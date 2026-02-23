@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الملف الشخصي | Akram Mostafa</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050d1b;
+  --bg2: #09162b;
+  --card: #0d1e38;
+  --card2: #112446;
+  --border: rgba(255,255,255,0.07);
+  --pink: #e94e77;
+  --orange: #f7931e;
+  --grad: linear-gradient(135deg,#e94e77,#f7931e);
+  --blue: #3b82f6;
+  --green: #22c55e;
+  --text: #e2eaf6;
+  --muted: #6b82a8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+.bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.bg-orbs span{position:absolute;border-radius:50%;filter:blur(80px);opacity:.12;}
+.bg-orbs span:nth-child(1){width:500px;height:500px;background:var(--pink);top:-100px;right:-100px;}
+.bg-orbs span:nth-child(2){width:400px;height:400px;background:var(--blue);bottom:-50px;left:-100px;}
+
+.topbar{
+  position:fixed;top:0;right:0;left:0;z-index:100;
+  height:60px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;
+  background:rgba(5,13,27,0.85);border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+}
+.topbar-brand{display:flex;align-items:center;gap:10px;}
+.topbar-brand img{width:32px;height:32px;filter:brightness(0) saturate(100%) invert(62%) sepia(93%) saturate(600%) hue-rotate(3deg) brightness(104%) contrast(97%);}
+.topbar-brand span{
+  font-size:.95rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.topbar-back{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 16px;background:var(--card);border:1px solid var(--border);
+  border-radius:20px;color:var(--muted);font-size:.82rem;font-weight:700;
+  text-decoration:none;transition:.25s;
+}
+.topbar-back:hover{color:var(--text);border-color:rgba(233,78,119,0.3);}
+
+.container{
+  max-width:900px;margin:0 auto;padding:90px 24px 60px;
+  position:relative;z-index:1;
+}
+
+.not-found{
+  text-align:center;padding:100px 20px;
+}
+.not-found i{font-size:3rem;color:var(--muted);margin-bottom:18px;opacity:.5;}
+.not-found h2{font-size:1.5rem;color:var(--text);margin-bottom:8px;}
+.not-found p{color:var(--muted);}
+
+.profile-hero{
+  background:var(--card);border:1px solid var(--border);border-radius:24px;
+  overflow:hidden;margin-bottom:24px;
+  position:relative;
+}
+.profile-banner{
+  height:160px;background:var(--grad);position:relative;overflow:hidden;
+}
+.profile-banner::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.profile-hero-body{padding:20px 28px 28px;}
+.profile-avatar-wrap{
+  display:flex;align-items:flex-end;gap:20px;
+  margin-top:-52px;margin-bottom:18px;
+}
+.profile-avatar{
+  width:100px;height:100px;border-radius:50%;object-fit:cover;
+  border:4px solid var(--card);flex-shrink:0;
+}
+.profile-avatar-placeholder{
+  width:100px;height:100px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;font-weight:900;color:#fff;flex-shrink:0;
+  border:4px solid var(--card);
+  background:var(--grad);
+}
+.profile-name-area{padding-bottom:4px;}
+.profile-name{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:4px;}
+.profile-type-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:4px 12px;border-radius:20px;
+  background:rgba(233,78,119,0.15);border:1px solid rgba(233,78,119,0.25);
+  color:var(--pink);font-size:.75rem;font-weight:700;
+}
+.profile-bio{color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:18px;}
+.profile-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  padding:16px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  margin-bottom:18px;
+}
+.profile-stat{text-align:center;}
+.profile-stat-num{
+  font-size:1.3rem;font-weight:900;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;margin-bottom:2px;
+}
+.profile-stat-lbl{font-size:.75rem;color:var(--muted);}
+.profile-actions{display:flex;gap:10px;}
+.pa-btn{
+  flex:1;padding:10px;border-radius:12px;border:1px solid var(--border);
+  background:rgba(255,255,255,0.03);color:var(--text);
+  font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:.25s;text-decoration:none;
+}
+.pa-btn:hover{background:var(--grad);border-color:transparent;color:#fff;}
+.pa-btn.primary{
+  background:var(--grad);border-color:transparent;color:#fff;
+}
+.pa-btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(233,78,119,0.3);}
+
+.info-card{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:24px;margin-bottom:20px;
+}
+.info-card h3{
+  font-size:1.05rem;font-weight:800;color:#fff;
+  margin-bottom:18px;display:flex;align-items:center;gap:8px;
+}
+.info-card h3 i{
+  width:32px;height:32px;border-radius:10px;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;
+}
+.info-row{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.info-row:last-child{border-bottom:none;padding-bottom:0;}
+.info-row:first-child{padding-top:0;}
+.info-row i{
+  width:38px;height:38px;border-radius:10px;
+  background:rgba(233,78,119,0.12);color:var(--pink);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;flex-shrink:0;
+}
+.info-row-text{flex:1;}
+.info-label{font-size:.72rem;color:var(--muted);display:block;margin-bottom:2px;}
+.info-val{font-size:.88rem;color:var(--text);font-weight:600;}
+
+@media(max-width:600px){
+  .topbar{padding:0 16px;}
+  .container{padding:90px 16px 40px;}
+  .profile-hero-body{padding:16px 20px 20px;}
+  .profile-stats{grid-template-columns:1fr;}
+  .profile-actions{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <span></span>
+  <span></span>
+</div>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <img src="images/logo.png" alt="Logo">
+    <span>AKRAM MOSTAFA</span>
+  </div>
+  <a href="index.html" class="topbar-back">
+    <i class="fas fa-arrow-left"></i> العودة للرئيسية
+  </a>
+</div>
+
+<div class="container" id="app">
+  <div class="not-found" id="notFound" style="display:none;">
+    <i class="fas fa-user-slash"></i>
+    <h2>المستخدم غير موجود</h2>
+    <p>عذراً، لم نتمكن من العثور على هذا الملف الشخصي</p>
+  </div>
+
+  <div id="profileContent">
+    <div class="profile-hero">
+      <div class="profile-banner"></div>
+      <div class="profile-hero-body">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar-placeholder" id="avatarPlaceholder">A</div>
+          <div class="profile-name-area">
+            <h1 class="profile-name" id="profileName">أكرم مصطفى</h1>
+            <span class="profile-type-badge">
+              <i class="fas fa-star"></i> خبير تسويق رقمي
+            </span>
+          </div>
+        </div>
+        <p class="profile-bio" id="profileBio">
+          متخصص في التسويق الإلكتروني والسوشيال ميديا، مطور تطبيقات ويب، أساعد الأفراد والشركات على النجاح في العالم الرقمي.
+        </p>
+        <div class="profile-stats">
+          <div class="profile-stat">
+            <span class="profile-stat-num">500+</span>
+            <span class="profile-stat-lbl">طالب متدرب</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-num">50+</span>
+            <span class="profile-stat-lbl">مشروع ناجح</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-num">10+</span>
+            <span class="profile-stat-lbl">كورس شامل</span>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <a href="courses.html" class="pa-btn primary">
+            <i class="fas fa-graduation-cap"></i> الكورسات
+          </a>
+          <a href="services.html" class="pa-btn">
+            <i class="fas fa-briefcase"></i> الخدمات
+          </a>
+          <a href="contact.html" class="pa-btn">
+            <i class="fas fa-envelope"></i> تواصل معي
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3><i class="fas fa-info-circle"></i> معلومات التواصل</h3>
+      <div class="info-row">
+        <i class="fas fa-envelope"></i>
+        <div class="info-row-text">
+          <span class="info-label">البريد الإلكتروني</span>
+          <span class="info-val">akram@example.com</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <i class="fab fa-whatsapp"></i>
+        <div class="info-row-text">
+          <span class="info-label">واتساب</span>
+          <span class="info-val">+20 155 551 2778</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <i class="fas fa-map-marker-alt"></i>
+        <div class="info-row-text">
+          <span class="info-label">الموقع</span>
+          <span class="info-val">مصر، القاهرة</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3><i class="fas fa-trophy"></i> الإنجازات</h3>
+      <div class="info-row">
+        <i class="fas fa-certificate" style="background:rgba(59,130,246,0.15);color:#3b82f6;"></i>
+        <div class="info-row-text">
+          <span class="info-label">شهادات احترافية</span>
+          <span class="info-val">معتمد من فيسبوك، انستجرام، تيك توك</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <i class="fas fa-award" style="background:rgba(34,197,94,0.15);color:#22c55e;"></i>
+        <div class="info-row-text">
+          <span class="info-label">معدل النجاح</span>
+          <span class="info-val">98% من العملاء راضون تماماً</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <i class="fas fa-clock" style="background:rgba(168,85,247,0.15);color:#a855f7;"></i>
+        <div class="info-row-text">
+          <span class="info-label">سنوات الخبرة</span>
+          <span class="info-val">5+ سنوات في التسويق الإلكتروني</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const userId = urlParams.get('id') || urlParams.get('user');
+
+if(userId && userId !== '1') {
+  document.getElementById('notFound').style.display = 'block';
+  document.getElementById('profileContent').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

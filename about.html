@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="اعرف أكتر عن أكرم مصطفى — خبير تسويق رقمي ومطوّر تطبيقات بيجمع بين الاتنين في شخص واحد">
+<title>من أنا | Akram Mostafa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/store.css">
+<style>
+body { background: #050d1b; }
+.wa-float {
+  position: fixed; bottom: 28px; left: 28px; z-index: 999;
+  width: 56px; height: 56px; background: #25D366; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: #fff;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+  text-decoration: none; transition: .3s;
+}
+.wa-float:hover { transform: scale(1.1); }
+
+/* -------- ABOUT PAGE CUSTOM -------- */
+.about-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+  padding: 40px 0 80px;
+  align-items: start;
+}
+/* SIDEBAR */
+.about-sidebar {
+  position: sticky;
+  top: 90px;
+}
+.about-profile-card {
+  background: #0d1e38;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  overflow: hidden;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.about-profile-cover {
+  height: 90px;
+  background: linear-gradient(135deg,#e94e77,#f7931e);
+}
+.about-profile-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 4px solid #0d1e38;
+  margin-top: -45px;
+  object-fit: cover;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.about-profile-name {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 14px 0 4px;
+  padding: 0 16px;
+}
+.about-profile-title {
+  font-size: .82rem;
+  color: #6b82a8;
+  padding: 0 16px 20px;
+  line-height: 1.6;
+}
+.about-contact-card {
+  background: #0d1e38;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.about-contact-card h4 {
+  font-size: .92rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 14px;
+}
+.about-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: .83rem;
+  color: #6b82a8;
+  transition: .2s;
+}
+.about-contact-item:last-child { border-bottom: none; padding-bottom: 0; }
+.about-contact-item:first-of-type { padding-top: 0; }
+.about-contact-item i {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(233,78,119,0.15);
+  color: #e94e77;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .85rem;
+  flex-shrink: 0;
+}
+.about-social-row {
+  display: flex;
+  gap: 10px;
+  padding: 0 0 4px;
+}
+.about-social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  font-size: .75rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: .3s;
+}
+.about-social-btn.wa { background: rgba(37,211,102,0.12); color: #25D366; }
+.about-social-btn.wa:hover { background: #25D366; color: #fff; }
+.about-social-btn.fb { background: rgba(66,103,178,0.12); color: #4267B2; }
+.about-social-btn.fb:hover { background: #4267B2; color: #fff; }
+.about-social-btn.li { background: rgba(0,119,181,0.12); color: #0077b5; }
+.about-social-btn.li:hover { background: #0077b5; color: #fff; }
+
+/* CONTENT */
+.about-content { display: flex; flex-direction: column; gap: 28px; }
+.about-section-card {
+  background: #0d1e38;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 28px;
+}
+.about-section-card h2 {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.about-section-card h2 i {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg,#e94e77,#f7931e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .9rem;
+  color: #fff;
+}
+.about-text {
+  font-size: .9rem;
+  color: #6b82a8;
+  line-height: 2;
+  margin: 0;
+}
+.about-text strong { color: #e94e77; font-weight: 700; }
+.about-highlights {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+.about-highlight {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .83rem;
+  color: #8b9fbf;
+}
+.about-highlight i {
+  font-size: 1.1rem;
+  background: linear-gradient(135deg,#e94e77,#f7931e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: 20px;
+  text-align: center;
+}
+
+/* SKILLS */
+.skills-list { display: flex; flex-direction: column; gap: 16px; }
+.skill-row { display: flex; flex-direction: column; gap: 6px; }
+.skill-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .85rem;
+}
+.skill-row-header span { color: #c0cee0; font-weight: 600; }
+.skill-row-header small { color: #e94e77; font-weight: 700; }
+.skill-bar-track {
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #e94e77, #f7931e);
+  width: 0;
+  transition: width 1.4s cubic-bezier(.4,0,.2,1);
+}
+
+/* EXPERIENCE TIMELINE */
+.exp-timeline { display: flex; flex-direction: column; gap: 0; }
+.exp-item {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 22px;
+  position: relative;
+}
+.exp-item::after {
+  content: '';
+  position: absolute;
+  right: 15px;
+  top: 36px;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255,255,255,0.06);
+}
+.exp-item:last-child::after { display: none; }
+.exp-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#e94e77,#f7931e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .8rem;
+  color: #fff;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.exp-body { flex: 1; }
+.exp-body h4 {
+  font-size: .92rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 5px 0 4px;
+}
+.exp-body span {
+  font-size: .78rem;
+  color: #e94e77;
+  font-weight: 600;
+  background: rgba(233,78,119,0.12);
+  padding: 2px 10px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.exp-body p { font-size: .82rem; color: #6b82a8; line-height: 1.7; margin: 0; }
+
+/* CERTS */
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 12px;
+}
+.cert-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.cert-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+.cert-body h5 {
+  font-size: .82rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px;
+  line-height: 1.4;
+}
+.cert-body small { font-size: .72rem; color: #6b82a8; }
+
+@media (max-width: 900px) {
+  .about-layout { grid-template-columns: 1fr; }
+  .about-sidebar { position: static; }
+  .about-highlights { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="images/logo.png" alt="Akram Mostafa" style="width:40px;height:40px;">
+        <span class="brand-name">AKRAM<br>MOSTAFA</span>
+      </a>
+    </div>
+    <a href="login.html" class="nav-login-btn">
+      <i class="fas fa-user-circle"></i>
+      <span>تسجيل الدخول</span>
+    </a>
+    <button class="nav-toggle" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+      <li><a href="about.html" class="nav-link active">من أنا</a></li>
+      <li><a href="courses.html" class="nav-link">الكورسات</a></li>
+      <li><a href="services.html" class="nav-link">الخدمات</a></li>
+      <li><a href="store.html" class="nav-link">المتجر</a></li>
+      <li><a href="contact.html" class="nav-link">تواصل معي</a></li>
+      <li><a href="login.html" class="nav-link nav-login-menu"><i class="fas fa-user-circle"></i> تسجيل الدخول</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-badge" data-aos="fade-down">
+      <i class="fas fa-user-circle"></i>
+      اعرف أكتر عني
+    </div>
+    <h1 data-aos="fade-up" data-aos-delay="100">
+      أنا <span>أكرم مصطفى</span>
+    </h1>
+    <p data-aos="fade-up" data-aos-delay="200">
+      خبير تسويق رقمي ومطوّر تطبيقات — بجمع بين قوة التسويق والبرمجة عشان أجيبلك نتايج حقيقية في شغلك
+    </p>
+  </div>
+</section>
+
+<!-- ABOUT LAYOUT -->
+<section>
+  <div class="container">
+    <div class="about-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="about-sidebar" data-aos="fade-right">
+        <div class="about-profile-card">
+          <div class="about-profile-cover"></div>
+          <img src="images/Screenshot_5.png" alt="أكرم مصطفى" class="about-profile-img">
+          <div class="about-profile-name">أكرم مصطفى</div>
+          <div class="about-profile-title">خبير تسويق رقمي | مطوّر تطبيقات<br>🇪🇬 القاهرة، مصر</div>
+        </div>
+
+        <div class="about-contact-card">
+          <h4>معلومات التواصل</h4>
+          <div class="about-contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>+20 155 5512 778</span>
+          </div>
+          <div class="about-contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>akram@example.com</span>
+          </div>
+          <div class="about-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>القاهرة، مصر</span>
+          </div>
+          <div class="about-contact-item">
+            <i class="fas fa-clock"></i>
+            <span>السبت–الخميس | 9ص–9م</span>
+          </div>
+        </div>
+
+        <div class="about-contact-card">
+          <h4>تواصل معي</h4>
+          <div class="about-social-row">
+            <a href="https://wa.me/00201555512778" target="_blank" class="about-social-btn wa">
+              <i class="fab fa-whatsapp"></i> واتساب
+            </a>
+            <a href="https://www.facebook.com/share/17x8kYFSQq/" target="_blank" class="about-social-btn fb">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="about-social-btn li">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- CONTENT -->
+      <div class="about-content">
+
+        <!-- About Text -->
+        <div class="about-section-card" data-aos="fade-up">
+          <h2><i class="fas fa-user"></i> نبذة عني</h2>
+          <p class="about-text">
+            أنا <strong>أكرم مصطفى</strong>، خبير تسويق رقمي ومطوّر تطبيقات ويب وعندي تجربة بتعدي عن <strong>10 سنين</strong> في السوق العربي والدولي.
+            <br><br>
+            بدأت مسيرتي بالتسويق الإلكتروني واتوسعتل تطوير التطبيقات عشان أقدّم لعملائي حلول متكاملة بتجمع بين <strong>استراتيجية التسويق الفعالة</strong> وأحدث التقنيات البرمجية.
+            <br><br>
+            عملت مع أكتر من <strong>200 عميل</strong> وحققتلهم نتايج ملموسة — من مضاعفة المبيعات لبناء أنظمة إدارة متكاملة وإطلاق متاجر إلكترونية شغالة.
+          </p>
+          <div class="about-highlights">
+            <div class="about-highlight"><i class="fas fa-trophy"></i> 200+ عميل ناجح</div>
+            <div class="about-highlight"><i class="fas fa-calendar-check"></i> 10+ سنوات خبرة</div>
+            <div class="about-highlight"><i class="fas fa-star"></i> تقييم 4.9 / 5</div>
+            <div class="about-highlight"><i class="fas fa-certificate"></i> شهادات دولية</div>
+            <div class="about-highlight"><i class="fas fa-globe"></i> أعمال بمصر والخليج</div>
+            <div class="about-highlight"><i class="fas fa-laptop-code"></i> 6+ تطبيق منجز</div>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="about-section-card" data-aos="fade-up">
+          <h2><i class="fas fa-chart-bar"></i> مهاراتي</h2>
+          <div class="skills-list" id="skillsList">
+            <div class="skill-row">
+              <div class="skill-row-header"><span><i class="fab fa-facebook" style="color:#4267B2;"></i> إعلانات الفيسبوك</span><small>95%</small></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-row-header"><span><i class="fab fa-instagram" style="color:#E1306C;"></i> تسويق إنستغرام</span><small>90%</small></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-row-header"><span><i class="fab fa-tiktok"></i> تيك توك مارك</span><small>85%</small></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-row-header"><span><i class="fas fa-chart-line" style="color:#3b82f6;"></i> تحليل البيانات</span><small>88%</small></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-row-header"><span><i class="fas fa-code" style="color:#8b5cf6;"></i> تطوير الويب</span><small>80%</small></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-row-header"><span><i class="fas fa-search" style="color:#10b981;"></i> SEO وتحسين الظهور</span><small>82%</small></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="82"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-row-header"><span><i class="fas fa-lightbulb" style="color:#f59e0b;"></i> استراتيجية التسويق</span><small>92%</small></div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" data-width="92"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience -->
+        <div class="about-section-card" data-aos="fade-up">
+          <h2><i class="fas fa-briefcase"></i> الخبرة المهنية</h2>
+          <div class="exp-timeline">
+            <div class="exp-item">
+              <div class="exp-dot"><i class="fas fa-rocket"></i></div>
+              <div class="exp-body">
+                <h4>خبير تسويق ومطوّر تطبيقات مستقل</h4>
+                <span>2018 — الآن</span>
+                <p>تقديم خدمات تسويق رقمي وتطوير تطبيقات لعملاء في مصر والسعودية والإمارات.</p>
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-dot"><i class="fas fa-building"></i></div>
+              <div class="exp-body">
+                <h4>مدير تسويق رقمي — شركة تقنية</h4>
+                <span>2015 — 2018</span>
+                <p>إدارة استراتيجية التسويق وحملات الإعلانات لشركات كتيرة حواليك.</p>
+              </div>
+            </div>
+            <div class="exp-item">
+              <div class="exp-dot"><i class="fas fa-graduation-cap"></i></div>
+              <div class="exp-body">
+                <h4>متخصص إعلانات رقمية — وكالة إعلانية</h4>
+                <span>2013 — 2015</span>
+                <p>إدارة الحملات الإعلانية وبناء الجمهور المستهدف لعملاء متنوعين.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="about-section-card" data-aos="fade-up">
+          <h2><i class="fas fa-certificate"></i> الشهادات والإنجازات</h2>
+          <div class="certs-grid">
+            <div class="cert-card">
+              <div class="cert-icon" style="background:linear-gradient(135deg,#4267B2,#1877F2);"><i class="fab fa-facebook-f"></i></div>
+              <div class="cert-body">
+                <h5>Meta Certified Digital Marketer</h5>
+                <small>Meta (Facebook) — 2023</small>
+              </div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-icon" style="background:linear-gradient(135deg,#DB4437,#F4B400);"><i class="fab fa-google"></i></div>
+              <div class="cert-body">
+                <h5>Google Analytics Certified</h5>
+                <small>Google — 2022</small>
+              </div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-icon" style="background:linear-gradient(135deg,#000,#333);"><i class="fab fa-tiktok"></i></div>
+              <div class="cert-body">
+                <h5>TikTok Ads Manager Pro</h5>
+                <small>TikTok For Business — 2023</small>
+              </div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-icon" style="background:linear-gradient(135deg,#e94e77,#f7931e);"><i class="fas fa-chart-bar"></i></div>
+              <div class="cert-body">
+                <h5>Digital Marketing Strategy</h5>
+                <small>HubSpot Academy — 2022</small>
+              </div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-icon" style="background:linear-gradient(135deg,#06b6d4,#0284c7);"><i class="fas fa-code"></i></div>
+              <div class="cert-body">
+                <h5>React Developer Certificate</h5>
+                <small>Coursera — 2021</small>
+              </div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fas fa-search"></i></div>
+              <div class="cert-body">
+                <h5>SEO Specialist Certification</h5>
+                <small>SEMrush Academy — 2023</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section" data-aos="fade-up" style="margin:0;border-radius:22px;">
+          <h2>جاهز تبدأ معايا؟</h2>
+          <p>كلمني دلوقتي ونشوف مع بعض إزاي أقدر أساعدك تحقق أهدافك</p>
+          <div class="cta-buttons">
+            <a href="https://wa.me/00201555512778?text=أهلاً أكرم، عايز أتكلم معاك" target="_blank" class="btn btn-primary">
+              <i class="fab fa-whatsapp"></i> ابدأ دلوقتي
+            </a>
+            <a href="contact.html" class="btn btn-secondary">
+              <i class="fas fa-envelope"></i> كلمني
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="container">
+    <div class="page-footer-brand">
+      <img src="images/logo.png" alt="Logo">
+      <span>AKRAM MOSTAFA</span>
+    </div>
+    <div class="page-footer-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="about.html">من أنا</a>
+      <a href="courses.html">الكورسات</a>
+      <a href="services.html">الخدمات</a>
+      <a href="portfolio.html">مشاريعي</a>
+      <a href="contact.html">تواصل معي</a>
+    </div>
+    <p>© 2026 Akram Mostafa — جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/00201555512778" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration:900, easing:'ease-in-out', once:true, offset:80 });
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+const navbar = document.getElementById('navbar');
+if(navToggle) navToggle.addEventListener('click', () => {
+  navToggle.classList.toggle('active');
+  navMenu.classList.toggle('active');
+});
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Animate skill bars on scroll
+const skillFills = document.querySelectorAll('.skill-bar-fill');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const w = e.target.getAttribute('data-width');
+      e.target.style.width = w + '%';
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+skillFills.forEach(f => observer.observe(f));
+</script>
+</body>
+</html>
+

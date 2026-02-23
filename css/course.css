@@ -1,0 +1,1021 @@
+/* ==========================================
+   Course Page Styles
+   ========================================== */
+
+/* ==========================================
+   Payment Modal
+   ========================================== */
+.payment-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.payment-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.payment-modal-box {
+    background: linear-gradient(135deg, #0d2550 0%, #0a1f44 100%);
+    border: 1px solid rgba(233, 78, 119, 0.3);
+    border-radius: 24px;
+    max-width: 480px;
+    width: 100%;
+    padding: 36px 32px;
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.payment-modal-overlay.active .payment-modal-box {
+    transform: scale(1) translateY(0);
+}
+
+.payment-modal-close {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.payment-modal-close:hover {
+    background: rgba(233, 78, 119, 0.5);
+}
+
+.payment-modal-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.payment-modal-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #e94e77, #f7931e);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #fff;
+    margin: 0 auto 14px;
+    box-shadow: 0 6px 20px rgba(233, 78, 119, 0.4);
+}
+
+.payment-modal-header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.payment-modal-header p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+}
+
+/* WePay Card */
+.wepay-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(247, 147, 30, 0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.payment-method-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #f7931e;
+}
+
+.payment-method-logo i {
+    font-size: 22px;
+}
+
+.payment-number-display {
+    background: rgba(247, 147, 30, 0.1);
+    border: 1px solid rgba(247, 147, 30, 0.4);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+}
+
+.payment-number-label {
+    display: block;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 6px;
+}
+
+.payment-number-value {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.payment-number-value span {
+    font-size: 22px;
+    font-weight: 900;
+    color: #f7931e;
+    letter-spacing: 1px;
+    direction: ltr;
+}
+
+.copy-btn {
+    background: linear-gradient(135deg, #e94e77, #f7931e);
+    border: none;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.copy-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(233, 78, 119, 0.4);
+}
+
+.copy-btn.copied {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+}
+
+.payment-steps {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+}
+
+.steps-title {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.payment-steps ol {
+    padding-right: 20px;
+    margin: 0;
+    line-height: 1.9;
+}
+
+.payment-steps ol strong {
+    color: #f7931e;
+}
+
+/* Footer section of modal */
+.payment-modal-footer {
+    text-align: center;
+}
+
+.payment-confirm-note {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.payment-confirm-note i {
+    color: #f7931e;
+}
+
+.whatsapp-confirm-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff !important;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 700;
+    width: 100%;
+    justify-content: center;
+    transition: all 0.3s;
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+    margin-bottom: 14px;
+}
+
+.whatsapp-confirm-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-confirm-btn i {
+    font-size: 20px;
+}
+
+.payment-guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+}
+
+.payment-guarantee i {
+    color: #4CAF50;
+}
+
+@media (max-width: 480px) {
+    .payment-modal-box {
+        padding: 24px 18px;
+    }
+    .payment-number-value span {
+        font-size: 18px;
+    }
+    .payment-modal-header h2 {
+        font-size: 19px;
+    }
+}
+
+/* Course Hero */
+.course-hero {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--deep-blue) 100%);
+    position: relative;
+    padding: 140px 0 80px;
+    overflow: hidden;
+}
+
+.course-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(233, 78, 119, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(247, 147, 30, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.course-hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.course-breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.course-breadcrumb a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.course-breadcrumb a:hover {
+    color: var(--gradient-orange);
+}
+
+.course-breadcrumb span:not(:has(a)) {
+    color: var(--white);
+}
+
+.course-icon-large {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 30px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    color: var(--white);
+    box-shadow: var(--shadow-lg);
+}
+
+.course-icon-large.facebook {
+    background: linear-gradient(135deg, #1877f2, #0d5dbf);
+}
+
+.course-icon-large.instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.course-icon-large.tiktok {
+    background: linear-gradient(135deg, #000000, #333333);
+}
+
+.course-icon-large.snapchat {
+    background: linear-gradient(135deg, #fffc00, #d4c200);
+}
+
+.course-icon-large.twitter {
+    background: linear-gradient(135deg, #000000, #333333);
+}
+
+.course-icon-large.all-platforms {
+    background: linear-gradient(135deg, var(--gradient-pink), var(--gradient-orange));
+}
+
+.course-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 20px;
+}
+
+.course-subtitle {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 800px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+}
+
+/* Course Meta */
+.course-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--white);
+    font-size: 15px;
+}
+
+.meta-item i {
+    color: var(--gradient-orange);
+    font-size: 20px;
+}
+
+/* Course CTA */
+.course-cta {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-large {
+    padding: 18px 40px;
+    font-size: 18px;
+}
+
+/* Course Info Section */
+.course-info {
+    padding: 80px 0;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Info Cards */
+.info-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.info-card h2 {
+    font-size: 28px;
+    color: var(--white);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.info-card h2 i {
+    color: var(--gradient-orange);
+    font-size: 32px;
+}
+
+.info-card p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 15px;
+}
+
+/* Learning List */
+.learning-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.learning-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.learning-list li:hover {
+    background: rgba(233, 78, 119, 0.1);
+    transform: translateX(-5px);
+}
+
+.learning-list i {
+    color: #10b581;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* Curriculum */
+.curriculum {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.module {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.module:hover {
+    border-color: var(--gradient-orange);
+    box-shadow: 0 5px 20px rgba(233, 78, 119, 0.2);
+}
+
+.module-header {
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.module-header h3 {
+    font-size: 20px;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.module-header h3 i {
+    color: var(--gradient-orange);
+}
+
+.module-info {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+.lessons {
+    list-style: none;
+    padding: 20px 25px;
+}
+
+.lessons li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.lessons li:last-child {
+    border-bottom: none;
+}
+
+.lessons i {
+    color: var(--gradient-pink);
+    font-size: 16px;
+}
+
+/* Requirements List */
+.requirements-list {
+    list-style: none;
+}
+
+.requirements-list li {
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+}
+
+.requirements-list i {
+    color: #10b981;
+    font-size: 18px;
+}
+
+/* Sidebar */
+.course-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-card h3 {
+    font-size: 20px;
+    color: var(--white);
+    margin-bottom: 20px;
+}
+
+/* Price Card */
+.price-card {
+    background: linear-gradient(135deg, rgba(233, 78, 119, 0.15), rgba(247, 147, 30, 0.15));
+    border: 2px solid var(--gradient-orange);
+    text-align: center;
+}
+
+.price-badge {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.price-label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.price-value {
+    font-size: 36px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gradient-pink), var(--gradient-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.guarantee {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #10b981;
+}
+
+.guarantee i {
+    font-size: 20px;
+}
+
+/* Features List */
+.features-list {
+    list-style: none;
+}
+
+.features-list li {
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.features-list li:last-child {
+    border-bottom: none;
+}
+
+.features-list i {
+    color: var(--gradient-orange);
+    font-size: 18px;
+    width: 20px;
+}
+
+/* Instructor Card */
+.instructor-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.instructor-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: contain;
+    border: 2px solid var(--gradient-orange);
+}
+
+.instructor-info h4 {
+    font-size: 18px;
+    color: var(--white);
+    margin-bottom: 5px;
+}
+
+.instructor-info p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.instructor-bio {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+}
+
+.instructor-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.instructor-stats .stat {
+    text-align: center;
+}
+
+.instructor-stats strong {
+    display: block;
+    font-size: 20px;
+    color: var(--gradient-orange);
+    margin-bottom: 5px;
+}
+
+.instructor-stats span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Share Card */
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.share-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 18px;
+    transition: var(--transition);
+}
+
+.share-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.share-btn.facebook {
+    background: #1877f2;
+}
+
+.share-btn.twitter {
+    background: #000;
+}
+
+.share-btn.whatsapp {
+    background: #25d366;
+}
+
+.share-btn.linkedin {
+    background: #0077b5;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .course-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .course-sidebar {
+        position: static;
+    }
+}
+
+/* ==========================================
+   WhatsApp & WePay Elements
+   ========================================== */
+
+/* Header WhatsApp Button */
+.nav-whatsapp-header {
+    margin-right: auto;
+    margin-left: 15px;
+}
+
+/* Login Button (Course/Service Pages) */
+.nav-login-course {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: var(--white) !important;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 13px;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(102,126,234,0.35);
+    margin-left: 20px;
+    white-space: nowrap;
+}
+.nav-login-course:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102,126,234,0.55);
+}
+.nav-login-course i { font-size: 16px; }
+
+.whatsapp-header-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: var(--white) !important;
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
+}
+
+.whatsapp-header-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-header-btn i {
+    font-size: 18px;
+}
+
+/* Nav menu WhatsApp link */
+.nav-whatsapp-menu {
+    color: #25D366 !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-whatsapp-menu i {
+    font-size: 18px;
+}
+
+/* WePay Info in Sidebar */
+.wepay-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(247, 147, 30, 0.1);
+    border: 1px solid rgba(247, 147, 30, 0.3);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 14px;
+    color: var(--white);
+}
+
+.wepay-info i {
+    color: var(--gradient-orange);
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.wepay-info strong {
+    color: var(--gradient-orange);
+}
+
+/* WhatsApp Contact Card in Sidebar */
+.whatsapp-contact-card {
+    margin: 12px 0;
+}
+
+.whatsapp-contact-card a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.15), rgba(18, 140, 126, 0.15));
+    border: 1px solid rgba(37, 211, 102, 0.4);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.whatsapp-contact-card a:hover {
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.3), rgba(18, 140, 126, 0.3));
+    border-color: #25D366;
+    transform: translateY(-2px);
+}
+
+.whatsapp-contact-card i {
+    font-size: 22px;
+    color: #25D366;
+    flex-shrink: 0;
+}
+
+.whatsapp-contact-card span {
+    flex: 1;
+    color: rgba(255,255,255,0.8);
+}
+
+.whatsapp-contact-card strong {
+    color: #25D366;
+    font-size: 15px;
+    margin-right: auto;
+}
+
+/* Footer WhatsApp */
+.footer-whatsapp {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer-wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: var(--white) !important;
+    text-decoration: none;
+    padding: 14px 30px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 700;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+}
+
+.footer-wa-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.55);
+}
+
+.footer-wa-btn i {
+    font-size: 22px;
+}
+
+.footer-wa-btn strong {
+    color: #fff;
+}
+
+/* ==========================================
+   Responsive
+   ========================================== */
+
+@media (max-width: 768px) {
+    .course-hero {
+        padding: 120px 0 60px;
+    }
+    
+    .course-meta {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .course-cta {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-large {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .info-card {
+        padding: 25px;
+    }
+    
+.nav-whatsapp-header span {
+        display: none;
+    }
+
+    .whatsapp-header-btn {
+        padding: 8px 12px;
+    }
+
+    .nav-login-course span {
+        display: none;
+    }
+
+    .nav-login-course {
+        padding: 8px 12px;
+        margin-left: 10px;
+    }
+
+    .footer-wa-btn {
+        font-size: 13px;
+        padding: 12px 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
+}

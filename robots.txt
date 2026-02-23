@@ -1,0 +1,15 @@
+# Robots.txt for Akram Mostafa Website
+# www.akrammostafa.net
+
+User-agent: *
+Allow: /
+
+# Sitemap location (update when you create sitemap.xml)
+Sitemap: https://www.akrammostafa.net/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Disallow specific directories if needed
+# Disallow: /admin/
+# Disallow: /private/

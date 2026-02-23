@@ -1,0 +1,749 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="شوف شغل أكرم مصطفى — تطبيقات ومواقع ويب بأحتراف تقدر تطلب مشابها دلوقتي">
+<title>متجر التطبيقات والمشاريع | Akram Mostafa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/store.css">
+<style>
+body { background: #050d1b; }
+
+/* reuse portfolio preview styles from style.css */
+.app-card-preview { padding:0; overflow:hidden; position:relative; height:210px; cursor:pointer; }
+.preview-browser-bar{display:flex;align-items:center;gap:5px;padding:7px 10px;background:rgba(255,255,255,0.05);}
+.preview-dot{width:8px;height:8px;border-radius:50%;}
+.preview-dot.r{background:#ff5f57;}
+.preview-dot.y{background:#ffbd2e;}
+.preview-dot.g{background:#28c840;}
+.preview-url-bar{flex:1;height:16px;background:rgba(255,255,255,0.07);border-radius:4px;margin:0 6px;font-size:8px;line-height:16px;padding:0 8px;color:rgba(255,255,255,0.4);overflow:hidden;white-space:nowrap;}
+.preview-body{padding:8px 8px 4px;height:calc(100% - 33px);overflow:hidden;display:flex;align-items:stretch;gap:6px;}
+/* hotel preview */
+.preview-sidebar{width:28px;display:flex;flex-direction:column;gap:4px;align-items:center;padding:4px 0;}
+.preview-menu-item{width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,0.4);}
+.preview-menu-item.active{background:rgba(233,78,119,0.3);color:#e94e77;}
+.preview-main{flex:1;min-width:0;}
+.preview-stats-row{display:flex;gap:4px;margin-bottom:6px;}
+.preview-stat-box{flex:1;border-radius:6px;padding:5px 4px;text-align:center;}
+.preview-stat-num{display:block;font-size:11px;font-weight:700;color:#fff;}
+.preview-stat-lbl{font-size:7px;color:rgba(255,255,255,0.5);}
+.preview-rooms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+.preview-room{border-radius:5px;padding:5px 3px;text-align:center;font-size:8px;font-weight:700;}
+.preview-room.occupied{background:rgba(233,78,119,0.35);color:#f87171;}
+.preview-room.avail{background:rgba(16,185,129,0.2);color:#6ee7b7;}
+/* store preview */
+.preview-store-nav{display:flex;align-items:center;justify-content:space-between;padding:5px 0;margin-bottom:5px;}
+.preview-store-logo{font-size:10px;font-weight:800;}
+.preview-store-icons{display:flex;gap:5px;font-size:9px;color:rgba(255,255,255,0.5);}
+.preview-store-hero{border-radius:6px;padding:8px 10px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;}
+.preview-hero-text{flex:1;}
+.preview-hero-badge{padding:3px 7px;border-radius:4px;font-size:7px;font-weight:700;}
+.preview-cats-row{display:flex;gap:4px;flex-wrap:wrap;}
+.preview-cat-pill{padding:3px 7px;background:rgba(255,255,255,0.07);border-radius:10px;font-size:7px;color:rgba(255,255,255,0.5);}
+.preview-cat-pill.active{color:#e94e77;}
+/* CRM */
+.preview-crm-header{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;border-radius:6px;margin-bottom:6px;}
+.preview-filter-pills{display:flex;gap:4px;}
+.preview-filter{font-size:7px;padding:2px 6px;border-radius:10px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.4);}
+.preview-filter.active{background:rgba(16,185,129,0.3);color:#6ee7b7;}
+.preview-rooms-grid-crm{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+.preview-crm-room{border-radius:5px;padding:5px 3px;text-align:center;}
+.preview-crm-room span{display:block;font-size:9px;font-weight:700;color:#fff;}
+.preview-crm-room small{font-size:7px;}
+.preview-crm-room.occupied{background:rgba(233,78,119,0.25);}
+.preview-crm-room.occupied small{color:#f87171;}
+.preview-crm-room.avail{background:rgba(16,185,129,0.15);}
+.preview-crm-room.avail small{color:#6ee7b7;}
+/* dialer */
+.preview-dialer-wrap{display:flex;gap:6px;height:100%;}
+.preview-dialer{background:rgba(255,255,255,0.04);border-radius:8px;padding:6px;flex:1;}
+.preview-dialer-screen{background:rgba(255,255,255,0.07);border-radius:5px;padding:4px 6px;font-size:8px;color:rgba(255,255,255,0.5);margin-bottom:5px;text-align:center;}
+.preview-dialer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-bottom:5px;}
+.preview-dialer-grid span{background:rgba(255,255,255,0.07);border-radius:4px;text-align:center;padding:3px;font-size:8px;color:rgba(255,255,255,0.6);}
+.preview-call-btn{width:30px;height:30px;background:#22c55e;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;}
+.preview-dialer-sidebar{display:flex;flex-direction:column;gap:4px;width:24px;justify-content:center;}
+.preview-ds-item{width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:8px;color:rgba(255,255,255,0.4);}
+.preview-ds-item.active{background:rgba(59,130,246,0.3);color:#60a5fa;}
+/* clinic */
+.preview-clinic-header{padding:6px 8px;border-radius:6px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;}
+.preview-clinic-stats{display:flex;gap:4px;margin-bottom:6px;}
+.preview-cstat{flex:1;border-radius:6px;padding:5px 4px;text-align:center;}
+.preview-cstat span{display:block;font-size:7px;color:rgba(255,255,255,0.5);margin-top:2px;}
+.preview-cstat strong{display:block;font-size:10px;font-weight:700;color:#fff;line-height:1;}
+.preview-appt-list{display:flex;flex-direction:column;gap:3px;}
+.preview-appt{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.04);border-radius:5px;padding:4px 6px;font-size:8px;color:rgba(255,255,255,0.6);}
+.preview-appt small{margin-right:auto;color:rgba(255,255,255,0.35);}
+.preview-appt-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+/* ORDER BADGE */
+.order-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: .7rem;
+  font-weight: 700;
+  background: linear-gradient(135deg,#e94e77,#f7931e);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(233,78,119,0.4);
+}
+
+/* GALLERY MODAL same as index */
+.lb-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  backdrop-filter: blur(8px);
+}
+.lb-overlay.open { display: flex; }
+.lb-img { max-width: 90vw; max-height: 80vh; border-radius: 12px; }
+.lb-close {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wa-float {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 999;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+  text-decoration: none;
+  transition: .3s;
+}
+.wa-float:hover { transform: scale(1.1); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="images/logo.png" alt="Akram Mostafa" style="width:40px;height:40px;">
+        <span class="brand-name">AKRAM<br>MOSTAFA</span>
+      </a>
+    </div>
+    <a href="login.html" class="nav-login-btn">
+      <i class="fas fa-user-circle"></i>
+      <span>تسجيل الدخول</span>
+    </a>
+    <button class="nav-toggle" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+      <li><a href="about.html" class="nav-link">من أنا</a></li>
+      <li><a href="courses.html" class="nav-link">الكورسات</a></li>
+      <li><a href="services.html" class="nav-link">الخدمات</a></li>
+      <li><a href="store.html" class="nav-link active">المتجر</a></li>
+      <li><a href="contact.html" class="nav-link">تواصل معي</a></li>
+      <li><a href="login.html" class="nav-link nav-login-menu"><i class="fas fa-user-circle"></i> تسجيل الدخول</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-badge" data-aos="fade-down">
+      <i class="fas fa-laptop-code"></i>
+      تطبيقات ومواقع بأحتراف
+    </div>
+    <h1 data-aos="fade-up" data-aos-delay="100">
+      شوف <span>شغلي ومشاريعي</span>
+    </h1>
+    <p data-aos="fade-up" data-aos-delay="200">
+      شغل تعمل فعلاً دلوقتي — تقدر تطلب مشروع زيه أو تاخد استشارة مجانية
+    </p>
+    <div class="page-hero-stats" data-aos="fade-up" data-aos-delay="300">
+      <div class="page-hero-stat"><strong>6+</strong><span>مشروع منجز</span></div>
+      <div class="page-hero-stat"><strong>3</strong><span>تقنيات متخصصة</span></div>
+      <div class="page-hero-stat"><strong>100%</strong><span>رضا العملاء</span></div>
+      <div class="page-hero-stat"><strong>5★</strong><span>تقييم العملاء</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTER -->
+<section class="filter-section">
+  <div class="container">
+    <div class="filter-bar" data-aos="fade-up">
+      <button class="filter-btn active" data-filter="all">
+        <i class="fas fa-th-large"></i> الكل
+      </button>
+      <button class="filter-btn" data-filter="management">
+        <i class="fas fa-cogs"></i> أنظمة إدارة
+      </button>
+      <button class="filter-btn" data-filter="store">
+        <i class="fas fa-store"></i> متاجر
+      </button>
+      <button class="filter-btn" data-filter="callcenter">
+        <i class="fas fa-headset"></i> كول سنتر
+      </button>
+      <button class="filter-btn" data-filter="clinic">
+        <i class="fas fa-stethoscope"></i> عيادات
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- APPS GRID -->
+<section>
+  <div class="container">
+    <div class="shop-grid" id="appsGrid">
+
+      <!-- App 1: AlModif -->
+      <div class="app-shop-card" data-category="management" data-aos="fade-up" data-aos-delay="100">
+        <div class="app-card-preview" onclick="openGallery('almodif')" title="انقر لعرض الصور"
+             style="background:linear-gradient(135deg,#0d1b3e 0%,#1e2d5e 40%,#2d1f6e 100%);">
+          <span class="order-tag"><i class="fas fa-images"></i> معرض الصور</span>
+          <div class="preview-browser-bar">
+            <span class="preview-dot r"></span><span class="preview-dot y"></span><span class="preview-dot g"></span>
+            <span class="preview-url-bar">almodif.net</span>
+          </div>
+          <div class="preview-body">
+            <div class="preview-sidebar">
+              <div class="preview-menu-item active"><i class="fas fa-th-large"></i></div>
+              <div class="preview-menu-item"><i class="fas fa-calendar-alt"></i></div>
+              <div class="preview-menu-item"><i class="fas fa-users"></i></div>
+              <div class="preview-menu-item"><i class="fas fa-chart-bar"></i></div>
+            </div>
+            <div class="preview-main">
+              <div class="preview-stats-row">
+                <div class="preview-stat-box" style="background:rgba(102,126,234,0.25)"><span class="preview-stat-num">35</span><span class="preview-stat-lbl">وحدة</span></div>
+                <div class="preview-stat-box" style="background:rgba(16,185,129,0.25)"><span class="preview-stat-num">34</span><span class="preview-stat-lbl">متاحة</span></div>
+                <div class="preview-stat-box" style="background:rgba(233,78,119,0.25)"><span class="preview-stat-num">1</span><span class="preview-stat-lbl">مشغولة</span></div>
+              </div>
+              <div class="preview-rooms-grid">
+                <div class="preview-room occupied">203<br><small>VIP</small></div>
+                <div class="preview-room avail">202</div>
+                <div class="preview-room avail">201</div>
+                <div class="preview-room avail">102</div>
+                <div class="preview-room avail">101</div>
+                <div class="preview-room avail">301</div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-type-badge" style="position:absolute;bottom:10px;left:10px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;">
+            <i class="fas fa-hotel"></i> إدارة فنادق
+          </div>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-header">
+            <div class="app-card-icon" style="background:linear-gradient(135deg,#667eea,#764ba2);">
+              <i class="fas fa-hotel"></i>
+            </div>
+            <div>
+              <div class="app-card-name">المضيف سمارت</div>
+              <div class="app-card-url">almodif.net</div>
+            </div>
+          </div>
+          <p class="app-card-desc">نظام إدارة متكامل للفنادق والشاليهات — حجوزات، وحدات، مدفوعات، وتقارير لحظية بواجهة عربية أنيقة.</p>
+          <div class="app-card-tags">
+            <span class="app-tag">React</span>
+            <span class="app-tag">Firebase</span>
+            <span class="app-tag">PWA</span>
+            <span class="app-tag">واجهة عربية</span>
+          </div>
+          <div class="app-card-footer">
+            <a href="https://almodif.net" target="_blank" class="btn-visit">
+              <i class="fas fa-external-link-alt"></i> زيارة المشروع
+            </a>
+            <a href="https://wa.me/00201555512778?text=عايز نظام إدارة زي المضيف سمارت" target="_blank" class="btn-order">
+              <i class="fas fa-phone-alt"></i> اطلب مشابهاً
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- App 2: Remo Store -->
+      <div class="app-shop-card" data-category="store" data-aos="fade-up" data-aos-delay="150">
+        <div class="app-card-preview" onclick="openGallery('remostore')" title="انقر لعرض الصور"
+             style="background:linear-gradient(135deg,#1a0533 0%,#3b0d6e 50%,#4c0f8a 100%);">
+          <span class="order-tag"><i class="fas fa-images"></i> معرض الصور</span>
+          <div class="preview-browser-bar">
+            <span class="preview-dot r"></span><span class="preview-dot y"></span><span class="preview-dot g"></span>
+            <span class="preview-url-bar">remostore.net</span>
+          </div>
+          <div class="preview-body">
+            <div style="width:100%;">
+              <div class="preview-store-nav">
+                <span class="preview-store-logo" style="color:#c084fc;">Remo Store</span>
+                <div class="preview-store-icons"><i class="fas fa-search"></i><i class="fas fa-shopping-cart"></i></div>
+              </div>
+              <div class="preview-store-hero" style="background:linear-gradient(90deg,rgba(168,85,247,0.4),rgba(109,40,217,0.2));">
+                <div class="preview-hero-text"><span style="font-size:10px;color:#e9d5ff;font-weight:700;">لاب توب احترافي</span></div>
+              </div>
+              <div class="preview-cats-row">
+                <div class="preview-cat-pill">ملابس</div>
+                <div class="preview-cat-pill active" style="background:rgba(168,85,247,0.3);color:#c084fc;">موبايلات</div>
+                <div class="preview-cat-pill">لاب توب</div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-type-badge" style="position:absolute;bottom:10px;left:10px;background:linear-gradient(135deg,#a855f7,#6d28d9);color:#fff;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;">
+            <i class="fas fa-store"></i> متجر إلكتروني
+          </div>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-header">
+            <div class="app-card-icon" style="background:linear-gradient(135deg,#a855f7,#6d28d9);">
+              <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div>
+              <div class="app-card-name">ريمو ستور</div>
+              <div class="app-card-url">remostore.net</div>
+            </div>
+          </div>
+          <p class="app-card-desc">متجر إلكتروني احترافي متكامل — كاتالوج منتجات، سلة مشتريات، نظام دفع، وذكاء اصطناعي مدمج لدعم العملاء.</p>
+          <div class="app-card-tags">
+            <span class="app-tag">e-Commerce</span>
+            <span class="app-tag">دفع أونلاين</span>
+            <span class="app-tag">AI</span>
+            <span class="app-tag">React</span>
+          </div>
+          <div class="app-card-footer">
+            <a href="https://www.remostore.net" target="_blank" class="btn-visit">
+              <i class="fas fa-external-link-alt"></i> زيارة المشروع
+            </a>
+            <a href="https://wa.me/00201555512778?text=عايز متجر إلكتروني زي ريمو ستور" target="_blank" class="btn-order">
+              <i class="fas fa-phone-alt"></i> اطلب مشابهاً
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- App 3: Hotel CRM -->
+      <div class="app-shop-card" data-category="management" data-aos="fade-up" data-aos-delay="200">
+        <div class="app-card-preview" onclick="openGallery('hotel-crm')" title="انقر لعرض الصور"
+             style="background:linear-gradient(135deg,#0a2e1a 0%,#0f3d24 50%,#1a5c38 100%);">
+          <span class="order-tag"><i class="fas fa-images"></i> معرض الصور</span>
+          <div class="preview-browser-bar">
+            <span class="preview-dot r"></span><span class="preview-dot y"></span><span class="preview-dot g"></span>
+            <span class="preview-url-bar">hotel-app-dce62.web.app</span>
+          </div>
+          <div class="preview-body">
+            <div style="width:100%;">
+              <div class="preview-crm-header" style="background:linear-gradient(90deg,rgba(16,185,129,0.3),transparent)">
+                <span style="font-size:10px;color:#6ee7b7;font-weight:700;"><i class="fas fa-building"></i> الوحدات</span>
+                <div class="preview-filter-pills">
+                  <span class="preview-filter active">الكل (35)</span>
+                  <span class="preview-filter">متاح (34)</span>
+                </div>
+              </div>
+              <div class="preview-rooms-grid-crm">
+                <div class="preview-crm-room occupied"><span>203</span><small>مشغولة</small></div>
+                <div class="preview-crm-room avail"><span>202</span><small>متاحة</small></div>
+                <div class="preview-crm-room avail"><span>201</span><small>متاحة</small></div>
+                <div class="preview-crm-room avail"><span>102</span><small>متاحة</small></div>
+                <div class="preview-crm-room avail"><span>101</span><small>متاحة</small></div>
+                <div class="preview-crm-room avail"><span>301</span><small>متاحة</small></div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-type-badge" style="position:absolute;bottom:10px;left:10px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;">
+            <i class="fas fa-database"></i> CRM
+          </div>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-header">
+            <div class="app-card-icon" style="background:linear-gradient(135deg,#10b981,#059669);">
+              <i class="fas fa-building"></i>
+            </div>
+            <div>
+              <div class="app-card-name">نظام CRM الفنادق</div>
+              <div class="app-card-url">hotel-app-dce62.web.app</div>
+            </div>
+          </div>
+          <p class="app-card-desc">برنامج CRM متخصص لإدارة الوحدات وبيانات الضيوف — عرض مرئي للغرف وحالة الإشغال وتتبع الحجوزات.</p>
+          <div class="app-card-tags">
+            <span class="app-tag">CRM</span>
+            <span class="app-tag">Firebase</span>
+            <span class="app-tag">قاعدة بيانات</span>
+            <span class="app-tag">تقارير</span>
+          </div>
+          <div class="app-card-footer">
+            <a href="https://hotel-app-dce62.web.app/" target="_blank" class="btn-visit">
+              <i class="fas fa-external-link-alt"></i> زيارة المشروع
+            </a>
+            <a href="https://wa.me/00201555512778?text=عايز نظام CRM زي نظام الفنادق" target="_blank" class="btn-order">
+              <i class="fas fa-phone-alt"></i> اطلب مشابهاً
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- App 4: Link Call -->
+      <div class="app-shop-card" data-category="callcenter" data-aos="fade-up" data-aos-delay="250">
+        <div class="app-card-preview" onclick="openGallery('linkcall')" title="انقر لعرض الصور"
+             style="background:linear-gradient(135deg,#0f172a 0%,#1e3a6e 50%,#2563eb 100%);">
+          <span class="order-tag"><i class="fas fa-images"></i> معرض الصور</span>
+          <div class="preview-browser-bar">
+            <span class="preview-dot r"></span><span class="preview-dot y"></span><span class="preview-dot g"></span>
+            <span class="preview-url-bar">link-call-jade.vercel.app</span>
+          </div>
+          <div class="preview-body">
+            <div class="preview-dialer-wrap">
+              <div class="preview-dialer">
+                <div class="preview-dialer-screen">رقم الهاتف</div>
+                <div class="preview-dialer-grid">
+                  <span>1</span><span>2</span><span>3</span>
+                  <span>4</span><span>5</span><span>6</span>
+                  <span>7</span><span>8</span><span>9</span>
+                  <span>#</span><span>0</span><span>*</span>
+                </div>
+                <div class="preview-call-btn"><i class="fas fa-phone"></i></div>
+              </div>
+              <div class="preview-dialer-sidebar">
+                <div class="preview-ds-item active"><i class="fas fa-th"></i></div>
+                <div class="preview-ds-item"><i class="fas fa-user-friends"></i></div>
+                <div class="preview-ds-item"><i class="fas fa-history"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-type-badge" style="position:absolute;bottom:10px;left:10px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;">
+            <i class="fas fa-phone-alt"></i> كول سنتر
+          </div>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-header">
+            <div class="app-card-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);">
+              <i class="fas fa-headset"></i>
+            </div>
+            <div>
+              <div class="app-card-name">Link Call</div>
+              <div class="app-card-url">link-call-jade.vercel.app</div>
+            </div>
+          </div>
+          <p class="app-card-desc">برنامج كول سنتر احترافي — يسجّل المكالمات الواردة والصادرة، سجل كامل، وإدارة فريق المبيعات برقم أمريكي.</p>
+          <div class="app-card-tags">
+            <span class="app-tag">VoIP</span>
+            <span class="app-tag">رقم أمريكي</span>
+            <span class="app-tag">تسجيل مكالمات</span>
+          </div>
+          <div class="app-card-footer">
+            <a href="https://link-call-jade.vercel.app/login.html" target="_blank" class="btn-visit">
+              <i class="fas fa-external-link-alt"></i> زيارة المشروع
+            </a>
+            <a href="https://wa.me/00201555512778?text=عايز نظام كول سنتر زي اللينك كول" target="_blank" class="btn-order">
+              <i class="fas fa-phone-alt"></i> اطلب مشابهاً
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- App 5: Miss Rim -->
+      <div class="app-shop-card" data-category="store" data-aos="fade-up" data-aos-delay="300">
+        <div class="app-card-preview" onclick="openGallery('missrim')" title="انقر لعرض الصور"
+             style="background:linear-gradient(135deg,#2d0a1a 0%,#5c1033 50%,#831843 100%);">
+          <span class="order-tag"><i class="fas fa-images"></i> معرض الصور</span>
+          <div class="preview-browser-bar">
+            <span class="preview-dot r"></span><span class="preview-dot y"></span><span class="preview-dot g"></span>
+            <span class="preview-url-bar">gentle-gumption-31f4ea.netlify.app</span>
+          </div>
+          <div class="preview-body">
+            <div style="width:100%;">
+              <div class="preview-store-nav" style="background:rgba(244,63,94,0.1);">
+                <span class="preview-store-logo" style="color:#fda4af;">Miss Rim</span>
+                <div class="preview-store-icons"><i class="fas fa-search"></i><i class="fas fa-heart"></i></div>
+              </div>
+              <div class="preview-store-hero" style="background:linear-gradient(90deg,rgba(244,63,94,0.35),rgba(251,113,133,0.15));">
+                <div class="preview-hero-text"><span style="font-size:10px;color:#fecdd3;font-weight:700;">محل ميس ريم</span></div>
+              </div>
+              <div class="preview-cats-row">
+                <div class="preview-cat-pill active" style="background:rgba(244,63,94,0.3);color:#fecdd3;">فساتين</div>
+                <div class="preview-cat-pill">عبايات</div>
+                <div class="preview-cat-pill">إكسسوارات</div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-type-badge" style="position:absolute;bottom:10px;left:10px;background:linear-gradient(135deg,#f43f5e,#e11d48);color:#fff;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;">
+            <i class="fas fa-tshirt"></i> موقع محل
+          </div>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-header">
+            <div class="app-card-icon" style="background:linear-gradient(135deg,#f43f5e,#e11d48);">
+              <i class="fas fa-store-alt"></i>
+            </div>
+            <div>
+              <div class="app-card-name">محل ميس ريم</div>
+              <div class="app-card-url">gentle-gumption.netlify.app</div>
+            </div>
+          </div>
+          <p class="app-card-desc">موقع رسمي احترافي لمحل أزياء — عرض المنتجات بصيغة متجر، صور المنتجات، تواصل مع العملاء، وهوية بصرية متكاملة.</p>
+          <div class="app-card-tags">
+            <span class="app-tag">أزياء</span>
+            <span class="app-tag">هوية بصرية</span>
+            <span class="app-tag">محل أونلاين</span>
+          </div>
+          <div class="app-card-footer">
+            <a href="https://gentle-gumption-31f4ea.netlify.app/" target="_blank" class="btn-visit">
+              <i class="fas fa-external-link-alt"></i> زيارة المشروع
+            </a>
+            <a href="https://wa.me/00201555512778?text=عايز موقع محل زي ميس ريم" target="_blank" class="btn-order">
+              <i class="fas fa-phone-alt"></i> اطلب مشابهاً
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- App 6: Denta Smart -->
+      <div class="app-shop-card" data-category="clinic management" data-aos="fade-up" data-aos-delay="350">
+        <div class="app-card-preview" onclick="openGallery('dentasmart')" title="انقر لعرض الصور"
+             style="background:linear-gradient(135deg,#0c1a2e 0%,#0f3460 50%,#0e4d8e 100%);">
+          <span class="order-tag"><i class="fas fa-images"></i> معرض الصور</span>
+          <div class="preview-browser-bar">
+            <span class="preview-dot r"></span><span class="preview-dot y"></span><span class="preview-dot g"></span>
+            <span class="preview-url-bar">dentasmart-app.web.app</span>
+          </div>
+          <div class="preview-body">
+            <div style="width:100%;">
+              <div class="preview-clinic-header" style="background:linear-gradient(90deg,rgba(6,182,212,0.3),transparent);">
+                <span style="font-size:10px;color:#67e8f9;font-weight:700;"><i class="fas fa-tooth"></i> Denta Smart</span>
+              </div>
+              <div class="preview-clinic-stats">
+                <div class="preview-cstat" style="background:rgba(6,182,212,0.2)"><i class="fas fa-user-injured" style="color:#22d3ee;font-size:10px;"></i><span>المرضى</span><strong>128</strong></div>
+                <div class="preview-cstat" style="background:rgba(16,185,129,0.2)"><i class="fas fa-calendar-check" style="color:#34d399;font-size:10px;"></i><span>مواعيد</span><strong>24</strong></div>
+                <div class="preview-cstat" style="background:rgba(245,158,11,0.15)"><i class="fas fa-file-invoice-dollar" style="color:#fbbf24;font-size:10px;"></i><span>فواتير</span><strong>56</strong></div>
+              </div>
+              <div class="preview-appt-list">
+                <div class="preview-appt"><span class="preview-appt-dot" style="background:#22d3ee;"></span><span>أحمد محمد</span><small>09:00</small></div>
+                <div class="preview-appt"><span class="preview-appt-dot" style="background:#34d399;"></span><span>سارة علي</span><small>10:30</small></div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-type-badge" style="position:absolute;bottom:10px;left:10px;background:linear-gradient(135deg,#06b6d4,#0284c7);color:#fff;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;">
+            <i class="fas fa-tooth"></i> عيادات ذكية
+          </div>
+        </div>
+        <div class="app-card-body">
+          <div class="app-card-header">
+            <div class="app-card-icon" style="background:linear-gradient(135deg,#06b6d4,#0284c7);">
+              <i class="fas fa-tooth"></i>
+            </div>
+            <div>
+              <div class="app-card-name">Denta Smart</div>
+              <div class="app-card-url">dentasmart-app.web.app</div>
+            </div>
+          </div>
+          <p class="app-card-desc">نظام إدارة عيادات أسنان ذكي — سجلات المرضى، جدولة المواعيد، الفواتير، وتقارير طبية بواجهة احترافية.</p>
+          <div class="app-card-tags">
+            <span class="app-tag">عيادات</span>
+            <span class="app-tag">مواعيد</span>
+            <span class="app-tag">Firebase</span>
+            <span class="app-tag">سجلات طبية</span>
+          </div>
+          <div class="app-card-footer">
+            <a href="https://dentasmart-app.web.app/" target="_blank" class="btn-visit">
+              <i class="fas fa-external-link-alt"></i> زيارة المشروع
+            </a>
+            <a href="https://wa.me/00201555512778?text=عايز نظام عيادات زي دينتا سمارت" target="_blank" class="btn-order">
+              <i class="fas fa-phone-alt"></i> اطلب مشابهاً
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end shop-grid -->
+
+    <!-- CTA -->
+    <div class="cta-section" data-aos="fade-up">
+      <h2>عاوز تطبيق أو موقع بأحتراف؟</h2>
+      <p>هعملك مشروعك من الصفر — كلمني دلوقتي وشوفنا مع بعض</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/00201555512778?text=عايز أطور تطبيق أو موقع ويب" target="_blank" class="btn btn-primary">
+          <i class="fab fa-whatsapp"></i> كلمني دلوقتي
+        </a>
+        <a href="contact.html" class="btn btn-secondary">
+          <i class="fas fa-envelope"></i> ابعتلي تفاصيل المشروع
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALLERY MODAL -->
+<div id="galleryModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;flex-direction:column;">
+  <button onclick="closeGallery()" style="position:absolute;top:18px;left:18px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;"><i class="fas fa-times"></i></button>
+  <div id="galleryTitle" style="color:#fff;font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:16px;text-align:center;"></div>
+  <div style="position:relative;display:flex;align-items:center;gap:12px;">
+    <button onclick="galleryPrev()" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;"><i class="fas fa-chevron-right"></i></button>
+    <img id="galleryImg" src="" alt="" style="max-width:80vw;max-height:65vh;border-radius:14px;border:1px solid rgba(255,255,255,0.1);object-fit:contain;">
+    <button onclick="galleryNext()" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;"><i class="fas fa-chevron-left"></i></button>
+  </div>
+  <div id="galleryDots" style="display:flex;gap:6px;margin-top:16px;"></div>
+  <div id="galleryCounter" style="color:rgba(255,255,255,0.5);font-size:.82rem;margin-top:8px;font-family:'Cairo',sans-serif;"></div>
+  <div id="galleryEmpty" style="display:none;text-align:center;padding:40px;color:rgba(255,255,255,0.5);font-family:'Cairo',sans-serif;">
+    <i class="fas fa-images" style="font-size:2.5rem;margin-bottom:12px;opacity:.3;display:block;"></i>
+    لا توجد صور لهذا المشروع بعد<br>
+    <small style="font-size:.8rem;opacity:.6;">يمكن إضافة الصور من لوحة الإدارة</small>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="container">
+    <div class="page-footer-brand">
+      <img src="images/logo.png" alt="Logo">
+      <span>AKRAM MOSTAFA</span>
+    </div>
+    <div class="page-footer-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="about.html">من أنا</a>
+      <a href="courses.html">الكورسات</a>
+      <a href="services.html">الخدمات</a>
+      <a href="portfolio.html">مشاريعي</a>
+      <a href="contact.html">تواصل معي</a>
+    </div>
+    <p>© 2026 Akram Mostafa — جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/00201555512778" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration:900, easing:'ease-in-out', once:true, offset:80 });
+
+// NAV TOGGLE
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+const navbar = document.getElementById('navbar');
+if(navToggle) navToggle.addEventListener('click', () => {
+  navToggle.classList.toggle('active');
+  navMenu.classList.toggle('active');
+});
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// FILTER
+const filterBtns = document.querySelectorAll('.filter-btn');
+const appCards = document.querySelectorAll('.app-shop-card');
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.getAttribute('data-filter');
+    appCards.forEach(card => {
+      const cats = card.getAttribute('data-category') || '';
+      card.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
+    });
+  });
+});
+
+// GALLERY
+const GALLERY_NAMES = {
+  'almodif':'المضيف سمارت','remostore':'ريمو ستور',
+  'hotel-crm':'نظام CRM الفنادق','linkcall':'Link Call',
+  'missrim':'محل ميس ريم','dentasmart':'Denta Smart'
+};
+const DEFAULT_GALLERY = {
+  'almodif': [
+    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=900&q=80&auto=format&fit=crop'
+  ],
+  'remostore': [
+    'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=80&auto=format&fit=crop'
+  ],
+  'hotel-crm': [
+    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1531973576160-7125cd663d86?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&q=80&auto=format&fit=crop'
+  ],
+  'linkcall': [
+    'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=900&q=80&auto=format&fit=crop'
+  ],
+  'missrim': [
+    'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=900&q=80&auto=format&fit=crop'
+  ],
+  'dentasmart': [
+    'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1588776814546-daab30f310ce?w=900&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&q=80&auto=format&fit=crop'
+  ]
+};
+let _gImgs=[], _gIdx=0;
+function openGallery(key){
+  const data = JSON.parse(localStorage.getItem('am_portfolio_imgs')||'{}');
+  const saved = data[key] && data[key].length ? data[key] : null;
+  _gImgs = saved || DEFAULT_GALLERY[key] || [];
+  _gIdx = 0;
+  const modal = document.getElementById('galleryModal');
+  document.getElementById('galleryTitle').textContent = GALLERY_NAMES[key] || key;
+  modal.style.display='flex';
+  document.body.style.overflow='hidden';
+  renderGallery();
+}
+function renderGallery(){
+  const img=document.getElementById('galleryImg');
+  const empty=document.getElementById('galleryEmpty');
+  const dots=document.getElementById('galleryDots');
+  const counter=document.getElementById('galleryCounter');
+  if(!_gImgs.length){ img.style.display='none';empty.style.display='block';dots.innerHTML='';counter.textContent=''; return; }
+  img.style.display='';empty.style.display='none';
+  img.src=_gImgs[_gIdx];
+  counter.textContent=(_gIdx+1)+' / '+_gImgs.length;
+  dots.innerHTML=_gImgs.map((_,i)=>`<span onclick="gotoSlide(${i})" style="width:${i===_gIdx?'20':'8'}px;height:8px;border-radius:4px;background:${i===_gIdx?'linear-gradient(135deg,#e94e77,#f7931e)':'rgba(255,255,255,0.2)'};cursor:pointer;transition:.3s;"></span>`).join('');
+}
+function galleryNext(){_gIdx=(_gIdx+1)%_gImgs.length;renderGallery();}
+function galleryPrev(){_gIdx=(_gIdx-1+_gImgs.length)%_gImgs.length;renderGallery();}
+function gotoSlide(i){_gIdx=i;renderGallery();}
+function closeGallery(){ document.getElementById('galleryModal').style.display='none'; document.body.style.overflow=''; }
+document.getElementById('galleryModal').addEventListener('click',function(e){if(e.target===this)closeGallery();});
+document.addEventListener('keydown',function(e){
+  if(document.getElementById('galleryModal').style.display==='flex'){
+    if(e.key==='ArrowLeft')galleryNext();
+    if(e.key==='ArrowRight')galleryPrev();
+    if(e.key==='Escape')closeGallery();
+  }
+});
+</script>
+</body>
+</html>
+

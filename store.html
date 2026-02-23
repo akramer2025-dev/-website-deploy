@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="متجر أكرم مصطفى - تطبيقات ويب وموبايل احترافية جاهزة للشراء | أنظمة إدارة - متاجر إلكترونية - تطبيقات جوال">
+    <meta name="keywords" content="تطبيقات ويب, تطبيقات موبايل, متجر إلكتروني, أنظمة إدارة, برمجة, تطوير">
+    <title>المتجر | Akram Mostafa - تطبيقات ويب وموبايل احترافية</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+                    <img src="images/logo.png" alt="Akram Mostafa" style="width:40px;height:40px;">
+                    <span class="brand-name">AKRAM<br>MOSTAFA</span>
+                </a>
+            </div>
+            
+            <!-- Cart Icon -->
+            <div id="cartDropdownWrapper" class="cart-icon-wrapper">
+                <button class="cart-icon-btn" onclick="toggleCartDropdown()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>السلة</span>
+                    <span class="cart-count">0</span>
+                </button>
+                <div class="cart-dropdown" id="cartDropdown">
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>السلة فارغة</p>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="login.html" class="nav-login-btn">
+                <i class="fas fa-user-circle"></i>
+                <span>تسجيل الدخول</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+                <li><a href="about.html" class="nav-link">من أنا</a></li>
+                <li><a href="courses.html" class="nav-link">الكورسات</a></li>
+                <li><a href="services.html" class="nav-link">الخدمات</a></li>
+                <li><a href="store.html" class="nav-link active">المتجر</a></li>
+                <li><a href="contact.html" class="nav-link">تواصل معي</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="store-page-hero">
+        <div class="container" style="position:relative;z-index:1;">
+            <div class="hero-badge" data-aos="fade-down">
+                <i class="fas fa-store"></i>
+                متجر التطبيقات الاحترافي
+            </div>
+            <h1 data-aos="fade-up">
+                تطبيقات <span>ويب وموبايل</span><br>
+                جاهزة للشراء
+            </h1>
+            <p data-aos="fade-up" data-aos-delay="100">
+                اكتشف مجموعة متنوعة من التطبيقات والأنظمة الاحترافية المصممة بعناية لتلبية احتياجات مشروعك
+            </p>
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="200">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">12+</div>
+                    <div class="hero-stat-label">تطبيق متاح</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">100%</div>
+                    <div class="hero-stat-label">كود أصلي</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">24/7</div>
+                    <div class="hero-stat-label">دعم فني</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">⭐ 5</div>
+                    <div class="hero-stat-label">تقييم العملاء</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORE TABS -->
+    <div class="store-tabs-wrapper">
+        <div class="container">
+            <div class="store-tabs">
+                <button class="store-tab active" data-tab="web" onclick="switchTab('web')">
+                    <i class="fas fa-globe"></i>
+                    <span>تطبيقات الويب</span>
+                    <span class="tab-count">6</span>
+                </button>
+                <button class="store-tab" data-tab="mobile" onclick="switchTab('mobile')">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>تطبيقات الموبايل</span>
+                    <span class="tab-count">6</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WEB APPS SECTION -->
+    <section id="webAppsSection">
+        <!-- Filter Bar -->
+        <div class="filter-bar-wrapper">
+            <div class="filter-bar">
+                <span class="filter-label"><i class="fas fa-filter"></i> تصفية:</span>
+                <button class="filter-btn active" onclick="filterProducts('all', this)">
+                    <i class="fas fa-th-large"></i> الكل
+                </button>
+                <button class="filter-btn" onclick="filterProducts('ecommerce', this)">
+                    <i class="fas fa-shopping-cart"></i> متاجر
+                </button>
+                <button class="filter-btn" onclick="filterProducts('management', this)">
+                    <i class="fas fa-cogs"></i> أنظمة إدارة
+                </button>
+                <button class="filter-btn" onclick="filterProducts('crm', this)">
+                    <i class="fas fa-users"></i> CRM
+                </button>
+                <button class="filter-btn" onclick="filterProducts('medical', this)">
+                    <i class="fas fa-heartbeat"></i> طبي
+                </button>
+            </div>
+        </div>
+        
+        <!-- Products Grid -->
+        <main class="store-main">
+            <div class="section-header" data-aos="fade-up">
+                <h2>تطبيقات الويب <span>الاحترافية</span></h2>
+                <p>مواقع وأنظمة ويب متكاملة جاهزة للتخصيص والتسليم</p>
+            </div>
+            <div class="products-grid" id="webAppsGrid">
+                <!-- سيتم تحميل التطبيقات عبر JavaScript -->
+            </div>
+        </main>
+    </section>
+
+    <!-- MOBILE APPS SECTION -->
+    <section id="mobileAppsSection" style="display:none;">
+        <!-- Filter Bar -->
+        <div class="filter-bar-wrapper">
+            <div class="filter-bar">
+                <span class="filter-label"><i class="fas fa-filter"></i> تصفية:</span>
+                <button class="filter-btn active" onclick="filterProducts('all', this)">
+                    <i class="fas fa-th-large"></i> الكل
+                </button>
+                <button class="filter-btn" onclick="filterProducts('productivity', this)">
+                    <i class="fas fa-tasks"></i> إنتاجية
+                </button>
+                <button class="filter-btn" onclick="filterProducts('health', this)">
+                    <i class="fas fa-heartbeat"></i> صحة
+                </button>
+                <button class="filter-btn" onclick="filterProducts('finance', this)">
+                    <i class="fas fa-wallet"></i> مالية
+                </button>
+                <button class="filter-btn" onclick="filterProducts('lifestyle', this)">
+                    <i class="fas fa-star"></i> أسلوب حياة
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Apps Grid -->
+        <main class="store-main">
+            <div class="section-header" data-aos="fade-up">
+                <h2>تطبيقات <span>الموبايل</span></h2>
+                <p>تطبيقات iOS و Android احترافية جاهزة للنشر</p>
+            </div>
+            <div class="mobile-apps-grid" id="mobileAppsGrid">
+                <!-- سيتم تحميل التطبيقات عبر JavaScript -->
+            </div>
+        </main>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="store-cta">
+        <div class="container">
+            <h2 data-aos="fade-up">عندك فكرة مشروع؟</h2>
+            <p data-aos="fade-up" data-aos-delay="100">
+                نقدر نحولها لتطبيق احترافي من الصفر — تصميم، تطوير، واختبار وتسليم كامل
+            </p>
+            <a href="https://wa.me/00201555512778?text=عايز أتكلم عن مشروع جديد" 
+               target="_blank" 
+               class="btn-whatsapp-cta" 
+               data-aos="fade-up" 
+               data-aos-delay="200">
+                <i class="fab fa-whatsapp"></i>
+                ابدأ مشروعك دلوقتي
+            </a>
+        </div>
+    </section>
+
+    <!-- PRODUCT MODAL -->
+    <div id="productModal">
+        <!-- سيتم تحميل المحتوى عبر JavaScript -->
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer" style="background:#07122a;border-top:1px solid rgba(255,255,255,0.05);padding:50px 0 30px;">
+        <div class="container">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px;margin-bottom:40px;">
+                <div>
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+                        <img src="images/logo.png" alt="Logo" style="width:50px;height:50px;">
+                        <div>
+                            <div style="font-size:1.1rem;font-weight:900;color:#fff;">AKRAM MOSTAFA</div>
+                            <div style="font-size:.8rem;color:#6b82a8;">متجر التطبيقات</div>
+                        </div>
+                    </div>
+                    <p style="color:#6b82a8;font-size:.9rem;line-height:1.8;">
+                        أقدم لك مجموعة من التطبيقات والأنظمة الاحترافية الجاهزة للاستخدام أو التخصيص حسب احتياجاتك.
+                    </p>
+                </div>
+                <div>
+                    <h4 style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:18px;">روابط سريعة</h4>
+                    <ul style="list-style:none;padding:0;margin:0;">
+                        <li style="margin-bottom:10px;"><a href="index.html" style="color:#6b82a8;text-decoration:none;font-size:.9rem;transition:.2s;">الرئيسية</a></li>
+                        <li style="margin-bottom:10px;"><a href="courses.html" style="color:#6b82a8;text-decoration:none;font-size:.9rem;transition:.2s;">الكورسات</a></li>
+                        <li style="margin-bottom:10px;"><a href="services.html" style="color:#6b82a8;text-decoration:none;font-size:.9rem;transition:.2s;">الخدمات</a></li>
+                        <li style="margin-bottom:10px;"><a href="contact.html" style="color:#6b82a8;text-decoration:none;font-size:.9rem;transition:.2s;">تواصل معي</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:18px;">تواصل معي</h4>
+                    <div style="display:flex;flex-direction:column;gap:12px;">
+                        <a href="https://wa.me/00201555512778" target="_blank" style="display:flex;align-items:center;gap:10px;color:#6b82a8;text-decoration:none;font-size:.9rem;">
+                            <i class="fab fa-whatsapp" style="color:#25D366;font-size:1.1rem;"></i>
+                            واتساب
+                        </a>
+                        <a href="mailto:contact@akrammostafa.com" style="display:flex;align-items:center;gap:10px;color:#6b82a8;text-decoration:none;font-size:.9rem;">
+                            <i class="fas fa-envelope" style="color:#e94e77;font-size:1rem;"></i>
+                            البريد الإلكتروني
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:18px;">تابعني</h4>
+                    <div style="display:flex;gap:10px;">
+                        <a href="#" style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#6b82a8;transition:.2s;">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#6b82a8;transition:.2s;">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#6b82a8;transition:.2s;">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#6b82a8;transition:.2s;">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div style="border-top:1px solid rgba(255,255,255,0.07);padding-top:24px;text-align:center;">
+                <p style="color:#6b82a8;font-size:.85rem;">
+                    &copy; 2026 Akram Mostafa. جميع الحقوق محفوظة.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({ 
+            duration: 700, 
+            once: true,
+            offset: 50
+        });
+
+        // Navbar Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        if (navToggle) {
+            navToggle.addEventListener('click', () => {
+                navToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                navbar.classList.toggle('scrolled', window.scrollY > 50);
+            }
+        });
+    </script>
+</body>
+</html>

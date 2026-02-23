@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الكورسات | Akram Mostafa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .courses-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .courses-hero h1 { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
+        .courses-hero h1 span { color: #f7931e; }
+        .courses-hero p { font-size: 1.2rem; opacity: 0.85; max-width: 600px; margin: 0 auto 2rem; }
+        .courses-hero-stats { display: flex; justify-content: center; gap: 3rem; margin-top: 2rem; flex-wrap: wrap; }
+        .hero-stat { text-align: center; }
+        .hero-stat .num { font-size: 2.5rem; font-weight: 900; color: #f7931e; display: block; }
+        .hero-stat span:last-child { font-size: 0.9rem; opacity: 0.8; }
+        .courses-section { padding: 80px 0; background: #0a0a0a; }
+        .courses-section .section-title { text-align: center; margin-bottom: 3rem; }
+        .courses-section .section-title h2 { font-size: 2.5rem; font-weight: 900; color: white; }
+        .courses-section .section-title h2 span { color: #f7931e; }
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .course-card { background: #111; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; position: relative; }
+        .course-card:hover { transform: translateY(-8px); border-color: #f7931e; box-shadow: 0 20px 40px rgba(247,147,30,0.15); }
+        .course-card-thumb { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; }
+        .course-card-badge { position: absolute; top: 12px; right: 12px; background: #f7931e; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
+        .course-card-body { padding: 1.5rem; }
+        .course-card-body h3 { font-size: 1.25rem; font-weight: 800; color: white; margin-bottom: 0.5rem; }
+        .course-card-body p { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem; line-height: 1.6; }
+        .course-card-meta { display: flex; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+        .course-card-meta span { font-size: 0.82rem; color: rgba(255,255,255,0.5); display: flex; align-items: center; gap: 4px; }
+        .course-card-meta i { color: #f7931e; }
+        .btn-course-details { display: block; text-align: center; padding: 0.75rem; border-radius: 12px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.3s; color: white; }
+        .btn-course-details i { margin-left: 6px; }
+        .courses-cta { background: linear-gradient(135deg, #1a1a2e, #0f3460); padding: 80px 2rem; text-align: center; }
+        .courses-cta h2 { font-size: 2rem; font-weight: 900; color: white; margin-bottom: 1rem; }
+        .courses-cta p { color: rgba(255,255,255,0.75); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .btn-cta-wa { display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: white; padding: 1rem 2rem; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s; }
+        .btn-cta-wa:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(37,211,102,0.4); }
+    </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="images/logo.png" alt="Akram Mostafa" style="width:40px;height:40px;">
+        <span class="brand-name">AKRAM<br>MOSTAFA</span>
+      </a>
+    </div>
+    <a href="login.html" class="nav-login-btn">
+      <i class="fas fa-user-circle"></i>
+      <span>تسجيل الدخول</span>
+    </a>
+    <button class="nav-toggle" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+      <li><a href="about.html" class="nav-link">من أنا</a></li>
+      <li><a href="courses.html" class="nav-link active">الكورسات</a></li>
+      <li><a href="services.html" class="nav-link">الخدمات</a></li>
+      <li><a href="store.html" class="nav-link">المتجر</a></li>
+      <li><a href="contact.html" class="nav-link">تواصل معي</a></li>
+      <li><a href="login.html" class="nav-link nav-login-menu"><i class="fas fa-user-circle"></i> تسجيل الدخول</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="courses-hero">
+    <div class="hero-particles"></div>
+    <div style="position:relative;z-index:2;" data-aos="fade-up">
+        <h1>الكورسات <span>التسويقية</span></h1>
+        <p>كورسات عملية واقعية هتخليك تتعلم التسويق الرقمي صح وتشتغل بنتايج من أول يوم</p>
+        <div class="courses-hero-stats">
+            <div class="hero-stat">
+                <span class="num">+500</span>
+                <span>طالب متخرج</span>
+            </div>
+            <div class="hero-stat">
+                <span class="num">8</span>
+                <span>كورس متخصص</span>
+            </div>
+            <div class="hero-stat">
+                <span class="num">+5</span>
+                <span>سنين خبرة</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="courses-section">
+    <div class="section-title" data-aos="fade-up">
+        <h2>كل <span>الكورسات</span></h2>
+        <p style="color:rgba(255,255,255,0.6);margin-top:0.5rem;">اختار الكورس المناسب وابدأ رحلتك في التسويق الرقمي</p>
+    </div>
+    <div class="courses-grid">
+
+        <div class="course-card" data-aos="fade-up" data-aos-delay="50">
+            <div class="course-card-thumb" style="background:linear-gradient(135deg,#1877F2,#0466c8);">
+                <i class="fab fa-facebook-f" style="color:white;"></i>
+                <span class="course-card-badge">الأكتر طلباً</span>
+            </div>
+            <div class="course-card-body">
+                <h3>إعلانات فيسبوك</h3>
+                <p>اتعلم إزاي تشغل إعلانات فيسبوك بشكل احترافي وتوصل لجمهورك الصح بأقل ميزانية</p>
+                <div class="course-card-meta">
+                    <span><i class="fas fa-clock"></i> 8 ساعات</span>
+                    <span><i class="fas fa-signal"></i> مبتدئ لمحترف</span>
+                    <span><i class="fas fa-video"></i> مسجل</span>
+                </div>
+                <a href="courses/facebook-ads.html" class="btn-course-details" style="background:linear-gradient(135deg,#1877F2,#0466c8);">
+                    <i class="fas fa-play-circle"></i> تفاصيل الكورس
+                </a>
+            </div>
+        </div>
+
+        <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="course-card-thumb" style="background:linear-gradient(135deg,#E1306C,#833AB4);">
+                <i class="fab fa-instagram" style="color:white;"></i>
+            </div>
+            <div class="course-card-body">
+                <h3>إنستغرام للبيزنس</h3>
+                <p>حوّل حسابك على إنستغرام لماكينة مبيعات حقيقية واكتسب متابعين حقيقيين كل يوم</p>
+                <div class="course-card-meta">
+                    <span><i class="fas fa-clock"></i> 6 ساعات</span>
+                    <span><i class="fas fa-signal"></i> مبتدئ لمحترف</span>
+                    <span><i class="fas fa-video"></i> مسجل</span>
+                </div>
+                <a href="courses/instagram.html" class="btn-course-details" style="background:linear-gradient(135deg,#E1306C,#833AB4);">
+                    <i class="fas fa-play-circle"></i> تفاصيل الكورس
+                </a>
+            </div>
+        </div>
+
+        <div class="course-card" data-aos="fade-up" data-aos-delay="150">
+            <div class="course-card-thumb" style="background:linear-gradient(135deg,#010101,#333);">
+                <i class="fab fa-tiktok" style="color:white;"></i>
+            </div>
+            <div class="course-card-body">
+                <h3>تيك توك للبيزنس</h3>
+                <p>اتعلم إزاي تعمل فيديوهات تيك توك تنتشر وتجيب عملاء لشغلك بأسرع وقت</p>
+                <div class="course-card-meta">
+                    <span><i class="fas fa-clock"></i> 7 ساعات</span>
+                    <span><i class="fas fa-signal"></i> مبتدئ لمحترف</span>
+                    <span><i class="fas fa-video"></i> مسجل</span>
+                </div>
+                <a href="courses/tiktok.html" class="btn-course-details" style="background:linear-gradient(135deg,#010101,#555);">
+                    <i class="fas fa-play-circle"></i> تفاصيل الكورس
+                </a>
+            </div>
+        </div>
+
+        <div class="course-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="course-card-thumb" style="background:linear-gradient(135deg,#FFFC00,#f0a500);">
+                <i class="fab fa-snapchat-ghost" style="color:#333;font-size:3.5rem;"></i>
+            </div>
+            <div class="course-card-body">
+                <h3>سناب شات للبيزنس</h3>
+                <p>استخدم سناب شات عشان توصل لجمهور شاب ومتفاعل وتحقق مبيعات حقيقية</p>
+                <div class="course-card-meta">
+                    <span><i class="fas fa-clock"></i> 5 ساعات</span>
+                    <span><i class="fas fa-signal"></i> مبتدئ لمحترف</span>
+                    <span><i class="fas fa-video"></i> مسجل</span>
+                </div>
+                <a href="courses/snapchat.html" class="btn-course-details" style="background:linear-gradient(135deg,#f0c000,#e6ac00);color:#333;">
+                    <i class="fas fa-play-circle"></i> تفاصيل الكورس
+                </a>
+            </div>
+        </div>
+
+        <div class="course-card" data-aos="fade-up" data-aos-delay="250">
+            <div class="course-card-thumb" style="background:linear-gradient(135deg,#1DA1F2,#0d8ecf);">
+                <i class="fab fa-twitter" style="color:white;"></i>
+            </div>
+            <div class="course-card-body">
+                <h3>تويتر / X للبيزنس</h3>
+                <p>ابني حضور قوي على تويتر واستخدمه عشان تتواصل مع جمهورك وتبني براندك</p>
+                <div class="course-card-meta">
+                    <span><i class="fas fa-clock"></i> 5 ساعات</span>
+                    <span><i class="fas fa-signal"></i> مبتدئ لمحترف</span>
+                    <span><i class="fas fa-video"></i> مسجل</span>
+                </div>
+                <a href="courses/twitter.html" class="btn-course-details" style="background:linear-gradient(135deg,#1DA1F2,#0d8ecf);">
+                    <i class="fas fa-play-circle"></i> تفاصيل الكورس
+                </a>
+            </div>
+        </div>
+
+        <div class="course-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="course-card-thumb" style="background:linear-gradient(135deg,#f7931e,#e07800);">
+                <i class="fas fa-chess-king" style="color:white;"></i>
+                <span class="course-card-badge">شامل</span>
+            </div>
+            <div class="course-card-body">
+                <h3>استراتيجية متكاملة</h3>
+                <p>كورس شامل يجمع كل المنصات في استراتيجية تسويقية متكاملة تناسب مشروعك</p>
+                <div class="course-card-meta">
+                    <span><i class="fas fa-clock"></i> 12 ساعة</span>
+                    <span><i class="fas fa-signal"></i> متوسط لمحترف</span>
+                    <span><i class="fas fa-video"></i> مسجل</span>
+                </div>
+                <a href="courses/integrated-strategy.html" class="btn-course-details" style="background:linear-gradient(135deg,#f7931e,#e07800);">
+                    <i class="fas fa-play-circle"></i> تفاصيل الكورس
+                </a>
+            </div>
+        </div>
+
+        <div class="course-card" data-aos="fade-up" data-aos-delay="350">
+            <div class="course-card-thumb" style="background:linear-gradient(135deg,#6366f1,#4338ca);">
+                <i class="fas fa-code" style="color:white;"></i>
+                <span class="course-card-badge">جديد</span>
+            </div>
+            <div class="course-card-body">
+                <h3>كورس البرمجة</h3>
+                <p>ابدأ رحلتك في البرمجة من الصفر وتعلم أساسيات تطوير الويب بطريقة عملية وممتعة</p>
+                <div class="course-card-meta">
+                    <span><i class="fas fa-clock"></i> 15 ساعة</span>
+                    <span><i class="fas fa-signal"></i> من الصفر</span>
+                    <span><i class="fas fa-video"></i> مسجل</span>
+                </div>
+                <a href="courses/programming.html" class="btn-course-details" style="background:linear-gradient(135deg,#6366f1,#4338ca);">
+                    <i class="fas fa-play-circle"></i> تفاصيل الكورس
+                </a>
+            </div>
+        </div>
+
+        <div class="course-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="course-card-thumb" style="background:linear-gradient(135deg,#10b981,#059669);">
+                <i class="fas fa-robot" style="color:white;"></i>
+                <span class="course-card-badge">جديد</span>
+            </div>
+            <div class="course-card-body">
+                <h3>التسويق بالذكاء الاصطناعي</h3>
+                <p>استخدم أدوات الذكاء الاصطناعي في التسويق ووفر وقتك وضاعف نتايجك بشكل جنوني</p>
+                <div class="course-card-meta">
+                    <span><i class="fas fa-clock"></i> 10 ساعات</span>
+                    <span><i class="fas fa-signal"></i> مبتدئ لمحترف</span>
+                    <span><i class="fas fa-video"></i> مسجل</span>
+                </div>
+                <a href="courses/ai-marketing.html" class="btn-course-details" style="background:linear-gradient(135deg,#10b981,#059669);">
+                    <i class="fas fa-play-circle"></i> تفاصيل الكورس
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="courses-cta">
+    <div data-aos="fade-up">
+        <h2>مش لاقي الكورس المناسب؟</h2>
+        <p>تواصل معايا وهقولك أنهي كورس يناسب احتياجاتك ومستواك بالظبط</p>
+        <a href="https://wa.me/00201555512778?text=عايز%20أعرف%20أنهي%20كورس%20يناسبني" class="btn-cta-wa" target="_blank">
+            <i class="fab fa-whatsapp"></i> تواصل معايا دلوقتي
+        </a>
+    </div>
+</section>
+
+<footer class="page-footer">
+  <div class="container">
+    <div class="page-footer-brand">
+      <img src="images/logo.png" alt="Logo">
+      <span>AKRAM MOSTAFA</span>
+    </div>
+    <div class="page-footer-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="about.html">من أنا</a>
+      <a href="courses.html">الكورسات</a>
+      <a href="services.html">الخدمات</a>
+      <a href="portfolio.html">مشاريعي</a>
+      <a href="contact.html">تواصل معي</a>
+    </div>
+    <p>© 2026 Akram Mostafa — جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+<a href="https://wa.me/00201555512778" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration:900, easing:'ease-in-out', once:true, offset:80 });
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+const navbar = document.getElementById('navbar');
+if(navToggle) navToggle.addEventListener('click', () => {
+  navToggle.classList.toggle('active');
+  navMenu.classList.toggle('active');
+});
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+</script>
+</body>
+</html>

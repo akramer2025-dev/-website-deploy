@@ -1,0 +1,476 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="كلمني دلوقتي — أكرم مصطفى شايلك استشارة مجانية واتساب أو ابعتلي رسالة دلوقتي">
+<title>تواصل معي | Akram Mostafa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/store.css">
+<style>
+body { background: #050d1b; }
+.wa-float {
+  position: fixed; bottom: 28px; left: 28px; z-index: 999;
+  width: 56px; height: 56px; background: #25D366; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: #fff;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+  text-decoration: none; transition: .3s;
+}
+.wa-float:hover { transform: scale(1.1); }
+
+/* CONTACT LAYOUT */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 32px;
+  padding: 40px 0 80px;
+  align-items: start;
+}
+
+/* FORM CARD */
+.contact-form-card {
+  background: #0d1e38;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 36px;
+}
+.contact-form-card h2 {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 8px;
+}
+.contact-form-card > p {
+  font-size: .88rem;
+  color: #6b82a8;
+  margin: 0 0 28px;
+  line-height: 1.7;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.form-group label {
+  font-size: .83rem;
+  font-weight: 700;
+  color: #8b9fbf;
+}
+.form-control {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px;
+  padding: 13px 16px;
+  font-family: 'Cairo', sans-serif;
+  font-size: .88rem;
+  color: #fff;
+  outline: none;
+  transition: .3s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.form-control::placeholder { color: rgba(255,255,255,0.22); }
+.form-control:focus {
+  border-color: rgba(233,78,119,0.5);
+  background: rgba(233,78,119,0.05);
+  box-shadow: 0 0 0 3px rgba(233,78,119,0.08);
+}
+select.form-control option { background: #0d1e38; color: #fff; }
+textarea.form-control { resize: vertical; min-height: 130px; }
+.btn-submit {
+  width: 100%;
+  padding: 15px 32px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #e94e77, #f7931e);
+  color: #fff;
+  font-family: 'Cairo', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(233,78,119,0.4);
+}
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 28px;
+}
+.form-success i { font-size: 2.5rem; color: #10b981; margin-bottom: 12px; display: block; }
+.form-success h3 { font-size: 1.1rem; color: #fff; margin: 0 0 8px; }
+.form-success p { font-size: .85rem; color: #6b82a8; margin: 0; }
+
+/* SIDEBAR */
+.contact-sidebar { display: flex; flex-direction: column; gap: 20px; }
+.contact-info-card {
+  background: #0d1e38;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 24px;
+}
+.contact-info-card h3 {
+  font-size: .95rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.contact-info-card h3 i {
+  width: 32px; height: 32px;
+  border-radius: 10px;
+  background: linear-gradient(135deg,#e94e77,#f7931e);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; color: #fff;
+}
+.contact-info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  cursor: pointer;
+  transition: .2s;
+  text-decoration: none;
+}
+.contact-info-item:last-child { border-bottom: none; padding-bottom: 0; }
+.contact-info-item:first-of-type { padding-top: 0; }
+.contact-info-item:hover .cii-main { color: #e94e77; }
+.cii-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.cii-body { flex: 1; }
+.cii-label { font-size: .75rem; color: #6b82a8; display: block; margin-bottom: 2px; }
+.cii-main { font-size: .88rem; font-weight: 700; color: #fff; transition: .2s; }
+
+/* SOCIAL BUTTONS */
+.contact-social-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+}
+.contact-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 13px 10px;
+  border-radius: 14px;
+  font-size: .82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: .3s;
+  border: 1px solid transparent;
+}
+.contact-social-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.3); }
+.csb-wa { background: rgba(37,211,102,0.1); color: #25D366; border-color: rgba(37,211,102,0.2); }
+.csb-wa:hover { background: #25D366; color: #fff; }
+.csb-fb { background: rgba(66,103,178,0.1); color: #4267B2; border-color: rgba(66,103,178,0.2); }
+.csb-fb:hover { background: #4267B2; color: #fff; }
+.csb-ig { background: rgba(225,48,108,0.1); color: #E1306C; border-color: rgba(225,48,108,0.2); }
+.csb-ig:hover { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
+.csb-yt { background: rgba(255,0,0,0.1); color: #FF0000; border-color: rgba(255,0,0,0.2); }
+.csb-yt:hover { background: #FF0000; color: #fff; }
+
+/* AVAILABILITY */
+.avail-card {
+  background: linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.05));
+  border: 1px solid rgba(16,185,129,0.2);
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.avail-dot {
+  width: 14px; height: 14px;
+  background: #10b981; border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 0 rgba(16,185,129,0.5);
+  animation: pulse-green 2s infinite;
+}
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+.avail-body h4 { font-size: .9rem; font-weight: 700; color: #fff; margin: 0 0 4px; }
+.avail-body p { font-size: .78rem; color: #6ee7b7; margin: 0; }
+
+@media (max-width: 900px) {
+  .contact-layout { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .contact-social-grid { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="images/logo.png" alt="Akram Mostafa" style="width:40px;height:40px;">
+        <span class="brand-name">AKRAM<br>MOSTAFA</span>
+      </a>
+    </div>
+    <a href="login.html" class="nav-login-btn">
+      <i class="fas fa-user-circle"></i>
+      <span>تسجيل الدخول</span>
+    </a>
+    <button class="nav-toggle" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+      <li><a href="about.html" class="nav-link">من أنا</a></li>
+      <li><a href="courses.html" class="nav-link">الكورسات</a></li>
+      <li><a href="services.html" class="nav-link">الخدمات</a></li>
+      <li><a href="store.html" class="nav-link">المتجر</a></li>
+      <li><a href="contact.html" class="nav-link active">تواصل معي</a></li>
+      <li><a href="login.html" class="nav-link nav-login-menu"><i class="fas fa-user-circle"></i> تسجيل الدخول</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-badge" data-aos="fade-down">
+      <i class="fas fa-comments"></i>
+      نتكلم ونبدأ معاً
+    </div>
+    <h1 data-aos="fade-up" data-aos-delay="100">
+      كلمني <span>دلوقتي</span>
+    </h1>
+    <p data-aos="fade-up" data-aos-delay="200">
+      موجود وهرد عليك — ابعتلي رسالة وهرد عليك في أسرع وقت
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT LAYOUT -->
+<section>
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- FORM -->
+      <div class="contact-form-card" data-aos="fade-right">
+        <h2>ابعتلي رسالة</h2>
+        <p>املى النموذج وهرد عليك خلال ساعات — أو تواصل مباشرة عبر واتساب للرد الفوري</p>
+
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">الاسم الكامل *</label>
+              <input type="text" id="fname" class="form-control" placeholder="أدخل اسمك" required>
+            </div>
+            <div class="form-group">
+              <label for="fphone">رقم الهاتف *</label>
+              <input type="tel" id="fphone" class="form-control" placeholder="01X XXXX XXXX" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="femail">البريد الإلكتروني</label>
+            <input type="email" id="femail" class="form-control" placeholder="example@email.com">
+          </div>
+          <div class="form-group">
+            <label for="fservice">الخدمة المطلوبة *</label>
+            <select id="fservice" class="form-control" required>
+              <option value="" disabled selected>اختر الخدمة...</option>
+              <option>إدارة الإعلانات</option>
+              <option>تحليلات وبيانات</option>
+              <option>تطوير تطبيقات ومواقع</option>
+              <option>استشارات تسويقية</option>
+              <option>إنشاء المحتوى</option>
+              <option>إدارة السوشيال ميديا</option>
+              <option>تدريب الفريق</option>
+              <option>تصميم مواقع</option>
+              <option>الاشتراك في كورس</option>
+              <option>أخرى</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fmessage">رسالتك *</label>
+            <textarea id="fmessage" class="form-control" placeholder="اكتب تفاصيل طلبك أو سؤالك هنا..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <i class="fas fa-paper-plane"></i> ابعت دلوقتي
+          </button>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <i class="fas fa-check-circle"></i>
+          <h3>وصلتك رسالتك كويس!</h3>
+          <p>شكراً إنك تواصلت — هرد عليك في أسرع وقت ⚛️</p>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="contact-sidebar" data-aos="fade-left">
+
+        <!-- Availability -->
+        <div class="avail-card">
+          <div class="avail-dot"></div>
+          <div class="avail-body">
+            <h4>موجود دلوقتي</h4>
+            <p>السبت – الخميس | 9:00ص – 9:00م</p>
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="contact-info-card">
+          <h3><i class="fas fa-address-card"></i> معلومات التواصل</h3>
+          <a href="https://wa.me/00201555512778" target="_blank" class="contact-info-item">
+            <div class="cii-icon" style="background:rgba(37,211,102,0.15);color:#25D366;"><i class="fab fa-whatsapp"></i></div>
+            <div class="cii-body">
+              <span class="cii-label">واتساب (مباشر)</span>
+              <span class="cii-main">+20 155 5512 778</span>
+            </div>
+            <i class="fas fa-external-link-alt" style="color:#6b82a8;font-size:.75rem;"></i>
+          </a>
+          <a href="tel:+201555512778" class="contact-info-item">
+            <div class="cii-icon" style="background:rgba(59,130,246,0.15);color:#3b82f6;"><i class="fas fa-phone-alt"></i></div>
+            <div class="cii-body">
+              <span class="cii-label">اتصال هاتفي</span>
+              <span class="cii-main">+20 155 5512 778</span>
+            </div>
+          </a>
+          <a href="https://www.facebook.com/share/17x8kYFSQq/" target="_blank" class="contact-info-item">
+            <div class="cii-icon" style="background:rgba(66,103,178,0.15);color:#4267B2;"><i class="fab fa-facebook-f"></i></div>
+            <div class="cii-body">
+              <span class="cii-label">فيسبوك</span>
+              <span class="cii-main">@AkramMostafaNet</span>
+            </div>
+          </a>
+          <div class="contact-info-item" style="cursor:default;">
+            <div class="cii-icon" style="background:rgba(247,147,30,0.15);color:#f7931e;"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="cii-body">
+              <span class="cii-label">الموقع</span>
+              <span class="cii-main">القاهرة، مصر</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social -->
+        <div class="contact-info-card">
+          <h3><i class="fas fa-share-alt"></i> تابعني</h3>
+          <div class="contact-social-grid">
+            <a href="https://wa.me/00201555512778" target="_blank" class="contact-social-btn csb-wa">
+              <i class="fab fa-whatsapp"></i> واتساب
+            </a>
+            <a href="https://www.facebook.com/share/17x8kYFSQq/" target="_blank" class="contact-social-btn csb-fb">
+              <i class="fab fa-facebook-f"></i> فيسبوك
+            </a>
+            <a href="#" class="contact-social-btn csb-ig">
+              <i class="fab fa-instagram"></i> إنستغرام
+            </a>
+            <a href="#" class="contact-social-btn csb-yt">
+              <i class="fab fa-youtube"></i> يوتيوب
+            </a>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="contact-info-card">
+          <h3><i class="fas fa-question-circle"></i> أسئلة شائعة</h3>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="padding:12px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06);">
+              <div style="font-size:.83rem;font-weight:700;color:#fff;margin-bottom:5px;">كم يستغرق وقت الرد؟</div>
+              <div style="font-size:.78rem;color:#6b82a8;">عادةً خلال 2-4 ساعات في أوقات العمل</div>
+            </div>
+            <div style="padding:12px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06);">
+              <div style="font-size:.83rem;font-weight:700;color:#fff;margin-bottom:5px;">هل الاستشارة مدفوعة؟</div>
+              <div style="font-size:.78rem;color:#6b82a8;">الاستشارة الأولى مجانية تماماً بلا أي التزام</div>
+            </div>
+            <div style="padding:12px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06);">
+              <div style="font-size:.83rem;font-weight:700;color:#fff;margin-bottom:5px;">هل تعمل مع شركات خارج مصر؟</div>
+              <div style="font-size:.78rem;color:#6b82a8;">نعم، أعمل مع عملاء من السعودية والإمارات وعدة دول عربية</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="container">
+    <div class="page-footer-brand">
+      <img src="images/logo.png" alt="Logo">
+      <span>AKRAM MOSTAFA</span>
+    </div>
+    <div class="page-footer-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="about.html">من أنا</a>
+      <a href="courses.html">الكورسات</a>
+      <a href="services.html">الخدمات</a>
+      <a href="portfolio.html">مشاريعي</a>
+      <a href="contact.html">تواصل معي</a>
+    </div>
+    <p>© 2026 Akram Mostafa — جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/00201555512778" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration:900, easing:'ease-in-out', once:true, offset:80 });
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+const navbar = document.getElementById('navbar');
+if(navToggle) navToggle.addEventListener('click', () => {
+  navToggle.classList.toggle('active');
+  navMenu.classList.toggle('active');
+});
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// FORM SUBMIT — redirect to WhatsApp
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('fname').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+  const service = document.getElementById('fservice').value;
+  const msg = document.getElementById('fmessage').value.trim();
+  const text = `أهلاً أكرم 👋\nأنا ${name} (${phone})\nعايز أستفسر عن: ${service}\n\n${msg}`;
+  // Show success msg
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+  // Open WhatsApp after short delay
+  setTimeout(() => {
+    window.open('https://wa.me/00201555512778?text=' + encodeURIComponent(text), '_blank');
+  }, 1200);
+});
+</script>
+</body>
+</html>
+

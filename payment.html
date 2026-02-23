@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>صفحة الدفع | Akram Mostafa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Cairo',sans-serif;background:#050d1b;color:#fff;direction:rtl;min-height:100vh;display:flex;flex-direction:column;}
+    a{text-decoration:none;}
+
+    /* NAVBAR */
+    .navbar{position:fixed;top:0;width:100%;z-index:100;background:rgba(5,13,27,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 0;}
+    .nav-inner{max-width:900px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
+    .nav-brand{display:flex;align-items:center;gap:10px;}
+    .nav-brand img{width:36px;height:36px;}
+    .nav-brand span{font-size:.85rem;font-weight:900;color:#fff;line-height:1.2;}
+    .nav-back{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#94a3b8;font-size:.85rem;font-weight:700;transition:.2s;}
+    .nav-back:hover{background:rgba(255,255,255,0.1);color:#fff;}
+
+    /* PAGE */
+    .page{flex:1;display:flex;align-items:center;justify-content:center;padding:100px 24px 60px;}
+    .card{background:#0d1e38;border:1px solid rgba(255,255,255,0.08);border-radius:24px;max-width:540px;width:100%;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
+
+    /* CARD HEADER */
+    .card-head{background:linear-gradient(135deg,#07122a,#0d1e38);border-bottom:1px solid rgba(255,255,255,0.07);padding:32px 32px 28px;text-align:center;}
+    .head-icon{width:64px;height:64px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;color:#fff;margin:0 auto 16px;box-shadow:0 8px 24px rgba(233,78,119,0.35);}
+    .card-head h1{font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:6px;}
+    .app-name-badge{display:inline-block;padding:5px 16px;background:rgba(233,78,119,0.12);border:1px solid rgba(233,78,119,0.3);border-radius:20px;font-size:.82rem;font-weight:700;color:#e94e77;margin-top:4px;}
+
+    /* CARD BODY */
+    .card-body{padding:32px;}
+
+    /* WEPAY BOX */
+    .wepay-box{background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(139,92,246,0.08));border:1px solid rgba(99,102,241,0.25);border-radius:16px;padding:22px 24px;margin-bottom:26px;text-align:center;}
+    .wepay-logo{font-size:.75rem;font-weight:900;color:#a5b4fc;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+    .wepay-box h3{font-size:1rem;font-weight:700;color:#c7d2fe;line-height:1.7;margin-bottom:12px;}
+    .wepay-number{display:flex;align-items:center;justify-content:center;gap:10px;}
+    .wepay-num-text{font-size:1.6rem;font-weight:900;color:#fff;letter-spacing:1px;}
+    .copy-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.35);border-radius:8px;color:#a5b4fc;font-size:.75rem;font-weight:700;cursor:pointer;transition:.2s;font-family:'Cairo',sans-serif;}
+    .copy-btn:hover{background:rgba(99,102,241,0.35);color:#fff;}
+    .copy-btn.copied{background:rgba(34,197,94,0.2);border-color:rgba(34,197,94,0.35);color:#4ade80;}
+
+    /* STEPS */
+    .steps{display:flex;flex-direction:column;gap:12px;margin-bottom:26px;}
+    .step{display:flex;align-items:flex-start;gap:12px;}
+    .step-num{width:28px;height:28px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#fff;flex-shrink:0;margin-top:1px;}
+    .step-txt{font-size:.88rem;color:#8fa5c4;line-height:1.6;}
+    .step-txt strong{color:#fff;font-weight:700;}
+
+    /* UPLOAD */
+    .upload-label{display:block;font-size:.88rem;font-weight:700;color:#c0cee0;margin-bottom:10px;}
+    .upload-zone{border:2px dashed rgba(233,78,119,0.3);border-radius:14px;padding:28px;text-align:center;cursor:pointer;transition:.3s;background:rgba(233,78,119,0.03);position:relative;}
+    .upload-zone:hover{border-color:rgba(233,78,119,0.6);background:rgba(233,78,119,0.07);}
+    .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+    .upload-icon{font-size:2rem;color:rgba(233,78,119,0.5);margin-bottom:10px;}
+    .upload-zone p{font-size:.84rem;color:#6b82a8;}
+    .upload-zone p span{color:#e94e77;font-weight:700;}
+    .preview-wrap{display:none;margin-top:14px;position:relative;}
+    .preview-wrap img{width:100%;border-radius:10px;border:1px solid rgba(233,78,119,0.25);max-height:220px;object-fit:cover;}
+    .remove-img{position:absolute;top:8px;left:8px;width:28px;height:28px;background:rgba(239,68,68,0.85);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.75rem;color:#fff;border:none;transition:.2s;}
+    .remove-img:hover{background:#ef4444;}
+
+    /* SUBMIT */
+    .btn-send{width:100%;margin-top:22px;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;background:linear-gradient(135deg,#25D366,#128C7E);border:none;border-radius:14px;color:#fff;font-size:1rem;font-weight:900;cursor:pointer;font-family:'Cairo',sans-serif;box-shadow:0 8px 28px rgba(37,211,102,0.3);transition:.3s;}
+    .btn-send:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(37,211,102,0.45);}
+    .btn-send:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+    .send-note{text-align:center;font-size:.76rem;color:#4b6280;margin-top:12px;line-height:1.6;}
+
+    /* SUCCESS */
+    .success-box{display:none;text-align:center;padding:20px 0;}
+    .success-icon{width:70px;height:70px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;margin:0 auto 18px;box-shadow:0 8px 24px rgba(34,197,94,0.4);}
+    .success-box h2{font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:8px;}
+    .success-box p{color:#8fa5c4;font-size:.9rem;line-height:1.75;}
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="images/logo.png" alt="Logo">
+      <span>AKRAM<br>MOSTAFA</span>
+    </a>
+    <a href="store.html" class="nav-back"><i class="fas fa-arrow-right"></i> العودة للمتجر</a>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+  <div class="card">
+
+    <!-- HEAD -->
+    <div class="card-head">
+      <div class="head-icon"><i class="fas fa-credit-card"></i></div>
+      <h1>إتمام عملية الدفع</h1>
+      <div class="app-name-badge" id="appNameBadge">جاري التحميل...</div>
+    </div>
+
+    <!-- BODY -->
+    <div class="card-body">
+
+      <!-- WEPAY BOX -->
+      <div class="wepay-box">
+        <div class="wepay-logo"><i class="fas fa-wallet"></i> &nbsp;WePay محفظة</div>
+        <h3>الرجاء إرسال مبلغ التطبيق على محفظة WePay<br>على الرقم التالي:</h3>
+        <div class="wepay-number">
+          <span class="wepay-num-text">01555512778</span>
+          <button class="copy-btn" onclick="copyNumber(this)"><i class="fas fa-copy"></i> نسخ</button>
+        </div>
+      </div>
+
+      <!-- STEPS -->
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-txt">افتح تطبيق <strong>WePay</strong> وحوّل المبلغ المطلوب على الرقم <strong>01555512778</strong></div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-txt">خد <strong>screenshot</strong> لإيصال التحويل من التطبيق</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-txt">ارفع صورة الإيصال هنا وابعت — هنتواصل معاك على طول</div>
+        </div>
+      </div>
+
+      <!-- UPLOAD ZONE -->
+      <div id="mainForm">
+        <label class="upload-label"><i class="fas fa-image" style="color:#e94e77;margin-left:5px;"></i> ارفع صورة إيصال التحويل</label>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="imgInput" accept="image/*" onchange="previewImage(this)">
+          <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+          <p>اسحب الصورة هنا أو <span>اضغط للاختيار</span></p>
+        </div>
+        <div class="preview-wrap" id="previewWrap">
+          <img id="previewImg" src="" alt="إيصال التحويل">
+          <button class="remove-img" onclick="removeImage()"><i class="fas fa-times"></i></button>
+        </div>
+
+        <button class="btn-send" id="sendBtn" onclick="sendToWhatsApp()" disabled>
+          <i class="fab fa-whatsapp" style="font-size:1.2rem;"></i> أرسل الإيصال على واتساب
+        </button>
+        <p class="send-note">بعد الضغط هيفتح واتساب تلقائياً مع صورة الإيصال — تأكد من الإرسال</p>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="success-box" id="successBox">
+        <div class="success-icon"><i class="fas fa-check"></i></div>
+        <h2>تم إرسال الإيصال!</h2>
+        <p>شكراً ليك! هتواصل معاك في أقرب وقت لتأكيد الطلب وبدء التسليم</p>
+        <a href="store.html" style="display:inline-flex;align-items:center;gap:7px;margin-top:22px;padding:12px 28px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:12px;color:#fff;font-size:.9rem;font-weight:800;">
+          <i class="fas fa-store"></i> رجوع للمتجر
+        </a>
+      </div>
+
+    </div><!-- /card-body -->
+  </div><!-- /card -->
+</div><!-- /page -->
+
+<script>
+  // اسم التطبيق من الرابط
+  const params  = new URLSearchParams(location.search);
+  const appName = params.get('app') || 'التطبيق';
+  document.getElementById('appNameBadge').textContent = appName;
+  document.title = `دفع - ${appName} | Akram Mostafa`;
+
+  // نسخ الرقم
+  function copyNumber(btn){
+    navigator.clipboard.writeText('01555512778').then(()=>{
+      btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
+      btn.classList.add('copied');
+      setTimeout(()=>{
+        btn.innerHTML = '<i class="fas fa-copy"></i> نسخ';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // معاينة الصورة
+  function previewImage(input){
+    if(!input.files || !input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('previewImg').src = e.target.result;
+      document.getElementById('previewWrap').style.display = 'block';
+      document.getElementById('uploadZone').style.borderColor = 'rgba(34,197,94,0.5)';
+      document.getElementById('sendBtn').disabled = false;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+
+  // حذف الصورة
+  function removeImage(){
+    document.getElementById('imgInput').value = '';
+    document.getElementById('previewImg').src = '';
+    document.getElementById('previewWrap').style.display = 'none';
+    document.getElementById('uploadZone').style.borderColor = 'rgba(233,78,119,0.3)';
+    document.getElementById('sendBtn').disabled = true;
+  }
+
+  // إرسال على واتساب
+  function sendToWhatsApp(){
+    const msg = encodeURIComponent(
+      `السلام عليكم أستاذ أكرم 🙏\n\nأنا بعتلك إيصال التحويل الخاص بـ: ${appName}\n\nالمبلغ اتحول على محفظة WePay رقم 01555512778\n\nهترفق صورة الإيصال في الرسالة الجاي.`
+    );
+    window.open(`https://wa.me/00201555512778?text=${msg}`, '_blank');
+    // إظهار رسالة النجاح
+    document.getElementById('mainForm').style.display = 'none';
+    document.getElementById('successBox').style.display = 'block';
+  }
+</script>
+</body>
+</html>
