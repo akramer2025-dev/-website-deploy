@@ -2550,3 +2550,698 @@
     .filter-bar { gap: 6px; }
     .filter-btn { padding: 8px 14px; font-size: .8rem; }
 }
+
+/* ==========================================
+   STORE PAGE - MOBILE OPTIMIZATIONS
+   ========================================== */
+
+/* === 768px - Tablet Portrait === */
+@media (max-width: 768px) {
+    /* Store Hero */
+    .store-page-hero {
+        padding: 90px 0 40px;
+    }
+    
+    .store-page-hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .store-page-hero p {
+        font-size: 0.9rem;
+    }
+    
+    /* Store Tabs */
+    .store-tabs {
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 12px;
+    }
+    
+    .store-tab {
+        justify-content: center;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        border-radius: 10px;
+    }
+    
+    .store-tab i {
+        font-size: 1rem;
+    }
+    
+    /* Filter Bar */
+    .filter-bar {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        gap: 6px;
+        scrollbar-width: none;
+    }
+    
+    .filter-bar::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .filter-btn {
+        flex-shrink: 0;
+        padding: 8px 14px;
+        font-size: 0.78rem;
+        border-radius: 8px;
+    }
+    
+    /* Product Cards */
+    .product-card {
+        border-radius: 14px;
+    }
+    
+    .product-image {
+        height: 160px;
+    }
+    
+    .product-icon-placeholder {
+        font-size: 2.5rem;
+    }
+    
+    .product-badge {
+        font-size: 0.65rem;
+        padding: 4px 10px;
+    }
+    
+    .product-info {
+        padding: 14px;
+    }
+    
+    .product-icon-mini {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+        border-radius: 8px;
+    }
+    
+    .product-title {
+        font-size: 0.95rem;
+    }
+    
+    .product-subtitle {
+        font-size: 0.72rem;
+    }
+    
+    .product-desc {
+        font-size: 0.78rem;
+        line-height: 1.5;
+        -webkit-line-clamp: 2;
+    }
+    
+    .product-tags {
+        gap: 4px;
+    }
+    
+    .product-tags .tag {
+        font-size: 0.65rem;
+        padding: 3px 8px;
+    }
+    
+    .product-rating {
+        font-size: 0.75rem;
+    }
+    
+    .product-rating i {
+        font-size: 0.7rem;
+    }
+    
+    .reviews-count {
+        font-size: 0.65rem;
+    }
+    
+    .product-sales {
+        font-size: 0.72rem;
+    }
+    
+    /* Product Footer */
+    .product-footer {
+        padding-top: 12px;
+        gap: 10px;
+    }
+    
+    .price-amount {
+        font-size: 1.1rem;
+    }
+    
+    .price-currency {
+        font-size: 0.7rem;
+    }
+    
+    .price-contact {
+        font-size: 0.78rem;
+    }
+    
+    .btn-add-cart {
+        padding: 8px 14px;
+        font-size: 0.78rem;
+        border-radius: 8px;
+    }
+    
+    .btn-add-cart i {
+        font-size: 0.85rem;
+    }
+    
+    /* Mobile App Cards */
+    .mobile-app-card {
+        border-radius: 14px;
+        padding: 14px;
+    }
+    
+    .app-icon-large,
+    .app-image-large {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        font-size: 1.6rem;
+    }
+    
+    .wishlist-btn-float {
+        width: 34px;
+        height: 34px;
+        font-size: 0.85rem;
+    }
+    
+    .mobile-app-name {
+        font-size: 1rem;
+    }
+    
+    .mobile-app-name-en {
+        font-size: 0.72rem;
+    }
+    
+    .mobile-app-desc {
+        font-size: 0.78rem;
+        -webkit-line-clamp: 2;
+    }
+    
+    .rating-badge,
+    .downloads-badge {
+        font-size: 0.72rem;
+        padding: 4px 8px;
+    }
+    
+    .platform-badge {
+        font-size: 0.68rem;
+        padding: 4px 8px;
+    }
+    
+    .feature-tag {
+        font-size: 0.68rem;
+        padding: 4px 10px;
+    }
+    
+    .mobile-app-price .price-value {
+        font-size: 1.1rem;
+    }
+    
+    .btn-mobile-details,
+    .btn-mobile-cart {
+        padding: 8px 12px;
+        font-size: 0.78rem;
+        border-radius: 8px;
+    }
+    
+    /* Cart Dropdown */
+    #cartDropdownWrapper .cart-dropdown,
+    .cart-dropdown {
+        width: 300px;
+        right: -80px;
+        border-radius: 14px;
+    }
+    
+    .cart-header {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+    }
+    
+    .cart-items {
+        max-height: 200px;
+        padding: 10px;
+    }
+    
+    .cart-item {
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .cart-item-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+    }
+    
+    .cart-item-name {
+        font-size: 0.82rem;
+    }
+    
+    .cart-item-type {
+        font-size: 0.68rem;
+    }
+    
+    .cart-item-remove {
+        width: 24px;
+        height: 24px;
+        font-size: 0.65rem;
+    }
+    
+    .cart-footer {
+        padding: 12px;
+    }
+    
+    .cart-total {
+        font-size: 0.82rem;
+    }
+    
+    .btn-checkout {
+        padding: 10px;
+        font-size: 0.82rem;
+    }
+    
+    /* Overlay Buttons */
+    .product-overlay .overlay-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+    }
+    
+    /* Modal */
+    .modal-content {
+        margin: 15px;
+        border-radius: 16px;
+    }
+    
+    .modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        top: 12px;
+        left: 12px;
+    }
+}
+
+/* === 480px - Small Phones === */
+@media (max-width: 480px) {
+    /* Store Hero */
+    .store-page-hero {
+        padding: 80px 0 30px;
+    }
+    
+    .store-page-hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .store-page-hero p {
+        font-size: 0.82rem;
+    }
+    
+    /* Hero Stats */
+    .hero-stats {
+        gap: 20px;
+    }
+    
+    .stat-value {
+        font-size: 1.4rem;
+    }
+    
+    .stat-label {
+        font-size: 0.68rem;
+    }
+    
+    /* Store Tabs */
+    .store-tabs {
+        padding: 6px;
+    }
+    
+    .store-tab {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        gap: 6px;
+    }
+    
+    .store-tab i {
+        font-size: 0.9rem;
+    }
+    
+    /* Filter Buttons */
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 0.72rem;
+    }
+    
+    /* Product Cards */
+    .product-image {
+        height: 140px;
+    }
+    
+    .product-icon-placeholder {
+        font-size: 2rem;
+    }
+    
+    .product-badge {
+        font-size: 0.6rem;
+        padding: 3px 8px;
+        top: 8px;
+        right: 8px;
+    }
+    
+    .product-info {
+        padding: 12px;
+    }
+    
+    .product-header {
+        gap: 10px;
+    }
+    
+    .product-icon-mini {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+    }
+    
+    .product-title {
+        font-size: 0.88rem;
+    }
+    
+    .product-subtitle {
+        font-size: 0.68rem;
+    }
+    
+    .product-desc {
+        font-size: 0.72rem;
+        margin: 8px 0;
+    }
+    
+    .product-tags .tag {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+    }
+    
+    .product-meta {
+        gap: 10px;
+    }
+    
+    .product-rating,
+    .product-sales {
+        font-size: 0.68rem;
+    }
+    
+    /* Product Footer - Stack on smallest screens */
+    .product-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .product-price {
+        text-align: center;
+    }
+    
+    .price-amount {
+        font-size: 1rem;
+    }
+    
+    .btn-add-cart {
+        justify-content: center;
+        padding: 10px 14px;
+        font-size: 0.78rem;
+    }
+    
+    /* Mobile App Cards */
+    .mobile-app-card {
+        padding: 12px;
+    }
+    
+    .mobile-app-header {
+        margin-bottom: 12px;
+    }
+    
+    .app-icon-large,
+    .app-image-large {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        font-size: 1.4rem;
+    }
+    
+    .wishlist-btn-float {
+        width: 30px;
+        height: 30px;
+        font-size: 0.78rem;
+    }
+    
+    .mobile-app-name {
+        font-size: 0.92rem;
+    }
+    
+    .mobile-app-name-en {
+        font-size: 0.68rem;
+    }
+    
+    .mobile-app-desc {
+        font-size: 0.72rem;
+    }
+    
+    .mobile-app-meta {
+        gap: 8px;
+    }
+    
+    .rating-badge,
+    .downloads-badge {
+        font-size: 0.68rem;
+        padding: 3px 6px;
+    }
+    
+    .mobile-app-platforms {
+        gap: 6px;
+    }
+    
+    .platform-badge {
+        font-size: 0.62rem;
+        padding: 3px 6px;
+    }
+    
+    .mobile-app-features {
+        gap: 4px;
+    }
+    
+    .feature-tag {
+        font-size: 0.62rem;
+        padding: 3px 8px;
+    }
+    
+    .mobile-app-footer {
+        padding-top: 12px;
+        gap: 8px;
+    }
+    
+    .mobile-app-price .price-value {
+        font-size: 1rem;
+    }
+    
+    .mobile-app-price .price-unit {
+        font-size: 0.65rem;
+    }
+    
+    .mobile-app-price .contact-price {
+        font-size: 0.75rem;
+    }
+    
+    .btn-mobile-details {
+        padding: 7px 10px;
+        font-size: 0.72rem;
+    }
+    
+    .btn-mobile-cart {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        font-size: 0.85rem;
+    }
+    
+    /* Cart */
+    #cartDropdownWrapper .cart-dropdown,
+    .cart-dropdown {
+        width: 280px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .cart-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .cart-badge {
+        font-size: 0.65rem;
+        min-width: 16px;
+        height: 16px;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+        padding: 30px 15px;
+        border-radius: 16px;
+    }
+    
+    .cta-section h2 {
+        font-size: 1.3rem;
+    }
+    
+    .cta-section p {
+        font-size: 0.82rem;
+    }
+    
+    .btn-cta {
+        padding: 10px 20px;
+        font-size: 0.82rem;
+    }
+}
+
+/* === 360px and smaller - Extra small phones === */
+@media (max-width: 360px) {
+    .store-page-hero h1 {
+        font-size: 1.3rem;
+    }
+    
+    .store-page-hero p {
+        font-size: 0.75rem;
+    }
+    
+    .store-tabs {
+        padding: 4px;
+    }
+    
+    .store-tab {
+        padding: 7px 10px;
+        font-size: 0.75rem;
+    }
+    
+    .filter-btn {
+        padding: 5px 10px;
+        font-size: 0.68rem;
+    }
+    
+    .product-image {
+        height: 120px;
+    }
+    
+    .product-info {
+        padding: 10px;
+    }
+    
+    .product-icon-mini {
+        width: 24px;
+        height: 24px;
+        font-size: 0.65rem;
+    }
+    
+    .product-title {
+        font-size: 0.82rem;
+    }
+    
+    .price-amount {
+        font-size: 0.95rem;
+    }
+    
+    .btn-add-cart {
+        padding: 8px 12px;
+        font-size: 0.72rem;
+    }
+    
+    .app-icon-large,
+    .app-image-large {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+        border-radius: 12px;
+    }
+    
+    .mobile-app-name {
+        font-size: 0.85rem;
+    }
+    
+    #cartDropdownWrapper .cart-dropdown,
+    .cart-dropdown {
+        width: 260px;
+    }
+}
+
+/* ==========================================
+   TOUCH DEVICE OPTIMIZATIONS - STORE
+   ========================================== */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    .btn-add-cart,
+    .btn-mobile-cart,
+    .btn-mobile-details {
+        min-height: 44px;
+    }
+    
+    .filter-btn {
+        min-height: 38px;
+    }
+    
+    .store-tab {
+        min-height: 44px;
+    }
+    
+    .overlay-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    /* Remove hover effects */
+    .product-card:hover,
+    .mobile-app-card:hover {
+        transform: none;
+    }
+    
+    /* Active states for touch */
+    .product-card:active,
+    .mobile-app-card:active {
+        transform: scale(0.99);
+        opacity: 0.95;
+    }
+    
+    .btn-add-cart:active,
+    .btn-mobile-cart:active,
+    .filter-btn:active {
+        transform: scale(0.97);
+    }
+    
+    /* Show overlay on mobile without hover */
+    .product-overlay {
+        opacity: 1;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+    }
+    
+    .product-overlay .overlay-btn {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ==========================================
+   LANDSCAPE MODE - STORE
+   ========================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .store-page-hero {
+        padding: 70px 0 25px;
+    }
+    
+    .hero-stats {
+        margin-top: 15px;
+    }
+    
+    .products-grid,
+    .mobile-apps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

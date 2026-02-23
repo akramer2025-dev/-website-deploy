@@ -3262,3 +3262,422 @@ select.form-control option {
         padding: 5px 10px;
     }
 }
+
+/* ==========================================
+   MOBILE OPTIMIZATIONS - COMPREHENSIVE
+   ========================================== */
+
+/* === 360px and smaller - Extra small phones === */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 12px;
+    }
+    
+    section {
+        padding: 45px 0;
+    }
+    
+    /* Hero */
+    .hero {
+        padding: 80px 0 30px;
+    }
+    
+    .hero-image-container {
+        max-width: 200px;
+    }
+    
+    .hero-title {
+        font-size: 20px;
+    }
+    
+    .gradient-text {
+        font-size: 26px;
+    }
+    
+    .gradient-text-secondary {
+        font-size: 12px;
+    }
+    
+    .hero-subtitle {
+        font-size: 13px;
+    }
+    
+    .hero-description {
+        font-size: 13px;
+    }
+    
+    .hero-label {
+        font-size: 11px;
+        padding: 6px 14px;
+    }
+    
+    .hero-roles {
+        gap: 5px;
+    }
+    
+    .hero-role-badge {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+        gap: 4px;
+    }
+    
+    .hero-role-badge i {
+        font-size: 0.75rem;
+    }
+    
+    /* Buttons - Extra Small */
+    .btn {
+        padding: 9px 14px;
+        font-size: 12px;
+        gap: 5px;
+        border-radius: 8px;
+    }
+    
+    .btn i {
+        font-size: 12px;
+    }
+    
+    /* Social Icons - Extra Small */
+    .social-link {
+        width: 34px;
+        height: 34px;
+        font-size: 13px;
+    }
+    
+    .social-links {
+        gap: 6px;
+    }
+    
+    /* Stats */
+    .stat-number-hero {
+        font-size: 20px;
+    }
+    
+    .stat-label-hero {
+        font-size: 10px;
+    }
+    
+    .stat-number {
+        font-size: 18px;
+    }
+    
+    .stat-label {
+        font-size: 10px;
+    }
+    
+    .stat-item {
+        padding: 10px 8px;
+    }
+    
+    /* Section Titles */
+    .section-title {
+        font-size: 22px;
+    }
+    
+    .section-description {
+        font-size: 13px;
+    }
+    
+    /* Cards */
+    .course-card,
+    .service-card {
+        padding: 16px 12px;
+        border-radius: 12px;
+    }
+    
+    .course-icon,
+    .service-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    .course-card h3,
+    .service-card h3 {
+        font-size: 14px;
+    }
+    
+    .course-card p,
+    .service-card p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+    
+    .course-features li {
+        font-size: 11px;
+        padding: 4px 0;
+    }
+    
+    /* Certifications */
+    .cert-badge {
+        width: 36px;
+        height: 36px;
+        font-size: 15px;
+    }
+    
+    .cert-title {
+        font-size: 13px;
+    }
+    
+    .cert-issuer {
+        font-size: 11px;
+    }
+    
+    .cert-description {
+        font-size: 11px;
+    }
+    
+    /* Contact Form */
+    .contact-form {
+        padding: 18px 12px;
+        border-radius: 12px;
+    }
+    
+    .form-group {
+        margin-bottom: 14px;
+    }
+    
+    .form-group label {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        font-size: 13px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+    
+    /* Footer */
+    .footer-section h3 {
+        font-size: 14px;
+    }
+    
+    .footer-section h4 {
+        font-size: 13px;
+    }
+    
+    .footer-links li,
+    .footer-contact li {
+        font-size: 12px;
+    }
+    
+    .social-links a {
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+    }
+}
+
+/* === Mobile Improvements - 480px === */
+@media (max-width: 480px) {
+    /* Navigation */
+    .navbar {
+        padding: 10px 0;
+    }
+    
+    .navbar.scrolled {
+        padding: 8px 0;
+    }
+    
+    .nav-brand img {
+        height: 35px;
+    }
+    
+    .menu-toggle {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+    
+    .nav-menu {
+        width: 100%;
+        padding: 15px;
+    }
+    
+    .nav-link {
+        font-size: 14px;
+        padding: 10px 0;
+    }
+    
+    /* Hero improvements */
+    .hero-buttons {
+        gap: 10px;
+    }
+    
+    .hero-buttons .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    /* About Stats */
+    .about-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+    
+    /* Tech badges */
+    .tech-badges {
+        gap: 8px;
+    }
+    
+    .tech-badge {
+        min-width: 50px;
+        padding: 8px 10px;
+        border-radius: 10px;
+    }
+    
+    .tech-badge i {
+        font-size: 1rem;
+    }
+    
+    .tech-badge span {
+        font-size: 0.65rem;
+    }
+    
+    /* Cards Grid */
+    .courses-grid,
+    .services-grid {
+        gap: 12px;
+    }
+    
+    /* Skills Pills */
+    .about-skills-pills {
+        gap: 6px;
+    }
+    
+    .about-skills-pills span {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+    }
+    
+    /* Image wrapper */
+    .image-wrapper {
+        width: 160px;
+        height: 160px;
+    }
+    
+    /* Toast/Notifications */
+    .toast-notification {
+        font-size: 12px;
+        padding: 10px 14px;
+    }
+}
+
+/* === Tablet Portrait - 768px === */
+@media (max-width: 768px) {
+    /* Navigation Mobile Menu */
+    .nav-menu {
+        background: rgba(10, 31, 68, 0.98);
+        border-radius: 0 0 20px 20px;
+    }
+    
+    /* Grid layouts */
+    .courses-grid,
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    /* Icons and buttons uniform sizing */
+    .course-icon,
+    .service-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+    
+    .btn {
+        padding: 11px 18px;
+        font-size: 13px;
+    }
+    
+    .btn i {
+        font-size: 13px;
+    }
+    
+    /* Social links */
+    .social-link {
+        width: 38px;
+        height: 38px;
+        font-size: 15px;
+    }
+    
+    /* Footer Grid */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        text-align: center;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+    
+    .footer-links,
+    .footer-contact {
+        align-items: center;
+    }
+}
+
+/* ==========================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ========================================== */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    .btn {
+        min-height: 44px;
+    }
+    
+    .social-link {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .nav-link {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Remove hover effects on touch */
+    .course-card:hover,
+    .service-card:hover {
+        transform: none;
+    }
+    
+    /* Active state for touch */
+    .btn:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+    
+    .course-card:active,
+    .service-card:active {
+        transform: scale(0.99);
+    }
+}
+
+/* ==========================================
+   LANDSCAPE MODE PHONES
+   ========================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        padding: 70px 0 30px;
+        min-height: auto;
+    }
+    
+    .hero-image-container {
+        max-width: 150px;
+    }
+    
+    section {
+        padding: 40px 0;
+    }
+    
+    .navbar {
+        padding: 8px 0;
+    }
+}
