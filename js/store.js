@@ -487,29 +487,33 @@ function renderWebApps(filter = 'all') {
 
         return `
             <div class="product-card" data-aos="fade-up" data-aos-delay="${i * 60}">
-                <div class="product-image">
-                    ${imgs.length > 0 
-                        ? `<img src="${imgs[0]}" alt="${app.name}" onerror="this.parentElement.innerHTML='<div class=product-icon-placeholder style=background:${app.color}><i class=${app.icon}></i></div>'">`
-                        : `<div class="product-icon-placeholder" style="background:${app.color}"><i class="${app.icon}"></i></div>`
-                    }
-                    <div class="product-overlay">
-                        <button class="overlay-btn wishlist-btn ${inWishlist ? 'active' : ''}" onclick="toggleWishlist('${app.key}', 'web', this)">
-                            <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
-                        </button>
-                        ${app.url ? `<a href="${app.url}" target="_blank" class="overlay-btn"><i class="fas fa-external-link-alt"></i></a>` : ''}
-                        <button class="overlay-btn" onclick="showProductDetails('${app.key}', 'web')">
-                            <i class="fas fa-eye"></i>
-                        </button>
+                <a href="products/${app.key}.html" class="product-image-link">
+                    <div class="product-image">
+                        ${imgs.length > 0 
+                            ? `<img src="${imgs[0]}" alt="${app.name}" onerror="this.parentElement.innerHTML='<div class=product-icon-placeholder style=background:${app.color}><i class=${app.icon}></i></div>'">`
+                            : `<div class="product-icon-placeholder" style="background:${app.color}"><i class="${app.icon}"></i></div>`
+                        }
+                        <div class="product-overlay">
+                            <button class="overlay-btn wishlist-btn ${inWishlist ? 'active' : ''}" onclick="event.preventDefault();event.stopPropagation();toggleWishlist('${app.key}', 'web', this)">
+                                <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
+                            </button>
+                            ${app.url ? `<a href="${app.url}" target="_blank" class="overlay-btn" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i></a>` : ''}
+                            <a href="products/${app.key}.html" class="overlay-btn">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                        <span class="product-badge">${app.type}</span>
                     </div>
-                    <span class="product-badge">${app.type}</span>
-                </div>
+                </a>
                 <div class="product-info">
                     <div class="product-header">
                         <div class="product-icon-mini" style="background:${app.color}">
                             <i class="${app.icon}"></i>
                         </div>
                         <div>
-                            <h3 class="product-title">${app.name}</h3>
+                            <a href="products/${app.key}.html" style="text-decoration:none;">
+                                <h3 class="product-title">${app.name}</h3>
+                            </a>
                             <span class="product-subtitle">${app.nameEn}</span>
                         </div>
                     </div>
@@ -535,10 +539,15 @@ function renderWebApps(filter = 'all') {
                                 : `<span class="price-contact"><i class="fas fa-comments"></i> تواصل للسعر</span>`
                             }
                         </div>
-                        <button class="btn-add-cart ${inCart ? 'in-cart' : ''}" onclick="addToCart('${app.key}', 'web')" ${inCart ? 'disabled' : ''}>
-                            <i class="fas ${inCart ? 'fa-check' : 'fa-cart-plus'}"></i>
-                            <span>${inCart ? 'في السلة' : 'أضف للسلة'}</span>
-                        </button>
+                        <div class="product-actions-row">
+                            <a href="products/${app.key}.html" class="btn-view-details">
+                                <i class="fas fa-eye"></i>
+                                <span>التفاصيل</span>
+                            </a>
+                            <button class="btn-add-cart ${inCart ? 'in-cart' : ''}" onclick="addToCart('${app.key}', 'web')" ${inCart ? 'disabled' : ''}>
+                                <i class="fas ${inCart ? 'fa-check' : 'fa-cart-plus'}"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -568,7 +577,7 @@ function renderMobileApps(filter = 'all') {
 
         return `
             <div class="mobile-app-card" data-aos="fade-up" data-aos-delay="${i * 60}">
-                <div class="mobile-app-header">
+                <a href="products/${app.key}.html" class="mobile-app-header" style="text-decoration:none;">
                     ${imgs.length > 0 
                         ? `<div class="app-image-large" style="background:${app.color}">
                              <img src="${imgs[0]}" alt="${app.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -578,12 +587,14 @@ function renderMobileApps(filter = 'all') {
                              <i class="${app.icon}"></i>
                            </div>`
                     }
-                    <button class="wishlist-btn-float ${inWishlist ? 'active' : ''}" onclick="toggleWishlist('${app.key}', 'mobile', this)">
+                    <button class="wishlist-btn-float ${inWishlist ? 'active' : ''}" onclick="event.preventDefault();event.stopPropagation();toggleWishlist('${app.key}', 'mobile', this)">
                         <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
                     </button>
-                </div>
+                </a>
                 <div class="mobile-app-body">
-                    <h3 class="mobile-app-name">${app.name}</h3>
+                    <a href="products/${app.key}.html" style="text-decoration:none;color:inherit;">
+                        <h3 class="mobile-app-name">${app.name}</h3>
+                    </a>
                     <span class="mobile-app-name-en">${app.nameEn}</span>
                     <p class="mobile-app-desc">${app.desc}</p>
                     <div class="mobile-app-meta">
@@ -612,10 +623,10 @@ function renderMobileApps(filter = 'all') {
                         }
                     </div>
                     <div class="mobile-app-actions">
-                        <button class="btn-mobile-details" onclick="showProductDetails('${app.key}', 'mobile')">
+                        <a href="products/${app.key}.html" class="btn-mobile-details">
                             <i class="fas fa-info-circle"></i>
                             التفاصيل
-                        </button>
+                        </a>
                         <button class="btn-mobile-cart ${inCart ? 'in-cart' : ''}" onclick="addToCart('${app.key}', 'mobile')" ${inCart ? 'disabled' : ''}>
                             <i class="fas ${inCart ? 'fa-check' : 'fa-cart-plus'}"></i>
                         </button>

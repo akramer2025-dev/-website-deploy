@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="المضيف سمارت - نظام إدارة متكامل للفنادق والشاليهات — حجوزات، وحدات، مدفوعات وتقارير فورية">
+    <meta name="keywords" content="نظام فنادق, إدارة شاليهات, نظام حجوزات, برنامج فندق">
+    <title>المضيف سمارت | Akram Mostafa - نظام إدارة الفنادق</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/store.css">
+    <style>
+        /* Product Detail Page Styles */
+        .product-detail-hero {
+            padding: 120px 0 60px;
+            background: linear-gradient(160deg, #07122a 0%, #0d1e38 60%, #07122a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-detail-hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .product-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .product-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+        
+        .product-breadcrumb a {
+            color: var(--store-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .product-breadcrumb a:hover {
+            color: var(--store-pink);
+        }
+        
+        .product-breadcrumb span {
+            color: var(--store-muted);
+        }
+        
+        .product-breadcrumb .current {
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+        
+        @media (max-width: 968px) {
+            .product-detail-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        .product-gallery {
+            position: sticky;
+            top: 100px;
+        }
+        
+        .product-main-image {
+            width: 100%;
+            aspect-ratio: 16/10;
+            border-radius: 24px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        .product-main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-main-image i {
+            font-size: 6rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .product-thumbnails {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 4px;
+        }
+        
+        .product-thumbnail {
+            width: 80px;
+            height: 60px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+        
+        .product-thumbnail.active,
+        .product-thumbnail:hover {
+            border-color: var(--store-pink);
+        }
+        
+        .product-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info-section {
+            padding: 20px 0;
+        }
+        
+        .product-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .product-type-badge {
+            padding: 8px 18px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .product-bestseller {
+            padding: 8px 18px;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.2));
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #22c55e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .product-detail-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        
+        .product-detail-subtitle {
+            font-size: 1.1rem;
+            color: var(--store-muted);
+            margin-bottom: 20px;
+        }
+        
+        .product-rating-large {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            border: 1px solid var(--store-border);
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 3px;
+        }
+        
+        .rating-stars i {
+            color: #fbbf24;
+            font-size: 1.1rem;
+        }
+        
+        .rating-number {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #fff;
+        }
+        
+        .rating-reviews {
+            color: var(--store-muted);
+            font-size: 0.9rem;
+        }
+        
+        .rating-divider {
+            width: 1px;
+            height: 30px;
+            background: var(--store-border);
+        }
+        
+        .sales-count {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--store-green);
+            font-weight: 700;
+        }
+        
+        .product-description {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--store-text);
+            margin-bottom: 30px;
+        }
+        
+        .product-price-section {
+            padding: 25px;
+            background: linear-gradient(145deg, rgba(233, 78, 119, 0.1), rgba(247, 147, 30, 0.05));
+            border: 1px solid rgba(233, 78, 119, 0.25);
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .price-label {
+            font-size: 0.9rem;
+            color: var(--store-muted);
+            margin-bottom: 8px;
+        }
+        
+        .price-value-large {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--store-pink), var(--store-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        
+        .price-contact-large {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            color: var(--store-orange);
+            font-weight: 700;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .btn-buy-now {
+            flex: 1;
+            padding: 16px 30px;
+            background: linear-gradient(135deg, var(--store-pink), var(--store-orange));
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .btn-buy-now:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(233, 78, 119, 0.4);
+        }
+        
+        .btn-add-wishlist {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--store-border);
+            color: var(--store-muted);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-add-wishlist:hover,
+        .btn-add-wishlist.active {
+            background: rgba(233, 78, 119, 0.15);
+            border-color: var(--store-pink);
+            color: var(--store-pink);
+        }
+        
+        .product-features-section {
+            padding: 50px 0;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-title i {
+            color: var(--store-pink);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .feature-card {
+            padding: 25px;
+            background: var(--store-card);
+            border: 1px solid var(--store-border);
+            border-radius: 18px;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            border-color: rgba(233, 78, 119, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .feature-icon i {
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .feature-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--store-muted);
+            line-height: 1.6;
+        }
+        
+        .tech-stack-section {
+            padding: 30px 0 50px;
+        }
+        
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .tech-tag {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--store-border);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--store-text);
+            transition: all 0.3s;
+        }
+        
+        .tech-tag:hover {
+            border-color: var(--store-pink);
+            color: var(--store-pink);
+        }
+        
+        .contact-section {
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .contact-card {
+            padding: 50px;
+            background: linear-gradient(145deg, var(--store-card), rgba(13, 30, 56, 0.5));
+            border: 1px solid var(--store-border);
+            border-radius: 24px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .contact-card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .contact-card p {
+            color: var(--store-muted);
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+        
+        .btn-whatsapp-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-whatsapp-large:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.35);
+        }
+        
+        .related-products {
+            padding: 60px 0;
+            background: var(--store-bg);
+        }
+        
+        .related-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 35px;
+            text-align: center;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .product-detail-hero {
+                padding: 100px 0 40px;
+            }
+            
+            .product-detail-title {
+                font-size: 1.8rem;
+            }
+            
+            .price-value-large {
+                font-size: 2.2rem;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+            
+            .btn-add-wishlist {
+                width: 100%;
+                height: 50px;
+            }
+            
+            .product-gallery {
+                position: relative;
+                top: 0;
+            }
+            
+            .contact-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+                    <img src="../images/logo.png" alt="Akram Mostafa" class="nav-logo">
+                    <span class="brand-name">AKRAM<br>MOSTAFA</span>
+                </a>
+            </div>
+            
+            <a href="../login.html" class="nav-login-btn">
+                <i class="fas fa-user-circle"></i>
+                <span>تسجيل الدخول</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html" class="nav-link">الرئيسية</a></li>
+                <li><a href="../about.html" class="nav-link">من أنا</a></li>
+                <li><a href="../courses.html" class="nav-link">الكورسات</a></li>
+                <li><a href="../services.html" class="nav-link">الخدمات</a></li>
+                <li><a href="../store.html" class="nav-link active">المتجر</a></li>
+                <li><a href="../contact.html" class="nav-link">تواصل معي</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- PRODUCT DETAIL HERO -->
+    <section class="product-detail-hero">
+        <div class="product-detail-container">
+            <!-- Breadcrumb -->
+            <nav class="product-breadcrumb" data-aos="fade-down">
+                <a href="../index.html"><i class="fas fa-home"></i></a>
+                <span>/</span>
+                <a href="../store.html">المتجر</a>
+                <span>/</span>
+                <span class="current">المضيف سمارت</span>
+            </nav>
+            
+            <div class="product-detail-grid">
+                <!-- Gallery -->
+                <div class="product-gallery" data-aos="fade-left">
+                    <div class="product-main-image" id="mainImage">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <div class="product-thumbnails" id="thumbnails">
+                        <!-- Will be loaded dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Product Info -->
+                <div class="product-info-section" data-aos="fade-right">
+                    <div class="product-badges">
+                        <span class="product-type-badge"><i class="fas fa-cogs"></i> نظام إدارة</span>
+                        <span class="product-bestseller"><i class="fas fa-fire"></i> الأكثر مبيعاً</span>
+                    </div>
+                    
+                    <h1 class="product-detail-title">المضيف سمارت</h1>
+                    <p class="product-detail-subtitle">Al-Modif Smart - نظام إدارة متكامل للفنادق</p>
+                    
+                    <div class="product-rating-large">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-number">5.0</span>
+                        <span class="rating-reviews">(24 تقييم)</span>
+                        <span class="rating-divider"></span>
+                        <span class="sales-count"><i class="fas fa-shopping-bag"></i> 15 مبيعات</span>
+                    </div>
+                    
+                    <p class="product-description">
+                        نظام إدارة متكامل للفنادق والشاليهات يوفر لك كل ما تحتاجه لإدارة منشأتك الفندقية بكفاءة عالية. يتضمن نظام حجوزات متقدم، إدارة الوحدات والغرف، متابعة المدفوعات، وتقارير فورية تساعدك على اتخاذ القرارات الصحيحة.
+                    </p>
+                    
+                    <div class="product-price-section">
+                        <p class="price-label">السعر</p>
+                        <div class="price-contact-large">
+                            <i class="fas fa-comments"></i>
+                            <span>تواصل للحصول على عرض السعر</span>
+                        </div>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <a href="https://wa.me/00201555512778?text=مهتم بنظام المضيف سمارت - نظام إدارة الفنادق" target="_blank" class="btn-buy-now">
+                            <i class="fab fa-whatsapp"></i>
+                            تواصل للشراء
+                        </a>
+                        <button class="btn-add-wishlist" onclick="toggleWishlist('almodif', 'web', this)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Live Demo Button -->
+                    <a href="https://almodif.net" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 25px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.4);border-radius:12px;color:#3b82f6;font-weight:700;text-decoration:none;transition:all 0.3s;">
+                        <i class="fas fa-external-link-alt"></i>
+                        معاينة النظام مباشرة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="product-features-section" style="background:var(--store-bg2);">
+        <div class="product-detail-container">
+            <h2 class="section-title" data-aos="fade-up">
+                <i class="fas fa-star"></i>
+                مميزات النظام
+            </h2>
+            
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h4>إدارة الحجوزات</h4>
+                    <p>نظام حجز متكامل مع تقويم تفاعلي وإشعارات تلقائية للحجوزات الجديدة والملغاة</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>تقارير تفصيلية</h4>
+                    <p>تقارير شاملة عن الإشغال، الإيرادات، وأداء العمل مع رسوم بيانية تفاعلية</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h4>لوحة تحكم متقدمة</h4>
+                    <p>لوحة تحكم سهلة الاستخدام تعرض جميع المعلومات المهمة في مكان واحد</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="feature-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h4>دعم متعدد اللغات</h4>
+                    <p>يدعم اللغة العربية والإنجليزية مع إمكانية إضافة لغات أخرى حسب الطلب</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <section class="tech-stack-section">
+        <div class="product-detail-container">
+            <h2 class="section-title" data-aos="fade-up">
+                <i class="fas fa-code"></i>
+                التقنيات المستخدمة
+            </h2>
+            
+            <div class="tech-tags" data-aos="fade-up" data-aos-delay="100">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Firebase</span>
+                <span class="tech-tag">PWA</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Responsive Design</span>
+                <span class="tech-tag">Arabic RTL Support</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT CTA -->
+    <section class="contact-section">
+        <div class="product-detail-container">
+            <div class="contact-card" data-aos="fade-up">
+                <h3>مهتم بهذا النظام؟</h3>
+                <p>تواصل معي الآن للحصول على عرض سعر مخصص ومعرفة المزيد عن كيفية تخصيص النظام لاحتياجاتك</p>
+                <a href="https://wa.me/00201555512778?text=مهتم بنظام المضيف سمارت - نظام إدارة الفنادق" target="_blank" class="btn-whatsapp-large">
+                    <i class="fab fa-whatsapp"></i>
+                    تواصل عبر واتساب
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" style="background:#07122a;border-top:1px solid rgba(255,255,255,0.05);padding:40px 0 25px;">
+        <div class="container" style="text-align:center;">
+            <p style="color:#6b82a8;font-size:.9rem;">
+                © 2024 Akram Mostafa. جميع الحقوق محفوظة.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50
+        });
+        
+        // Load portfolio images if available
+        document.addEventListener('DOMContentLoaded', function() {
+            const portfolio = JSON.parse(localStorage.getItem('am_portfolio_imgs') || '{}');
+            const images = portfolio['almodif'] || [];
+            
+            if (images.length > 0) {
+                const mainImage = document.getElementById('mainImage');
+                mainImage.innerHTML = `<img src="${images[0]}" alt="المضيف سمارت">`;
+                
+                const thumbnails = document.getElementById('thumbnails');
+                thumbnails.innerHTML = images.map((img, i) => `
+                    <div class="product-thumbnail ${i === 0 ? 'active' : ''}" onclick="changeImage('${img}', this)">
+                        <img src="${img}" alt="">
+                    </div>
+                `).join('');
+            }
+        });
+        
+        function changeImage(src, thumb) {
+            document.getElementById('mainImage').innerHTML = `<img src="${src}" alt="المضيف سمارت">`;
+            document.querySelectorAll('.product-thumbnail').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+        }
+        
+        // Wishlist functionality
+        function toggleWishlist(key, type, btn) {
+            let wishlist = JSON.parse(localStorage.getItem('am_wishlist') || '[]');
+            const index = wishlist.findIndex(i => i.key === key && i.type === type);
+            
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                btn.classList.remove('active');
+                btn.querySelector('i').className = 'far fa-heart';
+            } else {
+                wishlist.push({ key, type, addedAt: Date.now() });
+                btn.classList.add('active');
+                btn.querySelector('i').className = 'fas fa-heart';
+            }
+            
+            localStorage.setItem('am_wishlist', JSON.stringify(wishlist));
+        }
+        
+        // Check if in wishlist on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const wishlist = JSON.parse(localStorage.getItem('am_wishlist') || '[]');
+            const inWishlist = wishlist.some(i => i.key === 'almodif' && i.type === 'web');
+            
+            if (inWishlist) {
+                const btn = document.querySelector('.btn-add-wishlist');
+                btn.classList.add('active');
+                btn.querySelector('i').className = 'fas fa-heart';
+            }
+        });
+    </script>
+</body>
+</html>
