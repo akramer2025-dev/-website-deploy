@@ -479,75 +479,111 @@ function renderWebApps(filter = 'all') {
         return app.category === filter || app.tags.some(t => t.includes(filter));
     });
 
+    // Badge types based on category/ratings
+    const getBadge = (app) => {
+        if (app.sales >= 20) return { text: 'الأكثر مبيعاً', class: 'badge-trending', icon: 'fas fa-fire' };
+        if (app.rating >= 5) return { text: 'مميز', class: 'badge-featured', icon: 'fas fa-award' };
+        if (app.category === 'ecommerce') return { text: 'متجر', class: 'badge-special', icon: 'fas fa-shopping-bag' };
+        return { text: 'جديد', class: 'badge-new', icon: 'fas fa-bolt' };
+    };
+
+    // Generate stars HTML
+    const renderStars = (rating) => {
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+            if (i <= Math.floor(rating)) {
+                stars += '<i class="fas fa-star"></i>';
+            } else if (i - 0.5 <= rating) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            } else {
+                stars += '<i class="far fa-star empty"></i>';
+            }
+        }
+        return stars;
+    };
+
     grid.innerHTML = apps.map((app, i) => {
         const imgs = portfolio[app.key] || [];
         const price = prices[app.key];
         const inWishlist = Wishlist.isInWishlist(app.key, 'web');
         const inCart = Cart.items.some(item => item.key === app.key && item.type === 'web');
+        const badge = getBadge(app);
+        
+        // Generate fake original price (40% higher)
+        const originalPrice = price ? Math.round(price * 1.4) : null;
+        const discount = price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
         return `
-            <div class="product-card" data-aos="fade-up" data-aos-delay="${i * 60}">
+            <div class="product-card" data-aos="fade-up" data-aos-delay="${i * 80}">
                 <a href="products/${app.key}.html" class="product-image-link">
                     <div class="product-image">
                         ${imgs.length > 0 
                             ? `<img src="${imgs[0]}" alt="${app.name}" onerror="this.parentElement.innerHTML='<div class=product-icon-placeholder style=background:${app.color}><i class=${app.icon}></i></div>'">`
-                            : `<div class="product-icon-placeholder" style="background:${app.color}"><i class="${app.icon}"></i></div>`
+                            : `<div class="product-icon-placeholder" style="background:${app.color};display:flex;align-items:center;justify-content:center;height:100%;"><i class="${app.icon}" style="font-size:4rem;color:#fff;"></i></div>`
                         }
-                        <div class="product-overlay">
-                            <button class="overlay-btn wishlist-btn ${inWishlist ? 'active' : ''}" onclick="event.preventDefault();event.stopPropagation();toggleWishlist('${app.key}', 'web', this)">
-                                <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
-                            </button>
-                            ${app.url ? `<a href="${app.url}" target="_blank" class="overlay-btn" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i></a>` : ''}
-                            <a href="products/${app.key}.html" class="overlay-btn">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                        </div>
-                        <span class="product-badge">${app.type}</span>
                     </div>
                 </a>
-                <div class="product-info">
-                    <div class="product-header">
-                        <div class="product-icon-mini" style="background:${app.color}">
-                            <i class="${app.icon}"></i>
-                        </div>
-                        <div>
-                            <a href="products/${app.key}.html" style="text-decoration:none;">
-                                <h3 class="product-title">${app.name}</h3>
-                            </a>
-                            <span class="product-subtitle">${app.nameEn}</span>
-                        </div>
-                    </div>
+                
+                <!-- Badge -->
+                <span class="product-badge ${badge.class}">
+                    <i class="${badge.icon}"></i>
+                    ${badge.text}
+                </span>
+                
+                <!-- Discount Badge -->
+                ${price && discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ''}
+                
+                <!-- Wishlist Button -->
+                <button class="wishlist-btn ${inWishlist ? 'active' : ''}" onclick="event.preventDefault();event.stopPropagation();toggleWishlist('${app.key}', 'web', this)">
+                    <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
+                </button>
+                
+                <div class="product-content">
+                    <!-- Product Name -->
+                    <h3 class="product-name">${app.name}</h3>
+                    
+                    <!-- Description -->
                     <p class="product-desc">${app.desc}</p>
-                    <div class="product-tags">
-                        ${app.tags.slice(0, 3).map(t => `<span class="tag">${t}</span>`).join('')}
+                    
+                    <!-- Rating -->
+                    <div class="product-rating">
+                        <div class="stars">${renderStars(app.rating)}</div>
+                        <span class="rating-value">${app.rating}</span>
+                        <span class="rating-count">(${app.reviews})</span>
                     </div>
+                    
+                    <!-- Meta -->
                     <div class="product-meta">
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <span>${app.rating}</span>
-                            <span class="reviews-count">(${app.reviews} تقييم)</span>
-                        </div>
-                        <div class="product-sales">
-                            <i class="fas fa-shopping-bag"></i>
-                            <span>${app.sales} مبيعات</span>
-                        </div>
+                        <span class="product-category">
+                            <i class="${app.icon}"></i>
+                            ${app.type}
+                        </span>
+                        <span class="product-sales">
+                            <i class="fas fa-chart-line"></i>
+                            ${app.sales}+ مبيعات
+                        </span>
                     </div>
-                    <div class="product-footer">
-                        <div class="product-price">
-                            ${price 
-                                ? `<span class="price-amount">${Number(price).toLocaleString('ar-EG')}</span><span class="price-currency">ج.م</span>`
-                                : `<span class="price-contact"><i class="fas fa-comments"></i> تواصل للسعر</span>`
-                            }
-                        </div>
-                        <div class="product-actions-row">
-                            <a href="products/${app.key}.html" class="btn-view-details">
-                                <i class="fas fa-eye"></i>
-                                <span>التفاصيل</span>
-                            </a>
-                            <button class="btn-add-cart ${inCart ? 'in-cart' : ''}" onclick="addToCart('${app.key}', 'web')" ${inCart ? 'disabled' : ''}>
-                                <i class="fas ${inCart ? 'fa-check' : 'fa-cart-plus'}"></i>
-                            </button>
-                        </div>
+                    
+                    <!-- Price -->
+                    <div class="product-price">
+                        ${price 
+                            ? `<span class="current-price">${Number(price).toLocaleString('ar-EG')}</span>
+                               <span class="price-currency">ج.م</span>
+                               ${originalPrice ? `<span class="old-price">${Number(originalPrice).toLocaleString('ar-EG')}</span>` : ''}`
+                            : `<span class="current-price" style="font-size:1rem;">تواصل للسعر</span>`
+                        }
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="product-actions">
+                        <button class="btn-cart ${inCart ? 'in-cart' : ''}" onclick="addToCart('${app.key}', 'web')" ${inCart ? 'disabled' : ''}>
+                            <i class="fas ${inCart ? 'fa-check' : 'fa-shopping-cart'}"></i>
+                            ${inCart ? 'في السلة' : 'للسلة'}
+                        </button>
+                        <a href="products/${app.key}.html" class="btn-buy">
+                            <i class="fas fa-eye"></i>
+                            اشتري
+                        </a>
                     </div>
                 </div>
             </div>
@@ -569,67 +605,112 @@ function renderMobileApps(filter = 'all') {
         return app.category === filter;
     });
 
+    // Badge types based on downloads/ratings
+    const getBadge = (app) => {
+        const downloads = parseInt(app.downloads) || 0;
+        if (downloads >= 50) return { text: 'الأكثر تحميلاً', class: 'badge-trending', icon: 'fas fa-fire' };
+        if (app.rating >= 4.8) return { text: 'مميز', class: 'badge-featured', icon: 'fas fa-award' };
+        if (app.category === 'health') return { text: 'صحي', class: 'badge-special', icon: 'fas fa-heart' };
+        return { text: 'جديد', class: 'badge-new', icon: 'fas fa-bolt' };
+    };
+
+    // Generate stars HTML
+    const renderStars = (rating) => {
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+            if (i <= Math.floor(rating)) {
+                stars += '<i class="fas fa-star"></i>';
+            } else if (i - 0.5 <= rating) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            } else {
+                stars += '<i class="far fa-star empty"></i>';
+            }
+        }
+        return stars;
+    };
+
     grid.innerHTML = apps.map((app, i) => {
         const price = prices[app.key];
         const imgs = portfolio[app.key] || [];
         const inWishlist = Wishlist.isInWishlist(app.key, 'mobile');
         const inCart = Cart.items.some(item => item.key === app.key && item.type === 'mobile');
+        const badge = getBadge(app);
+        
+        // Generate fake original price (40% higher)
+        const originalPrice = price ? Math.round(price * 1.4) : null;
+        const discount = price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
         return `
-            <div class="mobile-app-card" data-aos="fade-up" data-aos-delay="${i * 60}">
-                <a href="products/${app.key}.html" class="mobile-app-header" style="text-decoration:none;">
-                    ${imgs.length > 0 
-                        ? `<div class="app-image-large" style="background:${app.color}">
-                             <img src="${imgs[0]}" alt="${app.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                             <i class="${app.icon}" style="display:none;font-size:2.5rem;color:#fff;"></i>
-                           </div>`
-                        : `<div class="app-icon-large" style="background:${app.color}">
-                             <i class="${app.icon}"></i>
-                           </div>`
-                    }
-                    <button class="wishlist-btn-float ${inWishlist ? 'active' : ''}" onclick="event.preventDefault();event.stopPropagation();toggleWishlist('${app.key}', 'mobile', this)">
-                        <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
-                    </button>
-                </a>
-                <div class="mobile-app-body">
-                    <a href="products/${app.key}.html" style="text-decoration:none;color:inherit;">
-                        <h3 class="mobile-app-name">${app.name}</h3>
-                    </a>
-                    <span class="mobile-app-name-en">${app.nameEn}</span>
-                    <p class="mobile-app-desc">${app.desc}</p>
-                    <div class="mobile-app-meta">
-                        <div class="rating-badge">
-                            <i class="fas fa-star"></i>
-                            <span>${app.rating}</span>
-                        </div>
-                        <div class="downloads-badge">
-                            <i class="fas fa-download"></i>
-                            <span>${app.downloads}</span>
-                        </div>
-                    </div>
-                    <div class="mobile-app-platforms">
-                        ${app.platforms.includes('android') ? `<span class="platform-badge android"><i class="fab fa-android"></i> Android</span>` : ''}
-                        ${app.platforms.includes('ios') ? `<span class="platform-badge ios"><i class="fab fa-apple"></i> iOS</span>` : ''}
-                    </div>
-                    <div class="mobile-app-features">
-                        ${app.features.slice(0, 3).map(f => `<span class="feature-tag"><i class="fas fa-check"></i> ${f}</span>`).join('')}
-                    </div>
-                </div>
-                <div class="mobile-app-footer">
-                    <div class="mobile-app-price">
-                        ${price 
-                            ? `<span class="price-value">${Number(price).toLocaleString('ar-EG')}</span><span class="price-unit">ج.م</span>`
-                            : `<span class="contact-price"><i class="fas fa-phone-alt"></i> تواصل للسعر</span>`
+            <div class="product-card" data-aos="fade-up" data-aos-delay="${i * 80}">
+                <a href="products/${app.key}.html" class="product-image-link">
+                    <div class="product-image">
+                        ${imgs.length > 0 
+                            ? `<img src="${imgs[0]}" alt="${app.name}" onerror="this.parentElement.innerHTML='<div class=product-icon-placeholder style=background:${app.color}><i class=${app.icon}></i></div>'">`
+                            : `<div class="product-icon-placeholder" style="background:${app.color};display:flex;align-items:center;justify-content:center;height:100%;"><i class="${app.icon}" style="font-size:4rem;color:#fff;"></i></div>`
                         }
                     </div>
-                    <div class="mobile-app-actions">
-                        <a href="products/${app.key}.html" class="btn-mobile-details">
-                            <i class="fas fa-info-circle"></i>
-                            التفاصيل
-                        </a>
-                        <button class="btn-mobile-cart ${inCart ? 'in-cart' : ''}" onclick="addToCart('${app.key}', 'mobile')" ${inCart ? 'disabled' : ''}>
-                            <i class="fas ${inCart ? 'fa-check' : 'fa-cart-plus'}"></i>
+                </a>
+                
+                <!-- Badge -->
+                <span class="product-badge ${badge.class}">
+                    <i class="${badge.icon}"></i>
+                    ${badge.text}
+                </span>
+                
+                <!-- Discount Badge -->
+                ${price && discount > 0 ? `<span class="discount-badge">-${discount}%</span>` : ''}
+                
+                <!-- Wishlist Button -->
+                <button class="wishlist-btn ${inWishlist ? 'active' : ''}" onclick="event.preventDefault();event.stopPropagation();toggleWishlist('${app.key}', 'mobile', this)">
+                    <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
+                </button>
+                
+                <div class="product-content">
+                    <!-- Product Name -->
+                    <h3 class="product-name">${app.name}</h3>
+                    
+                    <!-- Description -->
+                    <p class="product-desc">${app.desc}</p>
+                    
+                    <!-- Rating -->
+                    <div class="product-rating">
+                        <div class="stars">${renderStars(app.rating)}</div>
+                        <span class="rating-value">${app.rating}</span>
+                        <span class="rating-count">(${app.reviews})</span>
+                    </div>
+                    
+                    <!-- Meta -->
+                    <div class="product-meta">
+                        <span class="product-category">
+                            <i class="${app.icon}"></i>
+                            ${app.type}
+                        </span>
+                        <span class="product-sales">
+                            <i class="fas fa-download"></i>
+                            ${app.downloads}
+                        </span>
+                    </div>
+                    
+                    <!-- Price -->
+                    <div class="product-price">
+                        ${price 
+                            ? `<span class="current-price">${Number(price).toLocaleString('ar-EG')}</span>
+                               <span class="price-currency">ج.م</span>
+                               ${originalPrice ? `<span class="old-price">${Number(originalPrice).toLocaleString('ar-EG')}</span>` : ''}`
+                            : `<span class="current-price" style="font-size:1rem;">تواصل للسعر</span>`
+                        }
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="product-actions">
+                        <button class="btn-cart ${inCart ? 'in-cart' : ''}" onclick="addToCart('${app.key}', 'mobile')" ${inCart ? 'disabled' : ''}>
+                            <i class="fas ${inCart ? 'fa-check' : 'fa-shopping-cart'}"></i>
+                            ${inCart ? 'في السلة' : 'للسلة'}
                         </button>
+                        <a href="products/${app.key}.html" class="btn-buy">
+                            <i class="fas fa-eye"></i>
+                            اشتري
+                        </a>
                     </div>
                 </div>
             </div>
