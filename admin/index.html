@@ -337,6 +337,41 @@ button{cursor:pointer;}
 .gal-preview-thumb:hover .rm{display:flex;}
 .gal-url-preview{margin-top:12px;border-radius:10px;overflow:hidden;height:140px;display:none;border:1px solid var(--border);}
 .gal-url-preview img{width:100%;height:100%;object-fit:cover;}
+/* LECTURES */
+.lec-course-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.lec-tab{padding:10px 18px;border-radius:12px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-size:.82rem;font-weight:700;cursor:pointer;transition:.2s;}
+.lec-tab:hover{color:var(--text);}
+.lec-tab.active{background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(59,130,246,.15));color:#c4b5fd;border-color:rgba(139,92,246,.35);}
+.lec-tab.active i{color:#a78bfa;}
+.lec-panel{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;}
+.lec-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;}
+.lec-panel-head h3{font-size:1rem;font-weight:900;color:#fff;}
+.lec-list{display:flex;flex-direction:column;gap:10px;}
+.lec-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:.2s;}
+.lec-card:hover{border-color:rgba(139,92,246,.3);}
+.lec-card-num{width:38px;height:38px;min-width:38px;background:linear-gradient(135deg,#8b5cf6,#3b82f6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:800;color:#fff;}
+.lec-card-info{flex:1;}
+.lec-card-title{font-size:.92rem;font-weight:800;color:#fff;margin-bottom:3px;}
+.lec-card-meta{font-size:.75rem;color:var(--muted);display:flex;gap:12px;}
+.lec-card-meta i{color:#8b5cf6;}
+.lec-card-btns{display:flex;gap:6px;}
+.lec-btn{padding:7px 14px;border-radius:9px;border:1px solid;font-size:.78rem;font-weight:700;transition:.2s;}
+.lec-btn-edit{border-color:rgba(139,92,246,.3);background:rgba(139,92,246,.1);color:#c4b5fd;}
+.lec-btn-edit:hover{background:rgba(139,92,246,.2);}
+.lec-btn-view{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.1);color:#93c5fd;}
+.lec-btn-view:hover{background:rgba(59,130,246,.2);}
+.lec-btn-del{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.08);color:#f87171;}
+.lec-btn-del:hover{background:rgba(239,68,68,.18);}
+.lec-empty{text-align:center;padding:40px;color:var(--muted);font-size:.88rem;}
+/* slide editor row */
+.slide-row{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;}
+.slide-row-head{display:flex;align-items:center;gap:8px;justify-content:space-between;}
+.slide-row-num{font-size:.75rem;font-weight:800;color:#8b5cf6;background:rgba(139,92,246,.15);border-radius:20px;padding:3px 10px;}
+.slide-row-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.slide-row-fields .full{grid-column:1/-1;}
+.slide-field label{display:block;font-size:.75rem;font-weight:700;color:var(--muted);margin-bottom:5px;}
+.slide-field input,.slide-field select,.slide-field textarea{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:.82rem;outline:none;}
+.slide-field textarea{resize:vertical;}
 </style>
 </head>
 <body>
@@ -386,6 +421,10 @@ button{cursor:pointer;}
       <div class="adm-nav-item" onclick="showSection('joinrequests')"><i class="fas fa-user-clock"></i> طلبات الانضمام<span class="adm-nav-badge" id="pendingCount" style="background:#f59e0b">0</span></div>
       <div class="adm-nav-item" onclick="showSection('employees')"><i class="fas fa-user-tie"></i> الموظفون<span class="adm-nav-badge" id="empCount">0</span></div>
       <div class="adm-nav-item" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> الطلاب<span class="adm-nav-badge" id="stuCount">0</span></div>
+    </div>
+    <div class="adm-nav-section">
+      <div class="adm-nav-label">نظام الكورسات</div>
+      <div class="adm-nav-item" onclick="showSection('lectures');initLecturesSection()"><i class="fas fa-chalkboard-teacher"></i> إدارة المحاضرات<span class="adm-nav-badge" id="lecsCount" style="background:#8b5cf6">0</span></div>
     </div>
     <div class="adm-nav-section">
       <div class="adm-nav-label">أخرى</div>
@@ -478,6 +517,49 @@ button{cursor:pointer;}
         <button class="btn-add-user" onclick="openAddUser('student')"><i class="fas fa-plus"></i> إضافة جديد</button>
       </div>
       <div class="users-grid" id="studentsGrid"></div>
+    </div>
+
+    <!-- LECTURES -->
+    <div class="adm-section" id="sec-lectures">
+      <div class="adm-section-title">إدارة <span>المحاضرات</span></div>
+      <div class="adm-breadcrumb">أضف محاضرات لكل كورس، وأضف الشرائح مع الصور والشرح – ستظهر للطلاب فور نشرها</div>
+
+      <!-- course tabs -->
+      <div class="lec-course-tabs" id="lecCourseTabs"></div>
+
+      <!-- lectures list for selected course -->
+      <div class="lec-panel" id="lecPanel">
+        <div class="lec-panel-head">
+          <h3 id="lecPanelTitle">اختر كورساً</h3>
+          <button class="btn-add-user" onclick="openAddLecture()" id="btnAddLec" style="display:none"><i class="fas fa-plus"></i> محاضرة جديدة</button>
+        </div>
+        <div class="lec-list" id="lecList"></div>
+      </div>
+    </div>
+
+    <!-- LECTURE EDIT MODAL -->
+    <div class="modal-overlay" id="lecModal">
+      <div class="modal-box" style="max-width:700px;max-height:90vh;overflow-y:auto;">
+        <div class="modal-head">
+          <h3 id="lecModalTitle">محاضرة جديدة</h3>
+          <button class="modal-close" onclick="closeLecModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div style="padding:24px;display:flex;flex-direction:column;gap:18px;">
+          <div class="form-field"><label>عنوان المحاضرة *</label><input type="text" id="lecTitleInput" placeholder="مثال: المحاضرة الأولى - مقدمة عن الكورس"></div>
+          <div class="form-field"><label>وصف موجز</label><textarea id="lecDescInput" rows="2" placeholder="وصف قصير لمحتوى المحاضرة..." style="width:100%;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);resize:vertical;"></textarea></div>
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <label style="font-size:.88rem;font-weight:700;color:var(--muted);">الشرائح</label>
+              <button class="btn-add-user" style="padding:8px 14px;font-size:.8rem;" onclick="addSlideRow()"><i class="fas fa-plus"></i> شريحة</button>
+            </div>
+            <div id="slidesEditor" style="display:flex;flex-direction:column;gap:10px;"></div>
+          </div>
+          <div style="display:flex;gap:10px;justify-content:flex-end;">
+            <button class="btn-modal-cancel" onclick="closeLecModal()">إلغاء</button>
+            <button class="btn-modal-save" onclick="saveLecture()"><i class="fas fa-save"></i> حفظ المحاضرة</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- SETTINGS -->
@@ -710,6 +792,10 @@ function updateBadges(){
   if(rfP) rfP.textContent=`(${pending.length})`;
   if(rfA) rfA.textContent=`(${reqs.filter(r=>r.status==='approved').length})`;
   if(rfR) rfR.textContent=`(${reqs.filter(r=>r.status==='rejected').length})`;
+  // lectures badge
+  const allLecs = JSON.parse(localStorage.getItem('am_lectures')||'{}');
+  let totalLecs = 0; Object.values(allLecs).forEach(v=>{ totalLecs += v.length; });
+  const lecsEl = document.getElementById('lecsCount'); if(lecsEl) lecsEl.textContent = totalLecs;
 }
 
 function showSection(name){
@@ -1407,6 +1493,208 @@ function toast(msg,type='success'){
   const el=document.getElementById('toast'); el.textContent=msg; el.className='toast show '+type;
   setTimeout(()=>el.classList.remove('show'),3000);
 }
+
+// ══════════════════════════════════════
+//  LECTURES MANAGEMENT
+// ══════════════════════════════════════
+const LECTURES_KEY = 'am_lectures';
+const LEC_COURSES = [
+  {key:'free',        name:'الكورس المجاني',          icon:'fa-gift'},
+  {key:'facebook-ads',name:'إعلانات فيسبوك',           icon:'fa-facebook'},
+  {key:'instagram',   name:'إنستجرام',                 icon:'fa-instagram'},
+  {key:'tiktok',      name:'تيك توك',                  icon:'fa-music'},
+  {key:'snapchat',    name:'سناب شات',                 icon:'fa-snapchat'},
+  {key:'twitter',     name:'تويتر / X',                icon:'fa-x-twitter'},
+  {key:'ai-marketing',name:'الذكاء الاصطناعي',          icon:'fa-robot'},
+  {key:'integrated-strategy',name:'الاستراتيجية المتكاملة',icon:'fa-layer-group'},
+  {key:'programming', name:'البرمجة',                   icon:'fa-code'},
+];
+
+let activeLecCourse = null;
+let editingLecId = null;
+let slideRows = [];
+
+function getLectures(){ return JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}'); }
+function saveLectures(data){ localStorage.setItem(LECTURES_KEY, JSON.stringify(data)); }
+
+function initLecturesSection(){
+  const tabs = document.getElementById('lecCourseTabs');
+  const all = getLectures();
+  let total = 0;
+  Object.values(all).forEach(v=>{ total += v.length; });
+  document.getElementById('lecsCount').textContent = total;
+
+  tabs.innerHTML = LEC_COURSES.map(c=>`
+    <button class="lec-tab${activeLecCourse===c.key?' active':''}" onclick="selectLecCourse('${c.key}')">
+      <i class="fab ${c.icon}" style="margin-left:6px;"></i>${c.name}
+      <span style="margin-right:6px;font-size:.7rem;color:inherit;opacity:.7;">${(all[c.key]||[]).length}</span>
+    </button>
+  `).join('');
+
+  if(activeLecCourse) renderLecList(activeLecCourse);
+}
+
+function selectLecCourse(key){
+  activeLecCourse = key;
+  initLecturesSection();
+  renderLecList(key);
+}
+
+function renderLecList(key){
+  const meta = LEC_COURSES.find(c=>c.key===key);
+  document.getElementById('lecPanelTitle').textContent = (meta?meta.name:key) + ' – المحاضرات';
+  document.getElementById('btnAddLec').style.display = 'flex';
+  const all = getLectures();
+  const lecs = all[key]||[];
+  const list = document.getElementById('lecList');
+  if(!lecs.length){
+    list.innerHTML = `<div class="lec-empty"><i class="fas fa-inbox" style="font-size:2rem;margin-bottom:10px;display:block;opacity:.3;"></i>لا توجد محاضرات لهذا الكورس بعد</div>`;
+    return;
+  }
+  list.innerHTML = lecs.map((l,i)=>`
+    <div class="lec-card">
+      <div class="lec-card-num">${i+1}</div>
+      <div class="lec-card-info">
+        <div class="lec-card-title">${l.title||'محاضرة '+(i+1)}</div>
+        <div class="lec-card-meta">
+          <span><i class="fas fa-images"></i> ${(l.slides||[]).length} شريحة</span>
+          ${l.description?`<span><i class="fas fa-align-left"></i> ${l.description.substring(0,40)}...</span>`:''}
+        </div>
+      </div>
+      <div class="lec-card-btns">
+        <button class="lec-btn lec-btn-view" onclick="window.open('../lecture-viewer.html?course=${key}&id=${l.id}','_blank')"><i class="fas fa-eye"></i> معاينة</button>
+        <button class="lec-btn lec-btn-edit" onclick="openEditLecture('${l.id}')"><i class="fas fa-edit"></i> تعديل</button>
+        <button class="lec-btn lec-btn-del" onclick="deleteLecture('${l.id}')"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openAddLecture(){
+  if(!activeLecCourse){toast('اختر كورساً أولاً','error');return;}
+  editingLecId = null;
+  document.getElementById('lecModalTitle').textContent = 'محاضرة جديدة';
+  document.getElementById('lecTitleInput').value = '';
+  document.getElementById('lecDescInput').value = '';
+  slideRows = [];
+  renderSlideEditor();
+  addSlideRow();
+  document.getElementById('lecModal').classList.add('open');
+}
+
+function openEditLecture(id){
+  if(!activeLecCourse)return;
+  const all = getLectures();
+  const lec = (all[activeLecCourse]||[]).find(l=>l.id===id);
+  if(!lec)return;
+  editingLecId = id;
+  document.getElementById('lecModalTitle').textContent = 'تعديل: '+lec.title;
+  document.getElementById('lecTitleInput').value = lec.title||'';
+  document.getElementById('lecDescInput').value = lec.description||'';
+  slideRows = (lec.slides||[]).map(s=>({...s}));
+  renderSlideEditor();
+  document.getElementById('lecModal').classList.add('open');
+}
+
+function closeLecModal(){
+  document.getElementById('lecModal').classList.remove('open');
+  slideRows = [];
+  editingLecId = null;
+}
+
+function addSlideRow(){
+  slideRows.push({id:'s'+Date.now()+Math.random().toString(36).slice(2),type:'image',src:'',title:'',notes:''});
+  renderSlideEditor();
+}
+
+function removeSlideRow(idx){
+  slideRows.splice(idx,1);
+  renderSlideEditor();
+}
+
+function renderSlideEditor(){
+  const ed = document.getElementById('slidesEditor');
+  if(!slideRows.length){
+    ed.innerHTML = `<div style="text-align:center;padding:20px;color:var(--muted);font-size:.85rem;">لا توجد شرائح – اضغط "شريحة" لإضافة أولى</div>`;
+    return;
+  }
+  ed.innerHTML = slideRows.map((s,i)=>`
+    <div class="slide-row" id="sr-${i}">
+      <div class="slide-row-head">
+        <span class="slide-row-num">شريحة ${i+1}</span>
+        <button onclick="removeSlideRow(${i})" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;border-radius:8px;padding:5px 10px;font-size:.75rem;cursor:pointer;"><i class="fas fa-trash"></i></button>
+      </div>
+      <div class="slide-row-fields">
+        <div class="slide-field full">
+          <label>عنوان الشريحة</label>
+          <input type="text" value="${escHtml(s.title||'')}" oninput="slideRows[${i}].title=this.value" placeholder="عنوان يظهر أسفل الصورة">
+        </div>
+        <div class="slide-field">
+          <label>نوع الوسائط</label>
+          <select onchange="slideRows[${i}].type=this.value;renderSlideEditor()">
+            <option value="image"${s.type==='image'?' selected':''}>صورة</option>
+            <option value="video"${s.type==='video'?' selected':''}>فيديو</option>
+            <option value="pdf"${s.type==='pdf'?' selected':''}>PDF</option>
+          </select>
+        </div>
+        <div class="slide-field">
+          <label>${s.type==='image'?'رابط الصورة':s.type==='video'?'رابط الفيديو':'رابط PDF'}</label>
+          <input type="text" value="${escHtml(s.src||'')}" oninput="slideRows[${i}].src=this.value" placeholder="${s.type==='image'?'https://...':s.type==='video'?'يوتيوب أو رابط فيديو':'رابط PDF'}">
+        </div>
+        <div class="slide-field full">
+          <label>الشرح / الملاحظات</label>
+          <textarea rows="3" oninput="slideRows[${i}].notes=this.value" placeholder="اكتب شرح الشريحة هنا... سيظهر للطلاب على اليمين في العارض" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.82rem;resize:vertical;">${escHtml(s.notes||'')}</textarea>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function saveLecture(){
+  const title = document.getElementById('lecTitleInput').value.trim();
+  if(!title){toast('أدخل عنوان المحاضرة','error');return;}
+  if(!activeLecCourse){toast('اختر كورساً','error');return;}
+  const all = getLectures();
+  if(!all[activeLecCourse]) all[activeLecCourse]=[];
+
+  const lecData = {
+    id: editingLecId || ('lec'+Date.now()),
+    title,
+    description: document.getElementById('lecDescInput').value.trim(),
+    slides: slideRows.map(s=>({...s})),
+    createdAt: editingLecId ? undefined : Date.now(),
+    updatedAt: Date.now(),
+  };
+  if(editingLecId){
+    const idx = all[activeLecCourse].findIndex(l=>l.id===editingLecId);
+    if(idx>=0){ lecData.createdAt = all[activeLecCourse][idx].createdAt; all[activeLecCourse][idx]=lecData; }
+    else all[activeLecCourse].push(lecData);
+  } else {
+    all[activeLecCourse].push(lecData);
+  }
+  saveLectures(all);
+  closeLecModal();
+  initLecturesSection();
+  renderLecList(activeLecCourse);
+  toast('تم حفظ المحاضرة بنجاح ✓','success');
+}
+
+function deleteLecture(id){
+  if(!activeLecCourse)return;
+  if(!confirm('هل تريد حذف هذه المحاضرة نهائياً؟'))return;
+  const all = getLectures();
+  all[activeLecCourse] = (all[activeLecCourse]||[]).filter(l=>l.id!==id);
+  saveLectures(all);
+  initLecturesSection();
+  renderLecList(activeLecCourse);
+  toast('تم حذف المحاضرة','success');
+}
+
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Close lecture modal on overlay click
+document.getElementById('lecModal').addEventListener('click',function(e){if(e.target===this)closeLecModal();});
+
 </script>
 </body>
 </html>

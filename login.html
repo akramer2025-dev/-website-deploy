@@ -446,9 +446,10 @@
                             successMsg.classList.add('show');
                             sessionStorage.setItem('akram_logged_in', 'true');
                             sessionStorage.setItem('akram_user_id', lsUser.id);
+                            sessionStorage.setItem('akram_student_id', lsUser.id);
                             btn.classList.remove('loading');
                             btn.disabled = false;
-                            setTimeout(() => { window.location.href = 'profile.html?id=' + lsUser.id; }, 1200);
+                            setTimeout(() => { window.location.href = 'my-courses.html'; }, 1200);
                             return;
                         }
                     } catch(err) {}
