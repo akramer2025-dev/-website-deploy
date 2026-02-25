@@ -91,7 +91,7 @@ button{cursor:pointer;}
 /* COURSES GRID */
 .courses-sel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
 @media(max-width:560px){.courses-sel-grid{grid-template-columns:1fr;}}
-.course-sel-card{position:relative;border:2px solid var(--border);border-radius:14px;padding:14px 14px 14px 16px;cursor:pointer;transition:.25s;background:var(--bg2);user-select:none;display:flex;align-items:flex-start;gap:12px;}
+.course-sel-card{position:relative;border:2px solid var(--border);border-radius:14px;padding:14px 14px 14px 16px;cursor:pointer;transition:.25s;background:var(--bg2);user-select:none;display:flex;align-items:flex-start;gap:12px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 .course-sel-card:hover{border-color:rgba(233,78,119,.4);background:rgba(233,78,119,.04);}
 .course-sel-card.selected{border-color:var(--pink);background:linear-gradient(135deg,rgba(233,78,119,.1),rgba(247,147,30,.06));}
 .course-sel-card input[type=checkbox]{display:none;}
@@ -233,7 +233,7 @@ button{cursor:pointer;}
         </div>
         <div class="field">
           <label>رقم موبايلك <span class="req">*</span></label>
-          <div class="inp-wrap"><i class="fas fa-phone ico"></i><input type="tel" id="f-phone" placeholder="01XXXXXXXXX" autocomplete="tel" inputmode="numeric"></div>
+          <div class="inp-wrap"><i class="fas fa-phone ico"></i><input type="tel" id="f-phone" placeholder="مثال: 01012345678 أو +966501234567" autocomplete="tel" inputmode="tel"></div>
           <div class="field-err" id="e-phone">أدخل رقم مصري صحيح من 11 رقم يبدأ بـ 01</div>
         </div>
       </div>
@@ -529,7 +529,10 @@ function goStep2(){
   const field = document.getElementById('f-field').value;
   let ok = true;
   if(!name){ showErr('e-name','f-name','الاسم مطلوب'); ok=false; } else clearErr('e-name','f-name');
-  if(!phone || !/^01[0-9]{9}$/.test(phone.replace(/\s/g,''))){ showErr('e-phone','f-phone','أدخل رقم هاتف مصري صحيح (11 رقم يبدأ بـ 01)'); ok=false; } else clearErr('e-phone','f-phone');
+  // قبول أي رقم دولي: أرقام فقط (مع + أو 00 في البداية)، 7-15 رقم
+  const phoneClean = phone.replace(/[\s\-().]/g,'');
+  const phoneValid = phoneClean.length>=7 && phoneClean.length<=16 && /^(\+|00)?[0-9]{7,15}$/.test(phoneClean);
+  if(!phone || !phoneValid){ showErr('e-phone','f-phone','أدخل رقم واتساب صحيح (مثال: 01012345678 أو +966501234567)'); ok=false; } else clearErr('e-phone','f-phone');
   if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showErr('e-email','f-email','أدخل بريد إلكتروني صحيح'); ok=false; } else clearErr('e-email','f-email');
   if(!pass || pass.length<8){ showErr('e-pass','f-pass','كلمة المرور يجب أن تكون 8 أحرف على الأقل'); ok=false; } else clearErr('e-pass','f-pass');
   if(pass !== pass2){ showErr('e-pass2','f-pass2','كلمتا المرور غير متطابقتين'); ok=false; } else clearErr('e-pass2','f-pass2');
