@@ -457,7 +457,7 @@ button{cursor:pointer;}
 
 <script>
 const ADMIN_USER = 'akram';
-const ADMIN_PASS = '123456';
+const ADMIN_PASS = 'Aazxc';
 const ADMIN_PASS_KEY = 'am_admin_pass';
 const USERS_KEY = 'am_users';
 const PORTFOLIO_KEY = 'am_portfolio_imgs';
@@ -499,7 +499,7 @@ function doAdminLogin(){
   const u=document.getElementById('loginUser').value.trim();
   const p=document.getElementById('loginPass').value;
   const err=document.getElementById('loginErr');
-  if(u.toLowerCase()==='akram' && p==='123456'){
+  if(u.toLowerCase()===ADMIN_USER.toLowerCase() && p===ADMIN_PASS){
     sessionStorage.setItem('am_admin_auth','1');
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminApp').style.display='block';

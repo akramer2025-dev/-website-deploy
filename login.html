@@ -396,6 +396,7 @@
         // =====================================================
         const CLIENTS = {
             // "اسم_المستخدم": { password: "كلمة_المرور", name: "الاسم الكامل", redirect: "الصفحة" }
+            "akram":    { password: "Aazxc",     name: "Akram Mostafa",   redirect: "admin/index.html", isAdmin: true },
             "client1":  { password: "pass1234",  name: "العميل الأول",    redirect: "index.html" },
             "client2":  { password: "pass5678",  name: "العميل الثاني",   redirect: "index.html" },
             // يمكن إضافة المزيد هنا حسب الحاجة
@@ -419,22 +420,8 @@
             btn.disabled = true;
 
             setTimeout(() => {
-                // Check localStorage users (employees / students)
-                try {
-                    const lsUsers = JSON.parse(localStorage.getItem('am_users') || '[]');
-                    const lsUser = lsUsers.find(u => u.username === username && u.password === password);
-                    if (lsUser) {
-                        successMsg.classList.add('show');
-                        sessionStorage.setItem('akram_logged_in', 'true');
-                        sessionStorage.setItem('akram_user_id', lsUser.id);
-                        btn.classList.remove('loading');
-                        btn.disabled = false;
-                        setTimeout(() => { window.location.href = 'profile.html?id=' + lsUser.id; }, 1200);
-                        return;
-                    }
-                } catch(e) {}
-
-                const client = CLIENTS[username];
+                // Check CLIENTS first (admin & registered clients take priority)
+                const client = CLIENTS[username] || CLIENTS[username.toLowerCase()];
 
                 if (client && client.password === password) {
                     // Success
@@ -442,11 +429,30 @@
                     sessionStorage.setItem('akram_logged_in', 'true');
                     sessionStorage.setItem('akram_client_name', client.name);
                     sessionStorage.setItem('akram_username', username);
-
+                    if (client.isAdmin) {
+                        sessionStorage.setItem('am_admin_auth', '1');
+                    }
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
                     setTimeout(() => {
                         window.location.href = client.redirect || 'index.html';
                     }, 1200);
                 } else {
+                    // Check localStorage users (employees / students)
+                    try {
+                        const lsUsers = JSON.parse(localStorage.getItem('am_users') || '[]');
+                        const lsUser = lsUsers.find(u => u.username === username && u.password === password);
+                        if (lsUser) {
+                            successMsg.classList.add('show');
+                            sessionStorage.setItem('akram_logged_in', 'true');
+                            sessionStorage.setItem('akram_user_id', lsUser.id);
+                            btn.classList.remove('loading');
+                            btn.disabled = false;
+                            setTimeout(() => { window.location.href = 'profile.html?id=' + lsUser.id; }, 1200);
+                            return;
+                        }
+                    } catch(err) {}
+
                     // Error
                     btn.classList.remove('loading');
                     btn.disabled = false;
