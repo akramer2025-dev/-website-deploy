@@ -413,6 +413,9 @@ button{cursor:pointer;}
 .slide-field input,.slide-field select,.slide-field textarea{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:.82rem;outline:none;}
 .slide-field textarea{resize:vertical;}
 </style>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -905,6 +908,69 @@ function getAppPrices(){ try{ return JSON.parse(localStorage.getItem(APP_PRICES_
 function saveAppPrices(d){ localStorage.setItem(APP_PRICES_KEY, JSON.stringify(d)); }
 function genId(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,6); }
 
+/* ══════════════════════════════════════════════
+   FIREBASE FIRESTORE SYNC
+══════════════════════════════════════════════ */
+const _fbAdmin = firebase.initializeApp({
+  apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+  authDomain: "akramplatform-2c6be.firebaseapp.com",
+  projectId: "akramplatform-2c6be",
+  storageBucket: "akramplatform-2c6be.firebasestorage.app",
+  messagingSenderId: "132959399686",
+  appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+}, 'admin');
+const _fdb = firebase.firestore(_fbAdmin);
+
+// In-memory cache populated by Firestore real-time listener
+let _fsReqs = [];
+let _fsUnsubscribe = null;
+
+// Override getJoinRequests to use cloud cache
+function getJoinRequests(){ return _fsReqs.slice(); }
+
+// Override saveJoinRequests to sync changes back to Firestore
+function saveJoinRequests(newArr){
+  const oldIds = new Set(_fsReqs.map(r=>r.id));
+  const newIds = new Set(newArr.map(r=>r.id));
+
+  // Update/add changed docs
+  newArr.forEach(r=>{
+    const old = _fsReqs.find(x=>x.id===r.id);
+    if(!old || JSON.stringify(old)!==JSON.stringify(r)){
+      _fdb.collection('join_requests').doc(r.id).set(r).catch(e=>console.warn('FS set err',e));
+    }
+  });
+  // Delete removed docs
+  _fsReqs.forEach(r=>{
+    if(!newIds.has(r.id)){
+      _fdb.collection('join_requests').doc(r.id).delete().catch(e=>console.warn('FS del err',e));
+    }
+  });
+  _fsReqs = newArr.slice();
+}
+
+function initFirestore(){
+  if(_fsUnsubscribe) _fsUnsubscribe();
+  // Show loading indicator on join requests tab
+  const jrEl = document.getElementById('joinRequestsList');
+  if(jrEl) jrEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem"></i><br><br>جاري تحميل الطلبات...</div>';
+
+  _fsUnsubscribe = _fdb.collection('join_requests')
+    .orderBy('createdAt','desc')
+    .onSnapshot(snapshot=>{
+      _fsReqs = [];
+      snapshot.forEach(doc=>{ _fsReqs.push(doc.data()); });
+      renderJoinRequests(_currentReqFilter||'all');
+      updateBadges();
+    }, err=>{
+      console.warn('Firestore snapshot error:', err);
+      // Fallback: load from localStorage
+      try{ _fsReqs = JSON.parse(localStorage.getItem(JOIN_KEY)||'[]'); }catch(e){ _fsReqs=[]; }
+      renderJoinRequests(_currentReqFilter||'all');
+      updateBadges();
+    });
+}
+
 function genStudentId(){
   const users = getUsers().filter(u=>u.type==='student');
   let max = 0;
@@ -1032,7 +1098,7 @@ function renderRecordedLectures(){
     </div>`).join('');
 }
 
-function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); renderRecordedLectures(); }
+function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); renderRecordedLectures(); initFirestore(); }
 
 const JOIN_KEY = 'am_join_requests';
 function getJoinRequests(){ try{ return JSON.parse(localStorage.getItem(JOIN_KEY)||'[]'); }catch(e){ return []; } }

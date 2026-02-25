@@ -9,6 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <style>
 :root{
   --bg:#050d1b;--bg2:#09162b;--card:#0d1e38;--card2:#112446;
@@ -444,6 +447,18 @@ const adminCoursePrices = JSON.parse(localStorage.getItem('am_course_prices')||'
 COURSES.forEach(c=>{ if(!c.free && adminCoursePrices[c.key]) c.price = adminCoursePrices[c.key]; });
 
 const JOIN_KEY = 'am_join_requests';
+
+// ── Firebase init ──────────────────────────────────────────────
+const _fbApp = firebase.initializeApp({
+  apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+  authDomain: "akramplatform-2c6be.firebaseapp.com",
+  projectId: "akramplatform-2c6be",
+  storageBucket: "akramplatform-2c6be.firebasestorage.app",
+  messagingSenderId: "132959399686",
+  appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+});
+const _db = firebase.firestore(_fbApp);
+
 let selectedCourses = new Set();
 let paymentImages = {};
 let currentStep = 1;
@@ -638,12 +653,16 @@ function buildSummary(){
 // ─── SUBMIT ─────────────────────────────────────────────────────
 function genId(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,5); }
 
-function submitRequest(){
+async function submitRequest(){
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
 
   const id = genId().toUpperCase();
+  // strip base64 payment images before storing in Firestore (too large)
+  const paymentsClean = {};
+  Object.keys(paymentImages).forEach(k=>{ paymentsClean[k] = paymentImages[k].substring(0,50)==='data:' ? '[image]' : paymentImages[k]; });
+
   const req = {
     id,
     name: document.getElementById('f-name').value.trim(),
@@ -654,22 +673,38 @@ function submitRequest(){
     field: document.getElementById('f-field').value,
     notes: document.getElementById('f-notes').value.trim(),
     courses: [...selectedCourses],
-    payments: {...paymentImages},
+    payments: paymentsClean,
     status: 'pending',
     createdAt: Date.now(),
     reviewedAt: null,
     adminNote: ''
   };
 
-  const requests = JSON.parse(localStorage.getItem(JOIN_KEY)||'[]');
-  requests.push(req);
-  localStorage.setItem(JOIN_KEY, JSON.stringify(requests));
+  // 1️⃣ Save to Firestore (cloud — visible to admin from any device)
+  let firebaseSaved = false;
+  try {
+    await _db.collection('join_requests').doc(id).set(req);
+    firebaseSaved = true;
+  } catch(err) {
+    console.warn('Firebase save failed:', err);
+  }
 
-  setTimeout(()=>{
-    document.getElementById('mainForm').style.display='none';
-    document.getElementById('successState').style.display='block';
-    document.getElementById('reqIdDisplay').textContent = id;
-  }, 800);
+  // 2️⃣ Keep localStorage as backup
+  try {
+    const requests = JSON.parse(localStorage.getItem(JOIN_KEY)||'[]');
+    requests.push(req);
+    localStorage.setItem(JOIN_KEY, JSON.stringify(requests));
+  } catch(e){}
+
+  if(!firebaseSaved){
+    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> تحقق من الإنترنت وأعد المحاولة';
+    btn.disabled = false;
+    return;
+  }
+
+  document.getElementById('mainForm').style.display='none';
+  document.getElementById('successState').style.display='block';
+  document.getElementById('reqIdDisplay').textContent = id;
 }
 
 // ─── HELPERS ────────────────────────────────────────────────────
