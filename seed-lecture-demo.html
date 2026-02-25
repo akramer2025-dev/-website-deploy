@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحميل بيانات المحاضرة التجريبية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Cairo',sans-serif;background:#050d1b;color:#e2eaf6;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+  .box{background:#0d1e38;border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:48px 40px;max-width:600px;width:95vw;text-align:center;}
+  h1{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:10px;}
+  p{color:#6b82a8;font-size:.9rem;line-height:1.8;margin-bottom:24px;}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:linear-gradient(135deg,#e94e77,#f7931e);border:none;border-radius:14px;color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif;transition:.2s;}
+  .btn:hover{transform:scale(1.04);box-shadow:0 8px 24px rgba(233,78,119,.4);}
+  .success{display:none;margin-top:28px;padding:18px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:14px;color:#4ade80;font-size:.9rem;font-weight:700;}
+  .slide-preview{margin-top:28px;display:none;text-align:right;}
+  .slide-preview h3{font-size:.85rem;font-weight:700;color:#6b82a8;margin-bottom:12px;text-align:center;}
+  .slide-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#09162b;border-radius:10px;margin-bottom:6px;}
+  .slide-item img{width:60px;height:40px;border-radius:7px;object-fit:cover;flex-shrink:0;}
+  .slide-item .st{font-size:.82rem;font-weight:700;color:#e2eaf6;}
+  .slide-item .sn{font-size:.7rem;color:#6b82a8;}
+  .links{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
+  .link-btn{padding:11px 22px;border-radius:11px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#e2eaf6;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:.2s;}
+  .link-btn:hover{background:rgba(255,255,255,.09);}
+</style>
+</head>
+<body>
+<div class="box">
+  <div style="font-size:3rem;margin-bottom:16px;">🎓</div>
+  <h1>تحميل المحاضرة الأولى</h1>
+  <p>
+    سيتم تحميل <strong>المحاضرة الأولى – مقدمة في عالم البرمجة</strong><br>
+    لكورس <strong>البرمجة</strong> مع <strong>6 شرائح</strong> احترافية جاهزة بالصور والشرح
+  </p>
+
+  <button class="btn" onclick="seedData()">
+    <i class="fas fa-download"></i> تحميل المحاضرة الآن
+  </button>
+
+  <div class="success" id="successBox">
+    <i class="fas fa-check-circle" style="font-size:1.3rem;"></i>
+    تم تحميل المحاضرة بنجاح! يمكنك الآن مشاهدتها من لوحة التحكم أو مباشرة
+  </div>
+
+  <div class="slide-preview" id="slidePreview">
+    <h3>الشرائح المحملة</h3>
+    <div id="previewList"></div>
+    <div class="links">
+      <a class="link-btn" id="viewerLink" href="#"><i class="fas fa-play-circle"></i> فتح العارض</a>
+      <a class="link-btn" href="admin/index.html"><i class="fas fa-cog"></i> لوحة التحكم</a>
+      <a class="link-btn" href="my-courses.html"><i class="fas fa-graduation-cap"></i> بوابة الطالب</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const LECTURE_DATA = {
+  id: 'lec_prog_001',
+  title: 'المحاضرة الأولى – مقدمة في عالم البرمجة',
+  description: 'نبدأ رحلتنا في تعلم البرمجة من الصفر، ونتعرف على المفاهيم الأساسية وأدوات المبرمج وخارطة الطريق الكاملة لاحتراف البرمجة',
+  createdAt: Date.now(),
+  updatedAt: Date.now(),
+  slides: [
+    {
+      id: 's001',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1280&q=85',
+      title: 'ما هي البرمجة؟',
+      notes: `البرمجة هي فن التحدث مع الكمبيوتر بلغة يفهمها.
+
+عندما تكتب كوداً، أنت في الحقيقة تعطي الكمبيوتر تعليمات محددة ومرتبة ليقوم بتنفيذ مهمة معينة.
+
+فكّر في البرمجة كوصفة طبخ:
+- المكونات = البيانات التي تُدخلها
+- خطوات التحضير = الكود الذي تكتبه
+- الطبق النهائي = المخرجات والنتيجة
+
+المبرمج ليس ساحراً، بل هو شخص يعرف كيف يحل المشاكل خطوة بخطوة ويترجمها إلى لغة الكمبيوتر.
+
+اليوم ستبدأ رحلتك في هذا العالم الرائع من الصفر وحتى الاحتراف.`
+    },
+    {
+      id: 's002',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1280&q=85',
+      title: 'البرمجة في حياتنا اليومية',
+      notes: `كل شيء حولك تقريباً نتيجة برمجة!
+
+📱 هاتفك المحمول:
+تطبيق واتساب، إنستجرام، تيك توك – كلها مكتوبة بأكواد برمجية.
+
+🚗 السيارات الحديثة:
+تحتوي على أكثر من 100 مليون سطر كود تتحكم في كل شيء من نظام الفرملة لنظام الترفيه.
+
+🏥 القطاع الطبي:
+الأجهزة التي تقيس ضغط الدم، أجهزة الأشعة، وأنظمة المستشفيات – كلها تعمل بالبرمجة.
+
+🛒 التجارة الإلكترونية:
+أمازون، نون، جميلة – مواقع تُدار بملايين الأسطر البرمجية وتخدم ملايين العملاء يومياً.
+
+الحقيقة أن من يتعلم البرمجة يتعلم لغة المستقبل.`
+    },
+    {
+      id: 's003',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1280&q=85',
+      title: 'لغات البرمجة – أيها تبدأ؟',
+      notes: `لغات البرمجة كثيرة، لكن كل واحدة لها مجال تميّز فيه:
+
+🐍 Python – الأسهل والأكثر طلباً:
+مناسبة للمبتدئين، تُستخدم في الذكاء الاصطناعي والتحليل وتطوير المواقع.
+
+🌐 JavaScript – ملك الإنترنت:
+اللغة الوحيدة التي يفهمها المتصفح، أساسية لبناء أي موقع تفاعلي.
+
+📱 Dart/Flutter – تطبيقات الموبايل:
+بها تبني تطبيقاً واحداً يعمل على Android وiOS معاً.
+
+☕ Java/Kotlin – أندرويد والشركات:
+لغات المؤسسات الكبرى والبنوك وتطبيقات أندرويد.
+
+في هذا الكورس سنبدأ بـ JavaScript لأنها:
+✅ ترى نتائجها فوراً في المتصفح
+✅ مطلوبة في السوق بشكل كبير
+✅ تفتح لك باب Frontend وBackend معاً`
+    },
+    {
+      id: 's004',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1280&q=85',
+      title: 'أدوات المبرمج الأساسية',
+      notes: `قبل ما تكتب أول سطر كود، تحتاج لتجهيز بيئة العمل:
+
+💻 محرر الكود – VS Code (مجاني):
+أقوى محرر كود في العالم، بيه آلاف الإضافات التي تسهّل البرمجة.
+رابط التحميل: code.visualstudio.com
+
+🌐 المتصفح – Chrome أو Firefox:
+بيوفرلك أدوات المطورين (DevTools) لتجربة الكود مباشرة.
+
+📁 Git – نظام التحكم في الإصدارات:
+كأنك بتعمل save لكل تغيير في مشروعك وتقدر ترجع لأي نقطة سابقة.
+
+🔗 GitHub – مستودع الكود:
+موقع لحفظ مشاريعك على الإنترنت ومشاركتها مع الآخرين – وهو بورتفوليوك أمام أصحاب العمل.
+
+📋 المهمة:
+حمّل VS Code الآن وسنبدأ في الكتابة.`
+    },
+    {
+      id: 's005',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1484417894907-623942c8ee29?w=1280&q=85',
+      title: 'أول كود في حياتك – Hello World',
+      notes: `تقليد معروف في البرمجة: أول برنامج تكتبه في أي لغة جديدة هو "Hello World"!
+
+في JavaScript اكتب هذا:
+
+console.log("Hello World!");
+
+وستظهر لك الرسالة في المتصفح 🎉
+
+ليه Hello World بالذات؟
+لأنه يعني: "أنا موجود، أنا شغال، أنا جاهز!"
+وكذلك أنت الآن: موجود في عالم البرمجة، شغال على تعلم شيء جديد!
+
+نقاط مهمة في هذا الكود:
+• console.log() = دالة تطبع رسالة
+• الرسالة بين علامتي اقتباس " "
+• نقطة الفاصلة ; في النهاية مهمة
+• الكود حساس لحالة الأحرف (كبير/صغير)
+
+جرب الآن تغير النص داخل علامات الاقتباس وشوف ماذا يحدث!`
+    },
+    {
+      id: 's006',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1280&q=85',
+      title: 'خارطة طريقك لاحتراف البرمجة',
+      notes: `دي خارطة طريقك الكاملة في كورسنا:
+
+🟢 المرحلة الأولى – الأساسيات (المحاضرات 1-5):
+HTML: هيكل الصفحة
+CSS: التصميم والألوان
+JavaScript الأساسي: التفاعل والمنطق البرمجي
+
+🟡 المرحلة الثانية – التطبيق (المحاضرات 6-10):
+إنشاء مشاريع حقيقية
+قواعد البيانات الأساسية
+API والتواصل مع الخوادم
+
+🔴 المرحلة الثالثة – الاحتراف (المحاضرات 11-15):
+React.js لبناء تطبيقات ويب متطورة
+Node.js للـ Backend
+نشر المشاريع على الإنترنت
+
+🎯 الهدف النهائي:
+بعد الكورس ستكون قادراً على بناء وتسليم مشاريع ويب كاملة بنفسك وبدء العمل الحر أو التوظيف.
+
+تذكر: الاستمرارية أهم من السرعة. 30 دقيقة كل يوم تغير حياتك.`
+    }
+  ]
+};
+
+function seedData(){
+  const all = JSON.parse(localStorage.getItem('am_lectures')||'{}');
+  if(!all['programming']) all['programming'] = [];
+  // remove old demo if exists
+  all['programming'] = all['programming'].filter(l=>l.id!=='lec_prog_001');
+  all['programming'].unshift(LECTURE_DATA);
+  localStorage.setItem('am_lectures', JSON.stringify(all));
+
+  document.getElementById('successBox').style.display = 'block';
+  document.getElementById('slidePreview').style.display = 'block';
+  document.getElementById('viewerLink').href = 'lecture-viewer.html?course=programming&id=lec_prog_001';
+
+  const list = document.getElementById('previewList');
+  list.innerHTML = LECTURE_DATA.slides.map((s,i)=>`
+    <div class="slide-item">
+      <img src="${s.src}" alt="">
+      <div>
+        <div class="st">${s.title}</div>
+        <div class="sn">شريحة ${i+1} – ${s.notes.substring(0,55).replace(/\n/g,' ')}...</div>
+      </div>
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>
