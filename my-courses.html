@@ -6,6 +6,8 @@
 <title>محاضراتي | Akram Mostafa</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <style>
 :root{
   --bg:#050d1b; --bg2:#09162b; --card:#0d1e38; --card2:#112446;
@@ -198,6 +200,17 @@ const USERS_KEY = 'am_users';
 const LECTURES_KEY = 'am_lectures';
 const LIVE_KEY = 'am_live_sessions';
 const REC_LECS_KEY = 'am_recorded_lectures';
+
+/* ─── FIREBASE ─── */
+const _fbMC = firebase.initializeApp({
+  apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+  authDomain: "akramplatform-2c6be.firebaseapp.com",
+  projectId: "akramplatform-2c6be",
+  storageBucket: "akramplatform-2c6be.firebasestorage.app",
+  messagingSenderId: "132959399686",
+  appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+}, 'mycourses');
+const _mcdb = firebase.firestore(_fbMC);
 const COURSES_META = {
   'free':      { name:'الكورس المجاني',   icon:'fa-gift',           color:'#22c55e', paid:false },
   'facebook-ads':{ name:'إعلانات فيسبوك', icon:'fa-facebook',       color:'#1877f2', paid:true  },
@@ -213,20 +226,37 @@ const COURSES_META = {
 let currentUser = null;
 
 // ─── INIT ───────────────────────────────────────────────────────
-function init(){
-  // get user id from sessionStorage
+async function init(){
   const uid = sessionStorage.getItem('akram_student_id');
   if(!uid){ logout(); return; }
 
-  const users = JSON.parse(localStorage.getItem(USERS_KEY)||'[]');
-  currentUser = users.find(u=>String(u.id)===String(uid));
+  let allUsers=[], allLectures={}, recLectures=[], liveSessions=[];
+  // 1️⃣ localStorage first (fast render)
+  try{ allUsers     = JSON.parse(localStorage.getItem(USERS_KEY)||'[]'); }catch(e){}
+  try{ allLectures  = JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}'); }catch(e){}
+  try{ recLectures  = JSON.parse(localStorage.getItem(REC_LECS_KEY)||'[]'); }catch(e){}
+  try{ liveSessions = JSON.parse(localStorage.getItem(LIVE_KEY)||'[]'); }catch(e){}
+  currentUser = allUsers.find(u=>String(u.id)===String(uid));
+
+  // 2️⃣ Firestore (authoritative)
+  try {
+    const [usersSnap, lecsSnap, recSnap, liveSnap] = await Promise.all([
+      _mcdb.collection('admin_data').doc('users').get(),
+      _mcdb.collection('admin_data').doc('lectures').get(),
+      _mcdb.collection('admin_data').doc('recorded_lectures').get(),
+      _mcdb.collection('admin_data').doc('live_sessions').get(),
+    ]);
+    if(usersSnap.exists){ allUsers = usersSnap.data().data||[]; try{localStorage.setItem(USERS_KEY,JSON.stringify(allUsers))}catch(e){} }
+    if(lecsSnap.exists){ allLectures = lecsSnap.data().data||{}; try{localStorage.setItem(LECTURES_KEY,JSON.stringify(allLectures))}catch(e){} }
+    if(recSnap.exists){ recLectures = recSnap.data().data||[]; try{localStorage.setItem(REC_LECS_KEY,JSON.stringify(recLectures))}catch(e){} }
+    if(liveSnap.exists){ liveSessions = liveSnap.data().data||[]; try{localStorage.setItem(LIVE_KEY,JSON.stringify(liveSessions))}catch(e){} }
+    currentUser = allUsers.find(u=>String(u.id)===String(uid));
+  } catch(fsErr){ console.warn('Firestore load failed:', fsErr); }
+
   if(!currentUser){ logout(); return; }
 
   document.getElementById('userName').textContent  = currentUser.username || currentUser.name || 'طالب';
   document.getElementById('heroName').textContent  = (currentUser.name||currentUser.username||'طالب').split(' ')[0];
-
-  const allLectures = JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}');
-  const recLectures = JSON.parse(localStorage.getItem(REC_LECS_KEY)||'[]');
 
   /* backward compat: courses might be comma-string from old accounts */
   let enrolledCourses = currentUser.courses || [];
@@ -245,12 +275,12 @@ function init(){
   document.getElementById('crsCount').textContent    = enrolledCourses.length+' كورس';
 
   renderCourses(enrolledCourses, allLectures, recLectures);
-  renderLiveSessions(enrolledCourses);
+  renderLiveSessions(enrolledCourses, liveSessions);
 }
 
 // ─── LIVE SESSIONS ───────────────────────────────────────────────
-function renderLiveSessions(enrolledCourses){
-  const all = JSON.parse(localStorage.getItem(LIVE_KEY)||'[]');
+function renderLiveSessions(enrolledCourses, liveSessions){
+  const all = liveSessions || JSON.parse(localStorage.getItem(LIVE_KEY)||'[]');
   // show only sessions for enrolled courses that are live or scheduled
   const relevant = all.filter(s=>enrolledCourses.includes(s.courseKey) && s.status !== 'ended');
   const section = document.getElementById('liveSection');

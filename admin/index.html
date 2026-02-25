@@ -968,7 +968,7 @@ async function _loadAdminData(){
     renderRecordedLectures(); updateBadges();
     try{ renderLiveSessions(); }catch(e){}
     // seed default lectures if free course is empty
-    setTimeout(()=>{ try{ seedFreeLectures(); }catch(e){} }, 1000);
+    try{ seedFreeLectures(); }catch(e){}
   } catch(err){ console.warn('Firebase _loadAdminData failed:', err); }
 }
 
@@ -2003,8 +2003,16 @@ async function seedFreeLectures(){
     const all = getLectures();
     if((all['free']||[]).length > 0) return; // already seeded
     all['free'] = getDefaultFreeLectures();
-    saveLectures(all);
+    // update in-memory immediately so UI reads it right away
+    _fsLectures = Object.assign({}, all);
+    try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(all)); }catch(e){}
+    // save to Firestore in background
+    _fdb.collection('admin_data').doc('lectures').set({data:all, updatedAt:Date.now()})
+      .catch(e=>console.warn('FS seed lectures:', e));
     updateBadges();
+    // refresh UI if lectures section is open
+    try{ initLecturesSection(); }catch(e){}
+    if(activeLecCourse === 'free'){ try{ renderLecList('free'); }catch(e){} }
     console.log('✅ Free course lectures seeded successfully');
   } catch(e){ console.warn('Seed failed:', e); }
 }
@@ -2039,6 +2047,8 @@ function initLecturesSection(){
 function selectLecCourse(key){
   activeLecCourse = key;
   initLecturesSection();
+  // seed free course if empty
+  if(key === 'free'){ try{ seedFreeLectures(); }catch(e){} }
   renderLecList(key);
 }
 
