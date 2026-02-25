@@ -523,14 +523,21 @@ function launchJitsi(){
         defaultLanguage:'ar',
         disableDeepLinking:true,
         prejoinPageEnabled:false,
+        prejoinConfig:{ enabled:false },       /* disable prejoin - new API */
+        disablePrejoin:true,
         disableThirdPartyRequests:true,
         enableEmailInStats:false,
+        /* ── منع الـ Lobby نهائياً ── */
+        enableLobbyChat:false,
+        disableLobby:true,
+        hideLobbyButton:true,
+        membersOnly:false,
         toolbarButtons: isTeacherMode ? [
           'microphone','camera',
           'desktop',           /* ⭐ Screen Share — أول الأدوات */
           'chat','raisehand','reactions',
           'participants-pane','tileview','fullscreen',
-          'recording','settings','security','hangup'
+          'recording','settings','hangup'
         ] : [
           'microphone','camera',
           'chat','raisehand','reactions',

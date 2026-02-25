@@ -1986,9 +1986,11 @@ function editLiveSession(id){
 function closeLiveModal(){ document.getElementById('liveModal').classList.remove('open'); }
 
 function generateRoom(){
-  const adj = ['ميدان','marketing','digital','course','live','akram'];
-  const noun = ['session','class','meeting','room','tribe'];
-  const r = adj[Math.floor(Math.random()*adj.length)]+'-'+noun[Math.floor(Math.random()*noun.length)]+'-'+Math.floor(Math.random()*9000+1000);
+  /* نستخدم timestamp عشان الغرفة تكون جديدة دايماً على سيرفر Jitsi
+     ومفيش تعارض مع غرف قديمة عليها Lobby مفعّل */
+  const adj = ['marketing','digital','course','live','akram','class'];
+  const ts = Date.now().toString(36).slice(-4);  // 4 chars from timestamp
+  const r = 'akram-'+adj[Math.floor(Math.random()*adj.length)]+'-'+ts+Math.floor(Math.random()*100);
   document.getElementById('lsRoom').value = r;
 }
 
