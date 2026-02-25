@@ -2023,7 +2023,16 @@ function saveLiveSession(){
 function setLiveStatus(id, status){
   const sessions = getLiveSessions();
   const idx = sessions.findIndex(s=>s.id===id);
-  if(idx>-1){ sessions[idx].status = status; sessions[idx].updatedAt = new Date().toISOString(); }
+  if(idx>-1){
+    sessions[idx].status = status;
+    sessions[idx].updatedAt = new Date().toISOString();
+    /* غرفة جديدة كل مرة تبدأ الجلسة ← مفيش lock قديم من meet.jit.si */
+    if(status === 'live'){
+      const words = ['learn','class','live','akram','digital','course'];
+      const word = words[Math.floor(Math.random()*words.length)];
+      sessions[idx].room = 'akram-' + word + '-' + Date.now().toString(36);
+    }
+  }
   saveLiveSessions(sessions);
   renderLiveSessions();
   toast(status==='live'?'تم بدء الجلسة 🔴':'تم إنهاء الجلسة','success');
