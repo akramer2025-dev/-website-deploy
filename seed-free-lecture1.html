@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحميل محاضرة التسويق المجاني</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Cairo',sans-serif;background:#050d1b;color:#e2eaf6;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .box{background:#0d1e38;border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:48px 40px;max-width:660px;width:100%;text-align:center;}
+  .tag{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:20px;color:#4ade80;font-size:.78rem;font-weight:800;margin-bottom:18px;}
+  h1{font-size:1.45rem;font-weight:900;color:#fff;margin-bottom:10px;line-height:1.5;}
+  .subtitle{color:#6b82a8;font-size:.88rem;line-height:1.8;margin-bottom:28px;}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:linear-gradient(135deg,#e94e77,#f7931e);border:none;border-radius:14px;color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif;transition:.2s;}
+  .btn:hover{transform:scale(1.04);box-shadow:0 8px 24px rgba(233,78,119,.4);}
+  .success{display:none;margin-top:24px;padding:16px 20px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:14px;color:#4ade80;font-size:.88rem;font-weight:700;}
+  .slides-grid{margin-top:28px;display:none;text-align:right;}
+  .slides-grid h3{font-size:.82rem;font-weight:700;color:#6b82a8;margin-bottom:12px;text-align:center;text-transform:uppercase;letter-spacing:1px;}
+  .slide-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#09162b;border-radius:12px;margin-bottom:7px;border:1px solid rgba(255,255,255,.05);}
+  .slide-row img{width:70px;height:46px;border-radius:8px;object-fit:cover;flex-shrink:0;}
+  .slide-row .num{width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;color:#fff;}
+  .slide-row .info .t{font-size:.85rem;font-weight:800;color:#e2eaf6;}
+  .slide-row .info .s{font-size:.7rem;color:#6b82a8;margin-top:2px;}
+  .links{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
+  .link-btn{padding:11px 20px;border-radius:11px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#e2eaf6;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:.2s;}
+  .link-btn:hover{background:rgba(255,255,255,.09);}
+  .link-btn.primary{background:linear-gradient(135deg,#e94e77,#f7931e);border-color:transparent;}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="tag"><i class="fas fa-gift"></i> الكورس المجاني</div>
+  <h1>المحاضرة الأولى<br>عقلية التاجر في عصر الذكاء الاصطناعي</h1>
+  <p class="subtitle">
+    6 شرائح احترافية تبدأ بقصة التمر والسور وتنتهي بخارطة طريق الأسبوعين<br>
+    اضغط الزر وستظهر المحاضرة فوراً في العارض
+  </p>
+
+  <button class="btn" onclick="seedData()">
+    <i class="fas fa-rocket"></i> تحميل المحاضرة الآن
+  </button>
+
+  <div class="success" id="successBox">
+    <i class="fas fa-check-circle" style="font-size:1.2rem;margin-left:6px;"></i>
+    تم تحميل المحاضرة بنجاح! جاهزة للعرض ✓
+  </div>
+
+  <div class="slides-grid" id="slidesGrid">
+    <h3>الشرائح المحملة</h3>
+    <div id="slidesList"></div>
+    <div class="links">
+      <a class="link-btn primary" id="viewerLink" href="#"><i class="fas fa-play-circle"></i> فتح العارض</a>
+      <a class="link-btn" href="admin/index.html"><i class="fas fa-cog"></i> لوحة التحكم</a>
+      <a class="link-btn" href="my-courses.html"><i class="fas fa-graduation-cap"></i> بوابة الطالب</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const LECTURE = {
+  id: 'lec_free_001',
+  title: 'المحاضرة الأولى – عقلية التاجر في عصر الذكاء الاصطناعي',
+  description: 'نبدأ رحلتنا بقصة التمر والسور، ونتعلم كيف يفكر التاجر الحقيقي قبل ما يفتح أي حساب إعلاني',
+  createdAt: Date.now(),
+  updatedAt: Date.now(),
+  slides: [
+    {
+      id: 'fs01',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1280&q=85',
+      title: 'أهلاً بكم في الدبلومة 🔥',
+      notes: `أهلاً بيكم يا وحوش التسويق!
+
+النهاردة مش مجرد كورس، دي بداية رحلة هنغير فيها طريقة تفكيرنا في البيزنس.
+
+خلال الأسبوعين الجايين هتتعلموا:
+• إزاي تفكر كمسوّق محترف مش كمجرد "بتضغط أزرار"
+• إزاي تصل للعميل الصح في الوقت الصح بالرسالة الصح
+• إزاي تستخدم الذكاء الاصطناعي عشان تشتغل أضعاف بنص الوقت
+
+مش هنحفظ تعاريف، هنطلع من هنا بأدوات حقيقية وخطة عملية.
+
+مرحبتين بيكم في دبلومة احتراف التسويق الرقمي مع أكرم مصطفى.`
+    },
+    {
+      id: 'fs02',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1280&q=85',
+      title: 'أنت فين وعايز تروح فين؟',
+      notes: `قبل ما نبدأ، محتاجين نعرف مين معانا!
+
+كل واحد فيكم يقول:
+🙋 اسمك إيه؟
+💼 شغال إيه دلوقتي؟
+🎯 نفسك توصل لإيه بعد الأسبوعين دول؟
+
+ليه السؤال ده مهم؟
+
+لأن رحلة كل واحد فينا مختلفة:
+• صاحب بيزنس عايز يزيد مبيعاته
+• موظف عايز يتوظف في مجال التسويق
+• فريلانسر عايز يجيب عملاء جدد
+• طالب بيبني ملفه المهني
+
+البوصلة اللي معاكم النهاردة مش للتزيين، دي عشان تتأكد إن كل خطوة هتمشيها في الاتجاه الصح ناحية هدفك.`
+    },
+    {
+      id: 'fs03',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1280&q=85',
+      title: 'الحكاية – نطة السور 🧒',
+      notes: `عارفين أنا بدأت إمتى؟
+وأنا عندي 9 سنين!
+
+الحكاية:
+كان في محل تمر عند أبلة نبيلة في الحارة، وكان في سور بينها وبين الزباين اللي في الشارع التاني.
+
+الزباين كانوا عايزين يشتروا، وأبلة نبيلة مش قادرة توصلهم!
+
+أنا شوفت الفرصة:
+✅ اتفقت مع أبلة نبيلة على كيلو التمر بسعر المحل
+✅ بنط من فوق السور
+✅ بعت الكيلو بـ 15 قرش زيادة على الزباين
+✅ رجعت بربح نضيف من غير ما حد يتضرر
+
+المشكلة: الزباين محتاجين حاجة
+الفرصة: في حد عنده الحل
+التسويق: إنك توصل بين الاتنين بأذكى طريقة
+
+دي أول صفقة في حياتي، وكانت أول درس في التسويق!`
+    },
+    {
+      id: 'fs04',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1280&q=85',
+      title: 'تحليل سبوبة التمر 📊',
+      notes: `خليني أحللك اللي حصل بمصطلحات بيزنس حقيقية:
+
+🎯 نطة السور = القيمة المضافة (Added Value)
+أنا ما عملتش مجرد وساطة، أنا حليت مشكلة حقيقية – وده هو جوهر التسويق.
+
+🏪 أبلة نبيلة = إدارة سلسلة التوريد (Supply Chain)
+التفاوض مع المورد على السعر الصح هو أساس أي بيزنس ناجح.
+
+💰 الـ 15 قرش فرق = هامش الربح الصافي (Net Profit Margin)
+الفرق بين السعر اللي اشتريت بيه والسعر اللي بعت بيه، ده ربحك الحقيقي.
+
+🚧 السور = العقبات (Barriers)
+كل سوق فيه سور – المهم تلاقي طريقتك للنط منه.
+
+الدرس الأهم:
+التسويق مش "فهلوة" – ده علم في إنك تلاقي الفجوة بين المشكلة والحل وتملأها.`
+    },
+    {
+      id: 'fs05',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1280&q=85',
+      title: 'التسويق: علم ولا فهلوة؟',
+      notes: `سؤال كبير – والجواب واضح:
+
+التسويق مش زراير تضغطها ✋
+التسويق مش "بوست جميل وصورة حلوة"
+التسويق مش كوبونات وخصومات
+
+التسويق الحقيقي هو:
+إنك تلاقي "التمر" بتاعك – وتعرف توصله للناس الصح، في الوقت الصح، بالرسالة الصح.
+
+المعادلة الذهبية:
+
+🧠 العقلية الصح
++ 🛠️ الأدوات الصح
++ 📊 البيانات الصح
+= 💥 نتائج حقيقية
+
+الأسبوعين دول هنتعلم فيهم إزاي نستخدم الأدوات الحديثة عشان ننط من فوق أي سور في السوق.
+
+العقلية دايماً الأول – الأدوات بعدين.`
+    },
+    {
+      id: 'fs06',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1280&q=85',
+      title: 'خارطة الطريق – 14 يوم 🗺️',
+      notes: `ده اللي هنعمله مع بعض خلال الأسبوعين:
+
+📅 الأسبوع الأول – "نأسس الدماغ":
+• اليوم 1-2: عقلية التسويق والبحث عن الجمهور
+• اليوم 3-4: إنشاء المحتوى بالذكاء الاصطناعي
+• اليوم 5-6: صياغة الرسائل الإعلانية
+• اليوم 7: مراجعة وتطبيق عملي
+
+📅 الأسبوع الثاني – "نطلع نار":
+• اليوم 8-9: فتح حسابات الإعلانات وفهم الإعدادات
+• اليوم 10-11: إطلاق أول حملة إعلانية حقيقية
+• اليوم 12-13: تحليل النتائج والتحسين
+• اليوم 14: هاكاثون – تقديم مشروع كامل
+
+الهدف النهائي:
+بعد 14 يوم هتكون عندك حملة إعلانية شغالة ونتائج حقيقية يمكن تحطها في بورتفوليوك.
+
+مستعد تبدأ؟ 🚀`
+    }
+  ]
+};
+
+function seedData(){
+  const all = JSON.parse(localStorage.getItem('am_lectures')||'{}');
+  if(!all['free']) all['free'] = [];
+  all['free'] = all['free'].filter(l=>l.id!=='lec_free_001');
+  all['free'].unshift(LECTURE);
+  localStorage.setItem('am_lectures', JSON.stringify(all));
+
+  document.getElementById('successBox').style.display = 'block';
+  document.getElementById('slidesGrid').style.display  = 'block';
+  document.getElementById('viewerLink').href = 'lecture-viewer.html?course=free&id=lec_free_001';
+
+  const list = document.getElementById('slidesList');
+  list.innerHTML = LECTURE.slides.map((s,i)=>`
+    <a href="lecture-viewer.html?course=free&id=lec_free_001" class="slide-row" style="text-decoration:none;">
+      <div class="num">${i+1}</div>
+      <img src="${s.src}" alt="">
+      <div class="info">
+        <div class="t">${s.title}</div>
+        <div class="s">${s.notes.split('\n')[0].substring(0,60)}...</div>
+      </div>
+    </a>
+  `).join('');
+}
+</script>
+</body>
+</html>
