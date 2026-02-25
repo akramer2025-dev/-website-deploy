@@ -976,10 +976,11 @@ function initFirestore(){
   const jrEl = document.getElementById('joinRequestsList');
   if(jrEl) jrEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem"></i><br><br>جاري تحميل البيانات...</div>';
   _fsUnsubscribe = _fdb.collection('join_requests')
-    .orderBy('createdAt','desc')
     .onSnapshot(snapshot=>{
       _fsReqs = [];
       snapshot.forEach(doc=>{ _fsReqs.push(doc.data()); });
+      // ترتيب client-side بدل orderBy (لا يحتاج index)
+      _fsReqs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
       renderJoinRequests(_currentReqFilter||'all');
       updateBadges();
     }, err=>{
