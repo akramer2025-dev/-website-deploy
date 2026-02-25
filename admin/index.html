@@ -416,6 +416,7 @@ button{cursor:pointer;}
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 </head>
 <body>
 
@@ -783,7 +784,17 @@ button{cursor:pointer;}
         <div class="form-field"><label>المستوى</label><select id="f-level"><option value="مبتدئ">مبتدئ</option><option value="متوسط">متوسط</option><option value="متقدم">متقدم</option></select></div>
       </div>
     </div>
-    <div class="form-field"><label>رابط صورة الملف الشخصي (اختياري)</label><input type="url" id="f-avatar" placeholder="https://..."></div>
+    <div class="form-field">
+      <label>صورة الملف الشخصي (اختياري)</label>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <input type="url" id="f-avatar" placeholder="رابط خارجي https://..." style="flex:1">
+        <label style="cursor:pointer;background:var(--grad);color:#fff;padding:9px 14px;border-radius:10px;font-size:.8rem;font-weight:700;white-space:nowrap;">
+          <i class="fas fa-upload"></i> رفع صورة
+          <input type="file" id="f-avatar-file" accept="image/*" style="display:none" onchange="uploadAvatarFile(this)">
+        </label>
+      </div>
+      <div id="f-avatar-preview" style="display:none;margin-top:8px"><img id="f-avatar-img" src="" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--pink)"></div>
+    </div>
     <div class="form-field"><label>نبذة قصيرة</label><textarea id="f-bio" placeholder="اكتب عن المستخدم..."></textarea></div>
     <input type="hidden" id="f-editId"><input type="hidden" id="f-type">
     <div class="modal-footer">
@@ -932,6 +943,7 @@ const _fbAdmin = firebase.initializeApp({
   appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
 }, 'admin');
 const _fdb = firebase.firestore(_fbAdmin);
+const _fst = firebase.storage(_fbAdmin);
 
 // join_requests in-memory cache + real-time listener
 let _fsReqs = [];
@@ -1333,16 +1345,54 @@ function handleFileSelect(e, key, type){
 }
 
 function processImageFile(file, key){
-  // تحقق من حجم الصورة (max 2MB)
-  if(file.size > 2 * 1024 * 1024){
-    toast('حجم الصورة كبير جداً (أقصى حجم 2MB)', 'error');
+  if(file.size > 5 * 1024 * 1024){
+    toast('حجم الصورة كبير جداً (أقصى 5MB)', 'error');
     return;
   }
-  
+  // Preview محلي أولاً
   const reader = new FileReader();
-  reader.onload = function(e){
-    const base64 = e.target.result;
-    saveProductImage(key, base64);
+  reader.onload = async function(e){
+    const card = document.querySelector(`[data-key="${key}"]`);
+    if(card){
+      const img = card.querySelector('.portfolio-card-img');
+      if(img) img.src = e.target.result;
+    }
+    toast('جاري رفع الصورة...', 'info');
+    try {
+      const storageRef = _fst.ref('portfolio/'+key+'/'+Date.now()+'_'+file.name);
+      const snap = await storageRef.put(file);
+      const url = await snap.ref.getDownloadURL();
+      saveProductImage(key, url);
+      toast('تم رفع الصورة ✓', 'success');
+    } catch(err){
+      console.warn('Storage upload failed:', err);
+      saveProductImage(key, e.target.result); // fallback base64
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+async function uploadAvatarFile(input){
+  const file = input.files[0];
+  if(!file) return;
+  if(file.size > 3*1024*1024){ toast('حجم الصورة أكبر من 3MB','error'); return; }
+  const reader = new FileReader();
+  reader.onload = async function(e){
+    document.getElementById('f-avatar').value = '';
+    document.getElementById('f-avatar-img').src = e.target.result;
+    document.getElementById('f-avatar-preview').style.display = 'block';
+    toast('جاري رفع الصورة...','info');
+    try{
+      const storageRef = _fst.ref('avatars/'+Date.now()+'_'+file.name);
+      const snap = await storageRef.put(file);
+      const url = await snap.ref.getDownloadURL();
+      document.getElementById('f-avatar').value = url;
+      toast('تم رفع الصورة ✓','success');
+    } catch(err){
+      console.warn('Avatar upload failed:',err);
+      // store as base64 fallback
+      document.getElementById('f-avatar').value = e.target.result;
+    }
   };
   reader.readAsDataURL(file);
 }
@@ -1768,6 +1818,8 @@ function viewProfile(id){ window.open('../profile.html?id='+id,'_blank'); }
 
 function openAddUser(type){
   ['f-name','f-username','f-password','f-phone','f-email','f-role','f-dept','f-courses','f-avatar','f-bio'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-avatar-preview').style.display='none';
+  document.getElementById('f-avatar-file').value='';
   document.getElementById('f-level').value='مبتدئ';
   document.getElementById('f-editId').value=''; document.getElementById('f-type').value=type;
   const isEmp=type==='employee';
@@ -1785,8 +1837,12 @@ function editUser(id){
   document.getElementById('f-dept').value=user.department||''; document.getElementById('f-courses').value=user.courses||'';
   document.getElementById('f-level').value=user.level||'مبتدئ'; document.getElementById('f-avatar').value=user.avatar||'';
   document.getElementById('f-bio').value=user.bio||''; document.getElementById('f-editId').value=id; document.getElementById('f-type').value=user.type;
+  // عرض الصورة الحالية
+  const prevBox = document.getElementById('f-avatar-preview');
+  const prevImg = document.getElementById('f-avatar-img');
+  if(user.avatar){ prevImg.src=user.avatar; prevBox.style.display='block'; } else { prevBox.style.display='none'; }
   const isEmp=user.type==='employee';
-  document.getElementById('modalTitle').textContent=isEmp?'بنجاح الرابط الرابط':'بنجاح الرابط الرابط';
+  document.getElementById('modalTitle').textContent=isEmp?'تعديل موظف':'تعديل طالب';
   document.getElementById('empFields').style.display=isEmp?'':'none';
   document.getElementById('stuFields').style.display=isEmp?'none':'';
   document.getElementById('userModal').classList.add('open');

@@ -12,6 +12,7 @@
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 <style>
 :root{
   --bg:#050d1b;--bg2:#09162b;--card:#0d1e38;--card2:#112446;
@@ -458,6 +459,7 @@ const _fbApp = firebase.initializeApp({
   appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
 });
 const _db = firebase.firestore(_fbApp);
+const _storage = firebase.storage(_fbApp);
 
 let selectedCourses = new Set();
 let paymentImages = {};
@@ -613,13 +615,14 @@ function proofFileSelected(e, key){
   if(file) loadProofFile(file, key);
 }
 function loadProofFile(file, key){
-  if(file.size > 5*1024*1024){ showToast('حجم الصورة أكبر من 5MB','error'); return; }
+  if(file.size > 5*1024*1024){ showToast('حجم الصورة أكبر من 5MB','عerror'); return; }
+  // عرض preview محلياً أولاً
   const reader = new FileReader();
   reader.onload = function(ev){
-    paymentImages[key] = ev.target.result;
+    paymentImages[key] = { file, previewUrl: ev.target.result, uploadedUrl: null };
     document.getElementById('pprev-img-'+key).src = ev.target.result;
     document.getElementById('pprev-'+key).style.display = 'block';
-    document.getElementById('puz-'+key).querySelector('.puz-text').textContent = 'تم رفع الإيصال ✓';
+    document.getElementById('puz-'+key).querySelector('.puz-text').textContent = 'تم اختيار الصورة ✔ (سيتم رفعها عند الإرسال)';
     document.getElementById('puz-'+key).style.borderColor = '#22c55e';
   };
   reader.readAsDataURL(file);
@@ -630,6 +633,25 @@ function removeProof(key){
   document.getElementById('pfile-'+key).value = '';
   document.getElementById('puz-'+key).querySelector('.puz-text').textContent = 'اسحب صورة الإيصال هنا أو اضغط عشان تختارها';
   document.getElementById('puz-'+key).style.borderColor = '';
+}
+
+// رفع الإيصالات لـ Firebase Storage وإرجاع URLs
+async function uploadPaymentImages(reqId){
+  const result = {};
+  const keys = Object.keys(paymentImages);
+  for(const key of keys){
+    const entry = paymentImages[key];
+    if(!entry || !entry.file){ if(entry && entry.uploadedUrl) result[key]=entry.uploadedUrl; continue; }
+    try{
+      const storageRef = _storage.ref('payment_proofs/'+reqId+'/'+key+'_'+Date.now());
+      const snap = await storageRef.put(entry.file);
+      result[key] = await snap.ref.getDownloadURL();
+    } catch(err){
+      console.warn('Storage upload failed for',key,err);
+      result[key] = entry.previewUrl; // fallback to base64
+    }
+  }
+  return result;
 }
 
 // ─── SUMMARY ────────────────────────────────────────────────────
@@ -656,12 +678,12 @@ function genId(){ return Date.now().toString(36)+Math.random().toString(36).subs
 async function submitRequest(){
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري رفع الصور...';
 
   const id = genId().toUpperCase();
-  // strip base64 payment images before storing in Firestore (too large)
-  const paymentsClean = {};
-  Object.keys(paymentImages).forEach(k=>{ paymentsClean[k] = paymentImages[k].substring(0,50)==='data:' ? '[image]' : paymentImages[k]; });
+
+  // رفع الإيصالات لـ Firebase Storage أولاً
+  const paymentsUrls = await uploadPaymentImages(id);
 
   const req = {
     id,
@@ -673,14 +695,16 @@ async function submitRequest(){
     field: document.getElementById('f-field').value,
     notes: document.getElementById('f-notes').value.trim(),
     courses: [...selectedCourses],
-    payments: paymentsClean,
+    payments: paymentsUrls,
     status: 'pending',
     createdAt: Date.now(),
     reviewedAt: null,
     adminNote: ''
   };
 
-  // 1️⃣ Save to Firestore (cloud — visible to admin from any device)
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+
+  // حفظ في Firestore
   let firebaseSaved = false;
   try {
     await _db.collection('join_requests').doc(id).set(req);
@@ -689,7 +713,7 @@ async function submitRequest(){
     console.warn('Firebase save failed:', err);
   }
 
-  // 2️⃣ Keep localStorage as backup
+  // backup localStorage
   try {
     const requests = JSON.parse(localStorage.getItem(JOIN_KEY)||'[]');
     requests.push(req);
@@ -698,6 +722,14 @@ async function submitRequest(){
 
   if(!firebaseSaved){
     btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> تحقق من الإنترنت وأعد المحاولة';
+    btn.disabled = false;
+    return;
+  }
+
+  document.getElementById('mainForm').style.display='none';
+  document.getElementById('successState').style.display='block';
+  document.getElementById('reqIdDisplay').textContent = id;
+}
     btn.disabled = false;
     return;
   }
