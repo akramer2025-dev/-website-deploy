@@ -261,6 +261,60 @@ button{cursor:pointer;}
 @media(max-width:1100px){.stats-grid{grid-template-columns:1fr 1fr;}.adm-row{grid-template-columns:1fr;}.projects-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:768px){.adm-sidebar{transform:translateX(100%);transition:.3s;}.adm-sidebar.open{transform:none;}.adm-main{margin-right:0;}.adm-section{padding:20px;}.stats-grid{grid-template-columns:1fr 1fr;}.projects-grid{grid-template-columns:1fr;}}
 
+/* ===== JOIN REQUESTS ===== */
+.req-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.req-filter-btn{padding:7px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;color:var(--muted);font-size:.82rem;font-weight:700;cursor:pointer;transition:.2s;}
+.req-filter-btn:hover{color:var(--text);border-color:rgba(255,255,255,.15);}
+.req-filter-btn.active{background:linear-gradient(135deg,rgba(233,78,119,.2),rgba(247,147,30,.13));border-color:rgba(233,78,119,.4);color:#fff;}
+.req-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;}
+.req-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.3s;}
+.req-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.3);}
+.req-card-top{padding:18px 18px 14px;display:flex;align-items:flex-start;gap:14px;}
+.req-avatar{width:46px;height:46px;border-radius:13px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;color:#fff;flex-shrink:0;}
+.req-card-info{flex:1;min-width:0;}
+.req-card-name{font-size:.95rem;font-weight:800;color:#fff;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.req-card-email{font-size:.78rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.req-card-date{font-size:.72rem;color:var(--muted);margin-top:3px;}
+.req-status-badge{padding:5px 12px;border-radius:20px;font-size:.72rem;font-weight:800;flex-shrink:0;}
+.req-status-badge.pending{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.3);}
+.req-status-badge.approved{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3);}
+.req-status-badge.rejected{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3);}
+.req-card-body{padding:0 18px 14px;border-top:1px solid var(--border);margin-top:0;}
+.req-tags{display:flex;flex-wrap:wrap;gap:5px;padding:12px 0 0;}
+.req-course-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:.72rem;font-weight:700;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--text);}
+.req-card-meta{display:flex;gap:14px;flex-wrap:wrap;padding:8px 0;font-size:.78rem;color:var(--muted);}
+.req-card-meta span{display:flex;align-items:center;gap:5px;}
+.req-card-meta i{color:var(--pink);}
+.req-proofs{display:flex;gap:8px;flex-wrap:wrap;padding:6px 0 10px;}
+.req-proof-thumb{width:64px;height:50px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border);cursor:pointer;transition:.2s;flex-shrink:0;}
+.req-proof-thumb:hover{border-color:var(--pink);transform:scale(1.05);}
+.req-proof-thumb img{width:100%;height:100%;object-fit:cover;}
+.req-card-actions{display:flex;gap:8px;padding:12px 18px;border-top:1px solid var(--border);}
+.btn-approve{flex:1;padding:9px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);border-radius:10px;color:#4ade80;font-size:.82rem;font-weight:800;transition:.25s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-approve:hover{background:rgba(34,197,94,.25);}
+.btn-reject{flex:1;padding:9px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:10px;color:#f87171;font-size:.82rem;font-weight:800;transition:.25s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-reject:hover{background:rgba(239,68,68,.22);}
+.btn-view-req{padding:9px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:.82rem;font-weight:700;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-view-req:hover{color:var(--text);}
+.req-approved-info{padding:8px 18px 12px;background:rgba(34,197,94,.07);font-size:.78rem;color:#4ade80;display:flex;align-items:center;gap:6px;}
+.req-rejected-info{padding:8px 18px 12px;background:rgba(239,68,68,.07);font-size:.78rem;color:#f87171;display:flex;align-items:center;gap:6px;}
+.req-empty{text-align:center;padding:50px 20px;color:var(--muted);grid-column:1/-1;}
+.req-empty i{font-size:2.5rem;margin-bottom:14px;display:block;opacity:.4;}
+/* REQ DETAIL MODAL */
+#reqDetailModal .modal-box{max-width:580px;}
+.rd-section{margin-bottom:20px;}
+.rd-section-title{font-size:.8rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.rd-section-title i{color:var(--pink);}
+.rd-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.rd-row:last-child{border-bottom:none;}
+.rd-lbl{font-size:.78rem;color:var(--muted);font-weight:700;min-width:120px;}
+.rd-val{font-size:.88rem;color:var(--text);flex:1;line-height:1.6;}
+.rd-proofs-grid{display:flex;gap:10px;flex-wrap:wrap;}
+.rd-proof-img{width:110px;height:80px;border-radius:10px;overflow:hidden;border:1.5px solid var(--border);cursor:pointer;}
+.rd-proof-img img{width:100%;height:100%;object-fit:cover;}
+.admin-note-area textarea{width:100%;padding:10px 14px;background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:.88rem;outline:none;resize:vertical;min-height:70px;transition:.2s;font-family:'Cairo',sans-serif;}
+.admin-note-area textarea:focus{border-color:var(--pink);}
+
 /* ===== GALLERY UPLOAD MODAL ===== */
 #galleryModal .modal-box{max-width:500px;}
 .gal-tabs{display:flex;gap:5px;margin-bottom:20px;background:var(--bg2);border-radius:12px;padding:4px;}
@@ -329,6 +383,7 @@ button{cursor:pointer;}
     </div>
     <div class="adm-nav-section">
       <div class="adm-nav-label">إدارة المستخدمين</div>
+      <div class="adm-nav-item" onclick="showSection('joinrequests')"><i class="fas fa-user-clock"></i> طلبات الانضمام<span class="adm-nav-badge" id="pendingCount" style="background:#f59e0b">0</span></div>
       <div class="adm-nav-item" onclick="showSection('employees')"><i class="fas fa-user-tie"></i> الموظفون<span class="adm-nav-badge" id="empCount">0</span></div>
       <div class="adm-nav-item" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> الطلاب<span class="adm-nav-badge" id="stuCount">0</span></div>
     </div>
@@ -360,6 +415,7 @@ button{cursor:pointer;}
         <div class="adm-card">
           <h3><i class="fas fa-bolt"></i> إجراءات سريعة</h3>
           <div class="quick-actions">
+            <div class="qa-btn" onclick="showSection('joinrequests')"><div class="qa-btn-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;"><i class="fas fa-user-clock"></i></div>طلبات الانضمام</div>
             <div class="qa-btn" onclick="openAddUser('employee')"><div class="qa-btn-icon" style="background:rgba(59,130,246,0.15);color:var(--blue);"><i class="fas fa-user-plus"></i></div>إضافة موظف جديد</div>
             <div class="qa-btn" onclick="openAddUser('student')"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-user-graduate"></i></div>إضافة طالب جديد</div>
             <div class="qa-btn" onclick="showSection('portfolio')"><div class="qa-btn-icon" style="background:rgba(233,78,119,0.15);color:var(--pink);"><i class="fas fa-images"></i></div>إدارة معرض الأعمال</div>
@@ -389,6 +445,21 @@ button{cursor:pointer;}
       <div class="adm-section-title">تطبيقات <span>الموبايل</span></div>
       <div class="adm-breadcrumb">حدّث أسعار تطبيقات الموبايل، ستظهر مباشرة في صفحة المنتج</div>
       <div class="projects-grid" id="mobilePricesGrid"></div>
+    </div>
+
+    <!-- JOIN REQUESTS -->
+    <div class="adm-section" id="sec-joinrequests">
+      <div class="users-top">
+        <div><div class="adm-section-title">طلبات <span>الانضمام</span></div><div class="adm-breadcrumb">الطلبات الواردة من الطلاب عبر صفحة التسجيل – وافق أو ارفض كل طلب</div></div>
+        <a href="../register.html" target="_blank" class="btn-add-user" style="text-decoration:none"><i class="fas fa-link"></i> رابط التسجيل</a>
+      </div>
+      <div class="req-filters">
+        <button class="req-filter-btn active" id="rfAll" onclick="filterReqs('all')"><i class="fas fa-list"></i> الكل <span id="rfAllCount"></span></button>
+        <button class="req-filter-btn" id="rfPending" onclick="filterReqs('pending')" style="color:#fbbf24"><i class="fas fa-clock"></i> قيد الانتظار <span id="rfPendingCount"></span></button>
+        <button class="req-filter-btn" id="rfApproved" onclick="filterReqs('approved')" style="color:#4ade80"><i class="fas fa-check"></i> مقبول <span id="rfApprovedCount"></span></button>
+        <button class="req-filter-btn" id="rfRejected" onclick="filterReqs('rejected')" style="color:#f87171"><i class="fas fa-times"></i> مرفوض <span id="rfRejectedCount"></span></button>
+      </div>
+      <div class="req-cards" id="reqCardsGrid"></div>
     </div>
 
     <!-- EMPLOYEES -->
@@ -474,6 +545,18 @@ button{cursor:pointer;}
 <div class="lb-overlay" id="lbOverlay">
   <button class="lb-close" onclick="closeLb()"><i class="fas fa-times"></i></button>
   <img src="" alt="" class="lb-img" id="lbImg">
+</div>
+
+<!-- REQUEST DETAIL MODAL -->
+<div class="modal-overlay" id="reqDetailModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3><i class="fas fa-user-clock" style="color:var(--pink);margin-left:8px"></i> تفاصيل الطلب</h3>
+      <button class="modal-close" onclick="document.getElementById('reqDetailModal').classList.remove('open')"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="reqDetailContent"></div>
+    <div class="modal-footer" id="reqDetailActions"></div>
+  </div>
 </div>
 
 <!-- GALLERY IMAGE MODAL -->
@@ -603,18 +686,30 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 });
 
-function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); }
+function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); }
+
+const JOIN_KEY = 'am_join_requests';
+function getJoinRequests(){ try{ return JSON.parse(localStorage.getItem(JOIN_KEY)||'[]'); }catch(e){ return []; } }
+function saveJoinRequests(r){ localStorage.setItem(JOIN_KEY, JSON.stringify(r)); }
 
 function updateBadges(){
   const users=getUsers(); const emps=users.filter(u=>u.type==='employee'); const stus=users.filter(u=>u.type==='student');
   const portfolio=getPortfolio(); const totalImgs=Object.values(portfolio).reduce((s,imgs)=>s+(imgs||[]).length,0);
+  const reqs=getJoinRequests(); const pending=reqs.filter(r=>r.status==='pending');
   document.getElementById('empCount').textContent=emps.length;
   document.getElementById('stuCount').textContent=stus.length;
   document.getElementById('portfolioImgCount').textContent=totalImgs;
+  document.getElementById('pendingCount').textContent=pending.length;
   document.getElementById('dash-total').textContent=users.length;
   document.getElementById('dash-emp').textContent=emps.length;
   document.getElementById('dash-stu').textContent=stus.length;
   document.getElementById('dash-imgs').textContent=totalImgs;
+  // update filter counts
+  const rfAll=document.getElementById('rfAllCount'), rfP=document.getElementById('rfPendingCount'), rfA=document.getElementById('rfApprovedCount'), rfR=document.getElementById('rfRejectedCount');
+  if(rfAll) rfAll.textContent=`(${reqs.length})`;
+  if(rfP) rfP.textContent=`(${pending.length})`;
+  if(rfA) rfA.textContent=`(${reqs.filter(r=>r.status==='approved').length})`;
+  if(rfR) rfR.textContent=`(${reqs.filter(r=>r.status==='rejected').length})`;
 }
 
 function showSection(name){
@@ -864,6 +959,182 @@ function removeGalleryImage(key, index, type){
   updateBadges();
   toast('تم الحذف بنجاح', 'success');
 }
+
+// ======= JOIN REQUESTS FUNCTIONS =======
+const COURSES_NAMES = {
+  'free':'الكورس المجاني','facebook-ads':'إعلانات فيسبوك',
+  'instagram':'إنستجرام','tiktok':'تيك توك','snapchat':'سناب شات',
+  'twitter':'تويتر / X','ai-marketing':'ذكاء اصطناعي',
+  'integrated-strategy':'استراتيجية متكاملة','programming':'البرمجة'
+};
+
+let _currentReqFilter = 'all';
+
+function filterReqs(status){
+  _currentReqFilter = status;
+  ['All','Pending','Approved','Rejected'].forEach(s=>{
+    document.getElementById('rf'+s).classList.remove('active');
+  });
+  document.getElementById('rf'+(status==='all'?'All':status.charAt(0).toUpperCase()+status.slice(1))).classList.add('active');
+  renderJoinRequests(status);
+}
+
+function renderJoinRequests(filter){
+  _currentReqFilter = filter||'all';
+  const reqs = getJoinRequests().sort((a,b)=>b.createdAt-a.createdAt);
+  const filtered = filter==='all' ? reqs : reqs.filter(r=>r.status===filter);
+  const grid = document.getElementById('reqCardsGrid'); if(!grid) return;
+  if(!filtered.length){
+    grid.innerHTML=`<div class="req-empty"><i class="fas fa-inbox"></i><p>لا توجد طلبات ${filter==='all'?'':filter==='pending'?'قيد الانتظار':filter==='approved'?'مقبولة':'مرفوضة'} بعد</p></div>`;
+    return;
+  }
+  const statusLabel={'pending':'<span class="req-status-badge pending"><i class="fas fa-clock"></i> قيد المراجعة</span>','approved':'<span class="req-status-badge approved"><i class="fas fa-check"></i> مقبول</span>','rejected':'<span class="req-status-badge rejected"><i class="fas fa-times"></i> مرفوض</span>'};
+  grid.innerHTML = filtered.map(r=>{
+    const initial = r.name?r.name.trim().charAt(0).toUpperCase():'?';
+    const dt = new Date(r.createdAt).toLocaleString('ar-EG',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    const courses = (r.courses||[]).map(c=>`<span class="req-course-tag">${COURSES_NAMES[c]||c}</span>`).join('');
+    const payKeys = Object.keys(r.payments||{});
+    return `<div class="req-card" id="rcard-${r.id}">
+      <div class="req-card-top">
+        <div class="req-avatar">${initial}</div>
+        <div class="req-card-info">
+          <div class="req-card-name">${r.name}</div>
+          <div class="req-card-email">${r.email}</div>
+          <div class="req-card-date"><i class="far fa-clock"></i> ${dt}</div>
+        </div>
+        ${statusLabel[r.status]||''}
+      </div>
+      <div class="req-card-body">
+        <div class="req-card-meta">
+          <span><i class="fas fa-phone"></i>${r.phone||'—'}</span>
+          <span><i class="fas fa-briefcase"></i>${r.field||'—'}</span>
+        </div>
+        <div class="req-tags">${courses}</div>
+        ${payKeys.length?`<div class="req-proofs">${payKeys.map(k=>`<div class="req-proof-thumb" onclick="openLb('${r.payments[k].substring(0,30)===r.payments[k].substring(0,30)?r.payments[k]:r.payments[k]}')"><img src="${r.payments[k]}" alt="إيصال"></div>`).join('')}</div>`:''}
+      </div>
+      ${r.status==='approved'?`<div class="req-approved-info"><i class="fas fa-check-circle"></i> تمت الموافقة بتاريخ ${new Date(r.reviewedAt).toLocaleDateString('ar-EG')} ${r.adminNote?'&bull; '+r.adminNote:''}</div>`:''}
+      ${r.status==='rejected'?`<div class="req-rejected-info"><i class="fas fa-times-circle"></i> تم الرفض ${r.adminNote?'&bull; '+r.adminNote:''}</div>`:''}
+      <div class="req-card-actions">
+        ${r.status==='pending'?`
+          <button class="btn-approve" onclick="approveReq('${r.id}')"><i class="fas fa-check"></i> قبول</button>
+          <button class="btn-reject" onclick="rejectReq('${r.id}')"><i class="fas fa-times"></i> رفض</button>
+        `:r.status==='approved'?`
+          <button class="btn-reject" onclick="rejectReq('${r.id}')"><i class="fas fa-undo"></i> إلغاء القبول</button>
+        `:r.status==='rejected'?`
+          <button class="btn-approve" onclick="approveReq('${r.id}')"><i class="fas fa-redo"></i> قبول بدلاً</button>
+        `:''
+        }
+        <button class="btn-view-req" onclick="viewReqDetail('${r.id}')"><i class="fas fa-eye"></i> تفاصيل</button>
+        <button class="btn-view-req" style="color:#f87171;border-color:rgba(239,68,68,.3)" onclick="deleteReq('${r.id}')"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function approveReq(id){
+  const reqs = getJoinRequests();
+  const r = reqs.find(x=>x.id===id);
+  if(!r) return;
+  // create student user
+  const users = getUsers();
+  const exists = users.find(u=>u.username===r.username||u.email===r.email);
+  if(exists && r.status!=='approved'){ toast('يوجد مستخدم بنفس البيانات مسبقاً','error'); return; }
+  if(r.status!=='approved'){
+    users.push({ id:genId(), name:r.name, username:r.username, password:r.password, email:r.email, phone:r.phone, type:'student', level:'مبتدئ', courses:(r.courses||[]).map(c=>COURSES_NAMES[c]||c).join(', '), field:r.field||'', createdAt:r.createdAt });
+    saveUsers(users);
+  }
+  r.status='approved'; r.reviewedAt=Date.now();
+  saveJoinRequests(reqs);
+  renderJoinRequests(_currentReqFilter);
+  updateBadges();
+  toast('تمت الموافقة وإضافة الطالب ✓','success');
+}
+
+function rejectReq(id){
+  const note = prompt('سبب الرفض (اختياري):','');
+  if(note===null) return;
+  const reqs = getJoinRequests();
+  const r = reqs.find(x=>x.id===id);
+  if(r){
+    // if was approved, remove from students
+    if(r.status==='approved'){
+      let users=getUsers();
+      users=users.filter(u=>u.username!==r.username&&u.email!==r.email);
+      saveUsers(users);
+    }
+    r.status='rejected'; r.reviewedAt=Date.now(); r.adminNote=note.trim();
+    saveJoinRequests(reqs);
+  }
+  renderJoinRequests(_currentReqFilter);
+  updateBadges();
+  toast('تم رفض الطلب','success');
+}
+
+function deleteReq(id){
+  if(!confirm('حذف هذا الطلب نهائياً؟')) return;
+  let reqs=getJoinRequests().filter(r=>r.id!==id);
+  saveJoinRequests(reqs);
+  renderJoinRequests(_currentReqFilter);
+  updateBadges();
+  toast('تم الحذف','success');
+}
+
+function viewReqDetail(id){
+  const r = getJoinRequests().find(x=>x.id===id);
+  if(!r) return;
+  const payEntries = Object.entries(r.payments||{});
+  const statusLabel={'pending':'<span class="req-status-badge pending">قيد المراجعة</span>','approved':'<span class="req-status-badge approved">مقبول</span>','rejected':'<span class="req-status-badge rejected">مرفوض</span>'};
+  document.getElementById('reqDetailContent').innerHTML=`
+    <div class="rd-section">
+      <div class="rd-section-title"><i class="fas fa-user"></i> بيانات شخصية</div>
+      <div class="rd-row"><div class="rd-lbl">الاسم</div><div class="rd-val">${r.name}</div></div>
+      <div class="rd-row"><div class="rd-lbl">البريد الإلكتروني</div><div class="rd-val">${r.email}</div></div>
+      <div class="rd-row"><div class="rd-lbl">اسم المستخدم</div><div class="rd-val">${r.username}</div></div>
+      <div class="rd-row"><div class="rd-lbl">كلمة المرور</div><div class="rd-val"><code style="background:var(--bg2);padding:2px 8px;border-radius:6px;font-size:.85rem">${r.password}</code></div></div>
+      <div class="rd-row"><div class="rd-lbl">الهاتف</div><div class="rd-val">${r.phone||'—'}</div></div>
+      <div class="rd-row"><div class="rd-lbl">المجال</div><div class="rd-val">${r.field||'—'}</div></div>
+      <div class="rd-row"><div class="rd-lbl">الحالة</div><div class="rd-val">${statusLabel[r.status]||''}</div></div>
+      ${r.notes?`<div class="rd-row"><div class="rd-lbl">ملاحظات</div><div class="rd-val">${r.notes}</div></div>`:''}
+    </div>
+    <div class="rd-section">
+      <div class="rd-section-title"><i class="fas fa-graduation-cap"></i> الكورسات المختارة</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;padding-top:4px">${(r.courses||[]).map(c=>`<span class="summary-course-tag">${COURSES_NAMES[c]||c}</span>`).join('')}</div>
+    </div>
+    ${payEntries.length?`<div class="rd-section"><div class="rd-section-title"><i class="fas fa-receipt"></i> إيصالات السداد</div><div class="rd-proofs-grid">${payEntries.map(([k,v])=>`<div><div style="font-size:.72rem;color:var(--muted);margin-bottom:4px">${COURSES_NAMES[k]||k}</div><div class="rd-proof-img" onclick="openLb('${v}')"><img src="${v}" alt="إيصال"></div></div>`).join('')}</div></div>`:''}
+    <div class="rd-section admin-note-area">
+      <div class="rd-section-title"><i class="fas fa-comment-alt"></i> ملاحظة الأدمن</div>
+      <textarea id="rdNote" placeholder="أضف ملاحظة اختيارية...">${r.adminNote||''}</textarea>
+    </div>
+  `;
+  document.getElementById('reqDetailActions').innerHTML=`
+    ${r.status==='pending'?
+      `<button class="btn-modal-save" onclick="approveFromDetail('${r.id}')"><i class="fas fa-check"></i> موافقة</button>
+       <button class="btn-modal-cancel" style="background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171" onclick="rejectFromDetail('${r.id}')"><i class="fas fa-times"></i> رفض</button>`
+      :r.status==='rejected'?
+      `<button class="btn-modal-save" onclick="approveFromDetail('${r.id}')"><i class="fas fa-check"></i> قبول بدلاً</button>`
+      :`<button class="btn-modal-cancel" style="background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171" onclick="rejectFromDetail('${r.id}')"><i class="fas fa-undo"></i> إلغاء القبول</button>`
+    }
+    <button class="btn-modal-cancel" onclick="document.getElementById('reqDetailModal').classList.remove('open')"><i class="fas fa-times"></i> إغلاق</button>
+  `;
+  document.getElementById('reqDetailModal').classList.add('open');
+}
+
+function approveFromDetail(id){
+  const note = document.getElementById('rdNote').value.trim();
+  const reqs = getJoinRequests(); const r=reqs.find(x=>x.id===id);
+  if(r && note){ r.adminNote=note; saveJoinRequests(reqs); }
+  document.getElementById('reqDetailModal').classList.remove('open');
+  approveReq(id);
+}
+function rejectFromDetail(id){
+  const note = document.getElementById('rdNote').value.trim();
+  const reqs = getJoinRequests(); const r=reqs.find(x=>x.id===id);
+  if(r && note){ r.adminNote=note; saveJoinRequests(reqs); }
+  document.getElementById('reqDetailModal').classList.remove('open');
+  rejectReq(id);
+}
+
+// ======= JOIN REQUESTS FUNCTIONS END =======
 
 // ======= GALLERY MODAL FUNCTIONS =======
 let _galFiles = [];
