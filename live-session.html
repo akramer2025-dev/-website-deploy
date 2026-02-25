@@ -765,7 +765,7 @@ function saveRecording(){
   const blob = new Blob(recChunks,{type:'video/webm'});
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
-  const dt   = new Date().toLocaleDateString('ar-EG',{year:'2-digit',month:'2-digit',day:'2-digit'}).replace(///g,'-');
+  const dt   = new Date().toLocaleDateString('ar-EG',{year:'2-digit',month:'2-digit',day:'2-digit'}).replace(/\//g,'-');
   a.href     = url;
   a.download = `محاضرة-${(SESSION&&SESSION.title)?SESSION.title:'تسجيل'}-${dt}.webm`;
   document.body.appendChild(a);
