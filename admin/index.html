@@ -2162,7 +2162,8 @@ function renderSlideEditor(){
           </div>
           <input id="sf-file-${i}" type="file" accept="image/*" style="display:none" onchange="onSlideFileChange(${i},this)">
           ${s.src?`<img id="sf-imgpreview-${i}" src="${s.src.startsWith('data:')?s.src:''}" style="margin-top:8px;max-height:90px;border-radius:8px;display:${s.src.startsWith('data:')?'block':'none'};">`:`<img id="sf-imgpreview-${i}" style="display:none;">`}
-          ${s.src && !s.src.startsWith('data:')?`<img src="${s.src}" style="margin-top:8px;max-height:90px;border-radius:8px;border:1px solid var(--border)" onerror="this.style.display='none'">`:''}
+          ${s.src && s.src.startsWith('http')?`<img src="${s.src}" style="margin-top:8px;max-height:90px;border-radius:8px;border:1px solid var(--border)" onerror="this.style.display='none'">`:''}
+          ${s.src && !s.src.startsWith('http') && !s.src.startsWith('data:') && s.src.trim()?`<div style="margin-top:6px;font-size:.75rem;color:#f87171;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:6px 10px;"><i class="fas fa-exclamation-triangle" style="margin-left:5px;"></i>الصورة مفقودة — أعد رفعها</div>`:''}
         </div>`:`
         <div class="slide-field">
           <label>${s.type==='video'?'رابط الفيديو (يوتيوب أو mp4)':'رابط PDF'}</label>

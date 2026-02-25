@@ -281,8 +281,28 @@ let sidebarVisible = true;
 let isAnimating = false;
 let lectureData = null;
 
+// نصوص placeholder وهمية لا تُعتبر src حقيقي
+const FAKE_SRCS = new Set(['[صورة مرفوعة]','[محلي]','✓ تم الرفع','جاري الرفع...','']);
+function cleanSlides(arr){
+  return (arr||[]).map(s=>({...s, src: FAKE_SRCS.has((s.src||'').trim()) ? '' : s.src}));
+}
+
+// Firebase config
+const FB_CONFIG = {
+  apiKey:'AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s',
+  authDomain:'akramplatform-2c6be.firebaseapp.com',
+  projectId:'akramplatform-2c6be'
+};
+let _db = null;
+try{
+  if(!firebase.apps.find(a=>a.name==='viewer')){
+    firebase.initializeApp(FB_CONFIG,'viewer');
+  }
+  _db = firebase.app('viewer').firestore();
+}catch(e){ console.warn('Firebase init failed',e); }
+
 // ─── INIT ──────────────────────────────────────────────────────
-function init(){
+async function init(){
   const params = new URLSearchParams(location.search);
   const courseKey = params.get('course');
   const lecId = params.get('id');
@@ -291,16 +311,32 @@ function init(){
     showToast('معرّف المحاضرة غير موجود','error'); return;
   }
 
-  const allLectures = JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}');
-  const courseLecs = allLectures[courseKey]||[];
-  lectureData = courseLecs.find(l=>l.id===lecId);
+  // حاول التحميل من Firebase أولاً
+  if(_db){
+    try{
+      const doc = await _db.collection('admin_data').doc('lectures').get();
+      if(doc.exists){
+        const data = doc.data()||{};
+        const courseLecs = data[courseKey]||[];
+        lectureData = courseLecs.find(l=>l.id===lecId)||null;
+      }
+    }catch(e){ console.warn('Firebase load failed, using localStorage',e); }
+  }
+
+  // fallback: localStorage
+  if(!lectureData){
+    const allLectures = JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}');
+    const courseLecs = allLectures[courseKey]||[];
+    lectureData = courseLecs.find(l=>l.id===lecId)||null;
+  }
 
   if(!lectureData){
     document.getElementById('tbLecTitle').textContent = 'المحاضرة غير موجودة';
     return;
   }
 
-  slides = lectureData.slides || [];
+  // تنظيف الـ src الوهمية
+  slides = cleanSlides(lectureData.slides);
   document.getElementById('tbLecTitle').textContent = lectureData.title;
   document.getElementById('tbCrsName').textContent = COURSES_NAMES[courseKey]||courseKey;
   document.title = lectureData.title + ' | Akram Mostafa';
