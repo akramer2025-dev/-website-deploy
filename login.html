@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول | Akram Mostafa</title>
+    <title>طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„ | Akram Mostafa</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -43,10 +43,10 @@
         .back-btn { position:fixed; top:25px; right:30px; display:flex; align-items:center; gap:8px; color:rgba(255,255,255,.7); text-decoration:none; font-size:14px; font-weight:600; transition:all .3s; z-index:10; }
         .back-btn:hover { color:#fff; transform:translateX(5px); }
 
-        /* ──── WRAPPER ──── */
+        /* â”€â”€â”€â”€ WRAPPER â”€â”€â”€â”€ */
         .login-wrapper { width:100%; max-width:480px; padding:20px; position:relative; z-index:5; }
 
-        /* ──── STEP: ROLE SELECTION ──── */
+        /* â”€â”€â”€â”€ STEP: ROLE SELECTION â”€â”€â”€â”€ */
         #stepRole { animation:slideUp .45s ease-out both; }
         .role-logo { text-align:center; margin-bottom:32px; }
         .role-logo .logo-icon { width:70px; height:70px; background:linear-gradient(135deg,#667eea,#764ba2); border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; box-shadow:0 10px 30px rgba(102,126,234,.4); }
@@ -60,14 +60,14 @@
         .role-card { flex:1; padding:28px 16px; border-radius:20px; cursor:pointer; transition:all .25s; border:2px solid rgba(255,255,255,.08); background:rgba(255,255,255,.04); display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; backdrop-filter:blur(16px); }
         .role-card:hover { transform:translateY(-4px); }
 
-        /* ADMIN card — red */
+        /* ADMIN card â€” red */
         .role-card.admin-card { border-color:rgba(239,68,68,.25); background:rgba(239,68,68,.06); }
         .role-card.admin-card:hover { border-color:rgba(239,68,68,.55); background:rgba(239,68,68,.12); box-shadow:0 12px 35px rgba(239,68,68,.2); }
         .role-card.admin-card .rc-ico { background:linear-gradient(135deg,#ef4444,#b91c1c); box-shadow:0 8px 24px rgba(239,68,68,.35); }
         .role-card.admin-card .rc-label { color:#fca5a5; }
         .role-card.admin-card .rc-sub   { color:rgba(252,165,165,.55); }
 
-        /* STUDENT card — purple */
+        /* STUDENT card â€” purple */
         .role-card.student-card { border-color:rgba(167,139,250,.25); background:rgba(167,139,250,.06); }
         .role-card.student-card:hover { border-color:rgba(167,139,250,.55); background:rgba(167,139,250,.12); box-shadow:0 12px 35px rgba(167,139,250,.2); }
         .role-card.student-card .rc-ico { background:linear-gradient(135deg,#a78bfa,#6d28d9); box-shadow:0 8px 24px rgba(167,139,250,.35); }
@@ -79,14 +79,14 @@
         .rc-label { font-size:17px; font-weight:900; }
         .rc-sub   { font-size:12px; }
 
-        /* ──── SHARED CARD ──── */
+        /* â”€â”€â”€â”€ SHARED CARD â”€â”€â”€â”€ */
         .login-card { background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.1); border-radius:28px; padding:44px 40px; backdrop-filter:blur(20px); box-shadow:0 25px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08); animation:slideUp .45s ease-out both; }
         @keyframes slideUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
 
         /* ADMIN card override */
         #stepAdmin .login-card { border-color:rgba(239,68,68,.25); background:rgba(239,68,68,.04); }
 
-        /* ──── FORM HEADER ──── */
+        /* â”€â”€â”€â”€ FORM HEADER â”€â”€â”€â”€ */
         .form-head { display:flex; align-items:center; gap:14px; margin-bottom:28px; }
         .form-head-ico { width:50px; height:50px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
         .form-head-ico i { font-size:22px; color:#fff; }
@@ -95,11 +95,11 @@
         .form-head-text h2 { font-size:18px; font-weight:900; color:#fff; margin-bottom:3px; }
         .form-head-text p  { font-size:12px; color:rgba(255,255,255,.4); }
 
-        /* ──── ADMIN WARNING BADGE ──── */
+        /* â”€â”€â”€â”€ ADMIN WARNING BADGE â”€â”€â”€â”€ */
         .admin-warning { display:flex; align-items:center; gap:10px; background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.25); border-radius:12px; padding:11px 14px; margin-bottom:22px; color:#fca5a5; font-size:12px; font-weight:600; }
         .admin-warning i { font-size:15px; flex-shrink:0; }
 
-        /* ──── FIELDS ──── */
+        /* â”€â”€â”€â”€ FIELDS â”€â”€â”€â”€ */
         .form-group { margin-bottom:18px; position:relative; }
         .form-group label { display:block; font-size:13px; font-weight:600; color:rgba(255,255,255,.65); margin-bottom:7px; }
         .input-wrapper { position:relative; }
@@ -112,11 +112,11 @@
         .input-wrapper input::placeholder,
         .input-wrapper textarea::placeholder { color:rgba(255,255,255,.22); font-weight:400; }
 
-        /* Admin — red focus */
+        /* Admin â€” red focus */
         #stepAdmin .input-wrapper input:focus { border-color:#ef4444; background:rgba(239,68,68,.07); box-shadow:0 0 0 4px rgba(239,68,68,.13); }
         #stepAdmin .input-wrapper input:focus ~ i.field-ico { color:#ef4444; }
 
-        /* Student — purple focus */
+        /* Student â€” purple focus */
         #stepStudent .input-wrapper input:focus,
         #stepRequest .input-wrapper input:focus,
         #stepRequest .input-wrapper select:focus,
@@ -126,13 +126,13 @@
         .toggle-password { position:absolute; left:13px; top:50%; transform:translateY(-50%); background:none; border:none; color:rgba(255,255,255,.3); cursor:pointer; font-size:14px; padding:4px; transition:color .3s; }
         .toggle-password:hover { color:rgba(255,255,255,.7); }
 
-        /* ──── MESSAGES ──── */
+        /* â”€â”€â”€â”€ MESSAGES â”€â”€â”€â”€ */
         .error-msg   { display:none; align-items:center; gap:8px; background:rgba(233,78,119,.12); border:1px solid rgba(233,78,119,.3); border-radius:12px; padding:11px 15px; color:#ff6b8a; font-size:13px; font-weight:600; margin-bottom:18px; }
         .error-msg.show { display:flex; }
         .success-msg { display:none; align-items:center; gap:8px; background:rgba(37,211,102,.12); border:1px solid rgba(37,211,102,.3); border-radius:12px; padding:11px 15px; color:#25D366; font-size:13px; font-weight:700; margin-bottom:18px; }
         .success-msg.show { display:flex; }
 
-        /* ──── BUTTONS ──── */
+        /* â”€â”€â”€â”€ BUTTONS â”€â”€â”€â”€ */
         .btn-submit { width:100%; padding:14px; border:none; border-radius:13px; color:#fff; font-family:'Cairo',sans-serif; font-size:15px; font-weight:700; cursor:pointer; transition:all .3s; display:flex; align-items:center; justify-content:center; gap:10px; }
         .btn-submit:hover  { transform:translateY(-2px); }
         .btn-submit:active { transform:translateY(0); }
@@ -147,31 +147,31 @@
         .btn-student { background:linear-gradient(135deg,#a78bfa,#6d28d9); box-shadow:0 8px 24px rgba(167,139,250,.35); }
         .btn-student:hover { box-shadow:0 12px 32px rgba(167,139,250,.5); }
 
-        /* ──── BACK LINK ──── */
+        /* â”€â”€â”€â”€ BACK LINK â”€â”€â”€â”€ */
         .back-role { display:flex; align-items:center; gap:6px; background:none; border:none; color:rgba(255,255,255,.4); font-family:'Cairo',sans-serif; font-size:13px; cursor:pointer; padding:0; margin-top:20px; transition:color .3s; }
         .back-role:hover { color:rgba(255,255,255,.75); }
 
-        /* ──── DIVIDER ──── */
+        /* â”€â”€â”€â”€ DIVIDER â”€â”€â”€â”€ */
         .divider { display:flex; align-items:center; gap:12px; margin:22px 0; color:rgba(255,255,255,.25); font-size:12px; }
         .divider::before,.divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.08); }
 
-        /* ──── REQUEST LINK ──── */
+        /* â”€â”€â”€â”€ REQUEST LINK â”€â”€â”€â”€ */
         .req-link { text-align:center; font-size:13px; color:rgba(255,255,255,.4); }
         .req-link button { background:none; border:none; color:#c4b5fd; font-family:'Cairo',sans-serif; font-size:13px; font-weight:700; cursor:pointer; padding:0; transition:color .3s; }
         .req-link button:hover { color:#e9d5ff; }
 
-        /* ──── REQUEST SUCCESS ──── */
+        /* â”€â”€â”€â”€ REQUEST SUCCESS â”€â”€â”€â”€ */
         .req-success-box { text-align:center; padding:20px 0; }
         .req-success-box .rs-ico { width:70px; height:70px; background:rgba(37,211,102,.15); border:2px solid rgba(37,211,102,.3); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
         .req-success-box .rs-ico i { font-size:30px; color:#25D366; }
         .req-success-box h3 { font-size:18px; font-weight:900; color:#fff; margin-bottom:8px; }
         .req-success-box p  { font-size:13px; color:rgba(255,255,255,.45); line-height:1.7; }
 
-        /* ──── STU HINT ──── */
+        /* â”€â”€â”€â”€ STU HINT â”€â”€â”€â”€ */
         .stu-id-hint { background:rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.15); border-radius:12px; padding:10px 14px; margin-bottom:18px; font-size:12px; color:rgba(196,181,253,.7); line-height:1.6; }
         .stu-id-hint i { color:#a78bfa; margin-left:5px; }
 
-        /* ──── FOOTER ──── */
+        /* â”€â”€â”€â”€ FOOTER â”€â”€â”€â”€ */
         .login-footer { text-align:center; margin-top:24px; padding-top:20px; border-top:1px solid rgba(255,255,255,.06); color:rgba(255,255,255,.35); font-size:13px; }
         .login-footer a { color:#a78bfa; text-decoration:none; font-weight:700; }
         .login-footer a:hover { color:#c4b5fd; }
@@ -191,137 +191,137 @@
 
     <a href="index.html" class="back-btn">
         <i class="fas fa-arrow-right"></i>
-        <span>العودة للرئيسية</span>
+        <span>ط§ظ„ط¹ظˆط¯ط© ظ„ظ„ط±ط¦ظٹط³ظٹط©</span>
     </a>
 
     <div class="login-wrapper">
 
-        <!-- ══════════ STEP 1: اختيار الدور ══════════ -->
+        <!-- â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ STEP 1: ط§ط®طھظٹط§ط± ط§ظ„ط¯ظˆط± â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ -->
         <div id="stepRole">
             <div class="role-logo">
                 <div class="logo-icon"><i class="fas fa-play"></i></div>
                 <h1>AKRAM MOSTAFA</h1>
-                <p>منصة التسويق والإعلانات الرقمية</p>
+                <p>ظ…ظ†طµط© ط§ظ„طھط³ظˆظٹظ‚ ظˆط§ظ„ط¥ط¹ظ„ط§ظ†ط§طھ ط§ظ„ط±ظ‚ظ…ظٹط©</p>
             </div>
-            <p class="role-title">من أنت؟ اختر طريقة الدخول</p>
+            <p class="role-title">ظ…ظ† ط£ظ†طھطں ط§ط®طھط± ط·ط±ظٹظ‚ط© ط§ظ„ط¯ط®ظˆظ„</p>
             <div class="role-cards">
                 <div class="role-card admin-card" onclick="showStep('admin')">
                     <div class="rc-ico"><i class="fas fa-shield-alt"></i></div>
-                    <span class="rc-label">مدير النظام</span>
-                    <span class="rc-sub">دخول الأدمن فقط</span>
+                    <span class="rc-label">ظ…ط¯ظٹط± ط§ظ„ظ†ط¸ط§ظ…</span>
+                    <span class="rc-sub">ط¯ط®ظˆظ„ ط§ظ„ط£ط¯ظ…ظ† ظپظ‚ط·</span>
                 </div>
                 <div class="role-card student-card" onclick="showStep('student')">
                     <div class="rc-ico"><i class="fas fa-graduation-cap"></i></div>
-                    <span class="rc-label">طالب / عميل</span>
-                    <span class="rc-sub">دخول الطلاب المسجّلين</span>
+                    <span class="rc-label">ط·ط§ظ„ط¨ / ط¹ظ…ظٹظ„</span>
+                    <span class="rc-sub">ط¯ط®ظˆظ„ ط§ظ„ط·ظ„ط§ط¨ ط§ظ„ظ…ط³ط¬ظ‘ظ„ظٹظ†</span>
                 </div>
             </div>
             <div class="login-footer">
-                <p>محتاج مساعدة؟ <a href="https://wa.me/00201555512778?text=محتاج%20مساعدة%20بخصوص%20تسجيل%20الدخول" target="_blank"><i class="fab fa-whatsapp"></i> تواصل معنا</a></p>
+                <p>ظ…ط­طھط§ط¬ ظ…ط³ط§ط¹ط¯ط©طں <a href="https://wa.me/00201555512778?text=ظ…ط­طھط§ط¬%20ظ…ط³ط§ط¹ط¯ط©%20ط¨ط®طµظˆطµ%20طھط³ط¬ظٹظ„%20ط§ظ„ط¯ط®ظˆظ„" target="_blank"><i class="fab fa-whatsapp"></i> طھظˆط§طµظ„ ظ…ط¹ظ†ط§</a></p>
             </div>
         </div>
 
-        <!-- ══════════ STEP 2A: دخول الأدمن ══════════ -->
+        <!-- â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ STEP 2A: ط¯ط®ظˆظ„ ط§ظ„ط£ط¯ظ…ظ† â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ -->
         <div id="stepAdmin" style="display:none;">
             <div class="login-card">
                 <div class="form-head admin-head">
                     <div class="form-head-ico"><i class="fas fa-shield-alt"></i></div>
                     <div class="form-head-text">
-                        <h2>دخول مدير النظام</h2>
-                        <p>لوحة التحكم الكاملة</p>
+                        <h2>ط¯ط®ظˆظ„ ظ…ط¯ظٹط± ط§ظ„ظ†ط¸ط§ظ…</h2>
+                        <p>ظ„ظˆط­ط© ط§ظ„طھط­ظƒظ… ط§ظ„ظƒط§ظ…ظ„ط©</p>
                     </div>
                 </div>
                 <div class="admin-warning">
                     <i class="fas fa-exclamation-triangle"></i>
-                    هذه الصفحة مخصصة للمدير فقط — غير مصرح لغير المخوّلين
+                    ظ‡ط°ظ‡ ط§ظ„طµظپط­ط© ظ…ط®طµطµط© ظ„ظ„ظ…ط¯ظٹط± ظپظ‚ط· â€” ط؛ظٹط± ظ…طµط±ط­ ظ„ط؛ظٹط± ط§ظ„ظ…ط®ظˆظ‘ظ„ظٹظ†
                 </div>
-                <div class="error-msg" id="adminError"><i class="fas fa-times-circle"></i><span id="adminErrTxt">بيانات المدير غير صحيحة</span></div>
-                <div class="success-msg" id="adminSuccess"><i class="fas fa-check-circle"></i><span>تم التحقق! جاري الدخول...</span></div>
+                <div class="error-msg" id="adminError"><i class="fas fa-times-circle"></i><span id="adminErrTxt">ط¨ظٹط§ظ†ط§طھ ط§ظ„ظ…ط¯ظٹط± ط؛ظٹط± طµط­ظٹط­ط©</span></div>
+                <div class="success-msg" id="adminSuccess"><i class="fas fa-check-circle"></i><span>طھظ… ط§ظ„طھط­ظ‚ظ‚! ط¬ط§ط±ظٹ ط§ظ„ط¯ط®ظˆظ„...</span></div>
                 <form onsubmit="handleAdminLogin(event)">
                     <div class="form-group">
-                        <label><i class="fas fa-user" style="margin-left:5px;opacity:.6;"></i> اسم المستخدم</label>
+                        <label><i class="fas fa-user" style="margin-left:5px;opacity:.6;"></i> ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ…</label>
                         <div class="input-wrapper">
-                            <input type="text" id="adminUser" placeholder="أدخل اسم المستخدم" autocomplete="username" required>
+                            <input type="text" id="adminUser" placeholder="ط£ط¯ط®ظ„ ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ…" autocomplete="username" required>
                             <i class="fas fa-user field-ico"></i>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-lock" style="margin-left:5px;opacity:.6;"></i> كلمة المرور</label>
+                        <label><i class="fas fa-lock" style="margin-left:5px;opacity:.6;"></i> ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±</label>
                         <div class="input-wrapper">
-                            <input type="password" id="adminPass" placeholder="أدخل كلمة المرور" autocomplete="current-password" required>
+                            <input type="password" id="adminPass" placeholder="ط£ط¯ط®ظ„ ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±" autocomplete="current-password" required>
                             <i class="fas fa-lock field-ico"></i>
                             <button type="button" class="toggle-password" onclick="togglePw('adminPass',this)"><i class="fas fa-eye"></i></button>
                         </div>
                     </div>
                     <button type="submit" class="btn-submit btn-admin" id="adminBtn">
                         <div class="spinner"></div>
-                        <span class="btn-text"><i class="fas fa-shield-alt"></i> دخول لوحة الأدمن</span>
+                        <span class="btn-text"><i class="fas fa-shield-alt"></i> ط¯ط®ظˆظ„ ظ„ظˆط­ط© ط§ظ„ط£ط¯ظ…ظ†</span>
                     </button>
                 </form>
                 <button class="back-role" onclick="showStep('role')">
-                    <i class="fas fa-arrow-right"></i> العودة لاختيار الدور
+                    <i class="fas fa-arrow-right"></i> ط§ظ„ط¹ظˆط¯ط© ظ„ط§ط®طھظٹط§ط± ط§ظ„ط¯ظˆط±
                 </button>
             </div>
-            <p class="login-copyright">&copy; 2026 Akram Mostafa. جميع الحقوق محفوظة.</p>
+            <p class="login-copyright">&copy; 2026 Akram Mostafa. ط¬ظ…ظٹط¹ ط§ظ„ط­ظ‚ظˆظ‚ ظ…ط­ظپظˆط¸ط©.</p>
         </div>
 
-        <!-- ══════════ STEP 2B: دخول الطالب ══════════ -->
+        <!-- â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ STEP 2B: ط¯ط®ظˆظ„ ط§ظ„ط·ط§ظ„ط¨ â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ -->
         <div id="stepStudent" style="display:none;">
             <div class="login-card">
                 <div class="form-head student-head">
                     <div class="form-head-ico"><i class="fas fa-graduation-cap"></i></div>
                     <div class="form-head-text">
-                        <h2>دخول الطالب</h2>
-                        <p>ادخل ببياناتك المسجّلة</p>
+                        <h2>ط¯ط®ظˆظ„ ط§ظ„ط·ط§ظ„ط¨</h2>
+                        <p>ط§ط¯ط®ظ„ ط¨ط¨ظٹط§ظ†ط§طھظƒ ط§ظ„ظ…ط³ط¬ظ‘ظ„ط©</p>
                     </div>
                 </div>
                 <div class="stu-id-hint">
                     <i class="fas fa-id-badge"></i>
-                    سجّل بـ <strong>اسم المستخدم</strong> أو <strong>الرقم التعريفي (STU-XXX)</strong> + كلمة المرور
+                    ط³ط¬ظ‘ظ„ ط¨ظ€ <strong>ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ…</strong> ط£ظˆ <strong>ط§ظ„ط±ظ‚ظ… ط§ظ„طھط¹ط±ظٹظپظٹ (STU-XXX)</strong> + ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±
                 </div>
-                <div class="error-msg" id="stuError"><i class="fas fa-times-circle"></i><span id="stuErrTxt">اسم المستخدم أو كلمة المرور غير صحيحة</span></div>
-                <div class="success-msg" id="stuSuccess"><i class="fas fa-check-circle"></i><span>تم تسجيل الدخول! جاري التحويل...</span></div>
+                <div class="error-msg" id="stuError"><i class="fas fa-times-circle"></i><span id="stuErrTxt">ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ… ط£ظˆ ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط؛ظٹط± طµط­ظٹط­ط©</span></div>
+                <div class="success-msg" id="stuSuccess"><i class="fas fa-check-circle"></i><span>طھظ… طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„! ط¬ط§ط±ظٹ ط§ظ„طھط­ظˆظٹظ„...</span></div>
                 <form onsubmit="handleStudentLogin(event)">
                     <div class="form-group">
-                        <label><i class="fas fa-user" style="margin-left:5px;opacity:.6;"></i> اسم المستخدم</label>
+                        <label><i class="fas fa-user" style="margin-left:5px;opacity:.6;"></i> ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ…</label>
                         <div class="input-wrapper">
-                            <input type="text" id="stuUser" placeholder="أدخل اسم المستخدم" autocomplete="username" required>
+                            <input type="text" id="stuUser" placeholder="ط£ط¯ط®ظ„ ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ…" autocomplete="username" required>
                             <i class="fas fa-user field-ico"></i>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-lock" style="margin-left:5px;opacity:.6;"></i> كلمة المرور</label>
+                        <label><i class="fas fa-lock" style="margin-left:5px;opacity:.6;"></i> ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±</label>
                         <div class="input-wrapper">
-                            <input type="password" id="stuPass" placeholder="أدخل كلمة المرور" autocomplete="current-password" required>
+                            <input type="password" id="stuPass" placeholder="ط£ط¯ط®ظ„ ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط±" autocomplete="current-password" required>
                             <i class="fas fa-lock field-ico"></i>
                             <button type="button" class="toggle-password" onclick="togglePw('stuPass',this)"><i class="fas fa-eye"></i></button>
                         </div>
                     </div>
                     <button type="submit" class="btn-submit btn-student" id="stuBtn">
                         <div class="spinner"></div>
-                        <span class="btn-text"><i class="fas fa-sign-in-alt"></i> دخول</span>
+                        <span class="btn-text"><i class="fas fa-sign-in-alt"></i> ط¯ط®ظˆظ„</span>
                     </button>
                 </form>
-                <div class="divider">أو</div>
+                <div class="divider">ط£ظˆ</div>
                 <div class="req-link">
-                    <span>طالب جديد ومش مسجّل؟ </span>
-                    <button onclick="showStep('request')">اطلب الانضمام للمنصة</button>
+                    <span>ط·ط§ظ„ط¨ ط¬ط¯ظٹط¯ ظˆظ…ط´ ظ…ط³ط¬ظ‘ظ„طں </span>
+                    <button onclick="showStep('request')">ط§ط·ظ„ط¨ ط§ظ„ط§ظ†ط¶ظ…ط§ظ… ظ„ظ„ظ…ظ†طµط©</button>
                 </div>
                 <button class="back-role" onclick="showStep('role')">
-                    <i class="fas fa-arrow-right"></i> العودة لاختيار الدور
+                    <i class="fas fa-arrow-right"></i> ط§ظ„ط¹ظˆط¯ط© ظ„ط§ط®طھظٹط§ط± ط§ظ„ط¯ظˆط±
                 </button>
             </div>
-            <p class="login-copyright">&copy; 2026 Akram Mostafa. جميع الحقوق محفوظة.</p>
+            <p class="login-copyright">&copy; 2026 Akram Mostafa. ط¬ظ…ظٹط¹ ط§ظ„ط­ظ‚ظˆظ‚ ظ…ط­ظپظˆط¸ط©.</p>
         </div>
 
-        <!-- ══════════ STEP 3: طلب انضمام ══════════ -->
+        <!-- â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ STEP 3: ط·ظ„ط¨ ط§ظ†ط¶ظ…ط§ظ… â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ -->
         <div id="stepRequest" style="display:none;">
             <div class="login-card">
                 <div class="form-head student-head">
                     <div class="form-head-ico"><i class="fas fa-user-plus"></i></div>
                     <div class="form-head-text">
-                        <h2>طلب الانضمام</h2>
-                        <p>سيقوم الأدمن بمراجعة طلبك ومنحك رقمك التعريفي</p>
+                        <h2>ط·ظ„ط¨ ط§ظ„ط§ظ†ط¶ظ…ط§ظ…</h2>
+                        <p>ط³ظٹظ‚ظˆظ… ط§ظ„ط£ط¯ظ…ظ† ط¨ظ…ط±ط§ط¬ط¹ط© ط·ظ„ط¨ظƒ ظˆظ…ظ†ط­ظƒ ط±ظ‚ظ…ظƒ ط§ظ„طھط¹ط±ظٹظپظٹ</p>
                     </div>
                 </div>
 
@@ -330,87 +330,87 @@
                     <div style="width:70px;height:70px;background:rgba(37,211,102,.15);border:2px solid rgba(37,211,102,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
                         <i class="fas fa-check" style="font-size:30px;color:#25D366;"></i>
                     </div>
-                    <h3 style="font-size:18px;font-weight:900;color:#fff;margin-bottom:8px;">تم إرسال طلبك!</h3>
-                    <p style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;">سيقوم الأدمن بمراجعة طلبك في أقرب وقت<br>وإرسال بياناتك (اسم المستخدم + كلمة المرور + رقمك التعريفي)</p>
+                    <h3 style="font-size:18px;font-weight:900;color:#fff;margin-bottom:8px;">طھظ… ط¥ط±ط³ط§ظ„ ط·ظ„ط¨ظƒ!</h3>
+                    <p style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;">ط³ظٹظ‚ظˆظ… ط§ظ„ط£ط¯ظ…ظ† ط¨ظ…ط±ط§ط¬ط¹ط© ط·ظ„ط¨ظƒ ظپظٹ ط£ظ‚ط±ط¨ ظˆظ‚طھ<br>ظˆط¥ط±ط³ط§ظ„ ط¨ظٹط§ظ†ط§طھظƒ (ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ… + ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± + ط±ظ‚ظ…ظƒ ط§ظ„طھط¹ط±ظٹظپظٹ)</p>
                     <button class="btn-submit btn-student" style="margin-top:22px;" onclick="showStep('student')">
-                        <span class="btn-text"><i class="fas fa-arrow-right"></i> رجوع لتسجيل الدخول</span>
+                        <span class="btn-text"><i class="fas fa-arrow-right"></i> ط±ط¬ظˆط¹ ظ„طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„</span>
                     </button>
                 </div>
 
                 <!-- Form -->
                 <div id="reqFormBox">
-                    <div class="error-msg" id="reqError"><i class="fas fa-times-circle"></i><span>يرجى ملء جميع الحقول المطلوبة</span></div>
+                    <div class="error-msg" id="reqError"><i class="fas fa-times-circle"></i><span>ظٹط±ط¬ظ‰ ظ…ظ„ط، ط¬ظ…ظٹط¹ ط§ظ„ط­ظ‚ظˆظ„ ط§ظ„ظ…ط·ظ„ظˆط¨ط©</span></div>
                     <form onsubmit="handleJoinRequest(event)">
                         <div class="form-group">
-                            <label><i class="fas fa-user" style="margin-left:5px;opacity:.6;"></i> الاسم الكامل *</label>
+                            <label><i class="fas fa-user" style="margin-left:5px;opacity:.6;"></i> ط§ظ„ط§ط³ظ… ط§ظ„ظƒط§ظ…ظ„ *</label>
                             <div class="input-wrapper">
-                                <input type="text" id="reqName" placeholder="أدخل اسمك الكامل" required>
+                                <input type="text" id="reqName" placeholder="ط£ط¯ط®ظ„ ط§ط³ظ…ظƒ ط§ظ„ظƒط§ظ…ظ„" required>
                                 <i class="fas fa-user field-ico"></i>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-phone" style="margin-left:5px;opacity:.6;"></i> رقم الهاتف / واتساب *</label>
+                            <label><i class="fas fa-phone" style="margin-left:5px;opacity:.6;"></i> ط±ظ‚ظ… ط§ظ„ظ‡ط§طھظپ / ظˆط§طھط³ط§ط¨ *</label>
                             <div class="input-wrapper">
-                                <input type="tel" id="reqPhone" placeholder="مثال: 01012345678" required>
+                                <input type="tel" id="reqPhone" placeholder="ظ…ط«ط§ظ„: 01012345678" required>
                                 <i class="fas fa-phone field-ico"></i>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-at" style="margin-left:5px;opacity:.6;"></i> اسم المستخدم *</label>
+                            <label><i class="fas fa-at" style="margin-left:5px;opacity:.6;"></i> ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ… *</label>
                             <div class="input-wrapper">
-                                <input type="text" id="reqUsername" placeholder="مثال: ahmed2025" autocomplete="username" required>
+                                <input type="text" id="reqUsername" placeholder="ظ…ط«ط§ظ„: ahmed2025" autocomplete="username" required>
                                 <i class="fas fa-at field-ico"></i>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-lock" style="margin-left:5px;opacity:.6;"></i> كلمة المرور *</label>
+                            <label><i class="fas fa-lock" style="margin-left:5px;opacity:.6;"></i> ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± *</label>
                             <div class="input-wrapper">
-                                <input type="password" id="reqPassword" placeholder="اختر كلمة مرور قوية" autocomplete="new-password" required>
+                                <input type="password" id="reqPassword" placeholder="ط§ط®طھط± ظƒظ„ظ…ط© ظ…ط±ظˆط± ظ‚ظˆظٹط©" autocomplete="new-password" required>
                                 <i class="fas fa-lock field-ico"></i>
                                 <button type="button" class="toggle-password" onclick="togglePw('reqPassword',this)"><i class="fas fa-eye"></i></button>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-book" style="margin-left:5px;opacity:.6;"></i> الكورس المهتم به</label>
+                            <label><i class="fas fa-book" style="margin-left:5px;opacity:.6;"></i> ط§ظ„ظƒظˆط±ط³ ط§ظ„ظ…ظ‡طھظ… ط¨ظ‡</label>
                             <div class="input-wrapper">
                                 <select id="reqCourse">
-                                    <option value="">اختر كورساً (اختياري)</option>
-                                    <option value="facebook-ads">إعلانات فيسبوك</option>
-                                    <option value="instagram">إنستجرام</option>
-                                    <option value="tiktok">تيك توك</option>
-                                    <option value="snapchat">سناب شات</option>
-                                    <option value="twitter">تويتر X</option>
-                                    <option value="programming">برمجة التطبيقات</option>
-                                    <option value="ai-marketing">تسويق بالذكاء الاصطناعي</option>
-                                    <option value="integrated-strategy">الاستراتيجية المتكاملة</option>
-                                    <option value="free">كورس مجاني</option>
+                                    <option value="">ط§ط®طھط± ظƒظˆط±ط³ط§ظ‹ (ط§ط®طھظٹط§ط±ظٹ)</option>
+                                    <option value="facebook-ads">ط¥ط¹ظ„ط§ظ†ط§طھ ظپظٹط³ط¨ظˆظƒ</option>
+                                    <option value="instagram">ط¥ظ†ط³طھط¬ط±ط§ظ…</option>
+                                    <option value="tiktok">طھظٹظƒ طھظˆظƒ</option>
+                                    <option value="snapchat">ط³ظ†ط§ط¨ ط´ط§طھ</option>
+                                    <option value="twitter">طھظˆظٹطھط± X</option>
+                                    <option value="programming">ط¨ط±ظ…ط¬ط© ط§ظ„طھط·ط¨ظٹظ‚ط§طھ</option>
+                                    <option value="ai-marketing">طھط³ظˆظٹظ‚ ط¨ط§ظ„ط°ظƒط§ط، ط§ظ„ط§طµط·ظ†ط§ط¹ظٹ</option>
+                                    <option value="integrated-strategy">ط§ظ„ط§ط³طھط±ط§طھظٹط¬ظٹط© ط§ظ„ظ…طھظƒط§ظ…ظ„ط©</option>
+                                    <option value="free">ظƒظˆط±ط³ ظ…ط¬ط§ظ†ظٹ</option>
                                 </select>
                                 <i class="fas fa-book field-ico"></i>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-comment" style="margin-left:5px;opacity:.6;"></i> ملاحظة إضافية</label>
+                            <label><i class="fas fa-comment" style="margin-left:5px;opacity:.6;"></i> ظ…ظ„ط§ط­ط¸ط© ط¥ط¶ط§ظپظٹط©</label>
                             <div class="input-wrapper">
-                                <textarea id="reqNote" placeholder="أي معلومة إضافية (اختياري)" style="height:70px;"></textarea>
+                                <textarea id="reqNote" placeholder="ط£ظٹ ظ…ط¹ظ„ظˆظ…ط© ط¥ط¶ط§ظپظٹط© (ط§ط®طھظٹط§ط±ظٹ)" style="height:70px;"></textarea>
                             </div>
                         </div>
                         <button type="submit" class="btn-submit btn-student" id="reqBtn">
                             <div class="spinner"></div>
-                            <span class="btn-text"><i class="fas fa-paper-plane"></i> إرسال الطلب</span>
+                            <span class="btn-text"><i class="fas fa-paper-plane"></i> ط¥ط±ط³ط§ظ„ ط§ظ„ط·ظ„ط¨</span>
                         </button>
                     </form>
                     <button class="back-role" onclick="showStep('student')">
-                        <i class="fas fa-arrow-right"></i> العودة لتسجيل الدخول
+                        <i class="fas fa-arrow-right"></i> ط§ظ„ط¹ظˆط¯ط© ظ„طھط³ط¬ظٹظ„ ط§ظ„ط¯ط®ظˆظ„
                     </button>
                 </div>
             </div>
-            <p class="login-copyright">&copy; 2026 Akram Mostafa. جميع الحقوق محفوظة.</p>
+            <p class="login-copyright">&copy; 2026 Akram Mostafa. ط¬ظ…ظٹط¹ ط§ظ„ط­ظ‚ظˆظ‚ ظ…ط­ظپظˆط¸ط©.</p>
         </div>
 
     </div><!-- /login-wrapper -->
 
     <script>
-        /* ─── NAVIGATION ─── */
+        /* â”€â”€â”€ NAVIGATION â”€â”€â”€ */
         const STEPS = ['stepRole','stepAdmin','stepStudent','stepRequest'];
         const MAP   = { role:'stepRole', admin:'stepAdmin', student:'stepStudent', request:'stepRequest' };
 
@@ -420,7 +420,7 @@
             document.querySelectorAll('.error-msg,.success-msg').forEach(el=>el.classList.remove('show'));
         }
 
-        /* ─── ADMIN LOGIN ─── */
+        /* â”€â”€â”€ ADMIN LOGIN â”€â”€â”€ */
         const ADMIN_ACCOUNTS = {
             "akram": { password:"Aazxc", name:"Akram Mostafa" }
         };
@@ -443,7 +443,7 @@
                     setLoading(btn,false);
                     setTimeout(()=>{ window.location.href='admin/index.html'; },1100);
                 } else {
-                    document.getElementById('adminErrTxt').textContent='بيانات المدير غير صحيحة';
+                    document.getElementById('adminErrTxt').textContent='ط¨ظٹط§ظ†ط§طھ ط§ظ„ظ…ط¯ظٹط± ط؛ظٹط± طµط­ظٹط­ط©';
                     document.getElementById('adminError').classList.add('show');
                     shakeCard('stepAdmin');
                     setLoading(btn,false);
@@ -451,7 +451,7 @@
             },800);
         }
 
-        /* ─── STUDENT LOGIN ─── */
+        /* â”€â”€â”€ STUDENT LOGIN â”€â”€â”€ */
         function handleStudentLogin(e){
             e.preventDefault();
             const user = document.getElementById('stuUser').value.trim();
@@ -481,12 +481,12 @@
                     const existsByUsername = lsUsers.find(u=>u.username===user);
                     const existsById       = lsUsers.find(u=>u.id===user.toUpperCase());
                     if(existsByUsername || existsById){
-                        document.getElementById('stuErrTxt').textContent='كلمة المرور غير صحيحة';
+                        document.getElementById('stuErrTxt').textContent='ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط؛ظٹط± طµط­ظٹط­ط©';
                     } else {
-                        document.getElementById('stuErrTxt').textContent='اسم المستخدم أو الرقم التعريفي غير موجود — اطلب الانضمام إذا لم تكن مسجلاً';
+                        document.getElementById('stuErrTxt').textContent='ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ… ط£ظˆ ط§ظ„ط±ظ‚ظ… ط§ظ„طھط¹ط±ظٹظپظٹ ط؛ظٹط± ظ…ظˆط¬ظˆط¯ â€” ط§ط·ظ„ط¨ ط§ظ„ط§ظ†ط¶ظ…ط§ظ… ط¥ط°ط§ ظ„ظ… طھظƒظ† ظ…ط³ط¬ظ„ط§ظ‹';
                     }
                 } catch(err){
-                    document.getElementById('stuErrTxt').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';
+                    document.getElementById('stuErrTxt').textContent='ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ… ط£ظˆ ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط؛ظٹط± طµط­ظٹط­ط©';
                 }
                 document.getElementById('stuError').classList.add('show');
                 shakeCard('stepStudent');
@@ -494,7 +494,7 @@
             },800);
         }
 
-        /* ─── JOIN REQUEST ─── */
+        /* â”€â”€â”€ JOIN REQUEST â”€â”€â”€ */
         function handleJoinRequest(e){
             e.preventDefault();
             const name     = document.getElementById('reqName').value.trim();
@@ -514,7 +514,7 @@
                 const usernameTaken = existingUsers.find(u=>u.username===username)
                                    || existingReqs.find(r=>r.username===username && r.status!=='rejected');
                 if(usernameTaken){
-                    document.getElementById('reqError').querySelector('span').textContent='اسم المستخدم هذا مأخوذ، اختر اسماً آخر';
+                    document.getElementById('reqError').querySelector('span').textContent='ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ… ظ‡ط°ط§ ظ…ط£ط®ظˆط°طŒ ط§ط®طھط± ط§ط³ظ…ط§ظ‹ ط¢ط®ط±';
                     document.getElementById('reqError').classList.add('show');
                     setLoading(btn,false);
                     return;
@@ -536,7 +536,7 @@
             },900);
         }
 
-        /* ─── HELPERS ─── */
+        /* â”€â”€â”€ HELPERS â”€â”€â”€ */
         function setLoading(btn,on){ btn.classList.toggle('loading',on); btn.disabled=on; }
         function clearMsgs(pfx){ ['Error','Success'].forEach(s=>{ const el=document.getElementById(pfx+s); if(el)el.classList.remove('show'); }); }
 
@@ -557,480 +557,6 @@
         /* clear errors on typing */
         ['adminUser','adminPass'].forEach(id=>document.getElementById(id)?.addEventListener('input',()=>document.getElementById('adminError').classList.remove('show')));
         ['stuUser','stuPass'].forEach(id=>document.getElementById(id)?.addEventListener('input',()=>document.getElementById('stuError').classList.remove('show')));
-    </script>
-</body>
-</html>
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Animated Background */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(102,126,234,0.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(118,75,162,0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 60% 80%, rgba(233,78,119,0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        /* Floating Orbs */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.12;
-            animation: floatOrb 8s ease-in-out infinite;
-            pointer-events: none;
-        }
-        .orb-1 { width: 400px; height: 400px; background: #667eea; top: -100px; right: -100px; animation-delay: 0s; }
-        .orb-2 { width: 300px; height: 300px; background: #e94e77; bottom: -80px; left: -80px; animation-delay: 3s; }
-        .orb-3 { width: 250px; height: 250px; background: #f7931e; top: 40%; left: 30%; animation-delay: 5s; }
-
-        @keyframes floatOrb {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, -30px) scale(1.05); }
-        }
-
-        /* Back Button */
-        .back-btn {
-            position: fixed;
-            top: 25px;
-            right: 30px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
-        .back-btn:hover { color: #fff; transform: translateX(5px); }
-        .back-btn i { font-size: 16px; }
-
-        /* Login Card */
-        .login-wrapper {
-            width: 100%;
-            max-width: 440px;
-            padding: 20px;
-            position: relative;
-            z-index: 5;
-        }
-
-        .login-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 28px;
-            padding: 48px 44px;
-            backdrop-filter: blur(20px);
-            box-shadow:
-                0 25px 60px rgba(0,0,0,0.4),
-                inset 0 1px 0 rgba(255,255,255,0.08);
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Logo */
-        .login-logo {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .login-logo .logo-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 14px;
-            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
-        }
-        .login-logo .logo-icon i { font-size: 30px; color: #fff; }
-
-        .login-logo h1 {
-            font-size: 22px;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 6px;
-        }
-
-        .login-logo p {
-            font-size: 14px;
-            color: rgba(255,255,255,0.5);
-        }
-
-        /* Form */
-        .login-form h2 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 8px;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-wrapper i {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(255,255,255,0.35);
-            font-size: 16px;
-            pointer-events: none;
-            transition: color 0.3s;
-        }
-
-        .input-wrapper input {
-            width: 100%;
-            padding: 14px 48px 14px 18px;
-            background: rgba(255,255,255,0.06);
-            border: 1.5px solid rgba(255,255,255,0.1);
-            border-radius: 14px;
-            color: #fff;
-            font-family: 'Cairo', sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            outline: none;
-            transition: all 0.3s ease;
-            direction: rtl;
-        }
-
-        .input-wrapper input::placeholder { color: rgba(255,255,255,0.25); font-weight: 400; }
-
-        .input-wrapper input:focus {
-            border-color: #667eea;
-            background: rgba(102,126,234,0.08);
-            box-shadow: 0 0 0 4px rgba(102,126,234,0.15);
-        }
-
-        .input-wrapper input:focus + i,
-        .input-wrapper:focus-within i { color: #667eea; }
-
-        /* Toggle password */
-        .toggle-password {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: rgba(255,255,255,0.3);
-            cursor: pointer;
-            font-size: 15px;
-            padding: 4px;
-            transition: color 0.3s;
-        }
-        .toggle-password:hover { color: rgba(255,255,255,0.7); }
-
-        /* Error Message */
-        .error-msg {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            background: rgba(233,78,119,0.12);
-            border: 1px solid rgba(233,78,119,0.3);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: #ff6b8a;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        .error-msg.show { display: flex; }
-        .error-msg i { font-size: 16px; flex-shrink: 0; }
-
-        /* Success Message */
-        .success-msg {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            background: rgba(37,211,102,0.12);
-            border: 1px solid rgba(37,211,102,0.3);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: #25D366;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        .success-msg.show { display: flex; }
-
-        /* Submit Button */
-        .btn-login {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border: none;
-            border-radius: 14px;
-            color: #fff;
-            font-family: 'Cairo', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(102,126,234,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(102,126,234,0.55);
-        }
-
-        .btn-login:active { transform: translateY(0); }
-
-        .btn-login:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-login .spinner {
-            display: none;
-            width: 18px;
-            height: 18px;
-            border: 2.5px solid rgba(255,255,255,0.4);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-        }
-        .btn-login.loading .spinner { display: block; }
-        .btn-login.loading .btn-text { display: none; }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Footer */
-        .login-footer {
-            text-align: center;
-            margin-top: 28px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255,255,255,0.07);
-        }
-
-        .login-footer p {
-            color: rgba(255,255,255,0.4);
-            font-size: 13px;
-            line-height: 1.7;
-        }
-
-        .login-footer a {
-            color: #a78bfa;
-            text-decoration: none;
-            font-weight: 700;
-            transition: color 0.3s;
-        }
-        .login-footer a:hover { color: #c4b5fd; }
-
-        /* Copyright */
-        .login-copyright {
-            text-align: center;
-            margin-top: 24px;
-            color: rgba(255,255,255,0.2);
-            font-size: 12px;
-        }
-
-        /* Mobile */
-        @media (max-width: 480px) {
-            .login-card { padding: 36px 28px; }
-            .back-btn { right: 16px; top: 16px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-
-    <a href="index.html" class="back-btn">
-        <i class="fas fa-arrow-right"></i>
-        <span>العودة للرئيسية</span>
-    </a>
-
-    <div class="login-wrapper">
-        <div class="login-card">
-            <div class="login-logo">
-                <div class="logo-icon">
-                    <i class="fas fa-play"></i>
-                </div>
-                <h1>AKRAM MOSTAFA</h1>
-                <p>منصة التسويق والإعلانات الرقمية</p>
-            </div>
-
-            <div class="login-form">
-                <h2><i class="fas fa-lock" style="color:#a78bfa;margin-left:8px;"></i> تسجيل الدخول</h2>
-
-                <div class="error-msg" id="errorMsg">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span id="errorText">اسم المستخدم أو كلمة المرور غير صحيحة</span>
-                </div>
-
-                <div class="success-msg" id="successMsg">
-                    <i class="fas fa-check-circle"></i>
-                    <span>تم تسجيل الدخول بنجاح! جاري التحويل...</span>
-                </div>
-
-                <form id="loginForm" onsubmit="handleLogin(event)">
-                    <div class="form-group">
-                        <label for="username"><i class="fas fa-user" style="margin-left:6px;opacity:0.7;"></i> اسم المستخدم</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="username" name="username" placeholder="أدخل اسم المستخدم" autocomplete="username" required>
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password"><i class="fas fa-lock" style="margin-left:6px;opacity:0.7;"></i> كلمة المرور</label>
-                        <div class="input-wrapper">
-                            <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" autocomplete="current-password" required>
-                            <i class="fas fa-lock"></i>
-                            <button type="button" class="toggle-password" onclick="togglePassword()" id="toggleBtn">
-                                <i class="fas fa-eye" id="eyeIcon"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-login" id="loginBtn">
-                        <div class="spinner"></div>
-                        <span class="btn-text"><i class="fas fa-sign-in-alt"></i> دخول</span>
-                    </button>
-                </form>
-            </div>
-
-            <div class="login-footer">
-                <p>محتاج مساعدة؟ <a href="https://wa.me/00201555512778?text=محتاج%20مساعدة%20بخصوص%20تسجيل%20الدخول" target="_blank"><i class="fab fa-whatsapp"></i> تواصل</a></p>
-            </div>
-        </div>
-        <p class="login-copyright">&copy; 2026 Akram Mostafa. جميع الحقوق محفوظة.</p>
-    </div>
-
-    <script>
-        // =====================================================
-        // بيانات العملاء - يمكن تعديل البيانات حسب الحاجة
-        // =====================================================
-        const CLIENTS = {
-            // "اسم_المستخدم": { password: "كلمة_المرور", name: "الاسم الكامل", redirect: "الصفحة" }
-            "akram":    { password: "Aazxc",     name: "Akram Mostafa",   redirect: "admin/index.html", isAdmin: true },
-            "client1":  { password: "pass1234",  name: "العميل الأول",    redirect: "index.html" },
-            "client2":  { password: "pass5678",  name: "العميل الثاني",   redirect: "index.html" },
-            // يمكن إضافة المزيد هنا حسب الحاجة
-        };
-        // =====================================================
-
-        function handleLogin(e) {
-            e.preventDefault();
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            const btn      = document.getElementById('loginBtn');
-            const errorMsg = document.getElementById('errorMsg');
-            const successMsg = document.getElementById('successMsg');
-
-            // Reset messages
-            errorMsg.classList.remove('show');
-            successMsg.classList.remove('show');
-
-            // Loading state
-            btn.classList.add('loading');
-            btn.disabled = true;
-
-            setTimeout(() => {
-                // Check CLIENTS first (admin & registered clients take priority)
-                const client = CLIENTS[username] || CLIENTS[username.toLowerCase()];
-
-                if (client && client.password === password) {
-                    // Success
-                    successMsg.classList.add('show');
-                    sessionStorage.setItem('akram_logged_in', 'true');
-                    sessionStorage.setItem('akram_client_name', client.name);
-                    sessionStorage.setItem('akram_username', username);
-                    if (client.isAdmin) {
-                        sessionStorage.setItem('am_admin_auth', '1');
-                    }
-                    btn.classList.remove('loading');
-                    btn.disabled = false;
-                    setTimeout(() => {
-                        window.location.href = client.redirect || 'index.html';
-                    }, 1200);
-                } else {
-                    // Check localStorage users (employees / students)
-                    try {
-                        const lsUsers = JSON.parse(localStorage.getItem('am_users') || '[]');
-                        const lsUser = lsUsers.find(u => u.username === username && u.password === password);
-                        if (lsUser) {
-                            successMsg.classList.add('show');
-                            sessionStorage.setItem('akram_logged_in', 'true');
-                            sessionStorage.setItem('akram_user_id', lsUser.id);
-                            sessionStorage.setItem('akram_student_id', lsUser.id);
-                            btn.classList.remove('loading');
-                            btn.disabled = false;
-                            setTimeout(() => { window.location.href = 'my-courses.html'; }, 1200);
-                            return;
-                        }
-                    } catch(err) {}
-
-                    // Error
-                    btn.classList.remove('loading');
-                    btn.disabled = false;
-                    errorMsg.classList.add('show');
-
-                    // Shake animation
-                    const card = document.querySelector('.login-card');
-                    card.style.animation = 'none';
-                    card.style.transform = 'translateX(8px)';
-                    setTimeout(() => { card.style.transform = 'translateX(-8px)'; }, 80);
-                    setTimeout(() => { card.style.transform = 'translateX(5px)'; }, 160);
-                    setTimeout(() => { card.style.transform = 'translateX(0)'; }, 240);
-                }
-            }, 800);
-        }
-
-        function togglePassword() {
-            const input   = document.getElementById('password');
-            const icon    = document.getElementById('eyeIcon');
-            const isHidden = input.type === 'password';
-            input.type = isHidden ? 'text' : 'password';
-            icon.className = isHidden ? 'fas fa-eye-slash' : 'fas fa-eye';
-        }
-
-        // Clear error on typing
-        document.getElementById('username').addEventListener('input', () => {
-            document.getElementById('errorMsg').classList.remove('show');
-        });
-        document.getElementById('password').addEventListener('input', () => {
-            document.getElementById('errorMsg').classList.remove('show');
-        });
     </script>
 </body>
 </html>
