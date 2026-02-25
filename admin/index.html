@@ -334,6 +334,8 @@ button{cursor:pointer;}
 .btn-approve:hover{background:rgba(34,197,94,.25);}
 .btn-reject{flex:1;padding:9px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:10px;color:#f87171;font-size:.82rem;font-weight:800;transition:.25s;display:flex;align-items:center;justify-content:center;gap:6px;}
 .btn-reject:hover{background:rgba(239,68,68,.22);}
+.btn-whatsapp-notify{flex:1;padding:9px;background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.4);border-radius:10px;color:#25D366;font-size:.82rem;font-weight:800;transition:.25s;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;}
+.btn-whatsapp-notify:hover{background:rgba(37,211,102,.27);color:#25D366;}
 .btn-view-req{padding:9px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:.82rem;font-weight:700;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px;}
 .btn-view-req:hover{color:var(--text);}
 .req-approved-info{padding:8px 18px 12px;background:rgba(34,197,94,.07);font-size:.78rem;color:#4ade80;display:flex;align-items:center;gap:6px;}
@@ -1471,6 +1473,14 @@ function filterReqs(status){
   renderJoinRequests(status);
 }
 
+function buildWaLink(phone, name){
+  // normalise Egyptian number → international format
+  let num = (phone||'').replace(/\D/g,'');
+  if(num.startsWith('0')) num = '2' + num;  // 01xxxxxxxx → 201xxxxxxxx
+  const msg = encodeURIComponent('السلام عليكم ورحمة الله وبركاته 🌟\n\nتم قبول طلب انضمامك للكورس بنجاح ✅\n\nخليك جاهز، أول يوم للكورس هيكون يوم 1 مارس 🗓️\n\nهنبعتلك كل التفاصيل قريباً إن شاء الله 💪');
+  return 'https://wa.me/' + num + '?text=' + msg;
+}
+
 function renderJoinRequests(filter){
   _currentReqFilter = filter||'all';
   const reqs = getJoinRequests().sort((a,b)=>b.createdAt-a.createdAt);
@@ -1511,6 +1521,9 @@ function renderJoinRequests(filter){
           <button class="btn-approve" onclick="approveReq('${r.id}')"><i class="fas fa-check"></i> قبول</button>
           <button class="btn-reject" onclick="rejectReq('${r.id}')"><i class="fas fa-times"></i> رفض</button>
         `:r.status==='approved'?`
+          <a class="btn-whatsapp-notify" href="${buildWaLink(r.phone, r.name)}" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i> إرسال رسالة القبول
+          </a>
           <button class="btn-reject" onclick="rejectReq('${r.id}')"><i class="fas fa-undo"></i> إلغاء القبول</button>
         `:r.status==='rejected'?`
           <button class="btn-approve" onclick="approveReq('${r.id}')"><i class="fas fa-redo"></i> قبول بدلاً</button>
