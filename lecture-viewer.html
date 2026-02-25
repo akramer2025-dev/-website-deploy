@@ -316,8 +316,10 @@ async function init(){
     try{
       const doc = await _db.collection('admin_data').doc('lectures').get();
       if(doc.exists){
-        const data = doc.data()||{};
-        const courseLecs = data[courseKey]||[];
+        const raw = doc.data()||{};
+        // saveLectures تحفظ البيانات داخل حقل 'data'
+        const allLecs = raw.data || raw;
+        const courseLecs = allLecs[courseKey]||[];
         lectureData = courseLecs.find(l=>l.id===lecId)||null;
       }
     }catch(e){ console.warn('Firebase load failed, using localStorage',e); }
