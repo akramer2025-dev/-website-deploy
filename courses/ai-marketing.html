@@ -1,203 +1,462 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كورس التسويق بالذكاء الاصطناعي | Akram Mostafa</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #0a0f1c 0%, #0d1525 50%, #0a0f1c 100%); color: #fff; min-height: 100vh; }
-        .course-nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(10, 15, 28, 0.95); backdrop-filter: blur(20px); padding: 12px 20px; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .course-nav .container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .course-nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
-        .course-nav-brand img { width: 45px; height: 45px; border-radius: 10px; }
-        .course-nav-brand span { font-weight: 800; font-size: 14px; line-height: 1.2; }
-        .nav-back-btn { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; padding: 8px 14px; border-radius: 10px; background: rgba(255,255,255,0.05); transition: all 0.3s; }
-        .nav-back-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
-        .course-hero { padding: 100px 20px 50px; background: linear-gradient(135deg, #10b981 0%, #059669 60%, #047857 100%); text-align: center; position: relative; overflow: hidden; }
-        .course-hero::before { content: ''; position: absolute; inset: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.03)"/></svg>'); background-size: 30px 30px; }
-        .hero-content { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
-        .hero-icon { width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; color: #fff; backdrop-filter: blur(10px); }
-        .hero-title { font-size: clamp(24px, 6vw, 36px); font-weight: 900; margin-bottom: 15px; line-height: 1.3; }
-        .hero-subtitle { font-size: clamp(14px, 4vw, 16px); color: rgba(255,255,255,0.9); line-height: 1.7; margin-bottom: 25px; }
-        .hero-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 30px; }
-        .meta-badge { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; }
-        .hero-cta { display: flex; flex-direction: column; gap: 12px; max-width: 300px; margin: 0 auto; }
-        .btn-enroll { display: flex; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, #25D366, #128C7E); color: #fff; text-decoration: none; padding: 14px 24px; border-radius: 14px; font-size: 16px; font-weight: 700; transition: all 0.3s; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); }
-        .btn-enroll:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5); }
-        .btn-enroll i { font-size: 20px; }
-        .price-floating { position: fixed; bottom: 20px; left: 20px; right: 20px; background: linear-gradient(135deg, #0d1525 0%, #1a2744 100%); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 15px; z-index: 999; box-shadow: 0 -5px 30px rgba(0,0,0,0.5); max-width: 500px; margin: 0 auto; }
-        .price-info { display: flex; flex-direction: column; }
-        .price-label { font-size: 12px; color: rgba(255,255,255,0.6); }
-        .price-value { font-size: 22px; font-weight: 900; color: #10b981; }
-        .price-floating .btn-enroll { padding: 12px 20px; font-size: 14px; white-space: nowrap; }
-        .course-content { padding: 40px 20px 120px; max-width: 800px; margin: 0 auto; }
-        .info-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; margin-bottom: 25px; overflow: hidden; transition: all 0.3s; }
-        .info-card:hover { border-color: rgba(16, 185, 129, 0.3); transform: translateY(-3px); }
-        .card-header { background: linear-gradient(135deg, #10b981, #059669); padding: 18px 20px; display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 700; }
-        .card-body { padding: 20px; }
-        .card-body p { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 12px; }
-        .card-body p:last-child { margin-bottom: 0; }
-        .learning-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-        .learning-list li { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: rgba(255,255,255,0.03); border-radius: 12px; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.9); transition: all 0.3s; }
-        .learning-list li:hover { background: rgba(16, 185, 129, 0.15); transform: translateX(-5px); }
-        .learning-list li i { color: #10b981; font-size: 16px; margin-top: 2px; flex-shrink: 0; }
-        .curriculum-list { display: flex; flex-direction: column; gap: 10px; }
-        .curriculum-item { display: flex; align-items: center; gap: 14px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 12px; transition: all 0.3s; }
-        .curriculum-item:hover { background: rgba(16, 185, 129, 0.1); }
-        .curriculum-num { width: 36px; height: 36px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0; }
-        .curriculum-item span:last-child { font-size: 14px; color: rgba(255,255,255,0.9); line-height: 1.5; }
-        .instructor-card { background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.2)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 24px 20px; text-align: center; margin-bottom: 25px; }
-        .instructor-icon { width: 70px; height: 70px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 28px; }
-        .instructor-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
-        .instructor-card p { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 15px; }
-        .instructor-socials { display: flex; justify-content: center; gap: 12px; }
-        .instructor-socials a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; font-size: 18px; transition: all 0.3s; }
-        .instructor-socials a:hover { background: #10b981; transform: translateY(-3px); }
-        .other-courses { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 20px; margin-bottom: 25px; }
-        .other-courses h3 { font-size: 16px; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .other-courses h3 i { color: #f97316; }
-        .courses-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .courses-list li a { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(255,255,255,0.03); border-radius: 10px; color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; transition: all 0.3s; }
-        .courses-list li a:hover { background: rgba(249, 115, 22, 0.15); color: #f97316; transform: translateX(-5px); }
-        .courses-list li a i { font-size: 18px; width: 24px; text-align: center; }
-        .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
-        .feature-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; text-align: center; transition: all 0.3s; }
-        .feature-item:hover { border-color: rgba(37, 211, 102, 0.3); transform: translateY(-3px); }
-        .feature-item i { font-size: 24px; color: #25D366; margin-bottom: 10px; display: block; }
-        .feature-item span { font-size: 13px; color: rgba(255,255,255,0.8); display: block; }
-        .course-footer { background: rgba(10, 15, 28, 0.95); border-top: 1px solid rgba(255,255,255,0.1); padding: 30px 20px 100px; text-align: center; }
-        .footer-brand { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 15px; }
-        .footer-brand img { width: 40px; height: 40px; border-radius: 10px; }
-        .footer-brand span { font-weight: 800; font-size: 16px; }
-        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 20px; }
-        .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; transition: color 0.3s; }
-        .footer-links a:hover { color: #f97316; }
-        .footer-copyright { font-size: 12px; color: rgba(255,255,255,0.4); }
-        @media (min-width: 768px) {
-            .course-hero { padding: 120px 40px 70px; }
-            .hero-cta { flex-direction: row; max-width: 400px; }
-            .course-content { padding: 60px 40px 100px; }
-            .features-grid { grid-template-columns: repeat(4, 1fr); }
-            .price-floating { left: auto; right: 30px; max-width: 350px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كورس التسويق بالذكاء الاصطناعي | أكرم مصطفى</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23667eea'/><text y='.9em' font-size='70' x='15'>🤖</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --bg:#0a1628;--card:#111e35;--card2:#162038;--border:rgba(255,255,255,.08);
+  --purple:#667eea;--purple2:#764ba2;--gold:#f7c948;--green:#25d366;
+  --text:#e2e8f0;--muted:rgba(255,255,255,.45);--radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.hero{background:linear-gradient(135deg,#0a1628 0%,#1a1040 50%,#0d1f3c 100%);padding:60px 20px 80px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(102,126,234,.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(118,75,162,.12) 0%,transparent 50%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(102,126,234,.15);border:1px solid rgba(102,126,234,.3);border-radius:50px;padding:6px 18px;font-size:13px;color:#a78bfa;margin-bottom:20px}
+.hero h1{font-size:clamp(26px,5vw,48px);font-weight:900;line-height:1.3;margin-bottom:14px}
+.hero h1 span{background:linear-gradient(135deg,#667eea,#f7c948);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:clamp(14px,2vw,18px);color:var(--muted);max-width:600px;margin:0 auto 30px;line-height:1.8}
+.hero-stats{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:10px}
+.stat{text-align:center}
+.stat-num{font-size:28px;font-weight:900;background:linear-gradient(135deg,#667eea,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-lbl{font-size:12px;color:var(--muted)}
+.back-btn{position:absolute;top:20px;right:20px;display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.6);text-decoration:none;font-size:13px;font-weight:600;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:8px 14px;border-radius:50px;transition:.3s}
+.back-btn:hover{color:#fff;background:rgba(255,255,255,.1)}
+.progress-wrap{background:rgba(255,255,255,.06);height:6px;border-radius:3px;margin:0 20px;position:relative;top:-3px}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#667eea,#f7c948);transition:width .5s ease;width:0%}
+.section{max-width:1100px;margin:0 auto;padding:50px 20px}
+.section-title{text-align:center;font-size:22px;font-weight:900;margin-bottom:10px}
+.section-sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+.lec-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:26px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.lec-card::before{content:'';position:absolute;inset:0;opacity:0;transition:.3s;background:linear-gradient(135deg,rgba(102,126,234,.08),rgba(118,75,162,.06))}
+.lec-card:hover{transform:translateY(-4px);border-color:rgba(102,126,234,.4);box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.lec-card:hover::before{opacity:1}
+.lec-num{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;margin-bottom:14px;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;flex-shrink:0}
+.lec-card.done .lec-num{background:linear-gradient(135deg,#16a34a,#15803d)}
+.lec-duration{position:absolute;top:18px;left:18px;font-size:11px;color:var(--muted);background:rgba(255,255,255,.06);padding:3px 10px;border-radius:50px}
+.lec-title{font-size:16px;font-weight:900;margin-bottom:8px;line-height:1.4}
+.lec-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:18px}
+.lec-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.tag{background:rgba(102,126,234,.12);border:1px solid rgba(102,126,234,.2);color:#a78bfa;font-size:11px;padding:3px 10px;border-radius:50px}
+.lec-footer{display:flex;gap:10px}
+.btn-open{flex:1;padding:10px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-open:hover{opacity:.88;transform:translateY(-1px)}
+.btn-example{padding:10px 14px;border:1.5px solid rgba(247,201,72,.3);border-radius:10px;background:rgba(247,201,72,.08);color:var(--gold);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:.3s;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.btn-example:hover{background:rgba(247,201,72,.15);border-color:rgba(247,201,72,.5)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:15px}
+.overlay.open{display:flex}
+.modal{background:#0f1c35;border:1.5px solid rgba(102,126,234,.25);border-radius:24px;width:100%;max-width:800px;max-height:90vh;overflow-y:auto;animation:popIn .3s ease-out}
+@keyframes popIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal::-webkit-scrollbar{width:6px}
+.modal::-webkit-scrollbar-thumb{background:rgba(102,126,234,.4);border-radius:3px}
+.modal-header{position:sticky;top:0;z-index:10;background:#0f1c35;border-bottom:1px solid var(--border);padding:20px 24px;display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:17px;font-weight:900;display:flex;align-items:center;gap:10px}
+.modal-close{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.2s}
+.modal-close:hover{background:rgba(239,68,68,.2);border-color:rgba(239,68,68,.4);color:#ef4444}
+.modal-body{padding:28px 24px}
+.tabs{display:flex;gap:8px;margin-bottom:24px;background:rgba(255,255,255,.04);padding:6px;border-radius:12px}
+.tab-btn{flex:1;padding:9px;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;background:transparent;color:var(--muted)}
+.tab-btn.active{background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.lesson-block{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+.lesson-block h3{font-size:15px;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lesson-block h3 .icon{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--purple),var(--purple2));display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.lesson-block p{font-size:14px;color:var(--muted);line-height:1.9}
+.lesson-block ul{list-style:none;margin-top:10px}
+.lesson-block ul li{font-size:14px;color:var(--muted);line-height:1.9;padding-right:20px;position:relative}
+.lesson-block ul li::before{content:'←';position:absolute;right:0;color:var(--purple);font-size:12px;line-height:1.9}
+.compare-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.compare-table th{background:rgba(102,126,234,.15);padding:10px 14px;font-weight:700;text-align:right;border-bottom:1px solid var(--border)}
+.compare-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+.compare-table tr:hover td{background:rgba(255,255,255,.02)}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.info-item{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.info-item .val{font-size:22px;font-weight:900;background:linear-gradient(135deg,#667eea,#f7c948);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.info-item .lbl{font-size:12px;color:var(--muted);margin-top:4px}
+.example-wrap{background:rgba(247,201,72,.05);border:1px solid rgba(247,201,72,.2);border-radius:14px;padding:20px}
+.example-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(247,201,72,.15);border:1px solid rgba(247,201,72,.3);color:var(--gold);font-size:12px;font-weight:700;padding:5px 14px;border-radius:50px;margin-bottom:16px}
+.example-title{font-size:17px;font-weight:900;margin-bottom:8px}
+.example-subtitle{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.7}
+.step{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.step-num{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#f7c948,#e07c24);color:#000;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-content{flex:1}
+.step-content strong{display:block;font-size:14px;font-weight:900;margin-bottom:4px}
+.step-content p{font-size:13px;color:var(--muted);line-height:1.7}
+.prompt-box{background:#060e1d;border:1px solid rgba(102,126,234,.25);border-radius:12px;padding:16px;margin-top:8px;font-family:'Cairo',sans-serif;font-size:13px;color:#c4b5fd;line-height:1.9;position:relative;white-space:pre-wrap}
+.copy-btn{position:absolute;top:10px;left:10px;background:rgba(102,126,234,.2);border:1px solid rgba(102,126,234,.3);color:#a78bfa;font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:'Cairo',sans-serif;transition:.2s}
+.copy-btn:hover{background:rgba(102,126,234,.35)}
+.result-box{background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.2);border-radius:12px;padding:16px;margin-top:14px}
+.result-box .result-title{font-size:13px;font-weight:700;color:#25d366;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.result-box ul{list-style:none;padding:0}
+.result-box ul li{font-size:13px;color:var(--muted);line-height:1.9}
+.result-box ul li::before{content:'✅ ';color:#25d366}
+.tip-box{background:rgba(102,126,234,.07);border:1px solid rgba(102,126,234,.2);border-radius:12px;padding:14px;margin-top:14px;display:flex;gap:10px;align-items:flex-start}
+.tip-box .tip-icon{font-size:18px;margin-top:2px;flex-shrink:0}
+.tip-box p{font-size:13px;color:var(--muted);line-height:1.8}
+.challenge-box{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:16px;margin-top:14px}
+.challenge-box .challenge-title{font-size:13px;font-weight:700;color:#fca5a5;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.challenge-box p{font-size:13px;color:var(--muted);line-height:1.9}
+.quiz-wrap{margin-top:4px}
+.quiz-q{font-size:15px;font-weight:700;margin-bottom:14px;line-height:1.6}
+.quiz-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.quiz-opt{padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:.2s;font-size:14px;color:var(--text);background:rgba(255,255,255,.03)}
+.quiz-opt:hover{border-color:rgba(102,126,234,.4);background:rgba(102,126,234,.07)}
+.quiz-opt.correct{border-color:#25d366!important;background:rgba(37,211,102,.08)!important;color:#25d366!important}
+.quiz-opt.wrong{border-color:#ef4444!important;background:rgba(239,68,68,.08)!important;color:#ef4444!important}
+.quiz-feedback{display:none;padding:12px 16px;border-radius:10px;font-size:13px;margin-top:4px;line-height:1.7}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct-fb{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);color:#25d366}
+.quiz-feedback.wrong-fb{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#fca5a5}
+.btn-next-q{margin-top:12px;padding:10px 20px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;cursor:pointer;display:none}
+.btn-next-q.show{display:block}
+.btn-done{width:100%;padding:13px;border:none;border-radius:12px;margin-top:20px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-done:hover{opacity:.88}
+.btn-done.done-state{background:linear-gradient(135deg,#374151,#1f2937)!important;cursor:not-allowed}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.modal-body{padding:16px}.lec-footer{flex-direction:column}}
+</style>
 </head>
 <body>
-<nav class="course-nav">
-    <div class="container">
-        <a href="../index.html" class="course-nav-brand"><img src="../images/logo.png" alt="Logo"><span>AKRAM<br>MOSTAFA</span></a>
-        <a href="../courses.html" class="nav-back-btn"><i class="fas fa-arrow-right"></i><span>الكورسات</span></a>
-    </div>
-</nav>
-<section class="course-hero">
-    <div class="hero-content" data-aos="fade-up">
-        <div class="hero-icon"><i class="fas fa-robot"></i></div>
-        <h1 class="hero-title">التسويق بالذكاء الاصطناعي</h1>
-        <p class="hero-subtitle">استخدم أدوات الذكاء الاصطناعي الحديثة لتطوير استراتيجيات تسويق مبتكرة وفعّالة</p>
-        <div class="hero-meta">
-            <div class="meta-badge"><i class="fas fa-clock"></i><span>10 ساعات</span></div>
-            <div class="meta-badge"><i class="fas fa-signal"></i><span>متوسط لمتقدم</span></div>
-            <div class="meta-badge"><i class="fas fa-video"></i><span>فيديو مسجل</span></div>
-        </div>
-        <div class="hero-cta">
-            <a href="https://wa.me/00201555512778?text=عايز%20اشترك%20في%20كورس%20التسويق%20بالذكاء%20الاصطناعي" class="btn-enroll" target="_blank"><i class="fab fa-whatsapp"></i>اشترك دلوقتي</a>
-        </div>
-    </div>
-</section>
-<main class="course-content">
-    <div class="features-grid" data-aos="fade-up">
-        <div class="feature-item"><i class="fas fa-infinity"></i><span>وصول مدى الحياة</span></div>
-        <div class="feature-item"><i class="fas fa-users"></i><span>دعم في الجروب</span></div>
-        <div class="feature-item"><i class="fas fa-certificate"></i><span>شهادة إتمام</span></div>
-        <div class="feature-item"><i class="fas fa-laptop-code"></i><span>تطبيق عملي</span></div>
-    </div>
-    <div class="info-card" data-aos="fade-up">
-        <div class="card-header"><i class="fas fa-info-circle"></i>عن الكورس</div>
-        <div class="card-body">
-            <p>الذكاء الاصطناعي غيّر عالم التسويق بشكل جذري. كورس التسويق بالذكاء الاصطناعي هيعلمك إزاي تستخدم أحدث الأدوات زي ChatGPT و MidJourney وغيرها لتحسين حملاتك التسويقية.</p>
-            <p>هتتعلم إزاي توفر وقت ومجهود وتحقق نتائج أفضل باستخدام تقنيات AI المتقدمة في كل مراحل التسويق.</p>
-        </div>
-    </div>
-    <div class="info-card" data-aos="fade-up">
-        <div class="card-header"><i class="fas fa-list-check"></i>هتتعلم إيه</div>
-        <div class="card-body">
-            <ul class="learning-list">
-                <li><i class="fas fa-check-circle"></i><span>أساسيات الذكاء الاصطناعي في التسويق</span></li>
-                <li><i class="fas fa-check-circle"></i><span>استخدام ChatGPT لكتابة المحتوى</span></li>
-                <li><i class="fas fa-check-circle"></i><span>تصميم الصور بـ AI (MidJourney, DALL-E)</span></li>
-                <li><i class="fas fa-check-circle"></i><span>أتمتة المهام التسويقية</span></li>
-                <li><i class="fas fa-check-circle"></i><span>تحليل البيانات باستخدام AI</span></li>
-                <li><i class="fas fa-check-circle"></i><span>Chatbots وخدمة العملاء الآلية</span></li>
-                <li><i class="fas fa-check-circle"></i><span>مستقبل AI في التسويق الرقمي</span></li>
-            </ul>
-        </div>
-    </div>
-    <div class="info-card" data-aos="fade-up">
-        <div class="card-header"><i class="fas fa-clipboard-list"></i>محتوى الكورس</div>
-        <div class="card-body">
-            <div class="curriculum-list">
-                <div class="curriculum-item"><span class="curriculum-num">01</span><span>مقدمة في الذكاء الاصطناعي والتسويق</span></div>
-                <div class="curriculum-item"><span class="curriculum-num">02</span><span>ChatGPT وأدوات كتابة المحتوى</span></div>
-                <div class="curriculum-item"><span class="curriculum-num">03</span><span>تصميم الصور والفيديو بالـ AI</span></div>
-                <div class="curriculum-item"><span class="curriculum-num">04</span><span>أتمتة التسويق والـ Workflows</span></div>
-                <div class="curriculum-item"><span class="curriculum-num">05</span><span>تحليل البيانات والتنبؤات</span></div>
-                <div class="curriculum-item"><span class="curriculum-num">06</span><span>مشروع تطبيقي متكامل</span></div>
-            </div>
-        </div>
-    </div>
-    <div class="instructor-card" data-aos="fade-up">
-        <div class="instructor-icon"><i class="fas fa-user"></i></div>
-        <h3>Akram Mostafa</h3>
-        <p>خبير إعلانات رقمية بخبرة +5 سنين وأكتر من 500 طالب متخرج</p>
-        <div class="instructor-socials">
-            <a href="https://www.facebook.com/share/17x8kYFSQq/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-        </div>
-    </div>
-    <div class="other-courses" data-aos="fade-up">
-        <h3><i class="fas fa-graduation-cap"></i> كورسات تانية</h3>
-        <ul class="courses-list">
-            <li><a href="facebook-ads.html"><i class="fab fa-facebook"></i> إعلانات فيسبوك</a></li>
-            <li><a href="instagram.html"><i class="fab fa-instagram"></i> إنستغرام للبيزنس</a></li>
-            <li><a href="tiktok.html"><i class="fab fa-tiktok"></i> تيك توك للبيزنس</a></li>
-            <li><a href="integrated-strategy.html"><i class="fas fa-chess-king"></i> استراتيجية متكاملة</a></li>
-            <li><a href="programming.html"><i class="fas fa-code"></i> البرمجة للمسوقين</a></li>
-        </ul>
-    </div>
-</main>
-<div class="price-floating">
-    <div class="price-info"><span class="price-label">سعر الكورس</span><span class="price-value">1,199 جنيه</span></div>
-    <a href="https://wa.me/00201555512778?text=عايز%20اشترك%20في%20كورس%20التسويق%20بالذكاء%20الاصطناعي" class="btn-enroll" target="_blank"><i class="fab fa-whatsapp"></i>اشترك</a>
+
+<div class="hero">
+  <a href="../index.html" class="back-btn"><i class="fas fa-arrow-right"></i> الرئيسية</a>
+  <div class="hero-badge"><i class="fas fa-robot"></i> من الصفر للاحتراف</div>
+  <h1>التسويق بـ<span>الذكاء الاصطناعي</span></h1>
+  <p>كورس عملي كامل باللهجة المصرية — هتتعلم تشتغل بـ AI وتوفّر وقتك وتضاعف نتايجك</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">8</div><div class="stat-lbl">محاضرات</div></div>
+    <div class="stat"><div class="stat-num">11</div><div class="stat-lbl">ساعة</div></div>
+    <div class="stat"><div class="stat-num">30+</div><div class="stat-lbl">Prompt جاهز</div></div>
+    <div class="stat"><div class="stat-num">8</div><div class="stat-lbl">أمثلة عملية</div></div>
+  </div>
 </div>
-<footer class="course-footer">
-    <div class="footer-brand"><img src="../images/logo.png" alt="Logo"><span>AKRAM MOSTAFA</span></div>
-    <div class="footer-links">
-        <a href="../index.html">الرئيسية</a>
-        <a href="../about.html">من أنا</a>
-        <a href="../courses.html">الكورسات</a>
-        <a href="../services.html">الخدمات</a>
-        <a href="../contact.html">تواصل معي</a>
+<div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="section">
+  <div class="section-title">📚 محاضرات الكورس</div>
+  <div class="section-sub">كل محاضرة فيها شرح كامل + مثال عملي تطبيقي + سؤال تحدّي</div>
+  <div class="grid" id="lecturesGrid"></div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeIfOverlay(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
     </div>
-    <p class="footer-copyright">&copy; 2026 Akram Mostafa — جميع الحقوق محفوظة</p>
-</footer>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
 <script>
-    AOS.init({ duration: 600, once: true });
-    window.addEventListener('scroll', function() {
-        const floatingPrice = document.querySelector('.price-floating');
-        if (window.scrollY > 400) { floatingPrice.style.opacity = '1'; floatingPrice.style.transform = 'translateY(0)'; }
-        else { floatingPrice.style.opacity = '0'; floatingPrice.style.transform = 'translateY(100%)'; }
-    });
-    document.querySelector('.price-floating').style.transform = 'translateY(100%)';
-    document.querySelector('.price-floating').style.opacity = '0';
-    document.querySelector('.price-floating').style.transition = 'all 0.3s ease';
+const LECTURES=[
+{id:1,icon:'🤖',title:'مدخل إلى الذكاء الاصطناعي والتسويق',desc:'هتفهم إيه هو الـ AI وليه هو أهم سلاح في إيد المسوّق النهارده',duration:'60 دقيقة',tags:['الأساسيات','AI Overview','فرص العمل'],
+content:`<div class="lesson-block"><h3><span class="icon">💡</span> الـ AI بالكلام البسيط</h3><p>الذكاء الاصطناعي مش حاجة صعبة — هو بكل بساطة <strong>تعليم الكمبيوتر يفكر زي الإنسان</strong>. تخيّل عندك موظف بيشتغل 24 ساعة، مش بيتعب، مش بيطلب مرتب كبير، وبيتعلم من كل مرة بتحاوره — ده هو الـ AI.</p></div><div class="lesson-block"><h3><span class="icon">📊</span> أرقام مش هتصدّقها</h3><div class="info-grid"><div class="info-item"><div class="val">73%</div><div class="lbl">من الشركات بتستخدم AI</div></div><div class="info-item"><div class="val">40%</div><div class="lbl">توفير في وقت المحتوى</div></div><div class="info-item"><div class="val">50%</div><div class="lbl">تحسين نتايج الإعلانات</div></div><div class="info-item"><div class="val">36B$</div><div class="lbl">حجم سوق AI Marketing</div></div></div></div><div class="lesson-block"><h3><span class="icon">⚔️</span> مسوّق عادي مقابل مسوّق بـ AI</h3><table class="compare-table"><tr><th>المهمة</th><th>بدون AI</th><th>مع AI</th></tr><tr><td>كتابة بوست</td><td>30-60 دقيقة</td><td>3-5 دقايق</td></tr><tr><td>تصميم صورة</td><td>مصمم + أيام</td><td>ثوانٍ</td></tr><tr><td>10 إعلانات</td><td>يوم كامل</td><td>ساعة</td></tr><tr><td>الرد على عملاء</td><td>موظف بدوام</td><td>Bot 24/7</td></tr></table></div><div class="lesson-block"><h3><span class="icon">🗺️</span> خريطة الأدوات</h3><ul><li><strong>المحتوى النصي:</strong> ChatGPT, Claude, Gemini</li><li><strong>الصور:</strong> Midjourney, Leonardo AI, Canva AI</li><li><strong>الفيديو:</strong> Runway ML, HeyGen, CapCut AI</li><li><strong>الأتمتة:</strong> ManyChat, Zapier, Make.com</li></ul></div>`,
+example:{title:'جرّب ChatGPT على طول دلوقتي 🔥',subtitle:'افتح ChatGPT في تاب جديد وجرّب الـ Prompt الجاي — الهدف إنك تشوف بنفسك الفرق اللي الـ AI بيعمله',steps:[{title:'افتح ChatGPT',desc:'روح على chat.openai.com — ولو مش عندك حساب سجّل مجاناً في دقيقتين'},{title:'انسخ الـ Prompt الجاي',desc:'حدده واضغط زر النسخ — بعدين هوريه لـ ChatGPT وانتظر النتيجة'},{title:'قارن النتيجة',desc:'قارن سرعة وجودة الإجابة بو تكتبها بنفسك من الصفر — هتشوف الفرق بنفسك'}],
+prompt:`أنت خبير تسويق رقمي متخصص في السوق المصري.
+عندي متجر ملابس صغير في القاهرة وعاوز أنشر على السوشيال ميديا.
+
+إديني 5 أفكار بوست جاهزة ومختلفة للأسبوع ده.
+لكل فكرة:
+- العنوان
+- الكاب شن الجاهز للنشر (عامية مصرية)
+- الهاشتاجز المناسبة`,
+result:['5 بوستات كاملة جاهزة في أقل من 30 ثانية!','قارن ده بكتابتهم بنفسك — كانت هاخد منك كام ساعة؟','الفرق ده هو سبب تعلّمك الكورس ده 💪'],
+tip:'مش لازم الـ Prompt يكون طويل — لكن لازم يكون <strong>محدد</strong>. كلما كانت التفاصيل أوضح، كلما كانت الإجابة أحسن.',
+challenge:'بعد ما تجرّب، غيّر المتجر لأي مجال تاني وكرّر — شوف ازاي الأسلوب بيتغير تلقائياً!'},
+quiz:{q:'إيه الفرق الرئيسي بين المسوّق العادي والمسوّق اللي بيستخدم AI؟',opts:['المسوّق بالـ AI مش بيفتكر خالص والـ AI بيشتغل بدله كلياً','المسوّق بالـ AI بيستخدمه كأداة توفّر وقته وتضاعف إنتاجيته','المسوّق بالـ AI لازم يتعلم برمجة وذكاء اصطناعي أول','مفيش فرق — بس بيكتب أسرع شوية'],correct:1,feedback:'صح جداً! الـ AI مش بديل عنك — هو أداة بتضاعف قدرتك × 10. إنت اللي بتفكر وبتوجّه، والـ AI بينفّذ بسرعة.'}
+},
+
+{id:2,icon:'🛠️',title:'أدوات الذكاء الاصطناعي الأساسية',desc:'هتتعلم تستخدم ChatGPT + Canva AI + Leonardo بشكل احترافي وتكتب Prompts قوية',duration:'75 دقيقة',tags:['ChatGPT','Canva AI','Prompts','Leonardo AI'],
+content:`<div class="lesson-block"><h3><span class="icon">🔑</span> فن كتابة الـ Prompts</h3><p>الـ Prompt هو الأمر اللي بتديه للـ AI. الصيغة الاحترافية:</p><div style="background:#060e1d;border:1px solid rgba(102,126,234,.2);border-radius:10px;padding:14px;margin-top:10px;font-size:13px;color:#c4b5fd;line-height:2.2">👤 <strong>[الدور]</strong> — قوله مين هو (خبير تسويق، مصمم...)<br>📋 <strong>[المهمة]</strong> — إيه اللي عاوزه يعمله بالظبط<br>📝 <strong>[التفاصيل]</strong> — المنتج، الجمهور، الأسلوب<br>📦 <strong>[الشكل]</strong> — جدول / نقاط / عدد الكلمات</div></div><div class="lesson-block"><h3><span class="icon">❌</span> ضعيف مقابل احترافي</h3><table class="compare-table"><tr><th>❌ ضعيف</th><th>✅ احترافي</th></tr><tr><td>اكتبلي بوست</td><td>أنت خبير تسويق — اكتب بوست انستجرام لعيادة أسنان في القاهرة عن خصم 30% رمضان — جمهور: أمهات 25-45 — 80 كلمة — ودود مع إيموجي وCTA</td></tr><tr><td>إيه أفضل وقت للنشر</td><td>صفحة فيسبوك لمطعم في الإسكندرية — جمهور عائلات — إيه أفضل وقت النشر حسب أبحاث 2024؟</td></tr></table></div><div class="lesson-block"><h3><span class="icon">🎨</span> Canva AI — تصميم بدون مصمم</h3><ul><li><strong>Text to Image:</strong> اكتب وصف وهيولّد صورة</li><li><strong>Magic Design:</strong> اكتب مواصفات التصميم وهيعمله</li><li><strong>Magic Resize:</strong> تحويل التصميم لكل المنصات</li><li><strong>Background Remover:</strong> إزالة الخلفية بضغطة</li></ul></div><div class="lesson-block"><h3><span class="icon">🖼️</span> Leonardo AI — 150 صورة يومياً مجاناً!</h3><p>Leonardo.ai أحسن بداية للمبتدئين — مجاني وسهل ومتخصص في تصاميم التسويق والمنتجات.</p></div>`,
+example:{title:'بوست احترافي كامل في 5 دقايق 🚀',subtitle:'هنستخدم ChatGPT + Canva مع بعض عشان ننتج بوست فيسبوك كامل بكاب شن واحترافي',steps:[{title:'اكتب الكاب شن بـ ChatGPT',desc:'ابعتله الـ Prompt الجاي واستنى ثوانٍ'},{title:'افتح Canva',desc:'روح canva.com → Create New → Post'},{title:'استخدم Magic Write',desc:'Apps → Magic Write وحط الكاب شن اللي ChatGPT كتبه'},{title:'ولّد صورة',desc:'Apps → Text to Image → اوصف الصورة اللي تناسب البوست'},{title:'نزّل وانشر!',desc:'Download وشارك في المجموعة 🎉'}],
+prompt:`أنت خبير تسويق رقمي للسوق المصري.
+
+اكتب كاب شن فيسبوك لـ:
+- النوع: مطعم شاورما في مدينة نصر
+- العرض: لازانيا الشاورما الجديدة بسعر 89 جنيه بس
+- الجمهور: شباب 18-35 مهتمين بالأكل
+- الأسلوب: شبابي ظريف عامية مصرية
+- الطول: 60-80 كلمة
+- لازم يحتوي على: إيموجي + سؤال تفاعلي + هاشتاجز`,
+result:['كاب شن جاهز في ثوانٍ بأسلوب احترافي','حطّه في Canva + ولّد صورة بالـ Text to Image','البوست كامل في أقل من 5 دقايق!'],
+tip:'خليك دايماً <strong>تبدأ بـ ChatGPT للنص</strong> وبعدين تروح Canva للتصميم — ده النظام الأسرع.',
+challenge:'كرّر الخطوات لـ 3 مجالات مختلفة وشوف كيف يتغير الأسلوب تلقائياً!'},
+quiz:{q:'إيه أهم حاجة في كتابة Prompt ناجح لـ ChatGPT؟',opts:['يكون طويل وبالإنجليزية','يحتوي على: الدور + المهمة + التفاصيل + الشكل','يكون مختصر جداً','تكرار الطلب أكتر من مرة'],correct:1,feedback:'صح! الـ Prompt اللي فيه الـ 4 عناصر دول بيدي نتايج أحسن بكتير من الـ Prompt المختصر أو العام.'}
+},
+
+{id:3,icon:'✍️',title:'إنشاء المحتوى الاحترافي بالـ AI',desc:'هتنتج محتوى شهر كامل في يوم واحد وتحوّل فكرة واحدة لـ 10 محتويات مختلفة',duration:'90 دقيقة',tags:['Content Creation','Copywriting','خطة شهرية','Script'],
+content:`<div class="lesson-block"><h3><span class="icon">3️⃣</span> قاعدة 3-3-3 للمحتوى</h3><div class="info-grid"><div class="info-item"><div class="val" style="-webkit-text-fill-color:#667eea">33%</div><div class="lbl">📚 تعليمي</div></div><div class="info-item"><div class="val" style="-webkit-text-fill-color:#f7c948">33%</div><div class="lbl">🎉 تفاعلي</div></div><div class="info-item"><div class="val" style="-webkit-text-fill-color:#25d366">33%</div><div class="lbl">💰 ترويجي</div></div></div></div><div class="lesson-block"><h3><span class="icon">📱</span> الكتابة لكل منصة</h3><table class="compare-table"><tr><th>المنصة</th><th>الطول</th><th>الأسلوب</th></tr><tr><td>فيسبوك</td><td>100-150 كلمة</td><td>قصصي عاطفي</td></tr><tr><td>انستجرام</td><td>80-120 كلمة</td><td>جمالي إلهامي</td></tr><tr><td>TikTok</td><td>50-80 كلمة</td><td>مباشر شبابي</td></tr><tr><td>لينكدإن</td><td>150-300 كلمة</td><td>احترافي تعليمي</td></tr></table></div><div class="lesson-block"><h3><span class="icon">🎬</span> Hook — سر الفيديو الناجح</h3><p>أول 3 ثوانٍ بتحدد كل شيء. صيغ جاهزة:</p><ul><li>"اللي معظم الناس مش عارفينه عن [الموضوع]..."</li><li>"3 أخطاء بتخسّرك [الموضوع] كل يوم"</li><li>"لو بتعمل [الخطأ]، وقّف الفيديو ده"</li></ul></div><div class="lesson-block"><h3><span class="icon">🔄</span> Content Multiplier</h3><p>فكرة واحدة تتحوّل لـ: بوست فيسبوك + كاروسيل انستجرام + Reels script + Story + تغريدة + بوست لينكدإن + Quote + إنفوجرافيك + سؤال + Before/After = <strong>10 محتويات!</strong></p></div>`,
+example:{title:'خطة محتوى شهر كامل في 10 دقايق 📅',subtitle:'هنطلب من ChatGPT خطة 30 بوست متنوعة بالكاب شن الجاهز لبيزنس حقيقي',steps:[{title:'حدد البيزنس',desc:'اختار أي بيزنس — مثلاً: مركز تدريب على اللغة الإنجليزية في القاهرة'},{title:'ابعت الـ Prompt الكبير',desc:'استخدم الـ Prompt الجاي وخليه يولّد 30 بوست'},{title:'اختار أحسن 5 بوستات',desc:'اقرأ النتيجة واختار اللي بيناسب أسلوبك'},{title:'أضف لمستك الشخصية',desc:'غيّر كلمة أو اتنين تحس إنه كلامك أنت'},{title:'جدوّلهم على Buffer',desc:'المحتوى جاهز للشهر كله — ارتاح 😄'}],
+prompt:`أنت خبير تسويق رقمي للسوق المصري.
+
+اعملي خطة محتوى لـ "مركز تدريب لغة إنجليزية في القاهرة" على فيسبوك لشهر كامل.
+
+المطلوب: 30 بوست متنوعة:
+- 10 تعليمية (نصايح، أخطاء شايعة)
+- 10 ترويجية (كورسات، أسعار، عروض)
+- 10 تفاعلية (أسئلة، تحديات)
+
+لكل بوست:
+رقمه | نوعه | الفكرة | الكاب شن الجاهز بالعامية المصرية | 5 هاشتاجز`,
+result:['30 بوست كاملة في دقيقتين!','ده اللي كان بياخد من المسوّق أسبوع كامل من الجهد','متنساش تضيف لمستك قبل النشر'],
+tip:'لو عاوز المحتوى يبان أصلي أكتر، <strong>ابدأ كل بوست بقصة حقيقية</strong> حصلت معاك أو مع عميل.',
+challenge:'خذ أحسن بوست وحوّله لـ: Script Reels + تغريدة + Story — كلهم من نفس الفكرة!'},
+quiz:{q:'إيه قاعدة 3-3-3 في محتوى السوشيال ميديا؟',opts:['3 بوستات يومياً لمدة 3 أسبوع على 3 منصات','توزيع: تعليمي + تفاعلي + ترويجي بنسب متساوية','3 نسخ من كل بوست للاختبار','النشر 3 مرات في اليوم'],correct:1,feedback:'صح! القاعدة بتضمن إن جمهورك مش بيشوف منك بس إعلانات — بيتعلم، يتفاعل، ويحس بقيمة متابعتك.'}
+},
+
+{id:4,icon:'📱',title:'إدارة السوشيال ميديا بالذكاء الاصطناعي',desc:'هتتعلم تدير حسابات متعددة وتعمل الأسبوع كله في 3 ساعات يوم الأحد',duration:'75 دقيقة',tags:['Social Media','جدولة','نمو Organic','تحليل المنافسين'],
+content:`<div class="lesson-block"><h3><span class="icon">⚡</span> الأسبوع كله في 3 ساعات</h3><ul><li><strong>يوم الأحد (ساعتين):</strong> ChatGPT → خطة المحتوى → Canva → تصاميم → Buffer → جدولة</li><li><strong>باقي الأسبوع (ساعة إجمالي):</strong> رد على التعليقات + متابعة الأرقام</li></ul><div style="margin-top:12px;color:#a78bfa;font-weight:700">النتيجة: أسبوع محتوى كامل بدون ضغط يومي!</div></div><div class="lesson-block"><h3><span class="icon">#️⃣</span> هاشتاجز بالطريقة الصح</h3><div class="info-grid"><div class="info-item"><div class="val" style="-webkit-text-fill-color:#ef4444">10</div><div class="lbl">شعبية جداً (1M+)</div></div><div class="info-item"><div class="val" style="-webkit-text-fill-color:#f7c948">10</div><div class="lbl">متوسطة (100K-500K)</div></div><div class="info-item"><div class="val" style="-webkit-text-fill-color:#25d366">10</div><div class="lbl">متخصصة (أقل من 50K)</div></div></div></div><div class="lesson-block"><h3><span class="icon">📈</span> نمو الفولورز</h3><ul><li><strong>Engagement Formula:</strong> Hook → قيمة → سؤال → هاشتاجز</li><li><strong>أسئلة تفاعلية:</strong> اطلب من ChatGPT 20 سؤال مثير للجدل لجمهورك</li><li><strong>تحليل المنافسين:</strong> صف محتوى منافسك لـ ChatGPT وهيديك فرص التميّز</li></ul></div>`,
+example:{title:'حلّل حساب منافسك وشوف ثغراته 🔍',subtitle:'هنطلب من ChatGPT يحلل استراتيجية منافس ويطلعلنا الفرص — ده سلاح التخطيط الأقوى',steps:[{title:'اختار منافس حقيقي',desc:'اختار حساب بيشتغل في نفس مجالك ومتابعينه أكتر'},{title:'راقبه 5 دقايق',desc:'اتفرج على آخر 10-15 بوست وحدد أنواع المحتوى'},{title:'ابعت التحليل لـ ChatGPT',desc:'استخدم الـ Prompt الجاي واملأ المعلومات'},{title:'اقرأ الفرص',desc:'ChatGPT هيطلعلك الـ gaps اللي منافسك مش بيغطيها'},{title:'ابني استراتيجيتك',desc:'الفرص دي هي ميزتك التنافسية الجديدة 💡'}],
+prompt:`أنت خبير تحليل استراتيجيات التسويق الرقمي.
+
+عندي منافس في [اكتب المجال] بيعمل المحتوى التالي:
+- نوع المحتوى: [فيديوهات؟ صور؟ نصوص؟]
+- الأسلوب: [رسمي؟ شبابي؟ عامية؟]
+- التفاعل: [عالي؟ متوسط؟ منخفض؟]
+- أقوى منصة عنده: [فيسبوك؟ انستجرام؟]
+
+المطلوب:
+1. أقوى 3 حاجات بيعملها كويس
+2. أكبر 3 ثغرات في محتواه
+3. 5 أفكار تتميز بيها عنه
+4. نوع محتوى مش بيعمله وهيجيب تفاعل عالي`,
+result:['تحليل دقيق للمنافس من غير ما تدفع لأي خبير','الثغرات دي هي فرصك الذهبية في السوق','ده بيفرق كتير في تخطيطك الاستراتيجي'],
+tip:'<strong>مش هدفك تنسخ المنافس</strong> — الهدف إنك تعرف هو بيعمل إيه عشان تعمل حاجة مختلفة وأحسن.',
+challenge:'طبّق التحليل على 3 منافسين مختلفين وشوف الـ pattern المشترك في الثغرات — ده فرصتك!'},
+quiz:{q:'إيه أكتر حاجة بتأثر في نمو حساب السوشيال ميديا بشكل عضوي؟',opts:['عدد الفولورز الحالي','انتظام النشر + جودة المحتوى + التفاعل مع الجمهور','عدد الهاشتاجز','شراء فولورز في البداية'],correct:1,feedback:'صح! الخوارزمية بتكافئ: الانتظام + الجودة + الـ Engagement. دي المعادلة الحقيقية للنمو.'}
+},
+
+{id:5,icon:'💰',title:'الإعلانات المدفوعة والذكاء الاصطناعي',desc:'هتعرف تشغّل إعلانات ناجحة وتستخدم Advantage+ وتقرأ الأرقام بذكاء',duration:'90 دقيقة',tags:['Facebook Ads','Advantage+','A/B Testing','ROAS'],
+content:`<div class="lesson-block"><h3><span class="icon">🧠</span> كيف تفكر خوارزمية Meta</h3><p>فيسبوك سؤاله الوحيد: <strong>"الإعلان ده هيجيب قيمة لمستخدميني؟"</strong></p><ul><li><strong>Relevance Score:</strong> مدى صلة الإعلان بالجمهور</li><li><strong>CTR:</strong> نسبة النقر — كلما أعلى كلما أرخص</li><li><strong>Engagement:</strong> تعليقات، مشاركات، وقت المشاهدة</li><li><strong>Conversion:</strong> هل بيتحوّل لعميل؟</li></ul></div><div class="lesson-block"><h3><span class="icon">📊</span> قراءة الأرقام</h3><table class="compare-table"><tr><th>المقياس</th><th>المعدل الكويس</th><th>معناه</th></tr><tr><td>CTR</td><td>أكتر من 1%</td><td>الإعلان جذّاب</td></tr><tr><td>ROAS</td><td>3x فأكتر</td><td>ربح حقيقي</td></tr><tr><td>Frequency</td><td>2-4 مرات</td><td>تكرار المشاهدة</td></tr></table></div><div class="lesson-block"><h3><span class="icon">🔬</span> A/B Testing بالترتيب الصح</h3><ul><li><strong>1️⃣ أول:</strong> الصورة / الفيديو (الأكبر تأثيراً)</li><li><strong>2️⃣ تاني:</strong> الـ Headline</li><li><strong>3️⃣ تالت:</strong> الـ Primary Text</li><li><strong>4️⃣ رابع:</strong> الجمهور</li></ul></div>`,
+example:{title:'اكتب 3 إعلانات مختلفة لنفس المنتج 🎯',subtitle:'هنكتب 3 نسخ بزوايا مختلفة — وهنشوف إيه الأقوى في جمهورك',steps:[{title:'اختار منتج أو خدمة',desc:'أي حاجة: كورس، منتج، خدمة — المهم واضح إيه هو وإيه الفايدة'},{title:'ابعت الـ Prompt',desc:'استخدم الـ Prompt الجاي وهيكتبلك 3 نسخ مختلفة في ثوانٍ'},{title:'قارن النسخ',desc:'اقرأ كل نسخة وحدد: إيه الأكتر تأثيراً في جمهورك؟'},{title:'شغّل النسختين الأقوى',desc:'مش لازم تشغّل 3 — شغّل 2 فقط: الأقوى + التانية في الترتيب'},{title:'حلّل بعد 3 أيام',desc:'النسخة اللي CTR بتاعها أعلى هي الرابحة — اعتمدها'}],
+prompt:`أنت خبير كوبي رايتنج ومتخصص في إعلانات فيسبوك للسوق المصري.
+
+المنتج / الخدمة: [اوصف المنتج]
+الجمهور: [وصف الجمهور]
+الميزة الأساسية: [أهم فايدة]
+الهدف: [مبيعات / تسجيل / واتساب]
+
+اكتب 3 نسخ إعلانية مختلفة:
+
+النسخة 1: تعتمد على الفايدة المباشرة والنتيجة
+النسخة 2: تعتمد على الخوف من الخسارة وحل مشكلة
+النسخة 3: تعتمد على Social Proof (تجارب ناس حقيقيين)
+
+لكل نسخة: Headline + Primary Text + CTA محدد`,
+result:['3 إعلانات احترافية في دقيقتين','كل نسخة بتستهدف segment مختلف من جمهورك','دي نفس الطريقة اللي Agencies بتدفع فيها آلاف الجنيهات'],
+tip:'<strong>مهما كانت النسخة كويسة</strong>، لازم تعدّل وتضيف تفاصيل حقيقية من زبايينك الفعليين.',
+challenge:'بعد كتابة النسخ، شيل الـ Headlines وعيد صياغتهم بـ 5 أساليب: سؤال، رقم، وعد، مفاجأة، عاطفي.'},
+quiz:{q:'إيه الحاجة اللي لازم تختبرها أول في A/B Testing؟',opts:['الجمهور المستهدف','السعر والعرض','الصورة أو الفيديو','الكاب شن والنص'],correct:2,feedback:'صح! الصورة هي أكتر عنصر بيأثر في قرار الناس يوقفوا يقرأوا أو يعدّوا. اكسب في الـ Creative الأول.'}
+},
+
+{id:6,icon:'📊',title:'تحليل البيانات واتخاذ القرارات',desc:'هتقرأ الأرقام بذكاء وتعمل تقارير احترافية وتفهم جمهورك بعمق',duration:'75 دقيقة',tags:['Analytics','Data','تقارير','Customer Persona'],
+content:`<div class="lesson-block"><h3><span class="icon">🔴</span> Vanity vs Real Metrics</h3><table class="compare-table"><tr><th>Vanity (مش مهمة)</th><th>Real (مهمة جداً)</th></tr><tr><td>عدد الفولورز</td><td>معدل التحويل</td></tr><tr><td>عدد اللايكات</td><td>نسبة النقر CTR</td></tr><tr><td>Impressions</td><td>Reach الفريد</td></tr><tr><td>Website Visits</td><td>قرارات الشراء</td></tr></table></div><div class="lesson-block"><h3><span class="icon">👤</span> Customer Persona</h3><p>صورة تفصيلية لعميلك المثالي — لو فهمتها هتكتب محتوى وإعلانات بتتكلم مباشرة مع اللي عاوز يشتري.</p><ul><li><strong>الديموغرافيا:</strong> سنّه، جنسه، منطقته، دخله</li><li><strong>المشاكل:</strong> إيه اللي بيصعّب حياته؟</li><li><strong>قرار الشراء:</strong> ليه يشتري منك؟ وليه ممكن ما يشتريش؟</li></ul></div><div class="lesson-block"><h3><span class="icon">📋</span> تقرير شهري في 30 دقيقة</h3><p>ادي ChatGPT الأرقام وهو يعمل التقرير كامل: ملخص تنفيذي + النجاحات + التحديات + توصيات الشهر الجاي.</p></div>`,
+example:{title:'ابني Customer Persona كاملة 👤',subtitle:'هنبني شخصية العميل المثالي — ودي الأساس اللي بيُبنى عليه كل المحتوى والإعلانات',steps:[{title:'حدد بيزنسك',desc:'مثلاً: "كورس الكيتو دايت للسيدات في مصر"'},{title:'فكّر في عميلك الأفضل',desc:'لو عندك عملاء دلوقتي — مين أكتر واحد اشترى ومبسوط؟'},{title:'ابعت الـ Prompt',desc:'استخدم الـ Prompt وخليه يولّد Persona تفصيلية'},{title:'طابق بجمهورك الحقيقي',desc:'عدّل على الـ Persona لو في حاجة مش دقيقة'},{title:'احفظها واستخدمها دايماً',desc:'من دلوقتي في كل Prompt بتكتبه، قوله "الجمهور: [الـ Persona دي]"'}],
+prompt:`أنت خبير تسويق رقمي ومتخصص في سلوك المستهلك المصري.
+
+عندي [اوصف بيزنسك: نوعه، خدماته، السعر، المنطقة].
+
+اعملي Customer Persona كاملة لعميلي المثالي تشمل:
+1. الاسم الخيالي والعمر والجنس
+2. مكان السكن والوظيفة والدخل الشهري
+3. يومه على الإنترنت
+4. أكتر 3 مشاكل في مجال [مجالك]
+5. المنصات المفضلة عنده
+6. كيف بياخد قرار الشراء
+7. سبب الشراء منك
+8. سبب عدم الشراء
+9. الرسالة التسويقية المثالية له في جملة واحدة
+
+الأسلوب: واضح، عملي، بأمثلة مصرية حقيقية.`,
+result:['Persona كاملة ودقيقة هتساعدك في كل قرار تسويقي','محتواك وإعلاناتك هتبقى موجّهة بدقة مش عشوائية','الفرق بين إعلان بيبيع وإعلان بيصرف فلوس في الهوا'],
+tip:'<strong>الـ Persona مش نظرية</strong> — استخدمها في كل Prompt. قول "اكتبلي بوست لـ [الـ Persona دي]" وهتشوف فرق ضخم.',
+challenge:'بعد عمل الـ Persona، اطلب من ChatGPT يكتب نفس البوست القديم موجّه ليها — قارن النتيجتين!'},
+quiz:{q:'إيه الفرق بين Impressions و Reach؟',opts:['مفيش فرق — نفس الرقم','Impressions = مرات الظهور، Reach = عدد الأفراد الفريدين','Reach أهم دايماً','Impressions = إعلانات بس'],correct:1,feedback:'صح! Impressions ممكن تحسب نفس الشخص 10 مرات. Reach بيحسب كل شخص مرة واحدة — ده الأهم لمعرفة فعلاً وصلت لكام واحد.'}
+},
+
+{id:7,icon:'🗺️',title:'بناء استراتيجية تسويق متكاملة',desc:'هتصمم استراتيجية شاملة من الصفر وتبني Marketing Funnel ذكي وخطة 90 يوم',duration:'90 دقيقة',tags:['Strategy','Marketing Funnel','خطة 90 يوم','تسعير'],
+content:`<div class="lesson-block"><h3><span class="icon">🔽</span> الـ Marketing Funnel</h3><ul><li><strong>1. Awareness:</strong> محتوى تعليمي + Short Videos + إعلانات رخيصة</li><li><strong>2. Consideration:</strong> Case Studies + شهادات + Retargeting Ads</li><li><strong>3. Conversion:</strong> عروض محدودة + WhatsApp Bot</li><li><strong>4. Retention:</strong> متابعة بعد الشراء + Upsell + Loyalty</li></ul></div><div class="lesson-block"><h3><span class="icon">💼</span> تسعير خدماتك</h3><table class="compare-table"><tr><th>الباقة</th><th>المحتوى</th><th>السعر المقترح</th></tr><tr><td>أساسية</td><td>12 بوست + تصميم</td><td>2,000-3,500 ج/شهر</td></tr><tr><td>متوسطة</td><td>20 بوست + إعلانات</td><td>4,000-7,000 ج/شهر</td></tr><tr><td>احترافية</td><td>30 بوست + إعلانات + تقارير</td><td>8,000-15,000 ج/شهر</td></tr><tr><td>Freelance دولي</td><td>Full Package</td><td>$800-2,500/شهر</td></tr></table></div>`,
+example:{title:'خطة 90 يوم كاملة لبيزنس حقيقي 🗓️',subtitle:'هنطلب من ChatGPT خطة 3 شهور تفصيلية — ده الأساس اللي بتبني عليه عملك',steps:[{title:'حدد الهدف بأرقام',desc:'مثلاً: 1000 متابع + 50 عميل جديد خلال 90 يوم'},{title:'حدد الميزانية',desc:'كام الميزانية الشهرية المتاحة للتسويق؟'},{title:'ابعت الـ Prompt',desc:'الـ Prompt الجاي هيعملك خطة كاملة بالتفاصيل'},{title:'عدّل بناءً على بيزنسك',desc:'الخطة دي نقطة بداية — عدّل عليها بمعرفتك'},{title:'حوّلها لـ Tasks أسبوعية',desc:'اقسّمها لمهام صغيرة تقدر تتابعها كل أسبوع'}],
+prompt:`أنت خبير استراتيجيات تسويق رقمي.
+
+اعملي خطة تسويقية 90 يوم لـ:
+- نوع البيزنس: [وصف بيزنسك]
+- الهدف: [مثلاً: 50 عميل / 1000 متابع]
+- الميزانية الشهرية: [المبلغ]
+- المنصات: [فيسبوك + انستجرام مثلاً]
+
+الخطة تشمل:
+
+الشهر الأول — الـ Awareness:
+- المحتوى: كميته وأنواعه
+- الإعلانات: نوعها وميزانيتها
+- KPIs المتوقعة
+
+الشهر الثاني — الـ Leads:
+- نفس التفصيل
+
+الشهر الثالث — التحويل:
+- نفس التفصيل
+
++ أهم 5 أدوات AI للتنفيذ`,
+result:['خطة كاملة كانت هتكلف آلاف لو طلبتها من agency','كل تفصيلة موجودة: المحتوى + الإعلانات + KPIs','دلوقتي عندك roadmap واضح مش شغل عشوائي'],
+tip:'<strong>الخطة مش حديدة</strong> — هي دليل. لو اتغير شيء في السوق، غيّر في خطتك.',
+challenge:'حوّل الخطة لـ Trello board أو Excel — كل task في مكانه. هتشوف الفرق في إنتاجيتك!'},
+quiz:{q:'إيه الخطوة الأولى في أي استراتيجية تسويق ناجحة؟',opts:['البدء فوراً بالإعلانات المدفوعة','تحديد الهدف بوضوح وبأرقام قابلة للقياس','بناء حسابات السوشيال ميديا','دراسة المنافسين وتقليدهم'],correct:1,feedback:'صح! بدون هدف واضح وقابل للقياس، مش هتعرف هل نجحت ولا فشلت. الهدف الذكي: محدد + قابل للقياس + مرتبط بزمن.'}
+},
+
+{id:8,icon:'🏆',title:'مشروع التخرج + أول عميل حقيقي',desc:'هتطبق كل اللي اتعلمته وتبني Portfolio احترافي وتاخد أول عميل',duration:'120 دقيقة',tags:['Portfolio','مشروع التخرج','أول عميل','Freelance'],
+content:`<div class="lesson-block"><h3><span class="icon">📁</span> مشروع التخرج</h3><ul><li>اختار بيزنس حقيقي أو خيالي</li><li>Customer Persona كاملة</li><li>خطة محتوى 30 بوست</li><li>5 تصاميم بـ Canva AI</li><li>3 إعلانات مكتوبة لفيسبوك</li><li>Script Reels واحد</li><li>استراتيجية 90 يوم</li></ul></div><div class="lesson-block"><h3><span class="icon">🎯</span> أسرع 5 طرق لأول عميل</h3><ul><li><strong>1. الشبكة الشخصية:</strong> أصحابك وعيلتك عندهم بيزنس</li><li><strong>2. Facebook Groups:</strong> مجموعات أصحاب المشاريع</li><li><strong>3. LinkedIn:</strong> 20 رسالة يومياً لأصحاب الشركات الصغيرة</li><li><strong>4. Cold DM:</strong> حسابات الأعمال اللي محتواها قديم</li><li><strong>5. Mostaql / Fiverr:</strong> منصات Freelance</li></ul></div><div class="lesson-block"><h3><span class="icon">💬</span> الكلمة الأخيرة</h3><div style="padding:14px;background:rgba(247,201,72,.08);border:1px solid rgba(247,201,72,.2);border-radius:10px;font-size:14px;color:var(--gold);line-height:1.8">"الـ AI مش هيستبدلك — هيضاعف قدرتك × 10 لو استخدمته صح" — أكرم مصطفى</div></div>`,
+example:{title:'Proposal احترافي لعميل في 5 دقايق 📄',subtitle:'الـ Proposal هو بوابة أول عميل — هنكتب واحد احترافي كامل بمساعدة ChatGPT',steps:[{title:'اختار نوع العميل',desc:'مثلاً: متجر إكسسوارات نسائي على انستجرام مش بيعمل محتوى منتظم'},{title:'راقب حسابه 5 دقايق',desc:'لاحظ: إيه المشاكل الواضحة؟ محتوى قديم؟ تصاميم ضعيفة؟'},{title:'ابعت الـ Prompt',desc:'استخدم الـ Prompt الجاي واملأه بمعلومات العميل'},{title:'عدّل وأضف أرقام حقيقية',desc:'اللي ChatGPT كتبه هيكل — أضف أرقام وأمثلة من مجاله'},{title:'ابعته وانتظر',desc:'PDF واضح واحترافي — ده اللي بيفرق بين مسوّق بيبيع نفسه ومش بيعرف 💪'}],
+prompt:`أنت خبير كتابة Proposals لخدمات التسويق الرقمي.
+
+اعملي Proposal احترافي لعميل:
+- نوع بيزنسه: [وصف البيزنس]
+- المشكلة الواضحة: [إيه اللي شفته ناقص]
+- المنطقة: مصر
+- المنصات: [فيسبوك + انستجرام]
+
+الـ Proposal يشمل:
+1. المقدمة: إنك فاهم بيزنسه
+2. التشخيص: المشاكل الحالية
+3. الحل المقترح: الاستراتيجية بخطوات
+4. الخدمات: تفصيل كل خدمة
+5. النتائج المتوقعة في 90 يوم
+6. الأسعار: 3 باقات (أساسية / متوسطة / متكاملة)
+7. Timeline: الأسبوع الأول / التاني / التالت
+8. CTA: الخطوة التالية
+
+الأسلوب: واثق، احترافي، يبيع قيمة مش سعر رخيص.`,
+result:['Proposal كامل في دقيقتين بدل ساعات من الكتابة','هيكل محترف بيخليك تبان خبير عارف بيشتغل','غيّر الأرقام حسب قيمتك الفعلية مش حسب الخوف!'],
+tip:'<strong>أهم حاجة في الـ Proposal</strong> إنك تُظهر إنك فهمت مشكلة العميل — ابدأ دايماً بـ "لاحظت في حسابك..."',
+challenge:'اعمل Proposal لـ 3 عملاء في 3 مجالات مختلفة — شوف كيف ChatGPT بيغير الأسلوب تلقائياً!'},
+quiz:{q:'إيه أهم حاجة في Proposal تبعته لعميل؟',opts:['السعر المنخفض','إنك تظهر إنك فاهم مشكلته وعندك الحل','طول الـ Proposal','عدد الخدمات المقدمة'],correct:1,feedback:'صح جداً! العميل مش بيشتري خدمة — بيشتري حل لمشكلته. لما يحس إنك فاهمه أكتر من أي حد تاني، قرار الاختيار بيبقى سهل.'}
+}
+];
+
+function getDone(){try{return JSON.parse(localStorage.getItem('ai_course_done')||'[]')}catch(e){return[]}}
+function setDone(arr){try{localStorage.setItem('ai_course_done',JSON.stringify(arr))}catch(e){}}
+
+function renderCards(){
+  const done=getDone();
+  document.getElementById('lecturesGrid').innerHTML=LECTURES.map(l=>{
+    const isDone=done.includes(l.id);
+    return`<div class="lec-card${isDone?' done':''}" data-id="${l.id}">
+      <span class="lec-duration"><i class="fas fa-clock" style="margin-left:4px;opacity:.6"></i>${l.duration}</span>
+      <div class="lec-num">${isDone?'✓':l.id}</div>
+      <div class="lec-title">${l.icon} ${l.title}</div>
+      <div class="lec-desc">${l.desc}</div>
+      <div class="lec-tags">${l.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <div class="lec-footer">
+        <button class="btn-open" onclick="openModal(${l.id},'content')"><i class="fas fa-book-open"></i> افتح المحاضرة</button>
+        <button class="btn-example" onclick="openModal(${l.id},'example')"><i class="fas fa-flask"></i> مثال عملي</button>
+      </div>
+    </div>`;
+  }).join('');
+  const pct=Math.round(getDone().length/LECTURES.length*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+}
+
+let quizAnswered=false;
+
+function openModal(id,tab){
+  quizAnswered=false;
+  const l=LECTURES.find(x=>x.id===id);
+  const isDone=getDone().includes(id);
+  document.getElementById('modalTitle').innerHTML=`<span style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;font-size:15px">${l.icon}</span> محاضرة ${l.id} — ${l.title}`;
+  document.getElementById('modalBody').innerHTML=`
+    <div class="tabs">
+      <button class="tab-btn" id="tab-content" onclick="switchTab('content')">📚 الشرح</button>
+      <button class="tab-btn" id="tab-example" onclick="switchTab('example')">🔥 المثال العملي</button>
+      <button class="tab-btn" id="tab-quiz" onclick="switchTab('quiz')">🧠 تحدِّ نفسك</button>
+    </div>
+    <div class="tab-panel" id="panel-content">${l.content}</div>
+    <div class="tab-panel" id="panel-example">${buildEx(l.example)}</div>
+    <div class="tab-panel" id="panel-quiz">${buildQuiz(l.quiz,id)}</div>
+    <button class="btn-done${isDone?' done-state':''}" id="btnDone" onclick="markDone(${id})" ${isDone?'disabled':''}>
+      <i class="fas fa-${isDone?'check-double':'check'}"></i> ${isDone?'أحسنت! خلّصت المحاضرة دي ✓':'خلّصت المحاضرة — علّم عليها ✓'}
+    </button>`;
+  switchTab(tab||'content');
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function buildEx(ex){
+  return`<div class="example-wrap">
+    <div class="example-badge"><i class="fas fa-fire"></i> مثال عملي تطبيقي</div>
+    <div class="example-title">${ex.title}</div>
+    <div class="example-subtitle">${ex.subtitle}</div>
+    ${ex.steps.map((s,i)=>`<div class="step"><div class="step-num">${i+1}</div><div class="step-content"><strong>${s.title}</strong><p>${s.desc}</p></div></div>`).join('')}
+    <div style="margin-top:20px">
+      <div style="font-size:13px;font-weight:700;color:#a78bfa;margin-bottom:8px"><i class="fas fa-copy" style="margin-left:6px"></i> الـ Prompt الجاهز — انسخه وجرّبه دلوقتي:</div>
+      <div class="prompt-box" id="pb_${Math.random().toString(36).slice(2)}">${ex.prompt}<button class="copy-btn" onclick="copyP(this)">نسخ</button></div>
+    </div>
+    <div class="result-box"><div class="result-title"><i class="fas fa-check-circle"></i> إيه اللي هتلاقيه</div><ul>${ex.result.map(r=>`<li>${r}</li>`).join('')}</ul></div>
+    <div class="tip-box"><div class="tip-icon">💡</div><p><strong>نصيحة المدرب:</strong> ${ex.tip}</p></div>
+    <div class="challenge-box"><div class="challenge-title"><i class="fas fa-bolt"></i> تحدِّ إضافي!</div><p>${ex.challenge}</p></div>
+  </div>`;
+}
+
+function buildQuiz(q,id){
+  return`<div class="quiz-wrap">
+    <div style="background:rgba(247,201,72,.08);border:1px solid rgba(247,201,72,.2);border-radius:12px;padding:14px;margin-bottom:20px;font-size:13px;color:var(--gold)"><i class="fas fa-brain" style="margin-left:6px"></i> اختبر فهمك — ده أهم سؤال في المحاضرة</div>
+    <div class="quiz-q">${q.q}</div>
+    <div class="quiz-opts">${q.opts.map((o,i)=>`<div class="quiz-opt" onclick="answer(this,${i},${q.correct},'${esc(q.feedback)}')">${o}</div>`).join('')}</div>
+    <div class="quiz-feedback" id="qfb"></div>
+    <button class="btn-next-q" id="btnNq" onclick="closeModal()"><i class="fas fa-arrow-left"></i> ممتاز! ارجع للمحاضرات</button>
+  </div>`;
+}
+
+function esc(s){return s.replace(/'/g,"\\'").replace(/"/g,'&quot;')}
+
+function switchTab(t){
+  ['content','example','quiz'].forEach(id=>{
+    document.getElementById('tab-'+id)?.classList.toggle('active',id===t);
+    document.getElementById('panel-'+id)?.classList.toggle('active',id===t);
+  });
+}
+
+function closeModal(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow=''}
+function closeIfOverlay(e){if(e.target===document.getElementById('overlay'))closeModal()}
+
+function markDone(id){
+  const done=getDone();
+  if(!done.includes(id)){done.push(id);setDone(done)}
+  const btn=document.getElementById('btnDone');
+  btn.innerHTML='<i class="fas fa-check-double"></i> أحسنت! خلّصت المحاضرة دي ✓';
+  btn.classList.add('done-state');btn.disabled=true;
+  renderCards();
+}
+
+function answer(el,chosen,correct,feedback){
+  if(quizAnswered)return;quizAnswered=true;
+  document.querySelectorAll('.quiz-opt').forEach((o,i)=>{
+    if(i===correct)o.classList.add('correct');
+    else if(i===chosen&&chosen!==correct)o.classList.add('wrong');
+    o.style.cursor='default';
+  });
+  const fb=document.getElementById('qfb');
+  fb.textContent=(chosen===correct?'✅ صح! ':'❌ مش كده. الإجابة الصح: ')+feedback;
+  fb.className='quiz-feedback show '+(chosen===correct?'correct-fb':'wrong-fb');
+  document.getElementById('btnNq').classList.add('show');
+}
+
+function copyP(btn){
+  const text=btn.closest('.prompt-box').innerText.replace('نسخ','').trim();
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='تم ✓';btn.style.background='rgba(37,211,102,.25)';btn.style.color='#25d366';
+    setTimeout(()=>{btn.textContent='نسخ';btn.style.background='';btn.style.color=''},2000);
+  }).catch(()=>{btn.textContent='انسخ يدوياً'});
+}
+
+renderCards();
 </script>
 </body>
 </html>
