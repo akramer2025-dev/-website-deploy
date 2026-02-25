@@ -270,6 +270,25 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   <a href="my-courses.html" class="btn-home" style="margin-top:10px"><i class="fas fa-home"></i> رجوع لكورساتي</a>
 </div>
 
+<!-- ⑥ FALLBACK (Lobby error) -->
+<div class="screen" id="fallbackScreen" style="flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;">
+  <div style="font-size:3rem;margin-bottom:16px;">🔗</div>
+  <h2 style="font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:10px;">الغرفة دي عليها قفل من جلسة قديمة</h2>
+  <p style="color:var(--muted);font-size:.88rem;max-width:380px;line-height:1.8;margin-bottom:20px;">
+    سيرفر Jitsi حافظ إعدادات الغرفة القديمة — اضغط زرار "افتح المحاضرة" وهتدخل مباشرة.<br>
+    <span style="color:#fbbf24;">⭐ للمحاضر: لما تدخل اضغط Security وأوقف الـ Lobby</span>
+  </p>
+  <a id="fallbackLink" href="#" target="_blank"
+    style="display:inline-flex;align-items:center;gap:9px;padding:14px 28px;background:var(--grad);border-radius:13px;color:#fff;font-size:1rem;font-weight:900;box-shadow:0 8px 28px rgba(233,78,119,.3);text-decoration:none;margin-bottom:14px;">
+    <i class="fas fa-external-link-alt"></i> افتح المحاضرة مباشرة
+  </a>
+  <div style="margin-top:10px;">
+    <a href="my-courses.html" style="color:var(--muted);font-size:.82rem;"><i class="fas fa-arrow-right"></i> رجوع</a>
+    &nbsp;·&nbsp;
+    <span style="color:var(--muted);font-size:.78rem;">أو روح الأدمن وغيّر اسم الغرفة</span>
+  </div>
+</div>
+
 <script src="https://meet.jit.si/external_api.js" async></script>
 <script>
 /* ══════════════════════════════════════════════
@@ -361,7 +380,7 @@ function setDot(color,label){
    SCREENS
 ══════════════════════════════════════════════ */
 function showScreen(id){
-  ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
+  ['authScreen','waitScreen','endedScreen','notFoundScreen','fallbackScreen'].forEach(s=>{
     const el=document.getElementById(s);
     if(el){el.classList.remove('active');el.style.display='none';}
   });
@@ -571,6 +590,21 @@ function launchJitsi(){
       jitsiApi.addEventListener('readyToClose',onLeft);
       jitsiApi.addEventListener('participantJoined',updateAttendees);
       jitsiApi.addEventListener('participantLeft',updateAttendees);
+      /* ── اكتشاف Lobby/membersOnly error وفتح في تاب جديد ── */
+      jitsiApi.addEventListener('errorOccurred', function(e){
+        if(e && e.error && String(e.error).includes('membersOnly')){
+          fallbackOpen();
+        }
+      });
+      /* fallback: لو بعد 6 ثواني الجلسة ما فتحتش → افتح في تاب */
+      const safetyTimer = setTimeout(()=>{
+        try{
+          if(jitsiApi && typeof jitsiApi.getNumberOfParticipants === 'function'){
+            jitsiApi.getNumberOfParticipants(); // will throw if failed
+          }
+        }catch(e){ fallbackOpen(); }
+      }, 6000);
+      jitsiApi.addEventListener('videoConferenceJoined', ()=> clearTimeout(safetyTimer));
     } catch(e){
       console.warn('Jitsi API error:',e);
       fallbackOpen();
@@ -599,9 +633,23 @@ function updateAttendees(){
 
 function fallbackOpen(){
   setLoad(false);
-  window.open('https://meet.jit.si/'+SESSION.room,'_blank');
-  showScreen('authScreen');
-  clearActive(currentUser?.id);
+  if(jitsiApi){ try{jitsiApi.dispose();}catch(e){} jitsiApi=null; }
+  document.getElementById('jitsiScreen').style.display='none';
+  /* فتح Jitsi مباشرة في نفس التاب — أضمن من تاب جديد */
+  const url = 'https://meet.jit.si/'+SESSION.room+'?lang=ar';
+  showFallbackMsg(url);
+}
+
+function showFallbackMsg(url){
+  ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
+    const el=document.getElementById(s);if(el){el.classList.remove('active');el.style.display='none';}
+  });
+  document.getElementById('jitsiScreen').style.display='none';
+  const fb = document.getElementById('fallbackScreen');
+  const lnk = document.getElementById('fallbackLink');
+  if(lnk) lnk.href = url;
+  fb.classList.add('active');
+  fb.style.display='flex';
 }
 
 function onLeft(){
