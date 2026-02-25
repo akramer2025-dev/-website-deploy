@@ -2062,28 +2062,43 @@ function pickSlideImage(idx){
 function onSlideFileChange(idx, input){
   const file = input.files[0];
   if(!file) return;
+  if(file.size > 10*1024*1024){ toast('حجم الصورة أكبر من 10MB','error'); return; }
+
+  // عرض preview محلياً أولاً
   const reader = new FileReader();
-  reader.onload = e=>{
-    const img = new Image();
-    img.onload = ()=>{
-      // compress: max 1200px wide, JPEG q=0.78
-      const MAX = 1200;
-      let w = img.width, h = img.height;
-      if(w > MAX){ h = Math.round(h * MAX / w); w = MAX; }
-      const canvas = document.createElement('canvas');
-      canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      const compressed = canvas.toDataURL('image/jpeg', 0.78);
-      slideRows[idx].src = compressed;
-      const preview = document.getElementById('sf-imgpreview-'+idx);
-      const srcInput = document.getElementById('sf-src-'+idx);
-      if(preview){ preview.src=compressed; preview.style.display='block'; }
-      if(srcInput){ srcInput.value='[صورة مرفوعة]'; srcInput.disabled=true; }
-      // size feedback
-      const kb = Math.round(compressed.length * 0.75 / 1024);
-      toast('تم ضغط الصورة: ' + kb + ' KB ✓','success');
-    };
-    img.src = e.target.result;
+  reader.onload = async e=>{
+    const preview = document.getElementById('sf-imgpreview-'+idx);
+    const srcInput = document.getElementById('sf-src-'+idx);
+    if(preview){ preview.src=e.target.result; preview.style.display='block'; }
+    if(srcInput){ srcInput.value='جاري الرفع...'; srcInput.disabled=true; }
+    toast('جاري رفع الصورة...','info');
+    try {
+      const storageRef = _fst.ref('lecture_slides/'+Date.now()+'_'+file.name);
+      const snap = await storageRef.put(file);
+      const url = await snap.ref.getDownloadURL();
+      slideRows[idx].src = url;
+      if(srcInput){ srcInput.value='✓ تم الرفع'; srcInput.disabled=true; }
+      if(preview){ preview.src=url; }
+      toast('تم رفع الصورة ✓','success');
+    } catch(err){
+      console.warn('Slide image upload failed:', err);
+      // Fallback: compress to base64
+      const img = new Image();
+      img.onload = ()=>{
+        const MAX = 1200;
+        let w = img.width, h = img.height;
+        if(w > MAX){ h = Math.round(h * MAX / w); w = MAX; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        const compressed = canvas.toDataURL('image/jpeg', 0.78);
+        slideRows[idx].src = compressed;
+        if(preview){ preview.src=compressed; preview.style.display='block'; }
+        if(srcInput){ srcInput.value='[محلي]'; srcInput.disabled=true; }
+        toast('تم حفظ الصورة محلياً (فشل الرفع)','error');
+      };
+      img.src = e.target.result;
+    }
   };
   reader.readAsDataURL(file);
 }
