@@ -328,7 +328,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   </div>
 </div>
 
-<script src="https://meet.jit.si/external_api.js" async></script>
+<!-- Jitsi External API removed - using direct iframe instead -->
 <script>
 /* ══════════════════════════════════════════════
    DATA HELPERS
@@ -564,147 +564,61 @@ function launchJitsi(){
   myJoinToken='tk_'+Math.random().toString(36).slice(2);
   markActive(currentUser.id,myJoinToken);
 
-  /* Show jitsi frame */
+  /* إخفاء باقي الشاشات وإظهار Jitsi */
   ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
     const el=document.getElementById(s);if(el){el.classList.remove('active');el.style.display='none';}
   });
   document.getElementById('jitsiScreen').style.display='block';
+  setLoad(false);
 
-  function doLaunch(){
-    setLoad(false);
-    const options={
-      roomName: SESSION.room,
-      width:'100%', height:'100%',
-      parentNode: document.getElementById('jitsiMount'),
-      configOverwrite:{
-        startWithAudioMuted: !isTeacherMode,  /* طلاب يبدأوا مكتومين، الأستاذ مفتوح */
-        startWithVideoMuted: false,
-        defaultLanguage:'ar',
-        disableDeepLinking:true,
-        prejoinPageEnabled:false,
-        prejoinConfig:{ enabled:false },       /* disable prejoin - new API */
-        disablePrejoin:true,
-        disableThirdPartyRequests:true,
-        enableEmailInStats:false,
-        /* ── منع الـ Lobby نهائياً ── */
-        enableLobbyChat:false,
-        disableLobby:true,
-        hideLobbyButton:true,
-        membersOnly:false,
-        toolbarButtons: isTeacherMode ? [
-          'microphone','camera',
-          'desktop',           /* ⭐ Screen Share — أول الأدوات */
-          'chat','raisehand','reactions',
-          'participants-pane','tileview','fullscreen',
-          'recording','settings','hangup'
-        ] : [
-          'microphone','camera',
-          'chat','raisehand','reactions',
-          'participants-pane','tileview','fullscreen',
-          'settings','hangup'
-        ],
-        enableClosePage:false,
-        notifications:[],
-      },
-      interfaceConfigOverwrite:{
-        SHOW_JITSI_WATERMARK:false,
-        SHOW_WATERMARK_FOR_GUESTS:false,
-        DEFAULT_BACKGROUND:'#050d1b',
-        APP_NAME:'Akram Mostafa | محاضرات مباشرة',
-        NATIVE_APP_NAME:'Akram Mostafa',
-        TOOLBAR_ALWAYS_VISIBLE:false,
-        MOBILE_APP_PROMO:false,
-        RECENT_LIST_ENABLED:false,
-        filmStripOnly:false,
-      },
-      userInfo:{
-        displayName: isTeacherMode
-          ? '🎥 أكرم مصطفى (محاضر)'
-          : (currentUser.name||currentUser.username||'طالب'),
-        email: currentUser.email||'',
-      }
-    };
-    try{
-      jitsiApi=new JitsiMeetExternalAPI('meet.jit.si',options);
-      jitsiApi.addEventListener('videoConferenceLeft',onLeft);
-      jitsiApi.addEventListener('readyToClose',onLeft);
-      jitsiApi.addEventListener('participantJoined',updateAttendees);
-      jitsiApi.addEventListener('participantLeft',updateAttendees);
+  /* ── اسم المستخدم ── */
+  const displayName = isTeacherMode
+    ? '🎥 أكرم مصطفى (محاضر)'
+    : (currentUser.name||currentUser.username||'طالب');
 
-      /* ── اكتشاف Lobby/membersOnly ── */
-      let sessionJoined = false;
+  /* ── config عبر URL hash — هذا يبايباس lobby السيرفر ── */
+  const cfg = [
+    'config.disableLobby=true',
+    'config.prejoinConfig.enabled=false',
+    'config.startWithAudioMuted='+ (!isTeacherMode),
+    'config.startWithVideoMuted=false',
+    'config.enableLobbyChat=false',
+    'config.hideLobbyButton=true',
+    'config.disableDeepLinking=true',
+    'config.enableEmailInStats=false',
+    'config.defaultLanguage=ar',
+    'config.notifications=[]',
+    'interfaceConfig.SHOW_JITSI_WATERMARK=false',
+    'interfaceConfig.TOOLBAR_ALWAYS_VISIBLE=false',
+    'interfaceConfig.MOBILE_APP_PROMO=false',
+    'userInfo.displayName='+ encodeURIComponent(displayName),
+  ].join('&');
 
-      jitsiApi.addEventListener('errorOccurred', function(e){
-        const s = JSON.stringify(e||'');
-        if(s.includes('membersOnly') || s.includes('lobby') || s.includes('connectionError')){
-          fallbackOpen();
-        }
-      });
+  const url = 'https://meet.jit.si/'+ SESSION.room +'?lang=ar#'+ cfg;
 
-      /* safety: لو بعد 8 ثواني videoConferenceJoined ما جاتش → stuck في lobby */
-      const safetyTimer = setTimeout(()=>{
-        if(!sessionJoined) fallbackOpen();
-      }, 8000);
+  /* ── إنشاء iframe مباشرة (بدون External API) ── */
+  const mount = document.getElementById('jitsiMount');
+  mount.innerHTML='';
+  const iframe = document.createElement('iframe');
+  iframe.src = url;
+  iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
+  iframe.allow = 'camera; microphone; fullscreen; display-capture; speaker-selection; autoplay';
+  iframe.setAttribute('allowfullscreen','true');
+  mount.appendChild(iframe);
 
-      jitsiApi.addEventListener('videoConferenceJoined', ()=>{
-        sessionJoined = true;
-        clearTimeout(safetyTimer);
-        if(isTeacherMode){
-          document.getElementById('recPanel').classList.add('show');
-        }
-      });
-    } catch(e){
-      console.warn('Jitsi API error:',e);
-      fallbackOpen();
-    }
+  /* للمعلم — أظهر شريط التسجيل فوراً */
+  if(isTeacherMode){
+    document.getElementById('recPanel').classList.add('show');
   }
 
-  if(typeof JitsiMeetExternalAPI!=='undefined'){
-    doLaunch();
-  } else {
-    const t=setInterval(()=>{
-      if(typeof JitsiMeetExternalAPI!=='undefined'){clearInterval(t);doLaunch();}
-    },200);
-    setTimeout(()=>{clearInterval(t);if(!jitsiApi)fallbackOpen();},8000);
-  }
+  /* إحصاء الحضور غير متاح بالـ iframe المباشر — نخفيه */
+  document.getElementById('attendeeCount').style.display='none';
 }
 
-function updateAttendees(){
-  try{
-    const cnt=jitsiApi.getNumberOfParticipants?jitsiApi.getNumberOfParticipants():null;
-    if(cnt!==null){
-      document.getElementById('attNum').textContent=cnt;
-      document.getElementById('attendeeCount').style.display='flex';
-    }
-  }catch(e){}
-}
+function updateAttendees(){ /* غير متاح مع iframe مباشر */ }
 
 function fallbackOpen(){
-  setLoad(false);
-  if(jitsiApi){ try{jitsiApi.dispose();}catch(e){} jitsiApi=null; }
-  document.getElementById('jitsiScreen').style.display='none';
-
-  /* ── محاولة تلقائية بغرفة جديدة (مرة واحدة فقط) ── */
-  if(!SESSION._retried){
-    SESSION._retried = true;
-    const words = ['learn','class','live','akram','digital','course'];
-    const word   = words[Math.floor(Math.random()*words.length)];
-    const newRoom = 'akram-' + word + '-' + Date.now().toString(36);
-    SESSION.room = newRoom;
-    /* حفظ الغرفة الجديدة في localStorage حتى الأدمن يشوفها */
-    try{
-      const sessions = getLiveSessions();
-      const idx = sessions.findIndex(s=>s.id===SESSION.id);
-      if(idx>-1){ sessions[idx].room = newRoom; saveLiveSessions(sessions); }
-    }catch(e){}
-    /* إعادة تشغيل Jitsi بالغرفة الجديدة */
-    setTimeout(()=>launchJitsi(), 500);
-    return;
-  }
-
-  /* لو فشلت المحاولة الثانية → اعرض الـ fallback */
-  const url = 'https://meet.jit.si/'+SESSION.room+'?lang=ar';
-  showFallbackMsg(url);
+  /* مستخدمة فقط من الكود القديم — مش بتُستدعى بالـ iframe approach */ 
 }
 
 function showFallbackMsg(url){
@@ -810,6 +724,7 @@ function onLeft(){
   clearActive(currentUser?.id);
   jitsiApi=null;
   document.getElementById('recPanel').classList.remove('show');
+  document.getElementById('jitsiMount').innerHTML='';
   document.getElementById('jitsiScreen').style.display='none';
   document.getElementById('attendeeCount').style.display='none';
   showScreen('endedScreen');
@@ -821,12 +736,14 @@ function onLeft(){
 ══════════════════════════════════════════════ */
 window.addEventListener('beforeunload',()=>{
   if(currentUser)clearActive(currentUser.id);
-  if(jitsiApi){try{jitsiApi.dispose();}catch(e){}}
 });
 
 /* Detect if another tab kicked us (force join from other device) */
 window.addEventListener('storage',e=>{
-  if(e.key!==ACTIVE_KEY||!currentUser||!jitsiApi)return;
+  if(e.key!==ACTIVE_KEY||!currentUser) return;
+  /* نتأكد فيه iframe شغال (يعني داخل جلسة) */
+  const inSession = document.getElementById('jitsiScreen').style.display==='block';
+  if(!inSession) return;
   const g=JSON.parse(e.newValue||'{}');
   if(g[currentUser.id]&&g[currentUser.id].token!==myJoinToken){
     alert('⚠️ تم فتح المحاضرة في تاب أو جهاز آخر — هتتحول للصفحة الرئيسية');
