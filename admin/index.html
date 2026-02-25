@@ -16,6 +16,13 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--bg2);border-radius:10px;}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--pink),var(--orange));border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,var(--orange),var(--pink));}
+*{scrollbar-width:thin;scrollbar-color:var(--pink) var(--bg2);}
 a{text-decoration:none;color:inherit;}
 input,select,textarea,button{font-family:'Cairo',sans-serif;}
 button{cursor:pointer;}
@@ -1747,11 +1754,26 @@ function onSlideFileChange(idx, input){
   if(!file) return;
   const reader = new FileReader();
   reader.onload = e=>{
-    slideRows[idx].src = e.target.result;         // base64
-    const preview = document.getElementById('sf-imgpreview-'+idx);
-    const srcInput = document.getElementById('sf-src-'+idx);
-    if(preview){ preview.src=e.target.result; preview.style.display='block'; }
-    if(srcInput){ srcInput.value='[صورة مرفوعة]'; srcInput.disabled=true; }
+    const img = new Image();
+    img.onload = ()=>{
+      // compress: max 1200px wide, JPEG q=0.78
+      const MAX = 1200;
+      let w = img.width, h = img.height;
+      if(w > MAX){ h = Math.round(h * MAX / w); w = MAX; }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const compressed = canvas.toDataURL('image/jpeg', 0.78);
+      slideRows[idx].src = compressed;
+      const preview = document.getElementById('sf-imgpreview-'+idx);
+      const srcInput = document.getElementById('sf-src-'+idx);
+      if(preview){ preview.src=compressed; preview.style.display='block'; }
+      if(srcInput){ srcInput.value='[صورة مرفوعة]'; srcInput.disabled=true; }
+      // size feedback
+      const kb = Math.round(compressed.length * 0.75 / 1024);
+      toast('تم ضغط الصورة: ' + kb + ' KB ✓','success');
+    };
+    img.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
