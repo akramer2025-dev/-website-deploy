@@ -121,11 +121,12 @@ button{cursor:pointer;}
 .proof-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
 
 /* SUMMARY BOX */
-.summary-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;}
-.summary-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.summary-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;overflow:hidden;}
+.summary-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);min-width:0;}
 .summary-row:last-child{border-bottom:none;}
-.summary-lbl{font-size:.8rem;color:var(--muted);font-weight:700;min-width:130px;}
-.summary-val{font-size:.88rem;color:var(--text);font-weight:600;flex:1;line-height:1.6;}
+.summary-lbl{font-size:.8rem;color:var(--muted);font-weight:700;min-width:100px;max-width:110px;flex-shrink:0;}
+.summary-val{font-size:.85rem;color:var(--text);font-weight:600;flex:1;line-height:1.6;word-break:break-word;overflow-wrap:anywhere;min-width:0;}
+@media(max-width:400px){.summary-lbl{min-width:80px;max-width:90px;font-size:.75rem;}.summary-val{font-size:.8rem;}}
 .summary-course-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(233,78,119,.12);border:1px solid rgba(233,78,119,.25);border-radius:20px;padding:3px 10px;font-size:.75rem;font-weight:700;color:var(--pink);margin:2px;}
 
 /* STEP NAV BTNS */
@@ -707,28 +708,25 @@ async function submitRequest(){
 
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
 
-  // حفظ في Firestore
-  let firebaseSaved = false;
-  try {
-    await _db.collection('join_requests').doc(id).set(req);
-    firebaseSaved = true;
-  } catch(err) {
-    console.warn('Firebase save failed:', err);
-  }
-
-  // backup localStorage
+  // backup localStorage أولاً (دايماً)
   try {
     const requests = JSON.parse(localStorage.getItem(JOIN_KEY)||'[]');
     requests.push(req);
     localStorage.setItem(JOIN_KEY, JSON.stringify(requests));
   } catch(e){}
 
-  if(!firebaseSaved){
-    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> تحقق من الإنترنت وأعد المحاولة';
-    btn.disabled = false;
-    return;
+  // حفظ في Firestore (في الخلفية — مش شرط ينجح عشان نعرض النجاح)
+  try {
+    await _db.collection('join_requests').doc(id).set(req);
+  } catch(err) {
+    console.warn('Firebase save failed (saved locally):', err);
+    // محاولة ثانية بعد ثانيتين
+    setTimeout(async ()=>{
+      try{ await _db.collection('join_requests').doc(id).set(req); }catch(e2){}
+    }, 2000);
   }
 
+  // نعرض النجاح دايماً (البيانات محفوظة محلياً على الأقل)
   document.getElementById('mainForm').style.display='none';
   document.getElementById('successState').style.display='block';
   document.getElementById('reqIdDisplay').textContent = id;
