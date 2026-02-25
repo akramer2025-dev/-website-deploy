@@ -282,7 +282,7 @@ let isAnimating = false;
 let lectureData = null;
 
 // نصوص placeholder وهمية لا تُعتبر src حقيقي
-const FAKE_SRCS = new Set(['[صورة مرفوعة]','[محلي]','✓ تم الرفع','جاري الرفع...','']);
+const FAKE_SRCS = new Set(['[صورة مرفوعة]','[محلي]','✓ تم الرفع','✓ محفوظة','جاري الرفع...','']);
 function cleanSlides(arr){
   return (arr||[]).map(s=>({...s, src: FAKE_SRCS.has((s.src||'').trim()) ? '' : s.src}));
 }

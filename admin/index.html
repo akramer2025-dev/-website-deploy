@@ -2068,45 +2068,53 @@ function pickSlideImage(idx){
 function onSlideFileChange(idx, input){
   const file = input.files[0];
   if(!file) return;
-  if(file.size > 10*1024*1024){ toast('حجم الصورة أكبر من 10MB','error'); return; }
+  if(file.size > 15*1024*1024){ toast('حجم الصورة أكبر من 15MB','error'); return; }
 
-  // عرض preview محلياً أولاً
   const reader = new FileReader();
   reader.onload = async e=>{
     const preview = document.getElementById('sf-imgpreview-'+idx);
     const srcInput = document.getElementById('sf-src-'+idx);
-    if(preview){ preview.src=e.target.result; preview.style.display='block'; }
+
+    // ضغط الصورة أولاً على طول
+    const compressed = await compressImage(e.target.result, 1200, 0.75);
+
+    // حفظ base64 فوراً كـ fallback مضمون
+    slideRows[idx].src = compressed;
+    if(preview){ preview.src=compressed; preview.style.display='block'; }
     if(srcInput){ srcInput.value='جاري الرفع...'; srcInput.disabled=true; }
-    toast('جاري رفع الصورة...','info');
+
+    // حاول رفع على Firebase Storage في الخلفية
     try {
-      const storageRef = _fst.ref('lecture_slides/'+Date.now()+'_'+file.name);
+      const storageRef = _fst.ref('lecture_slides/'+Date.now()+'_'+file.name.replace(/[^\w.]/g,'_'));
       const snap = await storageRef.put(file);
       const url = await snap.ref.getDownloadURL();
+      // لو نجح الرفع، استخدم الـ URL بدل base64
       slideRows[idx].src = url;
       if(srcInput){ srcInput.value='✓ تم الرفع'; srcInput.disabled=true; }
       if(preview){ preview.src=url; }
       toast('تم رفع الصورة ✓','success');
     } catch(err){
-      console.warn('Slide image upload failed:', err);
-      // Fallback: compress to base64
-      const img = new Image();
-      img.onload = ()=>{
-        const MAX = 1200;
-        let w = img.width, h = img.height;
-        if(w > MAX){ h = Math.round(h * MAX / w); w = MAX; }
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        const compressed = canvas.toDataURL('image/jpeg', 0.78);
-        slideRows[idx].src = compressed;
-        if(preview){ preview.src=compressed; preview.style.display='block'; }
-        if(srcInput){ srcInput.value='[محلي]'; srcInput.disabled=true; }
-        toast('تم حفظ الصورة محلياً (فشل الرفع)','error');
-      };
-      img.src = e.target.result;
+      // فشل الـ Storage — base64 محفوظ بالفعل، شغال تمام
+      if(srcInput){ srcInput.value='✓ محفوظة'; srcInput.disabled=true; }
+      toast('تم حفظ الصورة ✓','success');
     }
   };
   reader.readAsDataURL(file);
+}
+
+function compressImage(dataUrl, maxWidth, quality){
+  return new Promise(resolve=>{
+    const img = new Image();
+    img.onload = ()=>{
+      let w = img.width, h = img.height;
+      if(w > maxWidth){ h = Math.round(h * maxWidth / w); w = maxWidth; }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', quality));
+    };
+    img.src = dataUrl;
+  });
 }
 
 function clearSlideImage(idx){
@@ -2189,7 +2197,7 @@ function saveLecture(){
   if(!all[activeLecCourse]) all[activeLecCourse]=[];
 
   // نصوص وهمية تظهر في الـ input لكنها مش روابط حقيقية
-  const FAKE_SRCS = ['[صورة مرفوعة]','[محلي]','✓ تم الرفع','جاري الرفع...',''];
+  const FAKE_SRCS = ['[صورة مرفوعة]','[محلي]','✓ تم الرفع','✓ محفوظة','جاري الرفع...',''];
   const lecData = {
     id: editingLecId || ('lec'+Date.now()),
     title,
