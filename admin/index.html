@@ -1882,7 +1882,7 @@ const LIVE_COURSE_NAMES = {
 };
 
 function getLiveSessions(){ return JSON.parse(localStorage.getItem('am_live_sessions')||'[]'); }
-function saveLiveSessions(arr){ localStorage.setItem('am_live_sessions', JSON.stringify(arr)); updateCounts(); }
+function saveLiveSessions(arr){ localStorage.setItem('am_live_sessions', JSON.stringify(arr)); updateBadges(); }
 
 function renderLiveSessions(){
   const sessions = getLiveSessions();
