@@ -2098,7 +2098,7 @@ function renderLiveSessions(){
         ${s.notes?`<div class="ls-info-row"><i class="fas fa-sticky-note"></i>${escHtml(s.notes)}</div>`:''}
         <div class="ls-info-row" style="margin-top:8px"><i class="fas fa-link"></i><span class="ls-room-tag">${escHtml(s.room)}</span></div>
         <div class="ls-card-actions">
-          <button class="ls-btn ls-btn-go" onclick="window.open('${adminPreviewUrl}','_blank')"><i class="fas fa-play"></i> افتح</button>
+          <button class="ls-btn ls-btn-go" onclick="window.open('${adminPreviewUrl}&adminSkip=1','_blank')"><i class="fas fa-play"></i> افتح</button>
           ${s.status!=='live'&&s.status!=='ended'?`<button class="ls-btn ls-btn-live" onclick="setLiveStatus('${s.id}','live')"><i class="fas fa-broadcast-tower"></i> ابدأ</button>`:''}
           ${s.status==='live'?`<button class="ls-btn ls-btn-end" onclick="setLiveStatus('${s.id}','ended')"><i class="fas fa-stop"></i> أنهي</button>`:''}
           <button class="ls-btn" style="background:var(--bg2);color:var(--muted);border:1px solid var(--border)" onclick="editLiveSession('${s.id}')"><i class="fas fa-edit"></i></button>

@@ -576,6 +576,8 @@ if(!SESSION && params.get('room')){
     courseKey:params.get('course')||'',room:params.get('room'),status:'live',scheduledAt:''};
 }
 
+const _adminSkip = params.get('adminSkip')==='1' && (SESSION && SESSION.id==='preview');
+
 let currentUser=null, myJoinToken=null, jitsiApi=null, isTeacherMode=false;
 const ADMIN_PASS='Aazxc';
 
@@ -611,6 +613,14 @@ window.addEventListener('DOMContentLoaded',function(){
   /* Auto-detect admin session → switch to teacher tab */
   if(sessionStorage.getItem('am_admin_auth')==='1'){
     switchRole('teacher', true);
+  }
+
+  /* Admin direct launch: skip auth screen entirely */
+  if(_adminSkip && sessionStorage.getItem('am_admin_auth')==='1'){
+    currentUser = {id:'teacher-host', name:'\u0623\u0643\u0631\u0645 \u0645\u0635\u0637\u0641\u0649', courses:[], type:'employee'};
+    isTeacherMode = true;
+    launchJitsi();
+    return;
   }
 
   showScreen('authScreen');
@@ -813,6 +823,7 @@ function launchJitsi(){
   /* ── config عبر URL hash — هذا يبايباس lobby السيرفر ── */
   const cfg = [
     'config.disableLobby=true',
+    'config.lobby.enabled=false',
     'config.prejoinConfig.enabled=false',
     'config.startWithAudioMuted='+ (!isTeacherMode),
     'config.startWithVideoMuted=false',
@@ -822,6 +833,12 @@ function launchJitsi(){
     'config.enableEmailInStats=false',
     'config.defaultLanguage=ar',
     'config.notifications=[]',
+    'config.p2p.enabled=true',
+    'config.p2p.preferH264=true',
+    'config.requireDisplayName=false',
+    'config.enableWelcomePage=false',
+    'config.enableClosePage=false',
+    'config.remoteVideoMenu.disabled=false',
     'interfaceConfig.SHOW_JITSI_WATERMARK=false',
     'interfaceConfig.TOOLBAR_ALWAYS_VISIBLE=false',
     'interfaceConfig.MOBILE_APP_PROMO=false',
