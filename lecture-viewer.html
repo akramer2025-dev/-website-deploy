@@ -337,7 +337,8 @@ function renderSidebar(){
 }
 
 function getThumbMedia(s){
-  if(s.type==='image'&&s.src) return `<img src="${s.src}" alt="">`;
+  const isRealSrc = s.src && (s.src.startsWith('http')||s.src.startsWith('data:'));
+  if(s.type==='image'&&isRealSrc) return `<img src="${s.src}" alt="">`;  
   if(s.type==='video') return `<i class="type-ico fas fa-play-circle"></i>`;
   if(s.type==='pdf')   return `<i class="type-ico fas fa-file-pdf"></i>`;
   return `<i class="type-ico fas fa-image"></i>`;
@@ -363,13 +364,16 @@ function renderSlides(){
 }
 
 function buildSlideHTML(s, i){
+  // التحقق من أن الـ src رابط حقيقي (http أو data:) وليس نص placeholder
+  const isRealSrc = s.src && (s.src.startsWith('http')||s.src.startsWith('data:'));
+
   // background blur from image
   let bgStyle = '';
-  if(s.type==='image'&&s.src) bgStyle = `style="background-image:url('${s.src}')"`;
+  if(s.type==='image'&&isRealSrc) bgStyle = `style="background-image:url('${s.src}')"`;
 
   // media content
   let mediaHTML = '';
-  if(s.type==='image'&&s.src){
+  if(s.type==='image'&&isRealSrc){
     mediaHTML = `<div class="slide-media-frame"><img src="${s.src}" alt="${s.title||''}"></div>`;
   } else if(s.type==='video'&&s.src){
     const isYT = s.src.includes('youtube.com')||s.src.includes('youtu.be');

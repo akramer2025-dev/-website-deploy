@@ -2029,7 +2029,12 @@ function collectSlideValues(){
     const notesEl = document.getElementById('sf-notes-'+i);
     const typeEl  = document.getElementById('sf-type-'+i);
     if(titleEl) s.title = titleEl.value;
-    if(srcEl)   s.src   = srcEl.value;
+    // لا تقرأ قيمة الـ input لو كانت نص عرض فقط (مش رابط حقيقي)
+    // الـ src الحقيقي محفوظ مسبقاً في slideRows[i].src من onSlideFileChange أو من renderSlideEditor
+    if(srcEl && !srcEl.disabled){
+      s.src = srcEl.value;
+    }
+    // لو كانت disabled ومحتواها نص placeholder نتركها كما هي في s.src
     if(notesEl) s.notes = notesEl.value;
     if(typeEl)  s.type  = typeEl.value;
   });
@@ -2181,11 +2186,16 @@ function saveLecture(){
   const all = getLectures();
   if(!all[activeLecCourse]) all[activeLecCourse]=[];
 
+  // نصوص وهمية تظهر في الـ input لكنها مش روابط حقيقية
+  const FAKE_SRCS = ['[صورة مرفوعة]','[محلي]','✓ تم الرفع','جاري الرفع...',''];
   const lecData = {
     id: editingLecId || ('lec'+Date.now()),
     title,
     description: document.getElementById('lecDescInput').value.trim(),
-    slides: slideRows.map(s=>({...s})),
+    slides: slideRows.map(s=>{
+      const cleanSrc = FAKE_SRCS.includes((s.src||'').trim()) ? '' : s.src;
+      return {...s, src: cleanSrc};
+    }),
     createdAt: editingLecId ? undefined : Date.now(),
     updatedAt: Date.now(),
   };
