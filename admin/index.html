@@ -1933,8 +1933,12 @@ var slideRows = []; // must be var for inline HTML handlers to access it
 function getLectures(){ return _fsLectures!==null ? Object.assign({},_fsLectures) : (()=>{try{return JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}');}catch(e){return {};}})(); }
 function saveLectures(obj){
   _fsLectures = Object.assign({},obj);
-  localStorage.setItem(LECTURES_KEY, JSON.stringify(obj));
-  _fdb.collection('admin_data').doc('lectures').set({data:obj,updatedAt:Date.now()}).catch(e=>console.warn('FS lectures',e));
+  // localStorage: نحاول نحفظ، لو فاض الحجم نتجاهل (base64 كبير)
+  try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(obj)); }catch(e){ console.warn('localStorage quota, skipping local save'); }
+  // Firestore هو المصدر الأساسي دايماً
+  _fdb.collection('admin_data').doc('lectures').set({data:obj,updatedAt:Date.now()})
+    .then(()=>{ toast('تم الحفظ على السحابة ✓','success'); })
+    .catch(e=>{ console.warn('FS lectures',e); toast('تم الحفظ محلياً فقط','error'); });
 }
 
 function initLecturesSection(){
@@ -2068,36 +2072,22 @@ function pickSlideImage(idx){
 function onSlideFileChange(idx, input){
   const file = input.files[0];
   if(!file) return;
-  if(file.size > 15*1024*1024){ toast('حجم الصورة أكبر من 15MB','error'); return; }
+  if(file.size > 20*1024*1024){ toast('حجم الصورة أكبر من 20MB','error'); return; }
 
   const reader = new FileReader();
   reader.onload = async e=>{
     const preview = document.getElementById('sf-imgpreview-'+idx);
     const srcInput = document.getElementById('sf-src-'+idx);
+    if(srcInput){ srcInput.value='جاري الضغط...'; srcInput.disabled=true; }
 
-    // ضغط الصورة أولاً على طول
-    const compressed = await compressImage(e.target.result, 1200, 0.75);
+    // ضغط الصورة (max 900px, quality 0.65) → حوالي 80-150KB
+    const compressed = await compressImage(e.target.result, 900, 0.65);
 
-    // حفظ base64 فوراً كـ fallback مضمون
+    // حفظ base64 مباشرة — لا Storage لا CORS
     slideRows[idx].src = compressed;
     if(preview){ preview.src=compressed; preview.style.display='block'; }
-    if(srcInput){ srcInput.value='جاري الرفع...'; srcInput.disabled=true; }
-
-    // حاول رفع على Firebase Storage في الخلفية
-    try {
-      const storageRef = _fst.ref('lecture_slides/'+Date.now()+'_'+file.name.replace(/[^\w.]/g,'_'));
-      const snap = await storageRef.put(file);
-      const url = await snap.ref.getDownloadURL();
-      // لو نجح الرفع، استخدم الـ URL بدل base64
-      slideRows[idx].src = url;
-      if(srcInput){ srcInput.value='✓ تم الرفع'; srcInput.disabled=true; }
-      if(preview){ preview.src=url; }
-      toast('تم رفع الصورة ✓','success');
-    } catch(err){
-      // فشل الـ Storage — base64 محفوظ بالفعل، شغال تمام
-      if(srcInput){ srcInput.value='✓ محفوظة'; srcInput.disabled=true; }
-      toast('تم حفظ الصورة ✓','success');
-    }
+    if(srcInput){ srcInput.value='✓ جاهزة للحفظ'; srcInput.disabled=true; }
+    toast('تم تحضير الصورة — اضغط حفظ المحاضرة','success');
   };
   reader.readAsDataURL(file);
 }
@@ -2197,7 +2187,7 @@ function saveLecture(){
   if(!all[activeLecCourse]) all[activeLecCourse]=[];
 
   // نصوص وهمية تظهر في الـ input لكنها مش روابط حقيقية
-  const FAKE_SRCS = ['[صورة مرفوعة]','[محلي]','✓ تم الرفع','✓ محفوظة','جاري الرفع...',''];
+  const FAKE_SRCS = ['[صورة مرفوعة]','[محلي]','✓ تم الرفع','✓ محفوظة','✓ جاهزة للحفظ','جاري الضغط...','جاري الرفع...',''];
   const lecData = {
     id: editingLecId || ('lec'+Date.now()),
     title,
