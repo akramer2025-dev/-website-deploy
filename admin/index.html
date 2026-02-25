@@ -260,6 +260,29 @@ button{cursor:pointer;}
 
 @media(max-width:1100px){.stats-grid{grid-template-columns:1fr 1fr;}.adm-row{grid-template-columns:1fr;}.projects-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:768px){.adm-sidebar{transform:translateX(100%);transition:.3s;}.adm-sidebar.open{transform:none;}.adm-main{margin-right:0;}.adm-section{padding:20px;}.stats-grid{grid-template-columns:1fr 1fr;}.projects-grid{grid-template-columns:1fr;}}
+
+/* ===== GALLERY UPLOAD MODAL ===== */
+#galleryModal .modal-box{max-width:500px;}
+.gal-tabs{display:flex;gap:5px;margin-bottom:20px;background:var(--bg2);border-radius:12px;padding:4px;}
+.gal-tab{flex:1;padding:9px;border:none;background:transparent;border-radius:10px;color:var(--muted);font-size:.88rem;font-weight:700;cursor:pointer;transition:.2s;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.gal-tab.active{background:var(--card2);color:#fff;}
+.gal-tab:hover:not(.active){color:var(--text);}
+.gal-tab-pane{display:none;}
+.gal-tab-pane.active{display:block;}
+.gal-drop-zone{border:2px dashed var(--border);border-radius:14px;padding:28px 20px;text-align:center;cursor:pointer;transition:.3s;background:var(--bg2);position:relative;}
+.gal-drop-zone:hover,.gal-drop-zone.dragover{border-color:var(--pink);background:rgba(233,78,119,0.06);}
+.gal-drop-zone .dz-icon{font-size:2.2rem;color:var(--muted);margin-bottom:10px;display:block;transition:.2s;}
+.gal-drop-zone:hover .dz-icon{color:var(--pink);}
+.gal-drop-zone .dz-text{color:var(--muted);font-size:.88rem;}
+.gal-drop-zone .dz-hint{color:var(--muted);font-size:.75rem;margin-top:5px;opacity:.7;}
+.gal-selected-info{margin-top:10px;padding:8px 12px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;color:#4ade80;font-size:.82rem;font-weight:700;display:none;}
+.gal-preview-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.gal-preview-thumb{width:72px;height:56px;border-radius:8px;overflow:hidden;border:2px solid var(--border);position:relative;flex-shrink:0;}
+.gal-preview-thumb img{width:100%;height:100%;object-fit:cover;}
+.gal-preview-thumb .rm{position:absolute;inset:0;background:rgba(239,68,68,0.85);display:none;align-items:center;justify-content:center;color:#fff;font-size:.75rem;cursor:pointer;}
+.gal-preview-thumb:hover .rm{display:flex;}
+.gal-url-preview{margin-top:12px;border-radius:10px;overflow:hidden;height:140px;display:none;border:1px solid var(--border);}
+.gal-url-preview img{width:100%;height:100%;object-fit:cover;}
 </style>
 </head>
 <body>
@@ -453,6 +476,61 @@ button{cursor:pointer;}
   <img src="" alt="" class="lb-img" id="lbImg">
 </div>
 
+<!-- GALLERY IMAGE MODAL -->
+<div class="modal-overlay" id="galleryModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3><i class="fas fa-images" style="color:var(--pink);margin-left:8px"></i> إضافة صور للمعرض</h3>
+      <button class="modal-close" onclick="closeGalleryModal()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="gal-tabs">
+      <button class="gal-tab active" id="galTabBtnFile" onclick="switchGalTab('file')">
+        <i class="fas fa-upload"></i> رفع صورة
+      </button>
+      <button class="gal-tab" id="galTabBtnUrl" onclick="switchGalTab('url')">
+        <i class="fas fa-link"></i> رابط صورة
+      </button>
+    </div>
+
+    <!-- File Upload Pane -->
+    <div class="gal-tab-pane active" id="galPaneFile">
+      <div class="gal-drop-zone" id="galDropZone"
+           onclick="document.getElementById('galFileInput').click()"
+           ondragover="galDragOver(event)" ondragleave="galDragLeave(event)" ondrop="galDrop(event)">
+        <i class="fas fa-cloud-upload-alt dz-icon"></i>
+        <p class="dz-text">اسحب الصور هنا أو انقر للاختيار</p>
+        <p class="dz-hint">PNG, JPG, WEBP – حد أقصى 2 MB لكل صورة – يمكن اختيار أكثر من صورة</p>
+      </div>
+      <input type="file" id="galFileInput" accept="image/*" multiple style="display:none" onchange="galFilesSelected(event)">
+      <div class="gal-selected-info" id="galSelectedInfo"></div>
+      <div class="gal-preview-strip" id="galPreviewStrip"></div>
+    </div>
+
+    <!-- URL Pane -->
+    <div class="gal-tab-pane" id="galPaneUrl">
+      <div class="form-field" style="margin-bottom:12px;">
+        <label>رابط الصورة</label>
+        <input type="url" id="galUrlInput" placeholder="https://example.com/image.jpg" oninput="galPreviewUrl()">
+      </div>
+      <div class="gal-url-preview" id="galUrlPreview">
+        <img src="" id="galUrlPreviewImg" alt="معاينة" onerror="document.getElementById('galUrlPreview').style.display='none'">
+      </div>
+    </div>
+
+    <input type="hidden" id="galKey">
+    <input type="hidden" id="galType">
+
+    <div class="modal-footer">
+      <button class="btn-modal-save" onclick="submitGalleryImages()">
+        <i class="fas fa-plus"></i> إضافة للمعرض
+      </button>
+      <button class="btn-modal-cancel" onclick="closeGalleryModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -550,7 +628,7 @@ function showSection(name){
 
 function renderDashboard(){
   const users=getUsers(); const recent=users.slice(-5).reverse(); const tbody=document.getElementById('recentUsersTable');
-  if(!recent.length){ tbody.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">جم موظف الرابطجم تم</td></tr>'; return; }
+  if(!recent.length){ tbody.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">لا يوجد مستخدمون بعد</td></tr>'; return; }
   tbody.innerHTML=recent.map(u=>`<tr><td><strong>${u.name}</strong></td><td><span class="user-type-badge ${u.type==='employee'?'emp':'stu'}">${u.type==='employee'?'موظف':'طالب'}</span></td><td style="color:var(--muted)">${new Date(u.createdAt).toLocaleDateString('ar-EG')}</td></tr>`).join('');
 }
 
@@ -584,11 +662,11 @@ function addProjectImage(key){
 }
 
 function removeProjectImage(key,index){
-  if(!confirm('جم موظف تم تم بنجاحɿ'))return;
+  if(!confirm('هل تريد حذف هذه الصورة من المعرض؟'))return;
   const portfolio=getPortfolio(); portfolio[key].splice(index,1); savePortfolio(portfolio);
   document.getElementById('thumbs-'+key).innerHTML=renderThumbs(key,portfolio[key]);
   document.getElementById('imgBadge-'+key).textContent=portfolio[key].length;
-  updateBadges(); toast('جم تم الرابط','success');
+  updateBadges(); toast('تم حذف الصورة بنجاح','success');
 }
 
 function renderWebPrices(){
@@ -626,7 +704,7 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
       </div>
     </div>
     <div class="project-card-body">
-      <!-- موظف الرابط -->
+      <!-- منطقة رفع صورة الغلاف -->
       <div class="product-img-zone ${hasImg?'has-img':''}" id="imgZone-${key}" 
            onclick="triggerImageUpload('${key}')"
            ondragover="handleDragOver(event,'${key}')" 
@@ -646,10 +724,10 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
         <input type="file" id="fileInput-${key}" accept="image/*" style="display:none" onchange="handleFileSelect(event,'${key}','${type}')">
       </div>
       
-      <!-- موظف بنجاح الرابطجم -->
+      <!-- معرض الصور الإضافية -->
       ${allImgs.length > 0 ? `
       <div class="gallery-section">
-        <div class="gallery-label"><i class="fas fa-images"></i> تم الرابط (${allImgs.length})</div>
+        <div class="gallery-label"><i class="fas fa-images"></i> الصور الإضافية (${allImgs.length})</div>
         <div class="gallery-thumbs">
           ${allImgs.map((img,i)=>`
             <div class="gallery-thumb" onclick="openLb('${img}')">
@@ -657,19 +735,19 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
               <div class="thumb-del" onclick="event.stopPropagation();removeGalleryImage('${key}',${i},'${type}')"><i class="fas fa-times"></i></div>
             </div>
           `).join('')}
-          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="بنجاح تم"><i class="fas fa-plus"></i></div>
+          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="إضافة صورة"><i class="fas fa-plus"></i></div>
         </div>
       </div>
       ` : `
       <div class="gallery-section">
-        <div class="gallery-label"><i class="fas fa-images"></i> تم الرابط</div>
+        <div class="gallery-label"><i class="fas fa-images"></i> الصور الإضافية</div>
         <div class="gallery-thumbs">
-          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="بنجاح تم"><i class="fas fa-plus"></i></div>
+          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="إضافة صورة"><i class="fas fa-plus"></i></div>
         </div>
       </div>
       `}
       
-      <!-- بنجاح -->
+      <!-- خانة السعر -->
       <div class="price-row">
         <div class="price-input-wrap">
           <input type="number" id="price-${key}" value="${price}" placeholder="أدخل السعر..." min="0">
@@ -752,7 +830,7 @@ function saveProductImage(key, imageData){
   }
   
   updateBadges();
-  toast('جم تم الرابط بنجاح ?', 'success');
+  toast('تم رفع صورة الغلاف بنجاح ✓', 'success');
 }
 
 function deleteMainImage(key, type){
@@ -772,7 +850,7 @@ if(!confirm('هل تريد حذف هذه الصورة؟')) return;
 }
 
 function removeGalleryImage(key, index, type){
-  if(!confirm('تم تم بنجاحɿ')) return;
+  if(!confirm('هل تريد حذف هذه الصورة؟')) return;
   
   const portfolio = getPortfolio();
   if(portfolio[key]){
@@ -787,22 +865,133 @@ function removeGalleryImage(key, index, type){
   toast('تم الحذف بنجاح', 'success');
 }
 
+// ======= GALLERY MODAL FUNCTIONS =======
+let _galFiles = [];
+
 function openGalleryModal(key, type){
-  const url = prompt('أدخل رابط الصورة (https://...)');
-  if(url && url.trim().startsWith('http')){
+  _galFiles = [];
+  document.getElementById('galKey').value = key;
+  document.getElementById('galType').value = type;
+  document.getElementById('galFileInput').value = '';
+  document.getElementById('galUrlInput').value = '';
+  document.getElementById('galSelectedInfo').style.display = 'none';
+  document.getElementById('galSelectedInfo').textContent = '';
+  document.getElementById('galPreviewStrip').innerHTML = '';
+  document.getElementById('galUrlPreview').style.display = 'none';
+  document.getElementById('galDropZone').querySelector('.dz-text').textContent = 'اسحب الصور هنا أو انقر للاختيار';
+  switchGalTab('file');
+  document.getElementById('galleryModal').classList.add('open');
+}
+
+function closeGalleryModal(){
+  document.getElementById('galleryModal').classList.remove('open');
+  _galFiles = [];
+}
+
+function switchGalTab(tab){
+  document.getElementById('galTabBtnFile').classList.toggle('active', tab==='file');
+  document.getElementById('galTabBtnUrl').classList.toggle('active', tab==='url');
+  document.getElementById('galPaneFile').classList.toggle('active', tab==='file');
+  document.getElementById('galPaneUrl').classList.toggle('active', tab==='url');
+}
+
+function galDragOver(e){
+  e.preventDefault();
+  document.getElementById('galDropZone').classList.add('dragover');
+}
+function galDragLeave(e){
+  document.getElementById('galDropZone').classList.remove('dragover');
+}
+function galDrop(e){
+  e.preventDefault();
+  document.getElementById('galDropZone').classList.remove('dragover');
+  const files = Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
+  if(files.length) galLoadFiles(files);
+}
+function galFilesSelected(e){
+  const files = Array.from(e.target.files);
+  if(files.length) galLoadFiles(files);
+}
+function galLoadFiles(files){
+  _galFiles = files.slice(0, 15);
+  const info = document.getElementById('galSelectedInfo');
+  info.style.display = 'block';
+  info.textContent = _galFiles.length === 1 ? 'تم اختيار صورة واحدة ✓' : `تم اختيار ${_galFiles.length} صور ✓`;
+  document.getElementById('galDropZone').querySelector('.dz-text').textContent = _galFiles.length === 1 ? 'تم اختيار صورة واحدة' : `تم اختيار ${_galFiles.length} صور`;
+  const strip = document.getElementById('galPreviewStrip');
+  strip.innerHTML = '';
+  _galFiles.slice(0,8).forEach((f,i)=>{
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const div = document.createElement('div');
+      div.className = 'gal-preview-thumb';
+      div.innerHTML = `<img src="${e.target.result}"><div class="rm" onclick="galRemoveFile(${i})"><i class="fas fa-times"></i></div>`;
+      strip.appendChild(div);
+    };
+    reader.readAsDataURL(f);
+  });
+}
+function galRemoveFile(i){
+  _galFiles.splice(i,1);
+  galLoadFiles(_galFiles);
+}
+function galPreviewUrl(){
+  const url = document.getElementById('galUrlInput').value.trim();
+  const pv = document.getElementById('galUrlPreview');
+  if(url.startsWith('http')){
+    document.getElementById('galUrlPreviewImg').src = url;
+    pv.style.display = 'block';
+  } else {
+    pv.style.display = 'none';
+  }
+}
+
+function submitGalleryImages(){
+  const key = document.getElementById('galKey').value;
+  const type = document.getElementById('galType').value;
+  const activeTab = document.getElementById('galPaneFile').classList.contains('active') ? 'file' : 'url';
+
+  if(activeTab === 'file'){
+    if(!_galFiles.length){ toast('اختر صورة أولاً', 'error'); return; }
     const portfolio = getPortfolio();
     if(!portfolio[key]) portfolio[key] = [];
-    portfolio[key].push(url.trim());
+    let loaded = 0, added = 0;
+    const total = _galFiles.length;
+    _galFiles.forEach(file => {
+      if(file.size > 2*1024*1024){
+        toast(`الصورة "${file.name}" أكبر من 2MB – تم تخطيها`, 'error');
+        loaded++;
+        if(loaded===total) finishGalSave(portfolio, key, type, added);
+        return;
+      }
+      const r = new FileReader();
+      r.onload = function(ev){
+        portfolio[key].push(ev.target.result);
+        loaded++; added++;
+        if(loaded===total) finishGalSave(portfolio, key, type, added);
+      };
+      r.readAsDataURL(file);
+    });
+  } else {
+    const url = document.getElementById('galUrlInput').value.trim();
+    if(!url || !url.startsWith('http')){ toast('أدخل رابط صورة صحيح يبدأ بـ http', 'error'); return; }
+    const portfolio = getPortfolio();
+    if(!portfolio[key]) portfolio[key] = [];
+    portfolio[key].push(url);
     savePortfolio(portfolio);
-    
-    if(type === 'web') renderWebPrices();
-    else renderMobilePrices();
-    
+    if(type==='web') renderWebPrices(); else renderMobilePrices();
     updateBadges();
-    toast('تم إضافة الصورة ✓', 'success');
-  } else if(url !== null){
-    toast('الرابط يجب أن يبدأ بـ http', 'error');
+    closeGalleryModal();
+    toast('تم إضافة الصورة بنجاح ✓', 'success');
   }
+}
+
+function finishGalSave(portfolio, key, type, count){
+  savePortfolio(portfolio);
+  if(type==='web') renderWebPrices(); else renderMobilePrices();
+  updateBadges();
+  closeGalleryModal();
+  toast(count===1 ? 'تم إضافة الصورة بنجاح ✓' : `تم إضافة ${count} صور بنجاح ✓`, 'success');
 }
 
 function saveProductData(key, type){
@@ -825,7 +1014,7 @@ toast('تم حفظ بيانات ' + apps[key].name + ' بنجاح ✓', 'success
 }
 
 function initDragDrop(){
-  // بنجاح بنجاح الرابطجم تم جم بنجاح
+  // تفعيل dragenter لمنع التأثيرات الافتراضية
   document.querySelectorAll('.product-img-zone').forEach(zone => {
     zone.addEventListener('dragenter', function(e){
       e.preventDefault();
