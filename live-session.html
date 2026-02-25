@@ -644,7 +644,7 @@ function isMobile(){
 }
 
 function showScreen(id){
-  ['authScreen','waitScreen','endedScreen','notFoundScreen','fallbackScreen','mobileScreen'].forEach(s=>{
+  ['authScreen','waitScreen','endedScreen','notFoundScreen','fallbackScreen','mobileScreen','teacherScreen'].forEach(s=>{
     const el=document.getElementById(s);
     if(el){el.classList.remove('active');el.style.display='none';}
   });
@@ -790,6 +790,33 @@ function launchJitsi(){
     const directUrl = 'https://meet.jit.si/'+ SESSION.room +'?lang=ar#config.disableDeepLinking=true';
     document.getElementById('mobJitsiLink').href = directUrl;
     showScreen('mobileScreen');
+    return;
+  }
+
+  /* ── معلم: افتح Jitsi مباشرة في تبويب جديد ── */
+  if(isTeacherMode){
+    setLoad(false);
+    const teacherUrl = 'https://meet.jit.si/'+ SESSION.room
+      + '?lang=ar#config.prejoinConfig.enabled=false'
+      + '&config.startWithAudioMuted=false'
+      + '&config.startWithVideoMuted=false'
+      + '&config.disableDeepLinking=true'
+      + '&config.defaultLanguage=ar'
+      + '&userInfo.displayName='+ encodeURIComponent('🎥 أكرم مصطفى (محاضر)');
+    document.getElementById('teacherJitsiLink').href = teacherUrl;
+    document.getElementById('teacherScTitle').textContent = SESSION.title || 'المحاضرة جاهزة';
+    /* إخفاء باقي الشاشات */
+    ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
+      const el=document.getElementById(s);if(el){el.classList.remove('active');el.style.display='none';}
+    });
+    document.getElementById('jitsiScreen').style.display='none';
+    showScreen('teacherScreen');
+    /* أظهر شريط التسجيل + أدوات التحديد */
+    document.getElementById('recPanel').classList.add('show');
+    const annoBtn = document.getElementById('btnAnnoToggleBar');
+    if(annoBtn) annoBtn.style.display='flex';
+    annoInit();
+    try{ _lastJoinCount = JSON.parse(localStorage.getItem('am_live_joins')||'[]').length; }catch(e){}
     return;
   }
 
