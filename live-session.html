@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>جلسة مباشرة | Akram Mostafa</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050d1b; --bg2:#09162b; --card:#0d1e38; --card2:#112446;
+  --border:rgba(255,255,255,0.07); --pink:#e94e77; --orange:#f7931e;
+  --grad:linear-gradient(135deg,#e94e77,#f7931e); --green:#22c55e;
+  --blue:#3b82f6; --red:#ef4444; --text:#e2eaf6; --muted:#6b82a8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow:hidden;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:'Cairo',sans-serif;}
+
+/* ── HEADER ── */
+.top-bar{position:fixed;top:0;left:0;right:0;z-index:200;height:54px;background:rgba(9,22,43,.97);
+  border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:14px;}
+.top-back{display:flex;align-items:center;gap:7px;padding:7px 14px;background:var(--card2);
+  border:1px solid var(--border);border-radius:10px;font-size:.82rem;color:var(--muted);transition:.2s;}
+.top-back:hover{color:#fff;border-color:rgba(255,255,255,.15);}
+.top-session-info{display:flex;align-items:center;gap:10px;flex:1;}
+.live-dot{width:10px;height:10px;border-radius:50%;background:var(--green);flex-shrink:0;
+  animation:pulse 1.5s infinite;box-shadow:0 0 0 0 rgba(34,197,94,.5);}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5);}70%{box-shadow:0 0 0 8px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
+.live-label{font-size:.72rem;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.8px;}
+.session-title-bar{font-size:.92rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px;}
+.top-room-badge{margin-right:auto;display:flex;align-items:center;gap:6px;padding:5px 12px;
+  background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);border-radius:20px;font-size:.72rem;color:#60a5fa;font-weight:700;}
+
+/* ── LOBBY ── */
+#lobby{position:fixed;inset:0;top:54px;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px;z-index:100;}
+.lobby-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:44px 40px;
+  width:100%;max-width:500px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,.5);}
+.lobby-icon{width:90px;height:90px;background:linear-gradient(135deg,rgba(233,78,119,.2),rgba(247,147,30,.15));
+  border:2px solid rgba(233,78,119,.3);border-radius:28px;display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;color:var(--pink);margin:0 auto 24px;}
+.lobby-title{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:8px;}
+.lobby-sub{font-size:.9rem;color:var(--muted);margin-bottom:28px;line-height:1.8;}
+.lobby-meta{display:flex;justify-content:center;gap:12px;margin-bottom:28px;flex-wrap:wrap;}
+.lmeta-item{display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:10px;font-size:.8rem;color:var(--muted);}
+.lmeta-item i{color:var(--pink);font-size:.85rem;}
+.lobby-name-label{font-size:.85rem;font-weight:700;color:var(--muted);text-align:right;margin-bottom:8px;}
+.lobby-name-input{width:100%;padding:13px 16px;background:var(--bg2);border:1.5px solid var(--border);
+  border-radius:13px;color:var(--text);font-size:.95rem;outline:none;text-align:right;transition:.25s;font-family:'Cairo',sans-serif;}
+.lobby-name-input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(233,78,119,.15);}
+.btn-join-now{width:100%;margin-top:18px;padding:15px;background:var(--grad);border:none;border-radius:14px;
+  color:#fff;font-size:1.05rem;font-weight:900;transition:.3s;display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 8px 30px rgba(233,78,119,.3);}
+.btn-join-now:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(233,78,119,.45);}
+.lobby-note{margin-top:16px;font-size:.78rem;color:var(--muted);line-height:1.7;}
+
+/* ── JITSI FRAME ── */
+#jitsiWrap{position:fixed;inset:0;top:54px;display:none;}
+#jitsiWrap iframe{width:100%;height:100%;border:none;}
+
+/* ── ENDED SCREEN ── */
+#endedScreen{display:none;position:fixed;inset:0;top:54px;background:var(--bg);
+  align-items:center;justify-content:center;padding:24px;}
+.ended-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:44px 40px;
+  width:100%;max-width:440px;text-align:center;}
+.ended-icon{font-size:3.5rem;margin-bottom:18px;}
+.ended-title{font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
+.ended-sub{font-size:.9rem;color:var(--muted);margin-bottom:28px;line-height:1.8;}
+.btn-back-home{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:var(--grad);
+  border:none;border-radius:13px;color:#fff;font-size:.95rem;font-weight:800;}
+
+/* ── NOT FOUND ── */
+#notFound{display:none;position:fixed;inset:0;top:54px;background:var(--bg);
+  align-items:center;justify-content:center;text-align:center;padding:24px;}
+#notFound h2{font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:10px;}
+#notFound p{color:var(--muted);font-size:.9rem;margin-bottom:24px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <a href="my-courses.html" class="top-back"><i class="fas fa-arrow-right"></i> رجوع</a>
+  <div class="top-session-info">
+    <div class="live-dot" id="liveDot"></div>
+    <span class="live-label" id="liveLabel">LIVE</span>
+    <span class="session-title-bar" id="topTitle">جلسة مباشرة</span>
+  </div>
+  <div class="top-room-badge"><i class="fas fa-video"></i> <span id="roomBadge">...</span></div>
+</div>
+
+<!-- LOBBY -->
+<div id="lobby">
+  <div class="lobby-card">
+    <div class="lobby-icon"><i class="fas fa-video"></i></div>
+    <div class="lobby-title" id="lobbyTitle">جلسة مباشرة</div>
+    <div class="lobby-sub" id="lobbySub">أنت على وشك تدخل الجلسة المباشرة — تأكد إن الكاميرا والمايك شغالين وادخل!</div>
+    <div class="lobby-meta">
+      <div class="lmeta-item"><i class="fas fa-book"></i> <span id="lobbyCourseName">—</span></div>
+      <div class="lmeta-item"><i class="fas fa-clock"></i> <span id="lobbyTime">—</span></div>
+      <div class="lmeta-item"><i class="fas fa-wifi" style="color:var(--green)"></i> <span id="lobbyStatus">نشط</span></div>
+    </div>
+    <div class="lobby-name-label">اسمك اللي هيظهر في الجلسة</div>
+    <input class="lobby-name-input" id="dispName" placeholder="اكتب اسمك هنا...">
+    <button class="btn-join-now" onclick="joinSession()">
+      <i class="fas fa-sign-in-alt"></i> ادخل الجلسة دلوقتي
+    </button>
+    <div class="lobby-note">
+      الجلسة تشتغل عن طريق Jitsi Meet — مجاني ومش محتاج تنزيل أي حاجة 🎉
+    </div>
+  </div>
+</div>
+
+<!-- JITSI CONTAINER -->
+<div id="jitsiWrap"></div>
+
+<!-- ENDED -->
+<div id="endedScreen">
+  <div class="ended-card">
+    <div class="ended-icon">🎓</div>
+    <div class="ended-title">انتهت الجلسة!</div>
+    <div class="ended-sub">شكراً لحضورك — نشوفك في الجلسة الجاية إن شاء الله 💪</div>
+    <a href="my-courses.html" class="btn-back-home"><i class="fas fa-home"></i> رجوع لكورساتي</a>
+  </div>
+</div>
+
+<!-- NOT FOUND -->
+<div id="notFound">
+  <div>
+    <h2>الجلسة مش موجودة 😕</h2>
+    <p>ممكن الرابط غلط أو الجلسة اتحذفت</p>
+    <a href="my-courses.html" class="btn-back-home"><i class="fas fa-home"></i> رجوع لكورساتي</a>
+  </div>
+</div>
+
+<script src="https://meet.jit.si/external_api.js"></script>
+<script>
+const COURSE_NAMES = {
+  free:'كورس التسويق المجاني', programming:'برمجة المواقع',
+  facebook:'إعلانات فيسبوك', instagram:'إنستاغرام', tiktok:'تيك توك',
+  snapchat:'سناب شات', twitter:'إكس (تويتر)', integrated:'استراتيجية التسويق المتكاملة'
+};
+
+function getLiveSessions(){ return JSON.parse(localStorage.getItem('am_live_sessions')||'[]'); }
+
+const params = new URLSearchParams(location.search);
+const sessionId = params.get('id');
+const sessions = getLiveSessions();
+let session = sessions.find(s => s.id === sessionId);
+
+// fallback: direct room param (for admin preview)
+const directRoom = params.get('room');
+const directTitle = params.get('title') || 'جلسة مباشرة';
+const directCourse = params.get('course') || '';
+
+if(!session && directRoom){
+  session = { id:'preview', title:directTitle, courseKey:directCourse, room:directRoom, status:'live', scheduledAt:'' };
+}
+
+window.onload = function(){
+  if(!session){ showNotFound(); return; }
+  if(session.status === 'ended'){ showEndedScreen(); return; }
+
+  // fill lobby
+  document.getElementById('lobbyTitle').textContent = session.title;
+  document.getElementById('topTitle').textContent = session.title;
+  document.getElementById('roomBadge').textContent = session.room;
+  document.getElementById('lobbyCourseName').textContent = COURSE_NAMES[session.courseKey] || session.courseKey || '—';
+
+  if(session.scheduledAt){
+    const d = new Date(session.scheduledAt);
+    document.getElementById('lobbyTime').textContent = d.toLocaleString('ar-EG',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+  }
+
+  const isLive = session.status === 'live';
+  document.getElementById('liveDot').style.background = isLive ? 'var(--green)' : 'var(--yellow)';
+  document.getElementById('liveLabel').textContent = isLive ? 'LIVE' : 'قريباً';
+  document.getElementById('liveLabel').style.color = isLive ? 'var(--green)' : 'var(--yellow)';
+  document.getElementById('lobbyStatus').textContent = isLive ? 'نشط الآن 🔴' : 'لم يبدأ بعد';
+
+  // pre-fill name from session
+  const sid = sessionStorage.getItem('akram_student_id');
+  if(sid){
+    const users = JSON.parse(localStorage.getItem('am_users')||'[]');
+    const u = users.find(x=>x.id===sid||x.email===sid);
+    if(u) document.getElementById('dispName').value = u.name || '';
+  }
+};
+
+function joinSession(){
+  const name = document.getElementById('dispName').value.trim() || 'طالب';
+  if(!session){ return; }
+  if(session.status === 'scheduled'){
+    alert('⏰ الجلسة لسه ما بدأتش — جرب تانيً لما الأستاذ يبدأها');
+    return;
+  }
+
+  document.getElementById('lobby').style.display = 'none';
+  const wrap = document.getElementById('jitsiWrap');
+  wrap.style.display = 'block';
+
+  const domain = 'meet.jit.si';
+  const options = {
+    roomName: session.room,
+    width: '100%',
+    height: '100%',
+    parentNode: wrap,
+    configOverwrite: {
+      startWithAudioMuted: false,
+      startWithVideoMuted: false,
+      defaultLanguage: 'ar',
+      disableDeepLinking: true,
+      prejoinPageEnabled: false,
+    },
+    interfaceConfigOverwrite: {
+      TOOLBAR_BUTTONS: ['microphone','camera','hangup','chat','tileview','fullscreen','settings','raisehand','videoquality'],
+      SHOW_JITSI_WATERMARK: false,
+      SHOW_WATERMARK_FOR_GUESTS: false,
+      DEFAULT_BACKGROUND: '#050d1b',
+      APP_NAME: 'Akram Mostafa | جلسات مباشرة',
+      NATIVE_APP_NAME: 'Akram Mostafa',
+      TOOLBAR_ALWAYS_VISIBLE: false,
+    },
+    userInfo: { displayName: name }
+  };
+
+  try{
+    const api = new JitsiMeetExternalAPI(domain, options);
+    api.addEventListener('videoConferenceLeft', function(){
+      wrap.style.display = 'none';
+      showEndedScreen();
+    });
+    api.addEventListener('readyToClose', function(){
+      wrap.style.display = 'none';
+      showEndedScreen();
+    });
+  } catch(e){
+    // fallback: open in new tab if API fails
+    wrap.style.display = 'none';
+    document.getElementById('lobby').style.display = 'flex';
+    window.open('https://meet.jit.si/' + session.room, '_blank');
+  }
+}
+
+function showEndedScreen(){
+  document.getElementById('lobby').style.display = 'none';
+  document.getElementById('jitsiWrap').style.display = 'none';
+  document.getElementById('endedScreen').style.display = 'flex';
+  document.getElementById('liveDot').style.background = '#ef4444';
+  document.getElementById('liveLabel').textContent = 'ENDED';
+  document.getElementById('liveLabel').style.color = '#ef4444';
+}
+
+function showNotFound(){
+  document.getElementById('lobby').style.display = 'none';
+  document.getElementById('notFound').style.display = 'flex';
+}
+</script>
+</body>
+</html>
