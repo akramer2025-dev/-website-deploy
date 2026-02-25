@@ -41,6 +41,7 @@
   <button class="btn" onclick="seedData()">
     <i class="fas fa-rocket"></i> تحميل المحاضرة الآن
   </button>
+  <div id="errBox" style="display:none;margin-top:16px;padding:14px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:12px;color:#f87171;font-size:.85rem;"></div>
 
   <div class="success" id="successBox">
     <i class="fas fa-check-circle" style="font-size:1.2rem;margin-left:6px;"></i>
@@ -206,27 +207,39 @@ const LECTURE = {
 };
 
 function seedData(){
-  const all = JSON.parse(localStorage.getItem('am_lectures')||'{}');
-  if(!all['free']) all['free'] = [];
-  all['free'] = all['free'].filter(l=>l.id!=='lec_free_001');
-  all['free'].unshift(LECTURE);
-  localStorage.setItem('am_lectures', JSON.stringify(all));
+  try {
+    const all = JSON.parse(localStorage.getItem('am_lectures')||'{}');
+    if(!all['free']) all['free'] = [];
+    all['free'] = all['free'].filter(l=>l.id!=='lec_free_001');
+    all['free'].unshift(LECTURE);
+    localStorage.setItem('am_lectures', JSON.stringify(all));
 
-  document.getElementById('successBox').style.display = 'block';
-  document.getElementById('slidesGrid').style.display  = 'block';
-  document.getElementById('viewerLink').href = 'lecture-viewer.html?course=free&id=lec_free_001';
+    // verify it saved correctly
+    const verify = JSON.parse(localStorage.getItem('am_lectures'));
+    if(!verify || !verify['free'] || !verify['free'].find(l=>l.id==='lec_free_001')){
+      throw new Error('تم الحفظ لكن التحقق فشل');
+    }
 
-  const list = document.getElementById('slidesList');
-  list.innerHTML = LECTURE.slides.map((s,i)=>`
-    <a href="lecture-viewer.html?course=free&id=lec_free_001" class="slide-row" style="text-decoration:none;">
-      <div class="num">${i+1}</div>
-      <img src="${s.src}" alt="">
-      <div class="info">
-        <div class="t">${s.title}</div>
-        <div class="s">${s.notes.split('\n')[0].substring(0,60)}...</div>
-      </div>
-    </a>
-  `).join('');
+    document.getElementById('successBox').style.display = 'block';
+    document.getElementById('slidesGrid').style.display  = 'block';
+    document.getElementById('viewerLink').href = 'lecture-viewer.html?course=free&id=lec_free_001';
+    document.getElementById('errBox').style.display = 'none';
+
+    const list = document.getElementById('slidesList');
+    list.innerHTML = LECTURE.slides.map((s,i)=>`
+      <a href="lecture-viewer.html?course=free&id=lec_free_001" class="slide-row" style="text-decoration:none;">
+        <div class="num">${i+1}</div>
+        <img src="${s.src}" alt="" onerror="this.style.display='none'">
+        <div class="info">
+          <div class="t">${s.title}</div>
+          <div class="s">${s.notes.split('\n')[0].substring(0,60)}...</div>
+        </div>
+      </a>
+    `).join('');
+  } catch(err) {
+    document.getElementById('errBox').style.display = 'block';
+    document.getElementById('errBox').textContent = 'خطأ: ' + err.message + ' – تأكد أن المتصفح لا يعمل في وضع Incognito أو أن localStorage غير ممنوع.';
+  }
 }
 </script>
 </body>

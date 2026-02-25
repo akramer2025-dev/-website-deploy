@@ -1512,7 +1512,7 @@ const LEC_COURSES = [
 
 let activeLecCourse = null;
 let editingLecId = null;
-let slideRows = [];
+var slideRows = []; // must be var for inline HTML handlers to access it
 
 function getLectures(){ return JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}'); }
 function saveLectures(data){ localStorage.setItem(LECTURES_KEY, JSON.stringify(data)); }
@@ -1602,58 +1602,133 @@ function closeLecModal(){
   editingLecId = null;
 }
 
+// collect current DOM values into slideRows before any re-render
+function collectSlideValues(){
+  slideRows.forEach((s,i)=>{
+    const titleEl = document.getElementById('sf-title-'+i);
+    const srcEl   = document.getElementById('sf-src-'+i);
+    const notesEl = document.getElementById('sf-notes-'+i);
+    const typeEl  = document.getElementById('sf-type-'+i);
+    if(titleEl) s.title = titleEl.value;
+    if(srcEl)   s.src   = srcEl.value;
+    if(notesEl) s.notes = notesEl.value;
+    if(typeEl)  s.type  = typeEl.value;
+  });
+}
+
 function addSlideRow(){
+  collectSlideValues();
   slideRows.push({id:'s'+Date.now()+Math.random().toString(36).slice(2),type:'image',src:'',title:'',notes:''});
   renderSlideEditor();
+  // scroll to bottom of editor
+  const ed=document.getElementById('slidesEditor');
+  setTimeout(()=>ed.lastElementChild&&ed.lastElementChild.scrollIntoView({behavior:'smooth'}),100);
 }
 
 function removeSlideRow(idx){
+  collectSlideValues();
   slideRows.splice(idx,1);
   renderSlideEditor();
+}
+
+function changeSlideType(idx){
+  collectSlideValues();
+  renderSlideEditor();
+}
+
+function pickSlideImage(idx){
+  document.getElementById('sf-file-'+idx).click();
+}
+
+function onSlideFileChange(idx, input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    slideRows[idx].src = e.target.result;         // base64
+    const preview = document.getElementById('sf-imgpreview-'+idx);
+    const srcInput = document.getElementById('sf-src-'+idx);
+    if(preview){ preview.src=e.target.result; preview.style.display='block'; }
+    if(srcInput){ srcInput.value='[صورة مرفوعة]'; srcInput.disabled=true; }
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearSlideImage(idx){
+  slideRows[idx].src = '';
+  const preview = document.getElementById('sf-imgpreview-'+idx);
+  const srcInput = document.getElementById('sf-src-'+idx);
+  if(preview){ preview.src=''; preview.style.display='none'; }
+  if(srcInput){ srcInput.value=''; srcInput.disabled=false; }
+  const fileInput = document.getElementById('sf-file-'+idx);
+  if(fileInput) fileInput.value='';
 }
 
 function renderSlideEditor(){
   const ed = document.getElementById('slidesEditor');
   if(!slideRows.length){
-    ed.innerHTML = `<div style="text-align:center;padding:20px;color:var(--muted);font-size:.85rem;">لا توجد شرائح – اضغط "شريحة" لإضافة أولى</div>`;
+    ed.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted);font-size:.85rem;"><i class="fas fa-layer-group" style="font-size:2rem;display:block;margin-bottom:10px;opacity:.3;"></i>لا توجد شرائح – اضغط "+شريحة" لإضافة</div>';
     return;
   }
-  ed.innerHTML = slideRows.map((s,i)=>`
+  ed.innerHTML = slideRows.map((s,i)=>{
+    const isImg = s.type==='image';
+    const hasBase64 = s.src && s.src.startsWith('data:');
+    const imgSrcDisplay = hasBase64 ? '[صورة مرفوعة]' : (s.src||'');
+    const imgDisabled = hasBase64 ? 'disabled' : '';
+    return `
     <div class="slide-row" id="sr-${i}">
       <div class="slide-row-head">
-        <span class="slide-row-num">شريحة ${i+1}</span>
-        <button onclick="removeSlideRow(${i})" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;border-radius:8px;padding:5px 10px;font-size:.75rem;cursor:pointer;"><i class="fas fa-trash"></i></button>
+        <span class="slide-row-num"><i class="fas fa-layer-group" style="margin-left:5px;"></i>شريحة ${i+1}</span>
+        <div style="display:flex;gap:6px;">
+          ${i>0?`<button onclick="collectSlideValues();slideRows.splice(${i}-1,0,slideRows.splice(${i},1)[0]);renderSlideEditor()" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:#93c5fd;border-radius:7px;padding:4px 9px;font-size:.75rem;cursor:pointer;" title="تحريك لأعلى"><i class="fas fa-arrow-up"></i></button>`:''}
+          ${i<slideRows.length-1?`<button onclick="collectSlideValues();slideRows.splice(${i}+1,0,slideRows.splice(${i},1)[0]);renderSlideEditor()" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:#93c5fd;border-radius:7px;padding:4px 9px;font-size:.75rem;cursor:pointer;" title="تحريك لأسفل"><i class="fas fa-arrow-down"></i></button>`:''}
+          <button onclick="removeSlideRow(${i})" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;border-radius:7px;padding:4px 9px;font-size:.75rem;cursor:pointer;"><i class="fas fa-trash"></i></button>
+        </div>
       </div>
       <div class="slide-row-fields">
         <div class="slide-field full">
           <label>عنوان الشريحة</label>
-          <input type="text" value="${escHtml(s.title||'')}" oninput="slideRows[${i}].title=this.value" placeholder="عنوان يظهر أسفل الصورة">
+          <input id="sf-title-${i}" type="text" value="${escHtml(s.title||'')}" placeholder="عنوان يظهر في العارض، مثال: ما هو التسويق الرقمي؟">
         </div>
         <div class="slide-field">
           <label>نوع الوسائط</label>
-          <select onchange="slideRows[${i}].type=this.value;renderSlideEditor()">
-            <option value="image"${s.type==='image'?' selected':''}>صورة</option>
-            <option value="video"${s.type==='video'?' selected':''}>فيديو</option>
-            <option value="pdf"${s.type==='pdf'?' selected':''}>PDF</option>
+          <select id="sf-type-${i}" onchange="changeSlideType(${i})">
+            <option value="image"${s.type==='image'?' selected':''}>🌄 صورة</option>
+            <option value="video"${s.type==='video'?' selected':''}>🎬 فيديو</option>
+            <option value="pdf"${s.type==='pdf'?' selected':''}>📄 PDF</option>
           </select>
         </div>
+        ${isImg?`
         <div class="slide-field">
-          <label>${s.type==='image'?'رابط الصورة':s.type==='video'?'رابط الفيديو':'رابط PDF'}</label>
-          <input type="text" value="${escHtml(s.src||'')}" oninput="slideRows[${i}].src=this.value" placeholder="${s.type==='image'?'https://...':s.type==='video'?'يوتيوب أو رابط فيديو':'رابط PDF'}">
-        </div>
+          <label>الصورة</label>
+          <div style="display:flex;gap:6px;">
+            <input id="sf-src-${i}" type="text" value="${escHtml(imgSrcDisplay)}" ${imgDisabled} placeholder="https://... رابط الصورة" style="flex:1;">
+            <button onclick="pickSlideImage(${i})" style="padding:0 12px;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:#c4b5fd;border-radius:9px;font-size:.78rem;cursor:pointer;white-space:nowrap;"><i class="fas fa-upload" style="margin-left:4px;"></i>رفع</button>
+            ${s.src?`<button onclick="clearSlideImage(${i})" style="padding:0 10px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#f87171;border-radius:9px;font-size:.78rem;cursor:pointer;"><i class="fas fa-times"></i></button>`:''}
+          </div>
+          <input id="sf-file-${i}" type="file" accept="image/*" style="display:none" onchange="onSlideFileChange(${i},this)">
+          ${s.src?`<img id="sf-imgpreview-${i}" src="${s.src.startsWith('data:')?s.src:''}" style="margin-top:8px;max-height:90px;border-radius:8px;display:${s.src.startsWith('data:')?'block':'none'};">`:`<img id="sf-imgpreview-${i}" style="display:none;">`}
+          ${s.src && !s.src.startsWith('data:')?`<img src="${s.src}" style="margin-top:8px;max-height:90px;border-radius:8px;border:1px solid var(--border)" onerror="this.style.display='none'">`:''}
+        </div>`:`
+        <div class="slide-field">
+          <label>${s.type==='video'?'رابط الفيديو (يوتيوب أو mp4)':'رابط PDF'}</label>
+          <input id="sf-src-${i}" type="text" value="${escHtml(s.src||'')}" placeholder="${s.type==='video'?'https://youtube.com/...':'https://...pdf'}">
+        </div>`}
         <div class="slide-field full">
-          <label>الشرح / الملاحظات</label>
-          <textarea rows="3" oninput="slideRows[${i}].notes=this.value" placeholder="اكتب شرح الشريحة هنا... سيظهر للطلاب على اليمين في العارض" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.82rem;resize:vertical;">${escHtml(s.notes||'')}</textarea>
+          <label>الشرح / النص التفصيلي <span style="color:var(--muted);font-size:.7rem;font-weight:400;">(يظهر في جانب العارض)</span></label>
+          <textarea id="sf-notes-${i}" rows="5" placeholder="اكتب الشرح التفصيلي هنا، كل سطر جديد = فقرة جديدة..." style="width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.85rem;resize:vertical;line-height:1.8;">${s.notes||''}</textarea>
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 function saveLecture(){
   const title = document.getElementById('lecTitleInput').value.trim();
   if(!title){toast('أدخل عنوان المحاضرة','error');return;}
   if(!activeLecCourse){toast('اختر كورساً','error');return;}
+  // collect latest DOM values before saving
+  collectSlideValues();
   const all = getLectures();
   if(!all[activeLecCourse]) all[activeLecCourse]=[];
 
