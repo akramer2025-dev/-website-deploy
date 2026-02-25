@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>���� ������ | Akram Mostafa</title>
+<title>لوحة الإدارة | Akram Mostafa</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -268,19 +268,19 @@ button{cursor:pointer;}
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo"><img src="../images/logo.png" alt="Logo"></div>
-    <h2>���� ������</h2>
-    <p>���� ����� ��������</p>
-    <div class="login-err" id="loginErr"><i class="fas fa-exclamation-circle"></i><span>��� �������� �� ���� ������ ��� �����</span></div>
+    <h2>لوحة الإدارة</h2>
+    <p>أدخل بيانات الدخول</p>
+    <div class="login-err" id="loginErr"><i class="fas fa-exclamation-circle"></i><span>اسم المستخدم أو كلمة المرور غير صحيحة</span></div>
     <div class="l-field">
-      <label>��� ��������</label>
-      <div class="l-input-wrap"><i class="fas fa-user"></i><input type="text" id="loginUser" placeholder="���� ��� ��������" autocomplete="username"></div>
+      <label>اسم المستخدم</label>
+      <div class="l-input-wrap"><i class="fas fa-user"></i><input type="text" id="loginUser" placeholder="أدخل اسم المستخدم" autocomplete="username"></div>
     </div>
     <div class="l-field">
-      <label>���� ������</label>
-      <div class="l-input-wrap"><i class="fas fa-lock"></i><input type="password" id="loginPass" placeholder="���� ���� ������" autocomplete="current-password"></div>
+      <label>كلمة المرور</label>
+      <div class="l-input-wrap"><i class="fas fa-lock"></i><input type="password" id="loginPass" placeholder="أدخل كلمة المرور" autocomplete="current-password"></div>
     </div>
-    <button class="btn-login-submit" onclick="doAdminLogin()"><i class="fas fa-sign-in-alt"></i> ����</button>
-    <p style="margin-top:18px;font-size:.78rem;color:var(--muted)"><a href="../index.html" style="color:var(--muted);"><i class="fas fa-arrow-right"></i> ������ ��������</a></p>
+    <button class="btn-login-submit" onclick="doAdminLogin()"><i class="fas fa-sign-in-alt"></i> دخول</button>
+    <p style="margin-top:18px;font-size:.78rem;color:var(--muted)"><a href="../index.html" style="color:var(--muted);"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a></p>
   </div>
 </div>
 
@@ -289,31 +289,31 @@ button{cursor:pointer;}
   <header class="adm-header">
     <div class="adm-header-brand"><img src="../images/logo.png" alt="Logo"><span>AKRAM ADMIN</span></div>
     <div class="adm-header-right">
-      <div class="adm-admin-pill"><i class="fas fa-shield-alt"></i><span>���� �����</span></div>
-      <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> ����</button>
+      <div class="adm-admin-pill"><i class="fas fa-shield-alt"></i><span>أدمن النظام</span></div>
+      <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
   </header>
   <aside class="adm-sidebar" id="adminSidebar">
     <div class="adm-nav-section">
-      <div class="adm-nav-label">������� ������</div>
-      <div class="adm-nav-item active" onclick="showSection('dashboard')"><i class="fas fa-th-large"></i> ���� ������</div>
-      <div class="adm-nav-item" onclick="showSection('portfolio')"><i class="fas fa-images"></i> ��� ��������<span class="adm-nav-badge" id="portfolioImgCount">0</span></div>
+      <div class="adm-nav-label">الإدارة الرئيسية</div>
+      <div class="adm-nav-item active" onclick="showSection('dashboard')"><i class="fas fa-th-large"></i> لوحة التحكم</div>
+      <div class="adm-nav-item" onclick="showSection('portfolio')"><i class="fas fa-images"></i> معرض الأعمال<span class="adm-nav-badge" id="portfolioImgCount">0</span></div>
     </div>
     <div class="adm-nav-section">
-      <div class="adm-nav-label">����� ������</div>
-      <div class="adm-nav-item" onclick="showSection('webprices')"><i class="fas fa-globe"></i> ������� �����<span class="adm-nav-badge">6</span></div>
-      <div class="adm-nav-item" onclick="showSection('mobileprices')"><i class="fas fa-mobile-alt"></i> ������� ��������<span class="adm-nav-badge">6</span></div>
+      <div class="adm-nav-label">إدارة المشاريع</div>
+      <div class="adm-nav-item" onclick="showSection('webprices')"><i class="fas fa-globe"></i> تطبيقات الويب<span class="adm-nav-badge">6</span></div>
+      <div class="adm-nav-item" onclick="showSection('mobileprices')"><i class="fas fa-mobile-alt"></i> تطبيقات الموبايل<span class="adm-nav-badge">6</span></div>
     </div>
     <div class="adm-nav-section">
-      <div class="adm-nav-label">����� ����������</div>
-      <div class="adm-nav-item" onclick="showSection('employees')"><i class="fas fa-user-tie"></i> ��������<span class="adm-nav-badge" id="empCount">0</span></div>
-      <div class="adm-nav-item" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> ������<span class="adm-nav-badge" id="stuCount">0</span></div>
+      <div class="adm-nav-label">إدارة المستخدمين</div>
+      <div class="adm-nav-item" onclick="showSection('employees')"><i class="fas fa-user-tie"></i> الموظفون<span class="adm-nav-badge" id="empCount">0</span></div>
+      <div class="adm-nav-item" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> الطلاب<span class="adm-nav-badge" id="stuCount">0</span></div>
     </div>
     <div class="adm-nav-section">
-      <div class="adm-nav-label">����</div>
-      <div class="adm-nav-item" onclick="showSection('settings')"><i class="fas fa-cog"></i> ���������</div>
-      <div class="adm-nav-item" onclick="window.open('../store.html','_blank')"><i class="fas fa-store"></i> ��� ������</div>
-      <div class="adm-nav-item" onclick="window.open('../index.html','_blank')"><i class="fas fa-external-link-alt"></i> ��� ������</div>
+      <div class="adm-nav-label">أخرى</div>
+      <div class="adm-nav-item" onclick="showSection('settings')"><i class="fas fa-cog"></i> الإعدادات</div>
+      <div class="adm-nav-item" onclick="window.open('../store.html','_blank')"><i class="fas fa-store"></i> متجر رمو</div>
+      <div class="adm-nav-item" onclick="window.open('../index.html','_blank')"><i class="fas fa-external-link-alt"></i> زيارة الموقع</div>
     </div>
     <div class="adm-sidebar-footer"><p>Akram Mostafa &copy; 2026</p></div>
   </aside>
@@ -321,27 +321,27 @@ button{cursor:pointer;}
 
     <!-- DASHBOARD -->
     <div class="adm-section active" id="sec-dashboard">
-      <div class="adm-section-title">���� <span>������</span></div>
-      <div class="adm-breadcrumb">����� �ߡ ����   ���� ���� ���� �� ���� ������</div>
+      <div class="adm-section-title">لوحة <span>التحكم</span></div>
+      <div class="adm-breadcrumb">مرحباً! هذه الإحصائيات العامة للنظام</div>
       <div class="stats-grid">
-        <div class="stat-card c1"><div class="stat-card-icon"><i class="fas fa-users"></i></div><div class="stat-num" id="dash-total">0</div><div class="stat-lbl">������ ����������</div></div>
-        <div class="stat-card c2"><div class="stat-card-icon"><i class="fas fa-user-tie"></i></div><div class="stat-num" id="dash-emp">0</div><div class="stat-lbl">��������</div></div>
-        <div class="stat-card c3"><div class="stat-card-icon"><i class="fas fa-user-graduate"></i></div><div class="stat-num" id="dash-stu">0</div><div class="stat-lbl">������</div></div>
-        <div class="stat-card c4"><div class="stat-card-icon"><i class="fas fa-images"></i></div><div class="stat-num" id="dash-imgs">0</div><div class="stat-lbl">��� ��������</div></div>
+        <div class="stat-card c1"><div class="stat-card-icon"><i class="fas fa-users"></i></div><div class="stat-num" id="dash-total">0</div><div class="stat-lbl">إجمالي المستخدمين</div></div>
+        <div class="stat-card c2"><div class="stat-card-icon"><i class="fas fa-user-tie"></i></div><div class="stat-num" id="dash-emp">0</div><div class="stat-lbl">الموظفون</div></div>
+        <div class="stat-card c3"><div class="stat-card-icon"><i class="fas fa-user-graduate"></i></div><div class="stat-num" id="dash-stu">0</div><div class="stat-lbl">الطلاب</div></div>
+        <div class="stat-card c4"><div class="stat-card-icon"><i class="fas fa-images"></i></div><div class="stat-num" id="dash-imgs">0</div><div class="stat-lbl">صور المعرض</div></div>
       </div>
       <div class="adm-row">
         <div class="adm-card">
-          <h3><i class="fas fa-users"></i> ��� ���������� ��������</h3>
-          <table class="adm-table"><thead><tr><th>�����</th><th>�����</th><th>����� �������</th></tr></thead><tbody id="recentUsersTable"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">�� ���� �������� ���</td></tr></tbody></table>
+          <h3><i class="fas fa-users"></i> آخر المستخدمين المضافين</h3>
+          <table class="adm-table"><thead><tr><th>الاسم</th><th>النوع</th><th>تاريخ الإضافة</th></tr></thead><tbody id="recentUsersTable"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">جم موظف الرابطجم تم</td></tr></tbody></table>
         </div>
         <div class="adm-card">
-          <h3><i class="fas fa-bolt"></i> ������� �����</h3>
+          <h3><i class="fas fa-bolt"></i> إجراءات سريعة</h3>
           <div class="quick-actions">
-            <div class="qa-btn" onclick="openAddUser('employee')"><div class="qa-btn-icon" style="background:rgba(59,130,246,0.15);color:var(--blue);"><i class="fas fa-user-plus"></i></div>����� ���� ����</div>
-            <div class="qa-btn" onclick="openAddUser('student')"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-user-graduate"></i></div>����� ���� ����</div>
-            <div class="qa-btn" onclick="showSection('portfolio')"><div class="qa-btn-icon" style="background:rgba(233,78,119,0.15);color:var(--pink);"><i class="fas fa-images"></i></div>����� ��� ��������</div>
-            <div class="qa-btn" onclick="showSection('webprices')"><div class="qa-btn-icon" style="background:rgba(247,147,30,0.15);color:var(--orange);"><i class="fas fa-globe"></i></div>����� ������� �����</div>
-            <div class="qa-btn" onclick="showSection('mobileprices')"><div class="qa-btn-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-mobile-alt"></i></div>����� ������� ��������</div>
+            <div class="qa-btn" onclick="openAddUser('employee')"><div class="qa-btn-icon" style="background:rgba(59,130,246,0.15);color:var(--blue);"><i class="fas fa-user-plus"></i></div>إضافة موظف جديد</div>
+            <div class="qa-btn" onclick="openAddUser('student')"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-user-graduate"></i></div>إضافة طالب جديد</div>
+            <div class="qa-btn" onclick="showSection('portfolio')"><div class="qa-btn-icon" style="background:rgba(233,78,119,0.15);color:var(--pink);"><i class="fas fa-images"></i></div>إدارة معرض الأعمال</div>
+            <div class="qa-btn" onclick="showSection('webprices')"><div class="qa-btn-icon" style="background:rgba(247,147,30,0.15);color:var(--orange);"><i class="fas fa-globe"></i></div>تحديث أسعار الويب</div>
+            <div class="qa-btn" onclick="showSection('mobileprices')"><div class="qa-btn-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-mobile-alt"></i></div>تحديث أسعار الموبايل</div>
           </div>
         </div>
       </div>
@@ -349,30 +349,30 @@ button{cursor:pointer;}
 
     <!-- PORTFOLIO -->
     <div class="adm-section" id="sec-portfolio">
-      <div class="adm-section-title">��� <span>��������</span></div>
-      <div class="adm-breadcrumb">��� ��� ��� �����  ����� �� ���� ������ ��� ����� ��� ������</div>
+      <div class="adm-section-title">معرض <span>الأعمال</span></div>
+      <div class="adm-breadcrumb">أضف صور لكل مشروع، ستظهر في صفحة المنتج على الموقع</div>
       <div class="projects-grid" id="portfolioProjectsGrid"></div>
     </div>
 
     <!-- WEB APP PRICES -->
     <div class="adm-section" id="sec-webprices">
-      <div class="adm-section-title">������� <span>�����</span></div>
-      <div class="adm-breadcrumb">��� ���� ���� ��� ����� � ���� ������ ������ �� ���� ����� �� �����</div>
+      <div class="adm-section-title">تطبيقات <span>الويب</span></div>
+      <div class="adm-breadcrumb">حدّث أسعار كل تطبيق، ستظهر مباشرة في صفحة المنتج</div>
       <div class="projects-grid" id="webPricesGrid"></div>
     </div>
 
     <!-- MOBILE APP PRICES -->
     <div class="adm-section" id="sec-mobileprices">
-      <div class="adm-section-title">������� <span>��������</span></div>
-      <div class="adm-breadcrumb">��� ���� ���� ��� ����� � ���� ������ ������ �� ���� ����� �� �����</div>
+      <div class="adm-section-title">تطبيقات <span>الموبايل</span></div>
+      <div class="adm-breadcrumb">حدّث أسعار تطبيقات الموبايل، ستظهر مباشرة في صفحة المنتج</div>
       <div class="projects-grid" id="mobilePricesGrid"></div>
     </div>
 
     <!-- EMPLOYEES -->
     <div class="adm-section" id="sec-employees">
       <div class="users-top">
-        <div><div class="adm-section-title">����� <span>��������</span></div><div class="adm-breadcrumb">�� �������� �������� �� ������</div></div>
-        <button class="btn-add-user" onclick="openAddUser('employee')"><i class="fas fa-plus"></i> ����� ����</button>
+        <div><div class="adm-section-title">قائمة <span>الموظفين</span></div><div class="adm-breadcrumb">إدارة الموظفين والفريق في المنظومة</div></div>
+        <button class="btn-add-user" onclick="openAddUser('employee')"><i class="fas fa-plus"></i> إضافة جديد</button>
       </div>
       <div class="users-grid" id="employeesGrid"></div>
     </div>
@@ -380,30 +380,30 @@ button{cursor:pointer;}
     <!-- STUDENTS -->
     <div class="adm-section" id="sec-students">
       <div class="users-top">
-        <div><div class="adm-section-title">����� <span>������</span></div><div class="adm-breadcrumb">�� ������ �������� �� ��������</div></div>
-        <button class="btn-add-user" onclick="openAddUser('student')"><i class="fas fa-plus"></i> ����� ����</button>
+        <div><div class="adm-section-title">قائمة <span>الطلاب</span></div><div class="adm-breadcrumb">إدارة الطلاب المسجلين في الدورات</div></div>
+        <button class="btn-add-user" onclick="openAddUser('student')"><i class="fas fa-plus"></i> إضافة جديد</button>
       </div>
       <div class="users-grid" id="studentsGrid"></div>
     </div>
 
     <!-- SETTINGS -->
     <div class="adm-section" id="sec-settings">
-      <div class="adm-section-title">��������� <span>������</span></div>
-      <div class="adm-breadcrumb">����� ���� ���� ������ ������ ��������</div>
+      <div class="adm-section-title">الإعدادات <span>العامة</span></div>
+      <div class="adm-breadcrumb">تحكم في إعدادات النظام وإدارة البيانات</div>
       <div class="settings-grid">
         <div class="settings-card">
-          <h4><i class="fas fa-key"></i> ����� ���� ���� ������</h4>
-          <div class="form-field"><label>���� ������ �������</label><input type="password" id="oldPass" placeholder="���� ���� ���� ������ �������"></div>
-          <div class="form-field"><label>���� ������ �������</label><input type="password" id="newPass" placeholder="���� ���� ������ �������"></div>
-          <div class="form-field"><label>����� ���� ������</label><input type="password" id="confPass" placeholder="��� ����� ���� ������"></div>
-          <button class="btn-modal-save" onclick="changeAdminPass()"><i class="fas fa-save"></i> ��� ���������</button>
+          <h4><i class="fas fa-key"></i> تغيير كلمة مرور الأدمن</h4>
+          <div class="form-field"><label>كلمة المرور الحالية</label><input type="password" id="oldPass" placeholder="أدخل كلمة المرور الحالية"></div>
+          <div class="form-field"><label>كلمة المرور الجديدة</label><input type="password" id="newPass" placeholder="أدخل كلمة المرور الجديدة"></div>
+          <div class="form-field"><label>تأكيد كلمة المرور</label><input type="password" id="confPass" placeholder="أكد كلمة المرور الجديدة"></div>
+          <button class="btn-modal-save" onclick="changeAdminPass()"><i class="fas fa-save"></i> حفظ التغييرات</button>
         </div>
         <div class="settings-card">
-          <h4><i class="fas fa-database"></i> ����� ��������</h4>
-          <p style="color:var(--muted);font-size:.88rem;margin-bottom:20px;">����� �� ��� ���� ������ ������ �������.</p>
+          <h4><i class="fas fa-database"></i> إدارة البيانات</h4>
+          <p style="color:var(--muted);font-size:.88rem;margin-bottom:20px;">تصدير أو حذف جميع بيانات النظام المخزنة.</p>
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <button class="qa-btn" onclick="exportData()" style="border-radius:11px;"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-download"></i></div>����� �������� (JSON)</button>
-            <button class="qa-btn" onclick="clearAllData()" style="border-radius:11px;"><div class="qa-btn-icon" style="background:rgba(239,68,68,0.15);color:#f87171;"><i class="fas fa-trash"></i></div><span style="color:#f87171;">��� �� ��������</span></button>
+            <button class="qa-btn" onclick="exportData()" style="border-radius:11px;"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-download"></i></div>تصدير البيانات (JSON)</button>
+            <button class="qa-btn" onclick="clearAllData()" style="border-radius:11px;"><div class="qa-btn-icon" style="background:rgba(239,68,68,0.15);color:#f87171;"><i class="fas fa-trash"></i></div><span style="color:#f87171;">حذف كل البيانات</span></button>
           </div>
         </div>
       </div>
@@ -415,34 +415,34 @@ button{cursor:pointer;}
 <!-- USER MODAL -->
 <div class="modal-overlay" id="userModal">
   <div class="modal-box">
-    <div class="modal-header"><h3 id="modalTitle">����� ������</h3><button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button></div>
+    <div class="modal-header"><h3 id="modalTitle">إضافة مستخدم</h3><button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button></div>
     <div class="form-row">
-      <div class="form-field"><label>����� ������ *</label><input type="text" id="f-name" placeholder="���� ����� ������"></div>
-      <div class="form-field"><label>��� �������� *</label><input type="text" id="f-username" placeholder="username ����"></div>
+      <div class="form-field"><label>الاسم الكامل *</label><input type="text" id="f-name" placeholder="أدخل الاسم الكامل"></div>
+      <div class="form-field"><label>اسم المستخدم *</label><input type="text" id="f-username" placeholder="username فقط"></div>
     </div>
     <div class="form-row">
-      <div class="form-field"><label>���� ������ *</label><input type="password" id="f-password" placeholder="���� ������"></div>
-      <div class="form-field"><label>��� ������</label><input type="tel" id="f-phone" placeholder="01XXXXXXXXX"></div>
+      <div class="form-field"><label>كلمة المرور *</label><input type="password" id="f-password" placeholder="كلمة المرور"></div>
+      <div class="form-field"><label>رقم الهاتف</label><input type="tel" id="f-phone" placeholder="01XXXXXXXXX"></div>
     </div>
-    <div class="form-field"><label>������ ����������</label><input type="email" id="f-email" placeholder="example@email.com"></div>
+    <div class="form-field"><label>البريد الإلكتروني</label><input type="email" id="f-email" placeholder="example@email.com"></div>
     <div id="empFields">
       <div class="form-row">
-        <div class="form-field"><label>������ �������</label><input type="text" id="f-role" placeholder="����: ���� �������"></div>
-        <div class="form-field"><label>�����</label><input type="text" id="f-dept" placeholder="����: �������"></div>
+        <div class="form-field"><label>المسمى الوظيفي</label><input type="text" id="f-role" placeholder="مثال: مدير التسويق"></div>
+        <div class="form-field"><label>القسم</label><input type="text" id="f-dept" placeholder="مثال: التسويق"></div>
       </div>
     </div>
     <div id="stuFields" style="display:none;">
       <div class="form-row">
-        <div class="form-field"><label>�������� �������</label><input type="text" id="f-courses" placeholder="����: Facebook Ads, TikTok"></div>
-        <div class="form-field"><label>�������</label><select id="f-level"><option value="�����">�����</option><option value="�����">�����</option><option value="�����">�����</option></select></div>
+        <div class="form-field"><label>الدورات المسجلة</label><input type="text" id="f-courses" placeholder="مثال: Facebook Ads, TikTok"></div>
+        <div class="form-field"><label>المستوى</label><select id="f-level"><option value="مبتدئ">مبتدئ</option><option value="متوسط">متوسط</option><option value="متقدم">متقدم</option></select></div>
       </div>
     </div>
-    <div class="form-field"><label>���� ���� ����� ������ (�������)</label><input type="url" id="f-avatar" placeholder="https://..."></div>
-    <div class="form-field"><label>���� �����</label><textarea id="f-bio" placeholder="���� �� ��������..."></textarea></div>
+    <div class="form-field"><label>رابط صورة الملف الشخصي (اختياري)</label><input type="url" id="f-avatar" placeholder="https://..."></div>
+    <div class="form-field"><label>نبذة قصيرة</label><textarea id="f-bio" placeholder="اكتب عن المستخدم..."></textarea></div>
     <input type="hidden" id="f-editId"><input type="hidden" id="f-type">
     <div class="modal-footer">
-      <button class="btn-modal-save" onclick="saveUser()"><i class="fas fa-save"></i> ���</button>
-      <button class="btn-modal-cancel" onclick="closeModal()">�����</button>
+      <button class="btn-modal-save" onclick="saveUser()"><i class="fas fa-save"></i> حفظ</button>
+      <button class="btn-modal-cancel" onclick="closeModal()">إلغاء</button>
     </div>
   </div>
 </div>
@@ -463,27 +463,27 @@ const USERS_KEY = 'am_users';
 const PORTFOLIO_KEY = 'am_portfolio_imgs';
 const APP_PRICES_KEY = 'am_app_prices';
 
-// ������� �����
+// تطبيقات الويب
 const WEB_APPS = {
-  'almodif':   { name:'������ �����',      icon:'fas fa-hotel',       color:'linear-gradient(135deg,#667eea,#764ba2)' },
-  'remostore': { name:'���� ����',          icon:'fas fa-shopping-bag', color:'linear-gradient(135deg,#a855f7,#6d28d9)' },
-  'hotel-crm': { name:'���� CRM �������',  icon:'fas fa-building',     color:'linear-gradient(135deg,#10b981,#059669)' },
+  'almodif':   { name:'منصة فندق',      icon:'fas fa-hotel',       color:'linear-gradient(135deg,#667eea,#764ba2)' },
+  'remostore': { name:'متجر ريمو',          icon:'fas fa-shopping-bag', color:'linear-gradient(135deg,#a855f7,#6d28d9)' },
+  'hotel-crm': { name:'نظام CRM للفنادق',  icon:'fas fa-building',     color:'linear-gradient(135deg,#10b981,#059669)' },
   'linkcall':  { name:'Link Call',           icon:'fas fa-headset',      color:'linear-gradient(135deg,#3b82f6,#1d4ed8)' },
-  'missrim':   { name:'��� ��� ���',        icon:'fas fa-store-alt',    color:'linear-gradient(135deg,#f43f5e,#e11d48)' },
+  'missrim':   { name:'متجر مس ريم',        icon:'fas fa-store-alt',    color:'linear-gradient(135deg,#f43f5e,#e11d48)' },
   'dentasmart':{ name:'Denta Smart',         icon:'fas fa-tooth',        color:'linear-gradient(135deg,#06b6d4,#0284c7)' }
 };
 
-// ������� ��������
+// تطبيقات الموبايل
 const MOBILE_APPS = {
-  'taskmaster':  { name:'���� �����',      icon:'fas fa-tasks',       color:'linear-gradient(135deg,#8b5cf6,#7c3aed)' },
-  'fittrack':    { name:'��� ����',         icon:'fas fa-heartbeat',   color:'linear-gradient(135deg,#ef4444,#dc2626)' },
-  'quickscan':   { name:'���� ����',        icon:'fas fa-qrcode',      color:'linear-gradient(135deg,#10b981,#059669)' },
-  'smartnotes':  { name:'����� ����',       icon:'fas fa-sticky-note', color:'linear-gradient(135deg,#f59e0b,#d97706)' },
-  'prayertime':  { name:'������ ������',    icon:'fas fa-mosque',      color:'linear-gradient(135deg,#14b8a6,#0d9488)' },
-  'moneywise':   { name:'���� ����',        icon:'fas fa-wallet',      color:'linear-gradient(135deg,#6366f1,#4f46e5)' }
+  'taskmaster':  { name:'مدير المهام',      icon:'fas fa-tasks',       color:'linear-gradient(135deg,#8b5cf6,#7c3aed)' },
+  'fittrack':    { name:'تتبع اللياقة',         icon:'fas fa-heartbeat',   color:'linear-gradient(135deg,#ef4444,#dc2626)' },
+  'quickscan':   { name:'مسح سريع',        icon:'fas fa-qrcode',      color:'linear-gradient(135deg,#10b981,#059669)' },
+  'smartnotes':  { name:'ملاحظات ذكية',       icon:'fas fa-sticky-note', color:'linear-gradient(135deg,#f59e0b,#d97706)' },
+  'prayertime':  { name:'مواقيت الصلاة',    icon:'fas fa-mosque',      color:'linear-gradient(135deg,#14b8a6,#0d9488)' },
+  'moneywise':   { name:'مدير المال',        icon:'fas fa-wallet',      color:'linear-gradient(135deg,#6366f1,#4f46e5)' }
 };
 
-// ��� �� ��������� �����������
+// آخر المستخدمين المضافين
 const ALL_APPS = {...WEB_APPS, ...MOBILE_APPS};
 
 function getUsers(){ return JSON.parse(localStorage.getItem(USERS_KEY)||'[]'); }
@@ -550,8 +550,8 @@ function showSection(name){
 
 function renderDashboard(){
   const users=getUsers(); const recent=users.slice(-5).reverse(); const tbody=document.getElementById('recentUsersTable');
-  if(!recent.length){ tbody.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">�� ���� �������� ���</td></tr>'; return; }
-  tbody.innerHTML=recent.map(u=>`<tr><td><strong>${u.name}</strong></td><td><span class="user-type-badge ${u.type==='employee'?'emp':'stu'}">${u.type==='employee'?'����':'����'}</span></td><td style="color:var(--muted)">${new Date(u.createdAt).toLocaleDateString('ar-EG')}</td></tr>`).join('');
+  if(!recent.length){ tbody.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">جم موظف الرابطجم تم</td></tr>'; return; }
+  tbody.innerHTML=recent.map(u=>`<tr><td><strong>${u.name}</strong></td><td><span class="user-type-badge ${u.type==='employee'?'emp':'stu'}">${u.type==='employee'?'موظف':'طالب'}</span></td><td style="color:var(--muted)">${new Date(u.createdAt).toLocaleDateString('ar-EG')}</td></tr>`).join('');
 }
 
 function renderPortfolio(){
@@ -559,36 +559,36 @@ function renderPortfolio(){
   grid.innerHTML=Object.entries(ALL_APPS).map(([key,p])=>{
     const imgs=portfolio[key]||[];
     return `<div class="project-img-card" id="proj-${key}">
-      <div class="project-card-header"><div class="project-card-icon" style="background:${p.color}"><i class="${p.icon}"></i></div><div><h4>${p.name}</h4><small>${imgs.length} ���� <span class="img-count-badge" id="imgBadge-${key}">${imgs.length}</span></small></div></div>
+      <div class="project-card-header"><div class="project-card-icon" style="background:${p.color}"><i class="${p.icon}"></i></div><div><h4>${p.name}</h4><small>${imgs.length} صورة <span class="img-count-badge" id="imgBadge-${key}">${imgs.length}</span></small></div></div>
       <div class="project-card-body">
         <div class="img-thumbs" id="thumbs-${key}">${renderThumbs(key,imgs)}</div>
-        <div class="img-add-form"><input type="url" id="imgUrl-${key}" placeholder="���� ������ (https://...)"><button onclick="addProjectImage('${key}')"><i class="fas fa-plus"></i> ���</button></div>
+        <div class="img-add-form"><input type="url" id="imgUrl-${key}" placeholder="رابط الصورة (https://...)"><button onclick="addProjectImage('${key}')"><i class="fas fa-plus"></i> إضافة</button></div>
       </div></div>`;
   }).join('');
 }
 
 function renderThumbs(key,imgs){
-  if(!imgs.length) return '<span class="no-imgs">�� ���� ���  ��� ���� ���� �����</span>';
+  if(!imgs.length) return '<span class="no-imgs">لا توجد صور، أضف صورة من أعلاه</span>';
   return imgs.map((url,i)=>`<div class="img-thumb"><img src="${url}" onerror="this.src='https://via.placeholder.com/70x55?text=Error'" onclick="openLb('${url}')"><button class="img-thumb-del" onclick="removeProjectImage('${key}',${i})"><i class="fas fa-times"></i></button></div>`).join('');
 }
 
 function addProjectImage(key){
   const input=document.getElementById('imgUrl-'+key); const url=input.value.trim();
-  if(!url){toast('���� ���� ������','error');return;}
-  if(!url.startsWith('http')){toast('������ ��� �� ���� �� http','error');return;}
+  if(!url){toast('أدخل رابط الصورة','error');return;}
+  if(!url.startsWith('http')){toast('الرابط يجب أن يبدأ بـ http','error');return;}
   const portfolio=getPortfolio(); if(!portfolio[key])portfolio[key]=[];
   portfolio[key].push(url); savePortfolio(portfolio);
   document.getElementById('thumbs-'+key).innerHTML=renderThumbs(key,portfolio[key]);
   document.getElementById('imgBadge-'+key).textContent=portfolio[key].length;
-  input.value=''; updateBadges(); toast('��� ����� ������ ����� ','success');
+  input.value=''; updateBadges(); toast('تم إضافة الصورة بنجاح ✓','success');
 }
 
 function removeProjectImage(key,index){
-  if(!confirm('�� ���� ��� ��� �����ɿ'))return;
+  if(!confirm('جم موظف تم تم بنجاحɿ'))return;
   const portfolio=getPortfolio(); portfolio[key].splice(index,1); savePortfolio(portfolio);
   document.getElementById('thumbs-'+key).innerHTML=renderThumbs(key,portfolio[key]);
   document.getElementById('imgBadge-'+key).textContent=portfolio[key].length;
-  updateBadges(); toast('�� ��� ������','success');
+  updateBadges(); toast('جم تم الرابط','success');
 }
 
 function renderWebPrices(){
@@ -622,11 +622,11 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
       <div class="project-icon" style="background:${p.color}"><i class="${p.icon}"></i></div>
       <div>
         <h4>${p.name}</h4>
-        <small style="color:var(--muted);">${type==='web'?'����� ���':'����� ������'}</small>
+        <small style="color:var(--muted);">${type==='web'?'تطبيق ويب':'تطبيق موبايل'}</small>
       </div>
     </div>
     <div class="project-card-body">
-      <!-- ���� ������ -->
+      <!-- موظف الرابط -->
       <div class="product-img-zone ${hasImg?'has-img':''}" id="imgZone-${key}" 
            onclick="triggerImageUpload('${key}')"
            ondragover="handleDragOver(event,'${key}')" 
@@ -635,21 +635,21 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
         ${hasImg ? `
           <img src="${mainImg}" class="product-preview" id="preview-${key}" onerror="this.style.display='none'">
           <div class="img-overlay">
-            <button class="img-action-btn view" onclick="event.stopPropagation();openLb('${mainImg}')" title="���"><i class="fas fa-eye"></i></button>
-            <button class="img-action-btn change" onclick="event.stopPropagation();triggerImageUpload('${key}')" title="�����"><i class="fas fa-sync-alt"></i></button>
-            <button class="img-action-btn delete" onclick="event.stopPropagation();deleteMainImage('${key}','${type}')" title="���"><i class="fas fa-trash"></i></button>
+            <button class="img-action-btn view" onclick="event.stopPropagation();openLb('${mainImg}')" title="عرض"><i class="fas fa-eye"></i></button>
+            <button class="img-action-btn change" onclick="event.stopPropagation();triggerImageUpload('${key}')" title="تغيير"><i class="fas fa-sync-alt"></i></button>
+            <button class="img-action-btn delete" onclick="event.stopPropagation();deleteMainImage('${key}','${type}')" title="حذف"><i class="fas fa-trash"></i></button>
           </div>
         ` : `
           <i class="fas fa-cloud-upload-alt upload-icon"></i>
-          <span class="upload-text">���� ���� ��� �� ���� ��������</span>
+          <span class="upload-text">اسحب صورة هنا أو انقر للاختيار</span>
         `}
         <input type="file" id="fileInput-${key}" accept="image/*" style="display:none" onchange="handleFileSelect(event,'${key}','${type}')">
       </div>
       
-      <!-- ���� ����� �������� -->
+      <!-- موظف بنجاح الرابطجم -->
       ${allImgs.length > 0 ? `
       <div class="gallery-section">
-        <div class="gallery-label"><i class="fas fa-images"></i> ��� ������ (${allImgs.length})</div>
+        <div class="gallery-label"><i class="fas fa-images"></i> تم الرابط (${allImgs.length})</div>
         <div class="gallery-thumbs">
           ${allImgs.map((img,i)=>`
             <div class="gallery-thumb" onclick="openLb('${img}')">
@@ -657,31 +657,31 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
               <div class="thumb-del" onclick="event.stopPropagation();removeGalleryImage('${key}',${i},'${type}')"><i class="fas fa-times"></i></div>
             </div>
           `).join('')}
-          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="����� ���"><i class="fas fa-plus"></i></div>
+          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="بنجاح تم"><i class="fas fa-plus"></i></div>
         </div>
       </div>
       ` : `
       <div class="gallery-section">
-        <div class="gallery-label"><i class="fas fa-images"></i> ��� ������</div>
+        <div class="gallery-label"><i class="fas fa-images"></i> تم الرابط</div>
         <div class="gallery-thumbs">
-          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="����� ���"><i class="fas fa-plus"></i></div>
+          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="بنجاح تم"><i class="fas fa-plus"></i></div>
         </div>
       </div>
       `}
       
-      <!-- ����� -->
+      <!-- بنجاح -->
       <div class="price-row">
         <div class="price-input-wrap">
-          <input type="number" id="price-${key}" value="${price}" placeholder="���� �����..." min="0">
-          <span class="currency">�.�</span>
+          <input type="number" id="price-${key}" value="${price}" placeholder="أدخل السعر..." min="0">
+          <span class="currency">ج.م</span>
         </div>
         <button class="btn-save-product" onclick="saveProductData('${key}','${type}')">
-          <i class="fas fa-save"></i> ���
+          <i class="fas fa-save"></i> حفظ
         </button>
       </div>
       <div class="price-status ${hasPrice?'has-price':'no-price'}">
         <i class="fas ${hasPrice?'fa-check-circle':'fa-exclamation-circle'}"></i>
-        ${hasPrice ? Number(price).toLocaleString('ar-EG')+' ����' : '�����: ����� ����'}
+        ${hasPrice ? Number(price).toLocaleString('ar-EG')+' ج.م' : 'السعر: غير محدد'}
       </div>
     </div>
   </div>`;
@@ -721,9 +721,9 @@ function handleFileSelect(e, key, type){
 }
 
 function processImageFile(file, key){
-  // ������ �� ��� ����� (max 2MB)
+  // تحقق من حجم الصورة (max 2MB)
   if(file.size > 2 * 1024 * 1024){
-    toast('��� ������ ���� ���� (���� ������ 2MB)', 'error');
+    toast('حجم الصورة كبير جداً (أقصى حجم 2MB)', 'error');
     return;
   }
   
@@ -739,11 +739,11 @@ function saveProductImage(key, imageData){
   const portfolio = getPortfolio();
   if(!portfolio[key]) portfolio[key] = [];
   
-  // ����� ������ �� ������� (����� ������)
+// إضافة الصورة في المقدمة (صورة الغلاف)
   portfolio[key].unshift(imageData);
   savePortfolio(portfolio);
   
-  // ����� �����
+  // تحديث العرض
   const card = document.querySelector(`[data-key="${key}"]`);
   if(card){
     const type = card.dataset.type;
@@ -752,15 +752,15 @@ function saveProductImage(key, imageData){
   }
   
   updateBadges();
-  toast('�� ��� ������ ����� ?', 'success');
+  toast('جم تم الرابط بنجاح ?', 'success');
 }
 
 function deleteMainImage(key, type){
-  if(!confirm('�� ���� ��� ��� �����ɿ')) return;
+if(!confirm('هل تريد حذف هذه الصورة؟')) return;
   
   const portfolio = getPortfolio();
   if(portfolio[key] && portfolio[key].length > 0){
-    portfolio[key].shift(); // ��� ��� ����
+    portfolio[key].shift(); // حذف صورة الغلاف
     savePortfolio(portfolio);
   }
   
@@ -768,11 +768,11 @@ function deleteMainImage(key, type){
   else renderMobilePrices();
   
   updateBadges();
-  toast('�� ��� ������', 'success');
+  toast('تم الحذف بنجاح', 'success');
 }
 
 function removeGalleryImage(key, index, type){
-  if(!confirm('��� ��� �����ɿ')) return;
+  if(!confirm('تم تم بنجاحɿ')) return;
   
   const portfolio = getPortfolio();
   if(portfolio[key]){
@@ -784,11 +784,11 @@ function removeGalleryImage(key, index, type){
   else renderMobilePrices();
   
   updateBadges();
-  toast('�� ��� ������', 'success');
+  toast('تم الحذف بنجاح', 'success');
 }
 
 function openGalleryModal(key, type){
-  const url = prompt('���� ���� ������ (https://...)');
+  const url = prompt('أدخل رابط الصورة (https://...)');
   if(url && url.trim().startsWith('http')){
     const portfolio = getPortfolio();
     if(!portfolio[key]) portfolio[key] = [];
@@ -799,9 +799,9 @@ function openGalleryModal(key, type){
     else renderMobilePrices();
     
     updateBadges();
-    toast('�� ����� ������', 'success');
+    toast('تم إضافة الصورة ✓', 'success');
   } else if(url !== null){
-    toast('������ ��� �� ���� �� http', 'error');
+    toast('الرابط يجب أن يبدأ بـ http', 'error');
   }
 }
 
@@ -821,11 +821,11 @@ function saveProductData(key, type){
   if(type === 'web') renderWebPrices();
   else renderMobilePrices();
   
-  toast('�� ��� ������ ' + apps[key].name + ' ����� ?', 'success');
+toast('تم حفظ بيانات ' + apps[key].name + ' بنجاح ✓', 'success');
 }
 
 function initDragDrop(){
-  // ����� ����� �������� ��� �� �����
+  // بنجاح بنجاح الرابطجم تم جم بنجاح
   document.querySelectorAll('.product-img-zone').forEach(zone => {
     zone.addEventListener('dragenter', function(e){
       e.preventDefault();
@@ -836,13 +836,13 @@ function initDragDrop(){
 function renderUsers(type){
   const users=getUsers().filter(u=>u.type===type);
   const grid=document.getElementById(type==='employee'?'employeesGrid':'studentsGrid');
-  if(!users.length){const lbl=type==='employee'?'������':'����';grid.innerHTML=`<div class="no-users-msg" style="grid-column:1/-1"><div><i class="fas fa-${type==='employee'?'user-tie':'user-graduate'}"></i></div><p>�� ���� ${lbl} ���</p><button class="btn-add-user" onclick="openAddUser('${type}')" style="margin-top:14px;display:inline-flex;"><i class="fas fa-plus"></i> ����� ${type==='employee'?'����':'����'}</button></div>`;return;}
+  if(!users.length){const lbl=type==='employee'?'موظف':'طالب';grid.innerHTML=`<div class="no-users-msg" style="grid-column:1/-1"><div><i class="fas fa-${type==='employee'?'user-tie':'user-graduate'}"></i></div><p>لا يوجد ${lbl} بعد</p><button class="btn-add-user" onclick="openAddUser('${type}')" style="margin-top:14px;display:inline-flex;"><i class="fas fa-plus"></i> إضافة ${type==='employee'?'موظف':'طالب'}</button></div>`;return;}
   grid.innerHTML=users.map(u=>{
     const isEmp=u.type==='employee';
     const avatarBg=isEmp?'linear-gradient(135deg,#3b82f6,#6366f1)':'linear-gradient(135deg,#22c55e,#16a34a)';
     const initial=u.name?u.name.charAt(0):'?';
     const avatarHtml=u.avatar?`<img class="user-avatar" src="${u.avatar}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="user-avatar-placeholder" style="background:${avatarBg};display:none">${initial}</div>`:`<div class="user-avatar-placeholder" style="background:${avatarBg}">${initial}</div>`;
-    const sub=isEmp?(u.role||'����'):(u.level?`����  ${u.level}`:'����');
+    const sub=isEmp?(u.role||'موظف'):(u.level?`المستوى: ${u.level}`:'طالب');
     return `<div class="user-card"><div class="user-card-header">${avatarHtml}<div><div class="user-card-name">${u.name}</div><div class="user-card-sub">${sub}</div></div></div>
       <div class="user-card-body"><div class="user-card-info">
         <div class="user-info-row"><i class="fas fa-at"></i><span>${u.username}</span></div>
@@ -852,8 +852,8 @@ function renderUsers(type){
         ${!isEmp&&u.courses?`<div class="user-info-row"><i class="fas fa-graduation-cap"></i><span>${u.courses}</span></div>`:''}
       </div>
       <div class="user-card-actions">
-        <button class="btn-sm btn-sm-primary" onclick="viewProfile('${u.id}')"><i class="fas fa-eye"></i> ���</button>
-        <button class="btn-sm btn-sm-outline" onclick="editUser('${u.id}')"><i class="fas fa-edit"></i> �����</button>
+        <button class="btn-sm btn-sm-primary" onclick="viewProfile('${u.id}')"><i class="fas fa-eye"></i> عرض</button>
+        <button class="btn-sm btn-sm-outline" onclick="editUser('${u.id}')"><i class="fas fa-edit"></i> تعديل</button>
         <button class="btn-sm btn-sm-danger" onclick="deleteUser('${u.id}')"><i class="fas fa-trash"></i></button>
       </div></div></div>`;
   }).join('');
@@ -863,10 +863,10 @@ function viewProfile(id){ window.open('../profile.html?id='+id,'_blank'); }
 
 function openAddUser(type){
   ['f-name','f-username','f-password','f-phone','f-email','f-role','f-dept','f-courses','f-avatar','f-bio'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('f-level').value='�����';
+  document.getElementById('f-level').value='مبتدئ';
   document.getElementById('f-editId').value=''; document.getElementById('f-type').value=type;
   const isEmp=type==='employee';
-  document.getElementById('modalTitle').textContent=isEmp?'����� ���� ����':'����� ���� ����';
+  document.getElementById('modalTitle').textContent=isEmp?'إضافة موظف جديد':'إضافة طالب جديد';
   document.getElementById('empFields').style.display=isEmp?'':'none';
   document.getElementById('stuFields').style.display=isEmp?'none':'';
   document.getElementById('userModal').classList.add('open');
@@ -878,10 +878,10 @@ function editUser(id){
   document.getElementById('f-password').value=user.password||''; document.getElementById('f-phone').value=user.phone||'';
   document.getElementById('f-email').value=user.email||''; document.getElementById('f-role').value=user.role||'';
   document.getElementById('f-dept').value=user.department||''; document.getElementById('f-courses').value=user.courses||'';
-  document.getElementById('f-level').value=user.level||'�����'; document.getElementById('f-avatar').value=user.avatar||'';
+  document.getElementById('f-level').value=user.level||'مبتدئ'; document.getElementById('f-avatar').value=user.avatar||'';
   document.getElementById('f-bio').value=user.bio||''; document.getElementById('f-editId').value=id; document.getElementById('f-type').value=user.type;
   const isEmp=user.type==='employee';
-  document.getElementById('modalTitle').textContent=isEmp?'����� ������ ������':'����� ������ ������';
+  document.getElementById('modalTitle').textContent=isEmp?'بنجاح الرابط الرابط':'بنجاح الرابط الرابط';
   document.getElementById('empFields').style.display=isEmp?'':'none';
   document.getElementById('stuFields').style.display=isEmp?'none':'';
   document.getElementById('userModal').classList.add('open');
@@ -891,26 +891,26 @@ function saveUser(){
   const name=document.getElementById('f-name').value.trim(); const username=document.getElementById('f-username').value.trim();
   const password=document.getElementById('f-password').value.trim(); const type=document.getElementById('f-type').value;
   const editId=document.getElementById('f-editId').value;
-  if(!name){toast('����� �����','error');return;}
-  if(!username){toast('��� �������� �����','error');return;}
-  if(!password&&!editId){toast('���� ������ ������','error');return;}
+  if(!name){toast('الاسم مطلوب','error');return;}
+  if(!username){toast('اسم المستخدم مطلوب','error');return;}
+  if(!password&&!editId){toast('كلمة المرور مطلوبة','error');return;}
   const users=getUsers();
   const existing=users.find(u=>u.username===username&&u.id!==editId);
-  if(existing){toast('��� �������� ������ ������','error');return;}
+  if(existing){toast('اسم المستخدم موجود مسبقاً','error');return;}
   const userData={name,username,password:password||(users.find(u=>u.id===editId)||{}).password||'',type,
     phone:document.getElementById('f-phone').value.trim(),email:document.getElementById('f-email').value.trim(),
     bio:document.getElementById('f-bio').value.trim(),avatar:document.getElementById('f-avatar').value.trim(),
     role:document.getElementById('f-role').value.trim(),department:document.getElementById('f-dept').value.trim(),
     courses:document.getElementById('f-courses').value.trim(),level:document.getElementById('f-level').value};
-  if(editId){ const idx=users.findIndex(u=>u.id===editId); if(idx!==-1){users[idx]={...users[idx],...userData};} toast('�� ����� �������� ����� ','success'); }
-  else { userData.id=genId(); userData.createdAt=new Date().toISOString(); users.push(userData); toast('��� ����� '+(type==='employee'?'������':'������')+' ����� ','success'); }
+  if(editId){ const idx=users.findIndex(u=>u.id===editId); if(idx!==-1){users[idx]={...users[idx],...userData};} toast('جم بنجاح الرابطجم بنجاح ','success'); }
+  else { userData.id=genId(); userData.createdAt=new Date().toISOString(); users.push(userData); toast('تم بنجاح '+(type==='employee'?'الرابط':'الرابط')+' بنجاح ','success'); }
   saveUsers(users); closeModal(); renderUsers('employee'); renderUsers('student'); renderDashboard(); updateBadges();
 }
 
 function deleteUser(id){
-  if(!confirm('�� ���� ��� ��� �������� �������'))return;
+  if(!confirm('هل تريد حذف هذا المستخدم نهائياً؟'))return;
   saveUsers(getUsers().filter(u=>u.id!==id));
-  renderUsers('employee'); renderUsers('student'); renderDashboard(); updateBadges(); toast('�� ��� ��������','success');
+  renderUsers('employee'); renderUsers('student'); renderDashboard(); updateBadges(); toast('تم حذف المستخدم بنجاح','success');
 }
 
 function closeModal(){ document.getElementById('userModal').classList.remove('open'); }
@@ -921,26 +921,26 @@ function closeLb(){ document.getElementById('lbOverlay').classList.remove('open'
 
 function changeAdminPass(){
   const old=document.getElementById('oldPass').value; const n=document.getElementById('newPass').value; const c=document.getElementById('confPass').value;
-  if(old!==getAdminPass()){toast('���� ������ ������� �����','error');return;}
-  if(n.length<4){toast('���� ������ ������� ����� ����','error');return;}
-  if(n!==c){toast('���� ������ ��� �������','error');return;}
+  if(old!==getAdminPass()){toast('كلمة المرور الحالية خطأ','error');return;}
+  if(n.length<4){toast('كلمة المرور الجديدة قصيرة جداً','error');return;}
+  if(n!==c){toast('كلمة المرور غير متطابقة','error');return;}
   localStorage.setItem(ADMIN_PASS_KEY,n);
   document.getElementById('oldPass').value=''; document.getElementById('newPass').value=''; document.getElementById('confPass').value='';
-  toast('�� ����� ���� ������ ����� ','success');
+  toast('تم تغيير كلمة المرور بنجاح ✓','success');
 }
 
 function exportData(){
   const data={users:getUsers(),portfolio:getPortfolio(),appPrices:getAppPrices(),exportDate:new Date().toISOString()};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='akram-admin-data-'+Date.now()+'.json'; a.click();
-  toast('�� ����� �������� ����� ','success');
+  toast('جم بنجاح الرابطجم بنجاح ','success');
 }
 
 function clearAllData(){
-  if(!confirm(' �����: ���� ��� ���� �������� ������� ���� ����!\n\n�� ��� ����Ͽ'))return;
-  if(!confirm('����� ����  ��� ������� �� ���� ������� ���!'))return;
+  if(!confirm(' بنجاح: موظف تم موظف الرابطجم تمإضافة موظف جديد!\n\nجم تم موظفϿ'))return;
+  if(!confirm('بنجاح موظف  تم الرابط# جم موظف الرابط# تم!'))return;
   [USERS_KEY,PORTFOLIO_KEY,APP_PRICES_KEY].forEach(k=>localStorage.removeItem(k));
-  initApp(); toast('�� ��� ���� ��������','error');
+  initApp(); toast('جم تم موظف الرابطجم','error');
 }
 
 function toast(msg,type='success'){
