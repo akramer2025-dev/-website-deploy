@@ -629,21 +629,24 @@ function launchJitsi(){
       jitsiApi.addEventListener('readyToClose',onLeft);
       jitsiApi.addEventListener('participantJoined',updateAttendees);
       jitsiApi.addEventListener('participantLeft',updateAttendees);
-      /* ── اكتشاف Lobby/membersOnly error وفتح في تاب جديد ── */
+
+      /* ── اكتشاف Lobby/membersOnly ── */
+      let sessionJoined = false;
+
       jitsiApi.addEventListener('errorOccurred', function(e){
-        if(e && e.error && String(e.error).includes('membersOnly')){
+        const s = JSON.stringify(e||'');
+        if(s.includes('membersOnly') || s.includes('lobby') || s.includes('connectionError')){
           fallbackOpen();
         }
       });
-      /* fallback: لو بعد 6 ثواني الجلسة ما فتحتش → افتح في تاب */
+
+      /* safety: لو بعد 8 ثواني videoConferenceJoined ما جاتش → stuck في lobby */
       const safetyTimer = setTimeout(()=>{
-        try{
-          if(jitsiApi && typeof jitsiApi.getNumberOfParticipants === 'function'){
-            jitsiApi.getNumberOfParticipants(); // will throw if failed
-          }
-        }catch(e){ fallbackOpen(); }
-      }, 6000);
+        if(!sessionJoined) fallbackOpen();
+      }, 8000);
+
       jitsiApi.addEventListener('videoConferenceJoined', ()=>{
+        sessionJoined = true;
         clearTimeout(safetyTimer);
         if(isTeacherMode){
           document.getElementById('recPanel').classList.add('show');
