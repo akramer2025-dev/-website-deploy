@@ -466,6 +466,7 @@ button{cursor:pointer;}
       <div class="adm-nav-label">نظام الكورسات</div>
       <div class="adm-nav-item" onclick="showSection('lectures');initLecturesSection()"><i class="fas fa-chalkboard-teacher"></i> إدارة المحاضرات<span class="adm-nav-badge" id="lecsCount" style="background:#8b5cf6">0</span></div>
       <div class="adm-nav-item" onclick="showSection('live');renderLiveSessions()"><i class="fas fa-broadcast-tower"></i> جلسات مباشرة<span class="adm-nav-badge" id="liveBadge" style="background:#22c55e">0</span></div>
+      <div class="adm-nav-item" onclick="showSection('recorded');renderRecordedLectures()"><i class="fas fa-video"></i> محاضرات مسجلة<span class="adm-nav-badge" id="recLecsBadge" style="background:#a78bfa">0</span></div>
     </div>
     <div class="adm-nav-section">
       <div class="adm-nav-label">أخرى</div>
@@ -624,6 +625,63 @@ button{cursor:pointer;}
         <div class="modal-footer">
           <button class="btn-modal-save" onclick="saveLiveSession()"><i class="fas fa-save"></i> حفظ</button>
           <button class="btn-modal-cancel" onclick="closeLiveModal()">إلغاء</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECORDED LECTURES -->
+    <div class="adm-section" id="sec-recorded">
+      <div class="users-top">
+        <div><div class="adm-section-title">محاضرات <span>مسجلة</span></div><div class="adm-breadcrumb">المحاضرات التي تم تسجيلها ورفعها ليتمكن الطلاب من مشاهدتها لاحقاً</div></div>
+        <button class="btn-add-user" onclick="openAddRecordedLecture()"><i class="fas fa-plus"></i> إضافة يدوي</button>
+      </div>
+      <div class="req-cards" id="recLecsGrid"></div>
+    </div>
+
+    <!-- ADD RECORDED LECTURE MODAL -->
+    <div class="modal-overlay" id="recLecModal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3>إضافة محاضرة مسجلة</h3>
+          <button class="modal-close" onclick="document.getElementById('recLecModal').classList.remove('open')">&times;</button>
+        </div>
+        <div class="form-field">
+          <label>عنوان المحاضرة *</label>
+          <input type="text" id="rlTitle" placeholder="مثال: محاضرة 1 – أسس التسويق"></div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>الكورس *</label>
+            <select id="rlCourse">
+              <option value="free">كورس التسويق المجاني</option>
+              <option value="programming">برمجة المواقع</option>
+              <option value="facebook-ads">إعلانات فيسبوك</option>
+              <option value="instagram">إنستاجرام</option>
+              <option value="tiktok">تيك توك</option>
+              <option value="snapchat">سناب شات</option>
+              <option value="twitter">إكس (تويتر)</option>
+              <option value="integrated-strategy">استراتيجية متكاملة</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>تاريخ المحاضرة</label>
+            <input type="date" id="rlDate">
+          </div>
+        </div>
+        <div class="form-field">
+          <label>رابط الفيديو (YouTube / Google Drive) *</label>
+          <input type="url" id="rlUrl" placeholder="https://youtu.be/...">
+        </div>
+        <div class="form-field">
+          <label>مدة المحاضرة (اختياري)</label>
+          <input type="text" id="rlDuration" placeholder="مثال: 1:30:00">
+        </div>
+        <div class="form-field">
+          <label>وصف مختصر (اختياري)</label>
+          <textarea id="rlDesc" placeholder="مادة المحاضرة..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-modal-save" onclick="saveRecordedLecture()"><i class="fas fa-save"></i> حفظ</button>
+          <button class="btn-modal-cancel" onclick="document.getElementById('recLecModal').classList.remove('open')"><i class="fas fa-times"></i> إلغاء</button>
         </div>
       </div>
     </div>
@@ -847,6 +905,16 @@ function getAppPrices(){ try{ return JSON.parse(localStorage.getItem(APP_PRICES_
 function saveAppPrices(d){ localStorage.setItem(APP_PRICES_KEY, JSON.stringify(d)); }
 function genId(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,6); }
 
+function genStudentId(){
+  const users = getUsers().filter(u=>u.type==='student');
+  let max = 0;
+  users.forEach(u=>{
+    const m = String(u.id||'').match(/^STU-(\d+)$/);
+    if(m) max = Math.max(max, parseInt(m[1]));
+  });
+  return 'STU-'+String(max+1).padStart(3,'0');
+}
+
 function doAdminLogin(){
   const u=document.getElementById('loginUser').value.trim();
   const p=document.getElementById('loginPass').value;
@@ -877,7 +945,94 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 });
 
-function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); }
+/* ══════════════════════════════════════════════
+   RECORDED LECTURES
+══════════════════════════════════════════════ */
+const REC_LECS_KEY = 'am_recorded_lectures';
+function getRecordedLectures(){ try{ return JSON.parse(localStorage.getItem(REC_LECS_KEY)||'[]'); }catch(e){ return []; } }
+function saveRecordedLectures(d){ localStorage.setItem(REC_LECS_KEY, JSON.stringify(d)); }
+
+let _editingRecLecId = null;
+
+function openAddRecordedLecture(){
+  _editingRecLecId = null;
+  ['rlTitle','rlUrl','rlDuration','rlDesc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('rlDate').value = new Date().toISOString().slice(0,10);
+  document.getElementById('recLecModal').classList.add('open');
+}
+
+function saveRecordedLecture(){
+  const title = document.getElementById('rlTitle').value.trim();
+  const url   = document.getElementById('rlUrl').value.trim();
+  const course= document.getElementById('rlCourse').value;
+  const date  = document.getElementById('rlDate').value;
+  const dur   = document.getElementById('rlDuration').value.trim();
+  const desc  = document.getElementById('rlDesc').value.trim();
+  if(!title||!url){ toast('العنوان والرابط مطلوبان','error'); return; }
+  const recs = getRecordedLectures();
+  if(_editingRecLecId){
+    const idx = recs.findIndex(r=>r.id===_editingRecLecId);
+    if(idx>-1) recs[idx]={...recs[idx],title,courseKey:course,date,videoUrl:url,duration:dur,description:desc,updatedAt:Date.now()};
+  } else {
+    recs.push({id:'rl_'+Date.now(), title, courseKey:course, date, videoUrl:url, duration:dur, description:desc, createdAt:Date.now()});
+  }
+  saveRecordedLectures(recs);
+  document.getElementById('recLecModal').classList.remove('open');
+  renderRecordedLectures();
+  updateBadges();
+  toast(_editingRecLecId?'تم التحديث':'تم إضافة المحاضرة ✓','success');
+}
+
+function editRecordedLecture(id){
+  const r = getRecordedLectures().find(x=>x.id===id);
+  if(!r) return;
+  _editingRecLecId = id;
+  document.getElementById('rlTitle').value = r.title||'';
+  document.getElementById('rlCourse').value = r.courseKey||'free';
+  document.getElementById('rlDate').value = r.date||'';
+  document.getElementById('rlUrl').value = r.videoUrl||'';
+  document.getElementById('rlDuration').value = r.duration||'';
+  document.getElementById('rlDesc').value = r.description||'';
+  document.getElementById('recLecModal').classList.add('open');
+}
+
+function deleteRecordedLecture(id){
+  if(!confirm('حذف هذه المحاضرة المسجلة؟')) return;
+  saveRecordedLectures(getRecordedLectures().filter(r=>r.id!==id));
+  renderRecordedLectures();
+  updateBadges();
+  toast('تم الحذف','success');
+}
+
+function renderRecordedLectures(){
+  const recs = getRecordedLectures().sort((a,b)=>b.createdAt-a.createdAt);
+  const grid = document.getElementById('recLecsGrid');
+  if(!grid) return;
+  if(!recs.length){
+    grid.innerHTML='<div class="req-empty"><i class="fas fa-video"></i><p>لا توجد محاضرات مسجلة بعد — أضف من زرار "إضافة يدوي" أو ارفع من داخل المحاضرة المباشرة</p></div>';
+    return;
+  }
+  const CNAMES = {free:'مجاني',programming:'برمجة','facebook-ads':'فيسبوك',instagram:'إنستاجرام',tiktok:'تيك توك',snapchat:'سناب',twitter:'X/تويتر','integrated-strategy':'متكاملة','ai-marketing':'ذكاء اصطناعي'};
+  grid.innerHTML = recs.map(r=>`
+    <div class="req-card">
+      <div class="req-card-top">
+        <div class="req-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);font-size:.85rem"><i class="fas fa-video"></i></div>
+        <div class="req-card-info">
+          <div class="req-card-name">${r.title}</div>
+          <div class="req-card-email"><i class="fas fa-book" style="margin-left:4px"></i>${CNAMES[r.courseKey]||r.courseKey} ${r.duration?'&bull; '+r.duration:''}</div>
+          <div class="req-card-date"><i class="far fa-calendar"></i> ${r.date||'—'}</div>
+        </div>
+        ${r.description?`<div style="font-size:.75rem;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.description}</div>`:''}
+      </div>
+      <div class="req-card-actions">
+        <a href="${r.videoUrl}" target="_blank" class="btn-approve"><i class="fas fa-play"></i> مشاهدة</a>
+        <button class="btn-view-req" onclick="editRecordedLecture('${r.id}')"><i class="fas fa-edit"></i> تعديل</button>
+        <button class="btn-view-req" style="color:#f87171;border-color:rgba(239,68,68,.3)" onclick="deleteRecordedLecture('${r.id}')"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`).join('');
+}
+
+function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); renderRecordedLectures(); }
 
 const JOIN_KEY = 'am_join_requests';
 function getJoinRequests(){ try{ return JSON.parse(localStorage.getItem(JOIN_KEY)||'[]'); }catch(e){ return []; } }
@@ -905,6 +1060,7 @@ function updateBadges(){
   const allLecs = JSON.parse(localStorage.getItem('am_lectures')||'{}');
   let totalLecs = 0; Object.values(allLecs).forEach(v=>{ totalLecs += v.length; });
   const lecsEl = document.getElementById('lecsCount'); if(lecsEl) lecsEl.textContent = totalLecs;
+  const recLecsEl = document.getElementById('recLecsBadge'); if(recLecsEl) recLecsEl.textContent = getRecordedLectures().length;
 }
 
 function showSection(name){
@@ -1235,8 +1391,13 @@ function approveReq(id){
   const exists = users.find(u=>u.username===r.username||u.email===r.email);
   if(exists && r.status!=='approved'){ toast('يوجد مستخدم بنفس البيانات مسبقاً','error'); return; }
   if(r.status!=='approved'){
-    users.push({ id:genId(), name:r.name, username:r.username, password:r.password, email:r.email, phone:r.phone, type:'student', level:'مبتدئ', courses:(r.courses||[]).map(c=>COURSES_NAMES[c]||c).join(', '), field:r.field||'', createdAt:r.createdAt });
+    const newId = genStudentId();
+    users.push({ id:newId, name:r.name, username:r.username, password:r.password, email:r.email, phone:r.phone, type:'student', level:'مبتدئ', courses:(r.courses||[]), field:r.field||'', createdAt:r.createdAt });
     saveUsers(users);
+    r.approvedId = newId;
+    setTimeout(()=>{
+      alert('✅ تمت الموافقة على الطالب\n\n👤 الاسم: '+r.name+'\n🔑 الرقم التعريفي: '+newId+'\n\n⬅️ ابعت هذا الرقم للطالب — هيستخدمه لدخول المحاضرات');
+    },300);
   }
   r.status='approved'; r.reviewedAt=Date.now();
   saveJoinRequests(reqs);
@@ -1504,7 +1665,8 @@ function renderUsers(type){
         ${u.phone?`<div class="user-info-row"><i class="fas fa-phone"></i><span>${u.phone}</span></div>`:''}
         ${u.email?`<div class="user-info-row"><i class="fas fa-envelope"></i><span>${u.email}</span></div>`:''}
         ${isEmp&&u.department?`<div class="user-info-row"><i class="fas fa-building"></i><span>${u.department}</span></div>`:''}
-        ${!isEmp&&u.courses?`<div class="user-info-row"><i class="fas fa-graduation-cap"></i><span>${u.courses}</span></div>`:''}
+        ${!isEmp&&u.id?`<div class="user-info-row" style="color:#fbbf24"><i class="fas fa-id-badge"></i><span>ID: <strong>${u.id}</strong></span></div>`:''}
+        ${!isEmp&&u.courses?`<div class="user-info-row"><i class="fas fa-graduation-cap"></i><span>${Array.isArray(u.courses)?u.courses.map(c=>COURSES_NAMES[c]||c).join('، '):u.courses}</span></div>`:''}
       </div>
       <div class="user-card-actions">
         <button class="btn-sm btn-sm-primary" onclick="viewProfile('${u.id}')"><i class="fas fa-eye"></i> عرض</button>

@@ -197,6 +197,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 const USERS_KEY = 'am_users';
 const LECTURES_KEY = 'am_lectures';
 const LIVE_KEY = 'am_live_sessions';
+const REC_LECS_KEY = 'am_recorded_lectures';
 const COURSES_META = {
   'free':      { name:'الكورس المجاني',   icon:'fa-gift',           color:'#22c55e', paid:false },
   'facebook-ads':{ name:'إعلانات فيسبوك', icon:'fa-facebook',       color:'#1877f2', paid:true  },
@@ -225,7 +226,11 @@ function init(){
   document.getElementById('heroName').textContent  = (currentUser.name||currentUser.username||'طالب').split(' ')[0];
 
   const allLectures = JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}');
-  const enrolledCourses = currentUser.courses || [];
+  const recLectures = JSON.parse(localStorage.getItem(REC_LECS_KEY)||'[]');
+
+  /* backward compat: courses might be comma-string from old accounts */
+  let enrolledCourses = currentUser.courses || [];
+  if(typeof enrolledCourses === 'string') enrolledCourses = enrolledCourses.split(',').map(s=>s.trim()).filter(Boolean);
 
   let totalLecs = 0, totalSlides = 0;
   enrolledCourses.forEach(ck=>{
@@ -239,7 +244,7 @@ function init(){
   document.getElementById('totalSlides').textContent = totalSlides;
   document.getElementById('crsCount').textContent    = enrolledCourses.length+' كورس';
 
-  renderCourses(enrolledCourses, allLectures);
+  renderCourses(enrolledCourses, allLectures, recLectures);
   renderLiveSessions(enrolledCourses);
 }
 
@@ -277,7 +282,7 @@ function renderLiveSessions(enrolledCourses){
 }
 
 // ─── RENDER COURSES ───────────────────────────────────────────
-function renderCourses(courses, allLectures){
+function renderCourses(courses, allLectures, recLectures){
   const grid = document.getElementById('coursesGrid');
   if(!courses.length){
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-box-open"></i><p>لم يتم تسجيلك في أي كورس بعد</p></div>`;
@@ -288,6 +293,7 @@ function renderCourses(courses, allLectures){
     const meta = COURSES_META[ck] || { name:ck, icon:'fa-book', color:'var(--pink)', paid:true };
     const lecs = allLectures[ck] || [];
     const hasLecs = lecs.length > 0;
+    const courseRecLecs = (recLectures||[]).filter(r=>r.courseKey===ck);
 
     const lecsList = hasLecs ? `
       <div class="crs-lectures-list">
@@ -302,6 +308,19 @@ function renderCourses(courses, allLectures){
       </div>
     ` : `<div class="no-lecs"><i class="fas fa-clock" style="margin-left:4px;"></i>لم تُضف محاضرات بعد</div>`;
 
+    const recLecsList = courseRecLecs.length ? `
+      <div style="margin-top:14px;">
+        <div style="font-size:.72rem;font-weight:900;color:var(--muted);letter-spacing:.06em;margin-bottom:8px;"><i class="fas fa-video" style="margin-left:5px;color:#a78bfa"></i>محاضرات مسجلة (${courseRecLecs.length})</div>
+        ${courseRecLecs.map(r=>`
+          <a href="${r.videoUrl}" target="_blank" class="lec-item" style="text-decoration:none;gap:8px;">
+            <i class="fas fa-play-circle" style="color:#a78bfa;font-size:1rem;"></i>
+            <span class="ltitle">${r.title}</span>
+            ${r.duration?`<span class="lslides"><i class="fas fa-clock"></i>${r.duration}</span>`:''}
+            <i class="fas fa-external-link-alt" style="font-size:.7rem;color:var(--muted);margin-right:auto"></i>
+          </a>`).join('')}
+      </div>
+    ` : '';
+
     return `
       <div class="crs-card">
         <div class="crs-banner" style="background:linear-gradient(135deg,rgba(13,30,56,.8),rgba(17,36,70,.9));">
@@ -313,8 +332,10 @@ function renderCourses(courses, allLectures){
           <div class="crs-meta">
             <span class="lec-cnt"><i class="fas fa-play-circle"></i> ${lecs.length} محاضرة</span>
             <span class="lec-cnt"><i class="fas fa-images"></i> ${lecs.reduce((a,l)=>a+(l.slides||[]).length,0)} شريحة</span>
+            ${courseRecLecs.length?`<span class="lec-cnt" style="color:#a78bfa"><i class="fas fa-video"></i> ${courseRecLecs.length} مسجلة</span>`:''}
           </div>
           ${lecsList}
+          ${recLecsList}
         </div>
       </div>
     `;
