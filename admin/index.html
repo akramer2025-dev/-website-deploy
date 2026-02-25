@@ -899,13 +899,25 @@ const MOBILE_APPS = {
 // آخر المستخدمين المضافين
 const ALL_APPS = {...WEB_APPS, ...MOBILE_APPS};
 
-function getUsers(){ return JSON.parse(localStorage.getItem(USERS_KEY)||'[]'); }
-function saveUsers(u){ localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+// ── Firebase in-memory caches (كل البيانات بتتحمل من الكلاود عند الدخول)
+let _fsUsers = null, _fsAppPrices = null, _fsRecLecs = null;
+let _fsLectures = null, _fsLiveSessions = null;
+
+function getUsers(){ return _fsUsers!==null ? _fsUsers.slice() : (()=>{try{return JSON.parse(localStorage.getItem(USERS_KEY)||'[]');}catch(e){return [];}})(); }
+function saveUsers(arr){
+  _fsUsers = arr.slice();
+  localStorage.setItem(USERS_KEY, JSON.stringify(arr));
+  _fdb.collection('admin_data').doc('users').set({data:arr,updatedAt:Date.now()}).catch(e=>console.warn('FS users',e));
+}
 function getPortfolio(){ return JSON.parse(localStorage.getItem(PORTFOLIO_KEY)||'{}'); }
 function savePortfolio(p){ localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(p)); }
 function getAdminPass(){ return ADMIN_PASS; }
-function getAppPrices(){ try{ return JSON.parse(localStorage.getItem(APP_PRICES_KEY))||{}; }catch(e){ return {}; } }
-function saveAppPrices(d){ localStorage.setItem(APP_PRICES_KEY, JSON.stringify(d)); }
+function getAppPrices(){ return _fsAppPrices!==null ? Object.assign({},_fsAppPrices) : (()=>{try{return JSON.parse(localStorage.getItem(APP_PRICES_KEY))||{};}catch(e){return {};}})(); }
+function saveAppPrices(obj){
+  _fsAppPrices = Object.assign({},obj);
+  localStorage.setItem(APP_PRICES_KEY, JSON.stringify(obj));
+  _fdb.collection('admin_data').doc('app_prices').set({data:obj,updatedAt:Date.now()}).catch(e=>console.warn('FS prices',e));
+}
 function genId(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,6); }
 
 /* ══════════════════════════════════════════════
@@ -921,40 +933,36 @@ const _fbAdmin = firebase.initializeApp({
 }, 'admin');
 const _fdb = firebase.firestore(_fbAdmin);
 
-// In-memory cache populated by Firestore real-time listener
+// join_requests in-memory cache + real-time listener
 let _fsReqs = [];
 let _fsUnsubscribe = null;
 
-// Override getJoinRequests to use cloud cache
-function getJoinRequests(){ return _fsReqs.slice(); }
-
-// Override saveJoinRequests to sync changes back to Firestore
-function saveJoinRequests(newArr){
-  const oldIds = new Set(_fsReqs.map(r=>r.id));
-  const newIds = new Set(newArr.map(r=>r.id));
-
-  // Update/add changed docs
-  newArr.forEach(r=>{
-    const old = _fsReqs.find(x=>x.id===r.id);
-    if(!old || JSON.stringify(old)!==JSON.stringify(r)){
-      _fdb.collection('join_requests').doc(r.id).set(r).catch(e=>console.warn('FS set err',e));
-    }
-  });
-  // Delete removed docs
-  _fsReqs.forEach(r=>{
-    if(!newIds.has(r.id)){
-      _fdb.collection('join_requests').doc(r.id).delete().catch(e=>console.warn('FS del err',e));
-    }
-  });
-  _fsReqs = newArr.slice();
+// Load all admin collections from Firestore on login
+async function _loadAdminData(){
+  const cols = ['users','app_prices','recorded_lectures','lectures','live_sessions'];
+  try {
+    const snaps = await Promise.all(cols.map(d=>_fdb.collection('admin_data').doc(d).get()));
+    snaps.forEach((snap,i)=>{
+      if(!snap.exists) return;
+      const d = snap.data().data;
+      if(i===0){ _fsUsers = Array.isArray(d)?d:[]; localStorage.setItem(USERS_KEY, JSON.stringify(_fsUsers)); }
+      if(i===1){ _fsAppPrices = d||{}; localStorage.setItem(APP_PRICES_KEY, JSON.stringify(_fsAppPrices)); }
+      if(i===2){ _fsRecLecs = Array.isArray(d)?d:[]; localStorage.setItem(REC_LECS_KEY, JSON.stringify(_fsRecLecs)); }
+      if(i===3){ _fsLectures = d||{}; localStorage.setItem(LECTURES_KEY, JSON.stringify(_fsLectures)); }
+      if(i===4){ _fsLiveSessions = Array.isArray(d)?d:[]; localStorage.setItem('am_live_sessions', JSON.stringify(_fsLiveSessions)); }
+    });
+    renderDashboard(); renderWebPrices(); renderMobilePrices();
+    renderUsers('employee'); renderUsers('student');
+    renderRecordedLectures(); updateBadges();
+    try{ renderLiveSessions(); }catch(e){}
+  } catch(err){ console.warn('Firebase _loadAdminData failed:', err); }
 }
 
 function initFirestore(){
   if(_fsUnsubscribe) _fsUnsubscribe();
-  // Show loading indicator on join requests tab
+  _loadAdminData();
   const jrEl = document.getElementById('joinRequestsList');
-  if(jrEl) jrEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem"></i><br><br>جاري تحميل الطلبات...</div>';
-
+  if(jrEl) jrEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem"></i><br><br>جاري تحميل البيانات...</div>';
   _fsUnsubscribe = _fdb.collection('join_requests')
     .orderBy('createdAt','desc')
     .onSnapshot(snapshot=>{
@@ -964,7 +972,6 @@ function initFirestore(){
       updateBadges();
     }, err=>{
       console.warn('Firestore snapshot error:', err);
-      // Fallback: load from localStorage
       try{ _fsReqs = JSON.parse(localStorage.getItem(JOIN_KEY)||'[]'); }catch(e){ _fsReqs=[]; }
       renderJoinRequests(_currentReqFilter||'all');
       updateBadges();
@@ -1015,8 +1022,12 @@ document.addEventListener('DOMContentLoaded',()=>{
    RECORDED LECTURES
 ══════════════════════════════════════════════ */
 const REC_LECS_KEY = 'am_recorded_lectures';
-function getRecordedLectures(){ try{ return JSON.parse(localStorage.getItem(REC_LECS_KEY)||'[]'); }catch(e){ return []; } }
-function saveRecordedLectures(d){ localStorage.setItem(REC_LECS_KEY, JSON.stringify(d)); }
+function getRecordedLectures(){ return _fsRecLecs!==null ? _fsRecLecs.slice() : (()=>{try{return JSON.parse(localStorage.getItem(REC_LECS_KEY)||'[]');}catch(e){return [];}})(); }
+function saveRecordedLectures(arr){
+  _fsRecLecs = arr.slice();
+  localStorage.setItem(REC_LECS_KEY, JSON.stringify(arr));
+  _fdb.collection('admin_data').doc('recorded_lectures').set({data:arr,updatedAt:Date.now()}).catch(e=>console.warn('FS rec_lecs',e));
+}
 
 let _editingRecLecId = null;
 
@@ -1101,8 +1112,19 @@ function renderRecordedLectures(){
 function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); renderRecordedLectures(); initFirestore(); }
 
 const JOIN_KEY = 'am_join_requests';
-function getJoinRequests(){ try{ return JSON.parse(localStorage.getItem(JOIN_KEY)||'[]'); }catch(e){ return []; } }
-function saveJoinRequests(r){ localStorage.setItem(JOIN_KEY, JSON.stringify(r)); }
+// ددالتي جلب وحفظ طلبات الانضمام — تستخدم كاش Firebase
+function getJoinRequests(){ return _fsReqs.slice(); }
+function saveJoinRequests(newArr){
+  const newIds = new Set(newArr.map(r=>r.id));
+  newArr.forEach(r=>{
+    const old = _fsReqs.find(x=>x.id===r.id);
+    if(!old || JSON.stringify(old)!==JSON.stringify(r)){
+      _fdb.collection('join_requests').doc(r.id).set(r).catch(e=>console.warn('FS set err',e));
+    }
+  });
+  _fsReqs.forEach(r=>{ if(!newIds.has(r.id)){ _fdb.collection('join_requests').doc(r.id).delete().catch(e=>console.warn('FS del err',e)); } });
+  _fsReqs = newArr.slice();
+}
 
 function updateBadges(){
   const users=getUsers(); const emps=users.filter(u=>u.type==='employee'); const stus=users.filter(u=>u.type==='student');
@@ -1123,7 +1145,7 @@ function updateBadges(){
   if(rfA) rfA.textContent=`(${reqs.filter(r=>r.status==='approved').length})`;
   if(rfR) rfR.textContent=`(${reqs.filter(r=>r.status==='rejected').length})`;
   // lectures badge
-  const allLecs = JSON.parse(localStorage.getItem('am_lectures')||'{}');
+  const allLecs = getLectures();
   let totalLecs = 0; Object.values(allLecs).forEach(v=>{ totalLecs += v.length; });
   const lecsEl = document.getElementById('lecsCount'); if(lecsEl) lecsEl.textContent = totalLecs;
   const recLecsEl = document.getElementById('recLecsBadge'); if(recLecsEl) recLecsEl.textContent = getRecordedLectures().length;
@@ -1851,8 +1873,12 @@ let activeLecCourse = null;
 let editingLecId = null;
 var slideRows = []; // must be var for inline HTML handlers to access it
 
-function getLectures(){ return JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}'); }
-function saveLectures(data){ localStorage.setItem(LECTURES_KEY, JSON.stringify(data)); }
+function getLectures(){ return _fsLectures!==null ? Object.assign({},_fsLectures) : (()=>{try{return JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}');}catch(e){return {};}})(); }
+function saveLectures(obj){
+  _fsLectures = Object.assign({},obj);
+  localStorage.setItem(LECTURES_KEY, JSON.stringify(obj));
+  _fdb.collection('admin_data').doc('lectures').set({data:obj,updatedAt:Date.now()}).catch(e=>console.warn('FS lectures',e));
+}
 
 function initLecturesSection(){
   const tabs = document.getElementById('lecCourseTabs');
@@ -2131,8 +2157,13 @@ const LIVE_COURSE_NAMES = {
   snapchat:'سناب شات', twitter:'إكس (تويتر)', integrated:'استراتيجية متكاملة'
 };
 
-function getLiveSessions(){ return JSON.parse(localStorage.getItem('am_live_sessions')||'[]'); }
-function saveLiveSessions(arr){ localStorage.setItem('am_live_sessions', JSON.stringify(arr)); updateBadges(); }
+function getLiveSessions(){ return _fsLiveSessions!==null ? _fsLiveSessions.slice() : (()=>{try{return JSON.parse(localStorage.getItem('am_live_sessions')||'[]');}catch(e){return [];}})(); }
+function saveLiveSessions(arr){
+  _fsLiveSessions = arr.slice();
+  localStorage.setItem('am_live_sessions', JSON.stringify(arr));
+  updateBadges();
+  _fdb.collection('admin_data').doc('live_sessions').set({data:arr,updatedAt:Date.now()}).catch(e=>console.warn('FS live_sessions',e));
+}
 
 function renderLiveSessions(){
   const sessions = getLiveSessions();
