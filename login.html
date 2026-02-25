@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <!-- LOGIN PAGE v2 - role selection -->
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -421,6 +424,17 @@
             document.querySelectorAll('.error-msg,.success-msg').forEach(el=>el.classList.remove('show'));
         }
 
+        /* ─── FIREBASE INIT ─── */
+        const _fbLogin = firebase.initializeApp({
+            apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+            authDomain: "akramplatform-2c6be.firebaseapp.com",
+            projectId: "akramplatform-2c6be",
+            storageBucket: "akramplatform-2c6be.firebasestorage.app",
+            messagingSenderId: "132959399686",
+            appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+        }, 'login');
+        const _ldb = firebase.firestore(_fbLogin);
+
         /* ─── ADMIN LOGIN ─── */
         const ADMIN_ACCOUNTS = {
             "akram": { password:"Aazxc", name:"Akram Mostafa" }
@@ -453,50 +467,68 @@
         }
 
         /* ─── STUDENT LOGIN ─── */
-        function handleStudentLogin(e){
+        async function handleStudentLogin(e){
             e.preventDefault();
             const user = document.getElementById('stuUser').value.trim();
             const pass = document.getElementById('stuPass').value;
             const btn  = document.getElementById('stuBtn');
             setLoading(btn,true);
             clearMsgs('stu');
-            setTimeout(()=>{
-                try {
-                    const lsUsers = JSON.parse(localStorage.getItem('am_users')||'[]');
-                    // support login with username OR STU-ID
-                    const found = lsUsers.find(u=>
-                        (u.username===user || u.id===user || u.id===user.toUpperCase()) &&
-                        u.password===pass
-                    );
-                    if(found){
-                        document.getElementById('stuSuccess').classList.add('show');
-                        sessionStorage.setItem('akram_logged_in','true');
-                        sessionStorage.setItem('akram_user_id', found.id);
-                        sessionStorage.setItem('akram_student_id', found.id);
-                        sessionStorage.setItem('akram_client_name', found.name||user);
-                        setLoading(btn,false);
-                        setTimeout(()=>{ window.location.href='my-courses.html'; },1100);
-                        return;
-                    }
-                    // helpful error messages
-                    const existsByUsername = lsUsers.find(u=>u.username===user);
-                    const existsById       = lsUsers.find(u=>u.id===user.toUpperCase());
-                    if(existsByUsername || existsById){
-                        document.getElementById('stuErrTxt').textContent='كلمة المرور غير صحيحة';
-                    } else {
-                        document.getElementById('stuErrTxt').textContent='اسم المستخدم أو الرقم التعريفي غير موجود — اطلب الانضمام إذا لم تكن مسجلاً';
-                    }
-                } catch(err){
-                    document.getElementById('stuErrTxt').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';
-                }
+
+            function loginSuccess(found){
+                document.getElementById('stuSuccess').classList.add('show');
+                sessionStorage.setItem('akram_logged_in','true');
+                sessionStorage.setItem('akram_user_id', found.id);
+                sessionStorage.setItem('akram_student_id', found.id);
+                sessionStorage.setItem('akram_client_name', found.name||user);
+                setLoading(btn,false);
+                setTimeout(()=>{ window.location.href='my-courses.html'; },1100);
+            }
+            function loginFail(wrongPass){
+                document.getElementById('stuErrTxt').textContent = wrongPass
+                    ? 'كلمة المرور غير صحيحة'
+                    : 'اسم المستخدم أو الرقم التعريفي غير موجود — اطلب الانضمام إذا لم تكن مسجلاً';
                 document.getElementById('stuError').classList.add('show');
                 shakeCard('stepStudent');
                 setLoading(btn,false);
-            },800);
+            }
+
+            // 1️⃣ Try localStorage first (fast)
+            try {
+                const lsUsers = JSON.parse(localStorage.getItem('am_users')||'[]');
+                const found = lsUsers.find(u=>
+                    (u.username===user || u.id===user || u.id===user.toUpperCase()) &&
+                    u.password===pass && u.type==='student'
+                );
+                if(found){ loginSuccess(found); return; }
+            } catch(e){}
+
+            // 2️⃣ Fallback: check Firestore (other devices won't have localStorage)
+            try {
+                const snap = await _ldb.collection('admin_data').doc('users').get();
+                if(snap.exists){
+                    const allUsers = snap.data().data || [];
+                    const found = allUsers.find(u=>
+                        (u.username===user || u.id===user || u.id===user.toUpperCase()) &&
+                        u.password===pass && u.type==='student'
+                    );
+                    if(found){
+                        // cache locally for next time
+                        try{ localStorage.setItem('am_users', JSON.stringify(allUsers)); }catch(e){}
+                        loginSuccess(found);
+                        return;
+                    }
+                    const exists = allUsers.find(u=> u.username===user || u.id===user.toUpperCase());
+                    loginFail(!!exists);
+                    return;
+                }
+            } catch(fsErr){ console.warn('Firestore login check failed', fsErr); }
+
+            loginFail(false);
         }
 
         /* ─── JOIN REQUEST ─── */
-        function handleJoinRequest(e){
+        async function handleJoinRequest(e){
             e.preventDefault();
             const name     = document.getElementById('reqName').value.trim();
             const phone    = document.getElementById('reqPhone').value.trim();
@@ -508,33 +540,53 @@
             }
             const btn = document.getElementById('reqBtn');
             setLoading(btn,true);
-            setTimeout(()=>{
-                // check username not already taken
-                const existingUsers = JSON.parse(localStorage.getItem('am_users')||'[]');
-                const existingReqs  = JSON.parse(localStorage.getItem('am_join_requests')||'[]');
-                const usernameTaken = existingUsers.find(u=>u.username===username)
-                                   || existingReqs.find(r=>r.username===username && r.status!=='rejected');
-                if(usernameTaken){
+
+            try {
+                // Check if username taken in Firestore (users + pending requests)
+                const [usersSnap, reqsSnap] = await Promise.all([
+                    _ldb.collection('admin_data').doc('users').get(),
+                    _ldb.collection('join_requests').where('username','==',username).get()
+                ]);
+                const allUsers = usersSnap.exists ? (usersSnap.data().data||[]) : [];
+                const takenInUsers = allUsers.find(u=>u.username===username);
+                const takenInReqs  = !reqsSnap.empty && reqsSnap.docs.some(d=> d.data().status!=='rejected');
+                if(takenInUsers || takenInReqs){
                     document.getElementById('reqError').querySelector('span').textContent='اسم المستخدم هذا مأخوذ، اختر اسماً آخر';
                     document.getElementById('reqError').classList.add('show');
                     setLoading(btn,false);
                     return;
                 }
-                const reqs = existingReqs;
-                reqs.push({
-                    id:'req_'+Date.now(),
-                    name, phone, username, password,
-                    courses: document.getElementById('reqCourse').value ? [document.getElementById('reqCourse').value] : [],
-                    notes:   document.getElementById('reqNote').value.trim(),
-                    createdAt: Date.now(),
-                    date:   new Date().toLocaleDateString('ar-EG'),
-                    status:'pending'
-                });
-                localStorage.setItem('am_join_requests', JSON.stringify(reqs));
-                setLoading(btn,false);
-                document.getElementById('reqFormBox').style.display='none';
-                document.getElementById('reqSuccessBox').style.display='block';
-            },900);
+            } catch(checkErr){ console.warn('Username check failed, proceeding:', checkErr); }
+
+            const reqId = 'req_'+Date.now();
+            const reqData = {
+                id: reqId,
+                name, phone, username, password,
+                email: document.getElementById('reqEmail')?.value.trim()||'',
+                courses: document.getElementById('reqCourse')?.value ? [document.getElementById('reqCourse').value] : [],
+                notes:   document.getElementById('reqNote')?.value.trim()||'',
+                createdAt: Date.now(),
+                date: new Date().toLocaleDateString('ar-EG'),
+                status: 'pending',
+                payments: {}
+            };
+
+            // Save to Firestore (admin sees it in real-time)
+            try {
+                await _ldb.collection('join_requests').doc(reqId).set(reqData);
+            } catch(fsErr){
+                console.warn('Firestore save failed, saving locally:', fsErr);
+                // Fallback: localStorage only
+                try{
+                    const loc = JSON.parse(localStorage.getItem('am_join_requests')||'[]');
+                    loc.push(reqData);
+                    localStorage.setItem('am_join_requests', JSON.stringify(loc));
+                }catch(e){}
+            }
+
+            setLoading(btn,false);
+            document.getElementById('reqFormBox').style.display='none';
+            document.getElementById('reqSuccessBox').style.display='block';
         }
 
         /* ─── HELPERS ─── */
