@@ -91,6 +91,18 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .feat-chip{display:flex;align-items:center;gap:5px;padding:5px 10px;
   background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);border-radius:20px;font-size:.72rem;color:var(--green);}
 
+/* ── ROLE TABS ── */
+.role-tabs{display:flex;background:var(--bg2);border:1px solid var(--border);border-radius:13px;padding:4px;gap:4px;margin-bottom:20px;}
+.role-tab{flex:1;padding:9px 6px;border:none;background:transparent;border-radius:10px;
+  color:var(--muted);font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;transition:.2s;cursor:pointer;}
+.role-tab.active-student{background:linear-gradient(135deg,rgba(59,130,246,.25),rgba(59,130,246,.15));
+  color:#93c5fd;border:1px solid rgba(59,130,246,.3);}
+.role-tab.active-teacher{background:linear-gradient(135deg,rgba(233,78,119,.25),rgba(247,147,30,.2));
+  color:var(--orange);border:1px solid rgba(247,147,30,.35);}
+.teacher-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;margin-bottom:14px;
+  background:linear-gradient(135deg,rgba(247,147,30,.12),rgba(233,78,119,.1));
+  border:1px solid rgba(247,147,30,.3);border-radius:12px;font-size:.8rem;font-weight:800;color:var(--orange);}
+
 /* ══ WAITING ══ */
 #waitScreen{align-items:center;justify-content:center;padding:20px;flex-direction:column;text-align:center;}
 .wait-emoji{font-size:3rem;margin-bottom:16px;animation:bob .9s infinite alternate;}
@@ -157,10 +169,19 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
     <div class="auth-course-badge"><i class="fas fa-graduation-cap"></i> <span id="authCourseName">—</span></div>
     <div class="auth-icon"><i class="fas fa-video"></i></div>
     <div class="auth-title" id="authTitle">محاضرة مباشرة</div>
-    <div class="auth-sub">أدخل رقمك التعريفي (Student ID) عشان نتأكد من تسجيلك وتدخل المحاضرة</div>
     <div class="auth-meta">
       <div class="auth-meta-chip"><i class="fas fa-clock"></i><span id="authTime">—</span></div>
       <div class="auth-meta-chip"><i class="fas fa-user-shield"></i> محمية</div>
+    </div>
+
+    <!-- ROLE TABS -->
+    <div class="role-tabs">
+      <button class="role-tab active-student" id="tabStudent" onclick="switchRole('student')">
+        🎓 طالب
+      </button>
+      <button class="role-tab" id="tabTeacher" onclick="switchRole('teacher')">
+        👨‍🏫 محاضر
+      </button>
     </div>
 
     <div class="auth-warn" id="authWarn">
@@ -173,25 +194,50 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 
     <div class="auth-err" id="authErr"><i class="fas fa-times-circle"></i><span id="authErrMsg">خطأ</span></div>
 
-    <div class="auth-form-label">رقمك التعريفي (Student ID)</div>
-    <div class="auth-input-wrap">
-      <i class="fas fa-id-card ico"></i>
-      <input class="auth-input" id="studentIdInput" type="text"
-        placeholder="أدخل Student ID بتاعك..." autocomplete="off"
-        onkeydown="if(event.key==='Enter')tryAuth()">
+    <!-- STUDENT PANEL -->
+    <div id="panelStudent">
+      <div class="auth-form-label">رقمك التعريفي (Student ID)</div>
+      <div class="auth-input-wrap">
+        <i class="fas fa-id-card ico"></i>
+        <input class="auth-input" id="studentIdInput" type="text"
+          placeholder="أدخل Student ID بتاعك..." autocomplete="off"
+          onkeydown="if(event.key==='Enter')tryAuth()">
+      </div>
+      <div class="auth-features" style="margin-bottom:14px">
+        <span class="feat-chip"><i class="fas fa-hand-paper"></i> رفع الإيد</span>
+        <span class="feat-chip"><i class="fas fa-smile"></i> ايموجي</span>
+        <span class="feat-chip"><i class="fas fa-comments"></i> شات</span>
+      </div>
     </div>
+
+    <!-- TEACHER PANEL -->
+    <div id="panelTeacher" style="display:none">
+      <div class="teacher-badge"><i class="fas fa-chalkboard-teacher"></i> دخول كمحاضر / مدير</div>
+      <div id="teacherAutoMsg" style="display:none;padding:10px 14px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:11px;font-size:.82rem;color:#4ade80;margin-bottom:12px;">
+        <i class="fas fa-check-circle"></i> تم التعرف عليك كأدمن — بيدخلك مباشرة
+      </div>
+      <div id="teacherPassWrap">
+        <div class="auth-form-label">كلمة سر المحاضر</div>
+        <div class="auth-input-wrap">
+          <i class="fas fa-lock ico"></i>
+          <input class="auth-input" id="teacherPassInput" type="password"
+            placeholder="أدخل كلمة مرور الأدمن..." autocomplete="off"
+            onkeydown="if(event.key==='Enter')tryAuth()">
+        </div>
+      </div>
+      <div class="auth-features" style="margin-bottom:14px">
+        <span class="feat-chip" style="background:rgba(247,147,30,.08);border-color:rgba(247,147,30,.25);color:var(--orange);"><i class="fas fa-desktop"></i> Screen Share</span>
+        <span class="feat-chip" style="background:rgba(247,147,30,.08);border-color:rgba(247,147,30,.25);color:var(--orange);"><i class="fas fa-microphone"></i> ميك مفتوح</span>
+        <span class="feat-chip" style="background:rgba(247,147,30,.08);border-color:rgba(247,147,30,.25);color:var(--orange);"><i class="fas fa-video"></i> كاميرا شغالة</span>
+      </div>
+    </div>
+
     <button class="btn-enter" id="btnEnter" onclick="tryAuth()">
-      <i class="fas fa-sign-in-alt"></i> ادخل المحاضرة
+      <i class="fas fa-sign-in-alt"></i> <span id="btnEnterLabel">ادخل المحاضرة</span>
     </button>
-    <div class="auth-note">
+    <div class="auth-note" id="authNote">
       🔒 الـ ID بتاعك للتحقق فقط ولا يُشارك مع أحد<br>
       📌 محاضرة مباشرة مع <strong>Akram Mostafa</strong>
-    </div>
-    <div class="auth-features">
-      <span class="feat-chip"><i class="fas fa-microphone"></i> كلام مباشر</span>
-      <span class="feat-chip"><i class="fas fa-hand-paper"></i> رفع الإيد</span>
-      <span class="feat-chip"><i class="fas fa-smile"></i> ايموجي</span>
-      <span class="feat-chip"><i class="fas fa-comments"></i> شات</span>
     </div>
   </div>
 </div>
@@ -261,7 +307,8 @@ if(!SESSION && params.get('room')){
     courseKey:params.get('course')||'',room:params.get('room'),status:'live',scheduledAt:''};
 }
 
-let currentUser=null, myJoinToken=null, jitsiApi=null;
+let currentUser=null, myJoinToken=null, jitsiApi=null, isTeacherMode=false;
+const ADMIN_PASS='Aazxc';
 
 /* ══════════════════════════════════════════════
    INIT
@@ -291,6 +338,11 @@ window.addEventListener('DOMContentLoaded',function(){
   /* Pre-fill ID from session if already logged in */
   const sid=sessionStorage.getItem('akram_student_id');
   if(sid) document.getElementById('studentIdInput').value=sid;
+
+  /* Auto-detect admin session → switch to teacher tab */
+  if(sessionStorage.getItem('am_admin_auth')==='1'){
+    switchRole('teacher', true);
+  }
 
   showScreen('authScreen');
 });
@@ -329,9 +381,53 @@ function showErr(msg){
 }
 
 /* ══════════════════════════════════════════════
+   ROLE SWITCH
+══════════════════════════════════════════════ */
+function switchRole(role, autoAdmin){
+  isTeacherMode = (role==='teacher');
+  const ts=document.getElementById('tabStudent');
+  const tt=document.getElementById('tabTeacher');
+  const ps=document.getElementById('panelStudent');
+  const pt=document.getElementById('panelTeacher');
+  const lbl=document.getElementById('btnEnterLabel');
+  const note=document.getElementById('authNote');
+  if(isTeacherMode){
+    ts.className='role-tab';
+    tt.className='role-tab active-teacher';
+    ps.style.display='none';
+    pt.style.display='block';
+    lbl.textContent='ابدأ المحاضرة 🎥';
+    note.innerHTML='👨‍🏫 دخول المحاضر — بيبدأ بميك وكاميرا شغالين + Screen Share جاهز';
+    if(autoAdmin || sessionStorage.getItem('am_admin_auth')==='1'){
+      document.getElementById('teacherPassWrap').style.display='none';
+      document.getElementById('teacherAutoMsg').style.display='block';
+    }
+  } else {
+    tt.className='role-tab';
+    ts.className='role-tab active-student';
+    pt.style.display='none';
+    ps.style.display='block';
+    lbl.textContent='ادخل المحاضرة';
+    note.innerHTML='🔒 الـ ID بتاعك للتحقق فقط ولا يُشارك مع أحد<br>📌 محاضرة مباشرة مع <strong>Akram Mostafa</strong>';
+  }
+}
+
+/* ══════════════════════════════════════════════
    AUTH
 ══════════════════════════════════════════════ */
 function tryAuth(){
+  /* ── TEACHER LOGIN ── */
+  if(isTeacherMode){
+    const isAdminSession = sessionStorage.getItem('am_admin_auth')==='1';
+    const enteredPass = document.getElementById('teacherPassInput') ? document.getElementById('teacherPassInput').value : '';
+    if(!isAdminSession && enteredPass !== ADMIN_PASS){
+      showErr('كلمة السر غلط — حاول تاني');return;
+    }
+    currentUser={id:'teacher-host',name:'أكرم مصطفى',courses:[],type:'employee'};
+    proceedToSession();
+    return;
+  }
+
   const raw=document.getElementById('studentIdInput').value.trim();
   if(!raw){showErr('أدخل رقمك التعريفي من فضلك');return;}
 
@@ -422,21 +518,24 @@ function launchJitsi(){
       width:'100%', height:'100%',
       parentNode: document.getElementById('jitsiMount'),
       configOverwrite:{
-        startWithAudioMuted: true,   /* طلاب يبدأوا مكتومين — الأستاذ يفتح مايكهم */
+        startWithAudioMuted: !isTeacherMode,  /* طلاب يبدأوا مكتومين، الأستاذ مفتوح */
         startWithVideoMuted: false,
         defaultLanguage:'ar',
         disableDeepLinking:true,
         prejoinPageEnabled:false,
         disableThirdPartyRequests:true,
         enableEmailInStats:false,
-        /* تفعيل رفع الإيد والايموجي والشات */
-        toolbarButtons:[
-          'microphone','camera','desktop',
-          'chat',            /* 💬 شات نصي */
-          'raisehand',       /* ✋ رفع الإيد */
-          'reactions',       /* 😂 ايموجي ريأكشن */
-          'participants-pane',
-          'tileview','fullscreen','settings','hangup'
+        toolbarButtons: isTeacherMode ? [
+          'microphone','camera',
+          'desktop',           /* ⭐ Screen Share — أول الأدوات */
+          'chat','raisehand','reactions',
+          'participants-pane','tileview','fullscreen',
+          'recording','settings','security','hangup'
+        ] : [
+          'microphone','camera',
+          'chat','raisehand','reactions',
+          'participants-pane','tileview','fullscreen',
+          'settings','hangup'
         ],
         enableClosePage:false,
         notifications:[],
@@ -453,7 +552,9 @@ function launchJitsi(){
         filmStripOnly:false,
       },
       userInfo:{
-        displayName: currentUser.name||currentUser.username||'طالب',
+        displayName: isTeacherMode
+          ? '🎥 أكرم مصطفى (محاضر)'
+          : (currentUser.name||currentUser.username||'طالب'),
         email: currentUser.email||'',
       }
     };
