@@ -1396,7 +1396,7 @@ function approveReq(id){
     saveUsers(users);
     r.approvedId = newId;
     setTimeout(()=>{
-      alert('✅ تمت الموافقة على الطالب\n\n👤 الاسم: '+r.name+'\n🔑 الرقم التعريفي: '+newId+'\n\n⬅️ ابعت هذا الرقم للطالب — هيستخدمه لدخول المحاضرات');
+      alert('✅ تمت الموافقة على الطالب\n\n👤 الاسم: '+r.name+'\n🆔 الرقم التعريفي: '+newId+'\n👤 اسم المستخدم: '+(r.username||'—')+'\n🔒 كلمة المرور: '+(r.password||'—')+'\n\n📲 ابعت للطالب:\nالرقم التعريفي: '+newId+'\nاسم المستخدم: '+(r.username||'—')+'\nكلمة المرور: '+(r.password||'—')+'\n\n✔️ يدخل بـ اسم المستخدم أو الرقم التعريفي + كلمة المرور');
     },300);
   }
   r.status='approved'; r.reviewedAt=Date.now();

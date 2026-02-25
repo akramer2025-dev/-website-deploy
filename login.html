@@ -277,7 +277,7 @@
                 </div>
                 <div class="stu-id-hint">
                     <i class="fas fa-id-badge"></i>
-                    طالب مسجّل؟ استخدم اسم المستخدم وكلمة المرور اللي حصلت عليهم من الأدمن
+                    سجّل بـ <strong>اسم المستخدم</strong> أو <strong>الرقم التعريفي (STU-XXX)</strong> + كلمة المرور
                 </div>
                 <div class="error-msg" id="stuError"><i class="fas fa-times-circle"></i><span id="stuErrTxt">اسم المستخدم أو كلمة المرور غير صحيحة</span></div>
                 <div class="success-msg" id="stuSuccess"><i class="fas fa-check-circle"></i><span>تم تسجيل الدخول! جاري التحويل...</span></div>
@@ -353,6 +353,21 @@
                             <div class="input-wrapper">
                                 <input type="tel" id="reqPhone" placeholder="مثال: 01012345678" required>
                                 <i class="fas fa-phone field-ico"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-at" style="margin-left:5px;opacity:.6;"></i> اسم المستخدم *</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="reqUsername" placeholder="مثال: ahmed2025" autocomplete="username" required>
+                                <i class="fas fa-at field-ico"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-lock" style="margin-left:5px;opacity:.6;"></i> كلمة المرور *</label>
+                            <div class="input-wrapper">
+                                <input type="password" id="reqPassword" placeholder="اختر كلمة مرور قوية" autocomplete="new-password" required>
+                                <i class="fas fa-lock field-ico"></i>
+                                <button type="button" class="toggle-password" onclick="togglePw('reqPassword',this)"><i class="fas fa-eye"></i></button>
                             </div>
                         </div>
                         <div class="form-group">
@@ -447,7 +462,11 @@
             setTimeout(()=>{
                 try {
                     const lsUsers = JSON.parse(localStorage.getItem('am_users')||'[]');
-                    const found = lsUsers.find(u=>u.username===user && u.password===pass);
+                    // support login with username OR STU-ID
+                    const found = lsUsers.find(u=>
+                        (u.username===user || u.id===user || u.id===user.toUpperCase()) &&
+                        u.password===pass
+                    );
                     if(found){
                         document.getElementById('stuSuccess').classList.add('show');
                         sessionStorage.setItem('akram_logged_in','true');
@@ -458,11 +477,14 @@
                         setTimeout(()=>{ window.location.href='my-courses.html'; },1100);
                         return;
                     }
-                    // helpful error
-                    const exists = lsUsers.find(u=>u.username===user);
-                    document.getElementById('stuErrTxt').textContent = exists
-                        ? 'كلمة المرور غير صحيحة'
-                        : 'اسم المستخدم غير موجود — اطلب الانضمام إذا لم تكن مسجلاً';
+                    // helpful error messages
+                    const existsByUsername = lsUsers.find(u=>u.username===user);
+                    const existsById       = lsUsers.find(u=>u.id===user.toUpperCase());
+                    if(existsByUsername || existsById){
+                        document.getElementById('stuErrTxt').textContent='كلمة المرور غير صحيحة';
+                    } else {
+                        document.getElementById('stuErrTxt').textContent='اسم المستخدم أو الرقم التعريفي غير موجود — اطلب الانضمام إذا لم تكن مسجلاً';
+                    }
                 } catch(err){
                     document.getElementById('stuErrTxt').textContent='اسم المستخدم أو كلمة المرور غير صحيحة';
                 }
@@ -475,18 +497,35 @@
         /* ─── JOIN REQUEST ─── */
         function handleJoinRequest(e){
             e.preventDefault();
-            const name  = document.getElementById('reqName').value.trim();
-            const phone = document.getElementById('reqPhone').value.trim();
-            if(!name||!phone){ document.getElementById('reqError').classList.add('show'); return; }
+            const name     = document.getElementById('reqName').value.trim();
+            const phone    = document.getElementById('reqPhone').value.trim();
+            const username = document.getElementById('reqUsername').value.trim();
+            const password = document.getElementById('reqPassword').value;
+            if(!name||!phone||!username||!password){
+                document.getElementById('reqError').classList.add('show');
+                return;
+            }
             const btn = document.getElementById('reqBtn');
             setLoading(btn,true);
             setTimeout(()=>{
-                const reqs = JSON.parse(localStorage.getItem('am_join_requests')||'[]');
+                // check username not already taken
+                const existingUsers = JSON.parse(localStorage.getItem('am_users')||'[]');
+                const existingReqs  = JSON.parse(localStorage.getItem('am_join_requests')||'[]');
+                const usernameTaken = existingUsers.find(u=>u.username===username)
+                                   || existingReqs.find(r=>r.username===username && r.status!=='rejected');
+                if(usernameTaken){
+                    document.getElementById('reqError').querySelector('span').textContent='اسم المستخدم هذا مأخوذ، اختر اسماً آخر';
+                    document.getElementById('reqError').classList.add('show');
+                    setLoading(btn,false);
+                    return;
+                }
+                const reqs = existingReqs;
                 reqs.push({
                     id:'req_'+Date.now(),
-                    name, phone,
-                    course: document.getElementById('reqCourse').value,
-                    note:   document.getElementById('reqNote').value.trim(),
+                    name, phone, username, password,
+                    courses: document.getElementById('reqCourse').value ? [document.getElementById('reqCourse').value] : [],
+                    notes:   document.getElementById('reqNote').value.trim(),
+                    createdAt: Date.now(),
                     date:   new Date().toLocaleDateString('ar-EG'),
                     status:'pending'
                 });
