@@ -2001,7 +2001,7 @@ function getDefaultFreeLectures(){
 async function seedFreeLectures(){
   try {
     const all = getLectures();
-    if((all['free']||[]).length > 0) return; // already seeded
+    if((all['free']||[]).length >= 8) return; // already has full set of lectures
     all['free'] = getDefaultFreeLectures();
     // update in-memory immediately so UI reads it right away
     _fsLectures = Object.assign({}, all);
