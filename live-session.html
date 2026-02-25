@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>جلسة مباشرة | Akram Mostafa</title>
+<title>محاضرة مباشرة | Akram Mostafa</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -14,68 +14,121 @@
   --blue:#3b82f6; --red:#ef4444; --text:#e2eaf6; --muted:#6b82a8;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow:hidden;}
+html,body{height:100%;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;}
 a{text-decoration:none;color:inherit;}
 button{cursor:pointer;font-family:'Cairo',sans-serif;}
 
-/* ── HEADER ── */
-.top-bar{position:fixed;top:0;left:0;right:0;z-index:200;height:54px;background:rgba(9,22,43,.97);
-  border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:14px;}
-.top-back{display:flex;align-items:center;gap:7px;padding:7px 14px;background:var(--card2);
-  border:1px solid var(--border);border-radius:10px;font-size:.82rem;color:var(--muted);transition:.2s;}
-.top-back:hover{color:#fff;border-color:rgba(255,255,255,.15);}
-.top-session-info{display:flex;align-items:center;gap:10px;flex:1;}
-.live-dot{width:10px;height:10px;border-radius:50%;background:var(--green);flex-shrink:0;
-  animation:pulse 1.5s infinite;box-shadow:0 0 0 0 rgba(34,197,94,.5);}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5);}70%{box-shadow:0 0 0 8px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
-.live-label{font-size:.72rem;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.8px;}
-.session-title-bar{font-size:.92rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px;}
-.top-room-badge{margin-right:auto;display:flex;align-items:center;gap:6px;padding:5px 12px;
-  background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);border-radius:20px;font-size:.72rem;color:#60a5fa;font-weight:700;}
+/* ══ TOP BAR ══ */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;z-index:300;height:52px;
+  background:rgba(5,13,27,.98);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 14px;gap:12px;
+}
+.top-back{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--card2);
+  border:1px solid var(--border);border-radius:9px;font-size:.78rem;color:var(--muted);transition:.2s;white-space:nowrap;}
+.top-back:hover{color:#fff;}
+.top-info{display:flex;align-items:center;gap:9px;flex:1;overflow:hidden;}
+.live-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;background:var(--green);
+  box-shadow:0 0 0 0 rgba(34,197,94,.5);animation:ldot 1.8s infinite;}
+@keyframes ldot{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5);}70%{box-shadow:0 0 0 8px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
+.live-pill{font-size:.65rem;font-weight:800;color:var(--green);letter-spacing:1px;
+  border:1px solid rgba(34,197,94,.3);padding:2px 7px;border-radius:20px;background:rgba(34,197,94,.1);white-space:nowrap;}
+.top-title{font-size:.88rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.top-right{display:flex;align-items:center;gap:8px;margin-right:auto;}
+.attendee-count{display:flex;align-items:center;gap:5px;padding:5px 10px;
+  background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:20px;
+  font-size:.72rem;color:#60a5fa;font-weight:700;}
 
-/* ── LOBBY ── */
-#lobby{position:fixed;inset:0;top:54px;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px;z-index:100;}
-.lobby-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:44px 40px;
-  width:100%;max-width:500px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,.5);}
-.lobby-icon{width:90px;height:90px;background:linear-gradient(135deg,rgba(233,78,119,.2),rgba(247,147,30,.15));
-  border:2px solid rgba(233,78,119,.3);border-radius:28px;display:flex;align-items:center;justify-content:center;
-  font-size:2.5rem;color:var(--pink);margin:0 auto 24px;}
-.lobby-title{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:8px;}
-.lobby-sub{font-size:.9rem;color:var(--muted);margin-bottom:28px;line-height:1.8;}
-.lobby-meta{display:flex;justify-content:center;gap:12px;margin-bottom:28px;flex-wrap:wrap;}
-.lmeta-item{display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg2);
-  border:1px solid var(--border);border-radius:10px;font-size:.8rem;color:var(--muted);}
-.lmeta-item i{color:var(--pink);font-size:.85rem;}
-.lobby-name-label{font-size:.85rem;font-weight:700;color:var(--muted);text-align:right;margin-bottom:8px;}
-.lobby-name-input{width:100%;padding:13px 16px;background:var(--bg2);border:1.5px solid var(--border);
-  border-radius:13px;color:var(--text);font-size:.95rem;outline:none;text-align:right;transition:.25s;font-family:'Cairo',sans-serif;}
-.lobby-name-input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(233,78,119,.15);}
-.btn-join-now{width:100%;margin-top:18px;padding:15px;background:var(--grad);border:none;border-radius:14px;
-  color:#fff;font-size:1.05rem;font-weight:900;transition:.3s;display:flex;align-items:center;justify-content:center;gap:10px;
-  box-shadow:0 8px 30px rgba(233,78,119,.3);}
-.btn-join-now:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(233,78,119,.45);}
-.lobby-note{margin-top:16px;font-size:.78rem;color:var(--muted);line-height:1.7;}
+/* ══ SCREENS ══ */
+.screen{position:fixed;inset:0;top:52px;display:none;background:var(--bg);}
+.screen.active{display:flex;}
 
-/* ── JITSI FRAME ── */
-#jitsiWrap{position:fixed;inset:0;top:54px;display:none;}
-#jitsiWrap iframe{width:100%;height:100%;border:none;}
+/* ══ AUTH ══ */
+#authScreen{align-items:center;justify-content:center;padding:20px;
+  background:radial-gradient(ellipse at 50% 30%,rgba(233,78,119,.1) 0%,transparent 60%),var(--bg);}
+.auth-card{width:100%;max-width:460px;background:var(--card);border:1px solid var(--border);
+  border-radius:24px;padding:38px 34px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,.5);}
+.auth-course-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;margin-bottom:18px;
+  background:rgba(233,78,119,.1);border:1px solid rgba(233,78,119,.25);border-radius:20px;font-size:.75rem;font-weight:800;color:var(--pink);}
+.auth-icon{width:76px;height:76px;margin:0 auto 18px;border-radius:22px;
+  background:linear-gradient(135deg,rgba(233,78,119,.2),rgba(247,147,30,.15));
+  border:2px solid rgba(233,78,119,.25);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--pink);}
+.auth-title{font-size:1.35rem;font-weight:900;color:#fff;margin-bottom:7px;}
+.auth-sub{font-size:.86rem;color:var(--muted);line-height:1.8;margin-bottom:22px;}
+.auth-meta{display:flex;justify-content:center;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
+.auth-meta-chip{display:flex;align-items:center;gap:5px;padding:5px 11px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;font-size:.75rem;color:var(--muted);}
+.auth-meta-chip i{color:var(--pink);font-size:.73rem;}
+.auth-form-label{font-size:.82rem;font-weight:700;color:var(--muted);text-align:right;margin-bottom:7px;}
+.auth-input-wrap{position:relative;margin-bottom:10px;}
+.auth-input-wrap i.ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);}
+.auth-input{width:100%;padding:13px 42px 13px 14px;background:var(--bg2);border:1.5px solid var(--border);
+  border-radius:13px;color:var(--text);font-size:.95rem;outline:none;transition:.25s;font-family:'Cairo',sans-serif;}
+.auth-input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(233,78,119,.15);}
+.auth-err{display:none;align-items:center;gap:8px;padding:10px 14px;margin-bottom:12px;
+  background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:10px;font-size:.82rem;color:#f87171;text-align:right;}
+.auth-err.show{display:flex;}
+/* duplicate-session warning */
+.auth-warn{display:none;align-items:flex-start;gap:10px;padding:12px 14px;margin-bottom:12px;
+  background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.25);border-radius:11px;font-size:.81rem;color:#fbbf24;text-align:right;flex-direction:column;}
+.auth-warn.show{display:flex;}
+.warn-btns{display:flex;gap:8px;width:100%;margin-top:6px;}
+.btn-force{flex:1;padding:8px;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);
+  border-radius:9px;color:#fbbf24;font-size:.78rem;font-weight:700;}
+.btn-force:hover{background:rgba(245,158,11,.25);}
+.btn-cancel-warn{flex:1;padding:8px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:9px;color:var(--muted);font-size:.78rem;font-weight:700;}
+.btn-enter{width:100%;padding:14px;background:var(--grad);border:none;border-radius:13px;color:#fff;
+  font-size:1rem;font-weight:900;transition:.3s;display:flex;align-items:center;justify-content:center;gap:9px;
+  box-shadow:0 8px 28px rgba(233,78,119,.3);}
+.btn-enter:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(233,78,119,.45);}
+.btn-enter:disabled{opacity:.5;pointer-events:none;}
+.auth-note{margin-top:14px;font-size:.75rem;color:var(--muted);line-height:1.7;}
 
-/* ── ENDED SCREEN ── */
-#endedScreen{display:none;position:fixed;inset:0;top:54px;background:var(--bg);
-  align-items:center;justify-content:center;padding:24px;}
-.ended-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:44px 40px;
-  width:100%;max-width:440px;text-align:center;}
-.ended-icon{font-size:3.5rem;margin-bottom:18px;}
-.ended-title{font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
-.ended-sub{font-size:.9rem;color:var(--muted);margin-bottom:28px;line-height:1.8;}
-.btn-back-home{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:var(--grad);
-  border:none;border-radius:13px;color:#fff;font-size:.95rem;font-weight:800;}
+/* feature hints row */
+.auth-features{display:flex;justify-content:center;gap:8px;margin-top:18px;flex-wrap:wrap;}
+.feat-chip{display:flex;align-items:center;gap:5px;padding:5px 10px;
+  background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);border-radius:20px;font-size:.72rem;color:var(--green);}
 
-/* ── NOT FOUND ── */
-#notFound{display:none;position:fixed;inset:0;top:54px;background:var(--bg);
-  align-items:center;justify-content:center;text-align:center;padding:24px;}
-#notFound h2{font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:10px;}
-#notFound p{color:var(--muted);font-size:.9rem;margin-bottom:24px;}
+/* ══ WAITING ══ */
+#waitScreen{align-items:center;justify-content:center;padding:20px;flex-direction:column;text-align:center;}
+.wait-emoji{font-size:3rem;margin-bottom:16px;animation:bob .9s infinite alternate;}
+@keyframes bob{from{transform:translateY(0);}to{transform:translateY(-12px);}}
+#waitScreen h2{font-size:1.25rem;font-weight:900;color:#fff;margin-bottom:10px;}
+#waitScreen p{color:var(--muted);font-size:.9rem;max-width:360px;line-height:1.8;}
+.btn-refresh{margin-top:20px;padding:10px 22px;background:var(--card2);border:1px solid var(--border);
+  border-radius:11px;color:var(--muted);font-size:.85rem;}
+.btn-refresh:hover{color:var(--text);}
+
+/* ══ JITSI ══ */
+#jitsiScreen{position:fixed;inset:0;top:52px;display:none;}
+#jitsiMount{width:100%;height:100%;}
+
+/* ══ ENDED ══ */
+#endedScreen{align-items:center;justify-content:center;padding:20px;}
+.ended-card{background:var(--card);border:1px solid var(--border);border-radius:24px;
+  padding:44px 38px;width:100%;max-width:440px;text-align:center;}
+.ended-emoji{font-size:3.5rem;margin-bottom:16px;}
+.ended-title{font-size:1.35rem;font-weight:900;color:#fff;margin-bottom:10px;}
+.ended-sub{color:var(--muted);font-size:.9rem;margin-bottom:26px;line-height:1.8;}
+.btn-home{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;background:var(--grad);
+  border:none;border-radius:13px;color:#fff;font-size:.93rem;font-weight:800;}
+
+/* ══ NOT FOUND ══ */
+#notFoundScreen{align-items:center;justify-content:center;padding:20px;flex-direction:column;text-align:center;}
+#notFoundScreen h2{font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:10px;}
+#notFoundScreen p{color:var(--muted);font-size:.9rem;margin-bottom:24px;}
+
+/* ══ LOADING OVERLAY ══ */
+#loadOverlay{display:none;position:fixed;inset:0;top:52px;z-index:500;
+  background:rgba(5,13,27,.9);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;flex-direction:column;gap:14px;}
+#loadOverlay.show{display:flex;}
+.load-spinner{width:46px;height:46px;border:3px solid var(--border);border-top-color:var(--pink);
+  border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+#loadOverlay p{color:var(--muted);font-size:.9rem;}
 </style>
 </head>
 <body>
@@ -83,180 +136,392 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 <!-- TOP BAR -->
 <div class="top-bar">
   <a href="my-courses.html" class="top-back"><i class="fas fa-arrow-right"></i> رجوع</a>
-  <div class="top-session-info">
+  <div class="top-info">
     <div class="live-dot" id="liveDot"></div>
-    <span class="live-label" id="liveLabel">LIVE</span>
-    <span class="session-title-bar" id="topTitle">جلسة مباشرة</span>
+    <span class="live-pill" id="livePill">LIVE</span>
+    <span class="top-title" id="topTitle">محاضرة مباشرة</span>
   </div>
-  <div class="top-room-badge"><i class="fas fa-video"></i> <span id="roomBadge">...</span></div>
+  <div class="top-right">
+    <div class="attendee-count" id="attendeeCount" style="display:none">
+      <i class="fas fa-users"></i><span id="attNum">0</span>
+    </div>
+  </div>
 </div>
 
-<!-- LOBBY -->
-<div id="lobby">
-  <div class="lobby-card">
-    <div class="lobby-icon"><i class="fas fa-video"></i></div>
-    <div class="lobby-title" id="lobbyTitle">جلسة مباشرة</div>
-    <div class="lobby-sub" id="lobbySub">أنت على وشك تدخل الجلسة المباشرة — تأكد إن الكاميرا والمايك شغالين وادخل!</div>
-    <div class="lobby-meta">
-      <div class="lmeta-item"><i class="fas fa-book"></i> <span id="lobbyCourseName">—</span></div>
-      <div class="lmeta-item"><i class="fas fa-clock"></i> <span id="lobbyTime">—</span></div>
-      <div class="lmeta-item"><i class="fas fa-wifi" style="color:var(--green)"></i> <span id="lobbyStatus">نشط</span></div>
+<!-- LOADING OVERLAY -->
+<div id="loadOverlay"><div class="load-spinner"></div><p id="loadMsg">جاري التحقق...</p></div>
+
+<!-- ① AUTH SCREEN -->
+<div class="screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-course-badge"><i class="fas fa-graduation-cap"></i> <span id="authCourseName">—</span></div>
+    <div class="auth-icon"><i class="fas fa-video"></i></div>
+    <div class="auth-title" id="authTitle">محاضرة مباشرة</div>
+    <div class="auth-sub">أدخل رقمك التعريفي (Student ID) عشان نتأكد من تسجيلك وتدخل المحاضرة</div>
+    <div class="auth-meta">
+      <div class="auth-meta-chip"><i class="fas fa-clock"></i><span id="authTime">—</span></div>
+      <div class="auth-meta-chip"><i class="fas fa-user-shield"></i> محمية</div>
     </div>
-    <div class="lobby-name-label">اسمك اللي هيظهر في الجلسة</div>
-    <input class="lobby-name-input" id="dispName" placeholder="اكتب اسمك هنا...">
-    <button class="btn-join-now" onclick="joinSession()">
-      <i class="fas fa-sign-in-alt"></i> ادخل الجلسة دلوقتي
+
+    <div class="auth-warn" id="authWarn">
+      <span>⚠️ حسابك مفتوح في تاب أو جهاز تاني — لو مش أنت اضغط "دخول بالقوة" وهيتحول هنا بس</span>
+      <div class="warn-btns">
+        <button class="btn-force" onclick="forceJoin()"><i class="fas fa-bolt"></i> دخول بالقوة</button>
+        <button class="btn-cancel-warn" onclick="cancelWarn()">إلغاء</button>
+      </div>
+    </div>
+
+    <div class="auth-err" id="authErr"><i class="fas fa-times-circle"></i><span id="authErrMsg">خطأ</span></div>
+
+    <div class="auth-form-label">رقمك التعريفي (Student ID)</div>
+    <div class="auth-input-wrap">
+      <i class="fas fa-id-card ico"></i>
+      <input class="auth-input" id="studentIdInput" type="text"
+        placeholder="أدخل Student ID بتاعك..." autocomplete="off"
+        onkeydown="if(event.key==='Enter')tryAuth()">
+    </div>
+    <button class="btn-enter" id="btnEnter" onclick="tryAuth()">
+      <i class="fas fa-sign-in-alt"></i> ادخل المحاضرة
     </button>
-    <div class="lobby-note">
-      الجلسة تشتغل عن طريق Jitsi Meet — مجاني ومش محتاج تنزيل أي حاجة 🎉
+    <div class="auth-note">
+      🔒 الـ ID بتاعك للتحقق فقط ولا يُشارك مع أحد<br>
+      📌 محاضرة مباشرة مع <strong>Akram Mostafa</strong>
+    </div>
+    <div class="auth-features">
+      <span class="feat-chip"><i class="fas fa-microphone"></i> كلام مباشر</span>
+      <span class="feat-chip"><i class="fas fa-hand-paper"></i> رفع الإيد</span>
+      <span class="feat-chip"><i class="fas fa-smile"></i> ايموجي</span>
+      <span class="feat-chip"><i class="fas fa-comments"></i> شات</span>
     </div>
   </div>
 </div>
 
-<!-- JITSI CONTAINER -->
-<div id="jitsiWrap"></div>
+<!-- ② WAITING -->
+<div class="screen" id="waitScreen">
+  <div class="wait-emoji">⏰</div>
+  <h2>المحاضرة لسه ما بدأتش</h2>
+  <p id="waitMsg">الأستاذ لسه ما بدأش المحاضرة — ارجع هنا لما تيجيلك رسالة على الواتساب</p>
+  <button class="btn-refresh" onclick="location.reload()"><i class="fas fa-sync-alt"></i> تحديث الصفحة</button>
+</div>
 
-<!-- ENDED -->
-<div id="endedScreen">
+<!-- ③ JITSI -->
+<div id="jitsiScreen"><div id="jitsiMount"></div></div>
+
+<!-- ④ ENDED -->
+<div class="screen" id="endedScreen">
   <div class="ended-card">
-    <div class="ended-icon">🎓</div>
-    <div class="ended-title">انتهت الجلسة!</div>
-    <div class="ended-sub">شكراً لحضورك — نشوفك في الجلسة الجاية إن شاء الله 💪</div>
-    <a href="my-courses.html" class="btn-back-home"><i class="fas fa-home"></i> رجوع لكورساتي</a>
+    <div class="ended-emoji">🎓</div>
+    <div class="ended-title">انتهت المحاضرة!</div>
+    <div class="ended-sub">شكراً لحضورك — نشوفك في المحاضرة الجاية إن شاء الله 💪</div>
+    <a href="my-courses.html" class="btn-home"><i class="fas fa-home"></i> رجوع لكورساتي</a>
   </div>
 </div>
 
-<!-- NOT FOUND -->
-<div id="notFound">
-  <div>
-    <h2>الجلسة مش موجودة 😕</h2>
-    <p>ممكن الرابط غلط أو الجلسة اتحذفت</p>
-    <a href="my-courses.html" class="btn-back-home"><i class="fas fa-home"></i> رجوع لكورساتي</a>
-  </div>
+<!-- ⑤ NOT FOUND -->
+<div class="screen" id="notFoundScreen">
+  <h2>المحاضرة دي مش موجودة 😕</h2>
+  <p>الرابط ممكن يكون غلط أو المحاضرة اتحذفت</p>
+  <a href="my-courses.html" class="btn-home" style="margin-top:10px"><i class="fas fa-home"></i> رجوع لكورساتي</a>
 </div>
 
-<script src="https://meet.jit.si/external_api.js"></script>
+<script src="https://meet.jit.si/external_api.js" async></script>
 <script>
-const COURSE_NAMES = {
-  free:'كورس التسويق المجاني', programming:'برمجة المواقع',
-  facebook:'إعلانات فيسبوك', instagram:'إنستاغرام', tiktok:'تيك توك',
-  snapchat:'سناب شات', twitter:'إكس (تويتر)', integrated:'استراتيجية التسويق المتكاملة'
+/* ══════════════════════════════════════════════
+   DATA HELPERS
+══════════════════════════════════════════════ */
+const COURSE_NAMES={
+  free:'كورس التسويق المجاني',programming:'برمجة المواقع',
+  facebook:'إعلانات فيسبوك','facebook-ads':'إعلانات فيسبوك',
+  instagram:'إنستاغرام',tiktok:'تيك توك',snapchat:'سناب شات',
+  twitter:'إكس (تويتر)',integrated:'استراتيجية متكاملة',
+  'ai-marketing':'الذكاء الاصطناعي'
 };
-
 function getLiveSessions(){ return JSON.parse(localStorage.getItem('am_live_sessions')||'[]'); }
+function getUsers(){ return JSON.parse(localStorage.getItem('am_users')||'[]'); }
 
-const params = new URLSearchParams(location.search);
+/* ── Duplicate-session prevention ──
+   We store { userId:{token,t} } in localStorage.
+   On tab close we delete it. Other tabs watch via storage event. */
+const ACTIVE_KEY='am_active_joins';
+function getActiveJoins(){ return JSON.parse(localStorage.getItem(ACTIVE_KEY)||'{}'); }
+function markActive(uid,token){ const g=getActiveJoins(); g[uid]={token,t:Date.now()}; localStorage.setItem(ACTIVE_KEY,JSON.stringify(g)); }
+function clearActive(uid){ const g=getActiveJoins(); delete g[uid]; localStorage.setItem(ACTIVE_KEY,JSON.stringify(g)); }
+function isAlreadyActive(uid){ const g=getActiveJoins(); if(!g[uid])return false; return(Date.now()-g[uid].t)<8*60*60*1000; }
+
+/* ══════════════════════════════════════════════
+   PAGE STATE
+══════════════════════════════════════════════ */
+const params    = new URLSearchParams(location.search);
 const sessionId = params.get('id');
-const sessions = getLiveSessions();
-let session = sessions.find(s => s.id === sessionId);
+let SESSION     = getLiveSessions().find(s=>s.id===sessionId)||null;
 
-// fallback: direct room param (for admin preview)
-const directRoom = params.get('room');
-const directTitle = params.get('title') || 'جلسة مباشرة';
-const directCourse = params.get('course') || '';
-
-if(!session && directRoom){
-  session = { id:'preview', title:directTitle, courseKey:directCourse, room:directRoom, status:'live', scheduledAt:'' };
+/* Admin preview via direct params */
+if(!SESSION && params.get('room')){
+  SESSION={id:'preview',title:params.get('title')||'محاضرة مباشرة',
+    courseKey:params.get('course')||'',room:params.get('room'),status:'live',scheduledAt:''};
 }
 
-window.onload = function(){
-  if(!session){ showNotFound(); return; }
-  if(session.status === 'ended'){ showEndedScreen(); return; }
+let currentUser=null, myJoinToken=null, jitsiApi=null;
 
-  // fill lobby
-  document.getElementById('lobbyTitle').textContent = session.title;
-  document.getElementById('topTitle').textContent = session.title;
-  document.getElementById('roomBadge').textContent = session.room;
-  document.getElementById('lobbyCourseName').textContent = COURSE_NAMES[session.courseKey] || session.courseKey || '—';
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded',function(){
+  if(!SESSION){ showScreen('notFoundScreen'); return; }
 
-  if(session.scheduledAt){
-    const d = new Date(session.scheduledAt);
-    document.getElementById('lobbyTime').textContent = d.toLocaleString('ar-EG',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('topTitle').textContent=SESSION.title;
+  document.getElementById('authTitle').textContent=SESSION.title;
+  document.getElementById('authCourseName').textContent=COURSE_NAMES[SESSION.courseKey]||SESSION.courseKey||'محاضرة';
+
+  if(SESSION.scheduledAt){
+    const d=new Date(SESSION.scheduledAt);
+    document.getElementById('authTime').textContent=
+      d.toLocaleString('ar-EG',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+  } else {
+    document.getElementById('authTime').textContent='مباشر الآن 🔴';
   }
 
-  const isLive = session.status === 'live';
-  document.getElementById('liveDot').style.background = isLive ? 'var(--green)' : 'var(--yellow)';
-  document.getElementById('liveLabel').textContent = isLive ? 'LIVE' : 'قريباً';
-  document.getElementById('liveLabel').style.color = isLive ? 'var(--green)' : 'var(--yellow)';
-  document.getElementById('lobbyStatus').textContent = isLive ? 'نشط الآن 🔴' : 'لم يبدأ بعد';
-
-  // pre-fill name from session
-  const sid = sessionStorage.getItem('akram_student_id');
-  if(sid){
-    const users = JSON.parse(localStorage.getItem('am_users')||'[]');
-    const u = users.find(x=>x.id===sid||x.email===sid);
-    if(u) document.getElementById('dispName').value = u.name || '';
+  const st=SESSION.status;
+  if(st==='ended'){
+    setDot('#ef4444','ENDED');
+  } else if(st==='scheduled'){
+    setDot('#f59e0b','SOON');
   }
-};
 
-function joinSession(){
-  const name = document.getElementById('dispName').value.trim() || 'طالب';
-  if(!session){ return; }
-  if(session.status === 'scheduled'){
-    alert('⏰ الجلسة لسه ما بدأتش — جرب تانيً لما الأستاذ يبدأها');
+  /* Pre-fill ID from session if already logged in */
+  const sid=sessionStorage.getItem('akram_student_id');
+  if(sid) document.getElementById('studentIdInput').value=sid;
+
+  showScreen('authScreen');
+});
+
+function setDot(color,label){
+  document.getElementById('liveDot').style.background=color;
+  document.getElementById('liveDot').style.boxShadow='none';
+  document.getElementById('liveDot').style.animation='none';
+  document.getElementById('livePill').textContent=label;
+  document.getElementById('livePill').style.color=color;
+  document.getElementById('livePill').style.borderColor=color+'55';
+  document.getElementById('livePill').style.background=color+'18';
+}
+
+/* ══════════════════════════════════════════════
+   SCREENS
+══════════════════════════════════════════════ */
+function showScreen(id){
+  ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
+    const el=document.getElementById(s);
+    if(el){el.classList.remove('active');el.style.display='none';}
+  });
+  document.getElementById('jitsiScreen').style.display='none';
+  const t=document.getElementById(id);
+  if(t){t.classList.add('active');t.style.display='flex';}
+}
+function setLoad(show,msg){
+  document.getElementById('loadMsg').textContent=msg||'جاري...';
+  document.getElementById('loadOverlay').classList.toggle('show',show);
+}
+function showErr(msg){
+  document.getElementById('authErrMsg').textContent=msg;
+  const e=document.getElementById('authErr');
+  e.classList.add('show');
+  setTimeout(()=>e.classList.remove('show'),5000);
+}
+
+/* ══════════════════════════════════════════════
+   AUTH
+══════════════════════════════════════════════ */
+function tryAuth(){
+  const raw=document.getElementById('studentIdInput').value.trim();
+  if(!raw){showErr('أدخل رقمك التعريفي من فضلك');return;}
+
+  /* Admin preview — no auth needed */
+  if(SESSION.id==='preview'){
+    currentUser={id:'admin-preview',name:'أكرم (معاينة)',courses:[]};
+    proceedToSession();
     return;
   }
 
-  document.getElementById('lobby').style.display = 'none';
-  const wrap = document.getElementById('jitsiWrap');
-  wrap.style.display = 'block';
+  setLoad(true,'جاري التحقق من هويتك...');
+  const users=getUsers();
 
-  const domain = 'meet.jit.si';
-  const options = {
-    roomName: session.room,
-    width: '100%',
-    height: '100%',
-    parentNode: wrap,
-    configOverwrite: {
-      startWithAudioMuted: false,
-      startWithVideoMuted: false,
-      defaultLanguage: 'ar',
-      disableDeepLinking: true,
-      prejoinPageEnabled: false,
-    },
-    interfaceConfigOverwrite: {
-      TOOLBAR_BUTTONS: ['microphone','camera','hangup','chat','tileview','fullscreen','settings','raisehand','videoquality'],
-      SHOW_JITSI_WATERMARK: false,
-      SHOW_WATERMARK_FOR_GUESTS: false,
-      DEFAULT_BACKGROUND: '#050d1b',
-      APP_NAME: 'Akram Mostafa | جلسات مباشرة',
-      NATIVE_APP_NAME: 'Akram Mostafa',
-      TOOLBAR_ALWAYS_VISIBLE: false,
-    },
-    userInfo: { displayName: name }
-  };
+  /* Match by id, email, or username — case insensitive */
+  const found=users.find(u=>
+    String(u.id).toLowerCase()===raw.toLowerCase()||
+    (u.email&&u.email.toLowerCase()===raw.toLowerCase())||
+    (u.username&&u.username.toLowerCase()===raw.toLowerCase())
+  );
 
-  try{
-    const api = new JitsiMeetExternalAPI(domain, options);
-    api.addEventListener('videoConferenceLeft', function(){
-      wrap.style.display = 'none';
-      showEndedScreen();
-    });
-    api.addEventListener('readyToClose', function(){
-      wrap.style.display = 'none';
-      showEndedScreen();
-    });
-  } catch(e){
-    // fallback: open in new tab if API fails
-    wrap.style.display = 'none';
-    document.getElementById('lobby').style.display = 'flex';
-    window.open('https://meet.jit.si/' + session.room, '_blank');
+  setLoad(false);
+  if(!found){showErr('الرقم التعريفي ده مش موجود — تأكد منه أو تواصل مع الأستاذ 👆');return;}
+
+  /* Employees/admins bypass enrollment check */
+  if(found.type!=='employee'){
+    const enrolled=found.courses||[];
+    if(!enrolled.includes(SESSION.courseKey)&&SESSION.courseKey!=='free'&&SESSION.courseKey!==''){
+      showErr('أنت غير مسجل في هذا الكورس — تواصل مع الأستاذ لإضافتك');return;
+    }
+  }
+
+  currentUser=found;
+
+  /* Duplicate check */
+  if(isAlreadyActive(found.id)){
+    document.getElementById('authWarn').classList.add('show');
+    document.getElementById('btnEnter').disabled=true;
+    return;
+  }
+
+  proceedToSession();
+}
+
+function cancelWarn(){
+  document.getElementById('authWarn').classList.remove('show');
+  document.getElementById('btnEnter').disabled=false;
+  currentUser=null;
+}
+function forceJoin(){
+  if(!currentUser)return;
+  clearActive(currentUser.id);
+  document.getElementById('authWarn').classList.remove('show');
+  document.getElementById('btnEnter').disabled=false;
+  proceedToSession();
+}
+
+function proceedToSession(){
+  if(SESSION.status==='ended'){showScreen('endedScreen');setDot('#ef4444','ENDED');return;}
+  if(SESSION.status==='scheduled'){
+    document.getElementById('waitMsg').textContent=
+      SESSION.scheduledAt
+        ?'المحاضرة مجدولة '+new Date(SESSION.scheduledAt).toLocaleString('ar-EG',{weekday:'long',hour:'2-digit',minute:'2-digit'})+' — ارجع وقتها!'
+        :'المحاضرة لسه ما بدأتش — جرب تاني.';
+    showScreen('waitScreen');
+    return;
+  }
+  launchJitsi();
+}
+
+/* ══════════════════════════════════════════════
+   JITSI LAUNCH
+══════════════════════════════════════════════ */
+function launchJitsi(){
+  setLoad(true,'جاري فتح المحاضرة...');
+  myJoinToken='tk_'+Math.random().toString(36).slice(2);
+  markActive(currentUser.id,myJoinToken);
+
+  /* Show jitsi frame */
+  ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
+    const el=document.getElementById(s);if(el){el.classList.remove('active');el.style.display='none';}
+  });
+  document.getElementById('jitsiScreen').style.display='block';
+
+  function doLaunch(){
+    setLoad(false);
+    const options={
+      roomName: SESSION.room,
+      width:'100%', height:'100%',
+      parentNode: document.getElementById('jitsiMount'),
+      configOverwrite:{
+        startWithAudioMuted: true,   /* طلاب يبدأوا مكتومين — الأستاذ يفتح مايكهم */
+        startWithVideoMuted: false,
+        defaultLanguage:'ar',
+        disableDeepLinking:true,
+        prejoinPageEnabled:false,
+        disableThirdPartyRequests:true,
+        enableEmailInStats:false,
+        /* تفعيل رفع الإيد والايموجي والشات */
+        toolbarButtons:[
+          'microphone','camera','desktop',
+          'chat',            /* 💬 شات نصي */
+          'raisehand',       /* ✋ رفع الإيد */
+          'reactions',       /* 😂 ايموجي ريأكشن */
+          'participants-pane',
+          'tileview','fullscreen','settings','hangup'
+        ],
+        enableClosePage:false,
+        notifications:[],
+      },
+      interfaceConfigOverwrite:{
+        SHOW_JITSI_WATERMARK:false,
+        SHOW_WATERMARK_FOR_GUESTS:false,
+        DEFAULT_BACKGROUND:'#050d1b',
+        APP_NAME:'Akram Mostafa | محاضرات مباشرة',
+        NATIVE_APP_NAME:'Akram Mostafa',
+        TOOLBAR_ALWAYS_VISIBLE:false,
+        MOBILE_APP_PROMO:false,
+        RECENT_LIST_ENABLED:false,
+        filmStripOnly:false,
+      },
+      userInfo:{
+        displayName: currentUser.name||currentUser.username||'طالب',
+        email: currentUser.email||'',
+      }
+    };
+    try{
+      jitsiApi=new JitsiMeetExternalAPI('meet.jit.si',options);
+      jitsiApi.addEventListener('videoConferenceLeft',onLeft);
+      jitsiApi.addEventListener('readyToClose',onLeft);
+      jitsiApi.addEventListener('participantJoined',updateAttendees);
+      jitsiApi.addEventListener('participantLeft',updateAttendees);
+    } catch(e){
+      console.warn('Jitsi API error:',e);
+      fallbackOpen();
+    }
+  }
+
+  if(typeof JitsiMeetExternalAPI!=='undefined'){
+    doLaunch();
+  } else {
+    const t=setInterval(()=>{
+      if(typeof JitsiMeetExternalAPI!=='undefined'){clearInterval(t);doLaunch();}
+    },200);
+    setTimeout(()=>{clearInterval(t);if(!jitsiApi)fallbackOpen();},8000);
   }
 }
 
-function showEndedScreen(){
-  document.getElementById('lobby').style.display = 'none';
-  document.getElementById('jitsiWrap').style.display = 'none';
-  document.getElementById('endedScreen').style.display = 'flex';
-  document.getElementById('liveDot').style.background = '#ef4444';
-  document.getElementById('liveLabel').textContent = 'ENDED';
-  document.getElementById('liveLabel').style.color = '#ef4444';
+function updateAttendees(){
+  try{
+    const cnt=jitsiApi.getNumberOfParticipants?jitsiApi.getNumberOfParticipants():null;
+    if(cnt!==null){
+      document.getElementById('attNum').textContent=cnt;
+      document.getElementById('attendeeCount').style.display='flex';
+    }
+  }catch(e){}
 }
 
-function showNotFound(){
-  document.getElementById('lobby').style.display = 'none';
-  document.getElementById('notFound').style.display = 'flex';
+function fallbackOpen(){
+  setLoad(false);
+  window.open('https://meet.jit.si/'+SESSION.room,'_blank');
+  showScreen('authScreen');
+  clearActive(currentUser?.id);
 }
+
+function onLeft(){
+  clearActive(currentUser?.id);
+  jitsiApi=null;
+  document.getElementById('jitsiScreen').style.display='none';
+  document.getElementById('attendeeCount').style.display='none';
+  showScreen('endedScreen');
+  setDot('#ef4444','ENDED');
+}
+
+/* ══════════════════════════════════════════════
+   CLEANUP
+══════════════════════════════════════════════ */
+window.addEventListener('beforeunload',()=>{
+  if(currentUser)clearActive(currentUser.id);
+  if(jitsiApi){try{jitsiApi.dispose();}catch(e){}}
+});
+
+/* Detect if another tab kicked us (force join from other device) */
+window.addEventListener('storage',e=>{
+  if(e.key!==ACTIVE_KEY||!currentUser||!jitsiApi)return;
+  const g=JSON.parse(e.newValue||'{}');
+  if(g[currentUser.id]&&g[currentUser.id].token!==myJoinToken){
+    alert('⚠️ تم فتح المحاضرة في تاب أو جهاز آخر — هتتحول للصفحة الرئيسية');
+    onLeft();
+  }
+});
 </script>
 </body>
 </html>
