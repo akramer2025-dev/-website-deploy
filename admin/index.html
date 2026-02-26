@@ -953,18 +953,57 @@ let _fsUnsubscribe = null;
 
 // Load all admin collections from Firestore on login
 async function _loadAdminData(){
-  const cols = ['users','app_prices','recorded_lectures','lectures','live_sessions'];
+  const cols = ['users','app_prices','recorded_lectures','live_sessions'];
   try {
-    const snaps = await Promise.all(cols.map(d=>_fdb.collection('admin_data').doc(d).get()));
+    // Load admin docs + lectures collection in parallel
+    const [snaps, lecsSnap] = await Promise.all([
+      Promise.all(cols.map(d=>_fdb.collection('admin_data').doc(d).get())),
+      _fdb.collection('lectures').get()
+    ]);
     snaps.forEach((snap,i)=>{
       if(!snap.exists) return;
       const d = snap.data().data;
       if(i===0){ _fsUsers = Array.isArray(d)?d:[]; localStorage.setItem(USERS_KEY, JSON.stringify(_fsUsers)); }
       if(i===1){ _fsAppPrices = d||{}; localStorage.setItem(APP_PRICES_KEY, JSON.stringify(_fsAppPrices)); }
       if(i===2){ _fsRecLecs = Array.isArray(d)?d:[]; localStorage.setItem(REC_LECS_KEY, JSON.stringify(_fsRecLecs)); }
-      if(i===3){ _fsLectures = d||{}; localStorage.setItem(LECTURES_KEY, JSON.stringify(_fsLectures)); }
-      if(i===4){ _fsLiveSessions = Array.isArray(d)?d:[]; localStorage.setItem('am_live_sessions', JSON.stringify(_fsLiveSessions)); }
+      if(i===3){ _fsLiveSessions = Array.isArray(d)?d:[]; localStorage.setItem('am_live_sessions', JSON.stringify(_fsLiveSessions)); }
     });
+    // Rebuild lectures object from individual docs (avoids 1MB Firestore limit)
+    const lecturesObj = {};
+    lecsSnap.forEach(doc=>{
+      const data = doc.data();
+      const ck = data.courseKey;
+      if(ck){
+        if(!lecturesObj[ck]) lecturesObj[ck] = [];
+        const {courseKey:_ck, savedAt:_sa, ...lecData} = data;
+        lecturesObj[ck].push(lecData);
+      }
+    });
+    // If lectures collection is empty, try to migrate from old admin_data/lectures doc
+    if(lecsSnap.empty){
+      try{
+        const oldDoc = await _fdb.collection('admin_data').doc('lectures').get();
+        if(oldDoc.exists){
+          const oldData = oldDoc.data().data||{};
+          Object.entries(oldData).forEach(([ck, lecs])=>{
+            if(!lecturesObj[ck]) lecturesObj[ck] = [];
+            (lecs||[]).forEach(lec=>{
+              if(!lec.id) return;
+              lecturesObj[ck].push(lec);
+              // migrate to new structure
+              _fdb.collection('lectures').doc(lec.id).set({...lec, courseKey:ck, savedAt:Date.now()}).catch(()=>{});
+            });
+          });
+          console.log('✅ Migrated lectures from old format');
+        }
+      }catch(e){ console.warn('Migration attempt failed:', e); }
+    }
+    // Sort each course lectures by createdAt
+    Object.keys(lecturesObj).forEach(ck=>{
+      lecturesObj[ck].sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+    });
+    _fsLectures = lecturesObj;
+    try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(lecturesObj)); }catch(e){}
     renderDashboard(); renderWebPrices(); renderMobilePrices();
     renderUsers('employee'); renderUsers('student');
     renderRecordedLectures(); updateBadges();
@@ -2050,12 +2089,17 @@ async function seedFreeLectures(){
 
 function saveLectures(obj){
   _fsLectures = Object.assign({},obj);
-  // localStorage: نحاول نحفظ، لو فاض الحجم نتجاهل (base64 كبير)
   try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(obj)); }catch(e){ console.warn('localStorage quota, skipping local save'); }
-  // Firestore هو المصدر الأساسي دايماً
-  _fdb.collection('admin_data').doc('lectures').set({data:obj,updatedAt:Date.now()})
-    .then(()=>{ toast('تم الحفظ على السحابة ✓','success'); })
-    .catch(e=>{ console.warn('FS lectures',e); toast('تم الحفظ محلياً فقط','error'); });
+  // Save each lecture as its own Firestore doc to avoid 1MB document size limit
+  Object.entries(obj).forEach(([courseKey, lecs])=>{
+    (lecs||[]).forEach(lec=>{
+      if(!lec.id) return;
+      _fdb.collection('lectures').doc(lec.id)
+        .set({...lec, courseKey, savedAt: Date.now()})
+        .catch(e=>console.warn('FS lec save', lec.id, e));
+    });
+  });
+  toast('تم الحفظ على السحابة ✓','success');
 }
 
 function initLecturesSection(){
@@ -2338,6 +2382,8 @@ function deleteLecture(id){
   const all = getLectures();
   all[activeLecCourse] = (all[activeLecCourse]||[]).filter(l=>l.id!==id);
   saveLectures(all);
+  // Delete individual Firestore doc
+  _fdb.collection('lectures').doc(id).delete().catch(e=>console.warn('FS del lec',e));
   initLecturesSection();
   renderLecList(activeLecCourse);
   toast('تم حذف المحاضرة','success');

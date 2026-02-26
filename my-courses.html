@@ -238,16 +238,24 @@ async function init(){
   try{ liveSessions = JSON.parse(localStorage.getItem(LIVE_KEY)||'[]'); }catch(e){}
   currentUser = allUsers.find(u=>String(u.id)===String(uid));
 
-  // 2️⃣ Firestore (authoritative)
+  // 2️⃣ Firestore (authoritative) — lectures stored as individual docs
   try {
-    const [usersSnap, lecsSnap, recSnap, liveSnap] = await Promise.all([
+    const [usersSnap, lecsQSnap, recSnap, liveSnap] = await Promise.all([
       _mcdb.collection('admin_data').doc('users').get(),
-      _mcdb.collection('admin_data').doc('lectures').get(),
+      _mcdb.collection('lectures').get(),
       _mcdb.collection('admin_data').doc('recorded_lectures').get(),
       _mcdb.collection('admin_data').doc('live_sessions').get(),
     ]);
     if(usersSnap.exists){ allUsers = usersSnap.data().data||[]; try{localStorage.setItem(USERS_KEY,JSON.stringify(allUsers))}catch(e){} }
-    if(lecsSnap.exists){ allLectures = lecsSnap.data().data||{}; try{localStorage.setItem(LECTURES_KEY,JSON.stringify(allLectures))}catch(e){} }
+    // Rebuild lectures grouped by courseKey
+    const lecsObj = {};
+    lecsQSnap.forEach(doc=>{
+      const d = doc.data();
+      const ck = d.courseKey;
+      if(ck){ if(!lecsObj[ck]) lecsObj[ck]=[]; const {courseKey:_,savedAt:__,...ld}=d; lecsObj[ck].push(ld); }
+    });
+    Object.keys(lecsObj).forEach(ck=>lecsObj[ck].sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)));
+    if(lecsQSnap.size > 0){ allLectures = lecsObj; try{localStorage.setItem(LECTURES_KEY,JSON.stringify(allLectures))}catch(e){} }
     if(recSnap.exists){ recLectures = recSnap.data().data||[]; try{localStorage.setItem(REC_LECS_KEY,JSON.stringify(recLectures))}catch(e){} }
     if(liveSnap.exists){ liveSessions = liveSnap.data().data||[]; try{localStorage.setItem(LIVE_KEY,JSON.stringify(liveSessions))}catch(e){} }
     currentUser = allUsers.find(u=>String(u.id)===String(uid));

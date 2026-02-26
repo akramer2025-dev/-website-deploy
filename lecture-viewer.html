@@ -311,16 +311,14 @@ async function init(){
     showToast('معرّف المحاضرة غير موجود','error'); return;
   }
 
-  // حاول التحميل من Firebase أولاً
+// حاول التحميل من Firebase أولاً — كل محاضرة doc مستقل
   if(_db){
     try{
-      const doc = await _db.collection('admin_data').doc('lectures').get();
+      const doc = await _db.collection('lectures').doc(lecId).get();
       if(doc.exists){
-        const raw = doc.data()||{};
-        // saveLectures تحفظ البيانات داخل حقل 'data'
-        const allLecs = raw.data || raw;
-        const courseLecs = allLecs[courseKey]||[];
-        lectureData = courseLecs.find(l=>l.id===lecId)||null;
+        const data = doc.data()||{};
+        const {courseKey:_ck, savedAt:_sa, ...lec} = data;
+        lectureData = lec;
       }
     }catch(e){ console.warn('Firebase load failed, using localStorage',e); }
   }
