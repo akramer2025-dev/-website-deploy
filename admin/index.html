@@ -629,6 +629,10 @@ button{cursor:pointer;}
           <label>ملاحظات (اختياري)</label>
           <textarea id="lsNotes" placeholder="أي تعليمات إضافية للطلاب..."></textarea>
         </div>
+        <div class="form-field">
+          <label><i class="fab fa-google" style="margin-left:6px;color:#4285f4"></i>رابط Google Meet (اختياري)</label>
+          <input type="url" id="lsMeetLink" placeholder="https://meet.google.com/xxx-yyyy-zzz">
+        </div>
         <div class="modal-footer">
           <button class="btn-modal-save" onclick="saveLiveSession()"><i class="fas fa-save"></i> حفظ</button>
           <button class="btn-modal-cancel" onclick="closeLiveModal()">إلغاء</button>
@@ -2514,6 +2518,7 @@ function openAddLiveSession(){
   document.getElementById('lsRoom').value = '';
   document.getElementById('lsStatus').value = 'scheduled';
   document.getElementById('lsNotes').value = '';
+  document.getElementById('lsMeetLink').value = '';
   const now = new Date(); now.setMinutes(Math.ceil(now.getMinutes()/15)*15,0,0);
   document.getElementById('lsScheduled').value = now.toISOString().slice(0,16);
   generateRoom();
@@ -2530,6 +2535,7 @@ function editLiveSession(id){
   document.getElementById('lsRoom').value = s.room;
   document.getElementById('lsStatus').value = s.status;
   document.getElementById('lsNotes').value = s.notes||'';
+  document.getElementById('lsMeetLink').value = s.meetLink||'';
   document.getElementById('lsScheduled').value = s.scheduledAt||'';
   document.getElementById('liveModal').classList.add('open');
 }
@@ -2557,12 +2563,14 @@ function saveLiveSession(){
       sessions[idx] = {...sessions[idx], title, courseKey:document.getElementById('lsCourse').value,
         room, status:document.getElementById('lsStatus').value,
         notes:document.getElementById('lsNotes').value.trim(),
+        meetLink:document.getElementById('lsMeetLink').value.trim(),
         scheduledAt:document.getElementById('lsScheduled').value, updatedAt:now};
     }
   } else {
     sessions.push({id:'ls_'+Date.now(), title, courseKey:document.getElementById('lsCourse').value,
       room, status:document.getElementById('lsStatus').value,
       notes:document.getElementById('lsNotes').value.trim(),
+      meetLink:document.getElementById('lsMeetLink').value.trim(),
       scheduledAt:document.getElementById('lsScheduled').value, createdAt:now});
   }
   saveLiveSessions(sessions);

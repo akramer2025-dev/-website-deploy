@@ -155,6 +155,20 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 <!-- MAIN -->
 <main class="main">
 
+  <!-- LIVE NOW BANNER -->
+  <div id="liveBanner" onclick="joinActiveLive()" style="display:none;background:linear-gradient(135deg,#052e1a,#064d2c);border-bottom:2px solid #22c55e;padding:14px 20px;cursor:pointer;transition:.2s;">
+    <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <div style="width:14px;height:14px;border-radius:50%;background:#22c55e;box-shadow:0 0 14px rgba(34,197,94,.9);animation:lpulse 1.2s infinite;flex-shrink:0;"></div>
+      <div style="flex:1;">
+        <div style="font-size:1rem;font-weight:900;color:#fff;" id="lbTitle">📡 محاضرة مباشرة شغالة الدلوقتي!</div>
+        <div style="font-size:.78rem;color:rgba(255,255,255,.65);" id="lbSub">اضغط هنا للانضمام فوراً</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;padding:9px 20px;background:#22c55e;border-radius:11px;color:#fff;font-size:.85rem;font-weight:900;pointer-events:none;">
+        <i class="fas fa-video"></i> ادخل المحاضرة
+      </div>
+    </div>
+  </div>
+
   <!-- HERO -->
   <div class="hero">
     <div class="hero-avatar"><i class="fas fa-graduation-cap"></i></div>
@@ -194,6 +208,16 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   </div>
 
 </main>
+
+<!-- KICKED MODAL -->
+<div id="kickedModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(5,13,27,.92);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#0d1e38;border:1px solid rgba(239,68,68,.3);border-radius:20px;padding:32px;max-width:380px;width:100%;text-align:center;">
+    <div style="font-size:2.8rem;margin-bottom:12px;">🚫</div>
+    <div style="font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:8px;">تم تسجيل دخول من جهاز آخر</div>
+    <div style="font-size:.85rem;color:#6b82a8;line-height:1.8;margin-bottom:22px;">جهاز آخر سجّل دخول على حسابك — تم إنهاء جلستك الحالية لحماية أمان حسابك.</div>
+    <button onclick="forceLogout()" style="width:100%;padding:13px;background:linear-gradient(135deg,#e94e77,#f7931e);border:none;border-radius:12px;color:#fff;font-size:.95rem;font-weight:900;cursor:pointer;font-family:'Cairo',sans-serif;"><i class="fas fa-sign-in-alt"></i> سجّل دخول مرة أخرى</button>
+  </div>
+</div>
 
 <script>
 const USERS_KEY = 'am_users';
@@ -306,13 +330,32 @@ async function init(){
 }
 
 // ─── LIVE SESSIONS ───────────────────────────────────────────────
+let _activeLiveSession = null;
+function joinLive(meetLink, sessionId){
+  if(meetLink){ window.open(meetLink,'_blank'); }
+  else { window.location.href='live-session.html?id='+sessionId; }
+}
+function joinActiveLive(){
+  if(!_activeLiveSession) return;
+  joinLive(_activeLiveSession.meetLink||'', _activeLiveSession.id);
+}
 function renderLiveSessions(enrolledCourses, liveSessions){
   const all = liveSessions || JSON.parse(localStorage.getItem(LIVE_KEY)||'[]');
-  // show only sessions for enrolled courses that are live or scheduled
   const relevant = all.filter(s=>enrolledCourses.includes(s.courseKey) && s.status !== 'ended');
   const section = document.getElementById('liveSection');
   const row = document.getElementById('liveSessionsRow');
   const cnt = document.getElementById('liveCnt');
+  // Top live banner
+  const activeLive = relevant.find(s=>s.status==='live');
+  _activeLiveSession = activeLive || null;
+  const banner = document.getElementById('liveBanner');
+  if(banner){
+    if(activeLive){
+      banner.style.display='block';
+      document.getElementById('lbTitle').textContent = '📡 ' + activeLive.title + ' — مباشر الآن!';
+      document.getElementById('lbSub').textContent = activeLive.meetLink ? 'اضغط للانضمام عبر Google Meet' : 'اضغط هنا للانضمام فوراً';
+    } else { banner.style.display='none'; }
+  }
   if(!relevant.length){ section.style.display='none'; return; }
   section.style.display='block';
   cnt.textContent = relevant.length + ' ' + (relevant.length===1?'جلسة':'جلسات');
@@ -320,6 +363,7 @@ function renderLiveSessions(enrolledCourses, liveSessions){
     const isLive = s.status==='live';
     const courseMeta = COURSES_META[s.courseKey]||{name:s.courseKey,icon:'fa-book',color:'var(--pink)'};
     const dt = s.scheduledAt ? new Date(s.scheduledAt).toLocaleString('ar-EG',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
+    const ml = (s.meetLink||'').replace(/'/g,"\\'");
     return `<div class="live-card ${isLive?'is-live':''}">
       <div class="live-card-dot ${s.status}"></div>
       <div class="live-card-info">
@@ -331,7 +375,7 @@ function renderLiveSessions(enrolledCourses, liveSessions){
         </div>
       </div>
       ${isLive
-        ?`<a href="live-session.html?id=${s.id}" class="btn-join-live"><i class="fas fa-sign-in-alt"></i> ادخل دلوقتي</a>`
+        ?`<button class="btn-join-live" onclick="joinLive('${ml}','${s.id}')"><i class="fas fa-sign-in-alt"></i> ادخل دلوقتي</button>`
         :`<button class="btn-join-soon" disabled><i class="fas fa-clock"></i> لسه ما بدأتش</button>`
       }
     </div>`;
@@ -399,13 +443,32 @@ function renderCourses(courses, allLectures, recLectures){
   }).join('');
 }
 
-// ─── LOGOUT ─────────────────────────────────────────────────────
+// ─── LOGOUT + SESSION WATCHER ─────────────────────────────────────────
 function logout(){
-  sessionStorage.removeItem('akram_student_id');
+  const myUid = sessionStorage.getItem('akram_session_uid') || sessionStorage.getItem('akram_student_id');
+  sessionStorage.clear();
+  if(myUid){ try{ const u={}; u['s_'+myUid]={token:'',loginAt:0}; _mcdb.collection('admin_data').doc('active_sessions').set(u,{merge:true}).catch(()=>{}); }catch(e){} }
   window.location.href = 'login.html';
+}
+function forceLogout(){ sessionStorage.clear(); window.location.href='login.html'; }
+function startSessionWatcher(){
+  const myTok = sessionStorage.getItem('akram_session_token');
+  const myUid = sessionStorage.getItem('akram_session_uid') || sessionStorage.getItem('akram_student_id');
+  if(!myTok || !myUid) return;
+  setInterval(async ()=>{
+    try{
+      const snap = await _mcdb.collection('admin_data').doc('active_sessions').get();
+      if(!snap.exists) return;
+      const sf = snap.data()['s_'+myUid];
+      if(sf && sf.token && sf.token !== myTok){
+        document.getElementById('kickedModal').style.display='flex';
+      }
+    }catch(e){}
+  }, 45000);
 }
 
 init();
+startSessionWatcher();
 </script>
 </body>
 </html>
