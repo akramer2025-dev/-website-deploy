@@ -734,7 +734,7 @@ button{cursor:pointer;}
           </div>
           <div style="display:flex;gap:10px;justify-content:flex-end;">
             <button class="btn-modal-cancel" onclick="closeLecModal()">إلغاء</button>
-            <button class="btn-modal-save" onclick="saveLecture()"><i class="fas fa-save"></i> حفظ المحاضرة</button>
+            <button class="btn-modal-save" id="btnSaveLec" onclick="saveLecture()"><i class="fas fa-save"></i> حفظ المحاضرة</button>
           </div>
         </div>
       </div>
@@ -2402,17 +2402,20 @@ function renderSlideEditor(){
   }).join('');
 }
 
-function saveLecture(){
+async function saveLecture(){
   const title = document.getElementById('lecTitleInput').value.trim();
   if(!title){toast('أدخل عنوان المحاضرة','error');return;}
   if(!activeLecCourse){toast('اختر كورساً','error');return;}
-  // collect latest DOM values before saving
   collectSlideValues();
+
+  // ── show loading state ──
+  const btn = document.getElementById('btnSaveLec');
+  if(btn){ btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...'; }
+
+  const FAKE_SRCS = ['[صورة مرفوعة]','[محلي]','✓ تم الرفع','✓ محفوظة','✓ جاهزة للحفظ','جاري الضغط...','جاري الرفع...',''];
   const all = getLectures();
   if(!all[activeLecCourse]) all[activeLecCourse]=[];
 
-  // نصوص وهمية تظهر في الـ input لكنها مش روابط حقيقية
-  const FAKE_SRCS = ['[صورة مرفوعة]','[محلي]','✓ تم الرفع','✓ محفوظة','✓ جاهزة للحفظ','جاري الضغط...','جاري الرفع...',''];
   const lecData = {
     id: editingLecId || ('lec'+Date.now()),
     title,
@@ -2424,6 +2427,7 @@ function saveLecture(){
     createdAt: editingLecId ? undefined : Date.now(),
     updatedAt: Date.now(),
   };
+
   if(editingLecId){
     const idx = all[activeLecCourse].findIndex(l=>l.id===editingLecId);
     if(idx>=0){ lecData.createdAt = all[activeLecCourse][idx].createdAt; all[activeLecCourse][idx]=lecData; }
@@ -2431,11 +2435,61 @@ function saveLecture(){
   } else {
     all[activeLecCourse].push(lecData);
   }
-  saveLectures(all);
-  closeLecModal();
-  initLecturesSection();
-  renderLecList(activeLecCourse);
-  toast('تم حفظ المحاضرة بنجاح ✓','success');
+
+  // ── 1. حفّظ في الذاكرة فوراً ──
+  _fsLectures = Object.assign({}, all);
+
+  // ── 2. حفّظ في localStorage (بدون base64 لتوفير المساحة) ──
+  try{
+    const localSafe = {};
+    for(const [k,lecs] of Object.entries(all)){
+      localSafe[k] = (lecs||[]).map(l=>({
+        ...l,
+        slides:(l.slides||[]).map(s=>({
+          ...s,
+          src: (s.src&&s.src.startsWith('http')) ? s.src : ''
+        }))
+      }));
+    }
+    localStorage.setItem(LECTURES_KEY, JSON.stringify(localSafe));
+  }catch(e){ console.warn('localStorage quota:',e); }
+
+  // ── 3. اضغط الصور وارفع على Firestore (await حقيقي) ──
+  try{
+    const compSlides = [];
+    for(const s of lecData.slides){
+      const compSrc = await compressImg(s.src, 800, 0.78);
+      compSlides.push({...s, src: compSrc});
+    }
+    const compLec = {...lecData, slides: compSlides};
+    await _fdb.collection('lectures').doc(compLec.id)
+      .set({...compLec, courseKey: activeLecCourse, savedAt: Date.now()});
+
+    // Grouped fallback (LQ)
+    const lqSlides = [];
+    for(const s of lecData.slides){
+      const lqSrc = await compressImg(s.src, 400, 0.45);
+      lqSlides.push({...s, src: lqSrc});
+    }
+    const courseLecs = (all[activeLecCourse]||[]).map(l=>{
+      if(l.id !== lecData.id) return l;
+      return {...l, slides: lqSlides};
+    });
+    await _fdb.collection('admin_data').doc('lectures_'+activeLecCourse)
+      .set({data: courseLecs, courseKey: activeLecCourse, updatedAt: Date.now()});
+
+    closeLecModal();
+    initLecturesSection();
+    renderLecList(activeLecCourse);
+    toast('✅ تم الحفظ على السحابة بنجاح','success');
+  } catch(err){
+    console.error('Firestore save error:', err);
+    // Close modal anyway — data is in memory
+    closeLecModal();
+    initLecturesSection();
+    renderLecList(activeLecCourse);
+    toast('⚠️ حُفظت محلياً — تحقق من الانترنت وأعد الحفظ','error');
+  }
 }
 
 function deleteLecture(id){
