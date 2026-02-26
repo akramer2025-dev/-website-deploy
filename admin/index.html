@@ -1997,28 +1997,22 @@ function getDefaultFreeLectures(){
   const sl=(id,title,notes)=>({id,type:'image',src:'',title,notes});
   return [
     { id:'lec_free_1', title:'رحلتي مع التسويق… بدأت من كيس تمر هندي', description:'قصة حقيقية من الطفولة تكشف كيف تبدأ رحلة التسويق من أبسط المواقف — وتنتهي بدروس لا تُنسى', createdAt:ts, updatedAt:ts, slides:[
-      {id:'s1_0',type:'html',src:'../images/free-course-cover.html',title:'غلاف المحاضرة',notes:'🎬 البانر الرسمي للمحاضرة الأولى\n\n"رحلتي مع التسويق… بدأت من كيس تمر هندي"\n\nسنشوف في المحاضرة دي إزاي أي حدث بسيط في طفولتي علّمني 5 دروس تسويق ما اتعلمتهمش في أي جامعة.'},
-      {id:'s1_1',type:'image',src:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80&fit=crop',title:'البداية — رحلتي مع التسويق',notes:'🎬 Fade in بطيء + موسيقى خفيفة\n\n"قبل ما أكون مدرب تسويق… كنت طفل عادي جدًا… أو يمكن مش عادي قوي."'},
-      {id:'s1_2',type:'image',src:'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80&fit=crop',title:'الرجوع للماضي — ولد عنده 9 سنين',notes:'🎬 Zoom خفيف على الطفل\n\n"خلّوني أرجع بيكم لولد عنده 9 سنين… بيقضي نص حياته في الشارع."'},
-      {id:'s1_3',type:'image',src:'https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=800&q=80&fit=crop',title:'وقت الفسحة — الأكل أهم حاجة',notes:'🎬 حركة أطفال / ضحك\n\n"في الفسحة… كان أهم حدث في اليوم… الأكل!"'},
-      {id:'s1_4',type:'image',src:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80&fit=crop',title:'أبلة نبيلة — 10 قروش بس',notes:'🎬 Highlight على الكيس\n\n"كان فيه ست اسمها أبلة نبيلة… بتبيع تمر هندي متلج… بـ 10 قروش بس."'},
-      {id:'s1_5',type:'image',src:'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800&q=80&fit=crop',title:'المشكلة — محدش شايفها',notes:'🎬 Blur على الباعة → Focus عليها\n\n"بس مشكلتها؟\nمكانها بعيد… محدش شايفها."'},
-      {id:'s1_6',type:'image',src:'https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=800&q=80&fit=crop',title:'القرار المجنون — نطّ السور',notes:'🎬 Motion jump أو Freeze frame\n\n"وأنا… الطفل الشقي… قررت أنط السور."'},
-      {id:'s1_7',type:'image',src:'https://images.unsplash.com/photo-1473186578172-c141e6798cf4?w=800&q=80&fit=crop',title:'لحظة الملاحظة — الزحمة دي فرصة',notes:'🎬 Crowd movement\n\n"رجعت… وشفت الطلب… زحمة… ناس عاوزة تشتري."'},
-      {id:'s1_8',type:'image',src:'https://images.unsplash.com/photo-1489710437720-ebb67ec84dd2?w=800&q=80&fit=crop',title:'الفكرة — مين عاوز؟',notes:'🎬 تكبير على الفم/الصوت\n\n"فقلت… مين عاوز تمر هندي من أبلة نبيلة؟"'},
-      {id:'s1_9',type:'image',src:'https://images.unsplash.com/photo-1551525212-a1dc18871d4a?w=800&q=80&fit=crop',title:'أول عملاء — 3 جريوا عليه',notes:'🎬 Slide سريعة توحي بالحماس\n\n"فجأة… 3 جريوا عليا!"'},
-      {id:'s1_10',type:'image',src:'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80&fit=crop',title:'أول تسعير — خدمة توصيل بقى!',notes:'🎬 الأرقام 10 → 15 تظهر Animated\n\n"الكيس بـ 15 قرش… خدمة توصيل بقى!"'},
-      {id:'s1_11',type:'image',src:'https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?w=800&q=80&fit=crop',title:'فرحة الربح — 45 قرش!',notes:'🎬 Coins تتساقط\n\n"رجعت فرحان… فاكر نفسي كسبت 45 قرش!"'},
-      {id:'s1_12',type:'image',src:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&fit=crop',title:'الصدمة — معايا 15 بس!',notes:'🎬 Error / X أحمر\n\n"بس الحقيقة؟ معايا 15 بس!"'},
-      {id:'s1_13',type:'image',src:'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&q=80&fit=crop',title:'الحساب الصح — نسيت التكلفة',notes:'🎬 كتابة المعادلة خطوة خطوة\n\n"نسيت أحسب تكلفة المنتج."\n\n45 (المبيعات) – 30 (التكلفة) = 15 (الربح الفعلي)'},
-      {id:'s1_14',type:'image',src:'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b6?w=800&q=80&fit=crop',title:'التحول الكبير — 10 أكياس!',notes:'🎬 Multiply effect\n\n"تاني يوم… اتفقت مع أبلة نبيلة… وبقيت أبيع 10 أكياس."'},
-      {id:'s1_15',type:'image',src:'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80&fit=crop',title:'الدرس الأول — المشكلة = فرصة',notes:'🎯 درس تسويقي\n\n"هي كانت بعيدة… أنا بقيت الحل."\n\nكل مشكلة تشوفها في السوق → هي فرصة بيزنس في انتظارك'},
-      {id:'s1_16',type:'image',src:'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80&fit=crop',title:'الدرس الثاني — الراحة أهم من السعر',notes:'🎯 درس تسويقي\n\n"نفس المنتج… بس أسهل وصول… فباع أكتر."\n\nالناس مش بتدفع أكتر للمنتج… بتدفع للراحة والسهولة'},
-      {id:'s1_17',type:'image',src:'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80&fit=crop',title:'الدرس الثالث — العرض الواضح يصنع المبيعات',notes:'🎯 درس تسويقي\n\n"بس سألت: مين عاوز؟\nوده كان كفاية."\n\nCTA بسيط وواضح = مبيعات حقيقية'},
-      {id:'s1_18',type:'image',src:'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80&fit=crop',title:'الدرس الرابع — احسب التكلفة قبل الربح',notes:'🎯 درس تسويقي\n\n"التسويق مش فلوس داخلة… التسويق ربح صافي."\n\nالربح = الإيراد – التكلفة الكاملة\nاوعى تنسى أي تكلفة حتى لو صغيرة'},
-      {id:'s1_19',type:'image',src:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&fit=crop',title:'الدرس الخامس — وسّع لما تنجح (Scale)',notes:'🎯 درس تسويقي\n\n"من كيس واحد… لـ 10 أكياس…\nده اسمه Scale."\n\nلما الفكرة تنجح → كبّر الحجم، متغيّرش الفكرة'},
-      {id:'s1_20',type:'image',src:'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80&fit=crop',title:'الربط بالذكاء الاصطناعي',notes:'🎬 AI + موبايل + بيزنس\n\n"زمان كنت بنط سور…\nدلوقتي بنستخدم الذكاء الاصطناعي عشان نوصل للعميل أسرع."\n\nالـ AI هو السور الجديد اللي هتنطه عشان توصل للعميل قبل منافسيك'},
-      {id:'s1_21',type:'image',src:'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80&fit=crop',title:'الخاتمة — يلا نبدأ رحلة التسويق',notes:'🎬 Fade to black + شعار الكورس\n\n"كل واحد فيكم عنده قصة بسيطة…\nبس ممكن تبقى مشروع ضخم."\n\n"يلا نبدأ رحلة التسويق."'},
+      {id:'s1_0',type:'html',src:'/images/free-course-cover.html',title:'غلاف المحاضرة',notes:'🎬 البانر الرسمي للمحاضرة الأولى\n\n"رحلتي مع التسويق… بدأت من كيس تمر هندي"\n\nسنشوف في المحاضرة دي إزاي أي حدث بسيط في طفولتي علّمني 5 دروس تسويق ما اتعلمتهمش في أي جامعة.'},
+      {id:'s1_1',type:'image',src:'/images/slides/lec1-01.jpg',title:'البداية — رحلتي مع التسويق',notes:'🎬 Fade in بطيء + موسيقى خفيفة\n\n"قبل ما أكون مدرب تسويق… كنت طفل عادي جدًا… أو يمكن مش عادي قوي."'},
+      {id:'s1_2',type:'image',src:'/images/slides/lec1-02.jpg',title:'الرجوع للماضي — ولد عنده 9 سنين',notes:'🎬 Zoom خفيف على الطفل\n\n"خلّوني أرجع بيكم لولد عنده 9 سنين… بيقضي نص حياته في الشارع."'},
+      {id:'s1_3',type:'image',src:'/images/slides/lec1-03.jpg',title:'وقت الفسحة — الأكل أهم حاجة',notes:'🎬 حركة أطفال / ضحك\n\n"في الفسحة… كان أهم حدث في اليوم… الأكل!"'},
+      {id:'s1_4',type:'image',src:'/images/slides/lec1-04.jpg',title:'أبلة نبيلة — منتج بـ 10 قروش',notes:'🎬 Highlight على الكيس\n\n"كان فيه ست اسمها أبلة نبيلة… بتبيع تمر هندي متلج… بـ 10 قروش بس."'},
+      {id:'s1_5',type:'image',src:'/images/slides/lec1-05.jpg',title:'المشكلة — محدش شايفها',notes:'🎬 Blur على الباعة → Focus عليها\n\n"بس مشكلتها؟\nمكانها بعيد… محدش شايفها."'},
+      {id:'s1_6',type:'image',src:'/images/slides/lec1-06.jpg',title:'القرار المجنون — نطّ السور',notes:'🎬 Motion jump أو Freeze frame\n\n"وأنا… الطفل الشقي… قررت أنط السور."'},
+      {id:'s1_7',type:'image',src:'/images/slides/lec1-07.jpg',title:'حلاوة المغامرة — الزحمة والفرصة',notes:'🎬 Crowd movement\n\n"رجعت… وشفت الطلب… زحمة… ناس عاوزة تشتري."'},
+      {id:'s1_8',type:'image',src:'/images/slides/lec1-08.jpg',title:'الفكرة — مين عاوز؟',notes:'🎬 تكبير على الفم/الصوت\n\n"فقلت… مين عاوز تمر هندي من أبلة نبيلة؟"'},
+      {id:'s1_9',type:'image',src:'/images/slides/lec1-09.jpg',title:'أول عملاء — 3 جريوا عليه',notes:'🎬 Slide سريعة توحي بالحماس\n\n"فجأة… 3 جريوا عليا!"'},
+      {id:'s1_10',type:'image',src:'/images/slides/lec1-10.jpg',title:'أول تسعير — خدمة توصيل بقى!',notes:'🎬 الأرقام 10 → 15 تظهر Animated\n\n"الكيس بـ 15 قرش… خدمة توصيل بقى!"'},
+      {id:'s1_11',type:'image',src:'/images/slides/lec1-11.jpg',title:'فرحة الربح — 45 قرش!',notes:'🎬 Coins تتساقط\n\n"رجعت فرحان… فاكر نفسي كسبت 45 قرش!"'},
+      {id:'s1_12',type:'image',src:'/images/slides/lec1-12.jpg',title:'صدمة المصروفات — معايا 15 بس!',notes:'🎬 Error / X أحمر\n\n"بس الحقيقة؟ معايا 15 بس!"'},
+      {id:'s1_13',type:'image',src:'/images/slides/lec1-13.jpg',title:'احسب حساباتك — الحساب الصح',notes:'🎬 كتابة المعادلة خطوة خطوة\n\n"نسيت أحسب تكلفة المنتج."\n\n45 (المبيعات) – 30 (التكلفة) = 15 (الربح الفعلي)'},
+      {id:'s1_14',type:'image',src:'/images/slides/lec1-14.jpg',title:'أول صفقة مدروسة — البيع الذكي',notes:'🎬 Multiply effect\n\n"تاني يوم… اتفقت مع أبلة نبيلة… وبقيت أبيع 10 أكياس بصفقة مدروسة."'},
+      {id:'s1_15',type:'image',src:'/images/slides/lec1-15.jpg',title:'الحساب النهائي — 10 أكياس!',notes:'🎬 حساب تفصيلي\n\n"10 أكياس × 5 قروش ربح = 50 قرش صافي!"\n\nده الفرق بين اللي بيبيع بالحظ… واللي بيبيع بحساب.'},
     ]},
     { id:'lec_free_2', title:'أدوات الذكاء الاصطناعي الأساسية', description:'ChatGPT + Canva AI + Leonardo AI وكيفية كتابة Prompts احترافية', createdAt:ts+1000, updatedAt:ts+1000, slides:[
       sl('s2_1','فن كتابة الـ Prompt','الصيغة الاحترافية = الدور + المهمة + التفاصيل + الشكل\nمثال ضعيف: "اكتبلي بوست"\nمثال قوي: "أنت خبير تسويق — اكتب بوست انستجرام لعيادة أسنان في القاهرة عن خصم 30% رمضان — جمهور أمهات 25-45 — 80 كلمة — ودود مع إيموجي وCTA"'),
@@ -2122,7 +2116,7 @@ async function saveLectures(obj){
         ...l,
         slides:(l.slides||[]).map(s=>({
           ...s,
-          src: (s.src&&s.src.startsWith('http')) ? s.src : ''
+          src: (s.src&&(s.src.startsWith('http')||s.src.startsWith('/'))) ? s.src : ''
         }))
       }));
     }
@@ -2386,8 +2380,8 @@ function renderSlideEditor(){
           </div>
           <input id="sf-file-${i}" type="file" accept="image/*" style="display:none" onchange="onSlideFileChange(${i},this)">
           ${s.src?`<img id="sf-imgpreview-${i}" src="${s.src.startsWith('data:')?s.src:''}" style="margin-top:8px;max-height:90px;border-radius:8px;display:${s.src.startsWith('data:')?'block':'none'};">`:`<img id="sf-imgpreview-${i}" style="display:none;">`}
-          ${s.src && s.src.startsWith('http')?`<img src="${s.src}" style="margin-top:8px;max-height:90px;border-radius:8px;border:1px solid var(--border)" onerror="this.style.display='none'">`:''}
-          ${s.src && !s.src.startsWith('http') && !s.src.startsWith('data:') && s.src.trim()?`<div style="margin-top:6px;font-size:.75rem;color:#f87171;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:6px 10px;"><i class="fas fa-exclamation-triangle" style="margin-left:5px;"></i>الصورة مفقودة — أعد رفعها</div>`:''}
+          ${s.src && (s.src.startsWith('http')||s.src.startsWith('/'))?`<img src="${s.src}" style="margin-top:8px;max-height:90px;border-radius:8px;border:1px solid var(--border)" onerror="this.style.display='none'">`:''}
+          ${s.src && !s.src.startsWith('http') && !s.src.startsWith('data:') && !s.src.startsWith('/') && s.src.trim()?`<div style="margin-top:6px;font-size:.75rem;color:#f87171;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:6px 10px;"><i class="fas fa-exclamation-triangle" style="margin-left:5px;"></i>الصورة مفقودة — أعد رفعها</div>`:''}
         </div>`:`
         <div class="slide-field">
           <label>${s.type==='video'?'رابط الفيديو (يوتيوب أو mp4)':'رابط PDF'}</label>
@@ -2447,7 +2441,7 @@ async function saveLecture(){
         ...l,
         slides:(l.slides||[]).map(s=>({
           ...s,
-          src: (s.src&&s.src.startsWith('http')) ? s.src : ''
+          src: (s.src&&(s.src.startsWith('http')||s.src.startsWith('/'))) ? s.src : ''
         }))
       }));
     }

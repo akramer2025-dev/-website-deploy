@@ -587,7 +587,7 @@ function renderSidebar(){
 }
 
 function getThumbMedia(s){
-  const isRealSrc = s.src && (s.src.startsWith('http')||s.src.startsWith('data:'));
+  const isRealSrc = s.src && (s.src.startsWith('http')||s.src.startsWith('data:')||s.src.startsWith('/'));
   if(s.type==='image'&&isRealSrc) return `<img src="${s.src}" alt="">`;  
   if(s.type==='video') return `<i class="type-ico fas fa-play-circle"></i>`;
   if(s.type==='pdf')   return `<i class="type-ico fas fa-file-pdf"></i>`;
@@ -615,8 +615,8 @@ function renderSlides(){
 }
 
 function buildSlideHTML(s, i){
-  // التحقق من أن الـ src رابط حقيقي (http أو data:) وليس نص placeholder
-  const isRealSrc = s.src && (s.src.startsWith('http')||s.src.startsWith('data:'));
+  // التحقق من أن الـ src رابط حقيقي (http أو data: أو /) وليس نص placeholder
+  const isRealSrc = s.src && (s.src.startsWith('http')||s.src.startsWith('data:')||s.src.startsWith('/'));
 
   // background blur from image
   let bgStyle = '';
