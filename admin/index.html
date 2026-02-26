@@ -2115,13 +2115,15 @@ async function saveLectures(obj){
   _fsLectures = Object.assign({},obj);
   try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(obj)); }catch(e){ console.warn('localStorage quota, skipping local save'); }
 
-  // Build compressed version for Firestore (base64 → 400px / quality 0.45 ≈ 8-15KB per image)
-  const buildCompressed = async (lecs) => {
+  // Build compressed versions — two quality levels:
+  // • HQ  (per-lecture doc): 1080px / 0.82 quality  ≈ 40-80KB per image (good quality)
+  // • LQ  (grouped fallback): 400px  / 0.45 quality  ≈ 8-15KB per image  (thumbnail)
+  const buildCompressed = async (lecs, maxW, quality) => {
     const out = [];
     for(const lec of (lecs||[])){
       const slides = [];
       for(const s of (lec.slides||[])){
-        const compSrc = await compressImg(s.src, 400, 0.45);
+        const compSrc = await compressImg(s.src, maxW, quality);
         slides.push({...s, src: compSrc});
       }
       out.push({...lec, slides});
@@ -2129,24 +2131,20 @@ async function saveLectures(obj){
     return out;
   };
 
-  // Save each lecture as its own Firestore doc with compressed images
+  // Save each lecture as its own Firestore doc with HQ images (1080px / 0.82)
   const pairs = Object.entries(obj);
   for(const [courseKey, lecs] of pairs){
-    const compLecs = await buildCompressed(lecs);
-    for(const lec of compLecs){
+    const hqLecs  = await buildCompressed(lecs, 1080, 0.82);
+    const lqLecs  = await buildCompressed(lecs,  400, 0.45);
+    for(const lec of hqLecs){
       if(!lec.id) continue;
       _fdb.collection('lectures').doc(lec.id)
         .set({...lec, courseKey, savedAt: Date.now()})
         .catch(e=>console.warn('FS lec save', lec.id, e));
     }
-    // Also write grouped doc (for fallback readers) — use compressed lecs
-    // but chunk them: save one grouped doc per course to keep under 1MB
-    const groupSnippet = compLecs.map(l=>({
-      ...l,
-      slides:(l.slides||[]).map(s=>({...s, src: s.src&&s.src.startsWith('http') ? s.src : s.src}))
-    }));
+    // Grouped fallback doc uses LQ to stay well under 1MB
     _fdb.collection('admin_data').doc('lectures_'+courseKey)
-      .set({data: groupSnippet, courseKey, updatedAt: Date.now()})
+      .set({data: lqLecs, courseKey, updatedAt: Date.now()})
       .catch(e=>console.warn('FS lectures_'+courseKey, e));
   }
   toast('تم الحفظ على السحابة ✓','success');
