@@ -1054,7 +1054,7 @@ function doAdminLogin(){
   const p=document.getElementById('loginPass').value;
   const err=document.getElementById('loginErr');
   if(u.toLowerCase()===ADMIN_USER.toLowerCase() && p===ADMIN_PASS){
-    sessionStorage.setItem('am_admin_auth','1');
+    localStorage.setItem('am_admin_auth','1');
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminApp').style.display='block';
     initApp();
@@ -1066,13 +1066,13 @@ function doAdminLogin(){
   }
 }
 function doLogout(){
-  sessionStorage.removeItem('am_admin_auth');
+  localStorage.removeItem('am_admin_auth');
   document.getElementById('adminApp').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
 }
 document.addEventListener('DOMContentLoaded',()=>{
   ['loginUser','loginPass'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')doAdminLogin();}));
-  if(sessionStorage.getItem('am_admin_auth')==='1'){
+  if(localStorage.getItem('am_admin_auth')==='1'){
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminApp').style.display='block';
     initApp();

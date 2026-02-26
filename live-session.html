@@ -631,13 +631,8 @@ window.addEventListener('DOMContentLoaded',function(){
   const sid=sessionStorage.getItem('akram_student_id');
   if(sid) document.getElementById('studentIdInput').value=sid;
 
-  /* Auto-detect admin session → switch to teacher tab */
-  if(sessionStorage.getItem('am_admin_auth')==='1'){
-    switchRole('teacher', true);
-  }
-
-  /* Admin direct launch: skip auth screen entirely if admin is logged in */
-  if(sessionStorage.getItem('am_admin_auth')==='1'){
+  /* Admin: skip auth entirely and go straight to teacher mode */
+  if(localStorage.getItem('am_admin_auth')==='1'){
     currentUser = {id:'teacher-host', name:'أكرم مصطفى', courses:[], type:'employee'};
     isTeacherMode = true;
     launchJitsi();
@@ -702,7 +697,7 @@ function switchRole(role, autoAdmin){
     pt.style.display='block';
     lbl.textContent='ابدأ المحاضرة 🎥';
     note.innerHTML='👨‍🏫 دخول المحاضر — بيبدأ بميك وكاميرا شغالين + Screen Share جاهز';
-    if(autoAdmin || sessionStorage.getItem('am_admin_auth')==='1'){
+    if(autoAdmin || localStorage.getItem('am_admin_auth')==='1'){
       document.getElementById('teacherPassWrap').style.display='none';
       document.getElementById('teacherAutoMsg').style.display='block';
     }
@@ -722,7 +717,7 @@ function switchRole(role, autoAdmin){
 function tryAuth(){
   /* ── TEACHER LOGIN ── */
   if(isTeacherMode){
-    const isAdminSession = sessionStorage.getItem('am_admin_auth')==='1';
+    const isAdminSession = localStorage.getItem('am_admin_auth')==='1';
     const enteredPass = document.getElementById('teacherPassInput') ? document.getElementById('teacherPassInput').value : '';
     if(!isAdminSession && enteredPass !== ADMIN_PASS){
       showErr('كلمة السر غلط — حاول تاني');return;
@@ -805,71 +800,93 @@ function proceedToSession(){
    JITSI LAUNCH
 ══════════════════════════════════════════════ */
 function launchJitsi(){
-  /* ── موبايل: افتح Google Meet مباشرة ── */
+  const room = SESSION.room || ('akram-' + SESSION.id);
+
+  /* ── موبايل: افتح Jitsi Meet مباشرة ── */
   if(isMobile()){
     setLoad(false);
-    const mobileUrl = SESSION.meetLink || 'https://meet.google.com/mkf-dkez-qkw';
+    const mobileUrl = 'https://meet.jit.si/' + encodeURIComponent(room);
     document.getElementById('mobJitsiLink').href = mobileUrl;
     showScreen('mobileScreen');
     return;
   }
 
-  /* ── معلم: افتح Google Meet مباشرة في تبويب جديد ── */
-  if(isTeacherMode){
-    setLoad(false);
-    const meetUrl = SESSION.meetLink || 'https://meet.google.com/mkf-dkez-qkw';
-    document.getElementById('teacherJitsiLink').href = meetUrl;
-    document.getElementById('teacherScTitle').textContent = SESSION.title || 'المحاضرة جاهزة';
-    /* إخفاء باقي الشاشات */
-    ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
-      const el=document.getElementById(s);if(el){el.classList.remove('active');el.style.display='none';}
+  setLoad(true, 'جاري تحضير قاعة المحاضرة...');
+
+  function startJitsiEmbed(){
+    /* أخفِ كل الشاشات الأخرى */
+    ['authScreen','waitScreen','endedScreen','notFoundScreen','teacherScreen'].forEach(s=>{
+      const el=document.getElementById(s);
+      if(el){el.classList.remove('active');el.style.display='none';}
     });
-    document.getElementById('jitsiScreen').style.display='none';
-    showScreen('teacherScreen');
-    /* أظهر شريط التسجيل + أدوات التحديد */
-    document.getElementById('recPanel').classList.add('show');
-    const annoBtn = document.getElementById('btnAnnoToggleBar');
-    if(annoBtn) annoBtn.style.display='flex';
-    annoInit();
-    try{ _lastJoinCount = JSON.parse(localStorage.getItem('am_live_joins')||'[]').length; }catch(e){}
-    return;
+
+    const mount = document.getElementById('jitsiMount');
+    mount.innerHTML = '';
+
+    const api = new JitsiMeetExternalAPI('meet.jit.si', {
+      roomName: room,
+      parentNode: mount,
+      width: '100%',
+      height: '100%',
+      userInfo:{
+        displayName: currentUser.name || (isTeacherMode ? 'أكرم مصطفى' : 'طالب'),
+      },
+      configOverwrite:{
+        prejoinPageEnabled: false,
+        startWithAudioMuted: !isTeacherMode,
+        startWithVideoMuted: !isTeacherMode,
+        disableDeepLinking: true,
+        enableNoisyMicDetection: false,
+      },
+      interfaceConfigOverwrite:{
+        SHOW_JITSI_WATERMARK: false,
+        SHOW_WATERMARK_FOR_GUESTS: false,
+        DEFAULT_REMOTE_DISPLAY_NAME: 'طالب',
+        MOBILE_APP_PROMO: false,
+        TOOLBAR_BUTTONS: isTeacherMode
+          ? ['microphone','camera','desktop','fullscreen','chat','raisehand','tileview','participants-pane','settings','videoquality','filmstrip','mute-everyone','hangup']
+          : ['microphone','camera','raisehand','chat','tileview','hangup'],
+      }
+    });
+    jitsiApi = api;
+
+    /* أظهر شاشة Jitsi */
+    document.getElementById('jitsiScreen').style.display='block';
+    setLoad(false);
+
+    /* أدوات المعلم فقط */
+    if(isTeacherMode){
+      document.getElementById('recPanel').classList.add('show');
+      const annoBtn = document.getElementById('btnAnnoToggleBar');
+      if(annoBtn) annoBtn.style.display='flex';
+      annoInit();
+      try{ _lastJoinCount = JSON.parse(localStorage.getItem('am_live_joins')||'[]').length; }catch(e){}
+    } else {
+      /* تسجيل انضمام الطالب */
+      myJoinToken='tk_'+Math.random().toString(36).slice(2);
+      markActive(currentUser.id, myJoinToken);
+      try{
+        const joins = JSON.parse(localStorage.getItem('am_live_joins')||'[]');
+        joins.push({userId:currentUser.id, name:currentUser.name||currentUser.username||'طالب', sessionId:SESSION.id, joinedAt:Date.now()});
+        if(joins.length>50) joins.splice(0, joins.length-50);
+        localStorage.setItem('am_live_joins', JSON.stringify(joins));
+      }catch(e){}
+    }
   }
 
-  setLoad(true,'جاري فتح المحاضرة...');
-  myJoinToken='tk_'+Math.random().toString(36).slice(2);
-  markActive(currentUser.id,myJoinToken);
-
-  /* إشعار للمعلم بدخول الطالب */
-  if(!isTeacherMode && SESSION){
-    try{
-      const joins = JSON.parse(localStorage.getItem('am_live_joins')||'[]');
-      joins.push({userId:currentUser.id, name:currentUser.name||currentUser.username||'طالب', sessionId:SESSION.id, joinedAt:Date.now()});
-      if(joins.length>50) joins.splice(0, joins.length-50);
-      localStorage.setItem('am_live_joins', JSON.stringify(joins));
-    }catch(e){}
+  /* حمّل Jitsi External API إذا لم تكن جاهزة */
+  if(typeof JitsiMeetExternalAPI !== 'undefined'){
+    startJitsiEmbed();
+  } else {
+    const s = document.createElement('script');
+    s.src = 'https://meet.jit.si/external_api.js';
+    s.onload = startJitsiEmbed;
+    s.onerror = ()=>{
+      setLoad(false);
+      showFallbackMsg('https://meet.jit.si/' + encodeURIComponent(room));
+    };
+    document.head.appendChild(s);
   }
-
-  /* طالب: افتح Google Meet في تبويب جديد */
-  setLoad(false);
-  const studentMeetUrl = SESSION.meetLink || 'https://meet.google.com/mkf-dkez-qkw';
-  window.open(studentMeetUrl, '_blank');
-  /* أظهر رسالة تأكيد */
-  ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
-    const el=document.getElementById(s);if(el){el.classList.remove('active');el.style.display='none';}
-  });
-  document.getElementById('jitsiScreen').style.display='none';
-  const confirmDiv = document.createElement('div');
-  confirmDiv.style.cssText='position:fixed;inset:0;top:52px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:24px;background:var(--bg);text-align:center;';
-  confirmDiv.innerHTML=`
-    <div style="font-size:3rem">✅</div>
-    <div style="font-size:1.1rem;font-weight:900;color:#fff;">جاري فتح Google Meet...</div>
-    <div style="font-size:.85rem;color:var(--muted);max-width:380px;line-height:1.8;">لو ما فتحش تلقائياً اضغط الزرار أدناه</div>
-    <a href="${studentMeetUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:9px;padding:13px 28px;background:linear-gradient(135deg,#4285f4,#34a853);border-radius:13px;color:#fff;font-size:.95rem;font-weight:900;text-decoration:none;">
-      <i class="fab fa-google"></i> افتح Google Meet
-    </a>
-    <a href="my-courses.html" style="color:var(--muted);font-size:.82rem;margin-top:4px;"><i class="fas fa-arrow-right"></i> رجوع</a>
-  `;
-  document.body.appendChild(confirmDiv);
 }
 
 function updateAttendees(){ /* غير متاح */ }
