@@ -2087,33 +2087,63 @@ async function seedFreeLectures(){
   } catch(e){ console.warn('Seed failed:', e); }
 }
 
-function saveLectures(obj){
-  _fsLectures = Object.assign({},obj);
-  try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(obj)); }catch(e){ console.warn('localStorage quota'); }
-  // 1) Save full object to admin_data/lectures (backward compat for lecture-viewer)
-  // Strip base64 srcs to avoid the 1MB limit — store URLs only
-  const stripped = {};
-  Object.entries(obj).forEach(([ck,lecs])=>{
-    stripped[ck] = (lecs||[]).map(lec=>({
-      ...lec,
-      slides:(lec.slides||[]).map(s=>({
-        ...s,
-        src: (s.src&&(s.src.startsWith('http')||s.src.startsWith('data:image'))) ? s.src : ''
-      }))
-    }));
+// Compress a base64 image to max maxW px wide at given quality (0-1)
+function compressImg(src, maxW, quality){
+  return new Promise(resolve=>{
+    if(!src || !src.startsWith('data:image')){ resolve(src); return; }
+    const img = new Image();
+    img.onload = ()=>{
+      const scale = Math.min(1, maxW / img.width);
+      const w = Math.round(img.width * scale);
+      const h = Math.round(img.height * scale);
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      resolve(c.toDataURL('image/jpeg', quality));
+    };
+    img.onerror = ()=>resolve(src);
+    img.src = src;
   });
-  _fdb.collection('admin_data').doc('lectures')
-    .set({data:stripped, updatedAt:Date.now()})
-    .catch(e=>console.warn('FS admin_data lectures:', e));
-  // 2) Save each lecture individually (supports large base64 per-lecture)
-  Object.entries(obj).forEach(([courseKey, lecs])=>{
-    (lecs||[]).forEach(lec=>{
-      if(!lec.id) return;
+}
+
+async function saveLectures(obj){
+  _fsLectures = Object.assign({},obj);
+  try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(obj)); }catch(e){ console.warn('localStorage quota, skipping local save'); }
+
+  // Build compressed version for Firestore (base64 → 400px / quality 0.45 ≈ 8-15KB per image)
+  const buildCompressed = async (lecs) => {
+    const out = [];
+    for(const lec of (lecs||[])){
+      const slides = [];
+      for(const s of (lec.slides||[])){
+        const compSrc = await compressImg(s.src, 400, 0.45);
+        slides.push({...s, src: compSrc});
+      }
+      out.push({...lec, slides});
+    }
+    return out;
+  };
+
+  // Save each lecture as its own Firestore doc with compressed images
+  const pairs = Object.entries(obj);
+  for(const [courseKey, lecs] of pairs){
+    const compLecs = await buildCompressed(lecs);
+    for(const lec of compLecs){
+      if(!lec.id) continue;
       _fdb.collection('lectures').doc(lec.id)
         .set({...lec, courseKey, savedAt: Date.now()})
         .catch(e=>console.warn('FS lec save', lec.id, e));
-    });
-  });
+    }
+    // Also write grouped doc (for fallback readers) — use compressed lecs
+    // but chunk them: save one grouped doc per course to keep under 1MB
+    const groupSnippet = compLecs.map(l=>({
+      ...l,
+      slides:(l.slides||[]).map(s=>({...s, src: s.src&&s.src.startsWith('http') ? s.src : s.src}))
+    }));
+    _fdb.collection('admin_data').doc('lectures_'+courseKey)
+      .set({data: groupSnippet, courseKey, updatedAt: Date.now()})
+      .catch(e=>console.warn('FS lectures_'+courseKey, e));
+  }
   toast('تم الحفظ على السحابة ✓','success');
 }
 

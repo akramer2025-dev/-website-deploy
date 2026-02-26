@@ -321,7 +321,17 @@ async function init(){
         lectureData = lec;
       }
     }catch(e){ console.warn('lectures/{id} load failed',e); }
-    // Fallback: read from admin_data/lectures (original format)
+    // Fallback: read from per-course doc admin_data/lectures_{courseKey}
+    if(!lectureData){
+      try{
+        const cDoc = await _db.collection('admin_data').doc('lectures_'+courseKey).get();
+        if(cDoc.exists){
+          const courseLecs = cDoc.data().data||[];
+          lectureData = courseLecs.find(l=>l.id===lecId)||null;
+        }
+      }catch(e){ console.warn('lectures_'+courseKey+' fallback failed',e); }
+    }
+    // Final fallback: old combined admin_data/lectures doc
     if(!lectureData){
       try{
         const fullDoc = await _db.collection('admin_data').doc('lectures').get();

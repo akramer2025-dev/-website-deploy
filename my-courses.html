@@ -259,13 +259,19 @@ async function init(){
       allLectures = lecsObj;
       try{localStorage.setItem(LECTURES_KEY,JSON.stringify(allLectures))}catch(e){}
     } else {
-      // Fallback: read from old admin_data/lectures doc
+      // Fallback: read from per-course docs admin_data/lectures_{courseKey}
       try{
-        const oldLecsDoc = await _mcdb.collection('admin_data').doc('lectures').get();
-        if(oldLecsDoc.exists){
-          const raw = oldLecsDoc.data()||{};
-          allLectures = raw.data||raw;
+        const KNOWN_COURSES = ['free','facebook-ads','instagram','tiktok','snapchat','twitter','programming','integrated-strategy'];
+        const courseDocs = await Promise.all(KNOWN_COURSES.map(ck=>_mcdb.collection('admin_data').doc('lectures_'+ck).get()));
+        const fallbackObj = {};
+        courseDocs.forEach((d,i)=>{ if(d.exists){ const arr=d.data().data||[]; if(arr.length) fallbackObj[KNOWN_COURSES[i]]=arr; } });
+        if(Object.keys(fallbackObj).length > 0){
+          allLectures = fallbackObj;
           try{localStorage.setItem(LECTURES_KEY,JSON.stringify(allLectures))}catch(e){}
+        } else {
+          // Final fallback: old combined doc
+          const oldLecsDoc = await _mcdb.collection('admin_data').doc('lectures').get();
+          if(oldLecsDoc.exists){ const raw=oldLecsDoc.data()||{}; allLectures=raw.data||raw; }
         }
       }catch(e){ console.warn('fallback lectures load failed',e); }
     }
