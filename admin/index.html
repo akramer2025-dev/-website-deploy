@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>���� ������� | Akram Mostafa</title>
+<title>لوحة الإدارة | Akram Mostafa</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -17,7 +17,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 
-/* ?? SCROLLBAR ?? */
+/* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:6px;height:6px;}
 ::-webkit-scrollbar-track{background:var(--bg2);border-radius:10px;}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--pink),var(--orange));border-radius:10px;}
@@ -426,19 +426,19 @@ button{cursor:pointer;}
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo"><img src="../images/logo.png" alt="Logo"></div>
-    <h2>���� �������</h2>
-    <p>���� ������ ������</p>
-    <div class="login-err" id="loginErr"><i class="fas fa-exclamation-circle"></i><span>��� �������� �� ���� ������ ��� �����</span></div>
+    <h2>لوحة الإدارة</h2>
+    <p>أدخل بيانات الدخول</p>
+    <div class="login-err" id="loginErr"><i class="fas fa-exclamation-circle"></i><span>اسم المستخدم أو كلمة المرور غير صحيحة</span></div>
     <div class="l-field">
-      <label>��� ��������</label>
-      <div class="l-input-wrap"><i class="fas fa-user"></i><input type="text" id="loginUser" placeholder="���� ��� ��������" autocomplete="username"></div>
+      <label>اسم المستخدم</label>
+      <div class="l-input-wrap"><i class="fas fa-user"></i><input type="text" id="loginUser" placeholder="أدخل اسم المستخدم" autocomplete="username"></div>
     </div>
     <div class="l-field">
-      <label>���� ������</label>
-      <div class="l-input-wrap"><i class="fas fa-lock"></i><input type="password" id="loginPass" placeholder="���� ���� ������" autocomplete="current-password"></div>
+      <label>كلمة المرور</label>
+      <div class="l-input-wrap"><i class="fas fa-lock"></i><input type="password" id="loginPass" placeholder="أدخل كلمة المرور" autocomplete="current-password"></div>
     </div>
-    <button class="btn-login-submit" onclick="doAdminLogin()"><i class="fas fa-sign-in-alt"></i> ����</button>
-    <p style="margin-top:18px;font-size:.78rem;color:var(--muted)"><a href="../index.html" style="color:var(--muted);"><i class="fas fa-arrow-right"></i> ������ ��������</a></p>
+    <button class="btn-login-submit" onclick="doAdminLogin()"><i class="fas fa-sign-in-alt"></i> دخول</button>
+    <p style="margin-top:18px;font-size:.78rem;color:var(--muted)"><a href="../index.html" style="color:var(--muted);"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a></p>
   </div>
 </div>
 
@@ -447,38 +447,38 @@ button{cursor:pointer;}
   <header class="adm-header">
     <div class="adm-header-brand"><img src="../images/logo.png" alt="Logo"><span>AKRAM ADMIN</span></div>
     <div class="adm-header-right">
-      <div class="adm-admin-pill"><i class="fas fa-shield-alt"></i><span>���� ������</span></div>
-      <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> ����</button>
+      <div class="adm-admin-pill"><i class="fas fa-shield-alt"></i><span>أدمن النظام</span></div>
+      <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
     </div>
   </header>
   <aside class="adm-sidebar" id="adminSidebar">
     <div class="adm-nav-section">
-      <div class="adm-nav-label">������� ��������</div>
-      <div class="adm-nav-item active" onclick="showSection('dashboard')"><i class="fas fa-th-large"></i> ���� ������</div>
-      <div class="adm-nav-item" onclick="showSection('portfolio')"><i class="fas fa-images"></i> ���� �������<span class="adm-nav-badge" id="portfolioImgCount">0</span></div>
+      <div class="adm-nav-label">الإدارة الرئيسية</div>
+      <div class="adm-nav-item active" onclick="showSection('dashboard')"><i class="fas fa-th-large"></i> لوحة التحكم</div>
+      <div class="adm-nav-item" onclick="showSection('portfolio')"><i class="fas fa-images"></i> معرض الأعمال<span class="adm-nav-badge" id="portfolioImgCount">0</span></div>
     </div>
     <div class="adm-nav-section">
-      <div class="adm-nav-label">����� ��������</div>
-      <div class="adm-nav-item" onclick="showSection('webprices')"><i class="fas fa-globe"></i> ������� �����<span class="adm-nav-badge">6</span></div>
-      <div class="adm-nav-item" onclick="showSection('mobileprices')"><i class="fas fa-mobile-alt"></i> ������� ��������<span class="adm-nav-badge">6</span></div>
+      <div class="adm-nav-label">إدارة المشاريع</div>
+      <div class="adm-nav-item" onclick="showSection('webprices')"><i class="fas fa-globe"></i> تطبيقات الويب<span class="adm-nav-badge">6</span></div>
+      <div class="adm-nav-item" onclick="showSection('mobileprices')"><i class="fas fa-mobile-alt"></i> تطبيقات الموبايل<span class="adm-nav-badge">6</span></div>
     </div>
     <div class="adm-nav-section">
-      <div class="adm-nav-label">����� ����������</div>
-      <div class="adm-nav-item" onclick="showSection('joinrequests')"><i class="fas fa-user-clock"></i> ����� ��������<span class="adm-nav-badge" id="pendingCount" style="background:#f59e0b">0</span></div>
-      <div class="adm-nav-item" onclick="showSection('employees')"><i class="fas fa-user-tie"></i> ��������<span class="adm-nav-badge" id="empCount">0</span></div>
-      <div class="adm-nav-item" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> ������<span class="adm-nav-badge" id="stuCount">0</span></div>
+      <div class="adm-nav-label">إدارة المستخدمين</div>
+      <div class="adm-nav-item" onclick="showSection('joinrequests')"><i class="fas fa-user-clock"></i> طلبات الانضمام<span class="adm-nav-badge" id="pendingCount" style="background:#f59e0b">0</span></div>
+      <div class="adm-nav-item" onclick="showSection('employees')"><i class="fas fa-user-tie"></i> الموظفون<span class="adm-nav-badge" id="empCount">0</span></div>
+      <div class="adm-nav-item" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> الطلاب<span class="adm-nav-badge" id="stuCount">0</span></div>
     </div>
     <div class="adm-nav-section">
-      <div class="adm-nav-label">���� ��������</div>
-      <div class="adm-nav-item" onclick="showSection('lectures');initLecturesSection()"><i class="fas fa-chalkboard-teacher"></i> ����� ���������<span class="adm-nav-badge" id="lecsCount" style="background:#8b5cf6">0</span></div>
-      <div class="adm-nav-item" onclick="showSection('live');renderLiveSessions()"><i class="fas fa-broadcast-tower"></i> ����� ������<span class="adm-nav-badge" id="liveBadge" style="background:#22c55e">0</span></div>
-      <div class="adm-nav-item" onclick="showSection('recorded');renderRecordedLectures()"><i class="fas fa-video"></i> ������� �����<span class="adm-nav-badge" id="recLecsBadge" style="background:#a78bfa">0</span></div>
+      <div class="adm-nav-label">نظام الكورسات</div>
+      <div class="adm-nav-item" onclick="showSection('lectures');initLecturesSection()"><i class="fas fa-chalkboard-teacher"></i> إدارة المحاضرات<span class="adm-nav-badge" id="lecsCount" style="background:#8b5cf6">0</span></div>
+      <div class="adm-nav-item" onclick="showSection('live');renderLiveSessions()"><i class="fas fa-broadcast-tower"></i> جلسات مباشرة<span class="adm-nav-badge" id="liveBadge" style="background:#22c55e">0</span></div>
+      <div class="adm-nav-item" onclick="showSection('recorded');renderRecordedLectures()"><i class="fas fa-video"></i> محاضرات مسجلة<span class="adm-nav-badge" id="recLecsBadge" style="background:#a78bfa">0</span></div>
     </div>
     <div class="adm-nav-section">
-      <div class="adm-nav-label">����</div>
-      <div class="adm-nav-item" onclick="showSection('settings')"><i class="fas fa-cog"></i> ���������</div>
-      <div class="adm-nav-item" onclick="window.open('../store.html','_blank')"><i class="fas fa-store"></i> ���� ���</div>
-      <div class="adm-nav-item" onclick="window.open('../index.html','_blank')"><i class="fas fa-external-link-alt"></i> ����� ������</div>
+      <div class="adm-nav-label">أخرى</div>
+      <div class="adm-nav-item" onclick="showSection('settings')"><i class="fas fa-cog"></i> الإعدادات</div>
+      <div class="adm-nav-item" onclick="window.open('../store.html','_blank')"><i class="fas fa-store"></i> متجر رمو</div>
+      <div class="adm-nav-item" onclick="window.open('../index.html','_blank')"><i class="fas fa-external-link-alt"></i> زيارة الموقع</div>
     </div>
     <div class="adm-sidebar-footer"><p>Akram Mostafa &copy; 2026</p></div>
   </aside>
@@ -486,28 +486,28 @@ button{cursor:pointer;}
 
     <!-- DASHBOARD -->
     <div class="adm-section active" id="sec-dashboard">
-      <div class="adm-section-title">���� <span>������</span></div>
-      <div class="adm-breadcrumb">������! ��� ���������� ������ ������</div>
+      <div class="adm-section-title">لوحة <span>التحكم</span></div>
+      <div class="adm-breadcrumb">مرحباً! هذه الإحصائيات العامة للنظام</div>
       <div class="stats-grid">
-        <div class="stat-card c1"><div class="stat-card-icon"><i class="fas fa-users"></i></div><div class="stat-num" id="dash-total">0</div><div class="stat-lbl">������ ����������</div></div>
-        <div class="stat-card c2"><div class="stat-card-icon"><i class="fas fa-user-tie"></i></div><div class="stat-num" id="dash-emp">0</div><div class="stat-lbl">��������</div></div>
-        <div class="stat-card c3"><div class="stat-card-icon"><i class="fas fa-user-graduate"></i></div><div class="stat-num" id="dash-stu">0</div><div class="stat-lbl">������</div></div>
-        <div class="stat-card c4"><div class="stat-card-icon"><i class="fas fa-images"></i></div><div class="stat-num" id="dash-imgs">0</div><div class="stat-lbl">��� ������</div></div>
+        <div class="stat-card c1"><div class="stat-card-icon"><i class="fas fa-users"></i></div><div class="stat-num" id="dash-total">0</div><div class="stat-lbl">إجمالي المستخدمين</div></div>
+        <div class="stat-card c2"><div class="stat-card-icon"><i class="fas fa-user-tie"></i></div><div class="stat-num" id="dash-emp">0</div><div class="stat-lbl">الموظفون</div></div>
+        <div class="stat-card c3"><div class="stat-card-icon"><i class="fas fa-user-graduate"></i></div><div class="stat-num" id="dash-stu">0</div><div class="stat-lbl">الطلاب</div></div>
+        <div class="stat-card c4"><div class="stat-card-icon"><i class="fas fa-images"></i></div><div class="stat-num" id="dash-imgs">0</div><div class="stat-lbl">صور المعرض</div></div>
       </div>
       <div class="adm-row">
         <div class="adm-card">
-          <h3><i class="fas fa-users"></i> ��� ���������� ��������</h3>
-          <table class="adm-table"><thead><tr><th>�����</th><th>�����</th><th>����� �������</th></tr></thead><tbody id="recentUsersTable"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">�� ���� �������� ��</td></tr></tbody></table>
+          <h3><i class="fas fa-users"></i> آخر المستخدمين المضافين</h3>
+          <table class="adm-table"><thead><tr><th>الاسم</th><th>النوع</th><th>تاريخ الإضافة</th></tr></thead><tbody id="recentUsersTable"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">جم موظف الرابطجم تم</td></tr></tbody></table>
         </div>
         <div class="adm-card">
-          <h3><i class="fas fa-bolt"></i> ������� �����</h3>
+          <h3><i class="fas fa-bolt"></i> إجراءات سريعة</h3>
           <div class="quick-actions">
-            <div class="qa-btn" onclick="showSection('joinrequests')"><div class="qa-btn-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;"><i class="fas fa-user-clock"></i></div>����� ��������</div>
-            <div class="qa-btn" onclick="openAddUser('employee')"><div class="qa-btn-icon" style="background:rgba(59,130,246,0.15);color:var(--blue);"><i class="fas fa-user-plus"></i></div>����� ���� ����</div>
-            <div class="qa-btn" onclick="openAddUser('student')"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-user-graduate"></i></div>����� ���� ����</div>
-            <div class="qa-btn" onclick="showSection('portfolio')"><div class="qa-btn-icon" style="background:rgba(233,78,119,0.15);color:var(--pink);"><i class="fas fa-images"></i></div>����� ���� �������</div>
-            <div class="qa-btn" onclick="showSection('webprices')"><div class="qa-btn-icon" style="background:rgba(247,147,30,0.15);color:var(--orange);"><i class="fas fa-globe"></i></div>����� ����� �����</div>
-            <div class="qa-btn" onclick="showSection('mobileprices')"><div class="qa-btn-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-mobile-alt"></i></div>����� ����� ��������</div>
+            <div class="qa-btn" onclick="showSection('joinrequests')"><div class="qa-btn-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;"><i class="fas fa-user-clock"></i></div>طلبات الانضمام</div>
+            <div class="qa-btn" onclick="openAddUser('employee')"><div class="qa-btn-icon" style="background:rgba(59,130,246,0.15);color:var(--blue);"><i class="fas fa-user-plus"></i></div>إضافة موظف جديد</div>
+            <div class="qa-btn" onclick="openAddUser('student')"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-user-graduate"></i></div>إضافة طالب جديد</div>
+            <div class="qa-btn" onclick="showSection('portfolio')"><div class="qa-btn-icon" style="background:rgba(233,78,119,0.15);color:var(--pink);"><i class="fas fa-images"></i></div>إدارة معرض الأعمال</div>
+            <div class="qa-btn" onclick="showSection('webprices')"><div class="qa-btn-icon" style="background:rgba(247,147,30,0.15);color:var(--orange);"><i class="fas fa-globe"></i></div>تحديث أسعار الويب</div>
+            <div class="qa-btn" onclick="showSection('mobileprices')"><div class="qa-btn-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-mobile-alt"></i></div>تحديث أسعار الموبايل</div>
           </div>
         </div>
       </div>
@@ -515,36 +515,36 @@ button{cursor:pointer;}
 
     <!-- PORTFOLIO -->
     <div class="adm-section" id="sec-portfolio">
-      <div class="adm-section-title">���� <span>�������</span></div>
-      <div class="adm-breadcrumb">��� ��� ��� ����ڡ ����� �� ���� ������ ��� ������</div>
+      <div class="adm-section-title">معرض <span>الأعمال</span></div>
+      <div class="adm-breadcrumb">أضف صور لكل مشروع، ستظهر في صفحة المنتج على الموقع</div>
       <div class="projects-grid" id="portfolioProjectsGrid"></div>
     </div>
 
     <!-- WEB APP PRICES -->
     <div class="adm-section" id="sec-webprices">
-      <div class="adm-section-title">������� <span>�����</span></div>
-      <div class="adm-breadcrumb">���� ����� �� ����ޡ ����� ������ �� ���� ������</div>
+      <div class="adm-section-title">تطبيقات <span>الويب</span></div>
+      <div class="adm-breadcrumb">حدّث أسعار كل تطبيق، ستظهر مباشرة في صفحة المنتج</div>
       <div class="projects-grid" id="webPricesGrid"></div>
     </div>
 
     <!-- MOBILE APP PRICES -->
     <div class="adm-section" id="sec-mobileprices">
-      <div class="adm-section-title">������� <span>��������</span></div>
-      <div class="adm-breadcrumb">���� ����� ������� �������� ����� ������ �� ���� ������</div>
+      <div class="adm-section-title">تطبيقات <span>الموبايل</span></div>
+      <div class="adm-breadcrumb">حدّث أسعار تطبيقات الموبايل، ستظهر مباشرة في صفحة المنتج</div>
       <div class="projects-grid" id="mobilePricesGrid"></div>
     </div>
 
     <!-- JOIN REQUESTS -->
     <div class="adm-section" id="sec-joinrequests">
       <div class="users-top">
-        <div><div class="adm-section-title">����� <span>��������</span></div><div class="adm-breadcrumb">������� ������� �� ������ ��� ���� ������� � ���� �� ���� �� ���</div></div>
-        <a href="../register.html" target="_blank" class="btn-add-user" style="text-decoration:none"><i class="fas fa-link"></i> ���� �������</a>
+        <div><div class="adm-section-title">طلبات <span>الانضمام</span></div><div class="adm-breadcrumb">الطلبات الواردة من الطلاب عبر صفحة التسجيل – وافق أو ارفض كل طلب</div></div>
+        <a href="../register.html" target="_blank" class="btn-add-user" style="text-decoration:none"><i class="fas fa-link"></i> رابط التسجيل</a>
       </div>
       <div class="req-filters">
-        <button class="req-filter-btn active" id="rfAll" onclick="filterReqs('all')"><i class="fas fa-list"></i> ���� <span id="rfAllCount"></span></button>
-        <button class="req-filter-btn" id="rfPending" onclick="filterReqs('pending')" style="color:#fbbf24"><i class="fas fa-clock"></i> ��� �������� <span id="rfPendingCount"></span></button>
-        <button class="req-filter-btn" id="rfApproved" onclick="filterReqs('approved')" style="color:#4ade80"><i class="fas fa-check"></i> ����� <span id="rfApprovedCount"></span></button>
-        <button class="req-filter-btn" id="rfRejected" onclick="filterReqs('rejected')" style="color:#f87171"><i class="fas fa-times"></i> ����� <span id="rfRejectedCount"></span></button>
+        <button class="req-filter-btn active" id="rfAll" onclick="filterReqs('all')"><i class="fas fa-list"></i> الكل <span id="rfAllCount"></span></button>
+        <button class="req-filter-btn" id="rfPending" onclick="filterReqs('pending')" style="color:#fbbf24"><i class="fas fa-clock"></i> قيد الانتظار <span id="rfPendingCount"></span></button>
+        <button class="req-filter-btn" id="rfApproved" onclick="filterReqs('approved')" style="color:#4ade80"><i class="fas fa-check"></i> مقبول <span id="rfApprovedCount"></span></button>
+        <button class="req-filter-btn" id="rfRejected" onclick="filterReqs('rejected')" style="color:#f87171"><i class="fas fa-times"></i> مرفوض <span id="rfRejectedCount"></span></button>
       </div>
       <div class="req-cards" id="reqCardsGrid"></div>
     </div>
@@ -552,8 +552,8 @@ button{cursor:pointer;}
     <!-- EMPLOYEES -->
     <div class="adm-section" id="sec-employees">
       <div class="users-top">
-        <div><div class="adm-section-title">����� <span>��������</span></div><div class="adm-breadcrumb">����� �������� ������� �� ��������</div></div>
-        <button class="btn-add-user" onclick="openAddUser('employee')"><i class="fas fa-plus"></i> ����� ����</button>
+        <div><div class="adm-section-title">قائمة <span>الموظفين</span></div><div class="adm-breadcrumb">إدارة الموظفين والفريق في المنظومة</div></div>
+        <button class="btn-add-user" onclick="openAddUser('employee')"><i class="fas fa-plus"></i> إضافة جديد</button>
       </div>
       <div class="users-grid" id="employeesGrid"></div>
     </div>
@@ -561,8 +561,8 @@ button{cursor:pointer;}
     <!-- STUDENTS -->
     <div class="adm-section" id="sec-students">
       <div class="users-top">
-        <div><div class="adm-section-title">����� <span>������</span></div><div class="adm-breadcrumb">����� ������ �������� �� �������</div></div>
-        <button class="btn-add-user" onclick="openAddUser('student')"><i class="fas fa-plus"></i> ����� ����</button>
+        <div><div class="adm-section-title">قائمة <span>الطلاب</span></div><div class="adm-breadcrumb">إدارة الطلاب المسجلين في الدورات</div></div>
+        <button class="btn-add-user" onclick="openAddUser('student')"><i class="fas fa-plus"></i> إضافة جديد</button>
       </div>
       <div class="users-grid" id="studentsGrid"></div>
     </div>
@@ -571,10 +571,10 @@ button{cursor:pointer;}
     <div class="adm-section" id="sec-live">
       <div class="live-top">
         <div>
-          <div class="adm-section-title">����� <span>������</span></div>
-          <div class="adm-breadcrumb">���� ���� ����� ������ ������ � ������� ������� �� ���� �������</div>
+          <div class="adm-section-title">جلسات <span>مباشرة</span></div>
+          <div class="adm-breadcrumb">افتح جلسة وابعت اللينك للطلاب — بيدخلوا مباشرةً من صفحة كورساتي</div>
         </div>
-        <button class="btn-add-user" onclick="openAddLiveSession()"><i class="fas fa-plus"></i> ���� �����</button>
+        <button class="btn-add-user" onclick="openAddLiveSession()"><i class="fas fa-plus"></i> جلسة جديدة</button>
       </div>
       <div class="live-sessions-grid" id="liveSessionsGrid"></div>
     </div>
@@ -583,54 +583,54 @@ button{cursor:pointer;}
     <div class="modal-overlay" id="liveModal">
       <div class="modal-box">
         <div class="modal-header">
-          <h3 id="liveModalTitle">���� �����</h3>
+          <h3 id="liveModalTitle">جلسة جديدة</h3>
           <button class="modal-close" onclick="closeLiveModal()">&times;</button>
         </div>
         <div class="form-field">
-          <label>����� ������ *</label>
-          <input type="text" id="lsTitle" placeholder="����: ������ ������ � ��� �������">
+          <label>عنوان الجلسة *</label>
+          <input type="text" id="lsTitle" placeholder="مثال: محاضرة مباشرة – أسس التسويق">
         </div>
         <div class="form-row">
           <div class="form-field">
-            <label>������ *</label>
+            <label>الكورس *</label>
             <select id="lsCourse">
-              <option value="free">���� ������� �������</option>
-              <option value="programming">����� �������</option>
-              <option value="facebook">������� ������</option>
-              <option value="instagram">���������</option>
-              <option value="tiktok">��� ���</option>
-              <option value="snapchat">���� ���</option>
-              <option value="twitter">��� (�����)</option>
-              <option value="integrated">���������� �������</option>
+              <option value="free">كورس التسويق المجاني</option>
+              <option value="programming">برمجة المواقع</option>
+              <option value="facebook">إعلانات فيسبوك</option>
+              <option value="instagram">إنستاغرام</option>
+              <option value="tiktok">تيك توك</option>
+              <option value="snapchat">سناب شات</option>
+              <option value="twitter">إكس (تويتر)</option>
+              <option value="integrated">استراتيجية متكاملة</option>
             </select>
           </div>
           <div class="form-field">
-            <label>����� ���� ������</label>
+            <label>تاريخ ووقت الجلسة</label>
             <input type="datetime-local" id="lsScheduled">
           </div>
         </div>
         <div class="form-field">
-          <label>��� ������ (���������) <small style="color:var(--muted)">� ����� ���� ����� �����</small></label>
+          <label>اسم الغرفة (أوتوماتيك) <small style="color:var(--muted)">— اتركه فاضي تتولد لوحده</small></label>
           <div style="display:flex;gap:8px;">
-            <input type="text" id="lsRoom" placeholder="������ ��������..." style="flex:1">
-            <button type="button" onclick="generateRoom()" style="padding:11px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:11px;color:var(--muted);font-size:.8rem;white-space:nowrap;">����� ����</button>
+            <input type="text" id="lsRoom" placeholder="هيتولد تلقائياً..." style="flex:1">
+            <button type="button" onclick="generateRoom()" style="padding:11px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:11px;color:var(--muted);font-size:.8rem;white-space:nowrap;">توليد جديد</button>
           </div>
         </div>
         <div class="form-field">
-          <label>���� ������</label>
+          <label>حالة الجلسة</label>
           <select id="lsStatus">
-            <option value="scheduled">������ (�� ���� ���)</option>
-            <option value="live">����� ���� ??</option>
-            <option value="ended">�����</option>
+            <option value="scheduled">مجدولة (لم تبدأ بعد)</option>
+            <option value="live">مباشر الآن 🔴</option>
+            <option value="ended">انتهت</option>
           </select>
         </div>
         <div class="form-field">
-          <label>������� (�������)</label>
-          <textarea id="lsNotes" placeholder="�� ������� ������ ������..."></textarea>
+          <label>ملاحظات (اختياري)</label>
+          <textarea id="lsNotes" placeholder="أي تعليمات إضافية للطلاب..."></textarea>
         </div>
         <div class="modal-footer">
-          <button class="btn-modal-save" onclick="saveLiveSession()"><i class="fas fa-save"></i> ���</button>
-          <button class="btn-modal-cancel" onclick="closeLiveModal()">�����</button>
+          <button class="btn-modal-save" onclick="saveLiveSession()"><i class="fas fa-save"></i> حفظ</button>
+          <button class="btn-modal-cancel" onclick="closeLiveModal()">إلغاء</button>
         </div>
       </div>
     </div>
@@ -638,8 +638,8 @@ button{cursor:pointer;}
     <!-- RECORDED LECTURES -->
     <div class="adm-section" id="sec-recorded">
       <div class="users-top">
-        <div><div class="adm-section-title">������� <span>�����</span></div><div class="adm-breadcrumb">��������� ���� �� ������� ������ ������ ������ �� �������� ������</div></div>
-        <button class="btn-add-user" onclick="openAddRecordedLecture()"><i class="fas fa-plus"></i> ����� ����</button>
+        <div><div class="adm-section-title">محاضرات <span>مسجلة</span></div><div class="adm-breadcrumb">المحاضرات التي تم تسجيلها ورفعها ليتمكن الطلاب من مشاهدتها لاحقاً</div></div>
+        <button class="btn-add-user" onclick="openAddRecordedLecture()"><i class="fas fa-plus"></i> إضافة يدوي</button>
       </div>
       <div class="req-cards" id="recLecsGrid"></div>
     </div>
@@ -648,54 +648,54 @@ button{cursor:pointer;}
     <div class="modal-overlay" id="recLecModal">
       <div class="modal-box">
         <div class="modal-header">
-          <h3>����� ������ �����</h3>
+          <h3>إضافة محاضرة مسجلة</h3>
           <button class="modal-close" onclick="document.getElementById('recLecModal').classList.remove('open')">&times;</button>
         </div>
         <div class="form-field">
-          <label>����� �������� *</label>
-          <input type="text" id="rlTitle" placeholder="����: ������ 1 � ��� �������"></div>
+          <label>عنوان المحاضرة *</label>
+          <input type="text" id="rlTitle" placeholder="مثال: محاضرة 1 – أسس التسويق"></div>
         <div class="form-row">
           <div class="form-field">
-            <label>������ *</label>
+            <label>الكورس *</label>
             <select id="rlCourse">
-              <option value="free">���� ������� �������</option>
-              <option value="programming">����� �������</option>
-              <option value="facebook-ads">������� ������</option>
-              <option value="instagram">���������</option>
-              <option value="tiktok">��� ���</option>
-              <option value="snapchat">���� ���</option>
-              <option value="twitter">��� (�����)</option>
-              <option value="integrated-strategy">���������� �������</option>
+              <option value="free">كورس التسويق المجاني</option>
+              <option value="programming">برمجة المواقع</option>
+              <option value="facebook-ads">إعلانات فيسبوك</option>
+              <option value="instagram">إنستاجرام</option>
+              <option value="tiktok">تيك توك</option>
+              <option value="snapchat">سناب شات</option>
+              <option value="twitter">إكس (تويتر)</option>
+              <option value="integrated-strategy">استراتيجية متكاملة</option>
             </select>
           </div>
           <div class="form-field">
-            <label>����� ��������</label>
+            <label>تاريخ المحاضرة</label>
             <input type="date" id="rlDate">
           </div>
         </div>
         <div class="form-field">
-          <label>���� ������� (YouTube / Google Drive) *</label>
+          <label>رابط الفيديو (YouTube / Google Drive) *</label>
           <input type="url" id="rlUrl" placeholder="https://youtu.be/...">
         </div>
         <div class="form-field">
-          <label>��� �������� (�������)</label>
-          <input type="text" id="rlDuration" placeholder="����: 1:30:00">
+          <label>مدة المحاضرة (اختياري)</label>
+          <input type="text" id="rlDuration" placeholder="مثال: 1:30:00">
         </div>
         <div class="form-field">
-          <label>��� ����� (�������)</label>
-          <textarea id="rlDesc" placeholder="���� ��������..."></textarea>
+          <label>وصف مختصر (اختياري)</label>
+          <textarea id="rlDesc" placeholder="مادة المحاضرة..."></textarea>
         </div>
         <div class="modal-footer">
-          <button class="btn-modal-save" onclick="saveRecordedLecture()"><i class="fas fa-save"></i> ���</button>
-          <button class="btn-modal-cancel" onclick="document.getElementById('recLecModal').classList.remove('open')"><i class="fas fa-times"></i> �����</button>
+          <button class="btn-modal-save" onclick="saveRecordedLecture()"><i class="fas fa-save"></i> حفظ</button>
+          <button class="btn-modal-cancel" onclick="document.getElementById('recLecModal').classList.remove('open')"><i class="fas fa-times"></i> إلغاء</button>
         </div>
       </div>
     </div>
 
     <!-- LECTURES -->
     <div class="adm-section" id="sec-lectures">
-      <div class="adm-section-title">����� <span>���������</span></div>
-      <div class="adm-breadcrumb">��� ������� ��� ���ӡ ���� ������� �� ����� ������ � ����� ������ ��� �����</div>
+      <div class="adm-section-title">إدارة <span>المحاضرات</span></div>
+      <div class="adm-breadcrumb">أضف محاضرات لكل كورس، وأضف الشرائح مع الصور والشرح – ستظهر للطلاب فور نشرها</div>
 
       <!-- course tabs -->
       <div class="lec-course-tabs" id="lecCourseTabs"></div>
@@ -703,8 +703,8 @@ button{cursor:pointer;}
       <!-- lectures list for selected course -->
       <div class="lec-panel" id="lecPanel">
         <div class="lec-panel-head">
-          <h3 id="lecPanelTitle">���� ������</h3>
-          <button class="btn-add-user" onclick="openAddLecture()" id="btnAddLec" style="display:none"><i class="fas fa-plus"></i> ������ �����</button>
+          <h3 id="lecPanelTitle">اختر كورساً</h3>
+          <button class="btn-add-user" onclick="openAddLecture()" id="btnAddLec" style="display:none"><i class="fas fa-plus"></i> محاضرة جديدة</button>
         </div>
         <div class="lec-list" id="lecList"></div>
       </div>
@@ -714,22 +714,22 @@ button{cursor:pointer;}
     <div class="modal-overlay" id="lecModal">
       <div class="modal-box" style="max-width:700px;max-height:90vh;overflow-y:auto;">
         <div class="modal-head">
-          <h3 id="lecModalTitle">������ �����</h3>
+          <h3 id="lecModalTitle">محاضرة جديدة</h3>
           <button class="modal-close" onclick="closeLecModal()"><i class="fas fa-times"></i></button>
         </div>
         <div style="padding:24px;display:flex;flex-direction:column;gap:18px;">
-          <div class="form-field"><label>����� �������� *</label><input type="text" id="lecTitleInput" placeholder="����: �������� ������ - ����� �� ������"></div>
-          <div class="form-field"><label>��� ����</label><textarea id="lecDescInput" rows="2" placeholder="��� ���� ������ ��������..." style="width:100%;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);resize:vertical;"></textarea></div>
+          <div class="form-field"><label>عنوان المحاضرة *</label><input type="text" id="lecTitleInput" placeholder="مثال: المحاضرة الأولى - مقدمة عن الكورس"></div>
+          <div class="form-field"><label>وصف موجز</label><textarea id="lecDescInput" rows="2" placeholder="وصف قصير لمحتوى المحاضرة..." style="width:100%;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);resize:vertical;"></textarea></div>
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-              <label style="font-size:.88rem;font-weight:700;color:var(--muted);">�������</label>
-              <button class="btn-add-user" style="padding:8px 14px;font-size:.8rem;" onclick="addSlideRow()"><i class="fas fa-plus"></i> �����</button>
+              <label style="font-size:.88rem;font-weight:700;color:var(--muted);">الشرائح</label>
+              <button class="btn-add-user" style="padding:8px 14px;font-size:.8rem;" onclick="addSlideRow()"><i class="fas fa-plus"></i> شريحة</button>
             </div>
             <div id="slidesEditor" style="display:flex;flex-direction:column;gap:10px;"></div>
           </div>
           <div style="display:flex;gap:10px;justify-content:flex-end;">
-            <button class="btn-modal-cancel" onclick="closeLecModal()">�����</button>
-            <button class="btn-modal-save" onclick="saveLecture()"><i class="fas fa-save"></i> ��� ��������</button>
+            <button class="btn-modal-cancel" onclick="closeLecModal()">إلغاء</button>
+            <button class="btn-modal-save" onclick="saveLecture()"><i class="fas fa-save"></i> حفظ المحاضرة</button>
           </div>
         </div>
       </div>
@@ -737,22 +737,22 @@ button{cursor:pointer;}
 
     <!-- SETTINGS -->
     <div class="adm-section" id="sec-settings">
-      <div class="adm-section-title">��������� <span>������</span></div>
-      <div class="adm-breadcrumb">���� �� ������� ������ ������ ��������</div>
+      <div class="adm-section-title">الإعدادات <span>العامة</span></div>
+      <div class="adm-breadcrumb">تحكم في إعدادات النظام وإدارة البيانات</div>
       <div class="settings-grid">
         <div class="settings-card">
-          <h4><i class="fas fa-key"></i> ����� ���� ���� ������</h4>
-          <div class="form-field"><label>���� ������ �������</label><input type="password" id="oldPass" placeholder="���� ���� ������ �������"></div>
-          <div class="form-field"><label>���� ������ �������</label><input type="password" id="newPass" placeholder="���� ���� ������ �������"></div>
-          <div class="form-field"><label>����� ���� ������</label><input type="password" id="confPass" placeholder="��� ���� ������ �������"></div>
-          <button class="btn-modal-save" onclick="changeAdminPass()"><i class="fas fa-save"></i> ��� ���������</button>
+          <h4><i class="fas fa-key"></i> تغيير كلمة مرور الأدمن</h4>
+          <div class="form-field"><label>كلمة المرور الحالية</label><input type="password" id="oldPass" placeholder="أدخل كلمة المرور الحالية"></div>
+          <div class="form-field"><label>كلمة المرور الجديدة</label><input type="password" id="newPass" placeholder="أدخل كلمة المرور الجديدة"></div>
+          <div class="form-field"><label>تأكيد كلمة المرور</label><input type="password" id="confPass" placeholder="أكد كلمة المرور الجديدة"></div>
+          <button class="btn-modal-save" onclick="changeAdminPass()"><i class="fas fa-save"></i> حفظ التغييرات</button>
         </div>
         <div class="settings-card">
-          <h4><i class="fas fa-database"></i> ����� ��������</h4>
-          <p style="color:var(--muted);font-size:.88rem;margin-bottom:20px;">����� �� ��� ���� ������ ������ �������.</p>
+          <h4><i class="fas fa-database"></i> إدارة البيانات</h4>
+          <p style="color:var(--muted);font-size:.88rem;margin-bottom:20px;">تصدير أو حذف جميع بيانات النظام المخزنة.</p>
           <div style="display:flex;flex-direction:column;gap:10px;">
-            <button class="qa-btn" onclick="exportData()" style="border-radius:11px;"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-download"></i></div>����� �������� (JSON)</button>
-            <button class="qa-btn" onclick="clearAllData()" style="border-radius:11px;"><div class="qa-btn-icon" style="background:rgba(239,68,68,0.15);color:#f87171;"><i class="fas fa-trash"></i></div><span style="color:#f87171;">��� �� ��������</span></button>
+            <button class="qa-btn" onclick="exportData()" style="border-radius:11px;"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-download"></i></div>تصدير البيانات (JSON)</button>
+            <button class="qa-btn" onclick="clearAllData()" style="border-radius:11px;"><div class="qa-btn-icon" style="background:rgba(239,68,68,0.15);color:#f87171;"><i class="fas fa-trash"></i></div><span style="color:#f87171;">حذف كل البيانات</span></button>
           </div>
         </div>
       </div>
@@ -764,44 +764,44 @@ button{cursor:pointer;}
 <!-- USER MODAL -->
 <div class="modal-overlay" id="userModal">
   <div class="modal-box">
-    <div class="modal-header"><h3 id="modalTitle">����� ������</h3><button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button></div>
+    <div class="modal-header"><h3 id="modalTitle">إضافة مستخدم</h3><button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button></div>
     <div class="form-row">
-      <div class="form-field"><label>����� ������ *</label><input type="text" id="f-name" placeholder="���� ����� ������"></div>
-      <div class="form-field"><label>��� �������� *</label><input type="text" id="f-username" placeholder="username ���"></div>
+      <div class="form-field"><label>الاسم الكامل *</label><input type="text" id="f-name" placeholder="أدخل الاسم الكامل"></div>
+      <div class="form-field"><label>اسم المستخدم *</label><input type="text" id="f-username" placeholder="username فقط"></div>
     </div>
     <div class="form-row">
-      <div class="form-field"><label>���� ������ *</label><input type="password" id="f-password" placeholder="���� ������"></div>
-      <div class="form-field"><label>��� ������</label><input type="tel" id="f-phone" placeholder="01XXXXXXXXX"></div>
+      <div class="form-field"><label>كلمة المرور *</label><input type="password" id="f-password" placeholder="كلمة المرور"></div>
+      <div class="form-field"><label>رقم الهاتف</label><input type="tel" id="f-phone" placeholder="01XXXXXXXXX"></div>
     </div>
-    <div class="form-field"><label>������ ����������</label><input type="email" id="f-email" placeholder="example@email.com"></div>
+    <div class="form-field"><label>البريد الإلكتروني</label><input type="email" id="f-email" placeholder="example@email.com"></div>
     <div id="empFields">
       <div class="form-row">
-        <div class="form-field"><label>������ �������</label><input type="text" id="f-role" placeholder="����: ���� �������"></div>
-        <div class="form-field"><label>�����</label><input type="text" id="f-dept" placeholder="����: �������"></div>
+        <div class="form-field"><label>المسمى الوظيفي</label><input type="text" id="f-role" placeholder="مثال: مدير التسويق"></div>
+        <div class="form-field"><label>القسم</label><input type="text" id="f-dept" placeholder="مثال: التسويق"></div>
       </div>
     </div>
     <div id="stuFields" style="display:none;">
       <div class="form-row">
-        <div class="form-field"><label>������� �������</label><input type="text" id="f-courses" placeholder="����: Facebook Ads, TikTok"></div>
-        <div class="form-field"><label>�������</label><select id="f-level"><option value="�����">�����</option><option value="�����">�����</option><option value="�����">�����</option></select></div>
+        <div class="form-field"><label>الدورات المسجلة</label><input type="text" id="f-courses" placeholder="مثال: Facebook Ads, TikTok"></div>
+        <div class="form-field"><label>المستوى</label><select id="f-level"><option value="مبتدئ">مبتدئ</option><option value="متوسط">متوسط</option><option value="متقدم">متقدم</option></select></div>
       </div>
     </div>
     <div class="form-field">
-      <label>���� ����� ������ (�������)</label>
+      <label>صورة الملف الشخصي (اختياري)</label>
       <div style="display:flex;gap:10px;align-items:center;">
-        <input type="url" id="f-avatar" placeholder="���� ����� https://..." style="flex:1">
+        <input type="url" id="f-avatar" placeholder="رابط خارجي https://..." style="flex:1">
         <label style="cursor:pointer;background:var(--grad);color:#fff;padding:9px 14px;border-radius:10px;font-size:.8rem;font-weight:700;white-space:nowrap;">
-          <i class="fas fa-upload"></i> ��� ����
+          <i class="fas fa-upload"></i> رفع صورة
           <input type="file" id="f-avatar-file" accept="image/*" style="display:none" onchange="uploadAvatarFile(this)">
         </label>
       </div>
       <div id="f-avatar-preview" style="display:none;margin-top:8px"><img id="f-avatar-img" src="" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--pink)"></div>
     </div>
-    <div class="form-field"><label>���� �����</label><textarea id="f-bio" placeholder="���� �� ��������..."></textarea></div>
+    <div class="form-field"><label>نبذة قصيرة</label><textarea id="f-bio" placeholder="اكتب عن المستخدم..."></textarea></div>
     <input type="hidden" id="f-editId"><input type="hidden" id="f-type">
     <div class="modal-footer">
-      <button class="btn-modal-save" onclick="saveUser()"><i class="fas fa-save"></i> ���</button>
-      <button class="btn-modal-cancel" onclick="closeModal()">�����</button>
+      <button class="btn-modal-save" onclick="saveUser()"><i class="fas fa-save"></i> حفظ</button>
+      <button class="btn-modal-cancel" onclick="closeModal()">إلغاء</button>
     </div>
   </div>
 </div>
@@ -816,7 +816,7 @@ button{cursor:pointer;}
 <div class="modal-overlay" id="reqDetailModal">
   <div class="modal-box">
     <div class="modal-header">
-      <h3><i class="fas fa-user-clock" style="color:var(--pink);margin-left:8px"></i> ������ �����</h3>
+      <h3><i class="fas fa-user-clock" style="color:var(--pink);margin-left:8px"></i> تفاصيل الطلب</h3>
       <button class="modal-close" onclick="document.getElementById('reqDetailModal').classList.remove('open')"><i class="fas fa-times"></i></button>
     </div>
     <div id="reqDetailContent"></div>
@@ -828,17 +828,17 @@ button{cursor:pointer;}
 <div class="modal-overlay" id="galleryModal">
   <div class="modal-box">
     <div class="modal-header">
-      <h3><i class="fas fa-images" style="color:var(--pink);margin-left:8px"></i> ����� ��� ������</h3>
+      <h3><i class="fas fa-images" style="color:var(--pink);margin-left:8px"></i> إضافة صور للمعرض</h3>
       <button class="modal-close" onclick="closeGalleryModal()"><i class="fas fa-times"></i></button>
     </div>
 
     <!-- Tabs -->
     <div class="gal-tabs">
       <button class="gal-tab active" id="galTabBtnFile" onclick="switchGalTab('file')">
-        <i class="fas fa-upload"></i> ��� ����
+        <i class="fas fa-upload"></i> رفع صورة
       </button>
       <button class="gal-tab" id="galTabBtnUrl" onclick="switchGalTab('url')">
-        <i class="fas fa-link"></i> ���� ����
+        <i class="fas fa-link"></i> رابط صورة
       </button>
     </div>
 
@@ -848,8 +848,8 @@ button{cursor:pointer;}
            onclick="document.getElementById('galFileInput').click()"
            ondragover="galDragOver(event)" ondragleave="galDragLeave(event)" ondrop="galDrop(event)">
         <i class="fas fa-cloud-upload-alt dz-icon"></i>
-        <p class="dz-text">���� ����� ��� �� ���� ��������</p>
-        <p class="dz-hint">PNG, JPG, WEBP � �� ���� 2 MB ��� ���� � ���� ������ ���� �� ����</p>
+        <p class="dz-text">اسحب الصور هنا أو انقر للاختيار</p>
+        <p class="dz-hint">PNG, JPG, WEBP – حد أقصى 2 MB لكل صورة – يمكن اختيار أكثر من صورة</p>
       </div>
       <input type="file" id="galFileInput" accept="image/*" multiple style="display:none" onchange="galFilesSelected(event)">
       <div class="gal-selected-info" id="galSelectedInfo"></div>
@@ -859,11 +859,11 @@ button{cursor:pointer;}
     <!-- URL Pane -->
     <div class="gal-tab-pane" id="galPaneUrl">
       <div class="form-field" style="margin-bottom:12px;">
-        <label>���� ������</label>
+        <label>رابط الصورة</label>
         <input type="url" id="galUrlInput" placeholder="https://example.com/image.jpg" oninput="galPreviewUrl()">
       </div>
       <div class="gal-url-preview" id="galUrlPreview">
-        <img src="" id="galUrlPreviewImg" alt="������" onerror="document.getElementById('galUrlPreview').style.display='none'">
+        <img src="" id="galUrlPreviewImg" alt="معاينة" onerror="document.getElementById('galUrlPreview').style.display='none'">
       </div>
     </div>
 
@@ -872,9 +872,9 @@ button{cursor:pointer;}
 
     <div class="modal-footer">
       <button class="btn-modal-save" onclick="submitGalleryImages()">
-        <i class="fas fa-plus"></i> ����� ������
+        <i class="fas fa-plus"></i> إضافة للمعرض
       </button>
-      <button class="btn-modal-cancel" onclick="closeGalleryModal()">�����</button>
+      <button class="btn-modal-cancel" onclick="closeGalleryModal()">إلغاء</button>
     </div>
   </div>
 </div>
@@ -889,30 +889,30 @@ const USERS_KEY = 'am_users';
 const PORTFOLIO_KEY = 'am_portfolio_imgs';
 const APP_PRICES_KEY = 'am_app_prices';
 
-// ������� �����
+// تطبيقات الويب
 const WEB_APPS = {
-  'almodif':   { name:'���� ����',      icon:'fas fa-hotel',       color:'linear-gradient(135deg,#667eea,#764ba2)' },
-  'remostore': { name:'���� ����',          icon:'fas fa-shopping-bag', color:'linear-gradient(135deg,#a855f7,#6d28d9)' },
-  'hotel-crm': { name:'���� CRM �������',  icon:'fas fa-building',     color:'linear-gradient(135deg,#10b981,#059669)' },
+  'almodif':   { name:'منصة فندق',      icon:'fas fa-hotel',       color:'linear-gradient(135deg,#667eea,#764ba2)' },
+  'remostore': { name:'متجر ريمو',          icon:'fas fa-shopping-bag', color:'linear-gradient(135deg,#a855f7,#6d28d9)' },
+  'hotel-crm': { name:'نظام CRM للفنادق',  icon:'fas fa-building',     color:'linear-gradient(135deg,#10b981,#059669)' },
   'linkcall':  { name:'Link Call',           icon:'fas fa-headset',      color:'linear-gradient(135deg,#3b82f6,#1d4ed8)' },
-  'missrim':   { name:'���� �� ���',        icon:'fas fa-store-alt',    color:'linear-gradient(135deg,#f43f5e,#e11d48)' },
+  'missrim':   { name:'متجر مس ريم',        icon:'fas fa-store-alt',    color:'linear-gradient(135deg,#f43f5e,#e11d48)' },
   'dentasmart':{ name:'Denta Smart',         icon:'fas fa-tooth',        color:'linear-gradient(135deg,#06b6d4,#0284c7)' }
 };
 
-// ������� ��������
+// تطبيقات الموبايل
 const MOBILE_APPS = {
-  'taskmaster':  { name:'���� ������',      icon:'fas fa-tasks',       color:'linear-gradient(135deg,#8b5cf6,#7c3aed)' },
-  'fittrack':    { name:'���� �������',         icon:'fas fa-heartbeat',   color:'linear-gradient(135deg,#ef4444,#dc2626)' },
-  'quickscan':   { name:'��� ����',        icon:'fas fa-qrcode',      color:'linear-gradient(135deg,#10b981,#059669)' },
-  'smartnotes':  { name:'������� ����',       icon:'fas fa-sticky-note', color:'linear-gradient(135deg,#f59e0b,#d97706)' },
-  'prayertime':  { name:'������ ������',    icon:'fas fa-mosque',      color:'linear-gradient(135deg,#14b8a6,#0d9488)' },
-  'moneywise':   { name:'���� �����',        icon:'fas fa-wallet',      color:'linear-gradient(135deg,#6366f1,#4f46e5)' }
+  'taskmaster':  { name:'مدير المهام',      icon:'fas fa-tasks',       color:'linear-gradient(135deg,#8b5cf6,#7c3aed)' },
+  'fittrack':    { name:'تتبع اللياقة',         icon:'fas fa-heartbeat',   color:'linear-gradient(135deg,#ef4444,#dc2626)' },
+  'quickscan':   { name:'مسح سريع',        icon:'fas fa-qrcode',      color:'linear-gradient(135deg,#10b981,#059669)' },
+  'smartnotes':  { name:'ملاحظات ذكية',       icon:'fas fa-sticky-note', color:'linear-gradient(135deg,#f59e0b,#d97706)' },
+  'prayertime':  { name:'مواقيت الصلاة',    icon:'fas fa-mosque',      color:'linear-gradient(135deg,#14b8a6,#0d9488)' },
+  'moneywise':   { name:'مدير المال',        icon:'fas fa-wallet',      color:'linear-gradient(135deg,#6366f1,#4f46e5)' }
 };
 
-// ��� ���������� ��������
+// آخر المستخدمين المضافين
 const ALL_APPS = {...WEB_APPS, ...MOBILE_APPS};
 
-// ?? Firebase in-memory caches (�� �������� ������ �� ������� ��� ������)
+// ── Firebase in-memory caches (كل البيانات بتتحمل من الكلاود عند الدخول)
 let _fsUsers = null, _fsAppPrices = null, _fsRecLecs = null;
 let _fsLectures = null, _fsLiveSessions = null;
 
@@ -933,9 +933,9 @@ function saveAppPrices(obj){
 }
 function genId(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,6); }
 
-/* ??????????????????????????????????????????????
+/* ══════════════════════════════════════════════
    FIREBASE FIRESTORE SYNC
-?????????????????????????????????????????????? */
+══════════════════════════════════════════════ */
 const _fbAdmin = firebase.initializeApp({
   apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
   authDomain: "akramplatform-2c6be.firebaseapp.com",
@@ -994,7 +994,7 @@ async function _loadAdminData(){
               _fdb.collection('lectures').doc(lec.id).set({...lec, courseKey:ck, savedAt:Date.now()}).catch(()=>{});
             });
           });
-          console.log('? Migrated lectures from old format');
+          console.log('✅ Migrated lectures from old format');
         }
       }catch(e){ console.warn('Migration attempt failed:', e); }
     }
@@ -1017,12 +1017,12 @@ function initFirestore(){
   if(_fsUnsubscribe) _fsUnsubscribe();
   _loadAdminData();
   const jrEl = document.getElementById('joinRequestsList');
-  if(jrEl) jrEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem"></i><br><br>���� ����� ��������...</div>';
+  if(jrEl) jrEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem"></i><br><br>جاري تحميل البيانات...</div>';
   _fsUnsubscribe = _fdb.collection('join_requests')
     .onSnapshot(snapshot=>{
       _fsReqs = [];
       snapshot.forEach(doc=>{ _fsReqs.push(doc.data()); });
-      // ����� client-side ��� orderBy (�� ����� index)
+      // ترتيب client-side بدل orderBy (لا يحتاج index)
       _fsReqs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
       renderJoinRequests(_currentReqFilter||'all');
       updateBadges();
@@ -1074,9 +1074,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 });
 
-/* ??????????????????????????????????????????????
+/* ══════════════════════════════════════════════
    RECORDED LECTURES
-?????????????????????????????????????????????? */
+══════════════════════════════════════════════ */
 const REC_LECS_KEY = 'am_recorded_lectures';
 function getRecordedLectures(){ return _fsRecLecs!==null ? _fsRecLecs.slice() : (()=>{try{return JSON.parse(localStorage.getItem(REC_LECS_KEY)||'[]');}catch(e){return [];}})(); }
 function saveRecordedLectures(arr){
@@ -1101,7 +1101,7 @@ function saveRecordedLecture(){
   const date  = document.getElementById('rlDate').value;
   const dur   = document.getElementById('rlDuration').value.trim();
   const desc  = document.getElementById('rlDesc').value.trim();
-  if(!title||!url){ toast('������� ������� �������','error'); return; }
+  if(!title||!url){ toast('العنوان والرابط مطلوبان','error'); return; }
   const recs = getRecordedLectures();
   if(_editingRecLecId){
     const idx = recs.findIndex(r=>r.id===_editingRecLecId);
@@ -1113,7 +1113,7 @@ function saveRecordedLecture(){
   document.getElementById('recLecModal').classList.remove('open');
   renderRecordedLectures();
   updateBadges();
-  toast(_editingRecLecId?'�� �������':'�� ����� �������� ?','success');
+  toast(_editingRecLecId?'تم التحديث':'تم إضافة المحاضرة ✓','success');
 }
 
 function editRecordedLecture(id){
@@ -1130,11 +1130,11 @@ function editRecordedLecture(id){
 }
 
 function deleteRecordedLecture(id){
-  if(!confirm('��� ��� �������� ������ɿ')) return;
+  if(!confirm('حذف هذه المحاضرة المسجلة؟')) return;
   saveRecordedLectures(getRecordedLectures().filter(r=>r.id!==id));
   renderRecordedLectures();
   updateBadges();
-  toast('�� �����','success');
+  toast('تم الحذف','success');
 }
 
 function renderRecordedLectures(){
@@ -1142,10 +1142,10 @@ function renderRecordedLectures(){
   const grid = document.getElementById('recLecsGrid');
   if(!grid) return;
   if(!recs.length){
-    grid.innerHTML='<div class="req-empty"><i class="fas fa-video"></i><p>�� ���� ������� ����� ��� � ��� �� ���� "����� ����" �� ���� �� ���� �������� ��������</p></div>';
+    grid.innerHTML='<div class="req-empty"><i class="fas fa-video"></i><p>لا توجد محاضرات مسجلة بعد — أضف من زرار "إضافة يدوي" أو ارفع من داخل المحاضرة المباشرة</p></div>';
     return;
   }
-  const CNAMES = {free:'�����',programming:'�����','facebook-ads':'������',instagram:'���������',tiktok:'��� ���',snapchat:'����',twitter:'X/�����','integrated-strategy':'�������','ai-marketing':'���� �������'};
+  const CNAMES = {free:'مجاني',programming:'برمجة','facebook-ads':'فيسبوك',instagram:'إنستاجرام',tiktok:'تيك توك',snapchat:'سناب',twitter:'X/تويتر','integrated-strategy':'متكاملة','ai-marketing':'ذكاء اصطناعي'};
   grid.innerHTML = recs.map(r=>`
     <div class="req-card">
       <div class="req-card-top">
@@ -1153,13 +1153,13 @@ function renderRecordedLectures(){
         <div class="req-card-info">
           <div class="req-card-name">${r.title}</div>
           <div class="req-card-email"><i class="fas fa-book" style="margin-left:4px"></i>${CNAMES[r.courseKey]||r.courseKey} ${r.duration?'&bull; '+r.duration:''}</div>
-          <div class="req-card-date"><i class="far fa-calendar"></i> ${r.date||'�'}</div>
+          <div class="req-card-date"><i class="far fa-calendar"></i> ${r.date||'—'}</div>
         </div>
         ${r.description?`<div style="font-size:.75rem;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.description}</div>`:''}
       </div>
       <div class="req-card-actions">
-        <a href="${r.videoUrl}" target="_blank" class="btn-approve"><i class="fas fa-play"></i> ������</a>
-        <button class="btn-view-req" onclick="editRecordedLecture('${r.id}')"><i class="fas fa-edit"></i> �����</button>
+        <a href="${r.videoUrl}" target="_blank" class="btn-approve"><i class="fas fa-play"></i> مشاهدة</a>
+        <button class="btn-view-req" onclick="editRecordedLecture('${r.id}')"><i class="fas fa-edit"></i> تعديل</button>
         <button class="btn-view-req" style="color:#f87171;border-color:rgba(239,68,68,.3)" onclick="deleteRecordedLecture('${r.id}')"><i class="fas fa-trash"></i></button>
       </div>
     </div>`).join('');
@@ -1168,7 +1168,7 @@ function renderRecordedLectures(){
 function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); renderRecordedLectures(); initFirestore(); }
 
 const JOIN_KEY = 'am_join_requests';
-// ������ ��� ���� ����� �������� � ������ ��� Firebase
+// ددالتي جلب وحفظ طلبات الانضمام — تستخدم كاش Firebase
 function getJoinRequests(){ return _fsReqs.slice(); }
 function saveJoinRequests(newArr){
   const newIds = new Set(newArr.map(r=>r.id));
@@ -1218,8 +1218,8 @@ function showSection(name){
 
 function renderDashboard(){
   const users=getUsers(); const recent=users.slice(-5).reverse(); const tbody=document.getElementById('recentUsersTable');
-  if(!recent.length){ tbody.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">�� ���� �������� ���</td></tr>'; return; }
-  tbody.innerHTML=recent.map(u=>`<tr><td><strong>${u.name}</strong></td><td><span class="user-type-badge ${u.type==='employee'?'emp':'stu'}">${u.type==='employee'?'����':'����'}</span></td><td style="color:var(--muted)">${new Date(u.createdAt).toLocaleDateString('ar-EG')}</td></tr>`).join('');
+  if(!recent.length){ tbody.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">لا يوجد مستخدمون بعد</td></tr>'; return; }
+  tbody.innerHTML=recent.map(u=>`<tr><td><strong>${u.name}</strong></td><td><span class="user-type-badge ${u.type==='employee'?'emp':'stu'}">${u.type==='employee'?'موظف':'طالب'}</span></td><td style="color:var(--muted)">${new Date(u.createdAt).toLocaleDateString('ar-EG')}</td></tr>`).join('');
 }
 
 function renderPortfolio(){
@@ -1227,36 +1227,36 @@ function renderPortfolio(){
   grid.innerHTML=Object.entries(ALL_APPS).map(([key,p])=>{
     const imgs=portfolio[key]||[];
     return `<div class="project-img-card" id="proj-${key}">
-      <div class="project-card-header"><div class="project-card-icon" style="background:${p.color}"><i class="${p.icon}"></i></div><div><h4>${p.name}</h4><small>${imgs.length} ���� <span class="img-count-badge" id="imgBadge-${key}">${imgs.length}</span></small></div></div>
+      <div class="project-card-header"><div class="project-card-icon" style="background:${p.color}"><i class="${p.icon}"></i></div><div><h4>${p.name}</h4><small>${imgs.length} صورة <span class="img-count-badge" id="imgBadge-${key}">${imgs.length}</span></small></div></div>
       <div class="project-card-body">
         <div class="img-thumbs" id="thumbs-${key}">${renderThumbs(key,imgs)}</div>
-        <div class="img-add-form"><input type="url" id="imgUrl-${key}" placeholder="���� ������ (https://...)"><button onclick="addProjectImage('${key}')"><i class="fas fa-plus"></i> �����</button></div>
+        <div class="img-add-form"><input type="url" id="imgUrl-${key}" placeholder="رابط الصورة (https://...)"><button onclick="addProjectImage('${key}')"><i class="fas fa-plus"></i> إضافة</button></div>
       </div></div>`;
   }).join('');
 }
 
 function renderThumbs(key,imgs){
-  if(!imgs.length) return '<span class="no-imgs">�� ���� ��ѡ ��� ���� �� �����</span>';
+  if(!imgs.length) return '<span class="no-imgs">لا توجد صور، أضف صورة من أعلاه</span>';
   return imgs.map((url,i)=>`<div class="img-thumb"><img src="${url}" onerror="this.src='https://via.placeholder.com/70x55?text=Error'" onclick="openLb('${url}')"><button class="img-thumb-del" onclick="removeProjectImage('${key}',${i})"><i class="fas fa-times"></i></button></div>`).join('');
 }
 
 function addProjectImage(key){
   const input=document.getElementById('imgUrl-'+key); const url=input.value.trim();
-  if(!url){toast('���� ���� ������','error');return;}
-  if(!url.startsWith('http')){toast('������ ��� �� ���� �� http','error');return;}
+  if(!url){toast('أدخل رابط الصورة','error');return;}
+  if(!url.startsWith('http')){toast('الرابط يجب أن يبدأ بـ http','error');return;}
   const portfolio=getPortfolio(); if(!portfolio[key])portfolio[key]=[];
   portfolio[key].push(url); savePortfolio(portfolio);
   document.getElementById('thumbs-'+key).innerHTML=renderThumbs(key,portfolio[key]);
   document.getElementById('imgBadge-'+key).textContent=portfolio[key].length;
-  input.value=''; updateBadges(); toast('�� ����� ������ ����� ?','success');
+  input.value=''; updateBadges(); toast('تم إضافة الصورة بنجاح ✓','success');
 }
 
 function removeProjectImage(key,index){
-  if(!confirm('�� ���� ��� ��� ������ �� �����ֿ'))return;
+  if(!confirm('هل تريد حذف هذه الصورة من المعرض؟'))return;
   const portfolio=getPortfolio(); portfolio[key].splice(index,1); savePortfolio(portfolio);
   document.getElementById('thumbs-'+key).innerHTML=renderThumbs(key,portfolio[key]);
   document.getElementById('imgBadge-'+key).textContent=portfolio[key].length;
-  updateBadges(); toast('�� ��� ������ �����','success');
+  updateBadges(); toast('تم حذف الصورة بنجاح','success');
 }
 
 function renderWebPrices(){
@@ -1290,11 +1290,11 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
       <div class="project-icon" style="background:${p.color}"><i class="${p.icon}"></i></div>
       <div>
         <h4>${p.name}</h4>
-        <small style="color:var(--muted);">${type==='web'?'����� ���':'����� ������'}</small>
+        <small style="color:var(--muted);">${type==='web'?'تطبيق ويب':'تطبيق موبايل'}</small>
       </div>
     </div>
     <div class="project-card-body">
-      <!-- ����� ��� ���� ������ -->
+      <!-- منطقة رفع صورة الغلاف -->
       <div class="product-img-zone ${hasImg?'has-img':''}" id="imgZone-${key}" 
            onclick="triggerImageUpload('${key}')"
            ondragover="handleDragOver(event,'${key}')" 
@@ -1303,21 +1303,21 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
         ${hasImg ? `
           <img src="${mainImg}" class="product-preview" id="preview-${key}" onerror="this.style.display='none'">
           <div class="img-overlay">
-            <button class="img-action-btn view" onclick="event.stopPropagation();openLb('${mainImg}')" title="���"><i class="fas fa-eye"></i></button>
-            <button class="img-action-btn change" onclick="event.stopPropagation();triggerImageUpload('${key}')" title="�����"><i class="fas fa-sync-alt"></i></button>
-            <button class="img-action-btn delete" onclick="event.stopPropagation();deleteMainImage('${key}','${type}')" title="���"><i class="fas fa-trash"></i></button>
+            <button class="img-action-btn view" onclick="event.stopPropagation();openLb('${mainImg}')" title="عرض"><i class="fas fa-eye"></i></button>
+            <button class="img-action-btn change" onclick="event.stopPropagation();triggerImageUpload('${key}')" title="تغيير"><i class="fas fa-sync-alt"></i></button>
+            <button class="img-action-btn delete" onclick="event.stopPropagation();deleteMainImage('${key}','${type}')" title="حذف"><i class="fas fa-trash"></i></button>
           </div>
         ` : `
           <i class="fas fa-cloud-upload-alt upload-icon"></i>
-          <span class="upload-text">���� ���� ��� �� ���� ��������</span>
+          <span class="upload-text">اسحب صورة هنا أو انقر للاختيار</span>
         `}
         <input type="file" id="fileInput-${key}" accept="image/*" style="display:none" onchange="handleFileSelect(event,'${key}','${type}')">
       </div>
       
-      <!-- ���� ����� �������� -->
+      <!-- معرض الصور الإضافية -->
       ${allImgs.length > 0 ? `
       <div class="gallery-section">
-        <div class="gallery-label"><i class="fas fa-images"></i> ����� �������� (${allImgs.length})</div>
+        <div class="gallery-label"><i class="fas fa-images"></i> الصور الإضافية (${allImgs.length})</div>
         <div class="gallery-thumbs">
           ${allImgs.map((img,i)=>`
             <div class="gallery-thumb" onclick="openLb('${img}')">
@@ -1325,31 +1325,31 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
               <div class="thumb-del" onclick="event.stopPropagation();removeGalleryImage('${key}',${i},'${type}')"><i class="fas fa-times"></i></div>
             </div>
           `).join('')}
-          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="����� ����"><i class="fas fa-plus"></i></div>
+          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="إضافة صورة"><i class="fas fa-plus"></i></div>
         </div>
       </div>
       ` : `
       <div class="gallery-section">
-        <div class="gallery-label"><i class="fas fa-images"></i> ����� ��������</div>
+        <div class="gallery-label"><i class="fas fa-images"></i> الصور الإضافية</div>
         <div class="gallery-thumbs">
-          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="����� ����"><i class="fas fa-plus"></i></div>
+          <div class="gallery-add-btn" onclick="openGalleryModal('${key}','${type}')" title="إضافة صورة"><i class="fas fa-plus"></i></div>
         </div>
       </div>
       `}
       
-      <!-- ���� ����� -->
+      <!-- خانة السعر -->
       <div class="price-row">
         <div class="price-input-wrap">
-          <input type="number" id="price-${key}" value="${price}" placeholder="���� �����..." min="0">
-          <span class="currency">�.�</span>
+          <input type="number" id="price-${key}" value="${price}" placeholder="أدخل السعر..." min="0">
+          <span class="currency">ج.م</span>
         </div>
         <button class="btn-save-product" onclick="saveProductData('${key}','${type}')">
-          <i class="fas fa-save"></i> ���
+          <i class="fas fa-save"></i> حفظ
         </button>
       </div>
       <div class="price-status ${hasPrice?'has-price':'no-price'}">
         <i class="fas ${hasPrice?'fa-check-circle':'fa-exclamation-circle'}"></i>
-        ${hasPrice ? Number(price).toLocaleString('ar-EG')+' �.�' : '�����: ��� ����'}
+        ${hasPrice ? Number(price).toLocaleString('ar-EG')+' ج.م' : 'السعر: غير محدد'}
       </div>
     </div>
   </div>`;
@@ -1390,10 +1390,10 @@ function handleFileSelect(e, key, type){
 
 function processImageFile(file, key){
   if(file.size > 5 * 1024 * 1024){
-    toast('��� ������ ���� ���� (���� 5MB)', 'error');
+    toast('حجم الصورة كبير جداً (أقصى 5MB)', 'error');
     return;
   }
-  // Preview ���� �����
+  // Preview محلي أولاً
   const reader = new FileReader();
   reader.onload = async function(e){
     const card = document.querySelector(`[data-key="${key}"]`);
@@ -1401,13 +1401,13 @@ function processImageFile(file, key){
       const img = card.querySelector('.portfolio-card-img');
       if(img) img.src = e.target.result;
     }
-    toast('���� ��� ������...', 'info');
+    toast('جاري رفع الصورة...', 'info');
     try {
       const storageRef = _fst.ref('portfolio/'+key+'/'+Date.now()+'_'+file.name);
       const snap = await storageRef.put(file);
       const url = await snap.ref.getDownloadURL();
       saveProductImage(key, url);
-      toast('�� ��� ������ ?', 'success');
+      toast('تم رفع الصورة ✓', 'success');
     } catch(err){
       console.warn('Storage upload failed:', err);
       saveProductImage(key, e.target.result); // fallback base64
@@ -1419,19 +1419,19 @@ function processImageFile(file, key){
 async function uploadAvatarFile(input){
   const file = input.files[0];
   if(!file) return;
-  if(file.size > 3*1024*1024){ toast('��� ������ ���� �� 3MB','error'); return; }
+  if(file.size > 3*1024*1024){ toast('حجم الصورة أكبر من 3MB','error'); return; }
   const reader = new FileReader();
   reader.onload = async function(e){
     document.getElementById('f-avatar').value = '';
     document.getElementById('f-avatar-img').src = e.target.result;
     document.getElementById('f-avatar-preview').style.display = 'block';
-    toast('���� ��� ������...','info');
+    toast('جاري رفع الصورة...','info');
     try{
       const storageRef = _fst.ref('avatars/'+Date.now()+'_'+file.name);
       const snap = await storageRef.put(file);
       const url = await snap.ref.getDownloadURL();
       document.getElementById('f-avatar').value = url;
-      toast('�� ��� ������ ?','success');
+      toast('تم رفع الصورة ✓','success');
     } catch(err){
       console.warn('Avatar upload failed:',err);
       // store as base64 fallback
@@ -1445,11 +1445,11 @@ function saveProductImage(key, imageData){
   const portfolio = getPortfolio();
   if(!portfolio[key]) portfolio[key] = [];
   
-// ����� ������ �� ������� (���� ������)
+// إضافة الصورة في المقدمة (صورة الغلاف)
   portfolio[key].unshift(imageData);
   savePortfolio(portfolio);
   
-  // ����� �����
+  // تحديث العرض
   const card = document.querySelector(`[data-key="${key}"]`);
   if(card){
     const type = card.dataset.type;
@@ -1458,15 +1458,15 @@ function saveProductImage(key, imageData){
   }
   
   updateBadges();
-  toast('�� ��� ���� ������ ����� ?', 'success');
+  toast('تم رفع صورة الغلاف بنجاح ✓', 'success');
 }
 
 function deleteMainImage(key, type){
-if(!confirm('�� ���� ��� ��� �����ɿ')) return;
+if(!confirm('هل تريد حذف هذه الصورة؟')) return;
   
   const portfolio = getPortfolio();
   if(portfolio[key] && portfolio[key].length > 0){
-    portfolio[key].shift(); // ��� ���� ������
+    portfolio[key].shift(); // حذف صورة الغلاف
     savePortfolio(portfolio);
   }
   
@@ -1474,11 +1474,11 @@ if(!confirm('�� ���� ��� ��� �����ɿ')) return
   else renderMobilePrices();
   
   updateBadges();
-  toast('�� ����� �����', 'success');
+  toast('تم الحذف بنجاح', 'success');
 }
 
 function removeGalleryImage(key, index, type){
-  if(!confirm('�� ���� ��� ��� �����ɿ')) return;
+  if(!confirm('هل تريد حذف هذه الصورة؟')) return;
   
   const portfolio = getPortfolio();
   if(portfolio[key]){
@@ -1490,15 +1490,15 @@ function removeGalleryImage(key, index, type){
   else renderMobilePrices();
   
   updateBadges();
-  toast('�� ����� �����', 'success');
+  toast('تم الحذف بنجاح', 'success');
 }
 
 // ======= JOIN REQUESTS FUNCTIONS =======
 const COURSES_NAMES = {
-  'free':'������ �������','facebook-ads':'������� ������',
-  'instagram':'��������','tiktok':'��� ���','snapchat':'���� ���',
-  'twitter':'����� / X','ai-marketing':'���� �������',
-  'integrated-strategy':'���������� �������','programming':'�������'
+  'free':'الكورس المجاني','facebook-ads':'إعلانات فيسبوك',
+  'instagram':'إنستجرام','tiktok':'تيك توك','snapchat':'سناب شات',
+  'twitter':'تويتر / X','ai-marketing':'ذكاء اصطناعي',
+  'integrated-strategy':'استراتيجية متكاملة','programming':'البرمجة'
 };
 
 let _currentReqFilter = 'all';
@@ -1513,10 +1513,10 @@ function filterReqs(status){
 }
 
 function buildWaLink(phone, name){
-  // normalise Egyptian number ? international format
+  // normalise Egyptian number → international format
   let num = (phone||'').replace(/\D/g,'');
-  if(num.startsWith('0')) num = '2' + num;  // 01xxxxxxxx ? 201xxxxxxxx
-  const msg = encodeURIComponent('������ ����� ����� ���� ������� ??\n\n�� ���� ��� ������� ������ ����� ?\n\n���� ���ҡ ��� ��� ������ ����� ��� 1 ���� ???\n\n������� �� �������� ������ �� ��� ���� ??');
+  if(num.startsWith('0')) num = '2' + num;  // 01xxxxxxxx → 201xxxxxxxx
+  const msg = encodeURIComponent('السلام عليكم ورحمة الله وبركاته 🌟\n\nتم قبول طلب انضمامك للكورس بنجاح ✅\n\nخليك جاهز، أول يوم للكورس هيكون يوم 1 مارس 🗓️\n\nهنبعتلك كل التفاصيل قريباً إن شاء الله 💪');
   return 'https://wa.me/' + num + '?text=' + msg;
 }
 
@@ -1526,10 +1526,10 @@ function renderJoinRequests(filter){
   const filtered = filter==='all' ? reqs : reqs.filter(r=>r.status===filter);
   const grid = document.getElementById('reqCardsGrid'); if(!grid) return;
   if(!filtered.length){
-    grid.innerHTML=`<div class="req-empty"><i class="fas fa-inbox"></i><p>�� ���� ����� ${filter==='all'?'':filter==='pending'?'��� ��������':filter==='approved'?'������':'������'} ���</p></div>`;
+    grid.innerHTML=`<div class="req-empty"><i class="fas fa-inbox"></i><p>لا توجد طلبات ${filter==='all'?'':filter==='pending'?'قيد الانتظار':filter==='approved'?'مقبولة':'مرفوضة'} بعد</p></div>`;
     return;
   }
-  const statusLabel={'pending':'<span class="req-status-badge pending"><i class="fas fa-clock"></i> ��� ��������</span>','approved':'<span class="req-status-badge approved"><i class="fas fa-check"></i> �����</span>','rejected':'<span class="req-status-badge rejected"><i class="fas fa-times"></i> �����</span>'};
+  const statusLabel={'pending':'<span class="req-status-badge pending"><i class="fas fa-clock"></i> قيد المراجعة</span>','approved':'<span class="req-status-badge approved"><i class="fas fa-check"></i> مقبول</span>','rejected':'<span class="req-status-badge rejected"><i class="fas fa-times"></i> مرفوض</span>'};
   grid.innerHTML = filtered.map(r=>{
     const initial = r.name?r.name.trim().charAt(0).toUpperCase():'?';
     const dt = new Date(r.createdAt).toLocaleString('ar-EG',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
@@ -1547,28 +1547,28 @@ function renderJoinRequests(filter){
       </div>
       <div class="req-card-body">
         <div class="req-card-meta">
-          <span><i class="fas fa-phone"></i>${r.phone||'�'}</span>
-          <span><i class="fas fa-briefcase"></i>${r.field||'�'}</span>
+          <span><i class="fas fa-phone"></i>${r.phone||'—'}</span>
+          <span><i class="fas fa-briefcase"></i>${r.field||'—'}</span>
         </div>
         <div class="req-tags">${courses}</div>
-        ${payKeys.length?`<div class="req-proofs">${payKeys.map(k=>`<div class="req-proof-thumb" onclick="openLb('${r.payments[k].substring(0,30)===r.payments[k].substring(0,30)?r.payments[k]:r.payments[k]}')"><img src="${r.payments[k]}" alt="�����"></div>`).join('')}</div>`:''}
+        ${payKeys.length?`<div class="req-proofs">${payKeys.map(k=>`<div class="req-proof-thumb" onclick="openLb('${r.payments[k].substring(0,30)===r.payments[k].substring(0,30)?r.payments[k]:r.payments[k]}')"><img src="${r.payments[k]}" alt="إيصال"></div>`).join('')}</div>`:''}
       </div>
-      ${r.status==='approved'?`<div class="req-approved-info"><i class="fas fa-check-circle"></i> ��� �������� ������ ${new Date(r.reviewedAt).toLocaleDateString('ar-EG')} ${r.adminNote?'&bull; '+r.adminNote:''}</div>`:''}
-      ${r.status==='rejected'?`<div class="req-rejected-info"><i class="fas fa-times-circle"></i> �� ����� ${r.adminNote?'&bull; '+r.adminNote:''}</div>`:''}
+      ${r.status==='approved'?`<div class="req-approved-info"><i class="fas fa-check-circle"></i> تمت الموافقة بتاريخ ${new Date(r.reviewedAt).toLocaleDateString('ar-EG')} ${r.adminNote?'&bull; '+r.adminNote:''}</div>`:''}
+      ${r.status==='rejected'?`<div class="req-rejected-info"><i class="fas fa-times-circle"></i> تم الرفض ${r.adminNote?'&bull; '+r.adminNote:''}</div>`:''}
       <div class="req-card-actions">
         ${r.status==='pending'?`
-          <button class="btn-approve" onclick="approveReq('${r.id}')"><i class="fas fa-check"></i> ����</button>
-          <button class="btn-reject" onclick="rejectReq('${r.id}')"><i class="fas fa-times"></i> ���</button>
+          <button class="btn-approve" onclick="approveReq('${r.id}')"><i class="fas fa-check"></i> قبول</button>
+          <button class="btn-reject" onclick="rejectReq('${r.id}')"><i class="fas fa-times"></i> رفض</button>
         `:r.status==='approved'?`
           <a class="btn-whatsapp-notify" href="${buildWaLink(r.phone, r.name)}" target="_blank" rel="noopener">
-            <i class="fab fa-whatsapp"></i> ����� ����� ������
+            <i class="fab fa-whatsapp"></i> إرسال رسالة القبول
           </a>
-          <button class="btn-reject" onclick="rejectReq('${r.id}')"><i class="fas fa-undo"></i> ����� ������</button>
+          <button class="btn-reject" onclick="rejectReq('${r.id}')"><i class="fas fa-undo"></i> إلغاء القبول</button>
         `:r.status==='rejected'?`
-          <button class="btn-approve" onclick="approveReq('${r.id}')"><i class="fas fa-redo"></i> ���� �����</button>
+          <button class="btn-approve" onclick="approveReq('${r.id}')"><i class="fas fa-redo"></i> قبول بدلاً</button>
         `:''
         }
-        <button class="btn-view-req" onclick="viewReqDetail('${r.id}')"><i class="fas fa-eye"></i> ������</button>
+        <button class="btn-view-req" onclick="viewReqDetail('${r.id}')"><i class="fas fa-eye"></i> تفاصيل</button>
         <button class="btn-view-req" style="color:#f87171;border-color:rgba(239,68,68,.3)" onclick="deleteReq('${r.id}')"><i class="fas fa-trash"></i></button>
       </div>
     </div>`;
@@ -1582,25 +1582,25 @@ function approveReq(id){
   // create student user
   const users = getUsers();
   const exists = users.find(u=>u.username===r.username||u.email===r.email);
-  if(exists && r.status!=='approved'){ toast('���� ������ ���� �������� ������','error'); return; }
+  if(exists && r.status!=='approved'){ toast('يوجد مستخدم بنفس البيانات مسبقاً','error'); return; }
   if(r.status!=='approved'){
     const newId = genStudentId();
-    users.push({ id:newId, name:r.name, username:r.username, password:r.password, email:r.email, phone:r.phone, type:'student', level:'�����', courses:(r.courses||[]), field:r.field||'', createdAt:r.createdAt });
+    users.push({ id:newId, name:r.name, username:r.username, password:r.password, email:r.email, phone:r.phone, type:'student', level:'مبتدئ', courses:(r.courses||[]), field:r.field||'', createdAt:r.createdAt });
     saveUsers(users);
     r.approvedId = newId;
     setTimeout(()=>{
-      alert('? ��� �������� ��� ������\n\n?? �����: '+r.name+'\n?? ����� ��������: '+newId+'\n?? ��� ��������: '+(r.username||'�')+'\n?? ���� ������: '+(r.password||'�')+'\n\n?? ���� ������:\n����� ��������: '+newId+'\n��� ��������: '+(r.username||'�')+'\n���� ������: '+(r.password||'�')+'\n\n?? ���� �� ��� �������� �� ����� �������� + ���� ������');
+      alert('✅ تمت الموافقة على الطالب\n\n👤 الاسم: '+r.name+'\n🆔 الرقم التعريفي: '+newId+'\n👤 اسم المستخدم: '+(r.username||'—')+'\n🔒 كلمة المرور: '+(r.password||'—')+'\n\n📲 ابعت للطالب:\nالرقم التعريفي: '+newId+'\nاسم المستخدم: '+(r.username||'—')+'\nكلمة المرور: '+(r.password||'—')+'\n\n✔️ يدخل بـ اسم المستخدم أو الرقم التعريفي + كلمة المرور');
     },300);
   }
   r.status='approved'; r.reviewedAt=Date.now();
   saveJoinRequests(reqs);
   renderJoinRequests(_currentReqFilter);
   updateBadges();
-  toast('��� �������� ������ ������ ?','success');
+  toast('تمت الموافقة وإضافة الطالب ✓','success');
 }
 
 function rejectReq(id){
-  const note = prompt('��� ����� (�������):','');
+  const note = prompt('سبب الرفض (اختياري):','');
   if(note===null) return;
   const reqs = getJoinRequests();
   const r = reqs.find(x=>x.id===id);
@@ -1616,54 +1616,54 @@ function rejectReq(id){
   }
   renderJoinRequests(_currentReqFilter);
   updateBadges();
-  toast('�� ��� �����','success');
+  toast('تم رفض الطلب','success');
 }
 
 function deleteReq(id){
-  if(!confirm('��� ��� ����� �������')) return;
+  if(!confirm('حذف هذا الطلب نهائياً؟')) return;
   let reqs=getJoinRequests().filter(r=>r.id!==id);
   saveJoinRequests(reqs);
   renderJoinRequests(_currentReqFilter);
   updateBadges();
-  toast('�� �����','success');
+  toast('تم الحذف','success');
 }
 
 function viewReqDetail(id){
   const r = getJoinRequests().find(x=>x.id===id);
   if(!r) return;
   const payEntries = Object.entries(r.payments||{});
-  const statusLabel={'pending':'<span class="req-status-badge pending">��� ��������</span>','approved':'<span class="req-status-badge approved">�����</span>','rejected':'<span class="req-status-badge rejected">�����</span>'};
+  const statusLabel={'pending':'<span class="req-status-badge pending">قيد المراجعة</span>','approved':'<span class="req-status-badge approved">مقبول</span>','rejected':'<span class="req-status-badge rejected">مرفوض</span>'};
   document.getElementById('reqDetailContent').innerHTML=`
     <div class="rd-section">
-      <div class="rd-section-title"><i class="fas fa-user"></i> ������ �����</div>
-      <div class="rd-row"><div class="rd-lbl">�����</div><div class="rd-val">${r.name}</div></div>
-      <div class="rd-row"><div class="rd-lbl">������ ����������</div><div class="rd-val">${r.email}</div></div>
-      <div class="rd-row"><div class="rd-lbl">��� ��������</div><div class="rd-val">${r.username}</div></div>
-      <div class="rd-row"><div class="rd-lbl">���� ������</div><div class="rd-val"><code style="background:var(--bg2);padding:2px 8px;border-radius:6px;font-size:.85rem">${r.password}</code></div></div>
-      <div class="rd-row"><div class="rd-lbl">������</div><div class="rd-val">${r.phone||'�'}</div></div>
-      <div class="rd-row"><div class="rd-lbl">������</div><div class="rd-val">${r.field||'�'}</div></div>
-      <div class="rd-row"><div class="rd-lbl">������</div><div class="rd-val">${statusLabel[r.status]||''}</div></div>
-      ${r.notes?`<div class="rd-row"><div class="rd-lbl">�������</div><div class="rd-val">${r.notes}</div></div>`:''}
+      <div class="rd-section-title"><i class="fas fa-user"></i> بيانات شخصية</div>
+      <div class="rd-row"><div class="rd-lbl">الاسم</div><div class="rd-val">${r.name}</div></div>
+      <div class="rd-row"><div class="rd-lbl">البريد الإلكتروني</div><div class="rd-val">${r.email}</div></div>
+      <div class="rd-row"><div class="rd-lbl">اسم المستخدم</div><div class="rd-val">${r.username}</div></div>
+      <div class="rd-row"><div class="rd-lbl">كلمة المرور</div><div class="rd-val"><code style="background:var(--bg2);padding:2px 8px;border-radius:6px;font-size:.85rem">${r.password}</code></div></div>
+      <div class="rd-row"><div class="rd-lbl">الهاتف</div><div class="rd-val">${r.phone||'—'}</div></div>
+      <div class="rd-row"><div class="rd-lbl">المجال</div><div class="rd-val">${r.field||'—'}</div></div>
+      <div class="rd-row"><div class="rd-lbl">الحالة</div><div class="rd-val">${statusLabel[r.status]||''}</div></div>
+      ${r.notes?`<div class="rd-row"><div class="rd-lbl">ملاحظات</div><div class="rd-val">${r.notes}</div></div>`:''}
     </div>
     <div class="rd-section">
-      <div class="rd-section-title"><i class="fas fa-graduation-cap"></i> �������� ��������</div>
+      <div class="rd-section-title"><i class="fas fa-graduation-cap"></i> الكورسات المختارة</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px;padding-top:4px">${(r.courses||[]).map(c=>`<span class="summary-course-tag">${COURSES_NAMES[c]||c}</span>`).join('')}</div>
     </div>
-    ${payEntries.length?`<div class="rd-section"><div class="rd-section-title"><i class="fas fa-receipt"></i> ������� ������</div><div class="rd-proofs-grid">${payEntries.map(([k,v])=>`<div><div style="font-size:.72rem;color:var(--muted);margin-bottom:4px">${COURSES_NAMES[k]||k}</div><div class="rd-proof-img" onclick="openLb('${v}')"><img src="${v}" alt="�����"></div></div>`).join('')}</div></div>`:''}
+    ${payEntries.length?`<div class="rd-section"><div class="rd-section-title"><i class="fas fa-receipt"></i> إيصالات السداد</div><div class="rd-proofs-grid">${payEntries.map(([k,v])=>`<div><div style="font-size:.72rem;color:var(--muted);margin-bottom:4px">${COURSES_NAMES[k]||k}</div><div class="rd-proof-img" onclick="openLb('${v}')"><img src="${v}" alt="إيصال"></div></div>`).join('')}</div></div>`:''}
     <div class="rd-section admin-note-area">
-      <div class="rd-section-title"><i class="fas fa-comment-alt"></i> ������ ������</div>
-      <textarea id="rdNote" placeholder="��� ������ ��������...">${r.adminNote||''}</textarea>
+      <div class="rd-section-title"><i class="fas fa-comment-alt"></i> ملاحظة الأدمن</div>
+      <textarea id="rdNote" placeholder="أضف ملاحظة اختيارية...">${r.adminNote||''}</textarea>
     </div>
   `;
   document.getElementById('reqDetailActions').innerHTML=`
     ${r.status==='pending'?
-      `<button class="btn-modal-save" onclick="approveFromDetail('${r.id}')"><i class="fas fa-check"></i> ������</button>
-       <button class="btn-modal-cancel" style="background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171" onclick="rejectFromDetail('${r.id}')"><i class="fas fa-times"></i> ���</button>`
+      `<button class="btn-modal-save" onclick="approveFromDetail('${r.id}')"><i class="fas fa-check"></i> موافقة</button>
+       <button class="btn-modal-cancel" style="background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171" onclick="rejectFromDetail('${r.id}')"><i class="fas fa-times"></i> رفض</button>`
       :r.status==='rejected'?
-      `<button class="btn-modal-save" onclick="approveFromDetail('${r.id}')"><i class="fas fa-check"></i> ���� �����</button>`
-      :`<button class="btn-modal-cancel" style="background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171" onclick="rejectFromDetail('${r.id}')"><i class="fas fa-undo"></i> ����� ������</button>`
+      `<button class="btn-modal-save" onclick="approveFromDetail('${r.id}')"><i class="fas fa-check"></i> قبول بدلاً</button>`
+      :`<button class="btn-modal-cancel" style="background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171" onclick="rejectFromDetail('${r.id}')"><i class="fas fa-undo"></i> إلغاء القبول</button>`
     }
-    <button class="btn-modal-cancel" onclick="document.getElementById('reqDetailModal').classList.remove('open')"><i class="fas fa-times"></i> �����</button>
+    <button class="btn-modal-cancel" onclick="document.getElementById('reqDetailModal').classList.remove('open')"><i class="fas fa-times"></i> إغلاق</button>
   `;
   document.getElementById('reqDetailModal').classList.add('open');
 }
@@ -1698,7 +1698,7 @@ function openGalleryModal(key, type){
   document.getElementById('galSelectedInfo').textContent = '';
   document.getElementById('galPreviewStrip').innerHTML = '';
   document.getElementById('galUrlPreview').style.display = 'none';
-  document.getElementById('galDropZone').querySelector('.dz-text').textContent = '���� ����� ��� �� ���� ��������';
+  document.getElementById('galDropZone').querySelector('.dz-text').textContent = 'اسحب الصور هنا أو انقر للاختيار';
   switchGalTab('file');
   document.getElementById('galleryModal').classList.add('open');
 }
@@ -1736,8 +1736,8 @@ function galLoadFiles(files){
   _galFiles = files.slice(0, 15);
   const info = document.getElementById('galSelectedInfo');
   info.style.display = 'block';
-  info.textContent = _galFiles.length === 1 ? '�� ������ ���� ����� ?' : `�� ������ ${_galFiles.length} ��� ?`;
-  document.getElementById('galDropZone').querySelector('.dz-text').textContent = _galFiles.length === 1 ? '�� ������ ���� �����' : `�� ������ ${_galFiles.length} ���`;
+  info.textContent = _galFiles.length === 1 ? 'تم اختيار صورة واحدة ✓' : `تم اختيار ${_galFiles.length} صور ✓`;
+  document.getElementById('galDropZone').querySelector('.dz-text').textContent = _galFiles.length === 1 ? 'تم اختيار صورة واحدة' : `تم اختيار ${_galFiles.length} صور`;
   const strip = document.getElementById('galPreviewStrip');
   strip.innerHTML = '';
   _galFiles.slice(0,8).forEach((f,i)=>{
@@ -1772,14 +1772,14 @@ function submitGalleryImages(){
   const activeTab = document.getElementById('galPaneFile').classList.contains('active') ? 'file' : 'url';
 
   if(activeTab === 'file'){
-    if(!_galFiles.length){ toast('���� ���� �����', 'error'); return; }
+    if(!_galFiles.length){ toast('اختر صورة أولاً', 'error'); return; }
     const portfolio = getPortfolio();
     if(!portfolio[key]) portfolio[key] = [];
     let loaded = 0, added = 0;
     const total = _galFiles.length;
     _galFiles.forEach(file => {
       if(file.size > 2*1024*1024){
-        toast(`������ "${file.name}" ���� �� 2MB � �� ������`, 'error');
+        toast(`الصورة "${file.name}" أكبر من 2MB – تم تخطيها`, 'error');
         loaded++;
         if(loaded===total) finishGalSave(portfolio, key, type, added);
         return;
@@ -1794,7 +1794,7 @@ function submitGalleryImages(){
     });
   } else {
     const url = document.getElementById('galUrlInput').value.trim();
-    if(!url || !url.startsWith('http')){ toast('���� ���� ���� ���� ���� �� http', 'error'); return; }
+    if(!url || !url.startsWith('http')){ toast('أدخل رابط صورة صحيح يبدأ بـ http', 'error'); return; }
     const portfolio = getPortfolio();
     if(!portfolio[key]) portfolio[key] = [];
     portfolio[key].push(url);
@@ -1802,7 +1802,7 @@ function submitGalleryImages(){
     if(type==='web') renderWebPrices(); else renderMobilePrices();
     updateBadges();
     closeGalleryModal();
-    toast('�� ����� ������ ����� ?', 'success');
+    toast('تم إضافة الصورة بنجاح ✓', 'success');
   }
 }
 
@@ -1811,7 +1811,7 @@ function finishGalSave(portfolio, key, type, count){
   if(type==='web') renderWebPrices(); else renderMobilePrices();
   updateBadges();
   closeGalleryModal();
-  toast(count===1 ? '�� ����� ������ ����� ?' : `�� ����� ${count} ��� ����� ?`, 'success');
+  toast(count===1 ? 'تم إضافة الصورة بنجاح ✓' : `تم إضافة ${count} صور بنجاح ✓`, 'success');
 }
 
 function saveProductData(key, type){
@@ -1830,11 +1830,11 @@ function saveProductData(key, type){
   if(type === 'web') renderWebPrices();
   else renderMobilePrices();
   
-toast('�� ��� ������ ' + apps[key].name + ' ����� ?', 'success');
+toast('تم حفظ بيانات ' + apps[key].name + ' بنجاح ✓', 'success');
 }
 
 function initDragDrop(){
-  // ����� dragenter ���� ��������� ����������
+  // تفعيل dragenter لمنع التأثيرات الافتراضية
   document.querySelectorAll('.product-img-zone').forEach(zone => {
     zone.addEventListener('dragenter', function(e){
       e.preventDefault();
@@ -1845,13 +1845,13 @@ function initDragDrop(){
 function renderUsers(type){
   const users=getUsers().filter(u=>u.type===type);
   const grid=document.getElementById(type==='employee'?'employeesGrid':'studentsGrid');
-  if(!users.length){const lbl=type==='employee'?'����':'����';grid.innerHTML=`<div class="no-users-msg" style="grid-column:1/-1"><div><i class="fas fa-${type==='employee'?'user-tie':'user-graduate'}"></i></div><p>�� ���� ${lbl} ���</p><button class="btn-add-user" onclick="openAddUser('${type}')" style="margin-top:14px;display:inline-flex;"><i class="fas fa-plus"></i> ����� ${type==='employee'?'����':'����'}</button></div>`;return;}
+  if(!users.length){const lbl=type==='employee'?'موظف':'طالب';grid.innerHTML=`<div class="no-users-msg" style="grid-column:1/-1"><div><i class="fas fa-${type==='employee'?'user-tie':'user-graduate'}"></i></div><p>لا يوجد ${lbl} بعد</p><button class="btn-add-user" onclick="openAddUser('${type}')" style="margin-top:14px;display:inline-flex;"><i class="fas fa-plus"></i> إضافة ${type==='employee'?'موظف':'طالب'}</button></div>`;return;}
   grid.innerHTML=users.map(u=>{
     const isEmp=u.type==='employee';
     const avatarBg=isEmp?'linear-gradient(135deg,#3b82f6,#6366f1)':'linear-gradient(135deg,#22c55e,#16a34a)';
     const initial=u.name?u.name.charAt(0):'?';
     const avatarHtml=u.avatar?`<img class="user-avatar" src="${u.avatar}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="user-avatar-placeholder" style="background:${avatarBg};display:none">${initial}</div>`:`<div class="user-avatar-placeholder" style="background:${avatarBg}">${initial}</div>`;
-    const sub=isEmp?(u.role||'����'):(u.level?`�������: ${u.level}`:'����');
+    const sub=isEmp?(u.role||'موظف'):(u.level?`المستوى: ${u.level}`:'طالب');
     return `<div class="user-card"><div class="user-card-header">${avatarHtml}<div><div class="user-card-name">${u.name}</div><div class="user-card-sub">${sub}</div></div></div>
       <div class="user-card-body"><div class="user-card-info">
         <div class="user-info-row"><i class="fas fa-at"></i><span>${u.username}</span></div>
@@ -1859,11 +1859,11 @@ function renderUsers(type){
         ${u.email?`<div class="user-info-row"><i class="fas fa-envelope"></i><span>${u.email}</span></div>`:''}
         ${isEmp&&u.department?`<div class="user-info-row"><i class="fas fa-building"></i><span>${u.department}</span></div>`:''}
         ${!isEmp&&u.id?`<div class="user-info-row" style="color:#fbbf24"><i class="fas fa-id-badge"></i><span>ID: <strong>${u.id}</strong></span></div>`:''}
-        ${!isEmp&&u.courses?`<div class="user-info-row"><i class="fas fa-graduation-cap"></i><span>${Array.isArray(u.courses)?u.courses.map(c=>COURSES_NAMES[c]||c).join('� '):u.courses}</span></div>`:''}
+        ${!isEmp&&u.courses?`<div class="user-info-row"><i class="fas fa-graduation-cap"></i><span>${Array.isArray(u.courses)?u.courses.map(c=>COURSES_NAMES[c]||c).join('، '):u.courses}</span></div>`:''}
       </div>
       <div class="user-card-actions">
-        <button class="btn-sm btn-sm-primary" onclick="viewProfile('${u.id}')"><i class="fas fa-eye"></i> ���</button>
-        <button class="btn-sm btn-sm-outline" onclick="editUser('${u.id}')"><i class="fas fa-edit"></i> �����</button>
+        <button class="btn-sm btn-sm-primary" onclick="viewProfile('${u.id}')"><i class="fas fa-eye"></i> عرض</button>
+        <button class="btn-sm btn-sm-outline" onclick="editUser('${u.id}')"><i class="fas fa-edit"></i> تعديل</button>
         <button class="btn-sm btn-sm-danger" onclick="deleteUser('${u.id}')"><i class="fas fa-trash"></i></button>
       </div></div></div>`;
   }).join('');
@@ -1875,10 +1875,10 @@ function openAddUser(type){
   ['f-name','f-username','f-password','f-phone','f-email','f-role','f-dept','f-courses','f-avatar','f-bio'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-avatar-preview').style.display='none';
   document.getElementById('f-avatar-file').value='';
-  document.getElementById('f-level').value='�����';
+  document.getElementById('f-level').value='مبتدئ';
   document.getElementById('f-editId').value=''; document.getElementById('f-type').value=type;
   const isEmp=type==='employee';
-  document.getElementById('modalTitle').textContent=isEmp?'����� ���� ����':'����� ���� ����';
+  document.getElementById('modalTitle').textContent=isEmp?'إضافة موظف جديد':'إضافة طالب جديد';
   document.getElementById('empFields').style.display=isEmp?'':'none';
   document.getElementById('stuFields').style.display=isEmp?'none':'';
   document.getElementById('userModal').classList.add('open');
@@ -1890,14 +1890,14 @@ function editUser(id){
   document.getElementById('f-password').value=user.password||''; document.getElementById('f-phone').value=user.phone||'';
   document.getElementById('f-email').value=user.email||''; document.getElementById('f-role').value=user.role||'';
   document.getElementById('f-dept').value=user.department||''; document.getElementById('f-courses').value=user.courses||'';
-  document.getElementById('f-level').value=user.level||'�����'; document.getElementById('f-avatar').value=user.avatar||'';
+  document.getElementById('f-level').value=user.level||'مبتدئ'; document.getElementById('f-avatar').value=user.avatar||'';
   document.getElementById('f-bio').value=user.bio||''; document.getElementById('f-editId').value=id; document.getElementById('f-type').value=user.type;
-  // ��� ������ �������
+  // عرض الصورة الحالية
   const prevBox = document.getElementById('f-avatar-preview');
   const prevImg = document.getElementById('f-avatar-img');
   if(user.avatar){ prevImg.src=user.avatar; prevBox.style.display='block'; } else { prevBox.style.display='none'; }
   const isEmp=user.type==='employee';
-  document.getElementById('modalTitle').textContent=isEmp?'����� ����':'����� ����';
+  document.getElementById('modalTitle').textContent=isEmp?'تعديل موظف':'تعديل طالب';
   document.getElementById('empFields').style.display=isEmp?'':'none';
   document.getElementById('stuFields').style.display=isEmp?'none':'';
   document.getElementById('userModal').classList.add('open');
@@ -1907,26 +1907,26 @@ function saveUser(){
   const name=document.getElementById('f-name').value.trim(); const username=document.getElementById('f-username').value.trim();
   const password=document.getElementById('f-password').value.trim(); const type=document.getElementById('f-type').value;
   const editId=document.getElementById('f-editId').value;
-  if(!name){toast('����� �����','error');return;}
-  if(!username){toast('��� �������� �����','error');return;}
-  if(!password&&!editId){toast('���� ������ ������','error');return;}
+  if(!name){toast('الاسم مطلوب','error');return;}
+  if(!username){toast('اسم المستخدم مطلوب','error');return;}
+  if(!password&&!editId){toast('كلمة المرور مطلوبة','error');return;}
   const users=getUsers();
   const existing=users.find(u=>u.username===username&&u.id!==editId);
-  if(existing){toast('��� �������� ����� ������','error');return;}
+  if(existing){toast('اسم المستخدم موجود مسبقاً','error');return;}
   const userData={name,username,password:password||(users.find(u=>u.id===editId)||{}).password||'',type,
     phone:document.getElementById('f-phone').value.trim(),email:document.getElementById('f-email').value.trim(),
     bio:document.getElementById('f-bio').value.trim(),avatar:document.getElementById('f-avatar').value.trim(),
     role:document.getElementById('f-role').value.trim(),department:document.getElementById('f-dept').value.trim(),
     courses:document.getElementById('f-courses').value.trim(),level:document.getElementById('f-level').value};
-  if(editId){ const idx=users.findIndex(u=>u.id===editId); if(idx!==-1){users[idx]={...users[idx],...userData};} toast('�� ����� �������� ����� ','success'); }
-  else { userData.id=genId(); userData.createdAt=new Date().toISOString(); users.push(userData); toast('�� ����� '+(type==='employee'?'������':'������')+' ����� ','success'); }
+  if(editId){ const idx=users.findIndex(u=>u.id===editId); if(idx!==-1){users[idx]={...users[idx],...userData};} toast('جم بنجاح الرابطجم بنجاح ','success'); }
+  else { userData.id=genId(); userData.createdAt=new Date().toISOString(); users.push(userData); toast('تم بنجاح '+(type==='employee'?'الرابط':'الرابط')+' بنجاح ','success'); }
   saveUsers(users); closeModal(); renderUsers('employee'); renderUsers('student'); renderDashboard(); updateBadges();
 }
 
 function deleteUser(id){
-  if(!confirm('�� ���� ��� ��� �������� �������'))return;
+  if(!confirm('هل تريد حذف هذا المستخدم نهائياً؟'))return;
   saveUsers(getUsers().filter(u=>u.id!==id));
-  renderUsers('employee'); renderUsers('student'); renderDashboard(); updateBadges(); toast('�� ��� �������� �����','success');
+  renderUsers('employee'); renderUsers('student'); renderDashboard(); updateBadges(); toast('تم حذف المستخدم بنجاح','success');
 }
 
 function closeModal(){ document.getElementById('userModal').classList.remove('open'); }
@@ -1937,26 +1937,26 @@ function closeLb(){ document.getElementById('lbOverlay').classList.remove('open'
 
 function changeAdminPass(){
   const old=document.getElementById('oldPass').value; const n=document.getElementById('newPass').value; const c=document.getElementById('confPass').value;
-  if(old!==getAdminPass()){toast('���� ������ ������� ���','error');return;}
-  if(n.length<4){toast('���� ������ ������� ����� ����','error');return;}
-  if(n!==c){toast('���� ������ ��� �������','error');return;}
+  if(old!==getAdminPass()){toast('كلمة المرور الحالية خطأ','error');return;}
+  if(n.length<4){toast('كلمة المرور الجديدة قصيرة جداً','error');return;}
+  if(n!==c){toast('كلمة المرور غير متطابقة','error');return;}
   localStorage.setItem(ADMIN_PASS_KEY,n);
   document.getElementById('oldPass').value=''; document.getElementById('newPass').value=''; document.getElementById('confPass').value='';
-  toast('�� ����� ���� ������ ����� ?','success');
+  toast('تم تغيير كلمة المرور بنجاح ✓','success');
 }
 
 function exportData(){
   const data={users:getUsers(),portfolio:getPortfolio(),appPrices:getAppPrices(),exportDate:new Date().toISOString()};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='akram-admin-data-'+Date.now()+'.json'; a.click();
-  toast('�� ����� �������� ����� ','success');
+  toast('جم بنجاح الرابطجم بنجاح ','success');
 }
 
 function clearAllData(){
-  if(!confirm(' �����: ���� �� ���� �������� ������� ���� ����!\n\n�� �� ����?'))return;
-  if(!confirm('����� ����  �� ������# �� ���� ������# ��!'))return;
+  if(!confirm(' بنجاح: موظف تم موظف الرابطجم تمإضافة موظف جديد!\n\nجم تم موظفϿ'))return;
+  if(!confirm('بنجاح موظف  تم الرابط# جم موظف الرابط# تم!'))return;
   [USERS_KEY,PORTFOLIO_KEY,APP_PRICES_KEY].forEach(k=>localStorage.removeItem(k));
-  initApp(); toast('�� �� ���� ��������','error');
+  initApp(); toast('جم تم موظف الرابطجم','error');
 }
 
 function toast(msg,type='success'){
@@ -1964,20 +1964,20 @@ function toast(msg,type='success'){
   setTimeout(()=>el.classList.remove('show'),3000);
 }
 
-// ??????????????????????????????????????
+// ══════════════════════════════════════
 //  LECTURES MANAGEMENT
-// ??????????????????????????????????????
+// ══════════════════════════════════════
 const LECTURES_KEY = 'am_lectures';
 const LEC_COURSES = [
-  {key:'free',        name:'������ �������',          icon:'fa-gift'},
-  {key:'facebook-ads',name:'������� ������',           icon:'fa-facebook'},
-  {key:'instagram',   name:'��������',                 icon:'fa-instagram'},
-  {key:'tiktok',      name:'��� ���',                  icon:'fa-music'},
-  {key:'snapchat',    name:'���� ���',                 icon:'fa-snapchat'},
-  {key:'twitter',     name:'����� / X',                icon:'fa-x-twitter'},
-  {key:'ai-marketing',name:'������ ���������',          icon:'fa-robot'},
-  {key:'integrated-strategy',name:'������������ ���������',icon:'fa-layer-group'},
-  {key:'programming', name:'�������',                   icon:'fa-code'},
+  {key:'free',        name:'الكورس المجاني',          icon:'fa-gift'},
+  {key:'facebook-ads',name:'إعلانات فيسبوك',           icon:'fa-facebook'},
+  {key:'instagram',   name:'إنستجرام',                 icon:'fa-instagram'},
+  {key:'tiktok',      name:'تيك توك',                  icon:'fa-music'},
+  {key:'snapchat',    name:'سناب شات',                 icon:'fa-snapchat'},
+  {key:'twitter',     name:'تويتر / X',                icon:'fa-x-twitter'},
+  {key:'ai-marketing',name:'الذكاء الاصطناعي',          icon:'fa-robot'},
+  {key:'integrated-strategy',name:'الاستراتيجية المتكاملة',icon:'fa-layer-group'},
+  {key:'programming', name:'البرمجة',                   icon:'fa-code'},
 ];
 
 let activeLecCourse = null;
@@ -1986,82 +1986,82 @@ var slideRows = []; // must be var for inline HTML handlers to access it
 
 function getLectures(){ return _fsLectures!==null ? Object.assign({},_fsLectures) : (()=>{try{return JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}');}catch(e){return {};}})(); }
 
-/* ?? SEED: ������ ������� � 8 ������� �������� ?? */
+/* ══ SEED: الكورس المجاني — 8 محاضرات افتراضية ══ */
 function getDefaultFreeLectures(){
   const ts = Date.now();
   const sl=(id,title,notes)=>({id,type:'image',src:'',title,notes});
   return [
-    { id:'lec_free_1', title:'����� �� ������ޅ ���� �� ��� ��� ����', description:'��� ������ �� ������� ���� ��� ���� ���� ������� �� ���� ������� � ������ ����� �� �����', createdAt:ts, updatedAt:ts, slides:[
-      {id:'s1_1',type:'image',src:'',title:'������ � ����� �� �������',notes:'?? Fade in ���� + ������ �����\n\n"��� �� ���� ���� ����ޅ ��� ��� ���� ���ǅ �� ���� �� ���� ���."'},
-      {id:'s1_2',type:'image',src:'',title:'������ ������ � ��� ���� 9 ����',notes:'?? Zoom ���� ��� �����\n\n"������ ���� ���� ���� ���� 9 ���� ����� �� ����� �� ������."'},
-      {id:'s1_3',type:'image',src:'',title:'��� ������ � ����� ��� ����',notes:'?? ���� ����� / ���\n\n"�� �����Ʌ ��� ��� ��� �� ����� �����!"'},
-      {id:'s1_4',type:'image',src:'',title:'���� ����� � 10 ���� ��',notes:'?? Highlight ��� �����\n\n"��� ��� �� ����� ���� ����Ʌ ����� ��� ���� ���̅ �� 10 ���� ��."'},
-      {id:'s1_5',type:'image',src:'',title:'������� � ���� ������',notes:'?? Blur ��� ������ ? Focus �����\n\n"�� ������ǿ\n������ ���υ ���� ������."'},
-      {id:'s1_6',type:'image',src:'',title:'������ ������� � ��� �����',notes:'?? Motion jump �� Freeze frame\n\n"���ǅ ����� ����� ���� ��� �����."'},
-      {id:'s1_7',type:'image',src:'',title:'���� �������� � ������ �� ����',notes:'?? Crowd movement\n\n"���ʅ ���� ����ȅ ���Ʌ ��� ����� �����."'},
-      {id:'s1_8',type:'image',src:'',title:'������ � ��� ���ҿ',notes:'?? ����� ��� ����/�����\n\n"���ʅ ��� ���� ��� ���� �� ���� ����ɿ"'},
-      {id:'s1_9',type:'image',src:'',title:'��� ����� � 3 ����� ����',notes:'?? Slide ����� ���� �������\n\n"���Ʌ 3 ����� ����!"'},
-      {id:'s1_10',type:'image',src:'',title:'��� ����� � ���� ����� ���!',notes:'?? ������� 10 ? 15 ���� Animated\n\n"����� �� 15 ��ԅ ���� ����� ���!"'},
-      {id:'s1_11',type:'image',src:'',title:'���� ����� � 45 ���!',notes:'?? Coins ������\n\n"���� ����� ���� ���� ���� 45 ���!"'},
-      {id:'s1_12',type:'image',src:'',title:'������ � ����� 15 ��!',notes:'?? Error / X ����\n\n"�� ������ɿ ����� 15 ��!"'},
-      {id:'s1_13',type:'image',src:'',title:'������ ���� � ���� �������',notes:'?? ����� �������� ���� ����\n\n"���� ���� ����� ������."\n\n45 (��������) � 30 (�������) = 15 (����� ������)'},
-      {id:'s1_14',type:'image',src:'',title:'������ ������ � 10 �����!',notes:'?? Multiply effect\n\n"���� ��� ����� �� ���� ����Ʌ ����� ���� 10 �����."'},
-      {id:'s1_15',type:'image',src:'',title:'����� ����� � ������� = ����',notes:'?? ��� ������\n\n"�� ���� ����Ʌ ��� ���� ����."\n\n�� ����� ������ �� ����� ? �� ���� ����� �� �������'},
-      {id:'s1_16',type:'image',src:'',title:'����� ������ � ������ ��� �� �����',notes:'?? ��� ������\n\n"��� �����̅ �� ���� ���� ���� ����."\n\n����� �� ����� ���� �����̅ ����� ������ ��������'},
-      {id:'s1_17',type:'image',src:'',title:'����� ������ � ����� ������ ���� ��������',notes:'?? ��� ������\n\n"�� ����: ��� ���ҿ\n��� ��� �����."\n\nCTA ���� ����� = ������ ������'},
-      {id:'s1_18',type:'image',src:'',title:'����� ������ � ���� ������� ��� �����',notes:'?? ��� ������\n\n"������� �� ���� ����Ʌ ������� ��� ����."\n\n����� = ������� � ������� �������\n���� ���� �� ����� ��� �� �����'},
-      {id:'s1_19',type:'image',src:'',title:'����� ������ � ���� ��� ���� (Scale)',notes:'?? ��� ������\n\n"�� ��� ���υ �� 10 ����Ӆ\n�� ���� Scale."\n\n��� ������ ���� ? ���� ����� ������� ������'},
-      {id:'s1_20',type:'image',src:'',title:'����� ������� ���������',notes:'?? AI + ������ + �����\n\n"���� ��� ��� ��х\n������ ������� ������ ��������� ���� ���� ������ ����."\n\n��� AI �� ����� ������ ���� ����� ���� ���� ������ ��� �������'},
-      {id:'s1_21',type:'image',src:'',title:'������� � ��� ���� ���� �������',notes:'?? Fade to black + ���� ������\n\n"�� ���� ���� ���� ��� ����Ʌ\n�� ���� ���� ����� ���."\n\n"��� ���� ���� �������."'},
+    { id:'lec_free_1', title:'رحلتي مع التسويق… بدأت من كيس تمر هندي', description:'قصة حقيقية من الطفولة تكشف كيف تبدأ رحلة التسويق من أبسط المواقف — وتنتهي بدروس لا تُنسى', createdAt:ts, updatedAt:ts, slides:[
+      {id:'s1_1',type:'image',src:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80&fit=crop',title:'الغلاف — رحلتي مع التسويق',notes:'🎬 Fade in بطيء + موسيقى خفيفة\n\n"قبل ما أكون مدرب تسويق… كنت طفل عادي جدًا… أو يمكن مش عادي قوي."'},
+      {id:'s1_2',type:'image',src:'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80&fit=crop',title:'الرجوع للماضي — ولد عنده 9 سنين',notes:'🎬 Zoom خفيف على الطفل\n\n"خلّوني أرجع بيكم لولد عنده 9 سنين… بيقضي نص حياته في الشارع."'},
+      {id:'s1_3',type:'image',src:'https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=800&q=80&fit=crop',title:'وقت الفسحة — الأكل أهم حاجة',notes:'🎬 حركة أطفال / ضحك\n\n"في الفسحة… كان أهم حدث في اليوم… الأكل!"'},
+      {id:'s1_4',type:'image',src:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80&fit=crop',title:'أبلة نبيلة — 10 قروش بس',notes:'🎬 Highlight على الكيس\n\n"كان فيه ست اسمها أبلة نبيلة… بتبيع تمر هندي متلج… بـ 10 قروش بس."'},
+      {id:'s1_5',type:'image',src:'https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=800&q=80&fit=crop',title:'المشكلة — محدش شايفها',notes:'🎬 Blur على الباعة → Focus عليها\n\n"بس مشكلتها؟\nمكانها بعيد… محدش شايفها."'},
+      {id:'s1_6',type:'image',src:'https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=800&q=80&fit=crop',title:'القرار المجنون — نطّ السور',notes:'🎬 Motion jump أو Freeze frame\n\n"وأنا… الطفل الشقي… قررت أنط السور."'},
+      {id:'s1_7',type:'image',src:'https://images.unsplash.com/photo-1473186578172-c141e6798cf4?w=800&q=80&fit=crop',title:'لحظة الملاحظة — الزحمة دي فرصة',notes:'🎬 Crowd movement\n\n"رجعت… وشفت الطلب… زحمة… ناس عاوزة تشتري."'},
+      {id:'s1_8',type:'image',src:'https://images.unsplash.com/photo-1489710437720-ebb67ec84dd2?w=800&q=80&fit=crop',title:'الفكرة — مين عاوز؟',notes:'🎬 تكبير على الفم/الصوت\n\n"فقلت… مين عاوز تمر هندي من أبلة نبيلة؟"'},
+      {id:'s1_9',type:'image',src:'https://images.unsplash.com/photo-1551525212-a1dc18871d4a?w=800&q=80&fit=crop',title:'أول عملاء — 3 جريوا عليه',notes:'🎬 Slide سريعة توحي بالحماس\n\n"فجأة… 3 جريوا عليا!"'},
+      {id:'s1_10',type:'image',src:'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80&fit=crop',title:'أول تسعير — خدمة توصيل بقى!',notes:'🎬 الأرقام 10 → 15 تظهر Animated\n\n"الكيس بـ 15 قرش… خدمة توصيل بقى!"'},
+      {id:'s1_11',type:'image',src:'https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?w=800&q=80&fit=crop',title:'فرحة الربح — 45 قرش!',notes:'🎬 Coins تتساقط\n\n"رجعت فرحان… فاكر نفسي كسبت 45 قرش!"'},
+      {id:'s1_12',type:'image',src:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&fit=crop',title:'الصدمة — معايا 15 بس!',notes:'🎬 Error / X أحمر\n\n"بس الحقيقة؟ معايا 15 بس!"'},
+      {id:'s1_13',type:'image',src:'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&q=80&fit=crop',title:'الحساب الصح — نسيت التكلفة',notes:'🎬 كتابة المعادلة خطوة خطوة\n\n"نسيت أحسب تكلفة المنتج."\n\n45 (المبيعات) – 30 (التكلفة) = 15 (الربح الفعلي)'},
+      {id:'s1_14',type:'image',src:'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b6?w=800&q=80&fit=crop',title:'التحول الكبير — 10 أكياس!',notes:'🎬 Multiply effect\n\n"تاني يوم… اتفقت مع أبلة نبيلة… وبقيت أبيع 10 أكياس."'},
+      {id:'s1_15',type:'image',src:'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80&fit=crop',title:'الدرس الأول — المشكلة = فرصة',notes:'🎯 درس تسويقي\n\n"هي كانت بعيدة… أنا بقيت الحل."\n\nكل مشكلة تشوفها في السوق → هي فرصة بيزنس في انتظارك'},
+      {id:'s1_16',type:'image',src:'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80&fit=crop',title:'الدرس الثاني — الراحة أهم من السعر',notes:'🎯 درس تسويقي\n\n"نفس المنتج… بس أسهل وصول… فباع أكتر."\n\nالناس مش بتدفع أكتر للمنتج… بتدفع للراحة والسهولة'},
+      {id:'s1_17',type:'image',src:'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80&fit=crop',title:'الدرس الثالث — العرض الواضح يصنع المبيعات',notes:'🎯 درس تسويقي\n\n"بس سألت: مين عاوز؟\nوده كان كفاية."\n\nCTA بسيط وواضح = مبيعات حقيقية'},
+      {id:'s1_18',type:'image',src:'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80&fit=crop',title:'الدرس الرابع — احسب التكلفة قبل الربح',notes:'🎯 درس تسويقي\n\n"التسويق مش فلوس داخلة… التسويق ربح صافي."\n\nالربح = الإيراد – التكلفة الكاملة\nاوعى تنسى أي تكلفة حتى لو صغيرة'},
+      {id:'s1_19',type:'image',src:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&fit=crop',title:'الدرس الخامس — وسّع لما تنجح (Scale)',notes:'🎯 درس تسويقي\n\n"من كيس واحد… لـ 10 أكياس…\nده اسمه Scale."\n\nلما الفكرة تنجح → كبّر الحجم، متغيّرش الفكرة'},
+      {id:'s1_20',type:'image',src:'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80&fit=crop',title:'الربط بالذكاء الاصطناعي',notes:'🎬 AI + موبايل + بيزنس\n\n"زمان كنت بنط سور…\nدلوقتي بنستخدم الذكاء الاصطناعي عشان نوصل للعميل أسرع."\n\nالـ AI هو السور الجديد اللي هتنطه عشان توصل للعميل قبل منافسيك'},
+      {id:'s1_21',type:'image',src:'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80&fit=crop',title:'الخاتمة — يلا نبدأ رحلة التسويق',notes:'🎬 Fade to black + شعار الكورس\n\n"كل واحد فيكم عنده قصة بسيطة…\nبس ممكن تبقى مشروع ضخم."\n\n"يلا نبدأ رحلة التسويق."'},
     ]},
-    { id:'lec_free_2', title:'����� ������ ��������� ��������', description:'ChatGPT + Canva AI + Leonardo AI ������ ����� Prompts ��������', createdAt:ts+1000, updatedAt:ts+1000, slides:[
-      sl('s2_1','�� ����� ��� Prompt','������ ���������� = ����� + ������ + �������� + �����\n���� ����: "������ ����"\n���� ���: "��� ���� ����� � ���� ���� �������� ������ ����� �� ������� �� ��� 30% ����� � ����� ����� 25-45 � 80 ���� � ���� �� ������ �CTA"'),
-      sl('s2_2','ChatGPT � ��������� ���������','���� ��� chat.openai.com ������.\n��� GPT-4o ������ �� ���� �����.\n������ Custom Instructions ���� ������ ��� ������.\n���� ���� Prompts ������ �� ���.'),
-      sl('s2_3','Canva AI � ����� ���� ����','Text to Image: ���� ��� ? ���� �����\nMagic Design: ������� ? ����� ����\nMagic Resize: ���� ������� ��� �������\nBackground Remover: ����� ������� �����\nMagic Write: ����� ����� ������ �� Canva'),
-      sl('s2_4','Leonardo AI � 150 ���� ������ ������','������: leonardo.ai\n���� ��������� � ����� ����\n����� ����� Anime Pastel Dream �������� �������\n������ ��� Negative Prompt ������ ������\n���� ����� ���� ����� �� Favorites'),
-      sl('s2_5','����� �������� �������','���� ���� ���� ���� 5 �����:\n? ���� ��� �� �� ChatGPT ������ ���� ������\n? ���� Canva ����� �����\n? ���� ���� �� Leonardo �� Canva AI\n���� ������� ����� ������ �������.'),
+    { id:'lec_free_2', title:'أدوات الذكاء الاصطناعي الأساسية', description:'ChatGPT + Canva AI + Leonardo AI وكيفية كتابة Prompts احترافية', createdAt:ts+1000, updatedAt:ts+1000, slides:[
+      sl('s2_1','فن كتابة الـ Prompt','الصيغة الاحترافية = الدور + المهمة + التفاصيل + الشكل\nمثال ضعيف: "اكتبلي بوست"\nمثال قوي: "أنت خبير تسويق — اكتب بوست انستجرام لعيادة أسنان في القاهرة عن خصم 30% رمضان — جمهور أمهات 25-45 — 80 كلمة — ودود مع إيموجي وCTA"'),
+      sl('s2_2','ChatGPT — الاستخدام الاحترافي','سجّل على chat.openai.com مجاناً.\nالـ GPT-4o مجاناً مع حدود يومية.\nاستخدم Custom Instructions عشان تعرّفه على بيزنسك.\nاحفظ أفضل Prompts بتاعتك في ملف.'),
+      sl('s2_3','Canva AI — تصميم بدون مصمم','Text to Image: اكتب وصف → صورة جاهزة\nMagic Design: مواصفات → تصميم كامل\nMagic Resize: حوّل التصميم لكل المنصات\nBackground Remover: إزالة الخلفية بضغطة\nMagic Write: كتابة محتوى مباشرة في Canva'),
+      sl('s2_4','Leonardo AI — 150 صورة مجاناً يومياً','الموقع: leonardo.ai\nأفضل للمبتدئين — مجاني وسهل\nاختار نموذج Anime Pastel Dream للتصاميم الجذابة\nاستخدم الـ Negative Prompt لإزالة العيوب\nاحفظ الصور اللي عجبتك في Favorites'),
+      sl('s2_5','تكليف المحاضرة الثانية','اصنع بوست كامل خلال 5 دقايق:\n① اكتب كاب شن في ChatGPT للمنتج اللي اخترته\n② افتح Canva وجهّز تصميم\n③ ولّد صورة من Leonardo أو Canva AI\nشارك النتيجة وقارن بالوقت المعتاد.'),
     ]},
-    { id:'lec_free_3', title:'����� ������� ��������� ���� AI', description:'����� ����� ��� ���� �� ��� ���� ������ ���� �� 10 �������', createdAt:ts+2000, updatedAt:ts+2000, slides:[
-      sl('s3_1','����� 3-3-3 �������','33% ����� ������: ����͡ ����� ����ɡ ������� �����\n33% ����� ������: ����ɡ ��������ʡ ������\n33% ����� ������: ���֡ �����ʡ �����\n������� �� ������ �� �� ����� �� � ���� ��� ���.'),
-      sl('s3_2','������� ��� ����','������: 100-150 ���� � ����� ���� �����\n��������: 80-120 ���� � ����� ������\nTikTok: 50-80 ���� � ����� ����� ����\n�������: 150-300 ���� � ������� ������\nX/�����: ��� �� 280 ��� � ��� ����� �����'),
-      sl('s3_3','Hook ������� � ��� 3 �����','��� 3 ����� ����� �� ��� �� �������.\n��� ����� ��� Hook:\n"���� ���� ����� �� ������� ��..."\n"3 ����� �������... �� ���"\n"�� �����... ���� ������� ��"\n"������� �� �����... �� ���� �� 1000 ���"'),
-      sl('s3_4','Content Multiplier � ���� � 10','���� ����� = ���� ������ + ������� �������� + Reels Script + Story + ������ + ���� ������� + Quote + ���������� + ���� ������ + Before/After\n���� ������ ���� "���� ����� �� ���� �����"'),
-      sl('s3_5','����� �������� �������','���� �� ChatGPT:\n"����� ��� ����� ���� ����� (7 ������) �� [������]\n3 ������� + 2 ������� + 2 �������\n����� �� ���� ��� ���� �������� ������� + �������"\n����� ���� 3 ����� �����.'),
+    { id:'lec_free_3', title:'إنشاء المحتوى الاحترافي بالـ AI', description:'إنتاج محتوى شهر كامل في يوم واحد وتحويل فكرة لـ 10 محتويات', createdAt:ts+2000, updatedAt:ts+2000, slides:[
+      sl('s3_1','قاعدة 3-3-3 للمحتوى','33% محتوى تعليمي: نصايح، أخطاء شايعة، معلومات مفيدة\n33% محتوى تفاعلي: أسئلة، استطلاعات، تحديات\n33% محتوى ترويجي: عروض، منتجات، خدمات\nالجمهور مش هيشتري من حد بيبيع بس — لازم يثق أول.'),
+      sl('s3_2','الكتابة لكل منصة','فيسبوك: 100-150 كلمة — أسلوب قصصي عاطفي\nانستجرام: 80-120 كلمة — جمالي إلهامي\nTikTok: 50-80 كلمة — مباشر شبابي مثير\nلينكدإن: 150-300 كلمة — احترافي تعليمي\nX/تويتر: أقل من 280 حرف — ذكي ومثير للجدل'),
+      sl('s3_3','Hook الفيديو — أول 3 ثوانٍ','أول 3 ثوانٍ بتحدد كل شيء في الفيديو.\nصيغ جاهزة للـ Hook:\n"اللي معظم الناس مش عارفينه عن..."\n"3 أخطاء بتخسّرك... كل يوم"\n"لو بتعمل... وقّف الفيديو ده"\n"الطريقة دي غيّرت... لـ أكتر من 1000 شخص"'),
+      sl('s3_4','Content Multiplier — فكرة × 10','فكرة واحدة = بوست فيسبوك + كاروسيل انستجرام + Reels Script + Story + تغريدة + بوست لينكدإن + Quote + إنفوجرافيك + سؤال تفاعلي + Before/After\nخليك دايماً تسأل "إزاي أحوّل ده لشكل تاني؟"'),
+      sl('s3_5','تكليف المحاضرة الثالثة','اطلب من ChatGPT:\n"اعملي خطة محتوى لمدة أسبوع (7 بوستات) لـ [بيزنسك]\n3 تعليمية + 2 تفاعلية + 2 ترويجية\nالكاب شن كامل لكل بوست بالعامية المصرية + هاشتاجز"\nاختار أحسن 3 وعدّل عليهم.'),
     ]},
-    { id:'lec_free_4', title:'����� �������� ����� ������� ���������', description:'����� ������ ������ ���� ������� ��� �� 3 ����� ��� �����', createdAt:ts+3000, updatedAt:ts+3000, slides:[
-      sl('s4_1','���� ��� 3 ����� ��������','��� ����� (2 ����): ChatGPT ? ��� ����� ? Canva ? ������ ? Buffer ? �����\n���� ������� (���� ������): �� ��� ������� + ������ �����\n�������: ����� ����� ���� ���� ��� ����!'),
-      sl('s4_2','��������� �������� ����','��������: 10 ����� (1M+) + 10 ������ (100K-500K) + 10 ������ (��� �� 50K)\n��������� �������� �� ���� ����� ����� ����� ����.\n���� �� ChatGPT: "����� 30 ������ �� [�����] ����� �� 3 �������"'),
-      sl('s4_3','��� �������� ���� �������','Engagement Formula: Hook ? ���� ? ���� ? �������\n��� ��� �� ����� �� ��� 30 ����� � ���������� ������ ��.\n���� �� ChatGPT "20 ���� ���� ����� �� ���� [���]" ��������� ������� �������.\nBest time to post: ����� �� Insights ���� ������.'),
-      sl('s4_4','����� ��������� ���� AI','�� ����� ������� �� ChatGPT ����� ������:\n3 ����� ������� ���� ? ����� ����\n3 ����� �� ������ ? �������\n5 ����� ����� ����\n��� ����� �� ������ ? ���� ��� ���'),
-      sl('s4_5','����� �������� �������','���� ������� ��:\n? ����� ����� �� �����\n? ���� ��� 10 ������\n? ���� ����� �� ChatGPT ����� �������\n? �� ��� 3 ��� ����� ���� 3 ������ ������� �����.'),
+    { id:'lec_free_4', title:'إدارة السوشيال ميديا بالذكاء الاصطناعي', description:'إدارة حسابات متعددة وعمل الأسبوع كله في 3 ساعات يوم الأحد', createdAt:ts+3000, updatedAt:ts+3000, slides:[
+      sl('s4_1','نظام الـ 3 ساعات الأسبوعي','يوم الأحد (2 ساعة): ChatGPT ← خطة محتوى ← Canva ← تصاميم ← Buffer ← جدولة\nباقي الأسبوع (ساعة إجمالي): رد على تعليقات + متابعة أرقام\nالنتيجة: أسبوع محتوى كامل بدون ضغط يومي!'),
+      sl('s4_2','الهاشتاجز بالطريقة الصح','المعادلة: 10 شعبية (1M+) + 10 متوسطة (100K-500K) + 10 متخصصة (أقل من 50K)\nالهاشتاجز المتخصصة هي اللي بتجيب جمهور حقيقي مهتم.\nاطلب من ChatGPT: "إديني 30 هاشتاج لـ [مجالك] مقسمة لـ 3 مستويات"'),
+      sl('s4_3','نمو الفولورز بدون إعلانات','Engagement Formula: Hook ← قيمة ← سؤال ← هاشتاجز\nارد على كل تعليق في أول 30 دقيقة — الخوارزمية بتلاحظ ده.\nاطلب من ChatGPT "20 سؤال مثير للجدل في مجال [كذا]" واستخدمها كبوستات تفاعلية.\nBest time to post: اتعرف من Insights بتاع الصفحة.'),
+      sl('s4_4','تحليل المنافسين بالـ AI','صف محتوى منافسيك لـ ChatGPT وقوله يطلعلك:\n3 حاجات بيعملها كويس ← اتعلم منها\n3 ثغرات في محتواه ← استغلها\n5 أفكار تتميز بيها\nنوع محتوى مش بيعمله ← ابدأ بيه أنت'),
+      sl('s4_5','تكليف المحاضرة الرابعة','اعمل التجربة دي:\n① اختار منافس في مجالك\n② راقب آخر 10 بوستات\n③ ابعت وصفها لـ ChatGPT واطلب التحليل\n④ خد أهم 3 فرص واعمل منها 3 بوستات الأسبوع الجاي.'),
     ]},
-    { id:'lec_free_5', title:'��������� �������� ������� ���������', description:'������� ������ ����ɡ A/B Testing� ������ ������� �����', createdAt:ts+4000, updatedAt:ts+4000, slides:[
-      sl('s5_1','��� ���� �������� Meta�','������ ����� ������: "������� �� ����� ���� �����������"\n��� ��������: Relevance Score + CTR + Engagement + Conversion\n���� ����� ��� CTR ���� ������ ������� ��������.\n������� ������ ������ ���������� ����� ����� ����.'),
-      sl('s5_2','����� ������� ��������','CTR ���� �� 1% = ����� ����\nROAS 3x ����� = ��� �����\nFrequency ��� 2-4 = ����� ����� (���� = �����)\nCPM ���� = ������ ��� �������\n���� �� ChatGPT ������ ������� �� �� ���� ������.'),
-      sl('s5_3','A/B Testing �������� ����','����� ����� �� �� �� ���:\n1?? ������ / ������� � ���� �����\n2?? ��� Headline\n3?? ��� Primary Text\n4?? ������� ��������\n�� ����� ���� �� ���� �� ����� ��� ���� ���.'),
-      sl('s5_4','����� ������� ���� AI','���� �� ChatGPT 3 ��� ��� �����:\n������ 1: ����� ��� ������� �������� ��������\n������ 2: ����� ��� ����� �� �������\n������ 3: ����� ��� Social Proof ������ ������\n���� 2 �� ��� ���� ��� ����� ��� 3 ����.'),
-      sl('s5_5','����� �������� �������','���� 3 ��� ������� ����� �� ���� ������:\n? ���� ��� Prompt ����� ������ �� ChatGPT\n? ���� ����� ������� ���� ���� ���� �� ����\n? �� ���� ����� � ���� ���� 2 ���� ���� �������.'),
+    { id:'lec_free_5', title:'الإعلانات المدفوعة والذكاء الاصطناعي', description:'إعلانات فيسبوك ناجحة، A/B Testing، وقراءة الأرقام بذكاء', createdAt:ts+4000, updatedAt:ts+4000, slides:[
+      sl('s5_1','كيف تفكر خوارزمية Meta؟','فيسبوك سؤاله الوحيد: "الإعلان ده هيجيب قيمة لمستخدميني؟"\nأهم المقاييس: Relevance Score + CTR + Engagement + Conversion\nكلما ارتفع الـ CTR كلما انخفضت التكلفة تلقائياً.\nالإعلان الكويس بيعلّم الخوارزمية تلاقي جمهور أفضل.'),
+      sl('s5_2','قراءة الأرقام الأساسية','CTR أكتر من 1% = إعلان جذاب\nROAS 3x فأكتر = ربح حقيقي\nFrequency بين 2-4 = تكرار مناسب (أكتر = إرهاق)\nCPM عالي = منافسة على الجمهور\nاطلب من ChatGPT يفسرلك الأرقام لو مش فاهم معناها.'),
+      sl('s5_3','A/B Testing بالترتيب الصح','اختبر واحدة بس في كل مرة:\n1️⃣ الصورة / الفيديو — أكبر تأثير\n2️⃣ الـ Headline\n3️⃣ الـ Primary Text\n4️⃣ الجمهور المستهدف\nلو غيّرت أكتر من حاجة مش هتعرف إيه اللي نجح.'),
+      sl('s5_4','كتابة إعلانات بالـ AI','اطلب من ChatGPT 3 نسخ لكل إعلان:\nالنسخة 1: تعتمد على الفائدة المباشرة والنتيجة\nالنسخة 2: تعتمد على الخوف من الخسارة\nالنسخة 3: تعتمد على Social Proof وتجارب حقيقية\nشغّل 2 مع بعض وشوف مين بيكسب بعد 3 أيام.'),
+      sl('s5_5','تكليف المحاضرة الخامسة','اعمل 3 نسخ إعلانية لمنتج أو خدمة حقيقية:\n① ابعت الـ Prompt الخاص بمنتجك لـ ChatGPT\n② اقرأ النسخ الثلاثة وحدد اللي أقوى في رأيك\n③ لو عندك بيزنس — شغّل أفضل 2 منهم وشوف النتيجة.'),
     ]},
-    { id:'lec_free_6', title:'����� �������� ������ ��������', description:'����� ������� ������ Customer Persona� ������� ��������', createdAt:ts+5000, updatedAt:ts+5000, slides:[
-      sl('s6_1','Vanity vs Real Metrics','������ ������� = Vanity (�� ����)\nConversion Rate + CTR + Revenue = Real Metrics\n���� �������: "������� �� ����� ��� ����� ��� �����ʿ"\n���� ��� ������� ���� ����� �� �������� �������� �������.'),
-      sl('s6_2','Customer Persona � ����� �������','���� ������� ������ �������:\n- ������������: ���� ���� ������ ����\n- ������: ��� ���� ������ �����\n- ����� ������: ���� ���� ��������� ���� ���������\n- ���� ������: ��� ����� ��߿ ���� �� �������'),
-      sl('s6_3','Persona Prompt �������','���� �� ChatGPT:\n"��� ���� [����� + ����� + �����].\n����� Customer Persona ����� ����:\n����� + ����� + ������� + ����� + ������ ��� 3 + ��� ����� ���� ������ + ������� ��������� �������� �� �� ���� �����"'),
-      sl('s6_4','����� ���� �� 30 �����','���� ������� �� ���������: Reach + Engagement + ������� + ������\n������ �� ChatGPT �� ��� �����:\n"����� ����� ����� ���� ����: ���� ������ + �������� + �������� + ������ ����� �����"\n������� ���� �� ������� ��� �����.'),
-      sl('s6_5','����� �������� �������','���� Persona �������:\n? ���� Prompt ��� Persona �� ChatGPT\n? ���� ������� ������� ������� ���������\n? ���� ��� �� ���� �� �����\n? �� ������ � �� �� Prompt ���� "�������: [��� Persona ��]"'),
+    { id:'lec_free_6', title:'تحليل البيانات واتخاذ القرارات', description:'قراءة الأرقام بذكاء، Customer Persona، وتقارير احترافية', createdAt:ts+5000, updatedAt:ts+5000, slides:[
+      sl('s6_1','Vanity vs Real Metrics','لايكات وفولورز = Vanity (مش مهمة)\nConversion Rate + CTR + Revenue = Real Metrics\nسؤال المليون: "المحتوى ده بيبيع ولا بيجمع فقط لايكات؟"\nركّز على الحاجات اللي بتأثر في المبيعات والأرباح الفعلية.'),
+      sl('s6_2','Customer Persona — عميلك المثالي','صورة تفصيلية لعميلك المثالي:\n- الديموغرافيا: عمره، جنسه، منطقته، دخله\n- مشاكله: إيه اللي بيصعّب حياته؟\n- سلوكه الرقمي: أكتر منصة بيستخدمها ووقت استخدامها\n- قرار الشراء: ليه يشتري منك؟ وليه مش هيشتري؟'),
+      sl('s6_3','Persona Prompt احترافي','اطلب من ChatGPT:\n"أنا عندي [بيزنس + موقعه + السعر].\nاعملي Customer Persona كاملة تشمل:\nالاسم + العمر + الوظيفة + الدخل + مشاكله الـ 3 + كيف بياخد قرار الشراء + الرسالة التسويقية المثالية له في جملة واحدة"'),
+      sl('s6_4','تقرير شهري في 30 دقيقة','اجمع الأرقام من التحليلات: Reach + Engagement + تحويلات + مبيعات\nابعتهم لـ ChatGPT مع هذا الطلب:\n"اعملي تقرير تسويق شهري يشمل: ملخص تنفيذي + النجاحات + التحديات + توصيات الشهر الجاي"\nالتقرير جاهز في دقيقتين بدل ساعات.'),
+      sl('s6_5','تكليف المحاضرة السادسة','ابني Persona لبيزنسك:\n① ابعت Prompt الـ Persona لـ ChatGPT\n② اقرأ النتيجة وقارنها بعملاءك الحقيقيين\n③ عدّل على أي حاجة مش دقيقة\n④ من دلوقتي — في كل Prompt اكتب "الجمهور: [الـ Persona دي]"'),
     ]},
-    { id:'lec_free_7', title:'���� ���������� ����� �������', description:'Marketing Funnel ���� ��� 90 ��� ������ ������', createdAt:ts+6000, updatedAt:ts+6000, slides:[
-      sl('s7_1','��� Marketing Funnel ��������','Awareness: ����� ������ + Short Videos + ������� Reach �����\nConsideration: Case Studies + ������ ����� + Retargeting\nConversion: ���� ������ + WhatsApp Bot + Urgency\nRetention: ������ ��� ������ + Upsell + Loyalty Program\n�� ����� ����� ��� ����� �����.'),
-      sl('s7_2','��� 90 ���','����� ����� � Awareness: 20 ���� ������ + ������� Reach �����\n����� ������ � Leads: 15 ���� ������ + ������� Lead Generation\n����� ������ � Sales: 10 ���� ������ + ������� Conversion\n���� ������� �� 2 ����� �����.'),
-      sl('s7_3','����� ������ �� Freelancer','���� ������: 12 ���� + ����� = 2000-3500 �/���\n���� ������: 20 ���� + ������� = 4000-7000 �/���\n���� ��������: 30 ���� + ������� + ������ = 8000-15000 �/���\nFreelance ����: Full Package = 800-2500 �����/���\n��� ������ ����� ��� ��� �����.'),
-      sl('s7_4','���� ����� ���� AI �� �����','����� ���� ������ ���� AI:\n��� ����� ����� (���� ����� ����� � ������ ���)\n����� ������� A/B Testing (���� 3 ���� � ������ ����)\n����� ��������� (��� ����� ���� � ������ 30 �����)\n��� �� ����� ���� ����� �� ���� ����� ����.'),
-      sl('s7_5','����� �������� �������','���� �� ChatGPT ��� 90 ��� �������:\n"����� ��� ������� 90 ��� �� [������] � �����: [������� ��������] � ���������: [������] � �������: [������ + ��������]"\n������ �� Tasks ������� �� Notion �� Trello.'),
+    { id:'lec_free_7', title:'بناء استراتيجية تسويق متكاملة', description:'Marketing Funnel ذكي، خطة 90 يوم، وتسعير خدماتك', createdAt:ts+6000, updatedAt:ts+6000, slides:[
+      sl('s7_1','الـ Marketing Funnel المتكامل','Awareness: محتوى تعليمي + Short Videos + إعلانات Reach رخيصة\nConsideration: Case Studies + شهادات عملاء + Retargeting\nConversion: عروض محدودة + WhatsApp Bot + Urgency\nRetention: متابعة بعد الشراء + Upsell + Loyalty Program\nكل مرحلة تحتاج نوع محتوى مختلف.'),
+      sl('s7_2','خطة 90 يوم','الشهر الأول — Awareness: 20 بوست تعليمي + إعلانات Reach صغيرة\nالشهر الثاني — Leads: 15 بوست إقناعي + إعلانات Lead Generation\nالشهر الثالث — Sales: 10 بوست ترويجي + إعلانات Conversion\nراجع الأرقام كل 2 أسبوع وعدّل.'),
+      sl('s7_3','تسعير خدماتك كـ Freelancer','باقة أساسية: 12 بوست + تصميم = 2000-3500 ج/شهر\nباقة متوسطة: 20 بوست + إعلانات = 4000-7000 ج/شهر\nباقة احترافية: 30 بوست + إعلانات + تقارير = 8000-15000 ج/شهر\nFreelance دولي: Full Package = 800-2500 دولار/شهر\nبدأ بالأقل وارفع بعد أول نتيجة.'),
+      sl('s7_4','إزاي تشتغل بالـ AI مع عملاء','خدمات تقدر تقدمها بالـ AI:\nخطة محتوى شهرية (كانت بتاخد أسبوع — دلوقتي يوم)\nكتابة إعلانات A/B Testing (كانت 3 أيام — دلوقتي ساعة)\nتحليل المنافسين (كان يحتاج خبير — دلوقتي 30 دقيقة)\nهذا هو الفرق اللي بيسمح لك بأخذ عملاء أكتر.'),
+      sl('s7_5','تكليف المحاضرة السابعة','اطلب من ChatGPT خطة 90 يوم لبيزنسك:\n"اعملي خطة تسويقية 90 يوم لـ [بيزنسك] — الهدف: [الأرقام المطلوبة] — الميزانية: [المبلغ] — المنصات: [فيسبوك + انستجرام]"\nحوّلها لـ Tasks أسبوعية في Notion أو Trello.'),
     ]},
-    { id:'lec_free_8', title:'����� ������ + ��� ���� �����', description:'����� �� �� ������ ����� Portfolio ������ ��� ����', createdAt:ts+7000, updatedAt:ts+7000, slides:[
-      sl('s8_1','����� ������ ������','����� ����� ����� �� ����� �����:\n? Customer Persona �����\n? ��� ����� 30 ����\n? 5 ������ �� Canva AI\n? 3 ���� ������� �������\n? Script Reels ����\n? ���������� 90 ���\n�� ��� Portfolio ����� �������.'),
-      sl('s8_2','���� 5 ��� ���� ����','1. ������ �������: ������� ������ ����� �����\n2. Facebook Groups: ������� ����� �������� �������\n3. LinkedIn: 20 ����� ������ ������ ������� �������\n4. Cold DM: ������ ����� ������� ���� �� ����\n5. Mostaql / Fiverr: ����� Freelance (���� ���� ������)'),
-      sl('s8_3','Proposal ������� �� 5 �����','��� Proposal = ����� ������ �����.\n���� �� ChatGPT:\n"���� Proposal �� [��� �������] � �������: [�� ������] � �������: [�� ������] � ������� �������� �� 90 ��� � 3 ����� ������ ������"\n���� ���� ����� ������� ������.'),
-      sl('s8_4','����� �������� �������','"��� AI �� �������� � ������ ����� � 10 �� �������� ��"\n\n��� 3 ����� ���� ����:\n1. ��� Prompt �� ����� � ���� �� ������ �� ���\n2. �������� ��� �� ������ � ���� ��� �� �� perfect\n3. ������� ����� � ������ ������ ����� ���� �����������'),
-      sl('s8_5','����� ������','���� ����� ������ ������:\n? ����� ����� ����� (���� ����� �� �����)\n? ���� �� ����� ������� �������� ��� AI\n? ���� ����� �� PDF �� Canva Presentation\n? ���� Proposal ���� ���� �����\n����� � ��� ������ ����� ���� ���� AI! ??'),
+    { id:'lec_free_8', title:'مشروع التخرج + أول عميل حقيقي', description:'تطبيق كل ما تعلمته وبناء Portfolio وإيجاد أول عميل', createdAt:ts+7000, updatedAt:ts+7000, slides:[
+      sl('s8_1','مشروع التخرج الكامل','اختار بيزنس حقيقي أو خيالي وابني:\n✅ Customer Persona كاملة\n✅ خطة محتوى 30 بوست\n✅ 5 تصاميم بـ Canva AI\n✅ 3 نصوص إعلانية لفيسبوك\n✅ Script Reels واحد\n✅ استراتيجية 90 يوم\nده الـ Portfolio بتاعك للعملاء.'),
+      sl('s8_2','أسرع 5 طرق لأول عميل','1. الشبكة الشخصية: أصدقاءك وعيلتك عندهم بيزنس\n2. Facebook Groups: مجموعات أصحاب المشاريع الصغيرة\n3. LinkedIn: 20 رسالة يومياً لأصحاب الشركات الصغيرة\n4. Cold DM: حسابات أعمال محتواها قديم أو ضعيف\n5. Mostaql / Fiverr: منصات Freelance (ابدأ بسعر تنافسي)'),
+      sl('s8_3','Proposal احترافي في 5 دقايق','الـ Proposal = بوابة العميل الأول.\nاطلب من ChatGPT:\n"اكتب Proposal لـ [نوع البيزنس] — المشكلة: [ما لاحظته] — الخدمات: [ما ستقدمه] — النتائج المتوقعة في 90 يوم — 3 باقات بأسعار مختلفة"\nعدّل وأضف أرقام وتفاصيل حقيقية.'),
+      sl('s8_4','رسالة المحاضرة الأخيرة','"الـ AI مش هيستبدلك — هيضاعف قدرتك × 10 لو استخدمته صح"\n\nأهم 3 حاجات تفضل معاك:\n1. الـ Prompt هو سلاحك — احسن في كتابته كل يوم\n2. الانتظام أهم من الكمال — انشر حتى لو مش perfect\n3. الأرقام بتحكي — راقعها وبناءً عليها غيّر استراتيجيتك'),
+      sl('s8_5','تكليف التخرج','اعمل مشروع التخرج الكامل:\n① اختار بيزنس حقيقي (ممكن بتاعك أو صاحبك)\n② طبّق كل خطوات المشروع باستخدام الـ AI\n③ نظّم الشغل في PDF أو Canva Presentation\n④ ابعت Proposal لأول عميل محتمل\nمبروك — أنت دلوقتي مسوّق رقمي بالـ AI! 🎉'),
     ]},
   ];
 }
@@ -2070,7 +2070,7 @@ async function seedFreeLectures(){
   try {
     const all = getLectures();
     const existing = all['free']||[];
-    // only seed if no free lectures exist yet
+    // re-seed if empty, less than 8, first lecture has < 10 slides, or first slide has no image
     if(existing.length >= 8 && (existing[0].slides||[]).length >= 10) return;
     all['free'] = getDefaultFreeLectures();
     // update in-memory immediately so UI reads it right away
@@ -2083,7 +2083,7 @@ async function seedFreeLectures(){
     // refresh UI if lectures section is open
     try{ initLecturesSection(); }catch(e){}
     if(activeLecCourse === 'free'){ try{ renderLecList('free'); }catch(e){} }
-    console.log('? Free course lectures seeded successfully');
+    console.log('✅ Free course lectures seeded successfully');
   } catch(e){ console.warn('Seed failed:', e); }
 }
 
@@ -2110,7 +2110,7 @@ async function saveLectures(obj){
   _fsLectures = Object.assign({},obj);
   try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(obj)); }catch(e){ console.warn('localStorage quota, skipping local save'); }
 
-  // Build compressed version for Firestore (base64 ? 400px / quality 0.45 ? 8-15KB per image)
+  // Build compressed version for Firestore (base64 → 400px / quality 0.45 ≈ 8-15KB per image)
   const buildCompressed = async (lecs) => {
     const out = [];
     for(const lec of (lecs||[])){
@@ -2134,7 +2134,7 @@ async function saveLectures(obj){
         .set({...lec, courseKey, savedAt: Date.now()})
         .catch(e=>console.warn('FS lec save', lec.id, e));
     }
-    // Also write grouped doc (for fallback readers) � use compressed lecs
+    // Also write grouped doc (for fallback readers) — use compressed lecs
     // but chunk them: save one grouped doc per course to keep under 1MB
     const groupSnippet = compLecs.map(l=>({
       ...l,
@@ -2144,7 +2144,7 @@ async function saveLectures(obj){
       .set({data: groupSnippet, courseKey, updatedAt: Date.now()})
       .catch(e=>console.warn('FS lectures_'+courseKey, e));
   }
-  toast('�� ����� ��� ������� ?','success');
+  toast('تم الحفظ على السحابة ✓','success');
 }
 
 function initLecturesSection(){
@@ -2174,28 +2174,28 @@ function selectLecCourse(key){
 
 function renderLecList(key){
   const meta = LEC_COURSES.find(c=>c.key===key);
-  document.getElementById('lecPanelTitle').textContent = (meta?meta.name:key) + ' � ���������';
+  document.getElementById('lecPanelTitle').textContent = (meta?meta.name:key) + ' – المحاضرات';
   document.getElementById('btnAddLec').style.display = 'flex';
   const all = getLectures();
   const lecs = all[key]||[];
   const list = document.getElementById('lecList');
   if(!lecs.length){
-    list.innerHTML = `<div class="lec-empty"><i class="fas fa-inbox" style="font-size:2rem;margin-bottom:10px;display:block;opacity:.3;"></i>�� ���� ������� ���� ������ ���</div>`;
+    list.innerHTML = `<div class="lec-empty"><i class="fas fa-inbox" style="font-size:2rem;margin-bottom:10px;display:block;opacity:.3;"></i>لا توجد محاضرات لهذا الكورس بعد</div>`;
     return;
   }
   list.innerHTML = lecs.map((l,i)=>`
     <div class="lec-card">
       <div class="lec-card-num">${i+1}</div>
       <div class="lec-card-info">
-        <div class="lec-card-title">${l.title||'������ '+(i+1)}</div>
+        <div class="lec-card-title">${l.title||'محاضرة '+(i+1)}</div>
         <div class="lec-card-meta">
-          <span><i class="fas fa-images"></i> ${(l.slides||[]).length} �����</span>
+          <span><i class="fas fa-images"></i> ${(l.slides||[]).length} شريحة</span>
           ${l.description?`<span><i class="fas fa-align-left"></i> ${l.description.substring(0,40)}...</span>`:''}
         </div>
       </div>
       <div class="lec-card-btns">
-        <button class="lec-btn lec-btn-view" onclick="window.open('../lecture-viewer.html?course=${key}&id=${l.id}','_blank')"><i class="fas fa-eye"></i> ������</button>
-        <button class="lec-btn lec-btn-edit" onclick="openEditLecture('${l.id}')"><i class="fas fa-edit"></i> �����</button>
+        <button class="lec-btn lec-btn-view" onclick="window.open('../lecture-viewer.html?course=${key}&id=${l.id}','_blank')"><i class="fas fa-eye"></i> معاينة</button>
+        <button class="lec-btn lec-btn-edit" onclick="openEditLecture('${l.id}')"><i class="fas fa-edit"></i> تعديل</button>
         <button class="lec-btn lec-btn-del" onclick="deleteLecture('${l.id}')"><i class="fas fa-trash"></i></button>
       </div>
     </div>
@@ -2203,9 +2203,9 @@ function renderLecList(key){
 }
 
 function openAddLecture(){
-  if(!activeLecCourse){toast('���� ������ �����','error');return;}
+  if(!activeLecCourse){toast('اختر كورساً أولاً','error');return;}
   editingLecId = null;
-  document.getElementById('lecModalTitle').textContent = '������ �����';
+  document.getElementById('lecModalTitle').textContent = 'محاضرة جديدة';
   document.getElementById('lecTitleInput').value = '';
   document.getElementById('lecDescInput').value = '';
   slideRows = [];
@@ -2220,7 +2220,7 @@ function openEditLecture(id){
   const lec = (all[activeLecCourse]||[]).find(l=>l.id===id);
   if(!lec)return;
   editingLecId = id;
-  document.getElementById('lecModalTitle').textContent = '�����: '+lec.title;
+  document.getElementById('lecModalTitle').textContent = 'تعديل: '+lec.title;
   document.getElementById('lecTitleInput').value = lec.title||'';
   document.getElementById('lecDescInput').value = lec.description||'';
   slideRows = (lec.slides||[]).map(s=>({...s}));
@@ -2242,12 +2242,12 @@ function collectSlideValues(){
     const notesEl = document.getElementById('sf-notes-'+i);
     const typeEl  = document.getElementById('sf-type-'+i);
     if(titleEl) s.title = titleEl.value;
-    // �� ���� ���� ��� input �� ���� �� ��� ��� (�� ���� �����)
-    // ��� src ������� ����� ������ �� slideRows[i].src �� onSlideFileChange �� �� renderSlideEditor
+    // لا تقرأ قيمة الـ input لو كانت نص عرض فقط (مش رابط حقيقي)
+    // الـ src الحقيقي محفوظ مسبقاً في slideRows[i].src من onSlideFileChange أو من renderSlideEditor
     if(srcEl && !srcEl.disabled){
       s.src = srcEl.value;
     }
-    // �� ���� disabled �������� �� placeholder ������ ��� �� �� s.src
+    // لو كانت disabled ومحتواها نص placeholder نتركها كما هي في s.src
     if(notesEl) s.notes = notesEl.value;
     if(typeEl)  s.type  = typeEl.value;
   });
@@ -2280,22 +2280,22 @@ function pickSlideImage(idx){
 function onSlideFileChange(idx, input){
   const file = input.files[0];
   if(!file) return;
-  if(file.size > 20*1024*1024){ toast('��� ������ ���� �� 20MB','error'); return; }
+  if(file.size > 20*1024*1024){ toast('حجم الصورة أكبر من 20MB','error'); return; }
 
   const reader = new FileReader();
   reader.onload = async e=>{
     const preview = document.getElementById('sf-imgpreview-'+idx);
     const srcInput = document.getElementById('sf-src-'+idx);
-    if(srcInput){ srcInput.value='���� �����...'; srcInput.disabled=true; }
+    if(srcInput){ srcInput.value='جاري الضغط...'; srcInput.disabled=true; }
 
-    // ��� ������ (max 900px, quality 0.65) ? ����� 80-150KB
+    // ضغط الصورة (max 900px, quality 0.65) → حوالي 80-150KB
     const compressed = await compressImage(e.target.result, 900, 0.65);
 
-    // ��� base64 ������ � �� Storage �� CORS
+    // حفظ base64 مباشرة — لا Storage لا CORS
     slideRows[idx].src = compressed;
     if(preview){ preview.src=compressed; preview.style.display='block'; }
-    if(srcInput){ srcInput.value='? ����� �����'; srcInput.disabled=true; }
-    toast('�� ����� ������ � ���� ��� ��������','success');
+    if(srcInput){ srcInput.value='✓ جاهزة للحفظ'; srcInput.disabled=true; }
+    toast('تم تحضير الصورة — اضغط حفظ المحاضرة','success');
   };
   reader.readAsDataURL(file);
 }
@@ -2328,57 +2328,57 @@ function clearSlideImage(idx){
 function renderSlideEditor(){
   const ed = document.getElementById('slidesEditor');
   if(!slideRows.length){
-    ed.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted);font-size:.85rem;"><i class="fas fa-layer-group" style="font-size:2rem;display:block;margin-bottom:10px;opacity:.3;"></i>�� ���� ����� � ���� "+�����" ������</div>';
+    ed.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted);font-size:.85rem;"><i class="fas fa-layer-group" style="font-size:2rem;display:block;margin-bottom:10px;opacity:.3;"></i>لا توجد شرائح – اضغط "+شريحة" لإضافة</div>';
     return;
   }
   ed.innerHTML = slideRows.map((s,i)=>{
     const isImg = s.type==='image';
     const hasBase64 = s.src && s.src.startsWith('data:');
-    const imgSrcDisplay = hasBase64 ? '[���� ������]' : (s.src||'');
+    const imgSrcDisplay = hasBase64 ? '[صورة مرفوعة]' : (s.src||'');
     const imgDisabled = hasBase64 ? 'disabled' : '';
     return `
     <div class="slide-row" id="sr-${i}">
       <div class="slide-row-head">
-        <span class="slide-row-num"><i class="fas fa-layer-group" style="margin-left:5px;"></i>����� ${i+1}</span>
+        <span class="slide-row-num"><i class="fas fa-layer-group" style="margin-left:5px;"></i>شريحة ${i+1}</span>
         <div style="display:flex;gap:6px;">
-          ${i>0?`<button onclick="collectSlideValues();slideRows.splice(${i}-1,0,slideRows.splice(${i},1)[0]);renderSlideEditor()" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:#93c5fd;border-radius:7px;padding:4px 9px;font-size:.75rem;cursor:pointer;" title="����� �����"><i class="fas fa-arrow-up"></i></button>`:''}
-          ${i<slideRows.length-1?`<button onclick="collectSlideValues();slideRows.splice(${i}+1,0,slideRows.splice(${i},1)[0]);renderSlideEditor()" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:#93c5fd;border-radius:7px;padding:4px 9px;font-size:.75rem;cursor:pointer;" title="����� �����"><i class="fas fa-arrow-down"></i></button>`:''}
+          ${i>0?`<button onclick="collectSlideValues();slideRows.splice(${i}-1,0,slideRows.splice(${i},1)[0]);renderSlideEditor()" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:#93c5fd;border-radius:7px;padding:4px 9px;font-size:.75rem;cursor:pointer;" title="تحريك لأعلى"><i class="fas fa-arrow-up"></i></button>`:''}
+          ${i<slideRows.length-1?`<button onclick="collectSlideValues();slideRows.splice(${i}+1,0,slideRows.splice(${i},1)[0]);renderSlideEditor()" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:#93c5fd;border-radius:7px;padding:4px 9px;font-size:.75rem;cursor:pointer;" title="تحريك لأسفل"><i class="fas fa-arrow-down"></i></button>`:''}
           <button onclick="removeSlideRow(${i})" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;border-radius:7px;padding:4px 9px;font-size:.75rem;cursor:pointer;"><i class="fas fa-trash"></i></button>
         </div>
       </div>
       <div class="slide-row-fields">
         <div class="slide-field full">
-          <label>����� �������</label>
-          <input id="sf-title-${i}" type="text" value="${escHtml(s.title||'')}" placeholder="����� ���� �� �����֡ ����: �� �� ������� �������">
+          <label>عنوان الشريحة</label>
+          <input id="sf-title-${i}" type="text" value="${escHtml(s.title||'')}" placeholder="عنوان يظهر في العارض، مثال: ما هو التسويق الرقمي؟">
         </div>
         <div class="slide-field">
-          <label>��� �������</label>
+          <label>نوع الوسائط</label>
           <select id="sf-type-${i}" onchange="changeSlideType(${i})">
-            <option value="image"${s.type==='image'?' selected':''}>?? ����</option>
-            <option value="video"${s.type==='video'?' selected':''}>?? �����</option>
-            <option value="pdf"${s.type==='pdf'?' selected':''}>?? PDF</option>
+            <option value="image"${s.type==='image'?' selected':''}>🌄 صورة</option>
+            <option value="video"${s.type==='video'?' selected':''}>🎬 فيديو</option>
+            <option value="pdf"${s.type==='pdf'?' selected':''}>📄 PDF</option>
           </select>
         </div>
         ${isImg?`
         <div class="slide-field">
-          <label>������</label>
+          <label>الصورة</label>
           <div style="display:flex;gap:6px;">
-            <input id="sf-src-${i}" type="text" value="${escHtml(imgSrcDisplay)}" ${imgDisabled} placeholder="https://... ���� ������" style="flex:1;">
-            <button onclick="pickSlideImage(${i})" style="padding:0 12px;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:#c4b5fd;border-radius:9px;font-size:.78rem;cursor:pointer;white-space:nowrap;"><i class="fas fa-upload" style="margin-left:4px;"></i>���</button>
+            <input id="sf-src-${i}" type="text" value="${escHtml(imgSrcDisplay)}" ${imgDisabled} placeholder="https://... رابط الصورة" style="flex:1;">
+            <button onclick="pickSlideImage(${i})" style="padding:0 12px;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:#c4b5fd;border-radius:9px;font-size:.78rem;cursor:pointer;white-space:nowrap;"><i class="fas fa-upload" style="margin-left:4px;"></i>رفع</button>
             ${s.src?`<button onclick="clearSlideImage(${i})" style="padding:0 10px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#f87171;border-radius:9px;font-size:.78rem;cursor:pointer;"><i class="fas fa-times"></i></button>`:''}
           </div>
           <input id="sf-file-${i}" type="file" accept="image/*" style="display:none" onchange="onSlideFileChange(${i},this)">
           ${s.src?`<img id="sf-imgpreview-${i}" src="${s.src.startsWith('data:')?s.src:''}" style="margin-top:8px;max-height:90px;border-radius:8px;display:${s.src.startsWith('data:')?'block':'none'};">`:`<img id="sf-imgpreview-${i}" style="display:none;">`}
           ${s.src && s.src.startsWith('http')?`<img src="${s.src}" style="margin-top:8px;max-height:90px;border-radius:8px;border:1px solid var(--border)" onerror="this.style.display='none'">`:''}
-          ${s.src && !s.src.startsWith('http') && !s.src.startsWith('data:') && s.src.trim()?`<div style="margin-top:6px;font-size:.75rem;color:#f87171;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:6px 10px;"><i class="fas fa-exclamation-triangle" style="margin-left:5px;"></i>������ ������ � ��� �����</div>`:''}
+          ${s.src && !s.src.startsWith('http') && !s.src.startsWith('data:') && s.src.trim()?`<div style="margin-top:6px;font-size:.75rem;color:#f87171;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:6px 10px;"><i class="fas fa-exclamation-triangle" style="margin-left:5px;"></i>الصورة مفقودة — أعد رفعها</div>`:''}
         </div>`:`
         <div class="slide-field">
-          <label>${s.type==='video'?'���� ������� (������ �� mp4)':'���� PDF'}</label>
+          <label>${s.type==='video'?'رابط الفيديو (يوتيوب أو mp4)':'رابط PDF'}</label>
           <input id="sf-src-${i}" type="text" value="${escHtml(s.src||'')}" placeholder="${s.type==='video'?'https://youtube.com/...':'https://...pdf'}">
         </div>`}
         <div class="slide-field full">
-          <label>����� / ���� �������� <span style="color:var(--muted);font-size:.7rem;font-weight:400;">(���� �� ���� ������)</span></label>
-          <textarea id="sf-notes-${i}" rows="5" placeholder="���� ����� �������� ��ǡ �� ��� ���� = ���� �����..." style="width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.85rem;resize:vertical;line-height:1.8;">${s.notes||''}</textarea>
+          <label>الشرح / النص التفصيلي <span style="color:var(--muted);font-size:.7rem;font-weight:400;">(يظهر في جانب العارض)</span></label>
+          <textarea id="sf-notes-${i}" rows="5" placeholder="اكتب الشرح التفصيلي هنا، كل سطر جديد = فقرة جديدة..." style="width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.85rem;resize:vertical;line-height:1.8;">${s.notes||''}</textarea>
         </div>
       </div>
     </div>`;
@@ -2387,15 +2387,15 @@ function renderSlideEditor(){
 
 function saveLecture(){
   const title = document.getElementById('lecTitleInput').value.trim();
-  if(!title){toast('���� ����� ��������','error');return;}
-  if(!activeLecCourse){toast('���� ������','error');return;}
+  if(!title){toast('أدخل عنوان المحاضرة','error');return;}
+  if(!activeLecCourse){toast('اختر كورساً','error');return;}
   // collect latest DOM values before saving
   collectSlideValues();
   const all = getLectures();
   if(!all[activeLecCourse]) all[activeLecCourse]=[];
 
-  // ���� ����� ���� �� ��� input ����� �� ����� ������
-  const FAKE_SRCS = ['[���� ������]','[����]','? �� �����','? ������','? ����� �����','���� �����...','���� �����...',''];
+  // نصوص وهمية تظهر في الـ input لكنها مش روابط حقيقية
+  const FAKE_SRCS = ['[صورة مرفوعة]','[محلي]','✓ تم الرفع','✓ محفوظة','✓ جاهزة للحفظ','جاري الضغط...','جاري الرفع...',''];
   const lecData = {
     id: editingLecId || ('lec'+Date.now()),
     title,
@@ -2418,12 +2418,12 @@ function saveLecture(){
   closeLecModal();
   initLecturesSection();
   renderLecList(activeLecCourse);
-  toast('�� ��� �������� ����� ?','success');
+  toast('تم حفظ المحاضرة بنجاح ✓','success');
 }
 
 function deleteLecture(id){
   if(!activeLecCourse)return;
-  if(!confirm('�� ���� ��� ��� �������� �������'))return;
+  if(!confirm('هل تريد حذف هذه المحاضرة نهائياً؟'))return;
   const all = getLectures();
   all[activeLecCourse] = (all[activeLecCourse]||[]).filter(l=>l.id!==id);
   saveLectures(all);
@@ -2431,7 +2431,7 @@ function deleteLecture(id){
   _fdb.collection('lectures').doc(id).delete().catch(e=>console.warn('FS del lec',e));
   initLecturesSection();
   renderLecList(activeLecCourse);
-  toast('�� ��� ��������','success');
+  toast('تم حذف المحاضرة','success');
 }
 
 function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -2443,9 +2443,9 @@ document.getElementById('lecModal').addEventListener('click',function(e){if(e.ta
    LIVE SESSIONS
    ============================================= */
 const LIVE_COURSE_NAMES = {
-  free:'���� ������� �������', programming:'����� �������',
-  facebook:'������� ������', instagram:'���������', tiktok:'��� ���',
-  snapchat:'���� ���', twitter:'��� (�����)', integrated:'���������� �������'
+  free:'كورس التسويق المجاني', programming:'برمجة المواقع',
+  facebook:'إعلانات فيسبوك', instagram:'إنستاغرام', tiktok:'تيك توك',
+  snapchat:'سناب شات', twitter:'إكس (تويتر)', integrated:'استراتيجية متكاملة'
 };
 
 function getLiveSessions(){ return _fsLiveSessions!==null ? _fsLiveSessions.slice() : (()=>{try{return JSON.parse(localStorage.getItem('am_live_sessions')||'[]');}catch(e){return [];}})(); }
@@ -2465,13 +2465,13 @@ function renderLiveSessions(){
   if(!sessions.length){
     grid.innerHTML = `<div class="ls-empty" style="grid-column:1/-1">
       <i class="fas fa-broadcast-tower"></i>
-      <p>���� ����� ��� � ���� ����� ����ɻ �����!</p>
+      <p>مفيش جلسات بعد — اضغط «جلسة جديدة» وابدأ!</p>
     </div>`;
     return;
   }
   grid.innerHTML = sessions.slice().reverse().map(s=>{
-    const statusMap = {live:'����� ??', scheduled:'������ ?', ended:'�����'};
-    const dt = s.scheduledAt ? new Date(s.scheduledAt).toLocaleString('ar-EG',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '�';
+    const statusMap = {live:'مباشر 🔴', scheduled:'مجدولة ⏰', ended:'انتهت'};
+    const dt = s.scheduledAt ? new Date(s.scheduledAt).toLocaleString('ar-EG',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
     const previewUrl = `../live-session.html?id=${s.id}`;
     const adminPreviewUrl = `../live-session.html?room=${encodeURIComponent(s.room)}&title=${encodeURIComponent(s.title)}&course=${s.courseKey}`;
     return `<div class="ls-card">
@@ -2486,17 +2486,17 @@ function renderLiveSessions(){
         ${s.notes?`<div class="ls-info-row"><i class="fas fa-sticky-note"></i>${escHtml(s.notes)}</div>`:''}
         <div class="ls-info-row" style="margin-top:8px"><i class="fas fa-link"></i><span class="ls-room-tag">${escHtml(s.room)}</span></div>
         <div class="ls-card-actions">
-          <button class="ls-btn ls-btn-go" onclick="window.open('${adminPreviewUrl}&adminSkip=1','_blank')"><i class="fas fa-play"></i> ����</button>
-          ${s.status!=='live'&&s.status!=='ended'?`<button class="ls-btn ls-btn-live" onclick="setLiveStatus('${s.id}','live')"><i class="fas fa-broadcast-tower"></i> ����</button>`:''}
-          ${s.status==='live'?`<button class="ls-btn ls-btn-end" onclick="setLiveStatus('${s.id}','ended')"><i class="fas fa-stop"></i> ����</button>`:''}
+          <button class="ls-btn ls-btn-go" onclick="window.open('${adminPreviewUrl}&adminSkip=1','_blank')"><i class="fas fa-play"></i> افتح</button>
+          ${s.status!=='live'&&s.status!=='ended'?`<button class="ls-btn ls-btn-live" onclick="setLiveStatus('${s.id}','live')"><i class="fas fa-broadcast-tower"></i> ابدأ</button>`:''}
+          ${s.status==='live'?`<button class="ls-btn ls-btn-end" onclick="setLiveStatus('${s.id}','ended')"><i class="fas fa-stop"></i> أنهي</button>`:''}
           <button class="ls-btn" style="background:var(--bg2);color:var(--muted);border:1px solid var(--border)" onclick="editLiveSession('${s.id}')"><i class="fas fa-edit"></i></button>
           <button class="ls-btn ls-btn-del" onclick="deleteLiveSession('${s.id}')"><i class="fas fa-trash"></i></button>
         </div>
         <div style="margin-top:12px">
-          <div style="font-size:.72rem;color:var(--muted);margin-bottom:5px">���� ������</div>
+          <div style="font-size:.72rem;color:var(--muted);margin-bottom:5px">رابط الطالب</div>
           <div style="display:flex;gap:6px;align-items:center">
             <input readonly value="${location.origin}/live-session.html?id=${s.id}" style="flex:1;padding:7px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:.72rem;outline:none;direction:ltr;font-family:monospace">
-            <button onclick="copyLink('${s.id}')" style="padding:7px 12px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:8px;color:#60a5fa;font-size:.75rem;white-space:nowrap">���</button>
+            <button onclick="copyLink('${s.id}')" style="padding:7px 12px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:8px;color:#60a5fa;font-size:.75rem;white-space:nowrap">نسخ</button>
           </div>
         </div>
       </div>
@@ -2507,7 +2507,7 @@ function renderLiveSessions(){
 var editingLiveId = null;
 function openAddLiveSession(){
   editingLiveId = null;
-  document.getElementById('liveModalTitle').textContent = '���� �����';
+  document.getElementById('liveModalTitle').textContent = 'جلسة جديدة';
   document.getElementById('lsTitle').value = '';
   document.getElementById('lsCourse').value = 'free';
   document.getElementById('lsRoom').value = '';
@@ -2523,7 +2523,7 @@ function editLiveSession(id){
   const s = getLiveSessions().find(x=>x.id===id);
   if(!s) return;
   editingLiveId = id;
-  document.getElementById('liveModalTitle').textContent = '����� ������';
+  document.getElementById('liveModalTitle').textContent = 'تعديل الجلسة';
   document.getElementById('lsTitle').value = s.title;
   document.getElementById('lsCourse').value = s.courseKey;
   document.getElementById('lsRoom').value = s.room;
@@ -2536,7 +2536,7 @@ function editLiveSession(id){
 function closeLiveModal(){ document.getElementById('liveModal').classList.remove('open'); }
 
 function generateRoom(){
-  /* timestamp ���� = ������ ����� ��� = ���� lobby ����� */
+  /* timestamp كامل = مستحيل يتكرر اسم = مفيش lobby قديمة */
   const words = ['learn','class','live','akram','digital','course'];
   const word = words[Math.floor(Math.random()*words.length)];
   const uniq = Date.now().toString(36);  // e.g. "m9x4k2"
@@ -2546,8 +2546,8 @@ function generateRoom(){
 function saveLiveSession(){
   const title = document.getElementById('lsTitle').value.trim();
   const room = document.getElementById('lsRoom').value.trim();
-  if(!title){ alert('���� ����� ������'); return; }
-  if(!room){ alert('���� ���� ��� ��� ����'); return; }
+  if(!title){ alert('اكتب عنوان الجلسة'); return; }
+  if(!room){ alert('لازم يكون فيه اسم غرفة'); return; }
   const sessions = getLiveSessions();
   const now = new Date().toISOString();
   if(editingLiveId){
@@ -2567,7 +2567,7 @@ function saveLiveSession(){
   saveLiveSessions(sessions);
   closeLiveModal();
   renderLiveSessions();
-  toast(editingLiveId?'�� �������':'�� ����� ������','success');
+  toast(editingLiveId?'تم التحديث':'تم إضافة الجلسة','success');
 }
 
 function setLiveStatus(id, status){
@@ -2576,7 +2576,7 @@ function setLiveStatus(id, status){
   if(idx>-1){
     sessions[idx].status = status;
     sessions[idx].updatedAt = new Date().toISOString();
-    /* ���� ����� �� ��� ���� ������ ? ���� lock ���� �� meet.jit.si */
+    /* غرفة جديدة كل مرة تبدأ الجلسة ← مفيش lock قديم من meet.jit.si */
     if(status === 'live'){
       const words = ['learn','class','live','akram','digital','course'];
       const word = words[Math.floor(Math.random()*words.length)];
@@ -2585,21 +2585,21 @@ function setLiveStatus(id, status){
   }
   saveLiveSessions(sessions);
   renderLiveSessions();
-  toast(status==='live'?'�� ��� ������ ??':'�� ����� ������','success');
+  toast(status==='live'?'تم بدء الجلسة 🔴':'تم إنهاء الجلسة','success');
 }
 
 function deleteLiveSession(id){
-  if(!confirm('�� ���� ������ ������� ������� � ����Ͽ')) return;
+  if(!confirm('لو حذفت الجلسة هيتتحذف نهائياً — متأكد؟')) return;
   const sessions = getLiveSessions().filter(s=>s.id!==id);
   saveLiveSessions(sessions);
   renderLiveSessions();
-  toast('�� �����','success');
+  toast('تم الحذف','success');
 }
 
 function copyLink(id){
   const url = location.origin + '/live-session.html?id=' + id;
-  navigator.clipboard.writeText(url).then(()=>toast('�� ��� ������ ??','success')).catch(()=>{
-    const el = document.createElement('textarea'); el.value=url; document.body.appendChild(el); el.select(); document.execCommand('copy'); el.remove(); toast('�� ��� ������','success');
+  navigator.clipboard.writeText(url).then(()=>toast('تم نسخ الرابط 👌','success')).catch(()=>{
+    const el = document.createElement('textarea'); el.value=url; document.body.appendChild(el); el.select(); document.execCommand('copy'); el.remove(); toast('تم نسخ الرابط','success');
   });
 }
 
