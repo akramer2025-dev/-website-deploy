@@ -2607,5 +2607,261 @@ function copyLink(id){
 document.getElementById('liveModal').addEventListener('click',function(e){if(e.target===this)closeLiveModal();});
 
 </script>
+
+<!-- ══════════════════════════════════════════════════════════
+     ANNOTATION TOOLBAR  (shared tool — works on all admin pages)
+══════════════════════════════════════════════════════════ -->
+<style>
+.anno-toolbar{
+  position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:9000;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  background:rgba(9,22,43,.95);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.08);border-left:none;
+  border-radius:0 14px 14px 0;padding:10px 6px;transition:transform .3s;
+}
+.anno-toolbar.hidden{transform:translateY(-50%) translateX(-100%);}
+.anno-tool-btn{
+  width:36px;height:36px;border-radius:10px;border:1px solid transparent;
+  background:transparent;color:#6b82a8;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.18s;position:relative;
+}
+.anno-tool-btn:hover{color:#e2eaf6;background:rgba(255,255,255,.07);}
+.anno-tool-btn.active{color:#fff;background:rgba(233,78,119,.25);border-color:rgba(233,78,119,.5);}
+.anno-tool-btn.hl-active{color:#fff;background:rgba(247,211,30,.2);border-color:rgba(247,211,30,.5);}
+.anno-sep{width:24px;height:1px;background:rgba(255,255,255,.07);margin:3px 0;flex-shrink:0;}
+.anno-color-swatch{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.2);cursor:pointer;transition:.2s;flex-shrink:0;}
+.anno-color-swatch:hover,.anno-color-swatch.selected{transform:scale(1.2);border-color:#fff;}
+.anno-tool-btn::after{
+  content:attr(data-tip);position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);
+  background:rgba(0,0,0,.88);color:#fff;font-size:.68rem;font-weight:700;padding:4px 9px;
+  border-radius:7px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;font-family:'Cairo',sans-serif;
+}
+.anno-tool-btn:hover::after{opacity:1;}
+.anno-toggle-show{
+  position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:9001;
+  width:20px;height:48px;background:rgba(9,22,43,.92);
+  border:1px solid rgba(255,255,255,.08);border-left:none;
+  border-radius:0 8px 8px 0;display:none;align-items:center;justify-content:center;
+  color:#6b82a8;cursor:pointer;font-size:.72rem;
+}
+.anno-toggle-show.show{display:flex;}
+.anno-toggle-show:hover{color:#fff;}
+#annoAdminCanvas{
+  position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8999;
+}
+#annoAdminCanvas.drawing{pointer-events:all;}
+.stage-pen   *,.stage-hl   *,.stage-rect   *,.stage-circle   *,.stage-arrow   *{cursor:crosshair !important;}
+.stage-eraser *{cursor:cell !important;}
+.stage-text   *{cursor:text !important;}
+/* Calculator */
+#calcWidgetAdmin{
+  position:fixed;left:56px;top:50%;transform:translateY(-50%);z-index:9100;
+  width:230px;background:rgba(9,22,43,.97);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.08);border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);display:none;flex-direction:column;overflow:hidden;user-select:none;
+}
+#calcWidgetAdmin.show{display:flex;}
+.calc-head{background:rgba(17,36,70,.9);padding:9px 14px;display:flex;align-items:center;justify-content:space-between;cursor:move;}
+.calc-head span{font-size:.75rem;font-weight:800;color:#6b82a8;}
+.calc-close{background:none;border:none;color:#6b82a8;font-size:.85rem;cursor:pointer;padding:2px 6px;border-radius:6px;}
+.calc-close:hover{color:#fff;background:rgba(233,78,119,.3);}
+.calc-screen{padding:10px 14px 6px;background:rgba(0,0,0,.35);}
+.calc-expr{min-height:18px;font-size:.72rem;color:#6b82a8;text-align:right;direction:ltr;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.calc-display{font-size:2rem;font-weight:900;color:#fff;text-align:right;direction:ltr;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;line-height:1.2;padding-bottom:6px;}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:10px;}
+.calc-btn{border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:800;height:42px;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;}
+.calc-btn:active{transform:scale(.93);}
+.cb-num{background:rgba(17,36,70,.9);color:#e2eaf6;} .cb-num:hover{background:rgba(255,255,255,.12);}
+.cb-op{background:rgba(247,147,30,.18);color:#f7931e;} .cb-op:hover{background:rgba(247,147,30,.32);}
+.cb-eq{background:linear-gradient(135deg,#e94e77,#f7931e);color:#fff;} .cb-eq:hover{filter:brightness(1.1);}
+.cb-ac{background:rgba(233,78,119,.2);color:#e94e77;} .cb-ac:hover{background:rgba(233,78,119,.35);}
+.cb-zero{grid-column:span 2;}
+</style>
+
+<!-- Toolbar HTML -->
+<div class="anno-toolbar" id="annoAdminToolbar">
+  <button class="anno-tool-btn active" id="aatPointer" data-tip="مؤشر (عادي)" onclick="aSetTool('pointer')"><i class="fas fa-mouse-pointer"></i></button>
+  <div class="anno-sep"></div>
+  <button class="anno-tool-btn" id="aatPen"    data-tip="قلم رسم (P)"       onclick="aSetTool('pen')"><i class="fas fa-pen"></i></button>
+  <button class="anno-tool-btn" id="aatHl"     data-tip="تظليل (H)"          onclick="aSetTool('hl')"><i class="fas fa-highlighter"></i></button>
+  <button class="anno-tool-btn" id="aatRect"   data-tip="مستطيل (R)"         onclick="aSetTool('rect')"><i class="far fa-square"></i></button>
+  <button class="anno-tool-btn" id="aatCircle" data-tip="دائرة (C)"          onclick="aSetTool('circle')"><i class="far fa-circle"></i></button>
+  <button class="anno-tool-btn" id="aatArrow"  data-tip="سهم (A)"            onclick="aSetTool('arrow')"><i class="fas fa-arrow-up-long" style="transform:rotate(-45deg)"></i></button>
+  <button class="anno-tool-btn" id="aatText"   data-tip="كتابة نص (T)"       onclick="aSetTool('text')"><i class="fas fa-font"></i></button>
+  <div class="anno-sep"></div>
+  <button class="anno-tool-btn" id="aatEraser" data-tip="ممسحة (E)"          onclick="aSetTool('eraser')"><i class="fas fa-eraser"></i></button>
+  <button class="anno-tool-btn" data-tip="تراجع (Ctrl+Z)"                    onclick="aAnnoUndo()"><i class="fas fa-rotate-left"></i></button>
+  <button class="anno-tool-btn" data-tip="مسح الكل"                          onclick="aAnnoClear()"><i class="fas fa-trash-can"></i></button>
+  <div class="anno-sep"></div>
+  <div class="anno-color-swatch selected" style="background:#e94e77" onclick="aSetColor('#e94e77',this)" title="وردي"></div>
+  <div class="anno-color-swatch" style="background:#3b82f6" onclick="aSetColor('#3b82f6',this)" title="أزرق"></div>
+  <div class="anno-color-swatch" style="background:#22c55e" onclick="aSetColor('#22c55e',this)" title="أخضر"></div>
+  <div class="anno-color-swatch" style="background:#f7d31e" onclick="aSetColor('#f7d31e',this)" title="أصفر"></div>
+  <div class="anno-color-swatch" style="background:#ffffff" onclick="aSetColor('#ffffff',this)" title="أبيض"></div>
+  <div class="anno-sep"></div>
+  <button class="anno-tool-btn" data-tip="آلة حاسبة"  onclick="aToggleCalc()"><i class="fas fa-calculator"></i></button>
+  <div class="anno-sep"></div>
+  <button class="anno-tool-btn" data-tip="إخفاء الشريط" onclick="aHideToolbar()" style="font-size:.72rem"><i class="fas fa-angles-left"></i></button>
+</div>
+<button class="anno-toggle-show" id="annoAdminShowBtn" onclick="aShowToolbar()" title="أدوات التعليق"><i class="fas fa-pen"></i></button>
+<canvas id="annoAdminCanvas"></canvas>
+
+<!-- Text overlay -->
+<textarea id="aAnnoTextInput" style="position:fixed;z-index:9050;background:rgba(0,0,0,.75);border:2px solid #e94e77;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;padding:8px 12px;min-width:160px;outline:none;resize:none;display:none;" rows="2" placeholder="اكتب ملحوظة..." onkeydown="aAnnoTextKeydown(event)"></textarea>
+
+<!-- Calculator -->
+<div id="calcWidgetAdmin">
+  <div class="calc-head" id="calcAdminHead">
+    <span><i class="fas fa-calculator" style="margin-left:6px"></i>آلة حاسبة</span>
+    <button class="calc-close" onclick="aToggleCalc()"><i class="fas fa-xmark"></i></button>
+  </div>
+  <div class="calc-screen">
+    <div class="calc-expr" id="aCalcExpr">&nbsp;</div>
+    <div class="calc-display" id="aCalcDisplay">0</div>
+  </div>
+  <div class="calc-grid">
+    <button class="calc-btn cb-ac"  onclick="aCalcAC()">AC</button>
+    <button class="calc-btn cb-op"  onclick="aCalcToggleSign()">±</button>
+    <button class="calc-btn cb-op"  onclick="aCalcPercent()">٪</button>
+    <button class="calc-btn cb-op"  onclick="aCalcOp('÷')">÷</button>
+    <button class="calc-btn cb-num" onclick="aCalcDigit('7')">7</button>
+    <button class="calc-btn cb-num" onclick="aCalcDigit('8')">8</button>
+    <button class="calc-btn cb-num" onclick="aCalcDigit('9')">9</button>
+    <button class="calc-btn cb-op"  onclick="aCalcOp('×')">×</button>
+    <button class="calc-btn cb-num" onclick="aCalcDigit('4')">4</button>
+    <button class="calc-btn cb-num" onclick="aCalcDigit('5')">5</button>
+    <button class="calc-btn cb-num" onclick="aCalcDigit('6')">6</button>
+    <button class="calc-btn cb-op"  onclick="aCalcOp('-')">-</button>
+    <button class="calc-btn cb-num" onclick="aCalcDigit('1')">1</button>
+    <button class="calc-btn cb-num" onclick="aCalcDigit('2')">2</button>
+    <button class="calc-btn cb-num" onclick="aCalcDigit('3')">3</button>
+    <button class="calc-btn cb-op"  onclick="aCalcOp('+')">+</button>
+    <button class="calc-btn cb-num cb-zero" onclick="aCalcDigit('0')">0</button>
+    <button class="calc-btn cb-num" onclick="aCalcDot()">٫</button>
+    <button class="calc-btn cb-eq"  onclick="aCalcEquals()">=</button>
+  </div>
+</div>
+
+<script>
+// ══════════ ADMIN ANNOTATION ENGINE ══════════
+(function(){
+  const canvas  = document.getElementById('annoAdminCanvas');
+  const ctx     = canvas.getContext('2d');
+  const txtInp  = document.getElementById('aAnnoTextInput');
+  let tool='pointer', color='#e94e77';
+  let drawing=false, sx=0, sy=0, snap=null;
+  let hist=[];
+
+  function resize(){
+    const img = canvas.width ? ctx.getImageData(0,0,canvas.width,canvas.height) : null;
+    canvas.width=innerWidth; canvas.height=innerHeight;
+    if(img) try{ ctx.putImageData(img,0,0); }catch(e){}
+  }
+  window.addEventListener('resize', resize); resize();
+
+  window.aSetTool=function(t){
+    tool=t;
+    document.querySelectorAll('.anno-tool-btn[id^="aat"]').forEach(b=>b.classList.remove('active','hl-active'));
+    const m={pointer:'aatPointer',pen:'aatPen',hl:'aatHl',rect:'aatRect',circle:'aatCircle',arrow:'aatArrow',text:'aatText',eraser:'aatEraser'};
+    if(m[t]){ const el=document.getElementById(m[t]); if(el) el.classList.add(t==='hl'?'hl-active':'active'); }
+    canvas.classList.toggle('drawing', t!=='pointer');
+    document.body.classList.remove('stage-pen','stage-hl','stage-rect','stage-circle','stage-arrow','stage-eraser','stage-text');
+    if(t!=='pointer') document.body.classList.add('stage-'+t);
+    if(t!=='text') txtInp.style.display='none';
+  };
+  window.aSetColor=function(c,el){
+    color=c;
+    document.querySelectorAll('.anno-color-swatch').forEach(s=>s.classList.remove('selected'));
+    if(el) el.classList.add('selected');
+  };
+  window.aAnnoUndo=function(){if(hist.length) ctx.putImageData(hist.pop(),0,0);};
+  window.aAnnoClear=function(){ savH(); ctx.clearRect(0,0,canvas.width,canvas.height); };
+  window.aHideToolbar=function(){ document.getElementById('annoAdminToolbar').classList.add('hidden'); document.getElementById('annoAdminShowBtn').classList.add('show'); };
+  window.aShowToolbar=function(){ document.getElementById('annoAdminToolbar').classList.remove('hidden'); document.getElementById('annoAdminShowBtn').classList.remove('show'); };
+
+  function savH(){ hist.push(ctx.getImageData(0,0,canvas.width,canvas.height)); if(hist.length>30) hist.shift(); }
+  function pos(e){ const src=e.touches?e.touches[0]:e; return {x:src.clientX,y:src.clientY}; }
+  function applyStroke(){
+    ctx.lineCap='round'; ctx.lineJoin='round';
+    if(tool==='hl'){ ctx.strokeStyle=hexA(color,.4); ctx.lineWidth=22; ctx.globalCompositeOperation='multiply'; }
+    else if(tool==='eraser'){ ctx.globalCompositeOperation='destination-out'; ctx.lineWidth=28; }
+    else { ctx.strokeStyle=color; ctx.lineWidth=3; ctx.globalCompositeOperation='source-over'; }
+  }
+  function hexA(h,a){ const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16); return `rgba(${r},${g},${b},${a})`; }
+  function dRect(x0,y0,x1,y1){ ctx.strokeStyle=color;ctx.lineWidth=3;ctx.globalCompositeOperation='source-over';ctx.strokeRect(x0,y0,x1-x0,y1-y0); }
+  function dCircle(x0,y0,x1,y1){ const rx=(x1-x0)/2,ry=(y1-y0)/2;ctx.strokeStyle=color;ctx.lineWidth=3;ctx.globalCompositeOperation='source-over';ctx.beginPath();ctx.ellipse(x0+rx,y0+ry,Math.abs(rx),Math.abs(ry),0,0,Math.PI*2);ctx.stroke(); }
+  function dArrow(x0,y0,x1,y1){ const ang=Math.atan2(y1-y0,x1-x0),hw=14,ha=.45;ctx.strokeStyle=color;ctx.lineWidth=3;ctx.globalCompositeOperation='source-over';ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.stroke();ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x1-hw*Math.cos(ang-ha),y1-hw*Math.sin(ang-ha));ctx.lineTo(x1-hw*Math.cos(ang+ha),y1-hw*Math.sin(ang+ha));ctx.closePath();ctx.fillStyle=color;ctx.fill(); }
+
+  function start(e){
+    if(tool==='pointer') return;
+    const p=pos(e);
+    if(tool==='text'){ placeText(p.x,p.y); return; }
+    drawing=true; sx=p.x; sy=p.y; savH(); snap=ctx.getImageData(0,0,canvas.width,canvas.height);
+    if(tool==='pen'||tool==='hl'||tool==='eraser'){ applyStroke(); ctx.beginPath(); ctx.moveTo(p.x,p.y); }
+  }
+  function move(e){
+    if(!drawing) return;
+    const p=pos(e);
+    if(tool==='pen'||tool==='hl'||tool==='eraser'){ applyStroke(); ctx.lineTo(p.x,p.y); ctx.stroke(); }
+    else{ ctx.putImageData(snap,0,0); if(tool==='rect') dRect(sx,sy,p.x,p.y); if(tool==='circle') dCircle(sx,sy,p.x,p.y); if(tool==='arrow') dArrow(sx,sy,p.x,p.y); }
+  }
+  function end(){ drawing=false; ctx.globalCompositeOperation='source-over'; }
+
+  canvas.addEventListener('mousedown',start);
+  canvas.addEventListener('mousemove',move);
+  canvas.addEventListener('mouseup',end);
+  canvas.addEventListener('mouseleave',end);
+  canvas.addEventListener('touchstart',e=>{e.preventDefault();start(e);},{passive:false});
+  canvas.addEventListener('touchmove', e=>{e.preventDefault();move(e); },{passive:false});
+  canvas.addEventListener('touchend',  e=>{e.preventDefault();end(e);  },{passive:false});
+
+  function placeText(x,y){ txtInp.style.display='block'; txtInp.style.left=x+'px'; txtInp.style.top=y+'px'; txtInp.value=''; txtInp.focus(); }
+  window.aAnnoTextKeydown=function(ev){ if(ev.key==='Enter'&&!ev.shiftKey){ ev.preventDefault(); commitText(); } if(ev.key==='Escape') txtInp.style.display='none'; };
+  function commitText(){
+    const x=parseFloat(txtInp.style.left), y=parseFloat(txtInp.style.top), val=txtInp.value.trim();
+    if(val){ savH(); ctx.globalCompositeOperation='source-over'; ctx.font='bold 22px Cairo,sans-serif'; const m=ctx.measureText(val); ctx.fillStyle='rgba(0,0,0,.55)'; ctx.fillRect(x-4,y-24,m.width+12,32); ctx.fillStyle=color; ctx.fillText(val,x+2,y); }
+    txtInp.style.display='none'; txtInp.value='';
+  }
+
+  // Keyboard
+  document.addEventListener('keydown',ev=>{
+    if(document.activeElement && ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
+    if((ev.ctrlKey||ev.metaKey)&&ev.key==='z'){ aAnnoUndo(); ev.preventDefault(); return; }
+    const calcOpen = document.getElementById('calcWidgetAdmin').classList.contains('show');
+    if(calcOpen){ const k=ev.key; if(/^[0-9]$/.test(k)){aCalcDigit(k);ev.stopImmediatePropagation();return;} if(k==='+'||k==='-'){aCalcOp(k);ev.stopImmediatePropagation();return;} if(k==='*'){aCalcOp('×');ev.stopImmediatePropagation();return;} if(k==='/'&&!ev.ctrlKey){aCalcOp('÷');ev.preventDefault();ev.stopImmediatePropagation();return;} if(k==='Enter'||k==='='){aCalcEquals();ev.stopImmediatePropagation();return;} if(k==='Backspace'){if(aCC.length>1)aCC=aCC.slice(0,-1);else aCC='0';aCalcRefresh();ev.stopImmediatePropagation();return;} }
+    switch(ev.key){
+      case 'p':case 'P': aSetTool('pen'); break;
+      case 'h':case 'H': aSetTool('hl'); break;
+      case 'r':case 'R': aSetTool('rect'); break;
+      case 'c':case 'C': aSetTool('circle'); break;
+      case 'a':case 'A': aSetTool('arrow'); break;
+      case 't':case 'T': aSetTool('text'); break;
+      case 'e':case 'E': aSetTool('eraser'); break;
+      case 'Escape': aSetTool('pointer'); txtInp.style.display='none'; break;
+    }
+  });
+})();
+
+// ══════════ ADMIN CALCULATOR ══════════
+let aCC='0',aCP='',aCOp='',aCWait=false;
+function aCalcRefresh(){ let d=aCC; if(d.length>12) d=parseFloat(d).toExponential(4); document.getElementById('aCalcDisplay').textContent=d; }
+function aCalcDigit(d){ if(aCWait){aCC=d;aCWait=false;}else aCC=aCC==='0'?d:aCC+d; aCalcRefresh(); }
+function aCalcDot(){ if(aCWait){aCC='0.';aCWait=false;aCalcRefresh();return;} if(!aCC.includes('.')) aCC+='.'; aCalcRefresh(); }
+function aCalcOp(op){ if(aCOp&&!aCWait) aCalcEquals(true); aCP=aCC;aCOp=op;aCWait=true; document.getElementById('aCalcExpr').textContent=aCP+' '+op; }
+function aCalcEquals(chain=false){ if(!aCOp) return; const a=parseFloat(aCP),b=parseFloat(aCC); let r; if(aCOp==='÷') r=b?a/b:'خطأ'; if(aCOp==='×') r=a*b; if(aCOp==='+') r=a+b; if(aCOp==='-') r=a-b; document.getElementById('aCalcExpr').textContent=aCP+' '+aCOp+' '+aCC+'='; aCC=r==='خطأ'?'خطأ':String(parseFloat(r.toFixed(10))); if(!chain){aCOp='';aCP='';} aCWait=true; aCalcRefresh(); }
+function aCalcAC(){ aCC='0';aCP='';aCOp='';aCWait=false; document.getElementById('aCalcExpr').textContent='\u00a0'; aCalcRefresh(); }
+function aCalcToggleSign(){ aCC=String(-parseFloat(aCC)); aCalcRefresh(); }
+function aCalcPercent(){ aCC=String(parseFloat(aCC)/100); aCalcRefresh(); }
+function aToggleCalc(){ document.getElementById('calcWidgetAdmin').classList.toggle('show'); }
+
+// Draggable calc
+(function(){
+  let drag=false,ox=0,oy=0;
+  const h=document.getElementById('calcAdminHead'), w=document.getElementById('calcWidgetAdmin');
+  h.addEventListener('mousedown',e=>{drag=true;ox=e.clientX-w.getBoundingClientRect().left;oy=e.clientY-w.getBoundingClientRect().top;e.preventDefault();});
+  document.addEventListener('mousemove',e=>{if(!drag)return;w.style.left=(e.clientX-ox)+'px';w.style.top=(e.clientY-oy)+'px';w.style.transform='none';});
+  document.addEventListener('mouseup',()=>drag=false);
+})();
+</script>
 </body>
 </html>
