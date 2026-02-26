@@ -360,7 +360,9 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   <div class="dots-wrap" id="dotsWrap"></div>
   <div class="slide-counter"><span id="curNum">0</span> / <span id="totNum">0</span></div>
   <div class="shortcut-hint">
-    <kbd>←</kbd><kbd>→</kbd> التنقل
+    <kbd>←</kbd><kbd>→</kbd> تنقل &nbsp;
+    <kbd>P</kbd>قلم <kbd>H</kbd>هايلايت <kbd>R</kbd>مستطيل <kbd>C</kbd>دائرة <kbd>T</kbd>نص <kbd>E</kbd>ممسحة <kbd>Esc</kbd>مؤشر &nbsp;
+    <kbd>Ctrl+Z</kbd> تراجع &nbsp;
     <kbd>F</kbd> ملء الشاشة
   </div>
 </div>
@@ -679,14 +681,33 @@ function toggleFullscreen(){
 
 // ─── KEYBOARD ──────────────────────────────────────────────────
 document.addEventListener('keydown',e=>{
+  const inText = document.activeElement === txtInput;
+  // Ctrl/Cmd+Z = undo (always)
+  if((e.ctrlKey||e.metaKey) && e.key==='z'){ annoUndo(); e.preventDefault(); return; }
+  // Shortcuts disabled when typing in text overlay
+  if(inText) return;
+  // Drawing shortcuts
+  if(!e.ctrlKey && !e.metaKey){
+    switch(e.key){
+      case 'p': case 'P': setTool('pen'); return;
+      case 'h': case 'H': setTool('hl'); return;
+      case 'r': case 'R': setTool('rect'); return;
+      case 'c': case 'C': setTool('circle'); return;
+      case 'a': case 'A': setTool('arrow'); return;
+      case 't': case 'T': setTool('text'); return;
+      case 'e': case 'E': setTool('eraser'); return;
+      case 'Escape': setTool('pointer'); txtInput.style.display='none'; return;
+    }
+  }
+  // Navigation (only in pointer mode or if no drawing tool active)
   switch(e.key){
-    case 'ArrowLeft': gotoNext(); break;
+    case 'ArrowLeft':  gotoNext(); break;
     case 'ArrowRight': gotoPrev(); break;
-    case 'ArrowUp': gotoPrev(); break;
-    case 'ArrowDown': gotoNext(); break;
+    case 'ArrowUp':    gotoPrev(); break;
+    case 'ArrowDown':  gotoNext(); break;
     case 'f': case 'F': toggleFullscreen(); break;
     case 'Home': goFirst(); break;
-    case 'End': goLast(); break;
+    case 'End':  goLast(); break;
   }
 });
 
@@ -918,10 +939,7 @@ function showAnnoToolbar(){
   document.getElementById('annoShowBtn').classList.remove('show');
 }
 
-// keyboard: Ctrl+Z for undo, Escape clears text input
-document.addEventListener('keydown', ev=>{
-  if((ev.ctrlKey||ev.metaKey) && ev.key==='z'){ annoUndo(); ev.preventDefault(); }
-});
+// (keydown merged above)
 
 // init with pointer selected
 setTool('pointer');
