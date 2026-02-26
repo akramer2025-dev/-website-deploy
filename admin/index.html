@@ -2103,7 +2103,7 @@ function compressImg(src, maxW, quality){
       const h = Math.round(img.height * scale);
       const c = document.createElement('canvas');
       c.width = w; c.height = h;
-      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      c.getContext('2d', {willReadFrequently: true}).drawImage(img, 0, 0, w, h);
       resolve(c.toDataURL('image/jpeg', quality));
     };
     img.onerror = ()=>resolve(src);
@@ -2113,11 +2113,24 @@ function compressImg(src, maxW, quality){
 
 async function saveLectures(obj){
   _fsLectures = Object.assign({},obj);
-  try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(obj)); }catch(e){ console.warn('localStorage quota, skipping local save'); }
+  // Strip base64 images from localStorage (only keep http:// URLs) to avoid quota errors
+  try{
+    const localSafe = {};
+    for(const [k,lecs] of Object.entries(obj)){
+      localSafe[k] = (lecs||[]).map(l=>({
+        ...l,
+        slides:(l.slides||[]).map(s=>({
+          ...s,
+          src: (s.src&&s.src.startsWith('http')) ? s.src : ''
+        }))
+      }));
+    }
+    localStorage.setItem(LECTURES_KEY, JSON.stringify(localSafe));
+  }catch(e){ console.warn('localStorage quota, skipping local save'); }
 
   // Build compressed versions — two quality levels:
-  // • HQ  (per-lecture doc): 1080px / 0.82 quality  ≈ 40-80KB per image (good quality)
-  // • LQ  (grouped fallback): 400px  / 0.45 quality  ≈ 8-15KB per image  (thumbnail)
+  // • HQ  (per-lecture doc): 800px / 0.78 quality  ≈ 35-60KB per image (good quality, safe under Firestore 1MB)
+  // • LQ  (grouped fallback): 400px / 0.45 quality  ≈ 8-15KB per image  (thumbnail)
   const buildCompressed = async (lecs, maxW, quality) => {
     const out = [];
     for(const lec of (lecs||[])){
@@ -2134,7 +2147,7 @@ async function saveLectures(obj){
   // Save each lecture as its own Firestore doc with HQ images (1080px / 0.82)
   const pairs = Object.entries(obj);
   for(const [courseKey, lecs] of pairs){
-    const hqLecs  = await buildCompressed(lecs, 1080, 0.82);
+    const hqLecs  = await buildCompressed(lecs, 800, 0.78);
     const lqLecs  = await buildCompressed(lecs,  400, 0.45);
     for(const lec of hqLecs){
       if(!lec.id) continue;
@@ -2292,7 +2305,7 @@ function onSlideFileChange(idx, input){
     if(srcInput){ srcInput.value='جاري الضغط...'; srcInput.disabled=true; }
 
     // ضغط الصورة (max 900px, quality 0.65) → حوالي 80-150KB
-    const compressed = await compressImage(e.target.result, 900, 0.65);
+    const compressed = await compressImage(e.target.result, 1200, 0.88);
 
     // حفظ base64 مباشرة — لا Storage لا CORS
     slideRows[idx].src = compressed;
@@ -2311,7 +2324,7 @@ function compressImage(dataUrl, maxWidth, quality){
       if(w > maxWidth){ h = Math.round(h * maxWidth / w); w = maxWidth; }
       const canvas = document.createElement('canvas');
       canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      canvas.getContext('2d', {willReadFrequently: true}).drawImage(img, 0, 0, w, h);
       resolve(canvas.toDataURL('image/jpeg', quality));
     };
     img.src = dataUrl;
@@ -2752,7 +2765,7 @@ document.getElementById('liveModal').addEventListener('click',function(e){if(e.t
 // ══════════ ADMIN ANNOTATION ENGINE ══════════
 (function(){
   const canvas  = document.getElementById('annoAdminCanvas');
-  const ctx     = canvas.getContext('2d');
+  const ctx     = canvas.getContext('2d', {willReadFrequently: true});
   const txtInp  = document.getElementById('aAnnoTextInput');
   let tool='pointer', color='#e94e77';
   let drawing=false, sx=0, sy=0, snap=null;

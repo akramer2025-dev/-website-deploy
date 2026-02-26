@@ -822,7 +822,7 @@ function showToast(msg, type=''){
 
 // ─── ANNOTATION ENGINE ─────────────────────────────────────────
 const canvas  = document.getElementById('annoCanvas');
-const ctx     = canvas.getContext('2d');
+const ctx     = canvas.getContext('2d', {willReadFrequently: true});
 const txtInput= document.getElementById('annoTextInput');
 
 let annoTool   = 'pointer';  // pointer|pen|hl|rect|circle|arrow|text|eraser
