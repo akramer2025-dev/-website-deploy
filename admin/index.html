@@ -2518,7 +2518,7 @@ function openAddLiveSession(){
   document.getElementById('lsRoom').value = '';
   document.getElementById('lsStatus').value = 'scheduled';
   document.getElementById('lsNotes').value = '';
-  document.getElementById('lsMeetLink').value = '';
+  document.getElementById('lsMeetLink').value = 'https://meet.google.com/mkf-dkez-qkw';
   const now = new Date(); now.setMinutes(Math.ceil(now.getMinutes()/15)*15,0,0);
   document.getElementById('lsScheduled').value = now.toISOString().slice(0,16);
   generateRoom();
