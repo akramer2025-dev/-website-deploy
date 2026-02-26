@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>غلاف المحاضرة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:#020b18;}
+body{
+  font-family:'Cairo',sans-serif;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ── خلفية سينمائية ── */
+.bg{
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 50%, rgba(233,78,119,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 85% 30%, rgba(59,130,246,.13) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 50% 100%, rgba(247,147,30,.10) 0%, transparent 60%),
+    #020b18;
+  z-index:0;
+}
+
+/* نجوم */
+.stars{
+  position:fixed;inset:0;z-index:1;
+  background-image:
+    radial-gradient(1px 1px at 15%  8%, rgba(255,255,255,.7) 0%,transparent 100%),
+    radial-gradient(1px 1px at 42% 23%, rgba(255,255,255,.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 67% 11%, rgba(255,255,255,.6) 0%,transparent 100%),
+    radial-gradient(1px 1px at 88%  5%, rgba(255,255,255,.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 31% 55%, rgba(255,255,255,.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 75% 68%, rgba(255,255,255,.4) 0%,transparent 100%),
+    radial-gradient(2px 2px at  6% 38%, rgba(255,255,255,.3) 0%,transparent 100%),
+    radial-gradient(2px 2px at 95% 82%, rgba(255,255,255,.3) 0%,transparent 100%);
+}
+
+/* ── حاوية المحتوى ── */
+.wrapper{
+  position:relative;z-index:10;
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;
+  gap:3%;
+}
+
+/* ── جانب الصورة ── */
+.photo-col{
+  flex-shrink:0;
+  display:flex;align-items:flex-end;justify-content:center;
+  width:42%;
+  height:100%;
+  position:relative;
+}
+
+/* Bokeh circles خلف الصورة */
+.bokeh{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(28px);
+  pointer-events:none;
+}
+.bokeh-1{width:220px;height:220px;background:rgba(233,78,119,.22);top:5%;right:3%;}
+.bokeh-2{width:160px;height:160px;background:rgba(59,130,246,.18);bottom:12%;left:0;}
+.bokeh-3{width:110px;height:110px;background:rgba(247,147,30,.15);top:30%;left:8%;}
+
+/* إطار الصورة */
+.photo-frame{
+  position:relative;
+  width:88%;
+  max-width:440px;
+  height:auto;
+  align-self:flex-end;
+}
+.photo-frame::before{
+  content:'';
+  position:absolute;
+  inset:-3px;
+  border-radius:28px 28px 0 0;
+  background:linear-gradient(135deg,rgba(233,78,119,.6),rgba(247,147,30,.4),rgba(59,130,246,.3));
+  z-index:-1;
+  filter:blur(4px);
+}
+.photo-frame img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:24px 24px 0 0;
+  object-fit:cover;
+  object-position:center top;
+  filter:drop-shadow(0 20px 60px rgba(0,0,0,.8));
+}
+
+/* شريط التدرج السفلي على الصورة */
+.photo-fade{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:38%;
+  background:linear-gradient(to top, #020b18 0%, transparent 100%);
+  border-radius:0 0 24px 24px;
+}
+
+/* شارة المحاضر */
+.instructor-badge{
+  position:absolute;
+  bottom:16px;left:50%;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(16px);
+  border-radius:14px;
+  padding:7px 18px;
+  display:flex;align-items:center;gap:8px;
+  white-space:nowrap;
+}
+.badge-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 0 0 rgba(34,197,94,.5);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(34,197,94,.5);}
+  70%{box-shadow:0 0 0 8px rgba(34,197,94,0);}
+  100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
+}
+.badge-name{font-size:.78rem;font-weight:700;color:#e2eaf6;}
+.badge-role{font-size:.68rem;color:#6b82a8;margin-right:6px;}
+
+
+/* ── جانب النص ── */
+.text-col{
+  flex:1;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  gap:0;
+}
+
+.course-label{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 16px;
+  background:rgba(233,78,119,.12);
+  border:1px solid rgba(233,78,119,.28);
+  border-radius:30px;
+  font-size:.72rem;font-weight:700;
+  color:#f472b6;
+  letter-spacing:.5px;
+  margin-bottom:18px;
+  width:fit-content;
+}
+.course-label span{
+  width:6px;height:6px;border-radius:50%;
+  background:#f472b6;
+  animation:pulse 2.5s infinite;
+}
+
+.main-title{
+  font-size:clamp(1.6rem, 3.8vw, 2.8rem);
+  font-weight:900;
+  line-height:1.25;
+  color:#fff;
+  margin-bottom:14px;
+  text-shadow:0 4px 24px rgba(0,0,0,.6);
+}
+.main-title em{
+  font-style:normal;
+  background:linear-gradient(135deg,#e94e77,#f7931e);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.subtitle{
+  font-size:clamp(.82rem, 1.5vw, 1rem);
+  color:#8097b8;
+  line-height:1.8;
+  margin-bottom:28px;
+  max-width:460px;
+}
+
+/* إحصائيات */
+.stats{
+  display:flex;gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:30px;
+}
+.stat-chip{
+  display:flex;align-items:center;gap:7px;
+  padding:8px 16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:12px;
+  font-size:.78rem;color:#c4d0e6;
+  font-weight:600;
+}
+.stat-chip i{font-size:.85rem;}
+.stat-chip .ic-pink{color:#e94e77;}
+.stat-chip .ic-orange{color:#f7931e;}
+.stat-chip .ic-blue{color:#60a5fa;}
+.stat-chip .ic-green{color:#4ade80;}
+
+/* CTA / عنوان المحاضرة */
+.lecture-card{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 20px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-right:3px solid;
+  border-image:linear-gradient(180deg,#e94e77,#f7931e) 1;
+  border-radius:0 14px 14px 0;
+}
+.lec-num{
+  width:40px;height:40px;
+  background:linear-gradient(135deg,#e94e77,#f7931e);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;font-weight:900;color:#fff;
+  flex-shrink:0;
+}
+.lec-info{flex:1;}
+.lec-label{font-size:.68rem;color:#6b82a8;font-weight:600;margin-bottom:2px;}
+.lec-title{font-size:.9rem;font-weight:800;color:#e2eaf6;line-height:1.4;}
+
+/* ── شعار الموقع ── */
+.logo-corner{
+  position:fixed;top:18px;left:18px;z-index:20;
+  display:flex;align-items:center;gap:9px;
+}
+.logo-corner img{
+  width:34px;height:34px;
+  border-radius:8px;
+  object-fit:cover;
+}
+.logo-corner span{
+  font-size:.82rem;font-weight:700;
+  color:rgba(255,255,255,.7);
+}
+
+/* ── خط العدد السفلي ── */
+.ep-counter{
+  position:fixed;bottom:18px;right:22px;z-index:20;
+  font-size:.68rem;color:#3b5070;letter-spacing:1px;font-weight:600;
+}
+
+/* ── خط ضوء ── */
+.light-line{
+  position:fixed;top:0;left:0;right:0;height:2px;z-index:30;
+  background:linear-gradient(90deg,transparent 0%,#e94e77 30%,#f7931e 60%,#3b82f6 85%,transparent 100%);
+  opacity:.7;
+}
+</style>
+</head>
+<body>
+<div class="light-line"></div>
+<div class="bg"></div>
+<div class="stars"></div>
+
+<!-- شعار الموقع -->
+<div class="logo-corner">
+  <img src="logo.png" alt="logo" onerror="this.style.display='none'">
+  <span>Akram Mostafa</span>
+</div>
+
+<div class="wrapper">
+
+  <!-- جانب النص (يمين في RTL) -->
+  <div class="text-col">
+    <div class="course-label"><span></span> كورس التسويق المجاني</div>
+
+    <h1 class="main-title">
+      رحلتي مع التسويق<br>
+      … بدأت من<br>
+      <em>كيس تمر هندي</em>
+    </h1>
+
+    <p class="subtitle">
+      قصة حقيقية من الطفولة — بدأت بطفل في الشارع<br>
+      وانتهت بدروس تغيّر طريقة تفكيرك في البيزنس للأبد
+    </p>
+
+    <div class="stats">
+      <div class="stat-chip"><i class="fas fa-clock ic-pink"></i> 28 دقيقة</div>
+      <div class="stat-chip"><i class="fas fa-layer-group ic-orange"></i> 21 شريحة</div>
+      <div class="stat-chip"><i class="fas fa-star ic-orange"></i><span style="color:#4ade80">مجاني 100%</span></div>
+      <div class="stat-chip"><i class="fas fa-fire ic-blue"></i> 5 دروس جوهرية</div>
+    </div>
+
+    <div class="lecture-card">
+      <div class="lec-num">01</div>
+      <div class="lec-info">
+        <div class="lec-label">المحاضرة الأولى</div>
+        <div class="lec-title">رحلتي مع التسويق… بدأت من كيس تمر هندي</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- جانب الصورة (يسار في RTL) -->
+  <div class="photo-col">
+    <div class="bokeh bokeh-1"></div>
+    <div class="bokeh bokeh-2"></div>
+    <div class="bokeh bokeh-3"></div>
+
+    <div class="photo-frame">
+      <!-- الصورة الجديدة — إذا مش موجودة يرجع للصورة القديمة -->
+      <img
+        src="akram-hero.jpg"
+        onerror="this.src='akram.png'"
+        alt="أكرم مصطفى">
+      <div class="photo-fade"></div>
+
+      <div class="instructor-badge">
+        <div class="badge-dot"></div>
+        <span class="badge-role">مدرب</span>
+        <span class="badge-name">أكرم مصطفى</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- رقم الحلقة -->
+<div class="ep-counter">المحاضرة 01 / كورس التسويق</div>
+
+<!-- Font Awesome -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" defer></script>
+</body>
+</html>

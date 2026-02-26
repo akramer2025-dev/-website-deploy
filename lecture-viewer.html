@@ -116,6 +116,8 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .slide-media-frame .video-wrap iframe{width:100%;height:100%;border:none;}
 .slide-media-frame .pdf-wrap{width:700px;max-width:100%;height:500px;background:#fff;border-radius:16px;overflow:hidden;}
 .slide-media-frame .pdf-wrap iframe{width:100%;height:100%;border:none;}
+.slide-media-frame.html-wrap{width:100%;height:calc(100vh - var(--topbar) - var(--bottom) - 56px);max-height:100%;border:none;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.slide-media-frame.html-wrap iframe{width:100%;height:100%;border:none;border-radius:16px;display:block;}
 .no-media-placeholder{width:100%;aspect-ratio:16/10;max-width:600px;background:var(--card2);border:2px dashed var(--border);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);}
 .no-media-placeholder i{font-size:3rem;opacity:.4;}
 
@@ -589,10 +591,11 @@ function getThumbMedia(s){
   if(s.type==='image'&&isRealSrc) return `<img src="${s.src}" alt="">`;  
   if(s.type==='video') return `<i class="type-ico fas fa-play-circle"></i>`;
   if(s.type==='pdf')   return `<i class="type-ico fas fa-file-pdf"></i>`;
+  if(s.type==='html')  return `<i class="type-ico fas fa-chalkboard-teacher" style="color:#e94e77;"></i>`;
   return `<i class="type-ico fas fa-image"></i>`;
 }
 function getTypeLabel(t){
-  return t==='video'?'فيديو':t==='pdf'?'ملف PDF':'صورة';
+  return t==='video'?'فيديو':t==='pdf'?'ملف PDF':t==='html'?'بانر تفاعلي':'صورة';
 }
 
 function renderSlides(){
@@ -631,6 +634,8 @@ function buildSlideHTML(s, i){
     } else {
       mediaHTML = `<div class="slide-media-frame"><div class="video-wrap"><video controls src="${s.src}"></video></div></div>`;
     }
+  } else if(s.type==='html'&&s.src){
+    mediaHTML = `<div class="slide-media-frame html-wrap"><iframe src="${s.src}" allowfullscreen loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe></div>`;
   } else if(s.type==='pdf'&&s.src){
     mediaHTML = `<div class="slide-media-frame"><div class="pdf-wrap"><iframe src="${s.src}#toolbar=0" title="PDF"></iframe></div></div>`;
   } else {
