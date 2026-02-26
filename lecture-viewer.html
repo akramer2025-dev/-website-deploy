@@ -264,6 +264,54 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   padding:8px 12px;min-width:160px;outline:none;resize:none;
   display:none;
 }
+
+/* ══════════ CALCULATOR ══════════ */
+#calcWidget{
+  position:fixed;left:56px;top:50%;transform:translateY(-50%);
+  z-index:400;width:230px;
+  background:rgba(9,22,43,.97);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+  display:none;flex-direction:column;overflow:hidden;
+  user-select:none;
+}
+#calcWidget.show{display:flex;}
+.calc-head{
+  background:var(--card2);padding:9px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:move;
+}
+.calc-head span{font-size:.75rem;font-weight:800;color:var(--muted);}
+.calc-close{background:none;border:none;color:var(--muted);font-size:.85rem;cursor:pointer;padding:2px 6px;border-radius:6px;}
+.calc-close:hover{color:#fff;background:rgba(233,78,119,.3);}
+.calc-screen{
+  padding:10px 14px 6px;
+  background:rgba(0,0,0,.35);
+}
+.calc-expr{min-height:18px;font-size:.72rem;color:var(--muted);text-align:right;direction:ltr;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.calc-display{
+  font-size:2rem;font-weight:900;color:#fff;text-align:right;
+  direction:ltr;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+  line-height:1.2;padding-bottom:6px;
+}
+.calc-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:10px;
+}
+.calc-btn{
+  border:none;border-radius:10px;font-family:'Cairo',sans-serif;
+  font-size:.9rem;font-weight:800;height:42px;cursor:pointer;
+  transition:.15s;display:flex;align-items:center;justify-content:center;
+}
+.calc-btn:active{transform:scale(.93);}
+.cb-num{background:var(--card2);color:var(--text);}
+.cb-num:hover{background:rgba(255,255,255,.12);}
+.cb-op{background:rgba(247,147,30,.18);color:#f7931e;}
+.cb-op:hover{background:rgba(247,147,30,.32);}
+.cb-eq{background:var(--grad);color:#fff;grid-column:span 1;}
+.cb-eq:hover{filter:brightness(1.1);}
+.cb-ac{background:rgba(233,78,119,.2);color:#e94e77;}
+.cb-ac:hover{background:rgba(233,78,119,.35);}
+.cb-zero{grid-column:span 2;}
 </style>
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -329,6 +377,8 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   <div class="anno-color-swatch" id="ac4" style="background:#f7d31e" onclick="setColor('#f7d31e')" title="أصفر"></div>
   <div class="anno-color-swatch" id="ac5" style="background:#ffffff" onclick="setColor('#ffffff')" title="أبيض"></div>
   <div class="anno-sep"></div>
+  <button class="anno-tool-btn" data-tip="آلة حاسبة" onclick="toggleCalc()"><i class="fas fa-calculator"></i></button>
+  <div class="anno-sep"></div>
   <button class="anno-tool-btn" data-tip="إخفاء الشريط" onclick="hideAnnoToolbar()" style="font-size:.75rem"><i class="fas fa-angles-left"></i></button>
 </div>
 
@@ -336,6 +386,43 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 <button class="anno-toggle-show" id="annoShowBtn" onclick="showAnnoToolbar()" title="أدوات التعليق">
   <i class="fas fa-pen"></i>
 </button>
+
+<!-- CALCULATOR WIDGET -->
+<div id="calcWidget">
+  <div class="calc-head" id="calcHead">
+    <span><i class="fas fa-calculator" style="margin-left:6px"></i>آلة حاسبة</span>
+    <button class="calc-close" onclick="toggleCalc()" title="إغلاق"><i class="fas fa-xmark"></i></button>
+  </div>
+  <div class="calc-screen">
+    <div class="calc-expr" id="calcExpr">&nbsp;</div>
+    <div class="calc-display" id="calcDisplay">0</div>
+  </div>
+  <div class="calc-grid">
+    <button class="calc-btn cb-ac" onclick="calcAC()">AC</button>
+    <button class="calc-btn cb-op" onclick="calcToggleSign()">±</button>
+    <button class="calc-btn cb-op" onclick="calcPercent()">٪</button>
+    <button class="calc-btn cb-op" onclick="calcOp('÷')">÷</button>
+
+    <button class="calc-btn cb-num" onclick="calcDigit('7')">7</button>
+    <button class="calc-btn cb-num" onclick="calcDigit('8')">8</button>
+    <button class="calc-btn cb-num" onclick="calcDigit('9')">9</button>
+    <button class="calc-btn cb-op" onclick="calcOp('×')">×</button>
+
+    <button class="calc-btn cb-num" onclick="calcDigit('4')">4</button>
+    <button class="calc-btn cb-num" onclick="calcDigit('5')">5</button>
+    <button class="calc-btn cb-num" onclick="calcDigit('6')">6</button>
+    <button class="calc-btn cb-op" onclick="calcOp('-')">-</button>
+
+    <button class="calc-btn cb-num" onclick="calcDigit('1')">1</button>
+    <button class="calc-btn cb-num" onclick="calcDigit('2')">2</button>
+    <button class="calc-btn cb-num" onclick="calcDigit('3')">3</button>
+    <button class="calc-btn cb-op" onclick="calcOp('+')">ف</button>
+
+    <button class="calc-btn cb-num cb-zero" onclick="calcDigit('0')">0</button>
+    <button class="calc-btn cb-num" onclick="calcDot()">٫</button>
+    <button class="calc-btn cb-eq" onclick="calcEquals()">=</button>
+  </div>
+</div>
 
 <!-- MAIN STAGE -->
 <div class="stage" id="stage">
@@ -938,6 +1025,94 @@ function showAnnoToolbar(){
   document.getElementById('annoToolbar').classList.remove('hidden');
   document.getElementById('annoShowBtn').classList.remove('show');
 }
+
+// ─── CALCULATOR ────────────────────────────────────────────────
+let calcCurrent='0', calcPrev='', calcOperator='', calcWaitingNext=false;
+const calcDisp = ()=>document.getElementById('calcDisplay');
+const calcExprEl= ()=>document.getElementById('calcExpr');
+
+function calcRefresh(){
+  let d = calcCurrent;
+  if(d.length>12) d=parseFloat(d).toExponential(5);
+  calcDisp().textContent = d;
+}
+function calcDigit(d){
+  if(calcWaitingNext){ calcCurrent=d; calcWaitingNext=false; }
+  else calcCurrent = calcCurrent==='0' ? d : calcCurrent+d;
+  calcRefresh();
+}
+function calcDot(){
+  if(calcWaitingNext){ calcCurrent='0.'; calcWaitingNext=false; calcRefresh(); return; }
+  if(!calcCurrent.includes('.')) calcCurrent+='.';
+  calcRefresh();
+}
+function calcOp(op){
+  if(calcOperator && !calcWaitingNext) calcEquals(true);
+  calcPrev=calcCurrent; calcOperator=op; calcWaitingNext=true;
+  calcExprEl().textContent=calcPrev+' '+op;
+}
+function calcEquals(chain=false){
+  if(!calcOperator) return;
+  const a=parseFloat(calcPrev), b=parseFloat(calcCurrent);
+  let res;
+  if(calcOperator==='÷') res = b!==0 ? a/b : 'خطأ';
+  if(calcOperator==='×') res = a*b;
+  if(calcOperator==='+') res = a+b;
+  if(calcOperator==='-') res = a-b;
+  calcExprEl().textContent=calcPrev+' '+calcOperator+' '+calcCurrent+'=';
+  calcCurrent= res==='خطأ' ? 'خطأ' : String(parseFloat(res.toFixed(10)));
+  if(!chain){ calcOperator=''; calcPrev=''; }
+  calcWaitingNext=true;
+  calcRefresh();
+}
+function calcAC(){ calcCurrent='0'; calcPrev=''; calcOperator=''; calcWaitingNext=false; calcExprEl().textContent='\u00a0'; calcRefresh(); }
+function calcToggleSign(){ calcCurrent=String(-parseFloat(calcCurrent)); calcRefresh(); }
+function calcPercent(){ calcCurrent=String(parseFloat(calcCurrent)/100); calcRefresh(); }
+
+function toggleCalc(){
+  const w=document.getElementById('calcWidget');
+  w.classList.toggle('show');
+}
+
+// Draggable calculator
+(function(){
+  let drag=false, ox=0, oy=0;
+  const head=document.getElementById('calcHead');
+  const wid =document.getElementById('calcWidget');
+  head.addEventListener('mousedown',e=>{
+    drag=true;
+    ox=e.clientX-wid.getBoundingClientRect().left;
+    oy=e.clientY-wid.getBoundingClientRect().top;
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove',e=>{
+    if(!drag) return;
+    wid.style.left=(e.clientX-ox)+'px';
+    wid.style.top =(e.clientY-oy)+'px';
+    wid.style.transform='none';
+  });
+  document.addEventListener('mouseup',()=>{ drag=false; });
+})();
+
+// Calc keyboard support (when calc is open, digits/ops go to calc)
+document.addEventListener('keydown', ev=>{
+  if(!document.getElementById('calcWidget').classList.contains('show')) return;
+  if(document.activeElement===txtInput) return;
+  const k=ev.key;
+  if(/^[0-9]$/.test(k)){ calcDigit(k); ev.stopImmediatePropagation(); }
+  else if(k==='.'||k===','){ calcDot(); ev.stopImmediatePropagation(); }
+  else if(k==='+'){ calcOp('+'); ev.stopImmediatePropagation(); }
+  else if(k==='-'){ calcOp('-'); ev.stopImmediatePropagation(); }
+  else if(k==='*'){ calcOp('×'); ev.stopImmediatePropagation(); }
+  else if(k==='/'){ calcOp('÷'); ev.stopImmediatePropagation(); ev.preventDefault(); }
+  else if(k==='Enter'||k==='='){ calcEquals(); ev.stopImmediatePropagation(); }
+  else if(k==='Escape'){ calcAC(); }
+  else if(k==='Backspace'){
+    if(calcCurrent.length>1) calcCurrent=calcCurrent.slice(0,-1);
+    else calcCurrent='0';
+    calcRefresh(); ev.stopImmediatePropagation();
+  }
+},true);
 
 // (keydown merged above)
 
