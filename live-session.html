@@ -412,22 +412,22 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 
 <!-- ③b TEACHER SCREEN -->
 <div class="screen" id="teacherScreen" style="flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:20px;text-align:center;">
-  <div style="width:76px;height:76px;background:linear-gradient(135deg,rgba(233,78,119,.25),rgba(247,147,30,.2));border:2px solid rgba(233,78,119,.35);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;">🎥</div>
+  <div style="width:76px;height:76px;background:linear-gradient(135deg,rgba(66,133,244,.25),rgba(52,168,83,.2));border:2px solid rgba(66,133,244,.35);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;">🎥</div>
   <div>
     <div style="font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:6px;" id="teacherScTitle">المحاضرة جاهزة</div>
-    <div style="font-size:.85rem;color:var(--muted);line-height:1.8;max-width:420px;">اضغط الزرار التالي كـ <strong style="color:#fbbf24;">مضيف</strong> — هتكون أول واحد يدخل وتتحول moderator تلقائياً بدون أي شاشة lobby</div>
+    <div style="font-size:.85rem;color:var(--muted);line-height:1.8;max-width:420px;">اضغط الزرار التالي لفتح <strong style="color:#4ade80;">Google Meet</strong> — هتدخل مباشرة كـ Host</div>
   </div>
   <a id="teacherJitsiLink" href="#" target="_blank"
-    style="display:inline-flex;align-items:center;gap:12px;padding:16px 36px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:16px;color:#fff;font-size:1.05rem;font-weight:900;text-decoration:none;box-shadow:0 10px 32px rgba(233,78,119,.35);cursor:pointer;">
-    <i class="fas fa-video"></i> افتح المحاضرة (Jitsi)
+    style="display:inline-flex;align-items:center;gap:12px;padding:16px 36px;background:linear-gradient(135deg,#4285f4,#34a853);border-radius:16px;color:#fff;font-size:1.05rem;font-weight:900;text-decoration:none;box-shadow:0 10px 32px rgba(66,133,244,.4);cursor:pointer;">
+    <i class="fab fa-google"></i> افتح المحاضرة (Google Meet)
   </a>
   <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:4px;">
-    <div style="padding:7px 13px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:10px;font-size:.78rem;color:#4ade80;"><i class="fas fa-check-circle" style="margin-left:5px;"></i>هتكون moderator أوتوماتيك</div>
+    <div style="padding:7px 13px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:10px;font-size:.78rem;color:#4ade80;"><i class="fas fa-check-circle" style="margin-left:5px;"></i>ادخل كـ Host وقبّل الطلاب من Waiting Room</div>
     <div style="padding:7px 13px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;font-size:.78rem;color:#60a5fa;"><i class="fas fa-users" style="margin-left:5px;"></i>الطلاب يدخلوا بعدك مباشرة</div>
-    <div style="padding:7px 13px;background:rgba(247,147,30,.08);border:1px solid rgba(247,147,30,.2);border-radius:10px;font-size:.78rem;color:#fb923c;"><i class="fas fa-desktop" style="margin-left:5px;"></i>فعّل Screen Share من داخل Jitsi</div>
+    <div style="padding:7px 13px;background:rgba(52,168,83,.08);border:1px solid rgba(52,168,83,.2);border-radius:10px;font-size:.78rem;color:#4ade80;"><i class="fas fa-desktop" style="margin-left:5px;"></i>فعّل Screen Share من داخل Meet</div>
   </div>
   <div style="font-size:.75rem;color:var(--muted);max-width:420px;line-height:1.9;">
-    💡 بعد ما تدخل، ارضع <strong style="color:#fbbf24;">Screen Share</strong> عشان الطلاب يشوفوا شاشتك.<br>أدوات الرسم والتسجيل موجودة هنا في الشريط اللي فوق.
+    💡 لازم تكون <strong style="color:#fbbf24;">أنت الأول</strong> يدخل — بعدين قبّل الطلاب من الـ Waiting Room.<br>أدوات الرسم والتسجيل موجودة هنا في الشريط اللي فوق.
   </div>
 </div>
 
@@ -805,26 +805,20 @@ function proceedToSession(){
    JITSI LAUNCH
 ══════════════════════════════════════════════ */
 function launchJitsi(){
-  /* ── موبايل: افتح مباشرة بدل iframe ── */
+  /* ── موبايل: افتح Google Meet مباشرة ── */
   if(isMobile()){
     setLoad(false);
-    const directUrl = 'https://meet.jit.si/'+ SESSION.room +'?lang=ar#config.disableDeepLinking=true';
-    document.getElementById('mobJitsiLink').href = directUrl;
+    const mobileUrl = SESSION.meetLink || 'https://meet.google.com/mkf-dkez-qkw';
+    document.getElementById('mobJitsiLink').href = mobileUrl;
     showScreen('mobileScreen');
     return;
   }
 
-  /* ── معلم: افتح Jitsi مباشرة في تبويب جديد ── */
+  /* ── معلم: افتح Google Meet مباشرة في تبويب جديد ── */
   if(isTeacherMode){
     setLoad(false);
-    const teacherUrl = 'https://meet.jit.si/'+ SESSION.room
-      + '?lang=ar#config.prejoinConfig.enabled=false'
-      + '&config.startWithAudioMuted=false'
-      + '&config.startWithVideoMuted=false'
-      + '&config.disableDeepLinking=true'
-      + '&config.defaultLanguage=ar'
-      + '&userInfo.displayName='+ encodeURIComponent('🎥 أكرم مصطفى (محاضر)');
-    document.getElementById('teacherJitsiLink').href = teacherUrl;
+    const meetUrl = SESSION.meetLink || 'https://meet.google.com/mkf-dkez-qkw';
+    document.getElementById('teacherJitsiLink').href = meetUrl;
     document.getElementById('teacherScTitle').textContent = SESSION.title || 'المحاضرة جاهزة';
     /* إخفاء باقي الشاشات */
     ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
@@ -845,86 +839,41 @@ function launchJitsi(){
   myJoinToken='tk_'+Math.random().toString(36).slice(2);
   markActive(currentUser.id,myJoinToken);
 
-  /* إشعار للمعلم بدخول الطالب (طلاب فقط) */
+  /* إشعار للمعلم بدخول الطالب */
   if(!isTeacherMode && SESSION){
     try{
       const joins = JSON.parse(localStorage.getItem('am_live_joins')||'[]');
       joins.push({userId:currentUser.id, name:currentUser.name||currentUser.username||'طالب', sessionId:SESSION.id, joinedAt:Date.now()});
-      // نحتفظ بآخر 50 فقط
       if(joins.length>50) joins.splice(0, joins.length-50);
       localStorage.setItem('am_live_joins', JSON.stringify(joins));
     }catch(e){}
   }
 
-  /* إخفاء باقي الشاشات وإظهار Jitsi */
+  /* طالب: افتح Google Meet في تبويب جديد */
+  setLoad(false);
+  const studentMeetUrl = SESSION.meetLink || 'https://meet.google.com/mkf-dkez-qkw';
+  window.open(studentMeetUrl, '_blank');
+  /* أظهر رسالة تأكيد */
   ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
     const el=document.getElementById(s);if(el){el.classList.remove('active');el.style.display='none';}
   });
-  document.getElementById('jitsiScreen').style.display='block';
-  setLoad(false);
-
-  /* ── اسم المستخدم ── */
-  const displayName = isTeacherMode
-    ? '🎥 أكرم مصطفى (محاضر)'
-    : (currentUser.name||currentUser.username||'طالب');
-
-  /* ── config عبر URL hash — هذا يبايباس lobby السيرفر ── */
-  const cfg = [
-    'config.disableLobby=true',
-    'config.lobby.enabled=false',
-    'config.prejoinConfig.enabled=false',
-    'config.startWithAudioMuted='+ (!isTeacherMode),
-    'config.startWithVideoMuted=false',
-    'config.enableLobbyChat=false',
-    'config.hideLobbyButton=true',
-    'config.disableDeepLinking=true',
-    'config.enableEmailInStats=false',
-    'config.defaultLanguage=ar',
-    'config.notifications=[]',
-    'config.p2p.enabled=true',
-    'config.p2p.preferH264=true',
-    'config.requireDisplayName=false',
-    'config.enableWelcomePage=false',
-    'config.enableClosePage=false',
-    'config.remoteVideoMenu.disabled=false',
-    'interfaceConfig.SHOW_JITSI_WATERMARK=false',
-    'interfaceConfig.TOOLBAR_ALWAYS_VISIBLE=false',
-    'interfaceConfig.MOBILE_APP_PROMO=false',
-    'userInfo.displayName='+ encodeURIComponent(displayName),
-  ].join('&');
-
-  const url = 'https://meet.jit.si/'+ SESSION.room +'?lang=ar#'+ cfg;
-
-  /* ── إنشاء iframe مباشرة (بدون External API) ── */
-  const mount = document.getElementById('jitsiMount');
-  mount.innerHTML='';
-  const iframe = document.createElement('iframe');
-  iframe.src = url;
-  iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
-  iframe.allow = 'camera; microphone; fullscreen; display-capture; speaker-selection; autoplay; clipboard-write';
-  iframe.setAttribute('allowfullscreen','true');
-  iframe.setAttribute('credentialless','');
-  mount.appendChild(iframe);
-
-  /* للمعلم — أظهر شريط التسجيل + أدوات التحديد + ابدأ مراقبة دخول الطلاب */
-  if(isTeacherMode){
-    document.getElementById('recPanel').classList.add('show');
-    const annoBtn = document.getElementById('btnAnnoToggleBar');
-    if(annoBtn) annoBtn.style.display='flex';
-    annoInit();
-    /* init join counter so only NEW joins trigger toast */
-    try{ _lastJoinCount = JSON.parse(localStorage.getItem('am_live_joins')||'[]').length; }catch(e){}
-  }
-
-  /* إحصاء الحضور غير متاح بالـ iframe المباشر — نخفيه */
-  document.getElementById('attendeeCount').style.display='none';
+  document.getElementById('jitsiScreen').style.display='none';
+  const confirmDiv = document.createElement('div');
+  confirmDiv.style.cssText='position:fixed;inset:0;top:52px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:24px;background:var(--bg);text-align:center;';
+  confirmDiv.innerHTML=`
+    <div style="font-size:3rem">✅</div>
+    <div style="font-size:1.1rem;font-weight:900;color:#fff;">جاري فتح Google Meet...</div>
+    <div style="font-size:.85rem;color:var(--muted);max-width:380px;line-height:1.8;">لو ما فتحش تلقائياً اضغط الزرار أدناه</div>
+    <a href="${studentMeetUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:9px;padding:13px 28px;background:linear-gradient(135deg,#4285f4,#34a853);border-radius:13px;color:#fff;font-size:.95rem;font-weight:900;text-decoration:none;">
+      <i class="fab fa-google"></i> افتح Google Meet
+    </a>
+    <a href="my-courses.html" style="color:var(--muted);font-size:.82rem;margin-top:4px;"><i class="fas fa-arrow-right"></i> رجوع</a>
+  `;
+  document.body.appendChild(confirmDiv);
 }
 
-function updateAttendees(){ /* غير متاح مع iframe مباشر */ }
-
-function fallbackOpen(){
-  /* مستخدمة فقط من الكود القديم — مش بتُستدعى بالـ iframe approach */ 
-}
+function updateAttendees(){ /* غير متاح */ }
+function fallbackOpen(){ /* deprecated */ }
 
 function showFallbackMsg(url){
   ['authScreen','waitScreen','endedScreen','notFoundScreen'].forEach(s=>{
