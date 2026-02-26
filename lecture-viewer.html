@@ -311,7 +311,7 @@ async function init(){
     showToast('معرّف المحاضرة غير موجود','error'); return;
   }
 
-// حاول التحميل من Firebase أولاً — كل محاضرة doc مستقل
+// Load lecture: try individual doc first, fallback to full lectures doc
   if(_db){
     try{
       const doc = await _db.collection('lectures').doc(lecId).get();
@@ -320,7 +320,19 @@ async function init(){
         const {courseKey:_ck, savedAt:_sa, ...lec} = data;
         lectureData = lec;
       }
-    }catch(e){ console.warn('Firebase load failed, using localStorage',e); }
+    }catch(e){ console.warn('lectures/{id} load failed',e); }
+    // Fallback: read from admin_data/lectures (original format)
+    if(!lectureData){
+      try{
+        const fullDoc = await _db.collection('admin_data').doc('lectures').get();
+        if(fullDoc.exists){
+          const raw = fullDoc.data()||{};
+          const allLecs = raw.data||raw;
+          const courseLecs = allLecs[courseKey]||[];
+          lectureData = courseLecs.find(l=>l.id===lecId)||null;
+        }
+      }catch(e){ console.warn('admin_data/lectures fallback failed',e); }
+    }
   }
 
   // fallback: localStorage

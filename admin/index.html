@@ -2089,8 +2089,23 @@ async function seedFreeLectures(){
 
 function saveLectures(obj){
   _fsLectures = Object.assign({},obj);
-  try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(obj)); }catch(e){ console.warn('localStorage quota, skipping local save'); }
-  // Save each lecture as its own Firestore doc to avoid 1MB document size limit
+  try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(obj)); }catch(e){ console.warn('localStorage quota'); }
+  // 1) Save full object to admin_data/lectures (backward compat for lecture-viewer)
+  // Strip base64 srcs to avoid the 1MB limit — store URLs only
+  const stripped = {};
+  Object.entries(obj).forEach(([ck,lecs])=>{
+    stripped[ck] = (lecs||[]).map(lec=>({
+      ...lec,
+      slides:(lec.slides||[]).map(s=>({
+        ...s,
+        src: (s.src&&(s.src.startsWith('http')||s.src.startsWith('data:image'))) ? s.src : ''
+      }))
+    }));
+  });
+  _fdb.collection('admin_data').doc('lectures')
+    .set({data:stripped, updatedAt:Date.now()})
+    .catch(e=>console.warn('FS admin_data lectures:', e));
+  // 2) Save each lecture individually (supports large base64 per-lecture)
   Object.entries(obj).forEach(([courseKey, lecs])=>{
     (lecs||[]).forEach(lec=>{
       if(!lec.id) return;

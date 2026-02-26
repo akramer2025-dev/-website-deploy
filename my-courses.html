@@ -255,7 +255,20 @@ async function init(){
       if(ck){ if(!lecsObj[ck]) lecsObj[ck]=[]; const {courseKey:_,savedAt:__,...ld}=d; lecsObj[ck].push(ld); }
     });
     Object.keys(lecsObj).forEach(ck=>lecsObj[ck].sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)));
-    if(lecsQSnap.size > 0){ allLectures = lecsObj; try{localStorage.setItem(LECTURES_KEY,JSON.stringify(allLectures))}catch(e){} }
+    if(lecsQSnap.size > 0){
+      allLectures = lecsObj;
+      try{localStorage.setItem(LECTURES_KEY,JSON.stringify(allLectures))}catch(e){}
+    } else {
+      // Fallback: read from old admin_data/lectures doc
+      try{
+        const oldLecsDoc = await _mcdb.collection('admin_data').doc('lectures').get();
+        if(oldLecsDoc.exists){
+          const raw = oldLecsDoc.data()||{};
+          allLectures = raw.data||raw;
+          try{localStorage.setItem(LECTURES_KEY,JSON.stringify(allLectures))}catch(e){}
+        }
+      }catch(e){ console.warn('fallback lectures load failed',e); }
+    }
     if(recSnap.exists){ recLectures = recSnap.data().data||[]; try{localStorage.setItem(REC_LECS_KEY,JSON.stringify(recLectures))}catch(e){} }
     if(liveSnap.exists){ liveSessions = liveSnap.data().data||[]; try{localStorage.setItem(LIVE_KEY,JSON.stringify(liveSessions))}catch(e){} }
     currentUser = allUsers.find(u=>String(u.id)===String(uid));
