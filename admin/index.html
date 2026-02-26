@@ -2707,7 +2707,7 @@ document.getElementById('liveModal').addEventListener('click',function(e){if(e.t
 <canvas id="annoAdminCanvas"></canvas>
 
 <!-- Text overlay -->
-<textarea id="aAnnoTextInput" style="position:fixed;z-index:9050;background:rgba(0,0,0,.75);border:2px solid #e94e77;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;padding:8px 12px;min-width:160px;outline:none;resize:none;display:none;" rows="2" placeholder="اكتب ملحوظة..." onkeydown="aAnnoTextKeydown(event)"></textarea>
+<textarea id="aAnnoTextInput" style="position:fixed;z-index:9050;background:rgba(0,0,0,.75);border:2px solid #e94e77;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;padding:8px 12px;min-width:160px;outline:none;resize:none;display:none;" rows="2" placeholder="اكتب ملحوظة..." onkeydown="aAnnoTextKeydown(event)" onblur="aCommitText()"></textarea>
 
 <!-- Calculator -->
 <div id="calcWidgetAdmin">
@@ -2816,12 +2816,14 @@ document.getElementById('liveModal').addEventListener('click',function(e){if(e.t
   canvas.addEventListener('touchend',  e=>{e.preventDefault();end(e);  },{passive:false});
 
   function placeText(x,y){ txtInp.style.display='block'; txtInp.style.left=x+'px'; txtInp.style.top=y+'px'; txtInp.value=''; txtInp.focus(); }
-  window.aAnnoTextKeydown=function(ev){ if(ev.key==='Enter'&&!ev.shiftKey){ ev.preventDefault(); commitText(); } if(ev.key==='Escape') txtInp.style.display='none'; };
-  function commitText(){
+  window.aAnnoTextKeydown=function(ev){ if(ev.key==='Enter'&&!ev.shiftKey){ ev.preventDefault(); aCommitText(); } if(ev.key==='Escape'){ txtInp.value=''; txtInp.style.display='none'; } };
+  let _aCommitLock=false;
+  window.aCommitText=function(){
+    if(_aCommitLock) return; _aCommitLock=true; setTimeout(()=>_aCommitLock=false,50);
     const x=parseFloat(txtInp.style.left), y=parseFloat(txtInp.style.top), val=txtInp.value.trim();
     if(val){ savH(); ctx.globalCompositeOperation='source-over'; ctx.font='bold 22px Cairo,sans-serif'; const m=ctx.measureText(val); ctx.fillStyle='rgba(0,0,0,.55)'; ctx.fillRect(x-4,y-24,m.width+12,32); ctx.fillStyle=color; ctx.fillText(val,x+2,y); }
     txtInp.style.display='none'; txtInp.value='';
-  }
+  };
 
   // Keyboard
   document.addEventListener('keydown',ev=>{

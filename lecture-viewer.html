@@ -427,7 +427,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 <!-- MAIN STAGE -->
 <div class="stage" id="stage">
   <canvas id="annoCanvas"></canvas>
-  <textarea id="annoTextInput" class="anno-text-input" rows="2" placeholder="اكتب ملحوظة..." onkeydown="annoTextKeydown(event)"></textarea>
+  <textarea id="annoTextInput" class="anno-text-input" rows="2" placeholder="اكتب ملحوظة..." onkeydown="annoTextKeydown(event)" onblur="commitText()"></textarea>
   <div class="slide-container" id="slideContainer">
     <div id="emptyState" style="display:flex">
       <i class="fas fa-photo-film"></i>
@@ -995,9 +995,12 @@ function annoTextKeydown(ev){
     ev.preventDefault();
     commitText();
   }
-  if(ev.key==='Escape'){ txtInput.style.display='none'; }
+  if(ev.key==='Escape'){ txtInput.value=''; txtInput.style.display='none'; }
 }
+let _commitLock=false;
 function commitText(){
+  if(_commitLock) return; _commitLock=true;
+  setTimeout(()=>_commitLock=false, 50);
   const x=parseFloat(txtInput.style.left), y=parseFloat(txtInput.style.top);
   const val=txtInput.value.trim();
   if(val){
