@@ -2,13 +2,18 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // طلبات الانضمام: أي زائر يقدر يكتب، القراءة للجميع (الأدمن محلي)
+    // طلبات الانضمام: أي زائر يقدر يكتب، القراءة للجميع
     match /join_requests/{docId} {
       allow read, write: if true;
     }
 
-    // بيانات الأدمن: قراءة وكتابة مفتوحة (الأمان عن طريق الـ admin password locally)
+    // بيانات الأدمن: قراءة وكتابة مفتوحة
     match /admin_data/{docId} {
+      allow read, write: if true;
+    }
+
+    // المحاضرات: كل محاضرة doc مستقل — قراءة وكتابة مفتوحة
+    match /lectures/{lecId} {
       allow read, write: if true;
     }
 
