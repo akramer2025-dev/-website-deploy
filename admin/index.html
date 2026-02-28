@@ -1012,7 +1012,20 @@ let _fsPortfolio = null;
 function getPortfolio(){ return _fsPortfolio!==null ? Object.assign({},_fsPortfolio) : (()=>{try{return JSON.parse(localStorage.getItem(PORTFOLIO_KEY)||'{}')||{};}catch(e){return {};}})(); }
 function savePortfolio(p){
   _fsPortfolio = Object.assign({},p);
-  localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(p));
+  // Don't save to localStorage if data is too large (> 4MB)
+  try {
+    const jsonStr = JSON.stringify(p);
+    if (jsonStr.length < 4 * 1024 * 1024) {
+      localStorage.setItem(PORTFOLIO_KEY, jsonStr);
+    } else {
+      console.warn('Portfolio data too large for localStorage, saving to Firestore only');
+      // Clear old data to free space
+      localStorage.removeItem(PORTFOLIO_KEY);
+    }
+  } catch(e) {
+    console.warn('localStorage quota exceeded, using Firestore only:', e);
+    localStorage.removeItem(PORTFOLIO_KEY);
+  }
   _fdb.collection('admin_data').doc('portfolio').set({data:p,updatedAt:Date.now()}).catch(e=>console.warn('FS portfolio',e));
 }
 function getAdminPass(){ return ADMIN_PASS; }
@@ -1873,6 +1886,13 @@ function submitGalleryImages(){
     if(!_galFiles.length){ toast('اختر صورة أولاً', 'error'); return; }
     const portfolio = getPortfolio();
     if(!portfolio[key]) portfolio[key] = [];
+    
+    // Warn if portfolio is getting large
+    const currentSize = JSON.stringify(portfolio).length;
+    if (currentSize > 3 * 1024 * 1024) {
+      toast('⚠️ البيانات كبيرة جداً! استخدم روابط URL بدلاً من رفع ملفات', 'warning');
+    }
+    
     let loaded = 0, added = 0;
     const total = _galFiles.length;
     _galFiles.forEach(file => {
