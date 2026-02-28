@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لوحة الإدارة | Akram Mostafa</title>
+
+<!-- 🔒 MAXIMUM SECURITY PROTECTION (15 LAYERS) - MUST BE FIRST -->
+<script src="../js/advanced-security.js"></script>
+<script src="../js/security-protection.js" defer></script>
+
 <link rel="icon" type="image/png" href="../images/akram.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -35,7 +40,7 @@ button{cursor:pointer;}
 .login-box{width:400px;max-width:95vw;background:var(--card);border:1px solid var(--border);border-radius:24px;
   padding:44px 36px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
 .login-logo{margin-bottom:20px;}
-.login-logo img{width:70px;height:70px;}
+.login-logo img{width:auto;height:70px;max-width:220px;object-fit:contain;}
 .login-box h2{font-size:1.5rem;font-weight:800;margin-bottom:6px;color:#fff;}
 .login-box p{color:var(--muted);font-size:.9rem;margin-bottom:32px;}
 .l-field{margin-bottom:18px;text-align:right;}
@@ -58,7 +63,7 @@ button{cursor:pointer;}
   background:var(--card);border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;padding:0 24px;}
 .adm-header-brand{display:flex;align-items:center;gap:12px;}
-.adm-header-brand img{width:36px;height:36px;}
+.adm-header-brand img{width:auto;height:36px;max-width:130px;object-fit:contain;}
 .adm-header-brand span{font-size:1rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .adm-header-right{display:flex;align-items:center;gap:16px;}
 .adm-admin-pill{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);
@@ -299,8 +304,81 @@ button{cursor:pointer;}
 .toast.success{border-color:rgba(34,197,94,0.4);color:#4ade80;}
 .toast.error{border-color:rgba(239,68,68,0.4);color:#f87171;}
 
-@media(max-width:1100px){.stats-grid{grid-template-columns:1fr 1fr;}.adm-row{grid-template-columns:1fr;}.projects-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:768px){.adm-sidebar{transform:translateX(100%);transition:.3s;}.adm-sidebar.open{transform:none;}.adm-main{margin-right:0;}.adm-section{padding:20px;}.stats-grid{grid-template-columns:1fr 1fr;}.projects-grid{grid-template-columns:1fr;}}
+/* HAMBURGER TOGGLE */
+.adm-menu-toggle{display:none;align-items:center;justify-content:center;width:40px;height:40px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-size:1.1rem;cursor:pointer;transition:.2s;flex-shrink:0;}
+.adm-menu-toggle:hover{background:var(--card2);color:#fff;}
+
+/* SIDEBAR OVERLAY */
+.adm-sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);
+  z-index:89;backdrop-filter:blur(2px);}
+.adm-sidebar-overlay.show{display:block;}
+
+/* TABLE SCROLL WRAPPER */
+.adm-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+@media(max-width:1100px){
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .adm-row{grid-template-columns:1fr;}
+  .projects-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+@media(max-width:768px){
+  /* Show hamburger */
+  .adm-menu-toggle{display:flex;}
+
+  /* Header */
+  .adm-header{padding:0 14px;gap:10px;}
+  .adm-admin-pill span{display:none;}
+  .adm-admin-pill{padding:7px 10px;}
+  .btn-logout span{display:none;}
+
+  /* Sidebar slides in from right */
+  .adm-sidebar{transform:translateX(100%);transition:.3s;z-index:90;}
+  .adm-sidebar.open{transform:none;box-shadow:-8px 0 40px rgba(0,0,0,0.5);}
+
+  /* Main takes full width */
+  .adm-main{margin-right:0;}
+  .adm-section{padding:16px;}
+  .adm-section-title{font-size:1.15rem;}
+
+  /* Stats — 2 cols */
+  .stats-grid{grid-template-columns:1fr 1fr;gap:12px;}
+  .stat-card{padding:16px;}
+  .stat-num{font-size:1.6rem;}
+
+  /* Projects */
+  .projects-grid{grid-template-columns:1fr;}
+
+  /* Users grid full width */
+  .users-grid{grid-template-columns:1fr;}
+  .users-top{flex-wrap:wrap;gap:10px;}
+  .users-tabs{width:100%;}
+  .users-tab{flex:1;text-align:center;padding:8px 10px;}
+
+  /* Table scroll */
+  .adm-card{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .adm-table-wrap{margin:0 -4px;}
+  .adm-table th,.adm-table td{font-size:.78rem;padding:9px 8px;white-space:nowrap;}
+
+  /* Requests grid */
+  .req-cards{grid-template-columns:1fr;}
+
+  /* Form row single col */
+  .form-row{grid-template-columns:1fr;}
+
+  /* Modal */
+  .modal-box{padding:22px 18px;border-radius:18px;}
+}
+
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .stat-card{padding:14px;}
+  .adm-header-brand span{font-size:.85rem;}
+  .adm-section{padding:12px;}
+  .adm-card{padding:16px;}
+}
 
 /* ===== JOIN REQUESTS ===== */
 .req-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
@@ -426,7 +504,7 @@ button{cursor:pointer;}
 <!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
-    <div class="login-logo"><img src="../images/logo.png" alt="Logo"></div>
+    <div class="login-logo"><img src="../images/1772173627537.png" alt="Logo"></div>
     <h2>لوحة الإدارة</h2>
     <p>أدخل بيانات الدخول</p>
     <div class="login-err" id="loginErr"><i class="fas fa-exclamation-circle"></i><span>اسم المستخدم أو كلمة المرور غير صحيحة</span></div>
@@ -446,12 +524,14 @@ button{cursor:pointer;}
 <!-- ADMIN APP -->
 <div id="adminApp">
   <header class="adm-header">
-    <div class="adm-header-brand"><img src="../images/logo.png" alt="Logo"><span>AKRAM ADMIN</span></div>
+    <button class="adm-menu-toggle" id="menuToggle" onclick="toggleAdminSidebar()" title="القائمة"><i class="fas fa-bars"></i></button>
+    <div class="adm-header-brand"><img src="../images/1772173627537.png" alt="Logo"><span>AKRAM ADMIN</span></div>
     <div class="adm-header-right">
       <div class="adm-admin-pill"><i class="fas fa-shield-alt"></i><span>أدمن النظام</span></div>
-      <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+      <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> <span>خروج</span></button>
     </div>
   </header>
+  <div class="adm-sidebar-overlay" id="sidebarOverlay" onclick="closeAdminSidebar()"></div>
   <aside class="adm-sidebar" id="adminSidebar">
     <div class="adm-nav-section">
       <div class="adm-nav-label">الإدارة الرئيسية</div>
@@ -477,6 +557,7 @@ button{cursor:pointer;}
     </div>
     <div class="adm-nav-section">
       <div class="adm-nav-label">أخرى</div>
+      <div class="adm-nav-item" onclick="window.open('../linkcall/login.html','_blank')" style="background: linear-gradient(135deg, rgba(233,78,119,0.15), rgba(247,147,30,0.1)); border: 1px solid rgba(233,78,119,0.3);"><i class="fas fa-phone-volume" style="background: linear-gradient(135deg, #e94e77, #f7931e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i> Link Call System</div>
       <div class="adm-nav-item" onclick="showSection('settings')"><i class="fas fa-cog"></i> الإعدادات</div>
       <div class="adm-nav-item" onclick="window.open('../store.html','_blank')"><i class="fas fa-store"></i> متجر رمو</div>
       <div class="adm-nav-item" onclick="window.open('../index.html','_blank')"><i class="fas fa-external-link-alt"></i> زيارة الموقع</div>
@@ -927,8 +1008,13 @@ function saveUsers(arr){
   localStorage.setItem(USERS_KEY, JSON.stringify(arr));
   _fdb.collection('admin_data').doc('users').set({data:arr,updatedAt:Date.now()}).catch(e=>console.warn('FS users',e));
 }
-function getPortfolio(){ return JSON.parse(localStorage.getItem(PORTFOLIO_KEY)||'{}'); }
-function savePortfolio(p){ localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(p)); }
+let _fsPortfolio = null;
+function getPortfolio(){ return _fsPortfolio!==null ? Object.assign({},_fsPortfolio) : (()=>{try{return JSON.parse(localStorage.getItem(PORTFOLIO_KEY)||'{}')||{};}catch(e){return {};}})(); }
+function savePortfolio(p){
+  _fsPortfolio = Object.assign({},p);
+  localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(p));
+  _fdb.collection('admin_data').doc('portfolio').set({data:p,updatedAt:Date.now()}).catch(e=>console.warn('FS portfolio',e));
+}
 function getAdminPass(){ return ADMIN_PASS; }
 function getAppPrices(){ return _fsAppPrices!==null ? Object.assign({},_fsAppPrices) : (()=>{try{return JSON.parse(localStorage.getItem(APP_PRICES_KEY))||{};}catch(e){return {};}})(); }
 function saveAppPrices(obj){
@@ -958,7 +1044,7 @@ let _fsUnsubscribe = null;
 
 // Load all admin collections from Firestore on login
 async function _loadAdminData(){
-  const cols = ['users','app_prices','recorded_lectures','live_sessions'];
+  const cols = ['users','app_prices','recorded_lectures','live_sessions','portfolio'];
   try {
     // Load admin docs + lectures collection in parallel
     const [snaps, lecsSnap] = await Promise.all([
@@ -972,6 +1058,7 @@ async function _loadAdminData(){
       if(i===1){ _fsAppPrices = d||{}; localStorage.setItem(APP_PRICES_KEY, JSON.stringify(_fsAppPrices)); }
       if(i===2){ _fsRecLecs = Array.isArray(d)?d:[]; localStorage.setItem(REC_LECS_KEY, JSON.stringify(_fsRecLecs)); }
       if(i===3){ _fsLiveSessions = Array.isArray(d)?d:[]; localStorage.setItem('am_live_sessions', JSON.stringify(_fsLiveSessions)); }
+      if(i===4){ _fsPortfolio = d||{}; localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(_fsPortfolio)); }
     });
     // Rebuild lectures object from individual docs (avoids 1MB Firestore limit)
     const lecturesObj = {};
@@ -1025,10 +1112,16 @@ function initFirestore(){
   if(jrEl) jrEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem"></i><br><br>جاري تحميل البيانات...</div>';
   _fsUnsubscribe = _fdb.collection('join_requests')
     .onSnapshot(snapshot=>{
+      const _prevPending = _fsReqs.filter(r=>r.status==='pending').length;
+      const _isFirstLoad = (_fsReqs.length === 0);
       _fsReqs = [];
       snapshot.forEach(doc=>{ _fsReqs.push(doc.data()); });
       // ترتيب client-side بدل orderBy (لا يحتاج index)
       _fsReqs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+      const _newPending = _fsReqs.filter(r=>r.status==='pending').length;
+      if (!_isFirstLoad && _newPending > _prevPending) {
+        toast('🔔 طلب انضمام جديد! تحقق من قسم طلبات الانضمام', 'info');
+      }
       renderJoinRequests(_currentReqFilter||'all');
       updateBadges();
     }, err=>{
@@ -2932,6 +3025,36 @@ function aToggleCalc(){ document.getElementById('calcWidgetAdmin').classList.tog
   document.addEventListener('mousemove',e=>{if(!drag)return;w.style.left=(e.clientX-ox)+'px';w.style.top=(e.clientY-oy)+'px';w.style.transform='none';});
   document.addEventListener('mouseup',()=>drag=false);
 })();
+
+// ══════════ MOBILE SIDEBAR TOGGLE ══════════
+function toggleAdminSidebar(){
+  const sb = document.getElementById('adminSidebar');
+  const ov = document.getElementById('sidebarOverlay');
+  const tog = document.getElementById('menuToggle');
+  const isOpen = sb.classList.contains('open');
+  if(isOpen){ closeAdminSidebar(); }
+  else {
+    sb.classList.add('open');
+    ov.classList.add('show');
+    tog.innerHTML = '<i class="fas fa-times"></i>';
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeAdminSidebar(){
+  const sb = document.getElementById('adminSidebar');
+  const ov = document.getElementById('sidebarOverlay');
+  const tog = document.getElementById('menuToggle');
+  sb.classList.remove('open');
+  ov.classList.remove('show');
+  tog.innerHTML = '<i class="fas fa-bars"></i>';
+  document.body.style.overflow = '';
+}
+// Close sidebar when nav item clicked on mobile
+document.querySelectorAll('.adm-nav-item').forEach(item=>{
+  item.addEventListener('click', ()=>{
+    if(window.innerWidth <= 768) closeAdminSidebar();
+  });
+});
 </script>
 </body>
 </html>

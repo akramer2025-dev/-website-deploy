@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
         <div class="container">
             <div class="nav-brand">
                 <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-                    <img src="../images/logo.png" alt="Akram Mostafa" class="nav-logo">
+                    <img src="../images/1772173627537.png" alt="Akram Mostafa" class="nav-logo">
                     <span class="brand-name">AKRAM<br>MOSTAFA</span>
                 </a>
             </div>
@@ -90,7 +90,7 @@
                     </div>
                     
                     <div class="product-actions">
-                        <a href="https://wa.me/00201555512778?text=مهتم بمتجر Miss Rim Shop - محل ميس ريم" target="_blank" class="btn-buy-now">
+                        <a href="https://wa.me/201555512778?text=مهتم بمتجر Miss Rim Shop - محل ميس ريم" target="_blank" class="btn-buy-now">
                             <i class="fab fa-whatsapp"></i>
                             تواصل للشراء
                         </a>
@@ -148,7 +148,7 @@
             <div class="contact-card" data-aos="fade-up">
                 <h3>جاهز لإطلاق متجرك؟</h3>
                 <p>تواصل معي للحصول على متجر مثل Miss Rim Shop وابدأ في بيع منتجاتك أونلاين</p>
-                <a href="https://wa.me/00201555512778?text=مهتم بمتجر Miss Rim Shop - محل ميس ريم" target="_blank" class="btn-whatsapp-large">
+                <a href="https://wa.me/201555512778?text=مهتم بمتجر Miss Rim Shop - محل ميس ريم" target="_blank" class="btn-whatsapp-large">
                     <i class="fab fa-whatsapp"></i>
                     تواصل عبر واتساب
                 </a>
@@ -162,11 +162,18 @@
         </div>
     </footer>
 
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../js/script.js"></script>
+    <script src="../js/portfolio-loader.js"></script>
     <script>
         AOS.init({duration:800,once:true,offset:50});
-        document.addEventListener('DOMContentLoaded',function(){const p=JSON.parse(localStorage.getItem('am_portfolio_imgs')||'{}');const imgs=p['missrim']||[];if(imgs.length>0){document.getElementById('mainImage').innerHTML=`<img src="${imgs[0]}" alt="Miss Rim Shop">`;document.getElementById('thumbnails').innerHTML=imgs.map((img,i)=>`<div class="product-thumbnail ${i===0?'active':''}" onclick="changeImage('${img}',this)"><img src="${img}" alt=""></div>`).join('')}const w=JSON.parse(localStorage.getItem('am_wishlist')||'[]');if(w.some(i=>i.key==='missrim'&&i.type==='web')){const btn=document.querySelector('.btn-add-wishlist');btn.classList.add('active');btn.querySelector('i').className='fas fa-heart'}});
+        document.addEventListener('DOMContentLoaded',function(){
+            loadProductImages('missrim','Miss Rim Shop');
+            const w=JSON.parse(localStorage.getItem('am_wishlist')||'[]');
+            if(w.some(i=>i.key==='missrim'&&i.type==='web')){const btn=document.querySelector('.btn-add-wishlist');btn.classList.add('active');btn.querySelector('i').className='fas fa-heart'}
+        });
         function changeImage(src,t){document.getElementById('mainImage').innerHTML=`<img src="${src}" alt="Miss Rim Shop">`;document.querySelectorAll('.product-thumbnail').forEach(x=>x.classList.remove('active'));t.classList.add('active')}
         function toggleWishlist(k,t,btn){let w=JSON.parse(localStorage.getItem('am_wishlist')||'[]');const i=w.findIndex(x=>x.key===k&&x.type===t);if(i>-1){w.splice(i,1);btn.classList.remove('active');btn.querySelector('i').className='far fa-heart'}else{w.push({key:k,type:t,addedAt:Date.now()});btn.classList.add('active');btn.querySelector('i').className='fas fa-heart'}localStorage.setItem('am_wishlist',JSON.stringify(w))}
     </script>

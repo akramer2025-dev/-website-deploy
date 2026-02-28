@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -119,9 +119,18 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 
 /* ─── RESPONSIVE ─── */
 @media(max-width:700px){
-  .hero{flex-wrap:wrap;}
+  .header-inner{padding:0 14px;}
+  .brand-title{font-size:.85rem;}
+  .brand-sub{font-size:.7rem;}
+  .brand img{width:32px;height:32px;}
+  .user-badge .uname{max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .header-right{gap:8px;}
+  .logout-btn span{display:none;}
+  .logout-btn{padding:7px 10px;}
+  .hero{flex-wrap:wrap;gap:12px;}
   .hero-stats{flex-wrap:wrap;gap:12px;}
   .courses-grid{grid-template-columns:1fr;}
+  .main{padding:20px 14px;}
 }
 </style>
 </head>
@@ -131,7 +140,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 <header class="header">
   <div class="header-inner">
     <div class="brand">
-      <img src="images/logo.png" alt="">
+      <img src="images/1772173627537.png" alt="">
       <div>
         <div class="brand-title">Akram Mostafa</div>
         <div class="brand-sub">بوابة الطالب</div>
@@ -146,7 +155,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
         </div>
       </div>
       <button class="logout-btn" onclick="logout()">
-        <i class="fas fa-sign-out-alt"></i> خروج
+        <i class="fas fa-sign-out-alt"></i> <span>خروج</span>
       </button>
     </div>
   </div>
