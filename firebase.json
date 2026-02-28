@@ -10,7 +10,7 @@
         "firebase.json",
         "**/.*",
         "**/node_modules/**",
-        "linkcall/**"
+        "linkcall/"
       ],
       "cleanUrls": true,
       "trailingSlash": false,
