@@ -16,18 +16,20 @@ AOS.init({
 const isMobile = window.innerWidth <= 768;
 const isLowEnd = isMobile || navigator.hardwareConcurrency <= 4;
 
-particlesJS('particles-js', {
-    particles: {
-        number: {
-            value: isLowEnd ? 20 : 80,
-            density: {
-                enable: true,
-                value_area: 800
-            }
-        },
-        color: {
-            value: ['#e94e77', '#f7931e', '#c471ed']
-        },
+// Only initialize particles if the container exists and library is loaded
+if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js')) {
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: isLowEnd ? 20 : 80,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: ['#e94e77', '#f7931e', '#c471ed']
+            },
         shape: {
             type: isLowEnd ? 'circle' : ['circle', 'edge'],
             stroke: {
@@ -98,6 +100,7 @@ particlesJS('particles-js', {
     },
     retina_detect: false
 });
+} // End of particlesJS check
 
 // ==========================================
 // Navbar Scroll Effect
