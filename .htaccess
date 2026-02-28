@@ -1,0 +1,113 @@
+# ═══════════════════════════════════════════════════════════
+# 🚀 SEO OPTIMIZATION - Akram Mostafa Website
+# ═══════════════════════════════════════════════════════════
+
+# ────────────────────────────────────────────────────────────
+# 1. REDIRECT TO WWW (Force www subdomain)
+# ────────────────────────────────────────────────────────────
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^akrammostafa\.com [NC]
+RewriteRule ^(.*)$ https://www.akrammostafa.com/$1 [L,R=301]
+
+# ────────────────────────────────────────────────────────────
+# 2. FORCE HTTPS (Secure connection)
+# ────────────────────────────────────────────────────────────
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ────────────────────────────────────────────────────────────
+# 3. REMOVE TRAILING SLASHES
+# ────────────────────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [L,R=301]
+
+# ────────────────────────────────────────────────────────────
+# 4. CLEAN URLS (Remove .html extension)
+# ────────────────────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L,QSA]
+
+# Remove .html from URL
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# ────────────────────────────────────────────────────────────
+# 5. CUSTOM ERROR PAGES
+# ────────────────────────────────────────────────────────────
+ErrorDocument 404 /404.html
+ErrorDocument 403 /403.html
+ErrorDocument 500 /500.html
+
+# ────────────────────────────────────────────────────────────
+# 6. COMPRESSION (GZIP)
+# ────────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# ────────────────────────────────────────────────────────────
+# 7. BROWSER CACHING
+# ────────────────────────────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS and JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    
+    # Fonts
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    
+    # HTML and data
+    ExpiresByType text/html "access plus 0 seconds"
+    ExpiresByType application/json "access plus 0 seconds"
+    ExpiresByType application/xml "access plus 0 seconds"
+</IfModule>
+
+# ────────────────────────────────────────────────────────────
+# 8. SECURITY HEADERS
+# ────────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ────────────────────────────────────────────────────────────
+# 9. BLOCK BAD BOTS AND SCRAPERS
+# ────────────────────────────────────────────────────────────
+RewriteCond %{HTTP_USER_AGENT} ^$ [OR]
+RewriteCond %{HTTP_USER_AGENT} ^(-|CazoodleBot|Zealbot|MSIECrawler|SiteSnagger|WebCopier) [NC]
+RewriteRule .* - [F,L]
+
+# ────────────────────────────────────────────────────────────
+# 10. UTF-8 ENCODING
+# ────────────────────────────────────────────────────────────
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .css .js .xml .json
+
+# ────────────────────────────────────────────────────────────
+# 11. REDIRECT OLD URLS (if needed)
+# ────────────────────────────────────────────────────────────
+# Redirect 301 /old-page.html /new-page
+# Redirect 301 /courses/old-course.html /courses/new-course
+
+# ═══════════════════════════════════════════════════════════
+# End of SEO Configuration
+# ═══════════════════════════════════════════════════════════
