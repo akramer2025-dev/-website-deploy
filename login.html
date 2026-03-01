@@ -390,6 +390,19 @@
     </div>
 
     <script>
+    /* AUTO-REDIRECT IF ALREADY LOGGED IN */
+    (function() {
+        const ls = localStorage;
+        if (ls.getItem('akram_logged_in') === 'true') {
+            if (ls.getItem('am_admin_auth') === '1') {
+                window.location.replace('admin/index.html'); return;
+            }
+            if (ls.getItem('akram_user_id')) {
+                window.location.replace('my-courses.html'); return;
+            }
+        }
+    })();
+
     /* FIREBASE */
     const _fb = firebase.initializeApp({
         apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
@@ -416,6 +429,10 @@
             sessionStorage.setItem('akram_client_name', 'Akram Mostafa');
             sessionStorage.setItem('akram_username', user);
             sessionStorage.setItem('am_admin_auth', '1');
+            localStorage.setItem('akram_logged_in', 'true');
+            localStorage.setItem('akram_client_name', 'Akram Mostafa');
+            localStorage.setItem('akram_username', user);
+            localStorage.setItem('am_admin_auth', '1');
             showSuccess('مرحباً بك يا أدمن! جاري الدخول...');
             setLoading(btn, false);
             setTimeout(() => window.location.href = 'admin/index.html', 1100);
@@ -480,6 +497,11 @@
         sessionStorage.setItem('akram_client_name', found.name || found.username || '');
         sessionStorage.setItem('akram_session_token', tok);
         sessionStorage.setItem('akram_session_uid', found.id);
+        localStorage.setItem('akram_logged_in', 'true');
+        localStorage.setItem('akram_user_id', found.id);
+        localStorage.setItem('akram_student_id', found.id);
+        localStorage.setItem('akram_client_name', found.name || found.username || '');
+        localStorage.removeItem('am_admin_auth');
         showSuccess('مرحباً ' + (found.name || '') + '! جاري الدخول...');
         if (btn) setLoading(btn, false);
         setTimeout(() => window.location.href = 'my-courses.html', 1100);

@@ -1192,6 +1192,10 @@ function doAdminLogin(){
 }
 function doLogout(){
   localStorage.removeItem('am_admin_auth');
+  localStorage.removeItem('akram_logged_in');
+  localStorage.removeItem('akram_client_name');
+  localStorage.removeItem('akram_username');
+  sessionStorage.clear();
   document.getElementById('adminApp').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
 }

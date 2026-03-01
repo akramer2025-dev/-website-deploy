@@ -456,10 +456,15 @@ function renderCourses(courses, allLectures, recLectures){
 function logout(){
   const myUid = sessionStorage.getItem('akram_session_uid') || sessionStorage.getItem('akram_student_id');
   sessionStorage.clear();
+  localStorage.removeItem('akram_logged_in');
+  localStorage.removeItem('akram_user_id');
+  localStorage.removeItem('akram_student_id');
+  localStorage.removeItem('akram_client_name');
+  localStorage.removeItem('am_admin_auth');
   if(myUid){ try{ const u={}; u['s_'+myUid]={token:'',loginAt:0}; _mcdb.collection('admin_data').doc('active_sessions').set(u,{merge:true}).catch(()=>{}); }catch(e){} }
   window.location.href = 'login.html';
 }
-function forceLogout(){ sessionStorage.clear(); window.location.href='login.html'; }
+function forceLogout(){ sessionStorage.clear(); localStorage.removeItem('akram_logged_in'); localStorage.removeItem('am_admin_auth'); window.location.href='login.html'; }
 function startSessionWatcher(){
   const myTok = sessionStorage.getItem('akram_session_token');
   const myUid = sessionStorage.getItem('akram_session_uid') || sessionStorage.getItem('akram_student_id');
