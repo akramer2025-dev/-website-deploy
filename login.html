@@ -393,13 +393,13 @@
     /* AUTO-REDIRECT IF ALREADY LOGGED IN */
     (function() {
         const ls = localStorage;
-        if (ls.getItem('akram_logged_in') === 'true') {
-            if (ls.getItem('am_admin_auth') === '1') {
-                window.location.replace('admin/index.html'); return;
-            }
-            if (ls.getItem('akram_user_id')) {
-                window.location.replace('my-courses.html'); return;
-            }
+        // أدمن - يكفي وجود am_admin_auth بدون شرط akram_logged_in
+        if (ls.getItem('am_admin_auth') === '1') {
+            window.location.replace('admin/index.html'); return;
+        }
+        // طالب - يشترط akram_logged_in مع وجود user_id
+        if (ls.getItem('akram_logged_in') === 'true' && ls.getItem('akram_user_id')) {
+            window.location.replace('my-courses.html'); return;
         }
     })();
 
