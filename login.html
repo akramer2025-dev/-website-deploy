@@ -456,7 +456,7 @@
             const cached = JSON.parse(localStorage.getItem('am_users') || '[]');
             found = cached.find(u =>
                 (u.username === user || u.id === user || u.id === user.toUpperCase()) &&
-                u.password === pass && u.type === 'student'
+                u.password === pass
             );
         } catch(_) {}
 
@@ -469,7 +469,7 @@
                     try { localStorage.setItem('am_users', JSON.stringify(all)); } catch(_) {}
                     found = all.find(u =>
                         (u.username === user || u.id === user || u.id === user.toUpperCase()) &&
-                        u.password === pass && u.type === 'student'
+                        u.password === pass
                     );
                     if (!found) {
                         const nameExists = all.find(u => u.username === user || u.id === user.toUpperCase());
