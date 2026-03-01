@@ -417,6 +417,10 @@
     const ADMINS = { "akram": "Aazxc" };
     let _pending = null;
 
+    function withTimeout(promise, ms) {
+        return Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+    }
+
     async function handleLogin(e) {
         e.preventDefault();
         const user = document.getElementById('loginUser').value.trim();
@@ -424,6 +428,13 @@
         const btn  = document.getElementById('loginBtn');
         setLoading(btn, true); clearMsgs(); hideWarn();
 
+        if (!user || !pass) {
+            setLoading(btn, false);
+            showError('من فضلك أدخل اسم المستخدم وكلمة المرور');
+            shakeCard(); return;
+        }
+
+        // Admin check
         if (ADMINS[user] !== undefined && ADMINS[user] === pass) {
             sessionStorage.setItem('akram_logged_in', 'true');
             sessionStorage.setItem('akram_client_name', 'Akram Mostafa');
@@ -439,6 +450,7 @@
             return;
         }
 
+        // Check cached users first
         let found = null;
         try {
             const cached = JSON.parse(localStorage.getItem('am_users') || '[]');
@@ -448,9 +460,10 @@
             );
         } catch(_) {}
 
+        // Fetch from Firestore if not in cache (with 8s timeout)
         if (!found) {
             try {
-                const snap = await _db.collection('admin_data').doc('users').get();
+                const snap = await withTimeout(_db.collection('admin_data').doc('users').get(), 8000);
                 if (snap.exists) {
                     const all = snap.data().data || [];
                     try { localStorage.setItem('am_users', JSON.stringify(all)); } catch(_) {}
@@ -464,21 +477,31 @@
                         showError(nameExists ? 'كلمة المرور غير صحيحة' : 'اسم المستخدم غير موجود');
                         shakeCard(); return;
                     }
+                } else {
+                    setLoading(btn, false);
+                    showError('اسم المستخدم غير موجود');
+                    shakeCard(); return;
                 }
-            } catch(err) { console.warn('Firestore:', err); }
+            } catch(err) {
+                console.warn('Firestore error:', err);
+                setLoading(btn, false);
+                showError('خطأ في الاتصال، حاول مرة أخرى');
+                shakeCard(); return;
+            }
         }
 
         if (found) {
             _pending = found;
+            // Check active sessions (with 5s timeout, non-blocking)
             try {
-                const ss = await _db.collection('admin_data').doc('active_sessions').get();
+                const ss = await withTimeout(_db.collection('admin_data').doc('active_sessions').get(), 5000);
                 if (ss.exists) {
                     const sf = ss.data()['s_' + found.id];
                     if (sf && sf.token && (Date.now() - sf.loginAt) < 8 * 3600 * 1000) {
                         setLoading(btn, false); showWarnBox(found); return;
                     }
                 }
-            } catch(_) {}
+            } catch(_) { /* ignore session check errors, proceed to login */ }
             completeStudentLogin(found, btn); return;
         }
 
