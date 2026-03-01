@@ -1,20 +1,6 @@
 {
   "version": 2,
   "name": "akram-mostafa-website",
-  "rewrites": [
-    {
-      "source": "/linkcall",
-      "destination": "/linkcall/login.html"
-    },
-    {
-      "source": "/linkcall/",
-      "destination": "/linkcall/login.html"
-    },
-    {
-      "source": "/linkcall/index.html",
-      "destination": "/linkcall/login.html"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -58,15 +44,6 @@
         }
       ]
     }
-  ],
-  "routes": [
-    {
-      "src": "/linkcall",
-      "dest": "/linkcall/login.html"
-    },
-    {
-      "src": "/linkcall/",
-      "dest": "/linkcall/login.html"
-    }
   ]
 }
+
