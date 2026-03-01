@@ -5,10 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لوحة الإدارة | Akram Mostafa</title>
 
-<!-- 🔒 MAXIMUM SECURITY PROTECTION (15 LAYERS) - MUST BE FIRST -->
-<script src="../js/advanced-security.js"></script>
-<script src="../js/security-protection.js" defer></script>
-
 <link rel="icon" type="image/png" href="../images/akram.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -1182,7 +1178,7 @@ function doAdminLogin(){
     localStorage.setItem('am_admin_auth','1');
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminApp').style.display='block';
-    initApp();
+    try { initApp(); } catch(e) { console.error('initApp error:', e); }
   } else {
     err.classList.add('show');
     const box=document.querySelector('.login-box');
@@ -1204,7 +1200,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(localStorage.getItem('am_admin_auth')==='1'){
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminApp').style.display='block';
-    initApp();
+    try { initApp(); } catch(e) { console.error('initApp error:', e); }
   }
 });
 
