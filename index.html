@@ -713,13 +713,7 @@
         renderAppsHome();
         // ===== END APPS SECTION =====
 
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
         const navbar = document.getElementById('navbar');
-        if(navToggle) navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
