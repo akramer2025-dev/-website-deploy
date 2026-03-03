@@ -44,6 +44,9 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/akram-mostafa", "destination": "/akram-mostafa.html" }
   ]
 }
 

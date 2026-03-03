@@ -39,87 +39,140 @@
     <meta name="google-site-verification" content="tugpHRsAGEcy0Shw_R2MDIhCvMjn2evJUenpUMgcyfc" />
     
     <!-- Schema.org JSON-LD Structured Data -->
+    <!-- 1. Person (Knowledge Panel) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
+      "@id": "https://www.akrammostafa.com/#person",
       "name": "أكرم مصطفى",
-      "alternateName": "Akram Mostafa",
+      "alternateName": ["Akram Mostafa", "اكرم مصطفى", "Akram M."],
       "url": "https://www.akrammostafa.com",
-      "image": "https://www.akrammostafa.com/images/Screenshot_1.png",
-      "jobTitle": "خبير التسويق الإلكتروني والسوشيال ميديا",
-      "description": "خبير تسويق إلكتروني متخصص في إدارة حملات السوشيال ميديا والإعلانات الممولة على فيسبوك وانستجرام وتيك توك وسناب شات",
-      "sameAs": [
-        "https://www.facebook.com/akrammostafa",
-        "https://www.instagram.com/akrammostafa",
-        "https://www.linkedin.com/in/akrammostafa"
-      ],
-      "knowsAbout": [
-        "التسويق الإلكتروني",
-        "السوشيال ميديا",
-        "إعلانات فيسبوك",
-        "إعلانات انستجرام",
-        "تيك توك",
-        "سناب شات",
-        "استراتيجيات التسويق الرقمي"
-      ]
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "أكرم مصطفى - خدمات التسويق الإلكتروني",
-      "image": "https://www.akrammostafa.com/images/Screenshot_1.png",
-      "@id": "https://www.akrammostafa.com",
-      "url": "https://www.akrammostafa.com",
-      "telephone": "+201234567890",
-      "priceRange": "$$",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://www.akrammostafa.com/images/1772173627537.png",
+        "width": 400,
+        "height": 400
+      },
+      "jobTitle": "خبير التسويق الإلكتروني ومطوّر التطبيقات",
+      "description": "أكرم مصطفى خبير تسويق رقمي ومطوّر تطبيقات مصري، متخصص في إدارة حملات السوشيال ميديا والإعلانات الممولة على فيسبوك وانستجرام وتيك توك وسناب شات، ومؤسس منصة Link Call وعدد من التطبيقات البرمجية.",
+      "nationality": { "@type": "Country", "name": "Egypt" },
+      "knowsLanguage": ["ar", "en"],
+      "gender": "Male",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "EG",
-        "addressLocality": "Egypt"
+        "addressLocality": "Cairo"
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 30.0444,
-        "longitude": 31.2357
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday"
-        ],
-        "opens": "09:00",
-        "closes": "23:00"
-      },
+      "knowsAbout": [
+        "التسويق الإلكتروني", "السوشيال ميديا", "إعلانات فيسبوك",
+        "إعلانات انستجرام", "تيك توك", "سناب شات",
+        "استراتيجيات التسويق الرقمي", "تطوير التطبيقات", "برمجة الويب",
+        "نظم إدارة الفنادق", "أنظمة CRM", "منصات الكول سنتر"
+      ],
       "sameAs": [
         "https://www.facebook.com/akrammostafa",
-        "https://www.instagram.com/akrammostafa"
+        "https://www.instagram.com/akrammostafa",
+        "https://www.linkedin.com/in/akrammostafa",
+        "https://www.youtube.com/@akrammostafa",
+        "https://twitter.com/akrammostafa",
+        "https://www.tiktok.com/@akrammostafa",
+        "https://www.akrammostafa.com/akram-mostafa"
       ],
-      "description": "خدمات تسويق إلكتروني احترافية - كورسات تدريبية - استشارات تسويقية - إدارة حملات إعلانية"
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "خدمات ودورات أكرم مصطفى",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Course", "name": "كورس إعلانات فيسبوك" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Course", "name": "كورس إعلانات انستجرام" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Course", "name": "كورس تيك توك" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "استشارات تسويق رقمي" } }
+        ]
+      },
+      "mainEntityOfPage": "https://www.akrammostafa.com/akram-mostafa"
     }
     </script>
+    <!-- 2. WebSite -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": "https://www.akrammostafa.com/#website",
       "name": "أكرم مصطفى",
       "url": "https://www.akrammostafa.com",
-      "description": "موقع أكرم مصطفى - خبير التسويق الإلكتروني والسوشيال ميديا",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.akrammostafa.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
+      "description": "موقع أكرم مصطفى - خبير التسويق الإلكتروني ومطوّر التطبيقات",
+      "inLanguage": "ar",
+      "publisher": { "@id": "https://www.akrammostafa.com/#person" }
     }
     </script>
+    <!-- 3. FAQPage — يظهر كـ featured snippet في Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "من هو أكرم مصطفى؟",
+          "acceptedAnswer": { "@type": "Answer", "text": "أكرم مصطفى خبير تسويق رقمي ومطوّر تطبيقات مصري، متخصص في إدارة حملات السوشيال ميديا والإعلانات الممولة على فيسبوك، انستجرام، تيك توك وسناب شات. ومؤسس منصة Link Call ومطوّر تطبيقات مثل المضيف سمارت، ريمو ستور، ودينتا سمارت." }
+        },
+        {
+          "@type": "Question",
+          "name": "ما هي خدمات أكرم مصطفى؟",
+          "acceptedAnswer": { "@type": "Answer", "text": "يقدم أكرم مصطفى خدمات التسويق الإلكتروني، إدارة حملات السوشيال ميديا والإعلانات الممولة، كورسات تدريبية في فيسبوك وانستجرام وتيك توك وسناب شات، وتطوير تطبيقات ويب وموبايل متخصصة للفنادق والمتاجر والشركات." }
+        },
+        {
+          "@type": "Question",
+          "name": "كيف أتواصل مع أكرم مصطفى؟",
+          "acceptedAnswer": { "@type": "Answer", "text": "يمكن التواصل مع أكرم مصطفى عبر واتساب على الرقم 01555512778 أو من خلال صفحة التواصل على الموقع www.akrammostafa.com/contact.html" }
+        },
+        {
+          "@type": "Question",
+          "name": "ما هي تطبيقات أكرم مصطفى؟",
+          "acceptedAnswer": { "@type": "Answer", "text": "طوّر أكرم مصطفى عدة تطبيقات منها: المضيف سمارت (إدارة الفنادق والشاليهات)، ريمو ستور (متجر إلكتروني)، Link Call (منصة كول سنتر)، نظام CRM الفنادق، محل ميس ريم، ودينتا سمارت (إدارة عيادات أسنان)." }
+        },
+        {
+          "@type": "Question",
+          "name": "هل أكرم مصطفى يقدم كورسات مجانية؟",
+          "acceptedAnswer": { "@type": "Answer", "text": "نعم، يقدم أكرم مصطفى محاضرة تسويق مجانية متاحة على الموقع على الرابط www.akrammostafa.com/free-course.html" }
+        }
+      ]
+    }
+    </script>
+    <!-- 4. ItemList للكورسات -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "كورسات أكرم مصطفى للتسويق الرقمي",
+      "url": "https://www.akrammostafa.com/courses.html",
+      "numberOfItems": 7,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "item": { "@type": "Course", "name": "كورس إعلانات فيسبوك", "url": "https://www.akrammostafa.com/courses/facebook-ads.html", "provider": { "@id": "https://www.akrammostafa.com/#person" } } },
+        { "@type": "ListItem", "position": 2, "item": { "@type": "Course", "name": "كورس إعلانات انستجرام", "url": "https://www.akrammostafa.com/courses/instagram.html", "provider": { "@id": "https://www.akrammostafa.com/#person" } } },
+        { "@type": "ListItem", "position": 3, "item": { "@type": "Course", "name": "كورس تيك توك", "url": "https://www.akrammostafa.com/courses/tiktok.html", "provider": { "@id": "https://www.akrammostafa.com/#person" } } },
+        { "@type": "ListItem", "position": 4, "item": { "@type": "Course", "name": "كورس سناب شات", "url": "https://www.akrammostafa.com/courses/snapchat.html", "provider": { "@id": "https://www.akrammostafa.com/#person" } } },
+        { "@type": "ListItem", "position": 5, "item": { "@type": "Course", "name": "كورس تويتر/X", "url": "https://www.akrammostafa.com/courses/twitter.html", "provider": { "@id": "https://www.akrammostafa.com/#person" } } },
+        { "@type": "ListItem", "position": 6, "item": { "@type": "Course", "name": "الاستراتيجية التسويقية المتكاملة", "url": "https://www.akrammostafa.com/courses/integrated-strategy.html", "provider": { "@id": "https://www.akrammostafa.com/#person" } } },
+        { "@type": "ListItem", "position": 7, "item": { "@type": "Course", "name": "كورس التسويق بالذكاء الاصطناعي", "url": "https://www.akrammostafa.com/courses/ai-marketing.html", "provider": { "@id": "https://www.akrammostafa.com/#person" } } }
+      ]
+    }
+    </script>
+    <!-- 5. SoftwareApplication لكل تطبيق -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "تطبيقات ومشاريع أكرم مصطفى",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "item": { "@type": "SoftwareApplication", "name": "المضيف سمارت", "url": "https://almodif.net", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "نظام إدارة متكامل للفنادق والشاليهات", "author": { "@id": "https://www.akrammostafa.com/#person" } } },
+        { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "ريمو ستور", "url": "https://www.remostore.net", "applicationCategory": "ShoppingApplication", "operatingSystem": "Web", "description": "متجر إلكتروني احترافي", "author": { "@id": "https://www.akrammostafa.com/#person" } } },
+        { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "Link Call", "url": "https://linkcall.akrammostafa.com", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "منصة كول سنتر ذكية لإدارة المكالمات", "author": { "@id": "https://www.akrammostafa.com/#person" } } },
+        { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "Denta Smart", "url": "https://dentasmart-app.web.app", "applicationCategory": "MedicalApplication", "operatingSystem": "Web", "description": "نظام إدارة عيادات أسنان ذكي", "author": { "@id": "https://www.akrammostafa.com/#person" } } }
+      ]
+    }
+    </script>
+    
     
     <!-- Google Analytics Placeholder (Replace G-XXXXXXXXXX with your actual ID) -->
     <!--
