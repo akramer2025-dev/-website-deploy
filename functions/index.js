@@ -148,5 +148,69 @@ app.get('/api/health', (req, res) => {
     });
 });
 
+// ==================== Fawry دفع ====================
+app.post('/api/fawry/pay', async (req, res) => {
+    const MERCHANT = process.env.FAWRY_MERCHANT_CODE;
+    const KEY      = process.env.FAWRY_SECURE_KEY;
+    const IS_PROD  = process.env.FAWRY_ENV === 'production';
+
+    if (!MERCHANT || !KEY) {
+        return res.status(503).json({ error: 'Fawry لم يتم تفعيله بعد' });
+    }
+
+    const { customerName, customerMobile, amount, appName } = req.body;
+    if (!customerName || !customerMobile || !amount) {
+        return res.status(400).json({ error: 'بيانات ناقصة' });
+    }
+    // clean phone: remove leading 0, keep 11 digits
+    const mobile = customerMobile.replace(/[^0-9]/g, '').replace(/^0/, '');
+    if (mobile.length < 10) return res.status(400).json({ error: 'رقم المحفظة غير صحيح' });
+
+    const crypto     = require('crypto');
+    const orderId    = 'ORD-' + Date.now();
+    const profileId  = 'CUST-' + mobile;
+    const itemId     = (appName || 'APP').replace(/\s/g, '-').substring(0, 20);
+    const price      = parseFloat(amount).toFixed(2);
+
+    // Fawry signature: merchantCode+customerProfileId+customerMobile+merchantRefNum+(itemId+qty+price)+secureKey
+    const sigStr     = MERCHANT + profileId + mobile + orderId + itemId + '1' + price + KEY;
+    const signature  = crypto.createHash('sha256').update(sigStr).digest('hex');
+
+    const payload = {
+        merchantCode:       MERCHANT,
+        merchantRefNum:     orderId,
+        customerProfileId:  profileId,
+        customerName:       customerName,
+        customerMobile:     mobile,
+        paymentMethod:      'MWALLET',
+        amount:             price,
+        currencyCode:       'EGP',
+        description:        `شراء: ${appName || 'app'}`,
+        signature,
+        chargeItems: [{
+            itemId,
+            description: appName || 'app',
+            price,
+            quantity: 1
+        }]
+    };
+
+    const BASE = IS_PROD
+        ? 'https://www.atfawry.com'
+        : 'https://atfawry.fawrystaging.com';
+
+    try {
+        const resp = await fetch(`${BASE}/ECommerceWeb/Fawry/payments/charge`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await resp.json();
+        res.json(data);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
 // Export Express app as Firebase Function
 exports.api = functions.https.onRequest(app);

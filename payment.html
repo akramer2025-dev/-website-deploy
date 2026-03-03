@@ -132,7 +132,7 @@
     <div class="card-body">
 
       <!-- METHOD SELECTOR -->
-      <div class="method-selector">
+      <div class="method-selector" style="grid-template-columns:repeat(3,1fr);">
         <div class="method-tab active" id="tab-wepay" onclick="switchMethod('wepay')">
           <div class="method-tab-icon">💜</div>
           <div class="method-tab-label">WePay</div>
@@ -142,6 +142,11 @@
           <div class="method-tab-icon">📱</div>
           <div class="method-tab-label">محفظة إلكترونية</div>
           <div class="method-tab-sub">فودافون / أورنج / اتصالات</div>
+        </div>
+        <div class="method-tab" id="tab-fawry" onclick="switchMethod('fawry')">
+          <div class="method-tab-icon">🟡</div>
+          <div class="method-tab-label">Fawry Pay</div>
+          <div class="method-tab-sub">دفع أونلاين</div>
         </div>
       </div>
 
@@ -179,6 +184,44 @@
         <p class="ewallet-desc">"حوّل المبلغ المطلوب على الرقم ده بواسطة محفظتك الإلكترونية ثم ارفع صورة الإيصال"</p>
       </div>
 
+      <!-- FAWRY BOX -->
+      <div id="box-fawry" style="display:none;">
+        <div class="ewallet-box" style="background:linear-gradient(135deg,rgba(247,147,30,0.08),rgba(255,200,0,0.05));border-color:rgba(247,147,30,0.35);">
+          <div class="ewallet-header">
+            <div class="ewallet-title" style="color:#f7931e;">
+              <span style="width:11px;height:11px;background:#f7931e;border-radius:50%;display:inline-block;margin-left:6px;"></span>
+              Fawry Pay
+            </div>
+            <div style="font-size:.72rem;color:#f7931e;font-weight:700;background:rgba(247,147,30,0.12);padding:3px 10px;border-radius:20px;border:1px solid rgba(247,147,30,0.3);">OTP على محفظتك</div>
+          </div>
+          <!-- Not configured yet -->
+          <div id="fawry-pending" style="text-align:center;padding:20px 0;">
+            <div style="font-size:2.2rem;margin-bottom:10px;">⏳</div>
+            <p style="color:#f7931e;font-weight:800;font-size:.92rem;margin-bottom:6px;">سيتم التفعيل قريباً</p>
+            <p style="color:#6b82a8;font-size:.78rem;line-height:1.65;">جاري استكمال تسجيل حساب Fawry التاجر.<br>في الوقت ده استخدم إحدى طرق الدفع الأخرى.</p>
+          </div>
+          <!-- Form (activated after credentials set) -->
+          <div id="fawry-form" style="display:none;">
+            <div style="margin-bottom:12px;">
+              <label style="font-size:.78rem;color:#8fa5c4;font-weight:700;display:block;margin-bottom:5px;">اسمك الكامل</label>
+              <input id="fawry-name" type="text" placeholder="مثال: أحمد محمد" style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.88rem;box-sizing:border-box;">
+            </div>
+            <div style="margin-bottom:12px;">
+              <label style="font-size:.78rem;color:#8fa5c4;font-weight:700;display:block;margin-bottom:5px;">رقم محفظتك (فودافون/أورنج/اتصالات)</label>
+              <input id="fawry-mobile" type="tel" placeholder="010xxxxxxxx" dir="ltr" style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.88rem;box-sizing:border-box;">
+            </div>
+            <div style="margin-bottom:16px;">
+              <label style="font-size:.78rem;color:#8fa5c4;font-weight:700;display:block;margin-bottom:5px;">المبلغ (ج.م)</label>
+              <input id="fawry-amount" type="number" placeholder="مثال: 5000" min="1" style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.88rem;box-sizing:border-box;">
+            </div>
+            <button onclick="submitFawryPay()" style="width:100%;padding:13px;background:linear-gradient(135deg,#f7931e,#f5a623);border:none;border-radius:12px;color:#fff;font-size:.95rem;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif;">
+              <i class="fas fa-bolt"></i> ادفع دلوقتي
+            </button>
+            <p id="fawry-msg" style="margin-top:10px;text-align:center;font-size:.8rem;color:#8fa5c4;min-height:20px;"></p>
+          </div>
+        </div>
+      </div>
+
       <!-- STEPS -->
       <div class="steps" id="steps-wepay">
         <div class="step">
@@ -209,7 +252,20 @@
         </div>
       </div>
 
-      <!-- UPLOAD ZONE -->
+      <div class="steps" id="steps-fawry" style="display:none;">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-txt">أدخل اسمك ورقم محفظتك والمبلغ أدناه</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-txt">اضغط <strong>"ادفع دلوقتي"</strong> — هيجيك <strong>OTP</strong> على محفظتك</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-txt">أدخل OTP في تطبيق محفظتك لتأكيد الدفع تلقائياً</div>
+        </div>
+      </div>
       <div id="mainForm">
         <label class="upload-label"><i class="fas fa-image" style="color:#e94e77;margin-left:5px;"></i> ارفع صورة إيصال التحويل</label>
         <div class="upload-zone" id="uploadZone">
@@ -253,18 +309,52 @@
   let activeMethod = 'wepay';
   // تفعيل tab المحفظة تلقائياً لو جاء من زر الشراء
   if(params.get('method') === 'ewallet') switchMethod('ewallet');
+  if(params.get('method') === 'fawry')   switchMethod('fawry');
 
   function switchMethod(method){
     activeMethod = method;
-    // tabs
-    document.getElementById('tab-wepay').classList.toggle('active', method==='wepay');
-    document.getElementById('tab-ewallet').classList.toggle('active', method==='ewallet');
-    // boxes
-    document.getElementById('box-wepay').style.display   = method==='wepay'    ? '' : 'none';
-    document.getElementById('box-ewallet').style.display = method==='ewallet'  ? '' : 'none';
-    // steps
-    document.getElementById('steps-wepay').style.display   = method==='wepay'   ? '' : 'none';
-    document.getElementById('steps-ewallet').style.display = method==='ewallet' ? '' : 'none';
+    ['wepay','ewallet','fawry'].forEach(m=>{
+      document.getElementById('tab-'+m).classList.toggle('active', m===method);
+    });
+    document.getElementById('box-wepay').style.display    = method==='wepay'   ? '' : 'none';
+    document.getElementById('box-ewallet').style.display  = method==='ewallet' ? '' : 'none';
+    document.getElementById('box-fawry').style.display    = method==='fawry'   ? '' : 'none';
+    document.getElementById('steps-wepay').style.display  = method==='wepay'   ? '' : 'none';
+    document.getElementById('steps-ewallet').style.display= method==='ewallet' ? '' : 'none';
+    document.getElementById('steps-fawry').style.display  = method==='fawry'   ? '' : 'none';
+    // show/hide main upload form
+    document.getElementById('mainForm').style.display = method==='fawry' ? 'none' : '';
+  }
+
+  // Fawry API endpoint (Firebase Function)
+  const FAWRY_API = 'https://us-central1-akramplatform-2c6be.cloudfunctions.net/api/fawry/pay';
+
+  async function submitFawryPay(){
+    const name   = document.getElementById('fawry-name').value.trim();
+    const mobile = document.getElementById('fawry-mobile').value.trim();
+    const amount = document.getElementById('fawry-amount').value.trim();
+    const msg    = document.getElementById('fawry-msg');
+    if(!name || !mobile || !amount){ msg.textContent = 'يرجى تعبئة جميع الحقول'; msg.style.color='#f87171'; return; }
+    msg.textContent = 'جاري إرسال الطلب...';
+    msg.style.color = '#8fa5c4';
+    try{
+      const resp = await fetch(FAWRY_API, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ customerName:name, customerMobile:mobile, amount, appName })
+      });
+      const data = await resp.json();
+      if(!resp.ok || data.error){
+        msg.textContent = data.error || 'حدث خطأ، تأكد من بياناتك وحاول تاني';
+        msg.style.color = '#f87171';
+      } else {
+        msg.innerHTML = '<span style="color:#4ade80">✓ تم إرسال الطلب! تحقق من تطبيق محفظتك لإدخال ال**OTP**</span>';
+        setTimeout(()=>{ document.getElementById('mainForm').style.display='none'; document.getElementById('successBox').style.display='block'; }, 3000);
+      }
+    }catch(e){
+      msg.textContent = 'تعذر الاتصال - تأكد من الإنترنت';
+      msg.style.color = '#f87171';
+    }
   }
 
   // نسخ الرقم
