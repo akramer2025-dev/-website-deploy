@@ -793,7 +793,7 @@
             const tagsHtml  = app.tags.map(t=>`<span class="apc-tag">${t}</span>`).join('');
             const priceHtml = price
               ? `<div class="apc-price-row"><span class="apc-price-val" style="background:${app.color};-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${Number(price).toLocaleString('ar-EG')}</span><span class="apc-price-cur">ج.م</span></div>`
-              : `<div class="apc-price-row"><span class="apc-price-contact">تواصل للسعر</span></div>`;
+              : `<div class="apc-price-row"><a href="payment.html?app=${encodeURIComponent(app.name)}&method=ewallet" class="apc-btn-buy" style="background:${app.color};display:inline-flex;padding:9px 18px;text-decoration:none;"><i class="fas fa-shopping-cart"></i> شراء</a></div>`;
 
             return `<div class="app-pro-card" data-aos="fade-up" data-aos-delay="${i*70}">
               ${galleryHtml}

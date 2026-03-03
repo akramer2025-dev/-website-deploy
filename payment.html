@@ -251,6 +251,8 @@
 
   // طريقة الدفع المختارة
   let activeMethod = 'wepay';
+  // تفعيل tab المحفظة تلقائياً لو جاء من زر الشراء
+  if(params.get('method') === 'ewallet') switchMethod('ewallet');
 
   function switchMethod(method){
     activeMethod = method;
