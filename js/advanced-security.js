@@ -26,32 +26,27 @@
         }
     }, true);
 
-    // كشف فتح DevTools المتقدم
-    let devtoolsOpen = false;
-    const devtoolsChecker = function() {
-        const threshold = 160;
-        const widthDiff = window.outerWidth - window.innerWidth;
-        const heightDiff = window.outerHeight - window.innerHeight;
-        
-        if (widthDiff > threshold || heightDiff > threshold) {
-            if (!devtoolsOpen) {
-                devtoolsOpen = true;
-                document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-family:system-ui;text-align:center;flex-direction:column;gap:20px"><div style="font-size:80px">⚠️</div><h1 style="font-size:36px;margin:0">تحذير أمني!</h1><p style="font-size:18px;opacity:0.9">تم اكتشاف محاولة وصول غير مصرح بها<br>This action has been logged and reported.</p></div>';
-                navigator.sendBeacon('/api/security-alert', JSON.stringify({
-                    type: 'devtools_detected',
-                    timestamp: new Date().toISOString(),
-                    userAgent: navigator.userAgent
-                }));
+    // كشف فتح DevTools (desktop only - safe check)
+    if (!/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+        let devtoolsOpen = false;
+        const devtoolsChecker = function() {
+            const threshold = 200;
+            const widthDiff = window.outerWidth - window.innerWidth;
+            const heightDiff = window.outerHeight - window.innerHeight;
+            if (widthDiff > threshold || heightDiff > threshold) {
+                if (!devtoolsOpen) {
+                    devtoolsOpen = true;
+                    document.body.style.opacity = '0';
+                }
+            } else {
+                if (devtoolsOpen) {
+                    devtoolsOpen = false;
+                    document.body.style.opacity = '1';
+                }
             }
-        }
-    };
-    
-    setInterval(devtoolsChecker, 500);
-
-    // كشف Debugger Statements
-    setInterval(function() {
-        debugger;
-    }, 100);
+        };
+        setInterval(devtoolsChecker, 1000);
+    }
 
     // ═══════════════════════════════════════════════════════════
     // 2️⃣ DISABLE RIGHT CLICK & CONTEXT MENU
