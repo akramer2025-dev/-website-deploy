@@ -24,7 +24,7 @@
 
   /* ------------------- 0. CONFIG ------------------- */
 
-  var PIXEL_ID = 'PIXEL_ID_HERE';
+  var PIXEL_ID = '4345157159075105';
 
   var CATALOG = {
     /* apps */
