@@ -15,5 +15,11 @@ Disallow: /linkcall/
 User-agent: Googlebot
 Allow: /
 
+# Allow Meta / Facebook crawler (for Catalog feed + Pixel)
+User-agent: facebookexternalhit
+Allow: /
+User-agent: Facebot
+Allow: /
+
 # Crawl-delay for polite crawling
 Crawl-delay: 0.5
