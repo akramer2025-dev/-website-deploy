@@ -260,7 +260,8 @@ button{cursor:pointer;}
 .product-img-zone.dragover{border-color:var(--pink);background:rgba(233,78,119,0.1);transform:scale(1.02);}
 .product-img-zone .upload-icon{font-size:2rem;color:var(--muted);opacity:.6;}
 .product-img-zone .upload-text{font-size:.8rem;color:var(--muted);text-align:center;padding:0 10px;}
-.product-img-zone .product-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.img-upload-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;width:100%;height:100%;}
+.product-img-zone .product-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;}
 .product-img-zone .img-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;gap:8px;}
 .product-img-zone:hover .img-overlay{display:flex;}
 .img-action-btn{width:36px;height:36px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:.9rem;cursor:pointer;transition:.2s;}
@@ -1446,23 +1447,24 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
     </div>
     <div class="project-card-body">
       <!-- منطقة رفع صورة الغلاف -->
-      <div class="product-img-zone ${hasImg?'has-img':''}" id="imgZone-${key}" 
-           onclick="triggerImageUpload('${key}')"
+      <input type="file" id="fileInput-${key}" accept="image/*" style="display:none" onchange="handleFileSelect(event,'${key}','${type}')">
+      <div class="product-img-zone ${hasImg?'has-img':''}" id="imgZone-${key}"
            ondragover="handleDragOver(event,'${key}')" 
            ondragleave="handleDragLeave(event,'${key}')"
            ondrop="handleDrop(event,'${key}')">
         ${hasImg ? `
           <img src="${mainImg}" class="product-preview" id="preview-${key}" onerror="this.style.display='none'">
           <div class="img-overlay">
-            <button class="img-action-btn view" onclick="event.stopPropagation();openLb('${mainImg}')" title="عرض"><i class="fas fa-eye"></i></button>
-            <button class="img-action-btn change" onclick="event.stopPropagation();triggerImageUpload('${key}')" title="تغيير"><i class="fas fa-sync-alt"></i></button>
-            <button class="img-action-btn delete" onclick="event.stopPropagation();deleteMainImage('${key}','${type}')" title="حذف"><i class="fas fa-trash"></i></button>
+            <button class="img-action-btn view" onclick="openLb('${mainImg}')" title="عرض"><i class="fas fa-eye"></i></button>
+            <label class="img-action-btn change" for="fileInput-${key}" title="تغيير"><i class="fas fa-sync-alt"></i></label>
+            <button class="img-action-btn delete" onclick="deleteMainImage('${key}','${type}')" title="حذف"><i class="fas fa-trash"></i></button>
           </div>
         ` : `
-          <i class="fas fa-cloud-upload-alt upload-icon"></i>
-          <span class="upload-text">اسحب صورة هنا أو انقر للاختيار</span>
+          <label for="fileInput-${key}" class="img-upload-label">
+            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+            <span class="upload-text">اسحب صورة هنا أو انقر للاختيار</span>
+          </label>
         `}
-        <input type="file" id="fileInput-${key}" accept="image/*" style="display:none" onchange="handleFileSelect(event,'${key}','${type}')">
       </div>
       
       <!-- معرض الصور الإضافية -->
@@ -1583,12 +1585,11 @@ function processImageFile(file, key){
   
   // ضغط الصورة أولاً
   compressImage(file, 800, 0.7).then(compressedBase64 => {
-    // Preview محلي
-    const card = document.querySelector(`[data-key="${key}"]`);
-    if(card){
-      const img = card.querySelector('.portfolio-card-img');
-      if(img) img.src = compressedBase64;
-    }
+    // تحديث الـ preview محلياً فوراً
+    const previewEl = document.getElementById('preview-'+key);
+    if(previewEl){ previewEl.src = compressedBase64; previewEl.style.display=''; }
+    const zone = document.getElementById('imgZone-'+key);
+    if(zone) zone.classList.add('has-img');
     
     // حفظ الصورة المضغوطة في Firestore
     saveProductImage(key, compressedBase64);
