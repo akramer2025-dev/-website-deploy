@@ -13,14 +13,45 @@
     // 1️⃣ ANTI-DEBUGGING: منع فتح Developer Tools المتقدم
     // ═══════════════════════════════════════════════════════════
     
-    // [DISABLED FOR DEBUG] منع جميع اختصارات Developer Tools
-    // document.addEventListener('keydown', function(e) { ... }, true);
+    // منع جميع اختصارات Developer Tools
+    document.addEventListener('keydown', function(e) {
+        // F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S
+        if (e.keyCode === 123 || 
+            (e.ctrlKey && e.shiftKey && [73, 74, 67].includes(e.keyCode)) ||
+            (e.ctrlKey && [85, 83].includes(e.keyCode)) ||
+            (e.metaKey && e.altKey && [73, 74, 67].includes(e.keyCode))) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+    }, true);
 
-    // [DISABLED FOR DEBUG] كشف فتح DevTools المتقدم
-    // setInterval(devtoolsChecker, 500);
+    // كشف فتح DevTools المتقدم
+    let devtoolsOpen = false;
+    const devtoolsChecker = function() {
+        const threshold = 160;
+        const widthDiff = window.outerWidth - window.innerWidth;
+        const heightDiff = window.outerHeight - window.innerHeight;
+        
+        if (widthDiff > threshold || heightDiff > threshold) {
+            if (!devtoolsOpen) {
+                devtoolsOpen = true;
+                document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-family:system-ui;text-align:center;flex-direction:column;gap:20px"><div style="font-size:80px">⚠️</div><h1 style="font-size:36px;margin:0">تحذير أمني!</h1><p style="font-size:18px;opacity:0.9">تم اكتشاف محاولة وصول غير مصرح بها<br>This action has been logged and reported.</p></div>';
+                navigator.sendBeacon('/api/security-alert', JSON.stringify({
+                    type: 'devtools_detected',
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent
+                }));
+            }
+        }
+    };
+    
+    setInterval(devtoolsChecker, 500);
 
-    // [DISABLED FOR DEBUG] كشف Debugger Statements
-    // setInterval(function() { debugger; }, 100);
+    // كشف Debugger Statements
+    setInterval(function() {
+        debugger;
+    }, 100);
 
     // ═══════════════════════════════════════════════════════════
     // 2️⃣ DISABLE RIGHT CLICK & CONTEXT MENU

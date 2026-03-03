@@ -14,8 +14,11 @@
     
     // منع اختصارات لوحة المفاتيح
     document.addEventListener('keydown', function(e) {
-        // F12 [DISABLED FOR DEBUG]
-        // if (e.keyCode === 123) { e.preventDefault(); return false; }
+        // F12
+        if (e.keyCode === 123) {
+            e.preventDefault();
+            return false;
+        }
         // Ctrl+Shift+I (Inspector)
         if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
             e.preventDefault();
