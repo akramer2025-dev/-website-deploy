@@ -26,6 +26,17 @@
     }).join('');
   }
 
+  function renderScreenshots(imgs, gridEl){
+    if(!imgs || !imgs.length || !gridEl) return;
+    gridEl.innerHTML = imgs.map(function(img,i){
+      return '<div class="screenshot-card" data-aos="zoom-in" data-aos-delay="'+(i*80)+'">'
+        +'<img src="'+img+'" alt="صورة '+(i+1)+'" loading="lazy">'
+        +'<div class="screenshot-title">صورة '+(i+1)+'</div>'
+        +'</div>';
+    }).join('');
+    if(typeof AOS !== 'undefined') AOS.refresh();
+  }
+
   /**
    * يُستدعى من صفحة المنتج
    * @param {string} key - مفتاح المنتج مثل 'linkcall'
@@ -34,12 +45,15 @@
   window.loadProductImages = function(key, alt){
     var mainEl = document.getElementById('mainImage');
     var thumbsEl = document.getElementById('thumbnails');
-    if(!mainEl || !thumbsEl) return;
+    var screenshotsEl = document.getElementById('screenshotsGrid');
 
     // عرض فوري من localStorage (cache)
     try{
       var cached = JSON.parse(localStorage.getItem('am_portfolio_imgs')||'{}');
-      if(cached[key] && cached[key].length) renderImgs(cached[key], mainEl, thumbsEl, alt);
+      if(cached[key] && cached[key].length){
+        if(mainEl && thumbsEl) renderImgs(cached[key], mainEl, thumbsEl, alt);
+        renderScreenshots(cached[key], screenshotsEl);
+      }
     }catch(e){}
 
     // تحديث من Firestore (المصدر الحقيقي)
@@ -50,7 +64,8 @@
         // حفّظ في cache
         try{ localStorage.setItem('am_portfolio_imgs', JSON.stringify(data)); }catch(e){}
         var imgs = data[key] || [];
-        renderImgs(imgs, mainEl, thumbsEl, alt);
+        if(mainEl && thumbsEl) renderImgs(imgs, mainEl, thumbsEl, alt);
+        renderScreenshots(imgs, screenshotsEl);
       }).catch(function(e){ console.warn('portfolio-loader:', e); });
     }catch(e){ console.warn('portfolio-loader init:', e); }
   };
