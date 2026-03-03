@@ -44,6 +44,33 @@
     .copy-btn:hover{background:rgba(99,102,241,0.35);color:#fff;}
     .copy-btn.copied{background:rgba(34,197,94,0.2);border-color:rgba(34,197,94,0.35);color:#4ade80;}
 
+    /* METHOD SELECTOR */
+    .method-selector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+    .method-tab{display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px 10px;background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:.25s;position:relative;}
+    .method-tab:hover{border-color:rgba(233,78,119,0.35);background:rgba(233,78,119,0.05);}
+    .method-tab.active{border-color:#e94e77;background:rgba(233,78,119,0.1);}
+    .method-tab.active::after{content:'✓';position:absolute;top:8px;left:10px;width:18px;height:18px;background:#e94e77;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:900;color:#fff;line-height:18px;text-align:center;}
+    .method-tab-icon{font-size:1.5rem;}
+    .method-tab-label{font-size:.78rem;font-weight:800;color:#c0cee0;text-align:center;line-height:1.4;}
+    .method-tab-sub{font-size:.67rem;color:#4b6280;text-align:center;}
+
+    /* EWALLET BOX */
+    .ewallet-box{background:linear-gradient(135deg,rgba(233,78,119,0.08),rgba(247,147,30,0.06));border:1.5px solid rgba(233,78,119,0.3);border-radius:16px;padding:20px 22px;margin-bottom:22px;}
+    .ewallet-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+    .ewallet-title{display:flex;align-items:center;gap:8px;font-size:.92rem;font-weight:800;color:#fff;}
+    .ewallet-dot{width:11px;height:11px;background:#e94e77;border-radius:50%;}
+    .ewallet-logos{display:flex;align-items:center;gap:6px;}
+    .ewallet-logo-badge{padding:3px 9px;border-radius:6px;font-size:.68rem;font-weight:900;color:#fff;letter-spacing:.3px;}
+    .ewallet-logo-badge.orange{background:#FF6600;}
+    .ewallet-logo-badge.etisalat{background:#003366;}
+    .ewallet-logo-badge.vodafone{background:#E60000;}
+    .ewallet-num-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:11px;padding:12px 15px;}
+    .ewallet-num-left{display:flex;align-items:center;gap:8px;}
+    .ewallet-num-flag{font-size:1.2rem;}
+    .ewallet-num-code{font-size:.85rem;color:#8fa5c4;font-weight:700;}
+    .ewallet-num-val{font-size:1.1rem;font-weight:900;color:#fff;letter-spacing:.5px;}
+    .ewallet-desc{font-size:.77rem;color:#6b82a8;margin-top:10px;text-align:center;}
+
     /* STEPS */
     .steps{display:flex;flex-direction:column;gap:12px;margin-bottom:26px;}
     .step{display:flex;align-items:flex-start;gap:12px;}
@@ -104,21 +131,73 @@
     <!-- BODY -->
     <div class="card-body">
 
+      <!-- METHOD SELECTOR -->
+      <div class="method-selector">
+        <div class="method-tab active" id="tab-wepay" onclick="switchMethod('wepay')">
+          <div class="method-tab-icon">💜</div>
+          <div class="method-tab-label">WePay</div>
+          <div class="method-tab-sub">محفظة WePay</div>
+        </div>
+        <div class="method-tab" id="tab-ewallet" onclick="switchMethod('ewallet')">
+          <div class="method-tab-icon">📱</div>
+          <div class="method-tab-label">محفظة إلكترونية</div>
+          <div class="method-tab-sub">فودافون / أورنج / اتصالات</div>
+        </div>
+      </div>
+
       <!-- WEPAY BOX -->
-      <div class="wepay-box">
+      <div class="wepay-box" id="box-wepay">
         <div class="wepay-logo"><i class="fas fa-wallet"></i> &nbsp;WePay محفظة</div>
         <h3>الرجاء إرسال مبلغ التطبيق على محفظة WePay<br>على الرقم التالي:</h3>
         <div class="wepay-number">
           <span class="wepay-num-text">01555512778</span>
-          <button class="copy-btn" onclick="copyNumber(this)"><i class="fas fa-copy"></i> نسخ</button>
+          <button class="copy-btn" id="copyBtnWepay" onclick="copyNumber(this,'01555512778')"><i class="fas fa-copy"></i> نسخ</button>
         </div>
       </div>
 
+      <!-- EWALLET BOX -->
+      <div class="ewallet-box" id="box-ewallet" style="display:none;">
+        <div class="ewallet-header">
+          <div class="ewallet-title">
+            <span class="ewallet-dot"></span>
+            محفظة إلكترونية
+          </div>
+          <div class="ewallet-logos">
+            <span class="ewallet-logo-badge orange">Orange</span>
+            <span class="ewallet-logo-badge etisalat">Etisalat</span>
+            <span class="ewallet-logo-badge vodafone">Vodafone</span>
+          </div>
+        </div>
+        <div class="ewallet-num-row">
+          <div class="ewallet-num-left">
+            <span class="ewallet-num-flag">🇪🇬</span>
+            <span class="ewallet-num-code">+20</span>
+            <span class="ewallet-num-val">01555512778</span>
+          </div>
+          <button class="copy-btn" id="copyBtnEwallet" onclick="copyNumber(this,'01555512778')"><i class="fas fa-copy"></i> نسخ</button>
+        </div>
+        <p class="ewallet-desc">"حوّل المبلغ المطلوب على الرقم ده بواسطة محفظتك الإلكترونية ثم ارفع صورة الإيصال"</p>
+      </div>
+
       <!-- STEPS -->
-      <div class="steps">
+      <div class="steps" id="steps-wepay">
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-txt">افتح تطبيق <strong>WePay</strong> وحوّل المبلغ المطلوب على الرقم <strong>01555512778</strong></div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-txt">خد <strong>screenshot</strong> لإيصال التحويل من التطبيق</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-txt">ارفع صورة الإيصال هنا وابعت — هنتواصل معاك على طول</div>
+        </div>
+      </div>
+      <div class="steps" id="steps-ewallet" style="display:none;">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-txt">افتح تطبيق <strong>Vodafone Cash / Orange Money / Etisalat Cash</strong> وحوّل المبلغ المطلوب على الرقم <strong>01555512778</strong></div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
@@ -170,9 +249,25 @@
   document.getElementById('appNameBadge').textContent = appName;
   document.title = `دفع - ${appName} | Akram Mostafa`;
 
+  // طريقة الدفع المختارة
+  let activeMethod = 'wepay';
+
+  function switchMethod(method){
+    activeMethod = method;
+    // tabs
+    document.getElementById('tab-wepay').classList.toggle('active', method==='wepay');
+    document.getElementById('tab-ewallet').classList.toggle('active', method==='ewallet');
+    // boxes
+    document.getElementById('box-wepay').style.display   = method==='wepay'    ? '' : 'none';
+    document.getElementById('box-ewallet').style.display = method==='ewallet'  ? '' : 'none';
+    // steps
+    document.getElementById('steps-wepay').style.display   = method==='wepay'   ? '' : 'none';
+    document.getElementById('steps-ewallet').style.display = method==='ewallet' ? '' : 'none';
+  }
+
   // نسخ الرقم
-  function copyNumber(btn){
-    navigator.clipboard.writeText('01555512778').then(()=>{
+  function copyNumber(btn, num){
+    navigator.clipboard.writeText(num).then(()=>{
       btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
       btn.classList.add('copied');
       setTimeout(()=>{
@@ -206,11 +301,13 @@
 
   // إرسال على واتساب
   function sendToWhatsApp(){
+    const methodLabel = activeMethod === 'ewallet'
+      ? 'محفظة إلكترونية (Vodafone Cash / Orange Money / Etisalat Cash)'
+      : 'محفظة WePay';
     const msg = encodeURIComponent(
-      `السلام عليكم أستاذ أكرم 🙏\n\nأنا بعتلك إيصال التحويل الخاص بـ: ${appName}\n\nالمبلغ اتحول على محفظة WePay رقم 01555512778\n\nهترفق صورة الإيصال في الرسالة الجاي.`
+      `السلام عليكم أستاذ أكرم 🙏\n\nأنا بعتلك إيصال التحويل الخاص بـ: ${appName}\n\nطريقة الدفع: ${methodLabel}\nرقم التحويل: 01555512778\n\nهترفق صورة الإيصال في الرسالة الجاي.`
     );
     window.open(`https://wa.me/201555512778?text=${msg}`, '_blank');
-    // إظهار رسالة النجاح
     document.getElementById('mainForm').style.display = 'none';
     document.getElementById('successBox').style.display = 'block';
   }
