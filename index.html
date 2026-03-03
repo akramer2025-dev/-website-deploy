@@ -381,6 +381,32 @@
         </div>
     </section>
 
+    <!-- ======= صورتي / من أنا ======= -->
+    <section class="about-preview" id="about-preview" style="padding:80px 0;background:#050d1b;">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">من أنا</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">خبير تسويق إلكتروني ومطور تطبيقات - بجمع بين الاتنين في شخص واحد</p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:50px;align-items:center;" data-aos="fade-up">
+                <div>
+                    <h3 style="font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:20px;">مرحباً، أنا <span style="background:linear-gradient(135deg,#e94e77,#f7931e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">أكرم مصطفى</span></h3>
+                    <p style="color:#6b82a8;line-height:2;margin-bottom:20px;">متخصص في التسويق الرقمي والسوشيال ميديا مع خبرة تتعدى 5 سنين في إدارة الحملات الإعلانية وتطوير استراتيجيات تسويقية ناجحة.</p>
+                    <p style="color:#6b82a8;line-height:2;margin-bottom:30px;">بالإضافة لكده، أنا مطور تطبيقات ويب، أقدر أصمم وأطور أنظمة متكاملة تساعد في إدارة الأعمال بكفاءة.</p>
+                    <a href="about.html" class="btn btn-primary">
+                        <i class="fas fa-user"></i> اعرف أكتر
+                        <span class="btn-shine"></span>
+                    </a>
+                </div>
+                <div style="position:relative;">
+                    <img src="images/Screenshot_1.png" alt="أكرم مصطفى" style="width:100%;border-radius:20px;border:1px solid rgba(255,255,255,0.1);">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ======= نهاية صورتي ======= -->
+
     <!-- FREE COURSE PROMO SECTION -->
     <section id="free-course-promo" style="background:linear-gradient(135deg,#07122a 0%,#0b1a35 60%,#07122a 100%);border-top:1px solid rgba(233,78,119,0.18);border-bottom:1px solid rgba(233,78,119,0.18);overflow:hidden;position:relative;">
 
@@ -474,7 +500,7 @@
     </section>
     <!-- END FREE COURSE PROMO SECTION -->
 
-    <!-- APPS SECTION -->
+    <!-- APPS SECTION - البرامج -->
     <section id="apps-home" style="padding:80px 0 60px;background:#09162b;">
       <div class="container">
         <div class="section-header" data-aos="fade-up">
@@ -489,30 +515,6 @@
           </a>
         </div>
       </div>
-    </section>
-
-    <section class="about-preview" id="about-preview" style="padding:80px 0;background:#050d1b;">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">من أنا</h2>
-                <div class="title-underline"></div>
-                <p class="section-description">خبير تسويق إلكتروني ومطور تطبيقات - بجمع بين الاتنين في شخص واحد</p>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:50px;align-items:center;" data-aos="fade-up">
-                <div>
-                    <h3 style="font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:20px;">مرحباً، أنا <span style="background:linear-gradient(135deg,#e94e77,#f7931e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">أكرم مصطفى</span></h3>
-                    <p style="color:#6b82a8;line-height:2;margin-bottom:20px;">متخصص في التسويق الرقمي والسوشيال ميديا مع خبرة تتعدى 5 سنين في إدارة الحملات الإعلانية وتطوير استراتيجيات تسويقية ناجحة.</p>
-                    <p style="color:#6b82a8;line-height:2;margin-bottom:30px;">بالإضافة لكده، أنا مطور تطبيقات ويب، أقدر أصمم وأطور أنظمة متكاملة تساعد في إدارة الأعمال بكفاءة.</p>
-                    <a href="about.html" class="btn btn-primary">
-                        <i class="fas fa-user"></i> اعرف أكتر
-                        <span class="btn-shine"></span>
-                    </a>
-                </div>
-                <div style="position:relative;">
-                    <img src="images/Screenshot_1.png" alt="أكرم مصطفى" style="width:100%;border-radius:20px;border:1px solid rgba(255,255,255,0.1);">
-                </div>
-            </div>
-        </div>
     </section>
 
     <section class="courses" id="courses" style="padding:80px 0;background:#0a0a0a;">
@@ -665,12 +667,12 @@
     <script>
         // ===== APPS SECTION =====
         const APPS = [
-          { key:'almodif',    name:'المضيف سمارت',      icon:'fas fa-hotel',       color:'linear-gradient(135deg,#667eea,#764ba2)', url:'https://almodif.net',              waText:'عايز نظام إدارة زي المضيف سمارت',      desc:'نظام إدارة متكامل للفنادق والشاليهات — حجوزات، وحدات، مدفوعات وتقارير فورية.', tags:['React','Firebase','PWA'] },
-          { key:'remostore',  name:'ريمو ستور',          icon:'fas fa-shopping-bag', color:'linear-gradient(135deg,#a855f7,#6d28d9)', url:'https://www.remostore.net',        waText:'عايز متجر إلكتروني زي ريمو ستور',        desc:'متجر إلكتروني احترافي — كاتالوج، سلة مشتريات، دفع أونلاين وذكاء اصطناعي مدمج.', tags:['e-Commerce','AI','React'] },
-          { key:'hotel-crm',  name:'نظام CRM الفنادق',  icon:'fas fa-building',     color:'linear-gradient(135deg,#10b981,#059669)', url:'#',                              waText:'عايز نظام CRM للفنادق',                  desc:'نظام CRM متكامل لإدارة علاقات العملاء في الفنادق والمنشآت الفندقية.', tags:['CRM','Firebase','واجهة عربية'] },
-          { key:'linkcall',   name:'Link Call',           icon:'fas fa-headset',      color:'linear-gradient(135deg,#3b82f6,#1d4ed8)', url:'#',                              waText:'عايز نظام كول سنتر زي Link Call',        desc:'منصة كول سنتر ذكية لإدارة المكالمات، المحادثات والفرق بكفاءة عالية.', tags:['Call Center','VoIP','Dashboard'] },
-          { key:'missrim',    name:'محل ميس ريم',        icon:'fas fa-store-alt',    color:'linear-gradient(135deg,#f43f5e,#e11d48)', url:'#',                              waText:'عايز موقع متجر محليات زي ميس ريم',       desc:'موقع بيع ملابس وإكسسوارات متكامل مع عروض وأكواد خصم وإدارة مخزون.', tags:['متجر','تصميم','Laravel'] },
-          { key:'dentasmart', name:'Denta Smart',         icon:'fas fa-tooth',        color:'linear-gradient(135deg,#06b6d4,#0284c7)', url:'https://dentasmart-app.web.app/', waText:'عايز نظام عيادات زي دينتا سمارت',        desc:'نظام إدارة عيادات أسنان ذكي — سجلات مرضى، مواعيد، فواتير وتقارير طبية.', tags:['عيادات','Firebase','مواعيد'] },
+          { key:'almodif',    name:'المضيف سمارت',      icon:'fas fa-hotel',       color:'linear-gradient(135deg,#667eea,#764ba2)', img:'/images/Screenshot_2.png', url:'https://almodif.net',              waText:'عايز نظام إدارة زي المضيف سمارت',      desc:'نظام إدارة متكامل للفنادق والشاليهات — حجوزات، وحدات، مدفوعات وتقارير فورية.', tags:['React','Firebase','PWA'] },
+          { key:'remostore',  name:'ريمو ستور',          icon:'fas fa-shopping-bag', color:'linear-gradient(135deg,#a855f7,#6d28d9)', img:'/images/Screenshot_3.png', url:'https://www.remostore.net',        waText:'عايز متجر إلكتروني زي ريمو ستور',        desc:'متجر إلكتروني احترافي — كاتالوج، سلة مشتريات، دفع أونلاين وذكاء اصطناعي مدمج.', tags:['e-Commerce','AI','React'] },
+          { key:'hotel-crm',  name:'نظام CRM الفنادق',  icon:'fas fa-building',     color:'linear-gradient(135deg,#10b981,#059669)', img:'/images/Screenshot_4.png', url:'#',                              waText:'عايز نظام CRM للفنادق',                  desc:'نظام CRM متكامل لإدارة علاقات العملاء في الفنادق والمنشآت الفندقية.', tags:['CRM','Firebase','واجهة عربية'] },
+          { key:'linkcall',   name:'Link Call',           icon:'fas fa-headset',      color:'linear-gradient(135deg,#3b82f6,#1d4ed8)', img:'/images/screenshots/dashboard.png', url:'https://linkcall.akrammostafa.com',waText:'عايز نظام كول سنتر زي Link Call',        desc:'منصة كول سنتر ذكية لإدارة المكالمات، المحادثات والفرق بكفاءة عالية.', tags:['Call Center','VoIP','Dashboard'] },
+          { key:'missrim',    name:'محل ميس ريم',        icon:'fas fa-store-alt',    color:'linear-gradient(135deg,#f43f5e,#e11d48)', img:'/images/Screenshot_5.png', url:'#',                              waText:'عايز موقع متجر محليات زي ميس ريم',       desc:'موقع بيع ملابس وإكسسوارات متكامل مع عروض وأكواد خصم وإدارة مخزون.', tags:['متجر','تصميم','Laravel'] },
+          { key:'dentasmart', name:'Denta Smart',         icon:'fas fa-tooth',        color:'linear-gradient(135deg,#06b6d4,#0284c7)', img:'/images/Screenshot_6.png', url:'https://dentasmart-app.web.app/', waText:'عايز نظام عيادات زي دينتا سمارت',        desc:'نظام إدارة عيادات أسنان ذكي — سجلات مرضى، مواعيد، فواتير وتقارير طبية.', tags:['عيادات','Firebase','مواعيد'] },
         ];
         const APP_PRICES_KEY = 'am_app_prices';
         function getAppPrices(){ try{ return JSON.parse(localStorage.getItem(APP_PRICES_KEY))||{}; }catch(e){ return {}; } }
@@ -688,17 +690,27 @@
                  </div>`
               : `<div style="margin-bottom:16px;"><span style="display:inline-block;padding:4px 14px;background:rgba(247,147,30,0.12);border:1px solid rgba(247,147,30,0.3);border-radius:20px;font-size:.8rem;font-weight:700;color:#f7931e;">تواصل للسعر</span></div>`;
             const tagsHtml = app.tags.map(t=>`<span style="padding:3px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;font-size:.72rem;color:#6b82a8;">${t}</span>`).join('');
-            return `<div data-aos="fade-up" data-aos-delay="${i*80}" style="background:#0d1e38;border:1px solid rgba(255,255,255,0.07);border-radius:20px;overflow:hidden;transition:.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.borderColor='rgba(233,78,119,0.35)';" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,255,255,0.07)';">
+            const imgHtml = app.img ? `
+              <div style="position:relative;height:180px;overflow:hidden;border-radius:12px 12px 0 0;margin:-22px -22px 16px;">
+                <img src="${app.img}" alt="${app.name}" loading="lazy"
+                  style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .4s;"
+                  onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(13,30,56,0.95) 100%);"></div>
+                <div style="position:absolute;bottom:12px;right:14px;display:flex;align-items:center;gap:8px;">
+                  <div style="width:36px;height:36px;border-radius:10px;background:${app.color};display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.4);">
+                    <i class="${app.icon}"></i>
+                  </div>
+                  <span style="font-size:.95rem;font-weight:800;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.6);">${app.name}</span>
+                </div>
+              </div>` : `
               <div style="padding:22px 22px 0;display:flex;align-items:center;gap:14px;margin-bottom:14px;">
-                <div style="width:52px;height:52px;border-radius:14px;background:${app.color};display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;flex-shrink:0;">
-                  <i class="${app.icon}"></i>
-                </div>
-                <div>
-                  <div style="font-size:1.05rem;font-weight:800;color:#fff;">${app.name}</div>
-                  <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;">${tagsHtml}</div>
-                </div>
-              </div>
-              <div style="padding:0 22px 20px;">
+                <div style="width:52px;height:52px;border-radius:14px;background:${app.color};display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;flex-shrink:0;"><i class="${app.icon}"></i></div>
+                <div style="font-size:1.05rem;font-weight:800;color:#fff;">${app.name}</div>
+              </div>`;
+            return `<div data-aos="fade-up" data-aos-delay="${i*80}" style="background:#0d1e38;border:1px solid rgba(255,255,255,0.07);border-radius:20px;overflow:hidden;transition:.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.borderColor='rgba(233,78,119,0.35)';" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,255,255,0.07)';">
+              <div style="padding:22px;">
+                ${imgHtml}
+                <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;">${tagsHtml}</div>
                 <p style="color:#6b82a8;font-size:.88rem;line-height:1.7;margin-bottom:14px;">${app.desc}</p>
                 ${priceHtml}
                 <div style="display:flex;gap:8px;">
