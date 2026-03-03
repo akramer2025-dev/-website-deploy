@@ -1,14 +1,16 @@
 ﻿// ==========================================
 // Initialize AOS (Animate On Scroll)
 // ==========================================
-AOS.init({
-    duration: 700,
-    easing: 'ease-out',
-    once: true,
-    mirror: false,
-    offset: 80,
-    disable: window.innerWidth < 768 ? 'phone' : false
-});
+if (typeof AOS !== 'undefined') {
+    AOS.init({
+        duration: 700,
+        easing: 'ease-out',
+        once: true,
+        mirror: false,
+        offset: 80,
+        disable: window.innerWidth < 768 ? 'phone' : false
+    });
+}
 
 // ==========================================
 // Particles.js Configuration
