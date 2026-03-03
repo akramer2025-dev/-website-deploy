@@ -306,6 +306,13 @@
   document.getElementById('appNameBadge').textContent = appName;
   document.title = `دفع - ${appName} | Akram Mostafa`;
 
+  // Purchase event عند نجاح الدفع
+  function showSuccess(){
+    document.getElementById('mainForm').style.display='none';
+    document.getElementById('successBox').style.display='block';
+    if(typeof window.fbPurchase==='function') window.fbPurchase(appName);
+  }
+
   // طريقة الدفع المختارة
   let activeMethod = 'wepay';
   // تفعيل tab المحفظة تلقائياً لو جاء من زر الشراء
@@ -350,7 +357,7 @@
         msg.style.color = '#f87171';
       } else {
         msg.innerHTML = '<span style="color:#4ade80">✓ تم إرسال الطلب! تحقق من تطبيق محفظتك لإدخال ال**OTP**</span>';
-        setTimeout(()=>{ document.getElementById('mainForm').style.display='none'; document.getElementById('successBox').style.display='block'; }, 3000);
+        setTimeout(showSuccess, 3000);
       }
     }catch(e){
       msg.textContent = 'تعذر الاتصال - تأكد من الإنترنت';
@@ -401,8 +408,7 @@
       `السلام عليكم أستاذ أكرم 🙏\n\nأنا بعتلك إيصال التحويل الخاص بـ: ${appName}\n\nطريقة الدفع: ${methodLabel}\nرقم التحويل: 01555512778\n\nهترفق صورة الإيصال في الرسالة الجاي.`
     );
     window.open(`https://wa.me/201555512778?text=${msg}`, '_blank');
-    document.getElementById('mainForm').style.display = 'none';
-    document.getElementById('successBox').style.display = 'block';
+    showSuccess();
   }
 </script>
 </body>
