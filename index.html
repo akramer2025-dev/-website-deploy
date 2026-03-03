@@ -764,7 +764,7 @@
           const prices = getAppPrices();
           grid.innerHTML = APPS.map((app, i) => {
             const price  = prices[app.key];
-            const imgs   = (portfolio && portfolio[app.key]) ? portfolio[app.key] : [];
+            const imgs   = (portfolio && portfolio[app.key]) ? portfolio[app.key].filter(v=>typeof v==='string'&&(v.startsWith('data:image')||v.startsWith('http'))) : [];
             const hasImg = imgs.length > 0;
 
             const galleryHtml = hasImg ? `

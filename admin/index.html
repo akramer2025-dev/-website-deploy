@@ -1005,9 +1005,23 @@ function saveUsers(arr){
   _fdb.collection('admin_data').doc('users').set({data:arr,updatedAt:Date.now()}).catch(e=>console.warn('FS users',e));
 }
 let _fsPortfolio = null;
+let _fsPortfolioSavedAt = 0; // timestamp of last LOCAL save (to detect race conditions)
 function getPortfolio(){ return _fsPortfolio!==null ? Object.assign({},_fsPortfolio) : (()=>{try{return JSON.parse(localStorage.getItem(PORTFOLIO_KEY)||'{}')||{};}catch(e){return {};}})(); }
 function savePortfolio(p){
-  _fsPortfolio = Object.assign({},p);
+  // تنظيف البيانات: إزالة أي قيمة غير صالحة (File object أو blob URL أو غير ذلك)
+  const cleaned = {};
+  Object.keys(p).forEach(key => {
+    const arr = p[key];
+    if (Array.isArray(arr)) {
+      cleaned[key] = arr.filter(v =>
+        typeof v === 'string' &&
+        (v.startsWith('data:image') || v.startsWith('http'))
+      );
+    }
+  });
+  p = cleaned;
+  _fsPortfolio = Object.assign({}, p);
+  _fsPortfolioSavedAt = Date.now();
   
   // فحص حجم البيانات
   const jsonStr = JSON.stringify(p);
@@ -1086,7 +1100,14 @@ async function _loadAdminData(){
       if(i===1){ _fsAppPrices = d||{}; localStorage.setItem(APP_PRICES_KEY, JSON.stringify(_fsAppPrices)); }
       if(i===2){ _fsRecLecs = Array.isArray(d)?d:[]; localStorage.setItem(REC_LECS_KEY, JSON.stringify(_fsRecLecs)); }
       if(i===3){ _fsLiveSessions = Array.isArray(d)?d:[]; localStorage.setItem('am_live_sessions', JSON.stringify(_fsLiveSessions)); }
-      if(i===4){ _fsPortfolio = d||{}; localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(_fsPortfolio)); }
+      if(i===4){
+        // لا تكتب فوق بيانات محلية حديثة (تجنب race condition)
+        const fsUpdatedAt = (snap.data().updatedAt) || 0;
+        if(_fsPortfolioSavedAt === 0 || fsUpdatedAt >= _fsPortfolioSavedAt) {
+          _fsPortfolio = d||{};
+          try{ localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(_fsPortfolio)); }catch(e){}
+        }
+      }
     });
     // Rebuild lectures object from individual docs (avoids 1MB Firestore limit)
     const lecturesObj = {};
