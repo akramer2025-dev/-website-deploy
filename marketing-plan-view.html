@@ -4,6 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>خطة تسويقية - أكرم مصطفى</title>
+  
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.akrammostafa.com/marketing-plan-view.html">
+  <meta property="og:title" content="خطة تسويقية احترافية - أكرم مصطفى">
+  <meta property="og:description" content="خطة تسويقية متكاملة ومُعدَّة خصيصاً بواسطة أكرم مصطفى - خبير التسويق الرقمي">
+  <meta property="og:image" content="https://www.akrammostafa.com/images/1772173627537.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ar_AR">
+  <meta property="og:site_name" content="أكرم مصطفى - خبير التسويق الرقمي">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://www.akrammostafa.com/marketing-plan-view.html">
+  <meta name="twitter:title" content="خطة تسويقية احترافية - أكرم مصطفى">
+  <meta name="twitter:description" content="خطة تسويقية متكاملة ومُعدَّة خصيصاً بواسطة أكرم مصطفى - خبير التسويق الرقمي">
+  <meta name="twitter:image" content="https://www.akrammostafa.com/images/1772173627537.png">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -561,6 +580,40 @@
       font-size: 1.3rem;
     }
 
+    .btn-whatsapp {
+      position: fixed;
+      bottom: 35px;
+      right: 35px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      padding: 18px 35px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    .btn-whatsapp:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
+    }
+
+    .btn-whatsapp:active {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    .btn-whatsapp i {
+      font-size: 1.3rem;
+    }
+
     .loading {
       text-align: center;
       padding: 120px 20px;
@@ -764,6 +817,18 @@
         font-size: 1.1rem;
       }
       
+      .btn-whatsapp {
+        bottom: 15px;
+        right: 15px;
+        padding: 12px 20px;
+        font-size: 0.95rem;
+        gap: 8px;
+      }
+      
+      .btn-whatsapp i {
+        font-size: 1.1rem;
+      }
+      
       .loading {
         padding: 80px 20px;
         font-size: 1.3rem;
@@ -826,6 +891,13 @@
         padding: 10px 16px;
         font-size: 0.85rem;
       }
+      
+      .btn-whatsapp {
+        bottom: 10px;
+        right: 10px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
@@ -842,6 +914,11 @@
   <button class="btn-print" onclick="window.print()" id="printBtn" style="display:none;">
     <i class="fas fa-print"></i>
     <span>طباعة / حفظ PDF</span>
+  </button>
+
+  <button class="btn-whatsapp" onclick="shareToWhatsApp()" id="whatsappBtn" style="display:none;">
+    <i class="fab fa-whatsapp"></i>
+    <span>إرسال للواتساب</span>
   </button>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1048,9 +1125,61 @@
       document.getElementById('loading').style.display = 'none';
       document.getElementById('planContainer').style.display = 'block';
       document.getElementById('printBtn').style.display = 'flex';
+      document.getElementById('whatsappBtn').style.display = 'flex';
       
-      // Update page title
+      // Update page title and meta tags
       document.title = `خطة تسويقية - ${plan.company_name}`;
+      updateMetaTags(plan);
+    }
+
+    function updateMetaTags(plan) {
+      // Update Open Graph meta tags dynamically
+      const ogTitle = `خطة تسويقية احترافية لـ ${plan.company_name}`;
+      const ogDescription = `خطة تسويقية متكاملة مُعدَّة خصيصاً لشركة ${plan.company_name} في مجال ${getIndustryLabel(plan.company_industry)}`;
+      const ogUrl = window.location.href;
+      
+      document.querySelector('meta[property="og:title"]').setAttribute('content', ogTitle);
+      document.querySelector('meta[property="og:description"]').setAttribute('content', ogDescription);
+      document.querySelector('meta[property="og:url"]').setAttribute('content', ogUrl);
+      
+      document.querySelector('meta[name="twitter:title"]').setAttribute('content', ogTitle);
+      document.querySelector('meta[name="twitter:description"]').setAttribute('content', ogDescription);
+      document.querySelector('meta[name="twitter:url"]').setAttribute('content', ogUrl);
+    }
+
+    function getIndustryLabel(industry) {
+      const industries = {
+        ecommerce: 'التجارة الإلكترونية',
+        restaurants: 'المطاعم والمقاهي',
+        realestate: 'العقارات',
+        education: 'التعليم',
+        health: 'الصحة والجمال',
+        services: 'الخدمات',
+        fashion: 'الأزياء والموضة',
+        tech: 'التكنولوجيا',
+        other: 'أخرى'
+      };
+      return industries[industry] || industry;
+    }
+
+    function shareToWhatsApp() {
+      const url = window.location.href;
+      const urlParams = new URLSearchParams(window.location.search);
+      const planId = urlParams.get('id');
+      
+      // Get plan company name from page title or use generic text
+      const companyName = document.querySelector('.company-info .info-item span')?.textContent.replace('اسم الشركة: ', '') || 'خطة تسويقية';
+      
+      const message = `✨ *خطة تسويقية احترافية*\n\n` +
+                     `🏢 ${companyName}\n\n` +
+                     `📊 خطة تسويقية متكاملة مُعدَّة خصيصاً بواسطة:\n` +
+                     `*أكرم مصطفى - خبير التسويق الرقمي*\n\n` +
+                     `🔗 اطلع على الخطة الكاملة:\n${url}\n\n` +
+                     `📞 للمزيد من المعلومات:\n` +
+                     `🌐 www.akrammostafa.com`;
+      
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
     }
 
     // Load plan on page load
