@@ -17,5 +17,10 @@ service cloud.firestore {
       allow read, write: if true;
     }
 
+    // بيانات الموظفين: قراءة وكتابة مفتوحة
+    match /employees/{employeeId} {
+      allow read, write: if true;
+    }
+
   }
 }
