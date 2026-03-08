@@ -1250,6 +1250,7 @@ const _fst = firebase.storage(_fbAdmin);
 
 // join_requests in-memory cache + real-time listener
 let _fsReqs = [];
+let _fsEmployees = [];
 let _fsUnsubscribe = null;
 
 // Load all admin collections from Firestore on login
@@ -3628,6 +3629,9 @@ async function renderEmployeeRequests(){
       const data = doc.data();
       requests.push({id: doc.id, ...data});
     });
+    
+    // Update global cache
+    _fsEmployees = requests;
     
     if(requests.length === 0){
       grid.innerHTML = `
