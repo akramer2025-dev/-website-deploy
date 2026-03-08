@@ -548,6 +548,10 @@ button{cursor:pointer;}
 <!-- Supabase (for employee system) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase-config.js"></script>
+
+<!-- jsPDF for PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -3816,16 +3820,52 @@ async function approveEmployeeRequest(empId){
   }
 }
 
+// قبول طلب موظف
+async function approveEmployeeRequest(empId){
+  try {
+    const { error } = await _supabase
+      .from('employees')
+      .update({
+        application_status: 'approved',
+        approved_at: new Date().toISOString()
+      })
+      .eq('id', empId);
+    
+    if (error) throw error;
+    
+    // Close modal if open
+    const modal = document.getElementById('reqDetailModal');
+    if (modal) modal.classList.remove('open');
+    
+    renderEmployeeRequests();
+    updateBadges();
+    toast('تم قبول الطلب بنجاح', 'success');
+    
+  } catch(error){
+    console.error('Error approving request:', error);
+    toast('حدث خطأ أثناء قبول الطلب', 'error');
+  }
+}
+
 // رفض طلب موظف
 async function rejectEmployeeRequest(empId){
   const reason = prompt('سبب الرفض (اختياري):');
   
   try {
-    await _fdb.collection('employees').doc(empId).update({
-      applicationStatus: 'rejected',
-      rejectedAt: new Date().toISOString(),
-      rejectionReason: reason || ''
-    });
+    const { error } = await _supabase
+      .from('employees')
+      .update({
+        application_status: 'rejected',
+        rejected_at: new Date().toISOString(),
+        rejection_reason: reason || ''
+      })
+      .eq('id', empId);
+    
+    if (error) throw error;
+    
+    // Close modal if open
+    const modal = document.getElementById('reqDetailModal');
+    if (modal) modal.classList.remove('open');
     
     renderEmployeeRequests();
     updateBadges();
@@ -3834,6 +3874,238 @@ async function rejectEmployeeRequest(empId){
   } catch(error){
     console.error('Error rejecting request:', error);
     toast('حدث خطأ أثناء رفض الطلب', 'error');
+  }
+}
+
+// تحميل عقد الموظف بصيغة PDF
+async function downloadEmployeeContractPDF(empId){
+  try {
+    // Load employee data
+    const { data: emp, error } = await _supabase
+      .from('employees')
+      .select('*')
+      .eq('id', empId)
+      .single();
+    
+    if (error || !emp) {
+      toast('لم يتم العثور على بيانات الموظف', 'error');
+      return;
+    }
+    
+    // Initialize jsPDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4'
+    });
+    
+    // Add Arabic font support
+    doc.setLanguage('ar');
+    
+    let yPos = 20;
+    
+    // Add Company Logo
+    try {
+      const logoImg = new Image();
+      logoImg.src = '../images/1772173627537.png';
+      await new Promise((resolve) => {
+        logoImg.onload = resolve;
+        logoImg.onerror = resolve; // Continue even if logo fails
+      });
+      if (logoImg.complete && logoImg.naturalHeight !== 0) {
+        doc.addImage(logoImg, 'PNG', 15, yPos, 30, 30);
+      }
+    } catch(e) {
+      console.log('Logo load skipped:', e);
+    }
+    
+    // Company Header (on the right side for RTL)
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('RemuStore - Digital Marketing', 105, yPos + 10, { align: 'center' });
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text('www.remostoreegy.com', 105, yPos + 17, { align: 'center' });
+    doc.text('info@remostoreegy.com', 105, yPos + 22, { align: 'center' });
+    
+    yPos += 40;
+    
+    // Contract Title
+    doc.setFontSize(20);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Employment Contract', 105, yPos, { align: 'center' });
+    doc.text('عقد عمل', 105, yPos + 8, { align: 'center' });
+    
+    yPos += 20;
+    
+    // Horizontal line
+    doc.setDrawColor(52, 152, 219);
+    doc.setLineWidth(0.5);
+    doc.line(15, yPos, 195, yPos);
+    
+    yPos += 10;
+    
+    // Contract Date
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    const contractDate = emp.approved_at ? new Date(emp.approved_at).toLocaleDateString('ar-EG') : new Date().toLocaleDateString('ar-EG');
+    doc.text(`Contract Date / تاريخ العقد: ${contractDate}`, 105, yPos, { align: 'center' });
+    
+    yPos += 15;
+    
+    // Employee Information Section
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(52, 152, 219);
+    doc.text('Employee Information / بيانات الموظف', 15, yPos);
+    doc.setTextColor(0, 0, 0);
+    
+    yPos += 10;
+    
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    
+    const employeeInfo = [
+      `Full Name / الاسم الكامل: ${emp.full_name || '-'}`,
+      `Email / البريد الإلكتروني: ${emp.email || '-'}`,
+      `Phone / الهاتف: ${emp.phone || '-'}`,
+      `National ID / رقم البطاقة: ${emp.national_id || '-'}`,
+      `Address / العنوان: ${emp.address || '-'}`
+    ];
+    
+    employeeInfo.forEach(info => {
+      doc.text(info, 15, yPos);
+      yPos += 7;
+    });
+    
+    yPos += 5;
+    
+    // Job Details Section
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(52, 152, 219);
+    doc.text('Job Details / بيانات الوظيفة', 15, yPos);
+    doc.setTextColor(0, 0, 0);
+    
+    yPos += 10;
+    
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    
+    const startDate = emp.start_date ? new Date(emp.start_date).toLocaleDateString('ar-EG') : '-';
+    
+    const jobInfo = [
+      `Job Title / المسمى الوظيفي: ${emp.job_title || '-'}`,
+      `Salary / الراتب: ${emp.salary || '-'} EGP/Month`,
+      `Start Date / تاريخ البدء: ${startDate}`
+    ];
+    
+    jobInfo.forEach(info => {
+      doc.text(info, 15, yPos);
+      yPos += 7;
+    });
+    
+    yPos += 5;
+    
+    // Contract Terms Section
+    if (emp.contract_terms) {
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(52, 152, 219);
+      doc.text('Contract Terms / شروط العقد', 15, yPos);
+      doc.setTextColor(0, 0, 0);
+      
+      yPos += 10;
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      
+      // Split terms text to fit page width
+      const terms = emp.contract_terms;
+      const splitTerms = doc.splitTextToSize(terms, 175);
+      
+      splitTerms.forEach(line => {
+        if (yPos > 270) {
+          doc.addPage();
+          yPos = 20;
+        }
+        doc.text(line, 15, yPos);
+        yPos += 5;
+      });
+      
+      yPos += 10;
+    }
+    
+    // Add new page if needed for signatures
+    if (yPos > 220) {
+      doc.addPage();
+      yPos = 20;
+    }
+    
+    // Signature Section
+    doc.setDrawColor(200, 200, 200);
+    doc.setLineWidth(0.3);
+    
+    // Employee Signature
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Employee Signature / توقيع الموظف', 15, yPos);
+    
+    yPos += 5;
+    
+    // Add employee signature image if available
+    if (emp.signature_url) {
+      try {
+        const sigImg = new Image();
+        sigImg.crossOrigin = 'anonymous';
+        sigImg.src = emp.signature_url;
+        await new Promise((resolve) => {
+          sigImg.onload = resolve;
+          sigImg.onerror = resolve;
+        });
+        if (sigImg.complete && sigImg.naturalHeight !== 0) {
+          doc.addImage(sigImg, 'PNG', 15, yPos, 50, 20);
+        }
+      } catch(e) {
+        console.log('Signature image skipped:', e);
+      }
+    }
+    
+    doc.line(15, yPos + 25, 65, yPos + 25);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text(emp.full_name || '', 15, yPos + 30);
+    doc.text(contractDate, 15, yPos + 35);
+    
+    // Company Signature
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Company Representative / ممثل الشركة', 130, yPos);
+    
+    doc.line(130, yPos + 25, 180, yPos + 25);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text('RemuStore Management', 130, yPos + 30);
+    doc.text(contractDate, 130, yPos + 35);
+    
+    // Footer
+    yPos = 280;
+    doc.setFontSize(8);
+    doc.setTextColor(128, 128, 128);
+    doc.text('This is a legally binding employment contract / هذا عقد عمل ملزم قانونياً', 105, yPos, { align: 'center' });
+    doc.text('RemuStore - Digital Marketing Solutions', 105, yPos + 5, { align: 'center' });
+    
+    // Save PDF
+    const fileName = `عقد_عمل_${emp.full_name || emp.id}.pdf`;
+    doc.save(fileName);
+    
+    toast('تم تحميل العقد بنجاح', 'success');
+    
+  } catch(error){
+    console.error('Error generating PDF:', error);
+    toast('حدث خطأ أثناء إنشاء ملف PDF', 'error');
   }
 }
 
@@ -3859,53 +4131,95 @@ function resendEmployeeLink(empId, email, name){
 // عرض تفاصيل طلب الموظف
 async function viewEmployeeRequestDetails(empId){
   try {
-    const empDoc = await _fdb.collection('employees').doc(empId).get();
-    if(!empDoc.exists) return;
+    // Load from Supabase
+    const { data: emp, error } = await _supabase
+      .from('employees')
+      .select('*')
+      .eq('id', empId)
+      .single();
     
-    const emp = empDoc.data();
+    if (error || !emp) {
+      console.error('Error loading employee:', error);
+      toast('لم يتم العثور على الموظف', 'error');
+      return;
+    }
     
     const modal = document.getElementById('reqDetailModal') || createReqDetailModal();
     const content = document.getElementById('reqDetailContent');
     
+    const startDate = emp.start_date ? new Date(emp.start_date).toLocaleDateString('ar-EG') : '-';
+    const submittedDate = emp.application_submitted_at ? new Date(emp.application_submitted_at).toLocaleDateString('ar-EG') : '-';
+    
     content.innerHTML = `
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-user"></i> البيانات الشخصية</div>
-        <div class="rd-row"><div class="rd-lbl">الاسم الكامل:</div><div class="rd-val">${emp.fullName || '-'}</div></div>
+        <div class="rd-row"><div class="rd-lbl">الاسم الكامل:</div><div class="rd-val">${emp.full_name || '-'}</div></div>
         <div class="rd-row"><div class="rd-lbl">البريد:</div><div class="rd-val">${emp.email || '-'}</div></div>
         <div class="rd-row"><div class="rd-lbl">الهاتف:</div><div class="rd-val">${emp.phone || '-'}</div></div>
         <div class="rd-row"><div class="rd-lbl">العنوان:</div><div class="rd-val">${emp.address || '-'}</div></div>
-        <div class="rd-row"><div class="rd-lbl">رقم البطاقة:</div><div class="rd-val">${emp.nationalId || '-'}</div></div>
-        <div class="rd-row"><div class="rd-lbl">المسمى الوظيفي:</div><div class="rd-val">${emp.jobTitle || '-'}</div></div>
-        <div class="rd-row"><div class="rd-lbl">الراتب:</div><div class="rd-val">${emp.salary || '-'} جنيه / شهر</div></div>
+        <div class="rd-row"><div class="rd-lbl">رقم البطاقة:</div><div class="rd-val">${emp.national_id || '-'}</div></div>
       </div>
       
-      ${emp.idFrontURL || emp.idBackURL ? `
+      <div class="rd-section">
+        <div class="rd-section-title"><i class="fas fa-briefcase"></i> بيانات الوظيفة</div>
+        <div class="rd-row"><div class="rd-lbl">المسمى الوظيفي:</div><div class="rd-val">${emp.job_title || '-'}</div></div>
+        <div class="rd-row"><div class="rd-lbl">الراتب:</div><div class="rd-val">${emp.salary || '-'} جنيه / شهر</div></div>
+        <div class="rd-row"><div class="rd-lbl">تاريخ البدء:</div><div class="rd-val">${startDate}</div></div>
+        <div class="rd-row"><div class="rd-lbl">تاريخ تقديم الطلب:</div><div class="rd-val">${submittedDate}</div></div>
+      </div>
+      
+      ${emp.id_front_url || emp.id_back_url ? `
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-id-card"></i> صور البطاقة</div>
         <div class="rd-proofs-grid">
-          ${emp.idFrontURL ? `<div class="rd-proof-img" onclick="openLb('${emp.idFrontURL}')">
-            <img src="${emp.idFrontURL}" alt="البطاقة الأمامية">
+          ${emp.id_front_url ? `<div class="rd-proof-img" onclick="openLb('${emp.id_front_url}')">
+            <img src="${emp.id_front_url}" alt="البطاقة الأمامية">
+            <p style="text-align:center;margin-top:8px;font-size:0.75rem;color:var(--text-secondary);">أمامية</p>
           </div>` : ''}
-          ${emp.idBackURL ? `<div class="rd-proof-img" onclick="openLb('${emp.idBackURL}')">
-            <img src="${emp.idBackURL}" alt="البطاقة الخلفية">
+          ${emp.id_back_url ? `<div class="rd-proof-img" onclick="openLb('${emp.id_back_url}')">
+            <img src="${emp.id_back_url}" alt="البطاقة الخلفية">
+            <p style="text-align:center;margin-top:8px;font-size:0.75rem;color:var(--text-secondary);">خلفية</p>
           </div>` : ''}
         </div>
       </div>` : ''}
       
-      ${emp.selfieURL ? `
+      ${emp.selfie_url ? `
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-camera"></i> الصورة الشخصية</div>
-        <div class="rd-proof-img" onclick="openLb('${emp.selfieURL}')" style="width:150px;height:150px;">
-          <img src="${emp.selfieURL}" alt="صورة سيلفي">
+        <div class="rd-proof-img" onclick="openLb('${emp.selfie_url}')" style="width:150px;height:150px;margin:0 auto;">
+          <img src="${emp.selfie_url}" alt="صورة سيلفي" style="border-radius:50%;">
         </div>
       </div>` : ''}
       
-      ${emp.signatureURL ? `
+      ${emp.signature_url ? `
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-signature"></i> التوقيع</div>
-        <div class="rd-proof-img" onclick="openLb('${emp.signatureURL}')" style="width:200px;height:80px;">
-          <img src="${emp.signatureURL}" alt="التوقيع">
+        <div class="rd-proof-img" onclick="openLb('${emp.signature_url}')" style="width:250px;height:100px;margin:0 auto;background:#fff;padding:10px;">
+          <img src="${emp.signature_url}" alt="التوقيع">
         </div>
+      </div>` : ''}
+      
+      ${emp.contract_terms ? `
+      <div class="rd-section">
+        <div class="rd-section-title"><i class="fas fa-file-contract"></i> شروط العقد</div>
+        <div style="padding:12px;background:var(--bg);border-radius:8px;white-space:pre-wrap;font-size:0.85rem;line-height:1.6;">${emp.contract_terms}</div>
+      </div>` : ''}
+      
+      ${emp.application_status === 'pending' ? `
+      <div class="rd-actions" style="margin-top:24px;display:flex;gap:12px;justify-content:center;">
+        <button class="btn-primary" onclick="approveEmployeeRequest('${emp.id}')" style="flex:1;max-width:200px;">
+          <i class="fas fa-check"></i> قبول الطلب
+        </button>
+        <button class="btn-danger" onclick="rejectEmployeeRequest('${emp.id}')" style="flex:1;max-width:200px;">
+          <i class="fas fa-times"></i> رفض الطلب
+        </button>
+      </div>` : ''}
+      
+      ${emp.application_status === 'approved' ? `
+      <div class="rd-actions" style="margin-top:24px;display:flex;gap:12px;justify-content:center;">
+        <button class="btn-primary" onclick="downloadEmployeeContractPDF('${emp.id}')" style="flex:1;max-width:300px;">
+          <i class="fas fa-file-pdf"></i> تحميل العقد PDF
+        </button>
       </div>` : ''}
     `;
     
