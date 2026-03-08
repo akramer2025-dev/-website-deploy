@@ -2,67 +2,66 @@
 
 ## ⚠️ المشكلة الحالية
 
-Firebase Storage بيرفض رفع الصور بسبب CORS policy:
+Firebase Storage بيرفض رفع الصور بسبب:
+1. ❌ **Storage غير مفعل في المشروع**
+2. ❌ **CORS policy غير مطبق**
+
 ```
 Access to XMLHttpRequest has been blocked by CORS policy
 ```
 
-## ✅ الحل: تطبيق CORS على Firebase Storage
+---
 
-### الطريقة 1: باستخدام Google Cloud SDK (الأسرع) 🚀
+## 🚀 الحل الكامل (خطوة بخطوة):
 
-#### الخطوة 1: تثبيت Google Cloud SDK
+### الخطوة 1️⃣: تفعيل Firebase Storage
 
-**Windows:**
-```powershell
-# Run as Administrator
-(New-Object Net.WebClient).DownloadFile("https://dl.google.com/dl/cloudsdk/channels/rapid/GoogleCloudSDKInstaller.exe", "$env:Temp\CloudSDK.exe")
-Start-Process "$env:Temp\CloudSDK.exe"
-```
+**هذه الخطوة إلزامية! يجب تنفيذها أولاً:**
 
-أو حمل من الموقع مباشرة:
-https://cloud.google.com/sdk/docs/install
+1. افتح Firebase Console:
+   **https://console.firebase.google.com/project/akramplatform-2c6be/storage**
 
-#### الخطوة 2: تسجيل الدخول
+2. اضغط على زرار **"Get Started"** أو **"البدء"**
 
-بعد التثبيت، افتح PowerShell جديد وشغل:
+3. اختر:
+   - ✅ **Start in production mode**
+   - 📍 Location: اختر `europe-west` أو `us-central`
 
-```powershell
-# Login to Google Cloud
-gcloud auth login
+4. اضغط **"Done"**
 
-# Set your Firebase project
-gcloud config set project akramplatform-2c6be
-```
+5. انتظر حتى يتم إنشاء Storage bucket
 
-#### الخطوة 3: تطبيق CORS
+---
+
+### الخطوة 2️⃣: رفع Storage Rules
+
+بعد تفعيل Storage، ارجع لـ PowerShell وشغل:
 
 ```powershell
-# Navigate to your project folder
 cd D:\mysite
-
-# Apply CORS configuration
-.\apply-cors.ps1
+.\setup-storage.ps1
 ```
 
 أو مباشرة:
 ```powershell
-gsutil cors set cors.json gs://akramplatform-2c6be.appspot.com
+firebase deploy --only storage
 ```
 
 ---
 
-### الطريقة 2: من Firebase Console (بديل)
+### الخطوة 3️⃣: تطبيق CORS
+
+#### الطريقة أ: من Firebase Console (الأسهل) ⭐
 
 1. افتح: https://console.firebase.google.com/project/akramplatform-2c6be/storage
-2. اضغط على **Rules** tab
-3. تأكد إن Rules تسمح برفع الملفات:
+2. اضغط **Rules** tab
+3. تأكد من وجود هذه الـ rules:
 
 ```javascript
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    match /employees/{employeeId}/{allPaths=**} {
+    match /{allPaths=**} {
       allow read, write: if true;
     }
   }
@@ -71,19 +70,20 @@ service firebase.storage {
 
 4. اضغط **Publish**
 
----
-
-### الطريقة 3: باستخدام Firebase CLI
+#### الطريقة ب: باستخدام gsutil
 
 ```powershell
-# Install Firebase CLI
-npm install -g firebase-tools
+# Install Google Cloud SDK
+# من: https://cloud.google.com/sdk/docs/install
 
 # Login
-firebase login
+gcloud auth login
 
-# Deploy storage rules
-firebase deploy --only storage
+# Set project
+gcloud config set project akramplatform-2c6be
+
+# Apply CORS
+gsutil cors set cors.json gs://akramplatform-2c6be.appspot.com
 ```
 
 ---
