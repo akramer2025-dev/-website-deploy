@@ -3880,6 +3880,8 @@ async function rejectEmployeeRequest(empId){
 // تحميل عقد الموظف بصيغة PDF
 async function downloadEmployeeContractPDF(empId){
   try {
+    toast('جاري إنشاء العقد...', 'info');
+    
     // Load employee data
     const { data: emp, error } = await _supabase
       .from('employees')
@@ -3892,210 +3894,167 @@ async function downloadEmployeeContractPDF(empId){
       return;
     }
     
-    // Initialize jsPDF
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: 'a4'
-    });
-    
-    // Add Arabic font support
-    doc.setLanguage('ar');
-    
-    let yPos = 20;
-    
-    // Add Company Logo
-    try {
-      const logoImg = new Image();
-      logoImg.src = '../images/1772173627537.png';
-      await new Promise((resolve) => {
-        logoImg.onload = resolve;
-        logoImg.onerror = resolve; // Continue even if logo fails
-      });
-      if (logoImg.complete && logoImg.naturalHeight !== 0) {
-        doc.addImage(logoImg, 'PNG', 15, yPos, 30, 30);
-      }
-    } catch(e) {
-      console.log('Logo load skipped:', e);
-    }
-    
-    // Company Header (on the right side for RTL)
-    doc.setFontSize(18);
-    doc.setFont('helvetica', 'bold');
-    doc.text('RemuStore - Digital Marketing', 105, yPos + 10, { align: 'center' });
-    
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.text('www.remostoreegy.com', 105, yPos + 17, { align: 'center' });
-    doc.text('info@remostoreegy.com', 105, yPos + 22, { align: 'center' });
-    
-    yPos += 40;
-    
-    // Contract Title
-    doc.setFontSize(20);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Employment Contract', 105, yPos, { align: 'center' });
-    doc.text('عقد عمل', 105, yPos + 8, { align: 'center' });
-    
-    yPos += 20;
-    
-    // Horizontal line
-    doc.setDrawColor(52, 152, 219);
-    doc.setLineWidth(0.5);
-    doc.line(15, yPos, 195, yPos);
-    
-    yPos += 10;
-    
-    // Contract Date
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
     const contractDate = emp.approved_at ? new Date(emp.approved_at).toLocaleDateString('ar-EG') : new Date().toLocaleDateString('ar-EG');
-    doc.text(`Contract Date / تاريخ العقد: ${contractDate}`, 105, yPos, { align: 'center' });
-    
-    yPos += 15;
-    
-    // Employee Information Section
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(52, 152, 219);
-    doc.text('Employee Information / بيانات الموظف', 15, yPos);
-    doc.setTextColor(0, 0, 0);
-    
-    yPos += 10;
-    
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    
-    const employeeInfo = [
-      `Full Name / الاسم الكامل: ${emp.full_name || '-'}`,
-      `Email / البريد الإلكتروني: ${emp.email || '-'}`,
-      `Phone / الهاتف: ${emp.phone || '-'}`,
-      `National ID / رقم البطاقة: ${emp.national_id || '-'}`,
-      `Address / العنوان: ${emp.address || '-'}`
-    ];
-    
-    employeeInfo.forEach(info => {
-      doc.text(info, 15, yPos);
-      yPos += 7;
-    });
-    
-    yPos += 5;
-    
-    // Job Details Section
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(52, 152, 219);
-    doc.text('Job Details / بيانات الوظيفة', 15, yPos);
-    doc.setTextColor(0, 0, 0);
-    
-    yPos += 10;
-    
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    
     const startDate = emp.start_date ? new Date(emp.start_date).toLocaleDateString('ar-EG') : '-';
     
-    const jobInfo = [
-      `Job Title / المسمى الوظيفي: ${emp.job_title || '-'}`,
-      `Salary / الراتب: ${emp.salary || '-'} EGP/Month`,
-      `Start Date / تاريخ البدء: ${startDate}`
-    ];
+    // Create hidden container for the contract HTML
+    const contractDiv = document.createElement('div');
+    contractDiv.id = 'contractPrintArea';
+    contractDiv.style.cssText = 'position:fixed;top:-9999px;left:0;width:794px;background:#fff;z-index:-1;font-family:Cairo,sans-serif;';
     
-    jobInfo.forEach(info => {
-      doc.text(info, 15, yPos);
-      yPos += 7;
+    contractDiv.innerHTML = `
+      <div style="padding:40px 50px;color:#1a1a1a;direction:rtl;">
+        <!-- Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #3498db;padding-bottom:20px;margin-bottom:30px;">
+          <div style="text-align:right;">
+            <h1 style="margin:0;font-size:22px;color:#2c3e50;font-weight:900;">RemuStore</h1>
+            <p style="margin:4px 0 0;font-size:12px;color:#7f8c8d;">Digital Marketing Solutions</p>
+            <p style="margin:2px 0 0;font-size:11px;color:#95a5a6;">www.remostoreegy.com</p>
+          </div>
+          <div style="text-align:left;">
+            <img src="../images/1772173627537.png" style="width:70px;height:70px;object-fit:contain;" onerror="this.style.display='none'">
+          </div>
+        </div>
+        
+        <!-- Contract Title -->
+        <div style="text-align:center;margin-bottom:30px;">
+          <h2 style="margin:0;font-size:28px;color:#2c3e50;font-weight:900;">عقد عمل</h2>
+          <p style="margin:5px 0 0;font-size:14px;color:#7f8c8d;">Employment Contract</p>
+          <p style="margin:8px 0 0;font-size:13px;color:#555;">تاريخ العقد: ${contractDate}</p>
+        </div>
+        
+        <!-- Employee Info Section -->
+        <div style="margin-bottom:25px;">
+          <h3 style="font-size:16px;color:#3498db;border-bottom:2px solid #ecf0f1;padding-bottom:8px;margin-bottom:15px;">
+            <span style="background:#3498db;color:#fff;padding:3px 10px;border-radius:4px;font-size:13px;margin-left:8px;">1</span>
+            البيانات الشخصية للموظف
+          </h3>
+          <table style="width:100%;border-collapse:collapse;font-size:14px;">
+            <tr style="border-bottom:1px solid #ecf0f1;">
+              <td style="padding:10px;font-weight:700;color:#555;width:35%;">الاسم الكامل:</td>
+              <td style="padding:10px;color:#1a1a1a;">${emp.full_name || '-'}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ecf0f1;">
+              <td style="padding:10px;font-weight:700;color:#555;">البريد الإلكتروني:</td>
+              <td style="padding:10px;color:#1a1a1a;">${emp.email || '-'}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ecf0f1;">
+              <td style="padding:10px;font-weight:700;color:#555;">رقم الهاتف:</td>
+              <td style="padding:10px;color:#1a1a1a;">${emp.phone || '-'}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ecf0f1;">
+              <td style="padding:10px;font-weight:700;color:#555;">رقم البطاقة:</td>
+              <td style="padding:10px;color:#1a1a1a;">${emp.national_id || '-'}</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;font-weight:700;color:#555;">العنوان:</td>
+              <td style="padding:10px;color:#1a1a1a;">${emp.address || '-'}</td>
+            </tr>
+          </table>
+        </div>
+        
+        <!-- Job Details Section -->
+        <div style="margin-bottom:25px;">
+          <h3 style="font-size:16px;color:#3498db;border-bottom:2px solid #ecf0f1;padding-bottom:8px;margin-bottom:15px;">
+            <span style="background:#3498db;color:#fff;padding:3px 10px;border-radius:4px;font-size:13px;margin-left:8px;">2</span>
+            بيانات الوظيفة
+          </h3>
+          <table style="width:100%;border-collapse:collapse;font-size:14px;">
+            <tr style="border-bottom:1px solid #ecf0f1;">
+              <td style="padding:10px;font-weight:700;color:#555;width:35%;">المسمى الوظيفي:</td>
+              <td style="padding:10px;color:#1a1a1a;">${emp.job_title || '-'}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #ecf0f1;">
+              <td style="padding:10px;font-weight:700;color:#555;">الراتب الشهري:</td>
+              <td style="padding:10px;color:#1a1a1a;">${emp.salary || '-'} جنيه مصري</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;font-weight:700;color:#555;">تاريخ بدء العمل:</td>
+              <td style="padding:10px;color:#1a1a1a;">${startDate}</td>
+            </tr>
+          </table>
+        </div>
+        
+        <!-- Contract Terms -->
+        ${emp.contract_terms ? `
+        <div style="margin-bottom:25px;">
+          <h3 style="font-size:16px;color:#3498db;border-bottom:2px solid #ecf0f1;padding-bottom:8px;margin-bottom:15px;">
+            <span style="background:#3498db;color:#fff;padding:3px 10px;border-radius:4px;font-size:13px;margin-left:8px;">3</span>
+            شروط وأحكام العقد
+          </h3>
+          <div style="padding:15px;background:#f8f9fa;border-radius:8px;font-size:13px;line-height:2;white-space:pre-wrap;color:#333;">${emp.contract_terms}</div>
+        </div>` : ''}
+        
+        <!-- Signatures Section -->
+        <div style="margin-top:40px;padding-top:20px;border-top:2px solid #ecf0f1;">
+          <div style="display:flex;justify-content:space-between;">
+            <!-- Employee Signature -->
+            <div style="text-align:center;width:45%;">
+              <p style="font-size:14px;font-weight:700;color:#2c3e50;margin-bottom:10px;">توقيع الموظف</p>
+              ${emp.signature_url ? `<img src="${emp.signature_url}" style="max-width:150px;max-height:60px;margin-bottom:8px;" crossorigin="anonymous" onerror="this.style.display='none'">` : '<div style="height:60px;"></div>'}
+              <div style="border-top:1px solid #bdc3c7;padding-top:8px;">
+                <p style="font-size:12px;color:#555;margin:0;">${emp.full_name || '-'}</p>
+                <p style="font-size:11px;color:#999;margin:2px 0 0;">${contractDate}</p>
+              </div>
+            </div>
+            <!-- Company Signature -->
+            <div style="text-align:center;width:45%;">
+              <p style="font-size:14px;font-weight:700;color:#2c3e50;margin-bottom:10px;">توقيع ممثل الشركة</p>
+              <div style="height:60px;"></div>
+              <div style="border-top:1px solid #bdc3c7;padding-top:8px;">
+                <p style="font-size:12px;color:#555;margin:0;">إدارة RemuStore</p>
+                <p style="font-size:11px;color:#999;margin:2px 0 0;">${contractDate}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Footer -->
+        <div style="margin-top:30px;padding-top:15px;border-top:1px solid #ecf0f1;text-align:center;">
+          <p style="font-size:10px;color:#bdc3c7;margin:0;">هذا العقد ملزم قانونياً لكلا الطرفين بمجرد التوقيع عليه</p>
+          <p style="font-size:10px;color:#bdc3c7;margin:3px 0 0;">RemuStore - Digital Marketing Solutions | www.remostoreegy.com</p>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(contractDiv);
+    
+    // Wait for images to load
+    await new Promise(r => setTimeout(r, 500));
+    
+    // Use html2canvas to render the contract
+    const canvas = await html2canvas(contractDiv, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff',
+      width: 794,
+      logging: false
     });
     
-    yPos += 5;
+    // Create PDF from canvas
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4');
     
-    // Contract Terms Section
-    if (emp.contract_terms) {
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(52, 152, 219);
-      doc.text('Contract Terms / شروط العقد', 15, yPos);
-      doc.setTextColor(0, 0, 0);
-      
-      yPos += 10;
-      
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      
-      // Split terms text to fit page width
-      const terms = emp.contract_terms;
-      const splitTerms = doc.splitTextToSize(terms, 175);
-      
-      splitTerms.forEach(line => {
-        if (yPos > 270) {
-          doc.addPage();
-          yPos = 20;
-        }
-        doc.text(line, 15, yPos);
-        yPos += 5;
-      });
-      
-      yPos += 10;
-    }
+    const imgWidth = 210; // A4 width in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
     
-    // Add new page if needed for signatures
-    if (yPos > 220) {
-      doc.addPage();
-      yPos = 20;
-    }
+    // Handle multi-page if content is long
+    let position = 0;
+    const pageHeight = 297; // A4 height in mm
+    let remainingHeight = imgHeight;
     
-    // Signature Section
-    doc.setDrawColor(200, 200, 200);
-    doc.setLineWidth(0.3);
-    
-    // Employee Signature
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Employee Signature / توقيع الموظف', 15, yPos);
-    
-    yPos += 5;
-    
-    // Add employee signature image if available
-    if (emp.signature_url) {
-      try {
-        const sigImg = new Image();
-        sigImg.crossOrigin = 'anonymous';
-        sigImg.src = emp.signature_url;
-        await new Promise((resolve) => {
-          sigImg.onload = resolve;
-          sigImg.onerror = resolve;
-        });
-        if (sigImg.complete && sigImg.naturalHeight !== 0) {
-          doc.addImage(sigImg, 'PNG', 15, yPos, 50, 20);
-        }
-      } catch(e) {
-        console.log('Signature image skipped:', e);
+    while (remainingHeight > 0) {
+      doc.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, position, imgWidth, imgHeight);
+      remainingHeight -= pageHeight;
+      if (remainingHeight > 0) {
+        doc.addPage();
+        position -= pageHeight;
       }
     }
     
-    doc.line(15, yPos + 25, 65, yPos + 25);
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.text(emp.full_name || '', 15, yPos + 30);
-    doc.text(contractDate, 15, yPos + 35);
-    
-    // Company Signature
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Company Representative / ممثل الشركة', 130, yPos);
-    
-    doc.line(130, yPos + 25, 180, yPos + 25);
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.text('RemuStore Management', 130, yPos + 30);
-    doc.text(contractDate, 130, yPos + 35);
-    
-    // Footer
-    yPos = 280;
-    doc.setFontSize(8);
-    doc.setTextColor(128, 128, 128);
-    doc.text('This is a legally binding employment contract / هذا عقد عمل ملزم قانونياً', 105, yPos, { align: 'center' });
-    doc.text('RemuStore - Digital Marketing Solutions', 105, yPos + 5, { align: 'center' });
+    // Clean up
+    document.body.removeChild(contractDiv);
     
     // Save PDF
     const fileName = `عقد_عمل_${emp.full_name || emp.id}.pdf`;
@@ -4105,6 +4064,9 @@ async function downloadEmployeeContractPDF(empId){
     
   } catch(error){
     console.error('Error generating PDF:', error);
+    // Clean up on error
+    const el = document.getElementById('contractPrintArea');
+    if (el) el.remove();
     toast('حدث خطأ أثناء إنشاء ملف PDF', 'error');
   }
 }

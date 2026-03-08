@@ -29,6 +29,11 @@ CREATE TABLE IF NOT EXISTS employees (
     contract_accepted BOOLEAN DEFAULT FALSE,
     contract_accepted_at TIMESTAMP WITH TIME ZONE,
     
+    -- حالة القبول والرفض
+    approved_at TIMESTAMP WITH TIME ZONE,
+    rejected_at TIMESTAMP WITH TIME ZONE,
+    rejection_reason TEXT,
+    
     -- التواريخ
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     application_submitted_at TIMESTAMP WITH TIME ZONE,
