@@ -4,7 +4,7 @@
 const SUPABASE_CONFIG = {
     // من Settings → API
     url: 'https://zwignngqrnzmlpphiqnc.supabase.co',
-    anonKey: 'sb_publishable_zmJ35zrJxa0-xr3nwPGYyg_b6A4eV7H',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3aWdubmdxcm56bWxwcGhpcW5jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5ODkxNjEsImV4cCI6MjA4ODU2NTE2MX0.dCYFQkcX0n7j7ccmXSRNCFsjc8WCXM-2AecsfdUqmYg',
     
     // اسم Bucket للصور
     bucketName: 'employee-files'
