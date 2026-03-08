@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -20,7 +20,7 @@
             padding: 120px 0 60px;
             background: linear-gradient(160deg, #07122a 0%, #0d1e38 60%, #07122a 100%);
             position: relative;
-            overflow: hidden;
+            overflow: clip;
         }
         
         .product-detail-hero::before {
@@ -516,6 +516,7 @@
             }
         }
     </style>
+    <script src="/js/meta-pixel.js" defer></script>
 </head>
 <body>
     <!-- NAVBAR -->
@@ -523,7 +524,7 @@
         <div class="container">
             <div class="nav-brand">
                 <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-                    <img src="../images/logo.png" alt="Akram Mostafa" class="nav-logo">
+                    <img src="../images/1772173627537.png" alt="Akram Mostafa" class="nav-logo">
                     <span class="brand-name">AKRAM<br>MOSTAFA</span>
                 </a>
             </div>
@@ -606,7 +607,7 @@
                     </div>
                     
                     <div class="product-actions">
-                        <a href="https://wa.me/00201555512778?text=مهتم بنظام المضيف سمارت - نظام إدارة الفنادق" target="_blank" class="btn-buy-now">
+                        <a href="https://wa.me/201555512778?text=مهتم بنظام المضيف سمارت - نظام إدارة الفنادق" target="_blank" class="btn-buy-now">
                             <i class="fab fa-whatsapp"></i>
                             تواصل للشراء
                         </a>
@@ -694,7 +695,7 @@
             <div class="contact-card" data-aos="fade-up">
                 <h3>مهتم بهذا النظام؟</h3>
                 <p>تواصل معي الآن للحصول على عرض سعر مخصص ومعرفة المزيد عن كيفية تخصيص النظام لاحتياجاتك</p>
-                <a href="https://wa.me/00201555512778?text=مهتم بنظام المضيف سمارت - نظام إدارة الفنادق" target="_blank" class="btn-whatsapp-large">
+                <a href="https://wa.me/201555512778?text=مهتم بنظام المضيف سمارت - نظام إدارة الفنادق" target="_blank" class="btn-whatsapp-large">
                     <i class="fab fa-whatsapp"></i>
                     تواصل عبر واتساب
                 </a>
@@ -712,8 +713,11 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="../js/script.js"></script>
+    <script src="../js/portfolio-loader.js"></script>
     <script>
         // Initialize AOS
         AOS.init({
@@ -722,21 +726,18 @@
             offset: 50
         });
         
-        // Load portfolio images if available
+        // Load portfolio images from Firestore
         document.addEventListener('DOMContentLoaded', function() {
-            const portfolio = JSON.parse(localStorage.getItem('am_portfolio_imgs') || '{}');
-            const images = portfolio['almodif'] || [];
+            loadProductImages('almodif', 'المضيف سمارت');
             
-            if (images.length > 0) {
-                const mainImage = document.getElementById('mainImage');
-                mainImage.innerHTML = `<img src="${images[0]}" alt="المضيف سمارت">`;
-                
-                const thumbnails = document.getElementById('thumbnails');
-                thumbnails.innerHTML = images.map((img, i) => `
-                    <div class="product-thumbnail ${i === 0 ? 'active' : ''}" onclick="changeImage('${img}', this)">
-                        <img src="${img}" alt="">
-                    </div>
-                `).join('');
+            // Check wishlist
+            const wishlist = JSON.parse(localStorage.getItem('am_wishlist') || '[]');
+            const inWishlist = wishlist.some(i => i.key === 'almodif' && i.type === 'web');
+            
+            if (inWishlist) {
+                const btn = document.querySelector('.btn-add-wishlist');
+                btn.classList.add('active');
+                btn.querySelector('i').className = 'fas fa-heart';
             }
         });
         
@@ -763,18 +764,6 @@
             
             localStorage.setItem('am_wishlist', JSON.stringify(wishlist));
         }
-        
-        // Check if in wishlist on load
-        document.addEventListener('DOMContentLoaded', function() {
-            const wishlist = JSON.parse(localStorage.getItem('am_wishlist') || '[]');
-            const inWishlist = wishlist.some(i => i.key === 'almodif' && i.type === 'web');
-            
-            if (inWishlist) {
-                const btn = document.querySelector('.btn-add-wishlist');
-                btn.classList.add('active');
-                btn.querySelector('i').className = 'fas fa-heart';
-            }
-        });
     </script>
 </body>
 </html>

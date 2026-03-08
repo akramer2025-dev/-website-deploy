@@ -1,15 +1,25 @@
 # Robots.txt for Akram Mostafa Website
-# www.akrammostafa.net
+# www.akrammostafa.com
 
 User-agent: *
 Allow: /
 
-# Sitemap location (update when you create sitemap.xml)
-Sitemap: https://www.akrammostafa.net/sitemap.xml
+# Sitemap location
+Sitemap: https://www.akrammostafa.com/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /linkcall/
+
+# Allow Googlebot
+User-agent: Googlebot
+Allow: /
+
+# Allow Meta / Facebook crawler (for Catalog feed + Pixel)
+User-agent: facebookexternalhit
+Allow: /
+User-agent: Facebot
+Allow: /
 
 # Crawl-delay for polite crawling
-Crawl-delay: 1
-
-# Disallow specific directories if needed
-# Disallow: /admin/
-# Disallow: /private/
+Crawl-delay: 0.5

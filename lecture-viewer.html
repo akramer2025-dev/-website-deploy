@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -251,6 +251,110 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .anno-toggle-show.show{display:flex;}
 .anno-toggle-show:hover{color:var(--text);}
 
+/* ══════════ LOADING OVERLAY ══════════ */
+#loadingOverlay{
+  position:fixed;inset:0;z-index:9000;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  transition:opacity .4s;
+}
+#loadingOverlay.hide{opacity:0;pointer-events:none;}
+.loader-ring{
+  width:52px;height:52px;border-radius:50%;
+  border:3px solid var(--border);
+  border-top-color:var(--pink);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loader-text{font-size:.9rem;color:var(--muted);font-weight:700;}
+
+/* ══════════ LIGHTBOX ══════════ */
+#lightbox{
+  display:none;position:fixed;inset:0;z-index:8000;
+  background:rgba(0,0,0,.92);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;
+}
+#lightbox.show{display:flex;}
+#lightbox img{
+  max-width:90vw;max-height:90vh;object-fit:contain;
+  border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.8);
+  animation:lbIn .25s ease;
+}
+@keyframes lbIn{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
+#lbClose{
+  position:fixed;top:20px;left:20px;z-index:8001;
+  width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.15);color:#fff;font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;
+}
+#lbClose:hover{background:rgba(233,78,119,.4);}
+
+/* ══════════ SEARCH IN SIDEBAR ══════════ */
+.sidebar-search{
+  padding:10px 12px 0;
+}
+.sidebar-search input{
+  width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);
+  border-radius:9px;padding:7px 12px;color:var(--text);font-family:'Cairo',sans-serif;
+  font-size:.8rem;outline:none;transition:.2s;
+}
+.sidebar-search input:focus{border-color:rgba(233,78,119,.5);background:rgba(233,78,119,.04);}
+.sidebar-search input::placeholder{color:var(--muted);}
+
+/* ══════════ NOTES FONT CONTROLS ══════════ */
+.notes-font-ctrl{
+  display:flex;align-items:center;gap:6px;margin-top:auto;padding-top:10px;
+  border-top:1px solid var(--border);
+}
+.nfc-btn{
+  width:28px;height:28px;border-radius:7px;border:1px solid var(--border);
+  background:rgba(255,255,255,.04);color:var(--muted);font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;
+}
+.nfc-btn:hover{color:var(--text);background:rgba(255,255,255,.1);}
+.nfc-label{font-size:.72rem;color:var(--muted);flex:1;text-align:center;}
+
+/* ══════════ AUTO-PLAY INDICATOR ══════════ */
+.autoplay-badge{
+  display:none;align-items:center;gap:6px;
+  padding:4px 10px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);
+  border-radius:20px;font-size:.75rem;font-weight:800;color:#4ade80;
+}
+.autoplay-badge.show{display:flex;}
+.ap-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:blink-ap 1s infinite;}
+@keyframes blink-ap{0%,100%{opacity:1;}50%{opacity:.25;}}
+.autoplay-progress{
+  position:fixed;bottom:var(--bottom);left:0;right:0;height:3px;z-index:201;
+  background:transparent;
+}
+.autoplay-progress-fill{
+  height:100%;background:var(--grad);width:0%;transition:width .1s linear;
+}
+
+/* ══════════ SHORTCUTS MODAL ══════════ */
+#shortcutsModal{
+  display:none;position:fixed;inset:0;z-index:7000;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;
+}
+#shortcutsModal.show{display:flex;}
+.shortcuts-box{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:28px;width:480px;max-width:90vw;max-height:80vh;overflow-y:auto;
+}
+.shortcuts-box h3{font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;}
+.sc-group{margin-bottom:14px;}
+.sc-group-title{font-size:.72rem;font-weight:800;color:var(--pink);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.sc-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);}
+.sc-row:last-child{border-bottom:none;}
+.sc-desc{font-size:.83rem;color:var(--text);}
+.sc-keys{display:flex;gap:4px;}
+.sc-keys kbd{padding:3px 8px;background:var(--card2);border-radius:6px;font-size:.72rem;color:var(--muted);font-family:'Cairo',sans-serif;}
+
+/* ══════════ MEDIA-ONLY MODE ══════════ */
+.slide-inner.media-only{grid-template-columns:1fr;}
+.slide-inner.media-only .slide-notes-col{display:none;}
+
 /* CANVAS OVERLAY */
 #annoCanvas{
   position:absolute;inset:0;width:100%;height:100%;
@@ -318,13 +422,62 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="/js/meta-pixel.js" defer></script>
 </head>
 <body>
+
+<!-- LOADING OVERLAY -->
+<div id="loadingOverlay">
+  <div class="loader-ring"></div>
+  <div class="loader-text">جاري تحميل المحاضرة...</div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lbClose" onclick="closeLightbox()"><i class="fas fa-xmark"></i></button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<!-- SHORTCUTS MODAL -->
+<div id="shortcutsModal" onclick="if(event.target===this)toggleShortcuts()">
+  <div class="shortcuts-box">
+    <h3>اختصارات لوحة المفاتيح <button onclick="toggleShortcuts()" style="width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--muted);cursor:pointer;"><i class="fas fa-xmark"></i></button></h3>
+    <div class="sc-group">
+      <div class="sc-group-title">التنقل</div>
+      <div class="sc-row"><span class="sc-desc">الشريحة التالية</span><span class="sc-keys"><kbd>←</kbd><span style="color:var(--muted);font-size:.7rem"> أو </span><kbd>↓</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">الشريحة السابقة</span><span class="sc-keys"><kbd>→</kbd><span style="color:var(--muted);font-size:.7rem"> أو </span><kbd>↑</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">أول شريحة</span><span class="sc-keys"><kbd>Home</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">آخر شريحة</span><span class="sc-keys"><kbd>End</kbd></span></div>
+    </div>
+    <div class="sc-group">
+      <div class="sc-group-title">أدوات الرسم</div>
+      <div class="sc-row"><span class="sc-desc">قلم رسم</span><span class="sc-keys"><kbd>P</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">قلم تظليل</span><span class="sc-keys"><kbd>H</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">مستطيل</span><span class="sc-keys"><kbd>R</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">دائرة</span><span class="sc-keys"><kbd>C</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">سهم</span><span class="sc-keys"><kbd>A</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">نص</span><span class="sc-keys"><kbd>T</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">ممسحة</span><span class="sc-keys"><kbd>E</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">مؤشر (عادي)</span><span class="sc-keys"><kbd>Esc</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">تراجع</span><span class="sc-keys"><kbd>Ctrl</kbd>+<kbd>Z</kbd></span></div>
+    </div>
+    <div class="sc-group">
+      <div class="sc-group-title">أخرى</div>
+      <div class="sc-row"><span class="sc-desc">ملء الشاشة</span><span class="sc-keys"><kbd>F</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">تشغيل/إيقاف تلقائي</span><span class="sc-keys"><kbd>Space</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">تبديل وضع الميديا</span><span class="sc-keys"><kbd>M</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">هذه القائمة</span><span class="sc-keys"><kbd>?</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTOPLAY PROGRESS BAR -->
+<div class="autoplay-progress"><div class="autoplay-progress-fill" id="apBar"></div></div>
 
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="tb-brand">
-    <img src="images/logo.png" alt="">
+    <img src="images/1772173627537.png" alt="">
     <div class="tb-brand-info">
       <div class="lec-title" id="tbLecTitle">جاري التحميل...</div>
       <div class="crs-name" id="tbCrsName"></div>
@@ -337,9 +490,13 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
     </div>
   </div>
   <div class="tb-right">
+    <div class="autoplay-badge" id="apBadge"><span class="ap-dot"></span>تشغيل تلقائي</div>
+    <button class="tb-btn" id="autoPlayBtn" onclick="toggleAutoPlay()" title="تشغيل تلقائي (Space)"><i class="fas fa-play"></i></button>
+    <button class="tb-btn" onclick="toggleMediaOnly()" id="mediaOnlyBtn" title="وضع الميديا الكاملة (M)"><i class="fas fa-expand-arrows-alt"></i></button>
+    <button class="tb-btn" onclick="toggleShortcuts()" title="اختصارات لوحة المفاتيح (?)"><i class="fas fa-keyboard"></i></button>
     <button class="tb-btn" onclick="toggleSidebar()" title="إخفاء/إظهار الشرائح"><i class="fas fa-th-list"></i></button>
     <button class="tb-btn" onclick="toggleFullscreen()" id="fsBtn" title="ملء الشاشة"><i class="fas fa-expand"></i></button>
-    <a href="javascript:history.back()" class="tb-back"><i class="fas fa-arrow-right"></i> رجوع</a>
+    <a href="javascript:goBackToCourse()" class="tb-back"><i class="fas fa-arrow-right"></i> رجوع</a>
   </div>
 </div>
 
@@ -348,6 +505,9 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   <div class="sidebar-head">
     <span>قائمة الشرائح</span>
     <span class="total" id="sidebarTotal">0</span>
+  </div>
+  <div class="sidebar-search">
+    <input type="text" id="slideSearch" placeholder="ابحث في الشرائح..." oninput="filterSlides(this.value)">
   </div>
   <div class="slides-list" id="slidesList"></div>
 </div>
@@ -474,6 +634,7 @@ let isAnimating = false;
 let lectureData = null;
 
 // نصوص placeholder وهمية لا تُعتبر src حقيقي
+const RESUME_KEY = 'am_lec_pos';
 const FAKE_SRCS = new Set(['[صورة مرفوعة]','[محلي]','✓ تم الرفع','✓ محفوظة','✓ جاهزة للحفظ','جاري الضغط...','جاري الرفع...','']);
 function cleanSlides(arr){
   return (arr||[]).map(s=>({...s, src: FAKE_SRCS.has((s.src||'').trim()) ? '' : s.src}));
@@ -544,6 +705,8 @@ async function init(){
     lectureData = courseLecs.find(l=>l.id===lecId)||null;
   }
 
+  hideLoading();
+
   if(!lectureData){
     document.getElementById('tbLecTitle').textContent = 'المحاضرة غير موجودة';
     return;
@@ -564,9 +727,143 @@ async function init(){
   renderSidebar();
   renderSlides();
   renderDots();
-  updateSidebar(0);
-  updateNavBtns();
-  updateProgress();
+
+  // استئناف من آخر موضع
+  const savedPos = getResumePos(lecId);
+  const startSlide = (savedPos > 0 && savedPos < slides.length) ? savedPos : 0;
+  if(startSlide > 0){
+    // activate first slide briefly then jump
+    currentIdx = 0;
+    const firstEl = document.getElementById('slide-0');
+    if(firstEl) firstEl.classList.add('active');
+    setTimeout(()=>{ gotoSlide(startSlide, true); }, 100);
+    showToast('استئناف من الشريحة ' + (startSlide+1));
+  } else {
+    updateSidebar(0);
+    updateNavBtns();
+    updateProgress();
+  }
+}
+
+// ─── LOADING ───────────────────────────────────────────────────
+function hideLoading(){
+  const ov = document.getElementById('loadingOverlay');
+  ov.classList.add('hide');
+  setTimeout(()=>{ ov.style.display='none'; }, 450);
+}
+
+// ─── LIGHTBOX ──────────────────────────────────────────────────
+function openLightbox(src){
+  document.getElementById('lbImg').src = src;
+  document.getElementById('lightbox').classList.add('show');
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('show');
+  document.getElementById('lbImg').src='';
+}
+
+// ─── BACK BUTTON ───────────────────────────────────────────────
+function goBackToCourse(){
+  const params = new URLSearchParams(location.search);
+  const courseKey = params.get('course');
+  const courseMap = {
+    'free':'free-course.html','facebook-ads':'courses/facebook-ads.html',
+    'instagram':'courses/instagram.html','tiktok':'courses/tiktok.html',
+    'snapchat':'courses/snapchat.html','twitter':'courses/twitter.html',
+    'ai-marketing':'courses/ai-marketing.html',
+    'integrated-strategy':'courses/integrated-strategy.html',
+    'programming':'courses/programming.html'
+  };
+  const dest = courseMap[courseKey];
+  if(dest) location.href = dest;
+  else history.back();
+}
+
+// ─── RESUME POSITION ───────────────────────────────────────────
+function saveResumePos(lecId, idx){
+  try{
+    const data = JSON.parse(localStorage.getItem(RESUME_KEY)||'{}');
+    data[lecId] = idx;
+    localStorage.setItem(RESUME_KEY, JSON.stringify(data));
+  }catch(e){}
+}
+function getResumePos(lecId){
+  try{
+    const data = JSON.parse(localStorage.getItem(RESUME_KEY)||'{}');
+    return data[lecId]||0;
+  }catch(e){ return 0; }
+}
+
+// ─── NOTES FONT SIZE ───────────────────────────────────────────
+let notesFontSize = 14; // px base
+function changeNotesFont(delta){
+  notesFontSize = Math.min(22, Math.max(10, notesFontSize + delta));
+  document.querySelectorAll('.notes-text').forEach(el=>el.style.fontSize=notesFontSize+'px');
+  document.querySelectorAll('.nfc-label').forEach(el=>el.textContent = notesFontSize+'px');
+}
+
+// ─── MEDIA-ONLY MODE ───────────────────────────────────────────
+let mediaOnly = false;
+function toggleMediaOnly(){
+  mediaOnly = !mediaOnly;
+  document.querySelectorAll('.slide-inner').forEach(el=>el.classList.toggle('media-only', mediaOnly));
+  const btn = document.getElementById('mediaOnlyBtn');
+  btn.classList.toggle('active', mediaOnly);
+  btn.style.color = mediaOnly ? 'var(--pink)' : '';
+  showToast(mediaOnly ? 'وضع الميديا الكاملة' : 'وضع عادي');
+}
+
+// ─── SLIDE SEARCH ──────────────────────────────────────────────
+function filterSlides(query){
+  const q = query.trim().toLowerCase();
+  document.querySelectorAll('.slide-thumb-item').forEach((el,i)=>{
+    const title = (slides[i]?.title||'').toLowerCase();
+    const notes = (slides[i]?.notes||'').toLowerCase();
+    el.style.display = (!q || title.includes(q) || notes.includes(q)) ? '' : 'none';
+  });
+}
+
+// ─── AUTO-PLAY ─────────────────────────────────────────────────
+let apTimer = null;
+let apInterval = 5000; // 5 seconds
+let apProgress = 0;
+let apBarTimer = null;
+
+function toggleAutoPlay(){
+  if(apTimer){ stopAutoPlay(); }
+  else { startAutoPlay(); }
+}
+function startAutoPlay(){
+  if(currentIdx >= slides.length-1) gotoSlide(0, true);
+  apTimer = setInterval(()=>{
+    if(currentIdx >= slides.length-1){ stopAutoPlay(); return; }
+    gotoNext();
+  }, apInterval);
+  // progress bar
+  apProgress = 0;
+  document.getElementById('apBar').style.width='0%';
+  apBarTimer = setInterval(()=>{
+    apProgress += 100/(apInterval/100);
+    if(apProgress>=100) apProgress=0;
+    document.getElementById('apBar').style.width = apProgress+'%';
+  }, 100);
+  document.getElementById('apBadge').classList.add('show');
+  document.getElementById('autoPlayBtn').innerHTML='<i class="fas fa-pause"></i>';
+  document.getElementById('autoPlayBtn').style.color='var(--green)';
+  showToast('تشغيل تلقائي كل 5 ثوانٍ');
+}
+function stopAutoPlay(){
+  clearInterval(apTimer); apTimer=null;
+  clearInterval(apBarTimer); apBarTimer=null;
+  document.getElementById('apBar').style.width='0%';
+  document.getElementById('apBadge').classList.remove('show');
+  document.getElementById('autoPlayBtn').innerHTML='<i class="fas fa-play"></i>';
+  document.getElementById('autoPlayBtn').style.color='';
+}
+
+// ─── SHORTCUTS MODAL ───────────────────────────────────────────
+function toggleShortcuts(){
+  document.getElementById('shortcutsModal').classList.toggle('show');
 }
 
 // ─── RENDER ────────────────────────────────────────────────────
@@ -625,7 +922,8 @@ function buildSlideHTML(s, i){
   // media content
   let mediaHTML = '';
   if(s.type==='image'&&isRealSrc){
-    mediaHTML = `<div class="slide-media-frame"><img src="${s.src}" alt="${s.title||''}"></div>`;
+    mediaHTML = `<div class="slide-media-frame"><img src="${s.src}" alt="${s.title||\'\'}" onclick="openLightbox('${s.src.replace(/'/g,"\\'")}')"
+      style="cursor:zoom-in" title="اضغط للتكبير"></div>`;
   } else if(s.type==='video'&&s.src){
     const isYT = s.src.includes('youtube.com')||s.src.includes('youtu.be');
     if(isYT){
@@ -663,6 +961,11 @@ function buildSlideHTML(s, i){
         <div class="notes-text">${notesHTML}</div>
         <div class="notes-extras">
           <div class="notes-slide-num"><i class="fas fa-layer-group"></i> الشريحة ${i+1} من ${slides.length}</div>
+          <div class="notes-font-ctrl">
+            <button class="nfc-btn" onclick="changeNotesFont(-1)" title="تصغير الخط"><i class="fas fa-minus"></i></button>
+            <span class="nfc-label" id="fontSizeLabel">خط الشرح</span>
+            <button class="nfc-btn" onclick="changeNotesFont(1)" title="تكبير الخط"><i class="fas fa-plus"></i></button>
+          </div>
         </div>
       </div>
     </div>
@@ -683,6 +986,10 @@ function renderDots(){
 function gotoSlide(newIdx, isClick=false){
   if(isAnimating || newIdx===currentIdx) return;
   if(newIdx<0||newIdx>=slides.length) return;
+  // save resume position
+  const params = new URLSearchParams(location.search);
+  const lecId = params.get('id');
+  if(lecId) saveResumePos(lecId, newIdx);
 
   const dir = newIdx>currentIdx?'next':'prev';
   const oldEl = document.getElementById('slide-'+currentIdx);
@@ -798,12 +1105,10 @@ document.addEventListener('keydown',e=>{
     case 'ArrowUp':    gotoPrev(); break;
     case 'ArrowDown':  gotoNext(); break;
     case 'f': case 'F': toggleFullscreen(); break;
-    case 'Home': goFirst(); break;
-    case 'End':  goLast(); break;
-  }
-});
-
-// ─── TOUCH SWIPE ───────────────────────────────────────────────
+      case 'm': case 'M': toggleMediaOnly(); break;
+      case ' ': e.preventDefault(); toggleAutoPlay(); break;
+      case '?': toggleShortcuts(); break;
+      case 'Escape': closeLightbox(); document.getElementById('shortcutsModal').classList.remove('show'); break;
 let touchStartX=0, touchStartY=0;
 document.getElementById('stage').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;},{passive:true});
 document.getElementById('stage').addEventListener('touchend',e=>{

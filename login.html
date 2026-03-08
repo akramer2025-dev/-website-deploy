@@ -4,643 +4,567 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول | Akram Mostafa</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23667eea'/><text y='.9em' font-size='70' x='15'>▶</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <!-- LOGIN PAGE v2 - role selection -->
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            font-family: 'Cairo', sans-serif;
-            background: #0a1f44;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            font-family:'Cairo',sans-serif;
+            background:#070f20;
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:relative;
+            overflow-x:hidden;
+            overflow-y:auto;
+            padding:40px 16px;
         }
-
         body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
+            content:'';
+            position:fixed; inset:0;
             background:
-                radial-gradient(ellipse at 20% 50%, rgba(102,126,234,.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(118,75,162,.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 60% 80%, rgba(233,78,119,.1) 0%, transparent 50%);
-            pointer-events: none;
+                radial-gradient(ellipse at 15% 40%, rgba(233,78,119,.13) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 15%, rgba(118,75,162,.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 55% 85%, rgba(247,147,30,.09) 0%, transparent 50%);
+            pointer-events:none; z-index:0;
         }
-
-        .orb { position:fixed; border-radius:50%; filter:blur(80px); opacity:.12; animation:floatOrb 8s ease-in-out infinite; pointer-events:none; }
-        .orb-1 { width:400px; height:400px; background:#667eea; top:-100px; right:-100px; }
-        .orb-2 { width:300px; height:300px; background:#e94e77; bottom:-80px; left:-80px; animation-delay:3s; }
-        .orb-3 { width:250px; height:250px; background:#f7931e; top:40%; left:30%; animation-delay:5s; }
-        @keyframes floatOrb { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(30px,-30px) scale(1.05)} }
-
-        .back-btn { position:fixed; top:25px; right:30px; display:flex; align-items:center; gap:8px; color:rgba(255,255,255,.7); text-decoration:none; font-size:14px; font-weight:600; transition:all .3s; z-index:10; }
-        .back-btn:hover { color:#fff; transform:translateX(5px); }
-
-        /* ──── WRAPPER ──── */
-        .login-wrapper { width:100%; max-width:480px; padding:20px; position:relative; z-index:5; }
-
-        /* ──── STEP: ROLE SELECTION ──── */
-        #stepRole { animation:slideUp .45s ease-out both; }
-        .role-logo { text-align:center; margin-bottom:32px; }
-        .role-logo .logo-icon { width:70px; height:70px; background:linear-gradient(135deg,#667eea,#764ba2); border-radius:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; box-shadow:0 10px 30px rgba(102,126,234,.4); }
-        .role-logo .logo-icon i { font-size:30px; color:#fff; }
-        .role-logo h1 { font-size:22px; font-weight:900; color:#fff; margin-bottom:6px; }
-        .role-logo p  { font-size:14px; color:rgba(255,255,255,.45); }
-
-        .role-title { text-align:center; font-size:17px; font-weight:700; color:rgba(255,255,255,.8); margin-bottom:24px; }
-
-        .role-cards { display:flex; gap:16px; }
-        .role-card { flex:1; padding:28px 16px; border-radius:20px; cursor:pointer; transition:all .25s; border:2px solid rgba(255,255,255,.08); background:rgba(255,255,255,.04); display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; backdrop-filter:blur(16px); }
-        .role-card:hover { transform:translateY(-4px); }
-
-        /* ADMIN card — red */
-        .role-card.admin-card { border-color:rgba(239,68,68,.25); background:rgba(239,68,68,.06); }
-        .role-card.admin-card:hover { border-color:rgba(239,68,68,.55); background:rgba(239,68,68,.12); box-shadow:0 12px 35px rgba(239,68,68,.2); }
-        .role-card.admin-card .rc-ico { background:linear-gradient(135deg,#ef4444,#b91c1c); box-shadow:0 8px 24px rgba(239,68,68,.35); }
-        .role-card.admin-card .rc-label { color:#fca5a5; }
-        .role-card.admin-card .rc-sub   { color:rgba(252,165,165,.55); }
-
-        /* STUDENT card — purple */
-        .role-card.student-card { border-color:rgba(167,139,250,.25); background:rgba(167,139,250,.06); }
-        .role-card.student-card:hover { border-color:rgba(167,139,250,.55); background:rgba(167,139,250,.12); box-shadow:0 12px 35px rgba(167,139,250,.2); }
-        .role-card.student-card .rc-ico { background:linear-gradient(135deg,#a78bfa,#6d28d9); box-shadow:0 8px 24px rgba(167,139,250,.35); }
-        .role-card.student-card .rc-label { color:#c4b5fd; }
-        .role-card.student-card .rc-sub   { color:rgba(196,181,253,.55); }
-
-        .rc-ico { width:60px; height:60px; border-radius:16px; display:flex; align-items:center; justify-content:center; }
-        .rc-ico i { font-size:26px; color:#fff; }
-        .rc-label { font-size:17px; font-weight:900; }
-        .rc-sub   { font-size:12px; }
-
-        /* ──── SHARED CARD ──── */
-        .login-card { background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.1); border-radius:28px; padding:44px 40px; backdrop-filter:blur(20px); box-shadow:0 25px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08); animation:slideUp .45s ease-out both; }
-        @keyframes slideUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
-
-        /* ADMIN card override */
-        #stepAdmin .login-card { border-color:rgba(239,68,68,.25); background:rgba(239,68,68,.04); }
-
-        /* ──── FORM HEADER ──── */
-        .form-head { display:flex; align-items:center; gap:14px; margin-bottom:28px; }
-        .form-head-ico { width:50px; height:50px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-        .form-head-ico i { font-size:22px; color:#fff; }
-        .admin-head .form-head-ico   { background:linear-gradient(135deg,#ef4444,#b91c1c); box-shadow:0 6px 20px rgba(239,68,68,.35); }
-        .student-head .form-head-ico { background:linear-gradient(135deg,#a78bfa,#6d28d9); box-shadow:0 6px 20px rgba(167,139,250,.35); }
-        .form-head-text h2 { font-size:18px; font-weight:900; color:#fff; margin-bottom:3px; }
-        .form-head-text p  { font-size:12px; color:rgba(255,255,255,.4); }
-
-        /* ──── ADMIN WARNING BADGE ──── */
-        .admin-warning { display:flex; align-items:center; gap:10px; background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.25); border-radius:12px; padding:11px 14px; margin-bottom:22px; color:#fca5a5; font-size:12px; font-weight:600; }
-        .admin-warning i { font-size:15px; flex-shrink:0; }
-
-        /* ──── FIELDS ──── */
-        .form-group { margin-bottom:18px; position:relative; }
-        .form-group label { display:block; font-size:13px; font-weight:600; color:rgba(255,255,255,.65); margin-bottom:7px; }
-        .input-wrapper { position:relative; }
-        .input-wrapper > i.field-ico { position:absolute; right:16px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,.3); font-size:15px; pointer-events:none; transition:color .3s; }
-        .input-wrapper input,
-        .input-wrapper select,
-        .input-wrapper textarea { width:100%; padding:13px 46px 13px 16px; background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.1); border-radius:13px; color:#fff; font-family:'Cairo',sans-serif; font-size:14px; font-weight:600; outline:none; transition:all .3s; direction:rtl; resize:none; }
-        .input-wrapper textarea { padding-top:11px; padding-bottom:11px; height:80px; }
-        .input-wrapper select option { background:#1a2f5e; color:#fff; }
-        .input-wrapper input::placeholder,
-        .input-wrapper textarea::placeholder { color:rgba(255,255,255,.22); font-weight:400; }
-
-        /* Admin — red focus */
-        #stepAdmin .input-wrapper input:focus { border-color:#ef4444; background:rgba(239,68,68,.07); box-shadow:0 0 0 4px rgba(239,68,68,.13); }
-        #stepAdmin .input-wrapper input:focus ~ i.field-ico { color:#ef4444; }
-
-        /* Student — purple focus */
-        #stepStudent .input-wrapper input:focus,
-        #stepRequest .input-wrapper input:focus,
-        #stepRequest .input-wrapper select:focus,
-        #stepRequest .input-wrapper textarea:focus { border-color:#a78bfa; background:rgba(167,139,250,.07); box-shadow:0 0 0 4px rgba(167,139,250,.13); }
-        #stepStudent .input-wrapper input:focus ~ i.field-ico { color:#a78bfa; }
-
-        .toggle-password { position:absolute; left:13px; top:50%; transform:translateY(-50%); background:none; border:none; color:rgba(255,255,255,.3); cursor:pointer; font-size:14px; padding:4px; transition:color .3s; }
-        .toggle-password:hover { color:rgba(255,255,255,.7); }
-
-        /* ──── MESSAGES ──── */
-        .error-msg   { display:none; align-items:center; gap:8px; background:rgba(233,78,119,.12); border:1px solid rgba(233,78,119,.3); border-radius:12px; padding:11px 15px; color:#ff6b8a; font-size:13px; font-weight:600; margin-bottom:18px; }
-        .error-msg.show { display:flex; }
-        .success-msg { display:none; align-items:center; gap:8px; background:rgba(37,211,102,.12); border:1px solid rgba(37,211,102,.3); border-radius:12px; padding:11px 15px; color:#25D366; font-size:13px; font-weight:700; margin-bottom:18px; }
-        .success-msg.show { display:flex; }
-
-        /* ──── BUTTONS ──── */
-        .btn-submit { width:100%; padding:14px; border:none; border-radius:13px; color:#fff; font-family:'Cairo',sans-serif; font-size:15px; font-weight:700; cursor:pointer; transition:all .3s; display:flex; align-items:center; justify-content:center; gap:10px; }
-        .btn-submit:hover  { transform:translateY(-2px); }
-        .btn-submit:active { transform:translateY(0); }
-        .btn-submit:disabled { opacity:.65; cursor:not-allowed; transform:none; }
-        .btn-submit .spinner { display:none; width:17px; height:17px; border:2.5px solid rgba(255,255,255,.35); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; }
-        .btn-submit.loading .spinner   { display:block; }
-        .btn-submit.loading .btn-text  { display:none; }
+        .orb { position:fixed; border-radius:50%; opacity:.1; pointer-events:none; z-index:0; }
+        .orb-1 { width:380px; height:380px; background:radial-gradient(circle,#e94e77,transparent 70%); top:-80px; right:-80px; }
+        .orb-2 { width:320px; height:320px; background:radial-gradient(circle,#667eea,transparent 70%); bottom:-60px; left:-60px; }
+        .back-btn {
+            position:fixed; top:20px; right:24px;
+            display:flex; align-items:center; gap:7px;
+            color:rgba(255,255,255,.5); text-decoration:none;
+            font-size:13px; font-weight:600;
+            transition:color .25s, transform .25s; z-index:20;
+        }
+        .back-btn:hover { color:#fff; transform:translateX(4px); }
+        .login-wrapper { width:100%; max-width:460px; position:relative; z-index:5; }
+        .login-logo { text-align:center; margin-bottom:28px; }
+        .login-logo img { height:88px; width:auto; max-width:280px; object-fit:contain; }
+        .login-logo .tagline { font-size:13px; color:rgba(255,255,255,.3); margin-top:8px; }
+        .login-card {
+            background:rgba(255,255,255,.04);
+            border:1.5px solid rgba(255,255,255,.09);
+            border-radius:24px; padding:38px 34px;
+            box-shadow:0 24px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.07);
+            animation:slideUp .4s ease both;
+        }
+        @keyframes slideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+        .card-title { font-size:20px; font-weight:900; color:#fff; margin-bottom:4px; }
+        .card-sub { font-size:13px; color:rgba(255,255,255,.35); margin-bottom:26px; }
+        .form-group { margin-bottom:17px; }
+        .form-group label {
+            display:block; font-size:12px; font-weight:700;
+            color:rgba(255,255,255,.5); margin-bottom:7px;
+            text-transform:uppercase; letter-spacing:.6px;
+        }
+        .input-wrap { position:relative; }
+        .input-wrap .ico {
+            position:absolute; right:14px; top:50%;
+            transform:translateY(-50%);
+            color:rgba(255,255,255,.22); font-size:15px;
+            pointer-events:none; transition:color .3s;
+        }
+        .input-wrap input {
+            width:100%; padding:13px 44px 13px 44px;
+            background:rgba(255,255,255,.05);
+            border:1.5px solid rgba(255,255,255,.1);
+            border-radius:13px; color:#fff;
+            font-family:'Cairo',sans-serif;
+            font-size:14px; font-weight:600; outline:none;
+            transition:border-color .25s, background .25s, box-shadow .25s;
+            direction:rtl;
+        }
+        .input-wrap input::placeholder { color:rgba(255,255,255,.18); font-weight:400; }
+        .input-wrap input:focus {
+            border-color:#e94e77;
+            background:rgba(233,78,119,.06);
+            box-shadow:0 0 0 4px rgba(233,78,119,.12);
+        }
+        .input-wrap input:focus ~ .ico { color:#e94e77; }
+        .toggle-pw {
+            position:absolute; left:13px; top:50%; transform:translateY(-50%);
+            background:none; border:none; color:rgba(255,255,255,.22);
+            cursor:pointer; font-size:14px; padding:4px; transition:color .25s;
+        }
+        .toggle-pw:hover { color:rgba(255,255,255,.6); }
+        .msg {
+            display:none; align-items:center; gap:9px;
+            border-radius:12px; padding:11px 14px;
+            font-size:13px; font-weight:600; margin-bottom:16px;
+        }
+        .msg.show { display:flex; }
+        .msg.error   { background:rgba(233,78,119,.12);  border:1px solid rgba(233,78,119,.3);  color:#ff6b8a; }
+        .msg.success { background:rgba(37,211,102,.1);   border:1px solid rgba(37,211,102,.3);  color:#4ade80; }
+        .msg.warn    { background:rgba(245,158,11,.09);  border:1px solid rgba(245,158,11,.28); color:#fbbf24; flex-direction:column; align-items:flex-start; gap:10px; }
+        .msg.warn .warn-actions { display:flex; gap:8px; width:100%; }
+        .msg.warn .warn-actions button {
+            flex:1; padding:8px 10px; border-radius:9px;
+            font-family:'Cairo',sans-serif; font-size:.78rem; font-weight:700; cursor:pointer;
+        }
+        .warn-confirm { background:rgba(245,158,11,.2); border:1px solid rgba(245,158,11,.4); color:#fbbf24; }
+        .warn-cancel  { background:transparent; border:1px solid rgba(255,255,255,.1); color:rgba(255,255,255,.35); }
+        .btn-login {
+            width:100%; padding:14px; border:none; border-radius:13px;
+            background:linear-gradient(135deg,#e94e77,#f7931e);
+            color:#fff; font-family:'Cairo',sans-serif;
+            font-size:15px; font-weight:900; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; gap:9px;
+            box-shadow:0 8px 24px rgba(233,78,119,.35);
+            transition:transform .25s, box-shadow .25s;
+        }
+        .btn-login:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 14px 32px rgba(233,78,119,.5); }
+        .btn-login:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+        .btn-login .spinner {
+            display:none; width:17px; height:17px;
+            border:2.5px solid rgba(255,255,255,.3);
+            border-top-color:#fff; border-radius:50%;
+            animation:spin .7s linear infinite;
+        }
+        .btn-login.loading .spinner { display:block; }
+        .btn-login.loading .btn-txt { display:none; }
         @keyframes spin { to{transform:rotate(360deg)} }
-
-        .btn-admin   { background:linear-gradient(135deg,#ef4444,#b91c1c); box-shadow:0 8px 24px rgba(239,68,68,.35); }
-        .btn-admin:hover { box-shadow:0 12px 32px rgba(239,68,68,.5); }
-        .btn-student { background:linear-gradient(135deg,#a78bfa,#6d28d9); box-shadow:0 8px 24px rgba(167,139,250,.35); }
-        .btn-student:hover { box-shadow:0 12px 32px rgba(167,139,250,.5); }
-
-        /* ──── BACK LINK ──── */
-        .back-role { display:flex; align-items:center; gap:6px; background:none; border:none; color:rgba(255,255,255,.4); font-family:'Cairo',sans-serif; font-size:13px; cursor:pointer; padding:0; margin-top:20px; transition:color .3s; }
-        .back-role:hover { color:rgba(255,255,255,.75); }
-
-        /* ──── DIVIDER ──── */
-        .divider { display:flex; align-items:center; gap:12px; margin:22px 0; color:rgba(255,255,255,.25); font-size:12px; }
-        .divider::before,.divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.08); }
-
-        /* ──── REQUEST LINK ──── */
-        .req-link { text-align:center; font-size:13px; color:rgba(255,255,255,.4); }
-        .req-link button { background:none; border:none; color:#c4b5fd; font-family:'Cairo',sans-serif; font-size:13px; font-weight:700; cursor:pointer; padding:0; transition:color .3s; }
-        .req-link button:hover { color:#e9d5ff; }
-
-        /* ──── REQUEST SUCCESS ──── */
-        .req-success-box { text-align:center; padding:20px 0; }
-        .req-success-box .rs-ico { width:70px; height:70px; background:rgba(37,211,102,.15); border:2px solid rgba(37,211,102,.3); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
-        .req-success-box .rs-ico i { font-size:30px; color:#25D366; }
-        .req-success-box h3 { font-size:18px; font-weight:900; color:#fff; margin-bottom:8px; }
-        .req-success-box p  { font-size:13px; color:rgba(255,255,255,.45); line-height:1.7; }
-
-        /* ──── STU HINT ──── */
-        .stu-id-hint { background:rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.15); border-radius:12px; padding:10px 14px; margin-bottom:18px; font-size:12px; color:rgba(196,181,253,.7); line-height:1.6; }
-        .stu-id-hint i { color:#a78bfa; margin-left:5px; }
-
-        /* ──── FOOTER ──── */
-        .login-footer { text-align:center; margin-top:24px; padding-top:20px; border-top:1px solid rgba(255,255,255,.06); color:rgba(255,255,255,.35); font-size:13px; }
-        .login-footer a { color:#a78bfa; text-decoration:none; font-weight:700; }
-        .login-footer a:hover { color:#c4b5fd; }
-        .login-copyright { text-align:center; margin-top:20px; color:rgba(255,255,255,.18); font-size:11px; }
-
-        @media(max-width:480px){
-            .login-card{padding:32px 24px;}
-            .role-cards{flex-direction:column;}
-            .back-btn{right:15px;top:15px;}
+        .divider {
+            display:flex; align-items:center; gap:10px;
+            margin:20px 0; color:rgba(255,255,255,.18); font-size:12px;
         }
+        .divider::before,.divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.07); }
+        .join-link { text-align:center; font-size:13px; color:rgba(255,255,255,.35); }
+        .join-link button {
+            background:none; border:none; color:#f7931e;
+            font-family:'Cairo',sans-serif; font-size:13px;
+            font-weight:700; cursor:pointer; padding:0; transition:color .25s;
+        }
+        .join-link button:hover { color:#fbbf24; }
+        .login-footer { text-align:center; margin-top:20px; font-size:12px; color:rgba(255,255,255,.2); }
+        .login-footer a { color:rgba(255,255,255,.35); text-decoration:none; }
+        .login-footer a:hover { color:rgba(255,255,255,.65); }
+        #joinPanel { display:none; }
+        .back-step {
+            display:flex; align-items:center; gap:6px;
+            background:none; border:none; color:rgba(255,255,255,.3);
+            font-family:'Cairo',sans-serif; font-size:13px;
+            cursor:pointer; padding:0; margin-top:18px; transition:color .25s;
+        }
+        .back-step:hover { color:rgba(255,255,255,.65); }
+        .success-box { text-align:center; padding:16px 0; }
+        .success-box .s-ico {
+            width:68px; height:68px;
+            background:rgba(37,211,102,.12); border:2px solid rgba(37,211,102,.3);
+            border-radius:50%; display:flex; align-items:center; justify-content:center;
+            margin:0 auto 14px; font-size:28px; color:#4ade80;
+        }
+        .success-box h3 { font-size:18px; font-weight:900; color:#fff; margin-bottom:8px; }
+        .success-box p  { font-size:13px; color:rgba(255,255,255,.38); line-height:1.75; }
+        @media(max-width:480px){
+            .login-card { padding:28px 20px; }
+            .login-logo img { height:72px; }
+        }
+
+        .courses-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px; }
+        .course-check {
+            display:flex; align-items:center; gap:10px; padding:10px 11px;
+            background:rgba(255,255,255,.03); border:1.5px solid rgba(255,255,255,.07);
+            border-radius:13px; cursor:pointer;
+            transition:background .2s, border-color .2s, box-shadow .2s;
+            user-select:none; position:relative; overflow:hidden;
+        }
+        .course-check:hover { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.13); }
+        .course-check input[type="checkbox"] { display:none; }
+        .ck-ico {
+            width:34px; height:34px; flex-shrink:0; border-radius:9px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:15px; color:#fff; transition:transform .2s;
+        }
+        .ck-txt { flex:1; min-width:0; }
+        .ck-name { font-size:12px; font-weight:800; color:rgba(255,255,255,.75); line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .ck-price { font-size:11px; font-weight:700; color:rgba(255,255,255,.38); margin-top:2px; }
+        .ck-price .free-tag { color:#4ade80; font-weight:800; }
+        .ck-box {
+            width:16px; height:16px; flex-shrink:0; border:1.5px solid rgba(255,255,255,.18);
+            border-radius:5px; display:flex; align-items:center; justify-content:center;
+            font-size:9px; color:transparent; transition:all .2s;
+        }
+        .course-check.sel { border-width:1.5px; box-shadow:0 2px 12px rgba(0,0,0,.25); }
+        .course-check.sel .ck-box { background:linear-gradient(135deg,#e94e77,#f7931e); border-color:transparent; color:#fff; }
+        .course-check.sel .ck-name { color:#fff; }
+        .course-check.sel .ck-price { color:rgba(255,255,255,.55); }
+        @media(max-width:400px){ .courses-grid{ grid-template-columns:1fr; } }
     </style>
+    <script src="/js/meta-pixel.js" defer></script>
 </head>
 <body>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-
-    <a href="index.html" class="back-btn">
-        <i class="fas fa-arrow-right"></i>
-        <span>العودة للرئيسية</span>
-    </a>
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-right"></i> الرئيسية</a>
 
     <div class="login-wrapper">
 
-        <!-- ══════════ STEP 1: اختيار الدور ══════════ -->
-        <div id="stepRole">
-            <div class="role-logo">
-                <div class="logo-icon"><i class="fas fa-play"></i></div>
-                <h1>AKRAM MOSTAFA</h1>
-                <p>منصة التسويق والإعلانات الرقمية</p>
+        <!-- LOGIN PANEL -->
+        <div id="loginPanel">
+            <div class="login-logo">
+                <img src="images/1772173627537.png" alt="Akram Mostafa">
+                <p class="tagline">منصة التسويق والإعلانات الرقمية</p>
             </div>
-            <p class="role-title">من أنت؟ اختر طريقة الدخول</p>
-            <div class="role-cards">
-                <div class="role-card admin-card" onclick="showStep('admin')">
-                    <div class="rc-ico"><i class="fas fa-shield-alt"></i></div>
-                    <span class="rc-label">مدير النظام</span>
-                    <span class="rc-sub">دخول الأدمن فقط</span>
-                </div>
-                <div class="role-card student-card" onclick="showStep('student')">
-                    <div class="rc-ico"><i class="fas fa-graduation-cap"></i></div>
-                    <span class="rc-label">طالب / عميل</span>
-                    <span class="rc-sub">دخول الطلاب المسجّلين</span>
-                </div>
-            </div>
-            <div class="login-footer">
-                <p>محتاج مساعدة؟ <a href="https://wa.me/00201555512778?text=محتاج%20مساعدة%20بخصوص%20تسجيل%20الدخول" target="_blank"><i class="fab fa-whatsapp"></i> تواصل معنا</a></p>
-            </div>
-        </div>
-
-        <!-- ══════════ STEP 2A: دخول الأدمن ══════════ -->
-        <div id="stepAdmin" style="display:none;">
             <div class="login-card">
-                <div class="form-head admin-head">
-                    <div class="form-head-ico"><i class="fas fa-shield-alt"></i></div>
-                    <div class="form-head-text">
-                        <h2>دخول مدير النظام</h2>
-                        <p>لوحة التحكم الكاملة</p>
+                <p class="card-title">مرحباً بك 👋</p>
+                <p class="card-sub">أدخل بياناتك وسيتم تحديد صلاحياتك تلقائياً</p>
+
+                <div class="msg warn" id="warnMsg">
+                    <span><i class="fas fa-exclamation-triangle" style="margin-left:6px;"></i>الحساب مفتوح على جهاز آخر — لو دخلت هنا هيتسجل خروج الجهاز الآخر تلقائياً.</span>
+                    <div class="warn-actions">
+                        <button class="warn-confirm" id="warnConfirmBtn"><i class="fas fa-bolt"></i> دخول هنا وإغلاق الجهاز الآخر</button>
+                        <button class="warn-cancel" onclick="hideWarn()">إلغاء</button>
                     </div>
                 </div>
-                <div class="admin-warning">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    هذه الصفحة مخصصة للمدير فقط — غير مصرح لغير المخوّلين
-                </div>
-                <div class="error-msg" id="adminError"><i class="fas fa-times-circle"></i><span id="adminErrTxt">بيانات المدير غير صحيحة</span></div>
-                <div class="success-msg" id="adminSuccess"><i class="fas fa-check-circle"></i><span>تم التحقق! جاري الدخول...</span></div>
-                <form onsubmit="handleAdminLogin(event)">
+                <div class="msg error" id="errMsg"><i class="fas fa-times-circle"></i><span id="errTxt">اسم المستخدم أو كلمة المرور غير صحيحة</span></div>
+                <div class="msg success" id="successMsg"><i class="fas fa-check-circle"></i><span id="successTxt">تم التحقق! جاري الدخول...</span></div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label><i class="fas fa-user" style="margin-left:5px;opacity:.6;"></i> اسم المستخدم</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="adminUser" placeholder="أدخل اسم المستخدم" autocomplete="username" required>
-                            <i class="fas fa-user field-ico"></i>
+                        <label>اسم المستخدم</label>
+                        <div class="input-wrap">
+                            <input type="text" id="loginUser" placeholder="أدخل اسم المستخدم" autocomplete="username" required>
+                            <i class="fas fa-user ico"></i>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-lock" style="margin-left:5px;opacity:.6;"></i> كلمة المرور</label>
-                        <div class="input-wrapper">
-                            <input type="password" id="adminPass" placeholder="أدخل كلمة المرور" autocomplete="current-password" required>
-                            <i class="fas fa-lock field-ico"></i>
-                            <button type="button" class="toggle-password" onclick="togglePw('adminPass',this)"><i class="fas fa-eye"></i></button>
+                        <label>كلمة المرور</label>
+                        <div class="input-wrap">
+                            <input type="password" id="loginPass" placeholder="أدخل كلمة المرور" autocomplete="current-password" required>
+                            <i class="fas fa-lock ico"></i>
+                            <button type="button" class="toggle-pw" onclick="togglePw(event)"><i class="fas fa-eye"></i></button>
                         </div>
                     </div>
-                    <button type="submit" class="btn-submit btn-admin" id="adminBtn">
+                    <button type="submit" class="btn-login" id="loginBtn">
                         <div class="spinner"></div>
-                        <span class="btn-text"><i class="fas fa-shield-alt"></i> دخول لوحة الأدمن</span>
+                        <span class="btn-txt"><i class="fas fa-sign-in-alt"></i> دخول</span>
                     </button>
                 </form>
-                <button class="back-role" onclick="showStep('role')">
-                    <i class="fas fa-arrow-right"></i> العودة لاختيار الدور
-                </button>
-            </div>
-            <p class="login-copyright">&copy; 2026 Akram Mostafa. جميع الحقوق محفوظة.</p>
-        </div>
 
-        <!-- ══════════ STEP 2B: دخول الطالب ══════════ -->
-        <div id="stepStudent" style="display:none;">
-            <div class="login-card">
-                <div class="form-head student-head">
-                    <div class="form-head-ico"><i class="fas fa-graduation-cap"></i></div>
-                    <div class="form-head-text">
-                        <h2>دخول الطالب</h2>
-                        <p>ادخل ببياناتك المسجّلة</p>
-                    </div>
-                </div>
-                <div class="stu-id-hint">
-                    <i class="fas fa-id-badge"></i>
-                    سجّل بـ <strong>اسم المستخدم</strong> أو <strong>الرقم التعريفي (STU-XXX)</strong> + كلمة المرور
-                </div>
-                <div class="error-msg" id="stuError"><i class="fas fa-times-circle"></i><span id="stuErrTxt">اسم المستخدم أو كلمة المرور غير صحيحة</span></div>
-                <div class="success-msg" id="stuSuccess"><i class="fas fa-check-circle"></i><span>تم تسجيل الدخول! جاري التحويل...</span></div>
-                <div id="stuWarn" style="display:none;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:14px;margin-bottom:12px;font-size:.83rem;color:#fbbf24;line-height:1.7;">
-                  <i class="fas fa-exclamation-triangle" style="margin-left:6px;"></i>
-                  الحساب ده مفتوح على جهاز تاني — لو دخلت من هنا هيتسجل خروج الجهاز الآخر تلقائياً.
-                  <div style="display:flex;gap:8px;margin-top:10px;">
-                    <button type="button" id="stuForceBtn" style="flex:1;padding:8px;background:rgba(245,158,11,.2);border:1px solid rgba(245,158,11,.4);border-radius:9px;color:#fbbf24;font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;"><i class="fas fa-bolt"></i> دخول هنا وإغلاق الجهاز الآخر</button>
-                    <button type="button" onclick="document.getElementById('stuWarn').style.display='none'" style="padding:8px 14px;background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:9px;color:rgba(255,255,255,.4);font-family:'Cairo',sans-serif;font-size:.8rem;cursor:pointer;">إلغاء</button>
-                  </div>
-                </div>
-                <form onsubmit="handleStudentLogin(event)">
-                    <div class="form-group">
-                        <label><i class="fas fa-user" style="margin-left:5px;opacity:.6;"></i> اسم المستخدم</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="stuUser" placeholder="أدخل اسم المستخدم" autocomplete="username" required>
-                            <i class="fas fa-user field-ico"></i>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-lock" style="margin-left:5px;opacity:.6;"></i> كلمة المرور</label>
-                        <div class="input-wrapper">
-                            <input type="password" id="stuPass" placeholder="أدخل كلمة المرور" autocomplete="current-password" required>
-                            <i class="fas fa-lock field-ico"></i>
-                            <button type="button" class="toggle-password" onclick="togglePw('stuPass',this)"><i class="fas fa-eye"></i></button>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-submit btn-student" id="stuBtn">
-                        <div class="spinner"></div>
-                        <span class="btn-text"><i class="fas fa-sign-in-alt"></i> دخول</span>
-                    </button>
-                </form>
                 <div class="divider">أو</div>
-                <div class="req-link">
-                    <span>طالب جديد ومش مسجّل؟ </span>
-                    <button onclick="showStep('request')">اطلب الانضمام للمنصة</button>
-                </div>
-                <button class="back-role" onclick="showStep('role')">
-                    <i class="fas fa-arrow-right"></i> العودة لاختيار الدور
-                </button>
+                <div class="join-link">طالب جديد؟ <a href="register.html" style="color:#e94e77;font-weight:800;text-decoration:none">سجّل دلوقتي ←</a></div>
             </div>
-            <p class="login-copyright">&copy; 2026 Akram Mostafa. جميع الحقوق محفوظة.</p>
+            <div class="login-footer">&copy; 2026 Akram Mostafa &nbsp;|&nbsp; <a href="https://wa.me/201555512778?text=مساعدة بخصوص تسجيل الدخول" target="_blank"><i class="fab fa-whatsapp"></i> مساعدة</a></div>
         </div>
 
-        <!-- ══════════ STEP 3: طلب انضمام ══════════ -->
-        <div id="stepRequest" style="display:none;">
+        <!-- JOIN PANEL REMOVED - redirect to register.html -->
+        <div id="joinPanel" style="display:none">
+            <div class="login-logo"><img src="images/1772173627537.png" alt="Akram Mostafa"></div>
             <div class="login-card">
-                <div class="form-head student-head">
-                    <div class="form-head-ico"><i class="fas fa-user-plus"></i></div>
-                    <div class="form-head-text">
-                        <h2>طلب الانضمام</h2>
-                        <p>سيقوم الأدمن بمراجعة طلبك ومنحك رقمك التعريفي</p>
-                    </div>
-                </div>
-
-                <!-- Success box -->
-                <div id="reqSuccessBox" style="display:none;text-align:center;padding:20px 0;">
-                    <div style="width:70px;height:70px;background:rgba(37,211,102,.15);border:2px solid rgba(37,211,102,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
-                        <i class="fas fa-check" style="font-size:30px;color:#25D366;"></i>
-                    </div>
-                    <h3 style="font-size:18px;font-weight:900;color:#fff;margin-bottom:8px;">تم إرسال طلبك!</h3>
-                    <p style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;">سيقوم الأدمن بمراجعة طلبك في أقرب وقت<br>وإرسال بياناتك (اسم المستخدم + كلمة المرور + رقمك التعريفي)</p>
-                    <button class="btn-submit btn-student" style="margin-top:22px;" onclick="showStep('student')">
-                        <span class="btn-text"><i class="fas fa-arrow-right"></i> رجوع لتسجيل الدخول</span>
+                <div id="joinSuccess" style="display:none;" class="success-box">
+                    <div class="s-ico"><i class="fas fa-check"></i></div>
+                    <h3>تم إرسال طلبك!</h3>
+                    <p>سيراجع الأدمن طلبك في أقرب وقت<br>وسيرسلك بيانات الدخول</p>
+                    <button class="btn-login" style="margin-top:22px;" onclick="showLogin()">
+                        <span class="btn-txt"><i class="fas fa-arrow-right"></i> رجوع لتسجيل الدخول</span>
                     </button>
                 </div>
-
-                <!-- Form -->
-                <div id="reqFormBox">
-                    <div class="error-msg" id="reqError"><i class="fas fa-times-circle"></i><span>يرجى ملء جميع الحقول المطلوبة</span></div>
+                <div id="joinForm">
+                    <p class="card-title">طلب الانضمام</p>
+                    <p class="card-sub">سيراجع الأدمن طلبك ويرسلك بيانات الدخول</p>
+                    <div class="msg error" id="joinErrMsg"><i class="fas fa-times-circle"></i><span id="joinErrTxt">يرجى ملء جميع الحقول المطلوبة</span></div>
                     <form onsubmit="handleJoinRequest(event)">
                         <div class="form-group">
-                            <label><i class="fas fa-user" style="margin-left:5px;opacity:.6;"></i> الاسم الكامل *</label>
-                            <div class="input-wrapper">
-                                <input type="text" id="reqName" placeholder="أدخل اسمك الكامل" required>
-                                <i class="fas fa-user field-ico"></i>
-                            </div>
+                            <label>الاسم الكامل *</label>
+                            <div class="input-wrap"><input type="text" id="reqName" placeholder="أدخل اسمك الكامل" required><i class="fas fa-user ico"></i></div>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-phone" style="margin-left:5px;opacity:.6;"></i> رقم الهاتف / واتساب *</label>
-                            <div class="input-wrapper">
-                                <input type="tel" id="reqPhone" placeholder="مثال: 01012345678" required>
-                                <i class="fas fa-phone field-ico"></i>
-                            </div>
+                            <label>رقم الهاتف / واتسآب *</label>
+                            <div class="input-wrap"><input type="tel" id="reqPhone" placeholder="مثال: 01012345678" required><i class="fas fa-phone ico"></i></div>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-at" style="margin-left:5px;opacity:.6;"></i> اسم المستخدم *</label>
-                            <div class="input-wrapper">
-                                <input type="text" id="reqUsername" placeholder="مثال: ahmed2025" autocomplete="username" required>
-                                <i class="fas fa-at field-ico"></i>
-                            </div>
+                            <label>اسم المستخدم المطلوب *</label>
+                            <div class="input-wrap"><input type="text" id="reqUsername" placeholder="مثال: ahmed2025" required><i class="fas fa-at ico"></i></div>
                         </div>
                         <div class="form-group">
-                            <label><i class="fas fa-lock" style="margin-left:5px;opacity:.6;"></i> كلمة المرور *</label>
-                            <div class="input-wrapper">
-                                <input type="password" id="reqPassword" placeholder="اختر كلمة مرور قوية" autocomplete="new-password" required>
-                                <i class="fas fa-lock field-ico"></i>
-                                <button type="button" class="toggle-password" onclick="togglePw('reqPassword',this)"><i class="fas fa-eye"></i></button>
+                            <label>كلمة المرور *</label>
+                            <div class="input-wrap">
+                                <input type="password" id="reqPassword" placeholder="اختر كلمة مرور قوية" required>
+                                <i class="fas fa-lock ico"></i>
+                                <button type="button" class="toggle-pw" onclick="togglePw(event)"><i class="fas fa-eye"></i></button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-book" style="margin-left:5px;opacity:.6;"></i> الكورس المهتم به</label>
-                            <div class="input-wrapper">
-                                <select id="reqCourse">
-                                    <option value="">اختر كورساً (اختياري)</option>
-                                    <option value="facebook-ads">إعلانات فيسبوك</option>
-                                    <option value="instagram">إنستجرام</option>
-                                    <option value="tiktok">تيك توك</option>
-                                    <option value="snapchat">سناب شات</option>
-                                    <option value="twitter">تويتر X</option>
-                                    <option value="programming">برمجة التطبيقات</option>
-                                    <option value="ai-marketing">تسويق بالذكاء الاصطناعي</option>
-                                    <option value="integrated-strategy">الاستراتيجية المتكاملة</option>
-                                    <option value="free">كورس مجاني</option>
-                                </select>
-                                <i class="fas fa-book field-ico"></i>
+                                                <div class="form-group">
+                            <label>الكورسات المهتم بها (اختياري)</label>
+                            <div class="courses-grid" id="coursesGrid">
+
+                                <label class="course-check" style="border-color:rgba(24,119,242,.25)">
+                                    <input type="checkbox" value="إعلانات فيسبوك" onchange="this.closest('.course-check').classList.toggle('sel',this.checked)">
+                                    <span class="ck-ico" style="background:linear-gradient(135deg,#1877F2,#0466c8)"><i class="fab fa-facebook-f"></i></span>
+                                    <span class="ck-txt">
+                                        <span class="ck-name">إعلانات فيسبوك</span>
+                                        <span class="ck-price">999 جنيه</span>
+                                    </span>
+                                    <span class="ck-box"><i class="fas fa-check"></i></span>
+                                </label>
+
+                                <label class="course-check" style="border-color:rgba(225,48,108,.25)">
+                                    <input type="checkbox" value="إنستغرام للبيزنس" onchange="this.closest('.course-check').classList.toggle('sel',this.checked)">
+                                    <span class="ck-ico" style="background:linear-gradient(135deg,#E1306C,#833AB4)"><i class="fab fa-instagram"></i></span>
+                                    <span class="ck-txt">
+                                        <span class="ck-name">إنستغرام للبيزنس</span>
+                                        <span class="ck-price">799 جنيه</span>
+                                    </span>
+                                    <span class="ck-box"><i class="fas fa-check"></i></span>
+                                </label>
+
+                                <label class="course-check" style="border-color:rgba(105,201,208,.2)">
+                                    <input type="checkbox" value="تيك توك للبيزنس" onchange="this.closest('.course-check').classList.toggle('sel',this.checked)">
+                                    <span class="ck-ico" style="background:linear-gradient(135deg,#111,#444)"><i class="fab fa-tiktok"></i></span>
+                                    <span class="ck-txt">
+                                        <span class="ck-name">تيك توك للبيزنس</span>
+                                        <span class="ck-price">899 جنيه</span>
+                                    </span>
+                                    <span class="ck-box"><i class="fas fa-check"></i></span>
+                                </label>
+
+                                <label class="course-check" style="border-color:rgba(240,192,0,.2)">
+                                    <input type="checkbox" value="سناب شات للبيزنس" onchange="this.closest('.course-check').classList.toggle('sel',this.checked)">
+                                    <span class="ck-ico" style="background:linear-gradient(135deg,#f0c000,#e6ac00)"><i class="fab fa-snapchat-ghost" style="color:#222"></i></span>
+                                    <span class="ck-txt">
+                                        <span class="ck-name">سناب شات للبيزنس</span>
+                                        <span class="ck-price">699 جنيه</span>
+                                    </span>
+                                    <span class="ck-box"><i class="fas fa-check"></i></span>
+                                </label>
+
+                                <label class="course-check" style="border-color:rgba(29,161,242,.25)">
+                                    <input type="checkbox" value="تويتر / X للبيزنس" onchange="this.closest('.course-check').classList.toggle('sel',this.checked)">
+                                    <span class="ck-ico" style="background:linear-gradient(135deg,#1DA1F2,#0d8ecf)"><i class="fab fa-twitter"></i></span>
+                                    <span class="ck-txt">
+                                        <span class="ck-name">تويتر / X للبيزنس</span>
+                                        <span class="ck-price">699 جنيه</span>
+                                    </span>
+                                    <span class="ck-box"><i class="fas fa-check"></i></span>
+                                </label>
+
+                                <label class="course-check" style="border-color:rgba(247,147,30,.25)">
+                                    <input type="checkbox" value="استراتيجية متكاملة" onchange="this.closest('.course-check').classList.toggle('sel',this.checked)">
+                                    <span class="ck-ico" style="background:linear-gradient(135deg,#f7931e,#e07800)"><i class="fas fa-chess-king"></i></span>
+                                    <span class="ck-txt">
+                                        <span class="ck-name">استراتيجية متكاملة</span>
+                                        <span class="ck-price">1,499 جنيه</span>
+                                    </span>
+                                    <span class="ck-box"><i class="fas fa-check"></i></span>
+                                </label>
+
+                                <label class="course-check" style="border-color:rgba(99,102,241,.25)">
+                                    <input type="checkbox" value="كورس البرمجة" onchange="this.closest('.course-check').classList.toggle('sel',this.checked)">
+                                    <span class="ck-ico" style="background:linear-gradient(135deg,#6366f1,#4338ca)"><i class="fas fa-code"></i></span>
+                                    <span class="ck-txt">
+                                        <span class="ck-name">كورس البرمجة</span>
+                                        <span class="ck-price">1,299 جنيه</span>
+                                    </span>
+                                    <span class="ck-box"><i class="fas fa-check"></i></span>
+                                </label>
+
+                                <label class="course-check" style="border-color:rgba(16,185,129,.25)">
+                                    <input type="checkbox" value="التسويق بالذكاء الاصطناعي" onchange="this.closest('.course-check').classList.toggle('sel',this.checked)">
+                                    <span class="ck-ico" style="background:linear-gradient(135deg,#10b981,#059669)"><i class="fas fa-robot"></i></span>
+                                    <span class="ck-txt">
+                                        <span class="ck-name">ذكاء اصطناعي</span>
+                                        <span class="ck-price"><span class="free-tag">🎁 مجاناً رمضان</span></span>
+                                    </span>
+                                    <span class="ck-box"><i class="fas fa-check"></i></span>
+                                </label>
+
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-comment" style="margin-left:5px;opacity:.6;"></i> ملاحظة إضافية</label>
-                            <div class="input-wrapper">
-                                <textarea id="reqNote" placeholder="أي معلومة إضافية (اختياري)" style="height:70px;"></textarea>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn-submit btn-student" id="reqBtn">
+                        <button type="submit" class="btn-login" id="reqBtn">
                             <div class="spinner"></div>
-                            <span class="btn-text"><i class="fas fa-paper-plane"></i> إرسال الطلب</span>
+                            <span class="btn-txt"><i class="fas fa-paper-plane"></i> إرسال الطلب</span>
                         </button>
                     </form>
-                    <button class="back-role" onclick="showStep('student')">
-                        <i class="fas fa-arrow-right"></i> العودة لتسجيل الدخول
-                    </button>
+                    <button class="back-step" onclick="showLogin()"><i class="fas fa-arrow-right"></i> رجوع لتسجيل الدخول</button>
                 </div>
             </div>
-            <p class="login-copyright">&copy; 2026 Akram Mostafa. جميع الحقوق محفوظة.</p>
+            <div class="login-footer">&copy; 2026 Akram Mostafa</div>
         </div>
 
-    </div><!-- /login-wrapper -->
+    </div>
 
     <script>
-        /* ─── NAVIGATION ─── */
-        const STEPS = ['stepRole','stepAdmin','stepStudent','stepRequest'];
-        const MAP   = { role:'stepRole', admin:'stepAdmin', student:'stepStudent', request:'stepRequest' };
+    /* AUTO-REDIRECT IF ALREADY LOGGED IN */
+    (function() {
+        const ls = localStorage;
+        // أدمن - يكفي وجود am_admin_auth بدون شرط akram_logged_in
+        if (ls.getItem('am_admin_auth') === '1') {
+            window.location.replace('admin/index.html'); return;
+        }
+        // طالب - يشترط akram_logged_in مع وجود user_id
+        if (ls.getItem('akram_logged_in') === 'true' && ls.getItem('akram_user_id')) {
+            window.location.replace('my-courses.html'); return;
+        }
+    })();
 
-        function showStep(key){
-            STEPS.forEach(id=>{ document.getElementById(id).style.display='none'; });
-            document.getElementById(MAP[key]).style.display='block';
-            document.querySelectorAll('.error-msg,.success-msg').forEach(el=>el.classList.remove('show'));
+    /* FIREBASE */
+    const _fb = firebase.initializeApp({
+        apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+        authDomain: "akramplatform-2c6be.firebaseapp.com",
+        projectId: "akramplatform-2c6be",
+        storageBucket: "akramplatform-2c6be.firebasestorage.app",
+        messagingSenderId: "132959399686",
+        appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+    }, 'login');
+    const _db = firebase.firestore(_fb);
+
+    const ADMINS = { "akram": "Aazxc" };
+    let _pending = null;
+
+    function withTimeout(promise, ms) {
+        return Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+    }
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        const user = document.getElementById('loginUser').value.trim();
+        const pass = document.getElementById('loginPass').value;
+        const btn  = document.getElementById('loginBtn');
+        setLoading(btn, true); clearMsgs(); hideWarn();
+
+        if (!user || !pass) {
+            setLoading(btn, false);
+            showError('من فضلك أدخل اسم المستخدم وكلمة المرور');
+            shakeCard(); return;
         }
 
-        /* ─── FIREBASE INIT ─── */
-        const _fbLogin = firebase.initializeApp({
-            apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
-            authDomain: "akramplatform-2c6be.firebaseapp.com",
-            projectId: "akramplatform-2c6be",
-            storageBucket: "akramplatform-2c6be.firebasestorage.app",
-            messagingSenderId: "132959399686",
-            appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
-        }, 'login');
-        const _ldb = firebase.firestore(_fbLogin);
-
-        /* ─── ADMIN LOGIN ─── */
-        const ADMIN_ACCOUNTS = {
-            "akram": { password:"Aazxc", name:"Akram Mostafa" }
-        };
-
-        function handleAdminLogin(e){
-            e.preventDefault();
-            const user = document.getElementById('adminUser').value.trim();
-            const pass = document.getElementById('adminPass').value;
-            const btn  = document.getElementById('adminBtn');
-            setLoading(btn,true);
-            clearMsgs('admin');
-            setTimeout(()=>{
-                const acc = ADMIN_ACCOUNTS[user] || ADMIN_ACCOUNTS[user.toLowerCase()];
-                if(acc && acc.password===pass){
-                    document.getElementById('adminSuccess').classList.add('show');
-                    sessionStorage.setItem('akram_logged_in','true');
-                    sessionStorage.setItem('akram_client_name', acc.name);
-                    sessionStorage.setItem('akram_username', user);
-                    sessionStorage.setItem('am_admin_auth','1');
-                    setLoading(btn,false);
-                    setTimeout(()=>{ window.location.href='admin/index.html'; },1100);
-                } else {
-                    document.getElementById('adminErrTxt').textContent='بيانات المدير غير صحيحة';
-                    document.getElementById('adminError').classList.add('show');
-                    shakeCard('stepAdmin');
-                    setLoading(btn,false);
-                }
-            },800);
+        // Admin check
+        if (ADMINS[user] !== undefined && ADMINS[user] === pass) {
+            sessionStorage.setItem('akram_logged_in', 'true');
+            sessionStorage.setItem('akram_client_name', 'Akram Mostafa');
+            sessionStorage.setItem('akram_username', user);
+            sessionStorage.setItem('am_admin_auth', '1');
+            localStorage.setItem('akram_logged_in', 'true');
+            localStorage.setItem('akram_client_name', 'Akram Mostafa');
+            localStorage.setItem('akram_username', user);
+            localStorage.setItem('am_admin_auth', '1');
+            showSuccess('مرحباً بك يا أدمن! جاري الدخول...');
+            setLoading(btn, false);
+            setTimeout(() => window.location.href = 'admin/index.html', 1100);
+            return;
         }
 
-        /* ─── STUDENT LOGIN ─── */
-        async function handleStudentLogin(e){
-            e.preventDefault();
-            const user = document.getElementById('stuUser').value.trim();
-            const pass = document.getElementById('stuPass').value;
-            const btn  = document.getElementById('stuBtn');
-            setLoading(btn,true);
-            clearMsgs('stu');
+        // Check cached users first
+        let found = null;
+        try {
+            const cached = JSON.parse(localStorage.getItem('am_users') || '[]');
+            found = cached.find(u =>
+                (u.username === user || u.id === user || u.id === user.toUpperCase()) &&
+                u.password === pass
+            );
+        } catch(_) {}
 
-            function loginSuccess(found){
-                const _tok='st_'+Date.now()+'_'+Math.random().toString(36).slice(2);
-                sessionStorage.setItem('akram_session_token',_tok);
-                sessionStorage.setItem('akram_session_uid',found.id);
-                try{ const _u={}; _u['s_'+found.id]={token:_tok,loginAt:Date.now()}; _ldb.collection('admin_data').doc('active_sessions').set(_u,{merge:true}).catch(()=>{}); }catch(e){}
-                document.getElementById('stuSuccess').classList.add('show');
-                sessionStorage.setItem('akram_logged_in','true');
-                sessionStorage.setItem('akram_user_id', found.id);
-                sessionStorage.setItem('akram_student_id', found.id);
-                sessionStorage.setItem('akram_client_name', found.name||user);
-                setLoading(btn,false);
-                setTimeout(()=>{ window.location.href='my-courses.html'; },1100);
-            }
-            function loginFail(wrongPass){
-                document.getElementById('stuWarn').style.display='none';
-                document.getElementById('stuErrTxt').textContent = wrongPass
-                    ? 'كلمة المرور غير صحيحة'
-                    : 'اسم المستخدم أو الرقم التعريفي غير موجود — اطلب الانضمام إذا لم تكن مسجلاً';
-                document.getElementById('stuError').classList.add('show');
-                shakeCard('stepStudent');
-                setLoading(btn,false);
-            }
-            async function checkAndLogin(found){
-                try{
-                    const sesSnap=await _ldb.collection('admin_data').doc('active_sessions').get();
-                    if(sesSnap.exists){
-                        const sf=sesSnap.data()['s_'+found.id];
-                        if(sf&&sf.token&&(Date.now()-sf.loginAt)<8*3600*1000){
-                            setLoading(btn,false);
-                            document.getElementById('stuWarn').style.display='block';
-                            document.getElementById('stuForceBtn').onclick=()=>{
-                                document.getElementById('stuWarn').style.display='none';
-                                setLoading(btn,true); loginSuccess(found);
-                            };
-                            return;
-                        }
-                    }
-                }catch(e){}
-                loginSuccess(found);
-            }
-
-            // 1️⃣ Try localStorage first (fast)
+        // Fetch from Firestore if not in cache (with 8s timeout)
+        if (!found) {
             try {
-                const lsUsers = JSON.parse(localStorage.getItem('am_users')||'[]');
-                const found = lsUsers.find(u=>
-                    (u.username===user || u.id===user || u.id===user.toUpperCase()) &&
-                    u.password===pass && u.type==='student'
-                );
-                if(found){ await checkAndLogin(found); return; }
-            } catch(e){}
-
-            // 2️⃣ Fallback: check Firestore (other devices won't have localStorage)
-            try {
-                const snap = await _ldb.collection('admin_data').doc('users').get();
-                if(snap.exists){
-                    const allUsers = snap.data().data || [];
-                    const found = allUsers.find(u=>
-                        (u.username===user || u.id===user || u.id===user.toUpperCase()) &&
-                        u.password===pass && u.type==='student'
+                const snap = await withTimeout(_db.collection('admin_data').doc('users').get(), 8000);
+                if (snap.exists) {
+                    const all = snap.data().data || [];
+                    try { localStorage.setItem('am_users', JSON.stringify(all)); } catch(_) {}
+                    found = all.find(u =>
+                        (u.username === user || u.id === user || u.id === user.toUpperCase()) &&
+                        u.password === pass
                     );
-                    if(found){
-                        // cache locally for next time
-                        try{ localStorage.setItem('am_users', JSON.stringify(allUsers)); }catch(e){}
-                        await checkAndLogin(found);
-                        return;
+                    if (!found) {
+                        const nameExists = all.find(u => u.username === user || u.id === user.toUpperCase());
+                        setLoading(btn, false);
+                        showError(nameExists ? 'كلمة المرور غير صحيحة' : 'اسم المستخدم غير موجود');
+                        shakeCard(); return;
                     }
-                    const exists = allUsers.find(u=> u.username===user || u.id===user.toUpperCase());
-                    loginFail(!!exists);
-                    return;
+                } else {
+                    setLoading(btn, false);
+                    showError('اسم المستخدم غير موجود');
+                    shakeCard(); return;
                 }
-            } catch(fsErr){ console.warn('Firestore login check failed', fsErr); }
-
-            loginFail(false);
+            } catch(err) {
+                console.warn('Firestore error:', err);
+                setLoading(btn, false);
+                showError('خطأ في الاتصال، حاول مرة أخرى');
+                shakeCard(); return;
+            }
         }
 
-        /* ─── JOIN REQUEST ─── */
-        async function handleJoinRequest(e){
-            e.preventDefault();
-            const name     = document.getElementById('reqName').value.trim();
-            const phone    = document.getElementById('reqPhone').value.trim();
-            const username = document.getElementById('reqUsername').value.trim();
-            const password = document.getElementById('reqPassword').value;
-            if(!name||!phone||!username||!password){
-                document.getElementById('reqError').classList.add('show');
-                return;
-            }
-            const btn = document.getElementById('reqBtn');
-            setLoading(btn,true);
-
+        if (found) {
+            _pending = found;
+            // Check active sessions (with 5s timeout, non-blocking)
             try {
-                // Check if username taken in Firestore (users + pending requests)
-                const [usersSnap, reqsSnap] = await Promise.all([
-                    _ldb.collection('admin_data').doc('users').get(),
-                    _ldb.collection('join_requests').where('username','==',username).get()
-                ]);
-                const allUsers = usersSnap.exists ? (usersSnap.data().data||[]) : [];
-                const takenInUsers = allUsers.find(u=>u.username===username);
-                const takenInReqs  = !reqsSnap.empty && reqsSnap.docs.some(d=> d.data().status!=='rejected');
-                if(takenInUsers || takenInReqs){
-                    document.getElementById('reqError').querySelector('span').textContent='اسم المستخدم هذا مأخوذ، اختر اسماً آخر';
-                    document.getElementById('reqError').classList.add('show');
-                    setLoading(btn,false);
-                    return;
+                const ss = await withTimeout(_db.collection('admin_data').doc('active_sessions').get(), 5000);
+                if (ss.exists) {
+                    const sf = ss.data()['s_' + found.id];
+                    if (sf && sf.token && (Date.now() - sf.loginAt) < 8 * 3600 * 1000) {
+                        setLoading(btn, false); showWarnBox(found); return;
+                    }
                 }
-            } catch(checkErr){ console.warn('Username check failed, proceeding:', checkErr); }
-
-            const reqId = 'req_'+Date.now();
-            const reqData = {
-                id: reqId,
-                name, phone, username, password,
-                email: document.getElementById('reqEmail')?.value.trim()||'',
-                courses: document.getElementById('reqCourse')?.value ? [document.getElementById('reqCourse').value] : [],
-                notes:   document.getElementById('reqNote')?.value.trim()||'',
-                createdAt: Date.now(),
-                date: new Date().toLocaleDateString('ar-EG'),
-                status: 'pending',
-                payments: {}
-            };
-
-            // Save to Firestore (admin sees it in real-time)
-            try {
-                await _ldb.collection('join_requests').doc(reqId).set(reqData);
-            } catch(fsErr){
-                console.warn('Firestore save failed, saving locally:', fsErr);
-                // Fallback: localStorage only
-                try{
-                    const loc = JSON.parse(localStorage.getItem('am_join_requests')||'[]');
-                    loc.push(reqData);
-                    localStorage.setItem('am_join_requests', JSON.stringify(loc));
-                }catch(e){}
-            }
-
-            setLoading(btn,false);
-            document.getElementById('reqFormBox').style.display='none';
-            document.getElementById('reqSuccessBox').style.display='block';
+            } catch(_) { /* ignore session check errors, proceed to login */ }
+            completeStudentLogin(found, btn); return;
         }
 
-        /* ─── HELPERS ─── */
-        function setLoading(btn,on){ btn.classList.toggle('loading',on); btn.disabled=on; }
-        function clearMsgs(pfx){ ['Error','Success'].forEach(s=>{ const el=document.getElementById(pfx+s); if(el)el.classList.remove('show'); }); }
+        setLoading(btn, false);
+        showError('اسم المستخدم أو كلمة المرور غير صحيحة');
+        shakeCard();
+    }
 
-        function togglePw(inputId,btn){
-            const input=document.getElementById(inputId);
-            const icon=btn.querySelector('i');
-            const hidden=input.type==='password';
-            input.type=hidden?'text':'password';
-            icon.className=hidden?'fas fa-eye-slash':'fas fa-eye';
-        }
+    function completeStudentLogin(found, btn) {
+        if (btn) setLoading(btn, true);
+        const tok = 'st_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+        try { _db.collection('admin_data').doc('active_sessions').set({ ['s_' + found.id]: { token: tok, loginAt: Date.now() } }, { merge:true }).catch(() => {}); } catch(_) {}
+        sessionStorage.setItem('akram_logged_in', 'true');
+        sessionStorage.setItem('akram_user_id', found.id);
+        sessionStorage.setItem('akram_student_id', found.id);
+        sessionStorage.setItem('akram_client_name', found.name || found.username || '');
+        sessionStorage.setItem('akram_session_token', tok);
+        sessionStorage.setItem('akram_session_uid', found.id);
+        localStorage.setItem('akram_logged_in', 'true');
+        localStorage.setItem('akram_user_id', found.id);
+        localStorage.setItem('akram_student_id', found.id);
+        localStorage.setItem('akram_client_name', found.name || found.username || '');
+        localStorage.removeItem('am_admin_auth');
+        showSuccess('مرحباً ' + (found.name || '') + '! جاري الدخول...');
+        if (btn) setLoading(btn, false);
+        setTimeout(() => window.location.href = 'my-courses.html', 1100);
+    }
 
-        function shakeCard(stepId){
-            const card=document.querySelector('#'+stepId+' .login-card');
-            if(!card)return;
-            [8,-8,5,-5,0].reduce((p,x)=>p.then(()=>new Promise(r=>{ card.style.transform='translateX('+x+'px)'; setTimeout(r,70); })),Promise.resolve()).then(()=>{ card.style.transform=''; });
-        }
+    function showWarnBox(found) {
+        document.getElementById('warnMsg').classList.add('show');
+        document.getElementById('warnConfirmBtn').onclick = () => {
+            hideWarn();
+            completeStudentLogin(found, document.getElementById('loginBtn'));
+        };
+    }
+    function hideWarn() { document.getElementById('warnMsg').classList.remove('show'); }
 
-        /* clear errors on typing */
-        ['adminUser','adminPass'].forEach(id=>document.getElementById(id)?.addEventListener('input',()=>document.getElementById('adminError').classList.remove('show')));
-        ['stuUser','stuPass'].forEach(id=>document.getElementById(id)?.addEventListener('input',()=>document.getElementById('stuError').classList.remove('show')));
+    function showJoin() { window.location.href = 'register.html'; }
+    function showLogin() { document.getElementById('joinPanel').style.display='none'; document.getElementById('loginPanel').style.display='block'; }
+
+    function setLoading(btn, on) { btn.classList.toggle('loading', on); btn.disabled = on; }
+    function clearMsgs() { ['errMsg','successMsg'].forEach(id => document.getElementById(id).classList.remove('show')); }
+    function showError(t)    { document.getElementById('errTxt').textContent = t;     document.getElementById('errMsg').classList.add('show'); }
+    function showSuccess(t)  { document.getElementById('successTxt').textContent = t; document.getElementById('successMsg').classList.add('show'); }
+
+    function togglePw(e) {
+        const btn = e.currentTarget;
+        const inp = btn.closest('.input-wrap').querySelector('input');
+        const hide = inp.type === 'password';
+        inp.type = hide ? 'text' : 'password';
+        btn.querySelector('i').className = hide ? 'fas fa-eye-slash' : 'fas fa-eye';
+    }
+
+    function shakeCard() {
+        const card = document.querySelector('#loginPanel .login-card');
+        if (!card) return;
+        [8,-8,5,-5,0].reduce((p,x) => p.then(() => new Promise(r => { card.style.transform='translateX('+x+'px)'; setTimeout(r,65); })), Promise.resolve()).then(() => card.style.transform='');
+    }
+
+    ['loginUser','loginPass'].forEach(id => {
+        document.getElementById(id)?.addEventListener('input', () => document.getElementById('errMsg').classList.remove('show'));
+    });
     </script>
 </body>
 </html>

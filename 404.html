@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - الصفحة غير موجودة | أكرم مصطفى</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 40px 20px;
+        }
+        .error-code {
+            font-size: 150px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 15px 40px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+        .btn-primary:hover {
+            background: #f0f0f0;
+        }
+        .search-box {
+            margin: 30px 0;
+        }
+        .search-input {
+            padding: 15px 25px;
+            font-size: 1em;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+        }
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        .popular-links {
+            margin-top: 40px;
+        }
+        .popular-links h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .popular-links a {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+        .popular-links a:hover {
+            background: rgba(255,255,255,0.25);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-code">404</div>
+        <h1>الصفحة غير موجودة</h1>
+        <p>عذراً، الصفحة التي تبحث عنها غير موجودة أو تم نقلها إلى مكان آخر</p>
+        
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="ابحث عن ما تريد..." id="searchInput">
+        </div>
+        
+        <div class="buttons">
+            <a href="/" class="btn btn-primary">🏠 الصفحة الرئيسية</a>
+            <a href="/courses" class="btn">📚 الكورسات</a>
+            <a href="/contact" class="btn">📞 تواصل معنا</a>
+        </div>
+        
+        <div class="popular-links">
+            <h3>صفحات شائعة:</h3>
+            <a href="/courses/facebook-ads">كورس فيسبوك</a>
+            <a href="/courses/instagram">كورس انستجرام</a>
+            <a href="/courses/tiktok">كورس تيك توك</a>
+            <a href="/services">خدماتنا</a>
+            <a href="/store">المتجر</a>
+            <a href="/about">من نحن</a>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-redirect to home if user presses Enter in search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.trim()) {
+                window.location.href = '/?search=' + encodeURIComponent(this.value);
+            }
+        });
+        
+        // Track 404 errors with Google Analytics (if installed)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', '404_error', {
+                'page_location': window.location.href,
+                'page_referrer': document.referrer
+            });
+        }
+    </script>
+</body>
+</html>

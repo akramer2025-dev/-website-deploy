@@ -313,6 +313,7 @@ body { background: #050d1b; }
   .certs-grid { grid-template-columns: 1fr; }
 }
 </style>
+    <script src="/js/meta-pixel.js" defer></script>
 </head>
 <body>
 
@@ -320,8 +321,8 @@ body { background: #050d1b; }
 <nav class="navbar" id="navbar">
   <div class="container">
     <div class="nav-brand">
-      <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
-        <img src="images/logo.png" alt="Akram Mostafa" class="nav-logo">
+      <a href="index.html" style="display:flex;align-items:center;gap:4px;text-decoration:none;">
+        <img src="images/1772173627537.png" alt="Akram Mostafa" class="nav-logo">
         <span class="brand-name">AKRAM<br>MOSTAFA</span>
       </a>
     </div>
@@ -397,7 +398,7 @@ body { background: #050d1b; }
         <div class="about-contact-card">
           <h4>تواصل معي</h4>
           <div class="about-social-row">
-            <a href="https://wa.me/00201555512778" target="_blank" class="about-social-btn wa">
+            <a href="https://wa.me/201555512778" target="_blank" class="about-social-btn wa">
               <i class="fab fa-whatsapp"></i> واتساب
             </a>
             <a href="https://www.facebook.com/share/17x8kYFSQq/" target="_blank" class="about-social-btn fb">
@@ -553,7 +554,7 @@ body { background: #050d1b; }
           <h2>جاهز تبدأ معايا؟</h2>
           <p>كلمني دلوقتي ونشوف مع بعض إزاي أقدر أساعدك تحقق أهدافك</p>
           <div class="cta-buttons">
-            <a href="https://wa.me/00201555512778?text=أهلاً أكرم، عايز أتكلم معاك" target="_blank" class="btn btn-primary">
+            <a href="https://wa.me/201555512778?text=أهلاً أكرم، عايز أتكلم معاك" target="_blank" class="btn btn-primary">
               <i class="fab fa-whatsapp"></i> ابدأ دلوقتي
             </a>
             <a href="contact.html" class="btn btn-secondary">
@@ -571,7 +572,7 @@ body { background: #050d1b; }
 <footer class="page-footer">
   <div class="container">
     <div class="page-footer-brand">
-      <img src="images/logo.png" alt="Logo">
+      <img src="images/1772173627537.png" alt="Logo">
       <span>AKRAM MOSTAFA</span>
     </div>
     <div class="page-footer-links">
@@ -586,7 +587,8 @@ body { background: #050d1b; }
   </div>
 </footer>
 
-<a href="https://wa.me/00201555512778" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+<a href="https://wa.me/201555512778" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+<button id="scrollTop" title="العودة للأعلى"><i class="fas fa-chevron-up"></i></button>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
@@ -614,6 +616,13 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.3 });
 skillFills.forEach(f => observer.observe(f));
+
+// SCROLL TO TOP
+const _stt = document.getElementById('scrollTop');
+if (_stt) {
+  window.addEventListener('scroll', () => _stt.classList.toggle('show', window.scrollY > 300));
+  _stt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
 </script>
 </body>
 </html>

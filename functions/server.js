@@ -1,0 +1,1376 @@
+﻿const express = require('express');
+const twilio = require('twilio');
+const cors = require('cors');
+const path = require('path');
+const https = require('https');
+const fs = require('fs');
+
+// Vercel KV للتخزين السحابي
+let kv;
+try {
+    kv = require('@vercel/kv').kv;
+} catch (error) {
+    console.log('⚠️ Vercel KV غير متاح (تشغيل محلي)');
+}
+
+const app = express();
+const PORT = 3000;
+
+// ==================== نظام حماية الـ API ====================
+const rateLimitStore = new Map();
+const securityAlerts = [];
+const blockedIPs = new Set();
+
+// Rate Limiting Middleware
+function rateLimiter(maxRequests = 100, windowMs = 60000) {
+    return (req, res, next) => {
+        const ip = req.ip || req.connection.remoteAddress;
+        const key = `${ip}:${req.path}`;
+        const now = Date.now();
+        
+        // تنظيف البيانات القديمة
+        if (rateLimitStore.size > 10000) {
+            rateLimitStore.clear();
+        }
+        
+        if (!rateLimitStore.has(key)) {
+            rateLimitStore.set(key, { count: 1, resetTime: now + windowMs });
+            return next();
+        }
+        
+        const rateLimit = rateLimitStore.get(key);
+        
+        if (now > rateLimit.resetTime) {
+            rateLimit.count = 1;
+            rateLimit.resetTime = now + windowMs;
+            return next();
+        }
+        
+        if (rateLimit.count >= maxRequests) {
+            logSecurityAlert({
+                type: 'rate_limit_exceeded',
+                ip: ip,
+                path: req.path,
+                count: rateLimit.count
+            });
+            return res.status(429).json({ 
+                error: 'تم تجاوز الحد المسموح من الطلبات',
+                retryAfter: Math.ceil((rateLimit.resetTime - now) / 1000)
+            });
+        }
+        
+        rateLimit.count++;
+        next();
+    };
+}
+
+// Security Headers Middleware
+function securityHeaders(req, res, next) {
+    // Content Security Policy
+    res.setHeader('Content-Security-Policy', 
+        "default-src 'self'; " +
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://*.twilio.com; " +
+        "style-src 'self' 'unsafe-inline'; " +
+        "img-src 'self' data: https: blob:; " +
+        "font-src 'self' data:; " +
+        "connect-src 'self' https://*.twilio.com wss://*.twilio.com https://images.unsplash.com; " +
+        "media-src 'self' https: blob:; " +
+        "frame-ancestors 'none'; " +
+        "base-uri 'self'; " +
+        "form-action 'self';"
+    );
+    
+    // Prevent clickjacking
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Frame-Options', 'DENY');
+    
+    // XSS Protection
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    
+    // Content Type Options
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    
+    // HSTS (إذا كان HTTPS)
+    if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
+        res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    }
+    
+    // Referrer Policy
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    // Permissions Policy
+    res.setHeader('Permissions-Policy', 
+        'geolocation=(), microphone=(self), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=()'
+    );
+    
+    // Hide powered by
+    res.removeHeader('X-Powered-By');
+    
+    next();
+}
+
+// IP Blocking Middleware
+function ipBlocker(req, res, next) {
+    const ip = req.ip || req.connection.remoteAddress;
+    
+    if (blockedIPs.has(ip)) {
+        logSecurityAlert({
+            type: 'blocked_ip_attempt',
+            ip: ip,
+            path: req.path
+        });
+        return res.status(403).json({ error: 'Access denied' });
+    }
+    
+    next();
+}
+
+// Security Alert Logger
+function logSecurityAlert(alert) {
+    alert.timestamp = new Date().toISOString();
+    securityAlerts.push(alert);
+    
+    // الاحتفاظ بآخر 1000 تنبيه فقط
+    if (securityAlerts.length > 1000) {
+        securityAlerts.shift();
+    }
+    
+    console.warn('🚨 تنبيه أمني:', JSON.stringify(alert));
+    
+    // حظر IP بعد 10 محاولات مشبوهة
+    if (alert.ip) {
+        const ipAlerts = securityAlerts.filter(a => a.ip === alert.ip);
+        if (ipAlerts.length >= 10) {
+            blockedIPs.add(alert.ip);
+            console.error('🚫 تم حظر IP:', alert.ip);
+        }
+    }
+}
+
+// API endpoint لتسجيل محاولات الاختراق
+app.post('/api/security-alert', rateLimiter(50, 60000), (req, res) => {
+    const ip = req.ip || req.connection.remoteAddress;
+    const alert = {
+        ...req.body,
+        ip: ip,
+        userAgent: req.headers['user-agent']
+    };
+    
+    logSecurityAlert(alert);
+    res.json({ success: true });
+});
+
+// قراءة بيانات المديرين (للتشغيل المحلي فقط)
+let employeesData = {
+    employees: [],
+    departments: {
+        "1": { name: "حجز وحدات الضيافة والفنادق", employees: [] },
+        "2": { name: "تأجير السيارات", employees: [] },
+        "3": { name: "البرامج والجولات السياحية", employees: [] },
+        "0": { name: "خدمة العملاء", employees: [] },
+        "9": { name: "الشكاوى", employees: [] }
+    }
+};
+
+// محاولة تحميل من الملف (للتشغيل المحلي)
+try {
+    const data = fs.readFileSync(path.join(__dirname, 'employees.json'), 'utf8');
+    employeesData = JSON.parse(data);
+    console.log('✅ تم تحميل بيانات المديرين من الملف');
+} catch (error) {
+    console.log('⚠️ سيتم استخدام KV للتخزين');
+}
+
+// دوال مساعدة للتعامل مع KV أو الملف
+async function getEmployeesData() {
+    if (kv && process.env.VERCEL) {
+        try {
+            const data = await kv.get('employees_data');
+            return data || employeesData;
+        } catch (error) {
+            console.error('خطأ في قراءة KV:', error);
+            return employeesData;
+        }
+    }
+    // للتشغيل المحلي: قراءة من الملف للتأكد من أحدث البيانات
+    try {
+        const data = fs.readFileSync(path.join(__dirname, 'employees.json'), 'utf8');
+        employeesData = JSON.parse(data);
+    } catch (error) {
+        console.log('⚠️ استخدام البيانات من الذاكرة');
+    }
+    return employeesData;
+}
+
+async function saveEmployeesData(data) {
+    if (kv && process.env.VERCEL) {
+        try {
+            await kv.set('employees_data', data);
+            console.log('✅ تم حفظ البيانات في KV');
+            return true;
+        } catch (error) {
+            console.error('خطأ في حفظ KV:', error);
+            return false;
+        }
+    } else {
+        // حفظ في ملف للتشغيل المحلي
+        try {
+            const filePath = path.join(__dirname, 'employees.json');
+            fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+            employeesData = data; // تحديث الذاكرة
+            console.log('✅ تم حفظ البيانات في الملف:', filePath);
+            console.log('📊 عدد المديرين بعد الحفظ:', data.employees.length);
+            return true;
+        } catch (error) {
+            console.error('❌ خطأ في حفظ الملف:', error);
+            return false;
+        }
+    }
+}
+
+// إعدادات Twilio - يجب تعيينها في .env أو Vercel Environment Variables
+const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID || 'demo_account_sid';
+const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN || 'demo_auth_token';
+const TWILIO_TWIML_APP_SID = process.env.TWILIO_TWIML_APP_SID;
+const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER || '+966555254915';
+const TWILIO_API_KEY = process.env.TWILIO_API_KEY;
+const TWILIO_API_SECRET = process.env.TWILIO_API_SECRET;
+
+if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_PHONE_NUMBER) {
+    console.error('❌ خطأ: يجب تعيين متغيرات Twilio في ملف .env');
+    console.error('أنشئ ملف .env وأضف:');
+    console.error('TWILIO_ACCOUNT_SID=your_account_sid');
+    console.error('TWILIO_AUTH_TOKEN=your_auth_token');
+    console.error('TWILIO_TWIML_APP_SID=your_twiml_app_sid');
+    console.error('TWILIO_PHONE_NUMBER=your_twilio_number');
+}
+
+// تهيئة عميل Twilio (فقط إذا كانت البيانات صحيحة)
+let twilioClient;
+if (TWILIO_ACCOUNT_SID && TWILIO_ACCOUNT_SID.startsWith('AC') && TWILIO_AUTH_TOKEN) {
+    twilioClient = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+    console.log('✅ تم تهيئة Twilio بنجاح');
+} else {
+    console.log('⚠️ Twilio غير مهيأ - المكالمات لن تعمل');
+}
+
+// Middleware - تطبيق الحماية على كل الطلبات
+app.use(ipBlocker);
+app.use(securityHeaders);
+app.use(rateLimiter(200, 60000)); // 200 طلب في الدقيقة
+app.use(cors());
+app.use(express.json({ limit: '10mb' })); // حد أقصى لحجم البيانات
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.static('.'));
+
+// Routes للصفحات الرئيسية
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/login.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+// Routes للملفات الثابتة (CSS, JS, Images)
+app.get('/style.css', (req, res) => {
+    res.sendFile(path.join(__dirname, 'style.css'));
+});
+
+app.get('/login-style.css', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login-style.css'));
+});
+
+app.get('/app.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'app.js'));
+});
+
+app.get('/logo.jpg', (req, res) => {
+    res.sendFile(path.join(__dirname, 'logo.jpg'));
+});
+
+// توليد Token للعميل (للمكالمات من المتصفح مباشرة)
+app.get('/token', async (req, res) => {
+    try {
+        const identity = req.query.identity || 'employee_' + Date.now();
+        
+        // إنشاء API Key تلقائياً إذا لم يكن موجود
+        let apiKey = TWILIO_API_KEY;
+        let apiSecret = TWILIO_API_SECRET;
+        
+        if (!apiKey || !apiSecret) {
+            console.log('📝 إنشاء API Key جديد...');
+            try {
+                const newKey = await twilioClient.newKeys.create({
+                    friendlyName: 'Link Call Auto Key'
+                });
+                apiKey = newKey.sid;
+                apiSecret = newKey.secret;
+                console.log('✅ تم إنشاء API Key:', apiKey);
+            } catch (keyError) {
+                console.error('❌ فشل إنشاء API Key:', keyError);
+                // استخدام Account SID كـ fallback (قد لا يعمل)
+                apiKey = TWILIO_ACCOUNT_SID;
+                apiSecret = TWILIO_AUTH_TOKEN;
+            }
+        }
+        
+        const AccessToken = twilio.jwt.AccessToken;
+        const VoiceGrant = AccessToken.VoiceGrant;
+        
+        const token = new AccessToken(
+            TWILIO_ACCOUNT_SID,
+            apiKey,
+            apiSecret,
+            { 
+                identity: identity,
+                ttl: 14400 // 4 ساعات
+            }
+        );
+
+        const voiceGrant = new VoiceGrant({
+            outgoingApplicationSid: TWILIO_TWIML_APP_SID,
+            incomingAllow: true
+        });
+
+        token.addGrant(voiceGrant);
+        
+        console.log('✅ Token تم إنشاؤه للمدير:', identity);
+
+        res.json({
+            token: token.toJwt(),
+            identity: identity
+        });
+    } catch (error) {
+        console.error('❌ خطأ في توليد Token:', error);
+        res.status(500).json({ 
+            error: 'فشل في توليد Token',
+            details: error.message 
+        });
+    }
+});
+
+// تم نقل /voice endpoint للأسفل (للمكالمات الواردة مع IVR)
+
+// إجراء مكالمة باستخدام Conference (للصوت الثنائي)
+app.post('/make-direct-call', async (req, res) => {
+    try {
+        const { to } = req.body;
+        
+        console.log('📞 بدء Conference call إلى:', to);
+        
+        // رقم المستخدم الافتراضي (موبايلك)
+        const userPhone = '+966559902557';
+        
+        // إنشاء conference فريد
+        const conferenceName = `call_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const baseUrl = process.env.NGROK_URL || 'https://unacetic-nearly-tawanna.ngrok-free.dev';
+        
+        console.log('📞 Conference:', conferenceName);
+        console.log('👤 موبايلك:', userPhone);
+        console.log('📱 الرقم المطلوب:', to);
+        
+        // المكالمة الأولى: الاتصال بموبايلك مع رد تلقائي
+        const call1 = await twilioClient.calls.create({
+            url: `${baseUrl}/join-conference?conference=${encodeURIComponent(conferenceName)}&participant=user&to=${encodeURIComponent(to)}`,
+            to: userPhone,
+            from: TWILIO_PHONE_NUMBER,
+            machineDetection: 'Enable', // كشف الرد الآلي
+            asyncAmd: 'true'
+        });
+        
+        console.log('✅ اتصال بموبايلك:', call1.sid);
+        
+        // الانتظار 1 ثانية فقط ثم الاتصال بالطرف الآخر
+        setTimeout(async () => {
+            try {
+                const call2 = await twilioClient.calls.create({
+                    url: `${baseUrl}/join-conference?conference=${encodeURIComponent(conferenceName)}&participant=other`,
+                    to: to,
+                    from: TWILIO_PHONE_NUMBER
+                });
+                
+                console.log('✅ اتصال بالرقم الآخر:', call2.sid);
+            } catch (error) {
+                console.error('❌ خطأ في الاتصال بالرقم الآخر:', error);
+            }
+        }, 1000);
+        
+        res.json({
+            success: true,
+            callSid: call1.sid,
+            conferenceName: conferenceName,
+            status: call1.status
+        });
+    } catch (error) {
+        console.error('❌ خطأ في إجراء المكالمة:', error);
+        res.status(500).json({ 
+            success: false,
+            error: error.message 
+        });
+    }
+});
+
+// TwiML بسيط للاتصال المباشر
+app.all('/simple-dial', (req, res) => {
+    const toNumber = req.query.to || req.body.to;
+    
+    console.log('📞 TwiML للاتصال بـ:', toNumber);
+    
+    const twiml = new twilio.twiml.VoiceResponse();
+    
+    if (toNumber) {
+        twiml.dial(toNumber);
+    } else {
+        twiml.say('No number provided');
+    }
+    
+    res.type('text/xml');
+    res.send(twiml.toString());
+});
+
+// TwiML للمكالمات الصادرة من المتصفح (Voice URL لـ TwiML App)
+// حفظ معرفات المديرين للمكالمات (في الذاكرة مؤقتاً)
+const callEmployeeMap = new Map();
+
+app.post('/outgoing-call', (req, res) => {
+    const toNumber = req.body.To;
+    const employeeId = req.body.employeeId || 'unknown';
+    
+    console.log('📞 اتصال صادر من المتصفح إلى:', toNumber);
+    console.log('👤 معرف المدير:', employeeId);
+    
+    const twiml = new twilio.twiml.VoiceResponse();
+    
+    if (toNumber) {
+        const dial = twiml.dial({
+            callerId: TWILIO_PHONE_NUMBER,
+            record: 'record-from-answer',
+            recordingStatusCallback: '/recording-status',
+            recordingStatusCallbackEvent: ['completed']
+        });
+        dial.number(toNumber);
+        
+        // حفظ معرف المدير مع رقم الهاتف
+        callEmployeeMap.set(toNumber, employeeId);
+    } else {
+        twiml.say({ voice: 'Polly.Zeina', language: 'ar-AE' }, 'لم يتم تحديد رقم للاتصال');
+    }
+    
+    res.type('text/xml');
+    res.send(twiml.toString());
+});
+
+// الحصول على حالة المكالمة
+app.get('/call-status/:callSid', async (req, res) => {
+    try {
+        const call = await twilioClient.calls(req.params.callSid).fetch();
+        console.log(`📊 حالة المكالمة ${req.params.callSid}: ${call.status}`);
+        res.json({
+            status: call.status,
+            duration: call.duration,
+            direction: call.direction,
+            startTime: call.startTime,
+            endTime: call.endTime
+        });
+    } catch (error) {
+        console.error('خطأ في جلب حالة المكالمة:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// إنهاء مكالمة
+app.post('/end-call', async (req, res) => {
+    try {
+        const { callSid } = req.body;
+        await twilioClient.calls(callSid).update({ status: 'completed' });
+        
+        res.json({ success: true });
+    } catch (error) {
+        console.error('خطأ في إنهاء المكالمة:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// TwiML للانضمام إلى Conference
+app.post('/join-conference', (req, res) => {
+    const conferenceName = req.query.conference;
+    const participant = req.query.participant;
+    const toNumber = req.query.to;
+    const twiml = new twilio.twiml.VoiceResponse();
+    
+    console.log('🎯 انضمام إلى Conference:', conferenceName, '- دور:', participant);
+    
+    if (participant === 'user') {
+        // المستخدم (موبايلك) - رسالة توضيحية
+        if (toNumber) {
+            twiml.say({ 
+                voice: 'Polly.Zeina', 
+                language: 'ar-AE' 
+            }, `جاري الاتصال بالرقم ${toNumber.replace(/\+966/, '').replace(/\+20/, '')}`);
+        } else {
+            twiml.say({ voice: 'Polly.Zeina', language: 'ar-AE' }, 'جاري توصيل المكالمة');
+        }
+    }
+    
+    // إضافة المشارك إلى Conference
+    const dial = twiml.dial();
+    dial.conference({
+        startConferenceOnEnter: true,  // بدء Conference فوراً
+        endConferenceOnExit: participant === 'user', // إنهاء لما تقفل انت
+        waitUrl: 'http://twimlets.com/holdmusic?Bucket=com.twilio.music.classical',
+        beep: false,
+        record: 'record-from-start',
+        recordingStatusCallback: `${process.env.NGROK_URL || 'https://unacetic-nearly-tawanna.ngrok-free.dev'}/recording-status`
+    }, conferenceName);
+    
+    res.type('text/xml');
+    res.send(twiml.toString());
+});
+
+// TwiML للمكالمات الواردة - نظام IVR
+app.post('/voice', (req, res) => {
+    const twiml = new twilio.twiml.VoiceResponse();
+    
+    console.log('📞 مكالمة واردة من:', req.body.From);
+    
+    // الرسالة الترحيبية مع القائمة
+    const gather = twiml.gather({
+        numDigits: 1,
+        action: '/ivr-response',
+        method: 'POST',
+        timeout: 10
+    });
+    
+    gather.say({
+        voice: 'Polly.Zeina',
+        language: 'ar-AE'
+    }, 'مرحباً بك في شركة المسار الساخن للسفر والسياحة. ' +
+       'لحجز وحدات الضيافة والفنادق اضغط واحد. ' +
+       'لتأجير السيارات اضغط اثنين. ' +
+       'للبرامج والجولات السياحية اضغط ثلاثة. ' +
+       'للتحدث مع خدمة العملاء اضغط صفر. ' +
+       'لتقديم شكوى اضغط تسعة.');
+    
+    // إذا لم يختر العميل شيء
+    twiml.say({
+        voice: 'Polly.Zeina',
+        language: 'ar-AE'
+    }, 'لم نتلق أي اختيار. شكراً لاتصالك بنا.');
+    
+    res.type('text/xml');
+    res.send(twiml.toString());
+});
+
+// معالجة اختيار العميل من IVR
+app.post('/ivr-response', async (req, res) => {
+    const digit = req.body.Digits;
+    const twiml = new twilio.twiml.VoiceResponse();
+    
+    console.log('🔢 العميل اختار:', digit);
+    
+    // الحصول على بيانات المديرين
+    const data = await getEmployeesData();
+    const department = data.departments[digit];
+    
+    if (department && department.employees.length > 0) {
+        // اختيار مدير عشوائي (أو أول مدير متاح)
+        const employeePhone = department.employees[0];
+        
+        twiml.say({
+            voice: 'Polly.Zeina',
+            language: 'ar-AE'
+        }, `جاري تحويلك إلى قسم ${department.name}. الرجاء الانتظار.`);
+        
+        // تحويل المكالمة للمدير
+        const dial = twiml.dial({
+            timeout: 30,
+            callerId: TWILIO_PHONE_NUMBER
+        });
+        dial.number(employeePhone);
+        
+        // إذا لم يرد المدير
+        twiml.say({
+            voice: 'Polly.Zeina',
+            language: 'ar-AE'
+        }, 'عذراً، جميع مديرينا مشغولون حالياً. يرجى المحاولة لاحقاً. شكراً لاتصالك بنا.');
+    } else {
+        // لا يوجد مديرين متاحين في هذا القسم
+        twiml.say({
+            voice: 'Polly.Zeina',
+            language: 'ar-AE'
+        }, 'عذراً، هذا القسم غير متاح حالياً. يرجى المحاولة لاحقاً. شكراً لاتصالك بنا.');
+    }
+    
+    res.type('text/xml');
+    res.send(twiml.toString());
+});
+
+// webhook لمتابعة أحداث المكالمة
+app.post('/call-events', (req, res) => {
+    console.log('🔔 حدث مكالمة:', {
+        CallSid: req.body.CallSid,
+        CallStatus: req.body.CallStatus,
+        Duration: req.body.CallDuration
+    });
+    res.sendStatus(200);
+});
+
+// معالجة حالة التسجيل
+app.post('/recording-status', (req, res) => {
+    console.log('تم إكمال التسجيل:', req.body.RecordingSid);
+    console.log('مدة التسجيل:', req.body.RecordingDuration);
+    console.log('رابط التسجيل:', req.body.RecordingUrl);
+    res.sendStatus(200);
+});
+
+// بدء تسجيل مكالمة نشطة
+app.post('/start-recording', async (req, res) => {
+    try {
+        const { callSid } = req.body;
+        
+        const recording = await twilioClient.calls(callSid)
+            .recordings
+            .create({
+                recordingChannels: 'dual',
+                recordingStatusCallback: '/recording-status',
+                recordingStatusCallbackEvent: ['completed']
+            });
+        
+        res.json({
+            success: true,
+            recordingSid: recording.sid
+        });
+    } catch (error) {
+        console.error('خطأ في بدء التسجيل:', error);
+        res.status(500).json({ error: 'فشل في بدء التسجيل' });
+    }
+});
+
+// جلب قائمة التسجيلات
+app.get('/recordings', async (req, res) => {
+    try {
+        const recordings = await twilioClient.recordings.list({ limit: 50 });
+        
+        // جلب معلومات المكالمات لكل تسجيل
+        const recordingsData = await Promise.all(recordings.map(async (recording) => {
+            try {
+                // جلب معلومات المكالمة
+                const call = await twilioClient.calls(recording.callSid).fetch();
+                
+                // البحث عن معرف المدير
+                const employeeId = callEmployeeMap.get(call.to) || callEmployeeMap.get(call.from);
+                
+                return {
+                    sid: recording.sid,
+                    callSid: recording.callSid,
+                    duration: recording.duration,
+                    dateCreated: recording.dateCreated,
+                    uri: recording.uri,
+                    // معلومات المكالمة
+                    from: call.from,
+                    to: call.to,
+                    direction: call.direction,
+                    employeeId: employeeId  // إضافة معرف المدير
+                };
+            } catch (error) {
+                // إذا فشل جلب معلومات المكالمة، نرجع البيانات الأساسية فقط
+                return {
+                    sid: recording.sid,
+                    callSid: recording.callSid,
+                    duration: recording.duration,
+                    dateCreated: recording.dateCreated,
+                    uri: recording.uri,
+                    from: 'غير معروف',
+                    to: 'غير معروف',
+                    direction: 'outbound-api',
+                    employeeId: null  // لا يوجد معرف مدير
+                };
+            }
+        }));
+        
+        res.json({ recordings: recordingsData });
+    } catch (error) {
+        console.error('خطأ في جلب التسجيلات:', error);
+        res.json({ recordings: [] }); // إرجاع قائمة فارغة بدلاً من خطأ
+    }
+});
+
+// جلب رابط تسجيل محدد
+app.get('/recording/:sid', async (req, res) => {
+    try {
+        const { sid } = req.params;
+        const recording = await twilioClient.recordings(sid).fetch();
+        
+        // رابط التسجيل الكامل
+        const recordingUrl = `https://api.twilio.com${recording.uri.replace('.json', '.mp3')}`;
+        
+        res.json({
+            url: recordingUrl,
+            duration: recording.duration,
+            dateCreated: recording.dateCreated
+        });
+    } catch (error) {
+        console.error('خطأ في جلب التسجيل:', error);
+        res.status(500).json({ error: 'فشل في جلب التسجيل' });
+    }
+});
+
+// حذف تسجيل
+app.delete('/recording/:sid', async (req, res) => {
+    try {
+        const { sid } = req.params;
+        await twilioClient.recordings(sid).remove();
+        
+        res.json({ success: true, message: 'تم حذف التسجيل بنجاح' });
+    } catch (error) {
+        console.error('خطأ في حذف التسجيل:', error);
+        res.status(500).json({ error: 'فشل في حذف التسجيل' });
+    }
+});
+
+// حذف تسجيل (endpoint بديل)
+app.delete('/delete-recording/:sid', async (req, res) => {
+    try {
+        const { sid } = req.params;
+        console.log('🗑️ جاري حذف التسجيل:', sid);
+        await twilioClient.recordings(sid).remove();
+        
+        res.json({ success: true, message: 'تم حذف التسجيل بنجاح' });
+    } catch (error) {
+        console.error('خطأ في حذف التسجيل:', error);
+        res.status(500).json({ error: 'فشل في حذف التسجيل', details: error.message });
+    }
+});
+
+// إيقاف التسجيل أثناء المكالمة
+app.post('/stop-recording', async (req, res) => {
+    try {
+        const { callSid } = req.body;
+        console.log('⏹️ إيقاف التسجيل للمكالمة:', callSid);
+        
+        // الحصول على كل التسجيلات النشطة لهذه المكالمة
+        const recordings = await twilioClient.recordings.list({
+            callSid: callSid,
+            status: 'in-progress'
+        });
+        
+        if (recordings.length > 0) {
+            // إيقاف آخر تسجيل نشط
+            const recording = recordings[0];
+            await twilioClient.recordings(recording.sid).update({ status: 'stopped' });
+            console.log('✅ تم إيقاف التسجيل:', recording.sid);
+            res.json({ success: true, recordingSid: recording.sid });
+        } else {
+            res.json({ success: false, message: 'لا يوجد تسجيل نشط' });
+        }
+    } catch (error) {
+        console.error('خطأ في إيقاف التسجيل:', error);
+        res.status(500).json({ error: 'فشل في إيقاف التسجيل', details: error.message });
+    }
+});
+
+// تشغيل التسجيل مباشرة (proxy بدون authentication)
+app.get('/play-recording/:sid', async (req, res) => {
+    try {
+        const { sid } = req.params;
+        const recording = await twilioClient.recordings(sid).fetch();
+        
+        // إعادة توجيه للتسجيل مع credentials
+        const recordingPath = recording.uri.replace('.json', '.mp3');
+        const authHeader = 'Basic ' + Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString('base64');
+        
+        const options = {
+            hostname: 'api.twilio.com',
+            path: recordingPath,
+            headers: {
+                'Authorization': authHeader
+            }
+        };
+        
+        https.get(options, (twilioRes) => {
+            res.setHeader('Content-Type', 'audio/mpeg');
+            twilioRes.pipe(res);
+        }).on('error', (err) => {
+            console.error('خطأ في جلب التسجيل:', err);
+            res.status(500).json({ error: 'فشل في جلب التسجيل' });
+        });
+    } catch (error) {
+        console.error('خطأ في تشغيل التسجيل:', error);
+        res.status(500).json({ error: 'فشل في تشغيل التسجيل' });
+    }
+});
+
+// تحميل التسجيل مباشرة (بدون تسجيل دخول)
+app.get('/download-recording/:sid', async (req, res) => {
+    try {
+        const { sid } = req.params;
+        console.log('⬇️ طلب تحميل تسجيل:', sid);
+        
+        const recording = await twilioClient.recordings(sid).fetch();
+        
+        // إعادة توجيه للتسجيل مع credentials
+        const recordingPath = recording.uri.replace('.json', '.mp3');
+        const authHeader = 'Basic ' + Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString('base64');
+        
+        const options = {
+            hostname: 'api.twilio.com',
+            path: recordingPath,
+            headers: {
+                'Authorization': authHeader
+            }
+        };
+        
+        https.get(options, (twilioRes) => {
+            // تعيين headers للتحميل
+            res.setHeader('Content-Type', 'audio/mpeg');
+            res.setHeader('Content-Disposition', `attachment; filename="recording_${sid}.mp3"`);
+            twilioRes.pipe(res);
+            console.log('✅ جاري تحميل التسجيل');
+        }).on('error', (err) => {
+            console.error('❌ خطأ في تحميل التسجيل:', err);
+            res.status(500).json({ error: 'فشل في تحميل التسجيل' });
+        });
+    } catch (error) {
+        console.error('❌ خطأ في تحميل التسجيل:', error);
+        res.status(500).json({ error: 'فشل في تحميل التسجيل' });
+    }
+});
+
+// جلب سجل المكالمات
+app.get('/call-history', async (req, res) => {
+    try {
+        const calls = await twilioClient.calls.list({ limit: 50 });
+        
+        const callsData = calls.map(call => ({
+            sid: call.sid,
+            from: call.from,
+            to: call.to,
+            status: call.status,
+            duration: call.duration,
+            startTime: call.startTime,
+            endTime: call.endTime,
+            direction: call.direction
+        }));
+        
+        res.json({ calls: callsData });
+    } catch (error) {
+        console.error('خطأ في جلب سجل المكالمات:', error);
+        res.json({ calls: [] }); // إرجاع قائمة فارغة بدلاً من خطأ
+    }
+});
+
+// ========== إدارة المديرين ==========
+
+// تسجيل الدخول
+app.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        console.log('🔐 محاولة تسجيل دخول:', username);
+        
+        const data = await getEmployeesData();
+        console.log('📊 عدد المديرين في القاعدة:', data.employees.length);
+        
+        // البحث عن المدير
+        const employee = data.employees.find(emp => 
+            emp.username === username && emp.password === password
+        );
+        
+        if (!employee) {
+            console.log('❌ فشل تسجيل الدخول: بيانات خاطئة');
+            return res.status(401).json({ error: 'اسم المستخدم أو كلمة المرور غير صحيحة' });
+        }
+        
+        console.log('✅ تم تسجيل الدخول:', employee.name || employee.fullname);
+        
+        // التحقق من الحساب التجريبي
+        const isTrial = employee.isTrial || employee.role === 'trial';
+        if (isTrial) {
+            console.log('📊 حساب تجريبي - الحد الأقصى للمكالمات:', employee.maxCalls || 2);
+        }
+        
+        res.json({
+            success: true,
+            employee: {
+                id: employee.id,
+                name: employee.name || employee.fullname,
+                username: employee.username,
+                department: employee.department,
+                departmentName: data.departments[employee.department]?.name || employee.departmentArabic || '',
+                role: employee.role || 'employee',
+                isTrial: isTrial,
+                maxCalls: employee.maxCalls || 2,
+                permissions: employee.permissions || {
+                    viewOwnRecordings: false,
+                    viewAllRecordings: false,
+                    deleteRecordings: false,
+                    editProfile: false
+                },
+                phone: employee.phone
+            }
+        });
+    } catch (error) {
+        console.error('❌ خطأ في تسجيل الدخول:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// جلب قائمة المديرين
+app.get('/employees', async (req, res) => {
+    const data = await getEmployeesData();
+    res.json(data);
+});
+
+// إضافة مدير جديد
+app.post('/employees', async (req, res) => {
+    try {
+        const { username, password, fullname, name, phone, department, permissions } = req.body;
+        const employeeName = fullname || name; // قبول كلا الاسمين
+        
+        console.log('📝 إضافة مدير جديد:', { username, employeeName, department });
+        
+        const data = await getEmployeesData();
+        
+        // التحقق من عدم وجود مدير بنفس اسم المستخدم
+        const exists = data.employees.find(emp => emp.username === username);
+        if (exists) {
+            return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل' });
+        }
+        
+        // إنشاء ID جديد بشكل صحيح (أعلى ID موجود + 1)
+        const maxId = data.employees.reduce((max, emp) => Math.max(max, emp.id || 0), 0);
+        
+        const newEmployee = {
+            id: maxId + 1,
+            username,
+            password,
+            fullname: employeeName,
+            name: employeeName,
+            phone: phone || '',
+            department,
+            departmentArabic: data.departments[department]?.name || 'غير محدد',
+            role: 'employee',
+            permissions: permissions || {
+                viewOwnRecordings: false,
+                viewAllRecordings: false,
+                deleteRecordings: false,
+                editProfile: false
+            }
+        };
+        
+        data.employees.push(newEmployee);
+        
+        // إضافة المدير لقسمه
+        if (data.departments[department]) {
+            if (!data.departments[department].employees.includes(phone)) {
+                data.departments[department].employees.push(phone);
+            }
+        }
+        
+        // حفظ البيانات
+        const saved = await saveEmployeesData(data);
+        
+        if (!saved) {
+            console.error('❌ فشل في حفظ البيانات للمدير:', username);
+            return res.status(500).json({ error: 'فشل في حفظ البيانات' });
+        }
+        
+        console.log('✅ تمت إضافة المدير بنجاح:', newEmployee.username, 'ID:', newEmployee.id);
+        res.json({ success: true, employee: newEmployee });
+    } catch (error) {
+        console.error('خطأ في إضافة مدير:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// API endpoint لإضافة موظف من لوحة الإدارة (حفظ دائم في قاعدة البيانات)
+app.post('/api/employees/add', async (req, res) => {
+    try {
+        const { username, password, fullname, phone, department, departmentArabic, email } = req.body;
+        
+        console.log('🔐 إضافة موظف جديد (API):', { username, fullname, department });
+        
+        const data = await getEmployeesData();
+        
+        // التحقق من عدم وجود موظف بنفس اسم المستخدم
+        const exists = data.employees.find(emp => emp.username === username);
+        if (exists) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'اسم المستخدم موجود بالفعل. الرجاء اختيار اسم مختلف.' 
+            });
+        }
+        
+        // إنشاء ID جديد (أعلى ID + 1)
+        const maxId = data.employees.reduce((max, emp) => Math.max(max, emp.id || 0), 0);
+        
+        const newEmployee = {
+            id: maxId + 1,
+            username: username.trim(),
+            password: password,
+            fullname: fullname.trim(),
+            name: fullname.trim(),
+            phone: phone?.trim() || '',
+            email: email?.trim() || '',
+            department: department,
+            departmentArabic: departmentArabic || data.departments[department]?.name || 'غير محدد',
+            role: 'employee',
+            createdAt: new Date().toISOString(),
+            isActive: true,
+            permissions: {
+                viewOwnRecordings: true,
+                viewAllRecordings: false,
+                deleteRecordings: false,
+                editProfile: true
+            }
+        };
+        
+        // إضافة الموظف للقائمة
+        data.employees.push(newEmployee);
+        
+        // إضافة الموظف لقسمه
+        if (data.departments[department]) {
+            const phone = newEmployee.phone || newEmployee.username;
+            if (!data.departments[department].employees.includes(phone)) {
+                data.departments[department].employees.push(phone);
+            }
+        }
+        
+        // حفظ البيانات بشكل دائم
+        const saved = await saveEmployeesData(data);
+        
+        if (!saved) {
+            console.error('❌ فشل في حفظ بيانات الموظف:', username);
+            return res.status(500).json({ 
+                success: false, 
+                error: 'فشل في حفظ البيانات في قاعدة البيانات' 
+            });
+        }
+        
+        console.log('✅ تم حفظ الموظف بشكل دائم:', newEmployee.username, 'ID:', newEmployee.id);
+        console.log('💾 البيانات محفوظة في:', process.env.VERCEL ? 'Vercel KV' : 'employees.json');
+        
+        res.json({ 
+            success: true, 
+            employee: newEmployee,
+            message: 'تم إضافة الموظف وحفظه بشكل دائم في قاعدة البيانات'
+        });
+    } catch (error) {
+        console.error('❌ خطأ في إضافة موظف:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'حدث خطأ في الخادم: ' + error.message 
+        });
+    }
+});
+
+// حذف مدير (تعطيل بدلاً من الحذف النهائي - حماية البيانات)
+app.delete('/employees/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const data = await getEmployeesData();
+        
+        const employeeIndex = data.employees.findIndex(emp => emp.id === id);
+        
+        if (employeeIndex === -1) {
+            return res.status(404).json({ error: 'المدير غير موجود' });
+        }
+        
+        const employee = data.employees[employeeIndex];
+        
+        // إزالة من القسم
+        if (data.departments[employee.department]) {
+            const phoneIndex = data.departments[employee.department].employees.indexOf(employee.phone);
+            if (phoneIndex > -1) {
+                data.departments[employee.department].employees.splice(phoneIndex, 1);
+            }
+        }
+        
+        // إزالة من القائمة
+        data.employees.splice(employeeIndex, 1);
+        
+        // حفظ البيانات
+        await saveEmployeesData(data);
+        
+        res.json({ success: true });
+    } catch (error) {
+        console.error('خطأ في حذف مدير:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// حذف موظف عبر API (تعطيل فقط - البيانات تبقى محفوظة)
+app.delete('/api/employees/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const data = await getEmployeesData();
+        
+        const employeeIndex = data.employees.findIndex(emp => emp.id === id);
+        
+        if (employeeIndex === -1) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'الموظف غير موجود' 
+            });
+        }
+        
+        const employee = data.employees[employeeIndex];
+        
+        // بدلاً من الحذف، نقوم بتعطيل الحساب فقط (حماية البيانات)
+        employee.isActive = false;
+        employee.deactivatedAt = new Date().toISOString();
+        
+        console.log('⚠️ تم تعطيل الموظف (البيانات محفوظة):', employee.username);
+        
+        // حفظ البيانات
+        const saved = await saveEmployeesData(data);
+        
+        if (!saved) {
+            return res.status(500).json({ 
+                success: false, 
+                error: 'فشل في حفظ التغييرات' 
+            });
+        }
+        
+        res.json({ 
+            success: true,
+            message: 'تم تعطيل الموظف. البيانات محفوظة ويمكن استرجاعها.'
+        });
+    } catch (error) {
+        console.error('❌ خطأ في تعطيل موظف:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: error.message 
+        });
+    }
+});
+
+// تحديث بيانات مدير (تغيير كلمة المرور والبيانات)
+app.put('/employees/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const { password, fullname, phone, department, permissions } = req.body;
+        
+        const data = await getEmployeesData();
+        
+        const employeeIndex = data.employees.findIndex(emp => emp.id === id);
+        
+        if (employeeIndex === -1) {
+            return res.status(404).json({ error: 'المدير غير موجود' });
+        }
+        
+        const employee = data.employees[employeeIndex];
+        
+        // تحديث البيانات
+        if (password && password.trim() !== '') {
+            employee.password = password;
+            console.log('🔐 تم تغيير كلمة المرور للمدير:', employee.username);
+        }
+        if (fullname) {
+            employee.fullname = fullname;
+            employee.name = fullname;
+        }
+        if (phone) {
+            employee.phone = phone;
+        }
+        if (department) {
+            // إزالة من القسم القديم
+            if (data.departments[employee.department]) {
+                const phoneIndex = data.departments[employee.department].employees.indexOf(employee.phone);
+                if (phoneIndex > -1) {
+                    data.departments[employee.department].employees.splice(phoneIndex, 1);
+                }
+            }
+            employee.department = department;
+            employee.departmentArabic = data.departments[department]?.name || 'غير محدد';
+            // إضافة للقسم الجديد
+            if (data.departments[department] && !data.departments[department].employees.includes(employee.phone)) {
+                data.departments[department].employees.push(employee.phone);
+            }
+        }
+        if (permissions) {
+            employee.permissions = permissions;
+        }
+        
+        // حفظ البيانات
+        await saveEmployeesData(data);
+        
+        console.log('✅ تم تحديث بيانات المدير:', employee.username);
+        res.json({ success: true, employee: employee });
+    } catch (error) {
+        console.error('خطأ في تحديث مدير:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ========== إدارة جهات الاتصال ==========
+
+// دوال مساعدة لقراءة وحفظ جهات الاتصال
+let contactsData = { contacts: [] };
+
+// تحميل جهات الاتصال من الملف
+try {
+    const data = fs.readFileSync(path.join(__dirname, 'contacts.json'), 'utf8');
+    contactsData = JSON.parse(data);
+    console.log('✅ تم تحميل جهات الاتصال من الملف');
+} catch (error) {
+    console.log('⚠️ سيتم إنشاء ملف جهات اتصال جديد');
+}
+
+async function getContactsData() {
+    if (kv && process.env.VERCEL) {
+        try {
+            const data = await kv.get('contacts_data');
+            return data || contactsData;
+        } catch (error) {
+            console.error('خطأ في قراءة جهات الاتصال من KV:', error);
+            return contactsData;
+        }
+    }
+    return contactsData;
+}
+
+async function saveContactsData(data) {
+    if (kv && process.env.VERCEL) {
+        try {
+            await kv.set('contacts_data', data);
+            return true;
+        } catch (error) {
+            console.error('خطأ في حفظ جهات الاتصال في KV:', error);
+            return false;
+        }
+    } else {
+        // حفظ في ملف للتشغيل المحلي
+        try {
+            fs.writeFileSync(
+                path.join(__dirname, 'contacts.json'),
+                JSON.stringify(data, null, 2)
+            );
+            contactsData = data;
+            return true;
+        } catch (error) {
+            console.error('خطأ في حفظ ملف جهات الاتصال:', error);
+            return false;
+        }
+    }
+}
+
+// جلب جميع جهات الاتصال
+app.get('/api/contacts', async (req, res) => {
+    try {
+        const data = await getContactsData();
+        res.json(data);
+    } catch (error) {
+        console.error('خطأ في جلب جهات الاتصال:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// إضافة جهة اتصال جديدة
+app.post('/api/contacts', async (req, res) => {
+    try {
+        const { name, phone } = req.body;
+        
+        if (!name || !phone) {
+            return res.status(400).json({ error: 'الاسم ورقم الهاتف مطلوبان' });
+        }
+        
+        const data = await getContactsData();
+        
+        // التحقق من عدم تكرار الرقم
+        const exists = data.contacts.find(c => c.phone === phone);
+        if (exists) {
+            return res.status(400).json({ error: 'رقم الهاتف موجود بالفعل' });
+        }
+        
+        const newContact = {
+            id: Date.now(),
+            name,
+            phone,
+            createdAt: new Date().toISOString(),
+            createdBy: req.body.createdBy || 'unknown'
+        };
+        
+        data.contacts.push(newContact);
+        await saveContactsData(data);
+        
+        console.log('✅ تمت إضافة جهة اتصال:', name, phone);
+        res.json({ success: true, contact: newContact });
+    } catch (error) {
+        console.error('خطأ في إضافة جهة اتصال:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// حذف جهة اتصال
+app.delete('/api/contacts', async (req, res) => {
+    try {
+        const id = parseInt(req.query.id);
+        
+        if (!id) {
+            return res.status(400).json({ error: 'معرف جهة الاتصال مطلوب' });
+        }
+        
+        const data = await getContactsData();
+        const contactIndex = data.contacts.findIndex(c => c.id === id);
+        
+        if (contactIndex === -1) {
+            return res.status(404).json({ error: 'جهة الاتصال غير موجودة' });
+        }
+        
+        const contact = data.contacts[contactIndex];
+        data.contacts.splice(contactIndex, 1);
+        await saveContactsData(data);
+        
+        console.log('✅ تم حذف جهة اتصال:', contact.name);
+        res.json({ success: true });
+    } catch (error) {
+        console.error('خطأ في حذف جهة اتصال:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ==================== Company Management API ====================
+const companiesAPI = require('./api/companies');
+
+// تسجيل شركة جديدة
+app.post('/api/companies/register', companiesAPI.register);
+
+// تسجيل دخول شركة
+app.post('/api/companies/login', companiesAPI.login);
+
+// الحصول على جميع الشركات (Super Admin فقط)
+app.get('/api/companies', companiesAPI.getAllCompanies);
+
+// الحصول على بيانات شركة محددة
+app.get('/api/companies/:id', companiesAPI.getCompany);
+
+// تحديث بيانات شركة
+app.put('/api/companies/:id', companiesAPI.updateCompany);
+
+// تحديث حالة شركة
+app.put('/api/companies/:id/status', companiesAPI.updateStatus);
+
+// تحديث خطة شركة
+app.put('/api/companies/:id/plan', companiesAPI.updatePlan);
+
+// حذف شركة (soft delete)
+app.delete('/api/companies/:id', companiesAPI.deleteCompany);
+
+// بدء الخادم
+app.listen(PORT, () => {
+    console.log(`\n✅ الخادم يعمل على http://localhost:${PORT}`);
+    console.log(`📱 رقم Twilio: ${TWILIO_PHONE_NUMBER}`);
+    console.log(`\n📊 المنصة: www.akrammostafa.com`);
+    console.log(`\n⚠️  تأكد من تعيين بياناتك في ملف server.js:\n`);
+    console.log(`   - TWILIO_ACCOUNT_SID`);
+    console.log(`   - TWILIO_AUTH_TOKEN`);
+    console.log(`   - TWILIO_TWIML_APP_SID\n`);
+});
+
+
+

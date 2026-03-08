@@ -1,31 +1,39 @@
-// ==========================================
+﻿// ==========================================
 // Initialize AOS (Animate On Scroll)
 // ==========================================
-AOS.init({
-    duration: 1000,
-    easing: 'ease-in-out',
-    once: true,
-    mirror: false,
-    offset: 100
-});
+if (typeof AOS !== 'undefined') {
+    AOS.init({
+        duration: 700,
+        easing: 'ease-out',
+        once: true,
+        mirror: false,
+        offset: 80,
+        disable: window.innerWidth < 768 ? 'phone' : false
+    });
+}
 
 // ==========================================
 // Particles.js Configuration
 // ==========================================
-particlesJS('particles-js', {
-    particles: {
-        number: {
-            value: 80,
-            density: {
-                enable: true,
-                value_area: 800
-            }
-        },
-        color: {
-            value: ['#e94e77', '#f7931e', '#c471ed']
-        },
+const isMobile = window.innerWidth <= 768;
+const isLowEnd = isMobile || navigator.hardwareConcurrency <= 4;
+
+// Only initialize particles if the container exists and library is loaded
+if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js')) {
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: isLowEnd ? 20 : 80,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: ['#e94e77', '#f7931e', '#c471ed']
+            },
         shape: {
-            type: ['circle', 'edge'],
+            type: isLowEnd ? 'circle' : ['circle', 'edge'],
             stroke: {
                 width: 0,
                 color: '#000000'
@@ -35,7 +43,7 @@ particlesJS('particles-js', {
             value: 0.5,
             random: true,
             anim: {
-                enable: true,
+                enable: !isLowEnd,
                 speed: 1,
                 opacity_min: 0.1,
                 sync: false
@@ -45,14 +53,14 @@ particlesJS('particles-js', {
             value: 3,
             random: true,
             anim: {
-                enable: true,
+                enable: false,
                 speed: 2,
                 size_min: 0.1,
                 sync: false
             }
         },
         line_linked: {
-            enable: true,
+            enable: !isLowEnd,
             distance: 150,
             color: '#e94e77',
             opacity: 0.3,
@@ -60,16 +68,14 @@ particlesJS('particles-js', {
         },
         move: {
             enable: true,
-            speed: 2,
+            speed: isLowEnd ? 1 : 2,
             direction: 'none',
             random: true,
             straight: false,
             out_mode: 'out',
             bounce: false,
             attract: {
-                enable: true,
-                rotateX: 600,
-                rotateY: 1200
+                enable: false
             }
         }
     },
@@ -77,11 +83,11 @@ particlesJS('particles-js', {
         detect_on: 'canvas',
         events: {
             onhover: {
-                enable: true,
+                enable: !isLowEnd,
                 mode: 'grab'
             },
             onclick: {
-                enable: true,
+                enable: !isLowEnd,
                 mode: 'push'
             },
             resize: true
@@ -89,17 +95,14 @@ particlesJS('particles-js', {
         modes: {
             grab: {
                 distance: 140,
-                line_linked: {
-                    opacity: 0.5
-                }
+                line_linked: { opacity: 0.5 }
             },
-            push: {
-                particles_nb: 4
-            }
+            push: { particles_nb: 4 }
         }
     },
-    retina_detect: true
+    retina_detect: false
 });
+} // End of particlesJS check
 
 // ==========================================
 // Navbar Scroll Effect
@@ -107,15 +110,22 @@ particlesJS('particles-js', {
 const navbar = document.getElementById('navbar');
 const scrollTop = document.getElementById('scrollTop');
 
+let scrollTicking = false;
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-        navbar.classList.add('scrolled');
-        scrollTop.classList.add('show');
-    } else {
-        navbar.classList.remove('scrolled');
-        scrollTop.classList.remove('show');
+    if (!scrollTicking) {
+        requestAnimationFrame(() => {
+            if (window.scrollY > 100) {
+                if (navbar) navbar.classList.add('scrolled');
+                if (scrollTop) scrollTop.classList.add('show');
+            } else {
+                if (navbar) navbar.classList.remove('scrolled');
+                if (scrollTop) scrollTop.classList.remove('show');
+            }
+            scrollTicking = false;
+        });
+        scrollTicking = true;
     }
-});
+}, { passive: true });
 
 // ==========================================
 // Mobile Menu Toggle
@@ -124,61 +134,65 @@ const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('.nav-link');
 
-navToggle.addEventListener('click', () => {
-    navToggle.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-// Close menu when clicking on a link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        navToggle.classList.remove('active');
-        navMenu.classList.remove('active');
+if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
     });
-});
 
-// Close menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-        navToggle.classList.remove('active');
-        navMenu.classList.remove('active');
-    }
-});
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    });
+}
 
 // ==========================================
 // Active Navigation Link on Scroll
 // ==========================================
 const sections = document.querySelectorAll('section[id]');
 
+let navTicking = false;
 function activateNavLink() {
-    const scrollY = window.pageYOffset;
-
-    sections.forEach(section => {
-        const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
-        const sectionId = section.getAttribute('id');
-        const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            navLinks.forEach(link => link.classList.remove('active'));
-            if (navLink) {
-                navLink.classList.add('active');
+    if (navTicking) return;
+    navTicking = true;
+    requestAnimationFrame(() => {
+        const scrollY = window.pageYOffset;
+        sections.forEach(section => {
+            const sectionHeight = section.offsetHeight;
+            const sectionTop = section.offsetTop - 100;
+            const sectionId = section.getAttribute('id');
+            const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                if (navLink) navLink.classList.add('active');
             }
-        }
+        });
+        navTicking = false;
     });
 }
 
-window.addEventListener('scroll', activateNavLink);
+window.addEventListener('scroll', activateNavLink, { passive: true });
 
 // ==========================================
 // Smooth Scroll to Top
 // ==========================================
-scrollTop.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+if (scrollTop) {
+    scrollTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
-});
+}
 
 // ==========================================
 // Smooth Scroll for All Links
@@ -203,7 +217,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ==========================================
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
+if (contactForm) contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
     // Get form data
@@ -216,21 +230,6 @@ contactForm.addEventListener('submit', (e) => {
     contactForm.reset();
     
     // Here you would typically send the data to a server
-    // Example using fetch:
-    /*
-    fetch('your-api-endpoint', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        showNotification('success', 'تم إرسال رسالتك بنجاح!');
-        contactForm.reset();
-    })
-    .catch(error => {
-        showNotification('error', 'حدث خطأ. يرجى المحاولة مرة أخرى.');
-    });
-    */
 });
 
 // ==========================================
@@ -309,17 +308,12 @@ document.head.appendChild(style);
 // ==========================================
 // Form Input Animations
 // ==========================================
-const formControls = document.querySelectorAll('.form-control');
-
-formControls.forEach(control => {
+document.querySelectorAll('.form-control').forEach(control => {
     control.addEventListener('focus', function() {
         this.parentElement.classList.add('focused');
     });
-    
     control.addEventListener('blur', function() {
-        if (!this.value) {
-            this.parentElement.classList.remove('focused');
-        }
+        if (!this.value) this.parentElement.classList.remove('focused');
     });
 });
 

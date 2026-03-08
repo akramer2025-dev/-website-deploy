@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Store Management System - Akram Mostafa
  * نظام إدارة المتجر الاحترافي
  * يتضمن: سلة مشتريات - حفظ دائم - تطبيقات ويب وموبايل
@@ -820,7 +820,7 @@ function showProductDetails(key, type) {
                             <i class="fas fa-cart-plus"></i>
                             أضف للسلة
                         </button>
-                        <a href="https://wa.me/00201555512778?text=استفسار عن ${app.name}" target="_blank" class="btn-modal-whatsapp">
+                        <a href="https://wa.me/201555512778?text=استفسار عن ${app.name}" target="_blank" class="btn-modal-whatsapp">
                             <i class="fab fa-whatsapp"></i>
                             تواصل واتساب
                         </a>

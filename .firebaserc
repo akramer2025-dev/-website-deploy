@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "akramplatform-2c6be"
+  },
+  "targets": {
+    "akramplatform-2c6be": {
+      "hosting": {
+        "main": [
+          "akramplatform-2c6be"
+        ],
+        "linkcall": [
+          "linkcall-akram"
+        ]
+      }
+    }
   }
 }

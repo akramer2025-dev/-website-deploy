@@ -25,7 +25,7 @@ a{text-decoration:none;color:inherit;}
 /* NAVBAR */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,13,27,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0;}
 .navbar .container{display:flex;align-items:center;justify-content:space-between;height:66px;}
-.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-brand{display:flex;align-items:center;gap:0;}
 .nav-brand img{width:38px;height:38px;}
 .nav-brand span{font-size:.92rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;}
 .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:var(--grad);border-radius:12px;color:#fff;font-size:.88rem;font-weight:800;transition:.3s;}
@@ -184,6 +184,7 @@ a{text-decoration:none;color:inherit;}
   .stat-divider{display:none;}
 }
 </style>
+    <script src="/js/meta-pixel.js" defer></script>
 </head>
 <body>
 
@@ -191,7 +192,7 @@ a{text-decoration:none;color:inherit;}
 <nav class="navbar">
   <div class="container">
     <div class="nav-brand">
-      <img src="images/logo.png" alt="Akram Mostafa">
+      <img src="images/1772173627537.png" alt="Akram Mostafa">
       <span>AKRAM<br>MOSTAFA</span>
     </div>
     <a href="#register" class="nav-cta" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'});return false;">
@@ -256,7 +257,7 @@ a{text-decoration:none;color:inherit;}
         </div>
 
         <div class="cta-row">
-          <a id="register" href="https://wa.me/00201555512778?text=عايز%20أسجل%20في%20الكورس%20المجاني%20للتسويق" target="_blank" class="btn-main">
+          <a id="register" href="https://wa.me/201555512778?text=عايز%20أسجل%20في%20الكورس%20المجاني%20للتسويق" target="_blank" class="btn-main">
             <i class="fab fa-whatsapp"></i> احجز مكانك مجاناً 
           </a>
           <div class="social-proof"><i class="fas fa-users"></i> +500 طالب سبقوك</div>
@@ -610,7 +611,7 @@ a{text-decoration:none;color:inherit;}
       <h2>احجز مكانك دلوقتي</h2>
       <p>الأماكن محدودة  متفوتش الفرصة دي. بعت رسالة واحدة على واتساب وهتكون جزء من الكورس.</p>
       <div class="final-cta-btns">
-        <a href="https://wa.me/00201555512778?text=عايز%20أسجل%20في%20الكورس%20المجاني%20للتسويق%20مع%20أكرم%20مصطفى" target="_blank" class="btn-main" style="font-size:1.05rem;padding:18px 40px;">
+        <a href="https://wa.me/201555512778?text=عايز%20أسجل%20في%20الكورس%20المجاني%20للتسويق%20مع%20أكرم%20مصطفى" target="_blank" class="btn-main" style="font-size:1.05rem;padding:18px 40px;">
           <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> احجز مكانك مجاناً
         </a>
       </div>
@@ -626,7 +627,8 @@ a{text-decoration:none;color:inherit;}
   </div>
 </footer>
 
-<a href="https://wa.me/00201555512778" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+<a href="https://wa.me/201555512778" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+<button id="scrollTop" title="العودة للأعلى"><i class="fas fa-chevron-up"></i></button>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
@@ -634,6 +636,13 @@ AOS.init({duration:850,easing:'ease-in-out',once:true,offset:70});
 function toggleFaq(el){
   const item = el.parentElement;
   item.classList.toggle('open');
+}
+
+// SCROLL TO TOP
+const _stt = document.getElementById('scrollTop');
+if (_stt) {
+  window.addEventListener('scroll', () => _stt.classList.toggle('show', window.scrollY > 300));
+  _stt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 </script>
 </body>

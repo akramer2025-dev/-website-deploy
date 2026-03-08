@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Meta Business Catalog Feed
+  الموقع: https://www.akrammostafa.com
+  URL للفيد: https://www.akrammostafa.com/catalog-feed.xml
+  
+  طريقة الربط في Meta Business Manager:
+  Commerce Manager → Catalog → Data Sources → Data Feed → Add URL
+  ثم أدخل: https://www.akrammostafa.com/catalog-feed.xml
+  اضبط التحديث على: يومي
+-->
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+  <channel>
+    <title>أكرم مصطفى — تطبيقات وكورسات</title>
+    <link>https://www.akrammostafa.com</link>
+    <description>تطبيقات برمجية ودورات تدريبية في التسويق الرقمي</description>
+
+    <!-- ==================== التطبيقات ==================== -->
+
+    <item>
+      <g:id>linkcall</g:id>
+      <g:title>Link Call — منصة كول سنتر ذكية</g:title>
+      <g:description>منصة كول سنتر متكاملة لإدارة المكالمات والمحادثات وفرق العمل. تتيح تتبع كل تفاعل مع العملاء، رسائل WhatsApp، تقارير فورية، وإدارة الموظفين من لوحة واحدة.</g:description>
+      <g:link>https://www.akrammostafa.com/products/linkcall.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/products/linkcall.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>1500.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>تطبيقات > إدارة الأعمال > كول سنتر</g:product_type>
+      <g:google_product_category>Software > Business &amp; Productivity Software</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>app</g:custom_label_0>
+      <g:custom_label_1>business</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>almodif</g:id>
+      <g:title>المضيف سمارت — نظام إدارة الفنادق</g:title>
+      <g:description>نظام إدارة متكامل للفنادق والشاليهات والوحدات السياحية. يشمل: الحجوزات، الوحدات، المدفوعات، التقارير الفورية، وإدارة الأسعار الموسمية تلقائياً.</g:description>
+      <g:link>https://www.akrammostafa.com/products/almodif.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/products/almodif.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>2000.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>تطبيقات > إدارة الأعمال > فنادق وضيافة</g:product_type>
+      <g:google_product_category>Software > Business &amp; Productivity Software</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>app</g:custom_label_0>
+      <g:custom_label_1>hospitality</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>remostore</g:id>
+      <g:title>ريمو ستور — متجر إلكتروني احترافي</g:title>
+      <g:description>منصة متجر إلكتروني احترافي مع ذكاء اصطناعي مدمج. يشمل: إدارة المنتجات، الطلبات، الشحن، عروض وأكواد خصم، تقارير مبيعات، وتكامل مع بوابات الدفع.</g:description>
+      <g:link>https://www.akrammostafa.com/products/remostore.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/products/remostore.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>1800.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>تطبيقات > تجارة إلكترونية</g:product_type>
+      <g:google_product_category>Software > E-Commerce Software</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>app</g:custom_label_0>
+      <g:custom_label_1>ecommerce</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>dentasmart</g:id>
+      <g:title>Denta Smart — نظام إدارة عيادات الأسنان</g:title>
+      <g:description>نظام إدارة ذكي لعيادات الأسنان. يشمل: سجلات المرضى الطبية، المواعيد، الفواتير، صور الأشعة، متابعة خطط العلاج، وتقارير مالية تفصيلية.</g:description>
+      <g:link>https://www.akrammostafa.com/products/dentasmart.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/products/dentasmart.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>1200.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>تطبيقات > صحة > عيادات</g:product_type>
+      <g:google_product_category>Software > Medical Software</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>app</g:custom_label_0>
+      <g:custom_label_1>medical</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>hotel-crm</g:id>
+      <g:title>نظام CRM الفنادق — إدارة علاقات العملاء</g:title>
+      <g:description>نظام CRM متكامل مخصص لقطاع الفنادق والمنشآت الفندقية. يتيح تتبع تاريخ كل عميل، إدارة الشكاوى، قياس رضا النزلاء، وبناء قاعدة بيانات عملاء محترفة.</g:description>
+      <g:link>https://www.akrammostafa.com/products/hotel-crm.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/products/hotel-crm.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>2500.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>تطبيقات > إدارة الأعمال > CRM</g:product_type>
+      <g:google_product_category>Software > Business &amp; Productivity Software</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>app</g:custom_label_0>
+      <g:custom_label_1>crm</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>missrim</g:id>
+      <g:title>محل ميس ريم — موقع بيع ملابس وإكسسوارات</g:title>
+      <g:description>موقع تجارة إلكترونية متكامل لبيع الملابس والإكسسوارات. يشمل: عرض المنتجات، أكواد الخصم، سلة المشتريات، وإدارة المخزون والطلبات.</g:description>
+      <g:link>https://www.akrammostafa.com/products/missrim.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/products/missrim.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>1000.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>تطبيقات > تجارة إلكترونية > ملابس</g:product_type>
+      <g:google_product_category>Software > E-Commerce Software</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>app</g:custom_label_0>
+      <g:custom_label_1>ecommerce</g:custom_label_1>
+    </item>
+
+    <!-- ==================== الكورسات ==================== -->
+
+    <item>
+      <g:id>course-ai</g:id>
+      <g:title>كورس التسويق بالذكاء الاصطناعي</g:title>
+      <g:description>دورة تدريبية متخصصة في استخدام أدوات الذكاء الاصطناعي في التسويق الرقمي. تعلّم كيف تستخدم ChatGPT وأدوات AI لإنشاء المحتوى، تحليل الجمهور، وأتمتة الحملات.</g:description>
+      <g:link>https://www.akrammostafa.com/courses/ai-marketing.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/courses/ai-marketing.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>597.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>كورسات > تسويق رقمي > ذكاء اصطناعي</g:product_type>
+      <g:google_product_category>Media > Books &amp; Magazines > Online Courses</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>course</g:custom_label_0>
+      <g:custom_label_1>ai</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>course-facebook</g:id>
+      <g:title>كورس إعلانات فيسبوك الاحترافي</g:title>
+      <g:description>دورة شاملة لإتقان إعلانات فيسبوك من الصفر حتى الاحتراف. تشمل: إعداد الحملات، الاستهداف، البيكسل، A/B Testing، وتحليل النتائج لتحقيق أعلى عائد على الإنفاق.</g:description>
+      <g:link>https://www.akrammostafa.com/courses/facebook-ads.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/courses/facebook-ads.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>497.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>كورسات > تسويق رقمي > فيسبوك</g:product_type>
+      <g:google_product_category>Media > Books &amp; Magazines > Online Courses</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>course</g:custom_label_0>
+      <g:custom_label_1>social-ads</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>course-instagram</g:id>
+      <g:title>كورس إعلانات انستجرام</g:title>
+      <g:description>دورة متخصصة في إعلانات انستجرام وبناء حضور قوي على المنصة. تشمل: Reels، Stories Ads، Shopping، استهداف الجمهور وقياس الأداء.</g:description>
+      <g:link>https://www.akrammostafa.com/courses/instagram.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/courses/instagram.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>397.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>كورسات > تسويق رقمي > انستجرام</g:product_type>
+      <g:google_product_category>Media > Books &amp; Magazines > Online Courses</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>course</g:custom_label_0>
+      <g:custom_label_1>social-ads</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>course-tiktok</g:id>
+      <g:title>كورس تيك توك للأعمال والإعلانات</g:title>
+      <g:description>دورة متخصصة في تيك توك للأعمال والإعلانات الممولة. تشمل: إنشاء محتوى فيروسي، TikTok Ads Manager، Pixel، واستراتيجيات الاستهداف.</g:description>
+      <g:link>https://www.akrammostafa.com/courses/tiktok.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/courses/tiktok.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>397.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>كورسات > تسويق رقمي > تيك توك</g:product_type>
+      <g:google_product_category>Media > Books &amp; Magazines > Online Courses</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>course</g:custom_label_0>
+      <g:custom_label_1>social-ads</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>course-snapchat</g:id>
+      <g:title>كورس إعلانات سناب شات</g:title>
+      <g:description>دورة شاملة في إعلانات سناب شات واستهداف جمهور الشباب. تشمل: Snap Ads، Story Ads، AR Lenses، جدول الميزانية، وتحليل الأداء.</g:description>
+      <g:link>https://www.akrammostafa.com/courses/snapchat.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/courses/snapchat.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>397.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>كورسات > تسويق رقمي > سناب شات</g:product_type>
+      <g:google_product_category>Media > Books &amp; Magazines > Online Courses</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>course</g:custom_label_0>
+      <g:custom_label_1>social-ads</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>course-twitter</g:id>
+      <g:title>كورس تويتر X للتسويق والإعلانات</g:title>
+      <g:description>دورة متخصصة في تسويق X (تويتر) والإعلانات الممولة على المنصة. تشمل: بناء الجمهور، Twitter Ads، الترند، وتحويل المتابعين لعملاء.</g:description>
+      <g:link>https://www.akrammostafa.com/courses/twitter.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/courses/twitter.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>297.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>كورسات > تسويق رقمي > تويتر</g:product_type>
+      <g:google_product_category>Media > Books &amp; Magazines > Online Courses</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>course</g:custom_label_0>
+      <g:custom_label_1>social-ads</g:custom_label_1>
+    </item>
+
+    <item>
+      <g:id>course-strategy</g:id>
+      <g:title>كورس الاستراتيجية التسويقية المتكاملة</g:title>
+      <g:description>دورة شاملة في بناء وتنفيذ استراتيجية تسويقية متكاملة عبر جميع القنوات الرقمية. تشمل: تحليل السوق، الجمهور، المحتوى، الإعلانات، وقياس الأداء الشامل.</g:description>
+      <g:link>https://www.akrammostafa.com/courses/integrated-strategy.html</g:link>
+      <g:image_link>https://image.thum.io/get/width/1200/crop/628/https://www.akrammostafa.com/courses/integrated-strategy.html</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:condition>new</g:condition>
+      <g:price>797.00 EGP</g:price>
+      <g:brand>أكرم مصطفى</g:brand>
+      <g:product_type>كورسات > تسويق رقمي > استراتيجية</g:product_type>
+      <g:google_product_category>Media > Books &amp; Magazines > Online Courses</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:custom_label_0>course</g:custom_label_0>
+      <g:custom_label_1>strategy</g:custom_label_1>
+    </item>
+
+  </channel>
+</rss>

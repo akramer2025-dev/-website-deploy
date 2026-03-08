@@ -6,29 +6,33 @@
    Navigation Logo Fix
    ========================================== */
 .nav-logo {
-    width: 55px !important;
-    height: 55px !important;
-    border-radius: 12px;
+    width: auto !important;
+    height: 110px !important;
+    max-width: 360px !important;
+    border-radius: 0;
     object-fit: contain;
     transition: transform 0.3s ease;
 }
 
 .navbar.scrolled .nav-logo {
-    width: 48px !important;
-    height: 48px !important;
+    width: auto !important;
+    height: 85px !important;
+    max-width: 300px !important;
 }
 
 @media (max-width: 480px) {
     .nav-logo {
-        width: 45px !important;
-        height: 45px !important;
+        width: auto !important;
+        height: 85px !important;
+        max-width: 290px !important;
     }
 }
 
 @media (max-width: 360px) {
     .nav-logo {
-        width: 40px !important;
-        height: 40px !important;
+        width: auto !important;
+        height: 75px !important;
+        max-width: 250px !important;
     }
 }
 
