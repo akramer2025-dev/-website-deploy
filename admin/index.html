@@ -208,6 +208,47 @@ button{cursor:pointer;}
 .emp-req-status.approved{background:rgba(34,197,94,0.15);color:#22c55e;}
 .emp-req-status.rejected{background:rgba(239,68,68,0.1);color:#f87171;}
 
+/* EMPLOYEE CONTRACT MODAL */
+.modal-box-lg{width:750px;max-width:95vw;}
+.emp-contract-form{margin-top:20px;}
+.emp-steps{display:flex;align-items:center;justify-content:center;margin-bottom:32px;gap:0;}
+.emp-step{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.emp-step-number{width:40px;height:40px;border-radius:50%;background:var(--bg2);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--muted);transition:.3s;}
+.emp-step-label{font-size:.8rem;color:var(--muted);font-weight:600;transition:.3s;}
+.emp-step.active .emp-step-number{background:var(--grad);border-color:var(--pink);color:#fff;}
+.emp-step.active .emp-step-label{color:#fff;}
+.emp-step.completed .emp-step-number{background:rgba(34,197,94,0.2);border-color:#22c55e;color:#22c55e;}
+.emp-step-line{flex:1;height:2px;background:var(--border);min-width:60px;max-width:120px;}
+.emp-form-step{display:none;}
+.emp-form-step.active{display:block;}
+.form-field label i{margin-left:6px;color:var(--pink);opacity:.7;}
+.emp-contract-preview{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;}
+.emp-preview-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--border);}
+.emp-preview-header i{font-size:2rem;color:var(--pink);}
+.emp-preview-header h4{font-size:1.1rem;color:#fff;font-weight:800;margin:0;}
+.emp-preview-content{margin-bottom:24px;}
+.emp-preview-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
+.emp-preview-row:last-child{border-bottom:none;}
+.emp-preview-label{font-size:.85rem;color:var(--muted);font-weight:600;}
+.emp-preview-value{font-size:.9rem;color:#fff;font-weight:700;}
+.emp-send-options{display:flex;flex-direction:column;gap:12px;}
+.emp-send-option{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;transition:.3s;}
+.emp-send-option:hover{border-color:var(--pink);transform:translateX(-3px);}
+.emp-send-icon{width:48px;height:48px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;}
+.emp-send-info{flex:1;}
+.emp-send-info h5{font-size:.9rem;color:#fff;font-weight:700;margin:0 0 4px 0;}
+.emp-send-info p{font-size:.75rem;color:var(--muted);margin:0;}
+.btn-send-whatsapp,.btn-copy-link,.btn-send-email{padding:8px 18px;border-radius:9px;border:none;font-size:.85rem;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.btn-send-whatsapp{background:rgba(37,211,102,0.15);color:#25d366;border:1px solid rgba(37,211,102,0.3);}
+.btn-send-whatsapp:hover{background:#25d366;color:#fff;}
+.btn-copy-link{background:rgba(233,78,119,0.15);color:var(--pink);border:1px solid rgba(233,78,119,0.25);}
+.btn-copy-link:hover{background:var(--grad);color:#fff;}
+.btn-send-email{background:rgba(59,130,246,0.15);color:#3b82f6;border:1px solid rgba(59,130,246,0.3);}
+.btn-send-email:hover{background:#3b82f6;color:#fff;}
+.emp-modal-footer{display:flex;gap:12px;margin-top:28px;}
+.btn-modal-back{flex:0 0 auto;padding:10px 20px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--muted);font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:8px;}
+.btn-modal-back:hover{background:var(--card);color:#fff;}
+
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
 .modal-overlay.open{display:flex;}
@@ -995,6 +1036,170 @@ button{cursor:pointer;}
         <i class="fas fa-plus"></i> إضافة للمعرض
       </button>
       <button class="btn-modal-cancel" onclick="closeGalleryModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- EMPLOYEE CONTRACT MODAL -->
+<div class="modal-overlay" id="employeeContractModal">
+  <div class="modal-box modal-box-lg">
+    <div class="modal-header">
+      <h3><i class="fas fa-user-plus" style="color:var(--pink);margin-left:8px"></i> إنشاء عقد موظف جديد</h3>
+      <button class="modal-close" onclick="closeEmployeeModal()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="emp-contract-form">
+      <!-- Step Indicator -->
+      <div class="emp-steps">
+        <div class="emp-step active">
+          <div class="emp-step-number">1</div>
+          <div class="emp-step-label">بيانات الموظف</div>
+        </div>
+        <div class="emp-step-line"></div>
+        <div class="emp-step">
+          <div class="emp-step-number">2</div>
+          <div class="emp-step-label">تفاصيل العقد</div>
+        </div>
+        <div class="emp-step-line"></div>
+        <div class="emp-step">
+          <div class="emp-step-number">3</div>
+          <div class="emp-step-label">إرسال</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Employee Data -->
+      <div class="emp-form-step active" id="empStep1">
+        <div class="form-row">
+          <div class="form-field">
+            <label><i class="fas fa-user"></i> الاسم الكامل *</label>
+            <input type="text" id="empName" placeholder="أدخل الاسم الكامل للموظف">
+          </div>
+          <div class="form-field">
+            <label><i class="fas fa-envelope"></i> البريد الإلكتروني *</label>
+            <input type="email" id="empEmail" placeholder="example@email.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label><i class="fas fa-phone"></i> رقم الهاتف *</label>
+            <input type="tel" id="empPhone" placeholder="01XXXXXXXXX">
+          </div>
+          <div class="form-field">
+            <label><i class="fas fa-id-card"></i> الرقم القومي *</label>
+            <input type="text" id="empNationalId" placeholder="14 رقم">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label><i class="fas fa-map-marker-alt"></i> العنوان الكامل *</label>
+          <input type="text" id="empAddress" placeholder="المدينة - الشارع - رقم المبنى">
+        </div>
+      </div>
+
+      <!-- Step 2: Contract Details -->
+      <div class="emp-form-step" id="empStep2">
+        <div class="form-row">
+          <div class="form-field">
+            <label><i class="fas fa-briefcase"></i> المسمى الوظيفي *</label>
+            <input type="text" id="empJobTitle" placeholder="مثال: مطور واجهات أمامية">
+          </div>
+          <div class="form-field">
+            <label><i class="fas fa-building"></i> القسم</label>
+            <input type="text" id="empDepartment" placeholder="مثال: قسم التطوير">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label><i class="fas fa-money-bill-wave"></i> الراتب الشهري (جنيه) *</label>
+            <input type="number" id="empSalary" placeholder="0000">
+          </div>
+          <div class="form-field">
+            <label><i class="fas fa-calendar-alt"></i> تاريخ بدء العمل *</label>
+            <input type="date" id="empStartDate">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label><i class="fas fa-file-contract"></i> نوع العقد</label>
+          <select id="empContractType">
+            <option value="دائم">عقد دائم</option>
+            <option value="مؤقت">عقد مؤقت</option>
+            <option value="تجربة">فترة تجربة (شهر واحد)</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label><i class="fas fa-clock"></i> ساعات العمل</label>
+          <input type="text" id="empWorkHours" placeholder="من 9 صباحاً إلى 5 مساءً" value="من 9 صباحاً إلى 5 مساءً">
+        </div>
+
+        <div class="form-field">
+          <label><i class="fas fa-align-right"></i> ملاحظات إضافية</label>
+          <textarea id="empNotes" placeholder="أي ملاحظات أو شروط إضافية..." rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- Step 3: Send -->
+      <div class="emp-form-step" id="empStep3">
+        <div class="emp-contract-preview">
+          <div class="emp-preview-header">
+            <i class="fas fa-file-signature"></i>
+            <h4>معاينة بيانات العقد</h4>
+          </div>
+          
+          <div class="emp-preview-content" id="empPreviewContent">
+            <!-- Will be filled by JS -->
+          </div>
+
+          <div class="emp-send-options">
+            <div class="emp-send-option">
+              <div class="emp-send-icon"><i class="fab fa-whatsapp"></i></div>
+              <div class="emp-send-info">
+                <h5>إرسال عبر واتساب</h5>
+                <p>إرسال رابط التسجيل مباشرة للموظف</p>
+              </div>
+              <button class="btn-send-whatsapp" onclick="sendViaWhatsApp()">
+                <i class="fab fa-whatsapp"></i> إرسال
+              </button>
+            </div>
+
+            <div class="emp-send-option">
+              <div class="emp-send-icon"><i class="fas fa-link"></i></div>
+              <div class="emp-send-info">
+                <h5>نسخ الرابط</h5>
+                <p>نسخ رابط التسجيل ليدوياً</p>
+              </div>
+              <button class="btn-copy-link" onclick="copyEmployeeLink()">
+                <i class="fas fa-copy"></i> نسخ
+              </button>
+            </div>
+
+            <div class="emp-send-option">
+              <div class="emp-send-icon"><i class="fas fa-envelope"></i></div>
+              <div class="emp-send-info">
+                <h5>إرسال عبر البريد</h5>
+                <p>فتح تطبيق البريد لإرسال الرابط</p>
+              </div>
+              <button class="btn-send-email" onclick="sendViaEmail()">
+                <i class="fas fa-envelope"></i> إرسال
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="modal-footer emp-modal-footer">
+      <button class="btn-modal-back" onclick="empPrevStep()" id="empBtnBack" style="display:none;">
+        <i class="fas fa-arrow-right"></i> السابق
+      </button>
+      <button class="btn-modal-save" onclick="empNextStep()" id="empBtnNext">
+        التالي <i class="fas fa-arrow-left"></i>
+      </button>
+      <button class="btn-modal-cancel" onclick="closeEmployeeModal()">إلغاء</button>
     </div>
   </div>
 </div>
@@ -3224,31 +3429,228 @@ document.querySelectorAll('.adm-nav-item').forEach(item=>{
 
 // إضافة موظف جديد مع إرسال رابط التسجيل
 async function addEmployeeWithOnboarding(){
-  const email = prompt('أدخل البريد الإلكتروني للموظف:');
-  if(!email || !email.includes('@')){
-    toast('يرجى إدخال بريد إلكتروني صحيح', 'error');
-    return;
-  }
+  // Open the professional modal
+  document.getElementById('employeeContractModal').classList.add('open');
   
-  const name = prompt('أدخل اسم الموظف:');
-  if(!name){
-    toast('يرجى إدخال اسم الموظف', 'error');
-    return;
-  }
+  // Reset form
+  document.getElementById('empName').value = '';
+  document.getElementById('empEmail').value = '';
+  document.getElementById('empPhone').value = '';
+  document.getElementById('empNationalId').value = '';
+  document.getElementById('empAddress').value = '';
+  document.getElementById('empJobTitle').value = '';
+  document.getElementById('empDepartment').value = '';
+  document.getElementById('empSalary').value = '';
+  document.getElementById('empStartDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('empContractType').value = 'تجربة';
+  document.getElementById('empWorkHours').value = 'من 9 صباحاً إلى 5 مساءً';
+  document.getElementById('empNotes').value = '';
   
-  const salary = prompt('أدخل الراتب الشهري (جنيه مصري):');
-  if(!salary || isNaN(salary)){
-    toast('يرجى إدخال راتب صحيح', 'error');
-    return;
-  }
+  // Reset to step 1
+  currentEmpStep = 1;
+  updateEmpStepDisplay();
+}
+
+let currentEmpStep = 1;
+let currentEmployeeData = {};
+
+function closeEmployeeModal(){
+  document.getElementById('employeeContractModal').classList.remove('open');
+  currentEmpStep = 1;
+  updateEmpStepDisplay();
+}
+
+function updateEmpStepDisplay(){
+  // Update steps indicator
+  document.querySelectorAll('.emp-step').forEach((step, index) => {
+    step.classList.remove('active', 'completed');
+    if(index + 1 < currentEmpStep){
+      step.classList.add('completed');
+    } else if(index + 1 === currentEmpStep){
+      step.classList.add('active');
+    }
+  });
   
+  // Update form steps
+  document.querySelectorAll('.emp-form-step').forEach((step, index) => {
+    step.classList.remove('active');
+    if(index + 1 === currentEmpStep){
+      step.classList.add('active');
+    }
+  });
+  
+  // Update buttons
+  const btnBack = document.getElementById('empBtnBack');
+  const btnNext = document.getElementById('empBtnNext');
+  
+  if(currentEmpStep === 1){
+    btnBack.style.display = 'none';
+    btnNext.innerHTML = 'التالي <i class="fas fa-arrow-left"></i>';
+  } else if(currentEmpStep === 2){
+    btnBack.style.display = 'flex';
+    btnNext.innerHTML = 'التالي <i class="fas fa-arrow-left"></i>';
+  } else if(currentEmpStep === 3){
+    btnBack.style.display = 'flex';
+    btnNext.innerHTML = '<i class="fas fa-check"></i> إنشاء العقد';
+  }
+}
+
+function empNextStep(){
+  if(currentEmpStep === 1){
+    // Validate step 1
+    const name = document.getElementById('empName').value.trim();
+    const email = document.getElementById('empEmail').value.trim();
+    const phone = document.getElementById('empPhone').value.trim();
+    const nationalId = document.getElementById('empNationalId').value.trim();
+    const address = document.getElementById('empAddress').value.trim();
+    
+    if(!name){
+      toast('يرجى إدخال اسم الموظف', 'error');
+      return;
+    }
+    if(!email || !email.includes('@')){
+      toast('يرجى إدخال بريد إلكتروني صحيح', 'error');
+      return;
+    }
+    if(!phone){
+      toast('يرجى إدخال رقم الهاتف', 'error');
+      return;
+    }
+    if(!nationalId || nationalId.length !== 14){
+      toast('يرجى إدخال رقم قومي صحيح (14 رقم)', 'error');
+      return;
+    }
+    if(!address){
+      toast('يرجى إدخال العنوان', 'error');
+      return;
+    }
+    
+    currentEmpStep = 2;
+    updateEmpStepDisplay();
+    
+  } else if(currentEmpStep === 2){
+    // Validate step 2
+    const jobTitle = document.getElementById('empJobTitle').value.trim();
+    const salary = document.getElementById('empSalary').value.trim();
+    const startDate = document.getElementById('empStartDate').value;
+    
+    if(!jobTitle){
+      toast('يرجى إدخال المسمى الوظيفي', 'error');
+      return;
+    }
+    if(!salary || isNaN(salary)){
+      toast('يرجى إدخال راتب صحيح', 'error');
+      return;
+    }
+    if(!startDate){
+      toast('يرجى اختيار تاريخ بدء العمل', 'error');
+      return;
+    }
+    
+    // Generate preview
+    generateEmployeePreview();
+    
+    currentEmpStep = 3;
+    updateEmpStepDisplay();
+    
+  } else if(currentEmpStep === 3){
+    // Create the employee contract
+    createEmployeeContract();
+  }
+}
+
+function empPrevStep(){
+  if(currentEmpStep > 1){
+    currentEmpStep--;
+    updateEmpStepDisplay();
+  }
+}
+
+function generateEmployeePreview(){
+  const name = document.getElementById('empName').value.trim();
+  const email = document.getElementById('empEmail').value.trim();
+  const phone = document.getElementById('empPhone').value.trim();
+  const nationalId = document.getElementById('empNationalId').value.trim();
+  const address = document.getElementById('empAddress').value.trim();
+  const jobTitle = document.getElementById('empJobTitle').value.trim();
+  const department = document.getElementById('empDepartment').value.trim();
+  const salary = document.getElementById('empSalary').value.trim();
+  const startDate = document.getElementById('empStartDate').value;
+  const contractType = document.getElementById('empContractType').value;
+  const workHours = document.getElementById('empWorkHours').value.trim();
+  const notes = document.getElementById('empNotes').value.trim();
+  
+  const formattedDate = new Date(startDate).toLocaleDateString('ar-EG', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  
+  let html = `
+    <div class="emp-preview-row">
+      <span class="emp-preview-label"><i class="fas fa-user"></i> الاسم الكامل</span>
+      <span class="emp-preview-value">${name}</span>
+    </div>
+    <div class="emp-preview-row">
+      <span class="emp-preview-label"><i class="fas fa-envelope"></i> البريد الإلكتروني</span>
+      <span class="emp-preview-value">${email}</span>
+    </div>
+    <div class="emp-preview-row">
+      <span class="emp-preview-label"><i class="fas fa-phone"></i> رقم الهاتف</span>
+      <span class="emp-preview-value">${phone}</span>
+    </div>
+    <div class="emp-preview-row">
+      <span class="emp-preview-label"><i class="fas fa-briefcase"></i> المسمى الوظيفي</span>
+      <span class="emp-preview-value">${jobTitle}</span>
+    </div>
+    ${department ? `<div class="emp-preview-row">
+      <span class="emp-preview-label"><i class="fas fa-building"></i> القسم</span>
+      <span class="emp-preview-value">${department}</span>
+    </div>` : ''}
+    <div class="emp-preview-row">
+      <span class="emp-preview-label"><i class="fas fa-money-bill-wave"></i> الراتب الشهري</span>
+      <span class="emp-preview-value">${parseFloat(salary).toLocaleString('ar-EG')} جنيه</span>
+    </div>
+    <div class="emp-preview-row">
+      <span class="emp-preview-label"><i class="fas fa-calendar-alt"></i> تاريخ بدء العمل</span>
+      <span class="emp-preview-value">${formattedDate}</span>
+    </div>
+    <div class="emp-preview-row">
+      <span class="emp-preview-label"><i class="fas fa-file-contract"></i> نوع العقد</span>
+      <span class="emp-preview-value">${contractType}</span>
+    </div>
+    <div class="emp-preview-row">
+      <span class="emp-preview-label"><i class="fas fa-clock"></i> ساعات العمل</span>
+      <span class="emp-preview-value">${workHours}</span>
+    </div>
+  `;
+  
+  document.getElementById('empPreviewContent').innerHTML = html;
+  
+  // Store data globally for later use
+  currentEmployeeData = {
+    name, email, phone, nationalId, address, jobTitle, 
+    department, salary, startDate, contractType, workHours, notes
+  };
+}
+
+async function createEmployeeContract(){
   try {
     // Create employee in Firestore
     const empId = 'emp_' + Date.now();
     const employeeData = {
-      email,
-      name,
-      salary: parseFloat(salary),
+      email: currentEmployeeData.email,
+      name: currentEmployeeData.name,
+      phone: currentEmployeeData.phone,
+      nationalId: currentEmployeeData.nationalId,
+      address: currentEmployeeData.address,
+      jobTitle: currentEmployeeData.jobTitle,
+      department: currentEmployeeData.department,
+      salary: parseFloat(currentEmployeeData.salary),
+      startDate: currentEmployeeData.startDate,
+      contractType: currentEmployeeData.contractType,
+      workHours: currentEmployeeData.workHours,
+      notes: currentEmployeeData.notes,
       status: 'pending',
       createdAt: new Date().toISOString(),
       onboardingCompleted: false,
@@ -3258,43 +3660,78 @@ async function addEmployeeWithOnboarding(){
     await _fdb.collection('employees').doc(empId).set(employeeData);
     
     // Generate onboarding link
-    const onboardingLink = `${window.location.origin}/employee-onboarding.html?id=${empId}`;
+    window.currentOnboardingLink = `${window.location.origin}/employee-onboarding.html?id=${empId}`;
     
-    // Show success with options to share
-    const shareMessage = `
-✅ تم إضافة الموظف بنجاح!
-
-📧 البريد الإلكتروني: ${email}
-👤 الاسم: ${name}
-💰 الراتب: ${salary} جنيه
-
-🔗 رابط التسجيل:
-${onboardingLink}
-
-اضغط "نسخ الرابط" لإرسال الرابط للموظف`;
-
-    if(confirm(shareMessage + '\n\nهل تريد نسخ الرابط؟')){
-      navigator.clipboard.writeText(onboardingLink);
-      toast('تم نسخ الرابط بنجاح', 'success');
-    }
+    toast('✅ تم إنشاء العقد بنجاح!', 'success');
     
-    // Offer WhatsApp option
-    const whatsappMsg = encodeURIComponent(`مرحباً ${name}!\n\nتم إنشاء حساب لك في المنصة.\nيرجى إكمال بياناتك والتوقيع على العقد من الرابط التالي:\n\n${onboardingLink}`);
-    const phone = prompt('أدخل رقم الواتساب للموظف (اختياري - اتركه فارغ للتخطي):\nمثال: 01012345678');
-    
-    if(phone && phone.trim()){
-      const cleanPhone = phone.replace(/\D/g, '');
-      const whatsappLink = `https://wa.me/${cleanPhone}?text=${whatsappMsg}`;
-      window.open(whatsappLink, '_blank');
-    }
+    // Keep modal open for sending options
+    // User can now click send buttons
     
     renderEmployeeRequests();
     updateBadges();
     
   } catch(error){
     console.error('Error adding employee:', error);
-    toast('حدث خطأ أثناء إضافة الموظف: ' + error.message, 'error');
+    toast('حدث خطأ أثناء إنشاء العقد: ' + error.message, 'error');
   }
+}
+
+function sendViaWhatsApp(){
+  if(!window.currentOnboardingLink){
+    toast('يرجى إنشاء العقد أولاً', 'error');
+    return;
+  }
+  
+  const phone = currentEmployeeData.phone.replace(/\D/g, '');
+  const message = `مرحباً ${currentEmployeeData.name}! 👋\n\n` +
+    `تم إنشاء عقد عمل لك في شركة أكرم مصطفى.\n\n` +
+    `📋 المسمى الوظيفي: ${currentEmployeeData.jobTitle}\n` +
+    `💰 الراتب الشهري: ${parseFloat(currentEmployeeData.salary).toLocaleString('ar-EG')} جنيه\n\n` +
+    `يرجى إكمال بياناتك والتوقيع على العقد من الرابط التالي:\n\n` +
+    `${window.currentOnboardingLink}\n\n` +
+    `مع تحياتنا 🌟`;
+  
+  const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappLink, '_blank');
+  
+  toast('تم فتح واتساب', 'success');
+  setTimeout(() => {
+    closeEmployeeModal();
+  }, 1500);
+}
+
+function copyEmployeeLink(){
+  if(!window.currentOnboardingLink){
+    toast('يرجى إنشاء العقد أولاً', 'error');
+    return;
+  }
+  
+  navigator.clipboard.writeText(window.currentOnboardingLink);
+  toast('✅ تم نسخ الرابط بنجاح', 'success');
+}
+
+function sendViaEmail(){
+  if(!window.currentOnboardingLink){
+    toast('يرجى إنشاء العقد أولاً', 'error');
+    return;
+  }
+  
+  const subject = `عقد عمل - ${currentEmployeeData.jobTitle}`;
+  const body = `مرحباً ${currentEmployeeData.name}،\n\n` +
+    `تم إنشاء عقد عمل لك في شركة أكرم مصطفى.\n\n` +
+    `المسمى الوظيفي: ${currentEmployeeData.jobTitle}\n` +
+    `الراتب الشهري: ${parseFloat(currentEmployeeData.salary).toLocaleString('ar-EG')} جنيه\n\n` +
+    `يرجى إكمال بياناتك والتوقيع على العقد من الرابط التالي:\n` +
+    `${window.currentOnboardingLink}\n\n` +
+    `مع تحياتنا،\nفريق شركة أكرم مصطفى`;
+  
+  const mailtoLink = `mailto:${currentEmployeeData.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailtoLink;
+  
+  toast('تم فتح تطبيق البريد', 'success');
+  setTimeout(() => {
+    closeEmployeeModal();
+  }, 1500);
 }
 
 // عرض طلبات الموظفين  
