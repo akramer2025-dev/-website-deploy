@@ -1051,6 +1051,34 @@ button{cursor:pointer;}
         <label><i class="fas fa-phone"></i> رقم الهاتف (اختياري)</label>
         <input type="tel" id="empPhone" placeholder="01XXXXXXXXX">
       </div>
+
+      <div class="form-field">
+        <label><i class="fas fa-briefcase"></i> الوظيفة *</label>
+        <select id="empJobTitle" onchange="updateContractTerms()">
+          <option value="">اختر الوظيفة</option>
+          <option value="مدير تسويق">مدير تسويق</option>
+          <option value="موظف مبيعات">موظف مبيعات</option>
+          <option value="محاسب">محاسب</option>
+          <option value="مصمم جرافيك">مصمم جرافيك</option>
+          <option value="مدير عام">مدير عام</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label><i class="fas fa-money-bill-wave"></i> الراتب الشهري (جنيه) *</label>
+          <input type="number" id="empSalary" placeholder="0000">
+        </div>
+        <div class="form-field">
+          <label><i class="fas fa-calendar-alt"></i> تاريخ بدء العمل *</label>
+          <input type="date" id="empStartDate">
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label><i class="fas fa-file-contract"></i> بنود العقد</label>
+        <textarea id="empContractTerms" readonly style="min-height:120px;background:var(--bg2);color:var(--muted);font-size:.85rem;line-height:1.6;"></textarea>
+      </div>
     </div>
 
     <!-- Send Options Section (Hidden initially) -->
@@ -1059,6 +1087,11 @@ button{cursor:pointer;}
         <div class="emp-preview-header">
           <i class="fas fa-check-circle" style="color:#22c55e;"></i>
           <h4>تم إنشاء الحساب بنجاح!</h4>
+        </div>
+        
+        <!-- Contract Summary -->
+        <div id="empContractSummary" style="margin-bottom:20px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
+          <!-- Will be filled by JS -->
         </div>
         
         <div class="emp-link-display">
@@ -3328,11 +3361,71 @@ async function addEmployeeWithOnboarding(){
   document.getElementById('empUsername').value = '';
   document.getElementById('empPassword').value = '';
   document.getElementById('empPhone').value = '';
+  document.getElementById('empJobTitle').value = '';
+  document.getElementById('empSalary').value = '';
+  document.getElementById('empStartDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('empContractTerms').value = '';
   
   // Hide send section, show form section
   document.getElementById('empFormSection').style.display = 'block';
   document.getElementById('empSendSection').style.display = 'none';
   document.getElementById('empBtnCreate').style.display = 'flex';
+}
+
+// Contract terms based on job title
+const JOB_CONTRACT_TERMS = {
+  'مدير تسويق': `• قيادة فريق التسويق وتطوير استراتيجيات التسويق الرقمي
+• إدارة الحملات الإعلانية على منصات التواصل الاجتماعي
+• تحليل البيانات وإعداد التقارير الشهرية
+• التواصل مع العملاء وبناء العلاقات التجارية
+• دوام من 9 صباحاً حتى 5 مساءً
+• إجازة أسبوعية يوم الجمعة
+• فترة تجربة: شهر واحد`,
+  
+  'موظف مبيعات': `• التواصل مع العملاء المحتملين وعرض المنتجات والخدمات
+• تحقيق الأهداف البيعية الشهرية المحددة
+• متابعة العملاء الحاليين وضمان رضاهم
+• إعداد تقارير المبيعات الأسبوعية
+• دوام من 9 صباحاً حتى 5 مساءً
+• إجازة أسبوعية يوم الجمعة
+• عمولة على المبيعات حسب الأداء
+• فترة تجربة: شهر واحد`,
+  
+  'محاسب': `• إدارة الحسابات المالية وإعداد القوائم المالية
+• مراجعة الفواتير والمصروفات
+• إعداد التقارير المالية الشهرية والسنوية
+• متابعة الضرائب والالتزامات المالية
+• دوام من 9 صباحاً حتى 5 مساءً
+• إجازة أسبوعية يوم الجمعة
+• فترة تجربة: شهر واحد`,
+  
+  'مصمم جرافيك': `• تصميم المواد التسويقية والإعلانية
+• إنشاء تصاميم للسوشيال ميديا والمواقع الإلكترونية
+• تطوير الهوية البصرية للعلامة التجارية
+• العمل بالتنسيق مع فريق التسويق
+• دوام من 9 صباحاً حتى 5 مساءً (مع إمكانية العمل عن بعد)
+• إجازة أسبوعية يوم الجمعة
+• فترة تجربة: شهر واحد`,
+  
+  'مدير عام': `• الإشراف على جميع أقسام الشركة
+• وضع الخطط الاستراتيجية وتحقيق الأهداف
+• اتخاذ القرارات الإدارية والمالية الهامة
+• قيادة الفرق وتطوير الأداء المؤسسي
+• التواصل مع الشركاء والعملاء الرئيسيين
+• دوام من 9 صباحاً حتى 5 مساءً
+• إجازة أسبوعية يوم الجمعة
+• فترة تجربة: شهرين`
+};
+
+function updateContractTerms(){
+  const jobTitle = document.getElementById('empJobTitle').value;
+  const termsField = document.getElementById('empContractTerms');
+  
+  if(jobTitle && JOB_CONTRACT_TERMS[jobTitle]){
+    termsField.value = JOB_CONTRACT_TERMS[jobTitle];
+  } else {
+    termsField.value = '';
+  }
 }
 
 let currentEmployeeData = {};
@@ -3345,6 +3438,10 @@ async function createEmployeeAccount(){
   const username = document.getElementById('empUsername').value.trim();
   const password = document.getElementById('empPassword').value.trim();
   const phone = document.getElementById('empPhone').value.trim();
+  const jobTitle = document.getElementById('empJobTitle').value;
+  const salary = document.getElementById('empSalary').value.trim();
+  const startDate = document.getElementById('empStartDate').value;
+  const contractTerms = document.getElementById('empContractTerms').value;
   
   // Validation
   if(!username){
@@ -3368,6 +3465,21 @@ async function createEmployeeAccount(){
     return;
   }
   
+  if(!jobTitle){
+    toast('يرجى اختيار الوظيفة', 'error');
+    return;
+  }
+  
+  if(!salary || isNaN(salary) || parseFloat(salary) <= 0){
+    toast('يرجى إدخال راتب صحيح', 'error');
+    return;
+  }
+  
+  if(!startDate){
+    toast('يرجى اختيار تاريخ بدء العمل', 'error');
+    return;
+  }
+  
   try {
     // Create employee in Firestore
     const empId = 'emp_' + Date.now();
@@ -3375,6 +3487,10 @@ async function createEmployeeAccount(){
       username,
       password,
       phone,
+      jobTitle,
+      salary: parseFloat(salary),
+      startDate,
+      contractTerms,
       status: 'pending',
       createdAt: new Date().toISOString(),
       onboardingCompleted: false,
@@ -3388,13 +3504,41 @@ async function createEmployeeAccount(){
     window.currentOnboardingLink = onboardingLink;
     
     // Store data for sending
-    currentEmployeeData = { username, phone, empId };
+    currentEmployeeData = { username, phone, jobTitle, salary, empId };
     
     // Show success and send options
     document.getElementById('empFormSection').style.display = 'none';
     document.getElementById('empSendSection').style.display = 'block';
     document.getElementById('empBtnCreate').style.display = 'none';
     document.getElementById('empLinkInput').value = onboardingLink;
+    
+    // Show contract summary
+    const formattedDate = new Date(startDate).toLocaleDateString('ar-EG', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    
+    document.getElementById('empContractSummary').innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+          <span style="color:var(--muted);font-size:.85rem;">👤 اسم المستخدم:</span>
+          <span style="color:#fff;font-weight:700;font-size:.9rem;">${username}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+          <span style="color:var(--muted);font-size:.85rem;">💼 الوظيفة:</span>
+          <span style="color:#fff;font-weight:700;font-size:.9rem;">${jobTitle}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+          <span style="color:var(--muted);font-size:.85rem;">💰 الراتب:</span>
+          <span style="color:var(--pink);font-weight:700;font-size:.9rem;">${parseFloat(salary).toLocaleString('ar-EG')} جنيه</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;">
+          <span style="color:var(--muted);font-size:.85rem;">📅 تاريخ البدء:</span>
+          <span style="color:#fff;font-weight:700;font-size:.9rem;">${formattedDate}</span>
+        </div>
+      </div>
+    `;
     
     toast('✅ تم إنشاء الحساب بنجاح!', 'success');
     
@@ -3421,7 +3565,9 @@ function sendViaWhatsApp(){
   const phone = currentEmployeeData.phone.replace(/\D/g, '');
   const message = `مرحباً! 👋\n\n` +
     `تم إنشاء حساب لك في منصة أكرم مصطفى.\n\n` +
-    `🔐 اسم المستخدم: ${currentEmployeeData.username}\n\n` +
+    `🔐 اسم المستخدم: ${currentEmployeeData.username}\n` +
+    `💼 الوظيفة: ${currentEmployeeData.jobTitle}\n` +
+    `💰 الراتب: ${parseFloat(currentEmployeeData.salary).toLocaleString('ar-EG')} جنيه\n\n` +
     `يرجى إكمال بياناتك الشخصية والتوقيع على العقد من الرابط التالي:\n\n` +
     `${window.currentOnboardingLink}\n\n` +
     `⚠️ هذا الرابط خاص بك ولا يجب مشاركته مع أحد.\n\n` +
