@@ -3548,6 +3548,18 @@ async function createEmployeeAccount(){
   }
   
   try {
+    // Check if username already exists
+    const { data: existing } = await _supabase
+      .from('employees')
+      .select('id')
+      .eq('username', username)
+      .maybeSingle();
+    
+    if (existing) {
+      toast('اسم المستخدم موجود بالفعل! اختر اسم آخر', 'error');
+      return;
+    }
+    
     // Create employee in Supabase
     const empId = 'emp_' + Date.now();
     const employeeData = {
