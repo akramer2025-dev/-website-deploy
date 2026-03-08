@@ -467,18 +467,68 @@ button{cursor:pointer;}
 .req-rejected-info{padding:8px 18px 12px;background:rgba(239,68,68,.07);font-size:.78rem;color:#f87171;display:flex;align-items:center;gap:6px;}
 .req-empty{text-align:center;padding:50px 20px;color:var(--muted);grid-column:1/-1;}
 .req-empty i{font-size:2.5rem;margin-bottom:14px;display:block;opacity:.4;}
-/* REQ DETAIL MODAL */
-#reqDetailModal .modal-box{max-width:580px;}
-.rd-section{margin-bottom:20px;}
-.rd-section-title{font-size:.8rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
-.rd-section-title i{color:var(--pink);}
-.rd-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+/* REQ DETAIL MODAL - Enhanced */
+#reqDetailModal .modal-box{max-width:680px;padding:0;overflow:hidden;}
+#reqDetailModal .modal-header{padding:20px 28px;margin-bottom:0;background:linear-gradient(135deg,rgba(233,78,119,0.12),rgba(247,147,30,0.08));border-bottom:1px solid var(--border);}
+#reqDetailModal #reqDetailContent{padding:24px 28px 28px;}
+.rd-emp-hero{display:flex;align-items:center;gap:18px;margin-bottom:24px;padding:20px;background:var(--bg2);border-radius:16px;border:1px solid var(--border);}
+.rd-emp-avatar{width:72px;height:72px;border-radius:50%;overflow:hidden;border:3px solid var(--pink);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:#fff;background:var(--grad);}
+.rd-emp-avatar img{width:100%;height:100%;object-fit:cover;}
+.rd-emp-info{flex:1;min-width:0;}
+.rd-emp-name{font-size:1.15rem;font-weight:900;color:#fff;margin-bottom:4px;}
+.rd-emp-meta{font-size:.78rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:12px;}
+.rd-emp-meta span{display:flex;align-items:center;gap:5px;}
+.rd-emp-meta i{font-size:.7rem;color:var(--pink);}
+.rd-emp-status{padding:5px 14px;border-radius:20px;font-size:.72rem;font-weight:800;flex-shrink:0;}
+.rd-emp-status.pending{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.3);}
+.rd-emp-status.approved{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3);}
+.rd-emp-status.rejected{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3);}
+.rd-emp-status.incomplete{background:rgba(148,163,184,.15);color:#94a3b8;border:1px solid rgba(148,163,184,.3);}
+.rd-section{margin-bottom:22px;background:var(--bg2);border-radius:14px;border:1px solid var(--border);overflow:hidden;}
+.rd-section-title{font-size:.82rem;font-weight:800;color:#fff;padding:14px 18px;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border);}
+.rd-section-title i{width:28px;height:28px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:#fff;}
+.rd-section-body{padding:6px 18px;}
+.rd-row{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:center;}
 .rd-row:last-child{border-bottom:none;}
-.rd-lbl{font-size:.78rem;color:var(--muted);font-weight:700;min-width:120px;}
-.rd-val{font-size:.88rem;color:var(--text);flex:1;line-height:1.6;}
-.rd-proofs-grid{display:flex;gap:10px;flex-wrap:wrap;}
-.rd-proof-img{width:110px;height:80px;border-radius:10px;overflow:hidden;border:1.5px solid var(--border);cursor:pointer;}
+.rd-lbl{font-size:.78rem;color:var(--muted);font-weight:700;min-width:130px;display:flex;align-items:center;gap:6px;}
+.rd-lbl i{font-size:.7rem;color:var(--pink);opacity:.7;}
+.rd-val{font-size:.88rem;color:var(--text);flex:1;line-height:1.6;font-weight:600;}
+.rd-proofs-grid{display:flex;gap:14px;flex-wrap:wrap;padding:14px 18px;}
+.rd-proof-item{text-align:center;}
+.rd-proof-img{width:140px;height:100px;border-radius:12px;overflow:hidden;border:2px solid var(--border);cursor:pointer;transition:.3s;position:relative;}
+.rd-proof-img:hover{border-color:var(--pink);transform:scale(1.03);box-shadow:0 8px 24px rgba(233,78,119,0.2);}
 .rd-proof-img img{width:100%;height:100%;object-fit:cover;}
+.rd-proof-label{font-size:.72rem;color:var(--muted);margin-top:6px;font-weight:600;}
+.rd-selfie-wrap{display:flex;justify-content:center;padding:18px;}
+.rd-selfie{width:120px;height:120px;border-radius:50%;overflow:hidden;border:3px solid var(--pink);cursor:pointer;transition:.3s;}
+.rd-selfie:hover{transform:scale(1.05);box-shadow:0 8px 30px rgba(233,78,119,0.3);}
+.rd-selfie img{width:100%;height:100%;object-fit:cover;}
+.rd-sig-wrap{display:flex;justify-content:center;padding:18px;}
+.rd-sig{width:220px;height:90px;background:#fff;border-radius:12px;padding:10px;border:2px solid var(--border);cursor:pointer;transition:.3s;}
+.rd-sig:hover{border-color:var(--pink);}
+.rd-sig img{width:100%;height:100%;object-fit:contain;}
+.rd-terms-box{padding:16px 18px;font-size:.84rem;line-height:1.8;color:var(--text);white-space:pre-wrap;}
+.rd-actions{display:flex;gap:10px;padding:20px 0 0;flex-wrap:wrap;}
+.rd-action-btn{flex:1;min-width:140px;padding:12px 16px;border-radius:12px;border:none;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.25s;}
+.rd-action-btn:hover{transform:translateY(-2px);}
+.rd-btn-approve{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;box-shadow:0 4px 15px rgba(34,197,94,0.3);}
+.rd-btn-approve:hover{box-shadow:0 8px 25px rgba(34,197,94,0.4);}
+.rd-btn-reject{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3);}
+.rd-btn-reject:hover{background:rgba(239,68,68,.25);}
+.rd-btn-pdf{background:linear-gradient(135deg,#e94e77,#f7931e);color:#fff;box-shadow:0 4px 15px rgba(233,78,119,0.3);}
+.rd-btn-pdf:hover{box-shadow:0 8px 25px rgba(233,78,119,0.4);}
+.rd-btn-send{background:rgba(37,211,102,.15);color:#25D366;border:1px solid rgba(37,211,102,.4);}
+.rd-btn-send:hover{background:rgba(37,211,102,.27);}
+@media(max-width:600px){
+  #reqDetailModal .modal-box{max-width:98vw;}
+  #reqDetailModal #reqDetailContent{padding:16px;}
+  .rd-emp-hero{flex-direction:column;text-align:center;}
+  .rd-emp-meta{justify-content:center;}
+  .rd-row{flex-direction:column;gap:3px;}
+  .rd-lbl{min-width:auto;}
+  .rd-proofs-grid{justify-content:center;}
+  .rd-actions{flex-direction:column;}
+}
 .admin-note-area textarea{width:100%;padding:10px 14px;background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:.88rem;outline:none;resize:vertical;min-height:70px;transition:.2s;font-family:'Cairo',sans-serif;}
 .admin-note-area textarea:focus{border-color:var(--pink);}
 
@@ -4071,6 +4121,34 @@ async function downloadEmployeeContractPDF(empId){
   }
 }
 
+// إرسال العقد للموظف عبر واتساب
+async function sendContractToEmployee(empId, phone, name){
+  if (!phone) {
+    phone = prompt('أدخل رقم واتساب الموظف:\nمثال: 01012345678');
+    if (!phone || !phone.trim()) return;
+  }
+  
+  // Normalize phone number
+  let formattedPhone = phone.replace(/\s+/g, '').replace(/^0/, '20');
+  if (!formattedPhone.startsWith('20')) formattedPhone = '20' + formattedPhone;
+  
+  // Build contract download link message
+  const siteUrl = window.location.origin || 'https://remostoreegy.com';
+  const contractMsg = encodeURIComponent(
+    `مرحباً ${name}! 🎉\n\n` +
+    `تم قبول طلبك للعمل في RemuStore بنجاح! ✅\n\n` +
+    `📋 تفاصيل العقد:\n` +
+    `• الوظيفة: سيتم إرفاق العقد\n` +
+    `• يرجى الاحتفاظ بنسخة من العقد\n\n` +
+    `ملاحظة: سيتم إرسال نسخة PDF من العقد في رسالة منفصلة.\n\n` +
+    `مرحباً بك في فريق العمل! 🚀\n` +
+    `RemuStore - Digital Marketing`
+  );
+  
+  window.open(`https://wa.me/${formattedPhone}?text=${contractMsg}`, '_blank');
+  toast('تم فتح واتساب لإرسال العقد', 'success');
+}
+
 // إعادة إرسال رابط التسجيل للموظف
 function resendEmployeeLink(empId, email, name){
   const onboardingLink = `${window.location.origin}/employee-onboarding.html?id=${empId}`;
@@ -4111,76 +4189,117 @@ async function viewEmployeeRequestDetails(empId){
     
     const startDate = emp.start_date ? new Date(emp.start_date).toLocaleDateString('ar-EG') : '-';
     const submittedDate = emp.application_submitted_at ? new Date(emp.application_submitted_at).toLocaleDateString('ar-EG') : '-';
+    const statusMap = {pending:'معلّق',approved:'مقبول',rejected:'مرفوض',incomplete:'غير مكتمل'};
+    const statusClass = emp.application_status || 'incomplete';
+    const initials = (emp.full_name || 'م').split(' ').map(w=>w[0]).join('').slice(0,2);
     
     content.innerHTML = `
+      <!-- Employee Hero -->
+      <div class="rd-emp-hero">
+        <div class="rd-emp-avatar">
+          ${emp.selfie_url ? `<img src="${emp.selfie_url}" alt="صورة">` : initials}
+        </div>
+        <div class="rd-emp-info">
+          <div class="rd-emp-name">${emp.full_name || '-'}</div>
+          <div class="rd-emp-meta">
+            <span><i class="fas fa-briefcase"></i> ${emp.job_title || '-'}</span>
+            <span><i class="fas fa-calendar"></i> ${submittedDate}</span>
+          </div>
+        </div>
+        <span class="rd-emp-status ${statusClass}">${statusMap[statusClass] || statusClass}</span>
+      </div>
+      
+      <!-- Personal Info -->
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-user"></i> البيانات الشخصية</div>
-        <div class="rd-row"><div class="rd-lbl">الاسم الكامل:</div><div class="rd-val">${emp.full_name || '-'}</div></div>
-        <div class="rd-row"><div class="rd-lbl">البريد:</div><div class="rd-val">${emp.email || '-'}</div></div>
-        <div class="rd-row"><div class="rd-lbl">الهاتف:</div><div class="rd-val">${emp.phone || '-'}</div></div>
-        <div class="rd-row"><div class="rd-lbl">العنوان:</div><div class="rd-val">${emp.address || '-'}</div></div>
-        <div class="rd-row"><div class="rd-lbl">رقم البطاقة:</div><div class="rd-val">${emp.national_id || '-'}</div></div>
+        <div class="rd-section-body">
+          <div class="rd-row"><div class="rd-lbl"><i class="fas fa-id-badge"></i> الاسم الكامل</div><div class="rd-val">${emp.full_name || '-'}</div></div>
+          <div class="rd-row"><div class="rd-lbl"><i class="fas fa-envelope"></i> البريد</div><div class="rd-val">${emp.email || '-'}</div></div>
+          <div class="rd-row"><div class="rd-lbl"><i class="fas fa-phone"></i> الهاتف</div><div class="rd-val">${emp.phone || '-'}</div></div>
+          <div class="rd-row"><div class="rd-lbl"><i class="fas fa-map-marker-alt"></i> العنوان</div><div class="rd-val">${emp.address || '-'}</div></div>
+          <div class="rd-row"><div class="rd-lbl"><i class="fas fa-id-card"></i> رقم البطاقة</div><div class="rd-val">${emp.national_id || '-'}</div></div>
+        </div>
       </div>
       
+      <!-- Job Info -->
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-briefcase"></i> بيانات الوظيفة</div>
-        <div class="rd-row"><div class="rd-lbl">المسمى الوظيفي:</div><div class="rd-val">${emp.job_title || '-'}</div></div>
-        <div class="rd-row"><div class="rd-lbl">الراتب:</div><div class="rd-val">${emp.salary || '-'} جنيه / شهر</div></div>
-        <div class="rd-row"><div class="rd-lbl">تاريخ البدء:</div><div class="rd-val">${startDate}</div></div>
-        <div class="rd-row"><div class="rd-lbl">تاريخ تقديم الطلب:</div><div class="rd-val">${submittedDate}</div></div>
+        <div class="rd-section-body">
+          <div class="rd-row"><div class="rd-lbl"><i class="fas fa-user-tie"></i> المسمى الوظيفي</div><div class="rd-val">${emp.job_title || '-'}</div></div>
+          <div class="rd-row"><div class="rd-lbl"><i class="fas fa-coins"></i> الراتب</div><div class="rd-val">${emp.salary || '-'} جنيه / شهر</div></div>
+          <div class="rd-row"><div class="rd-lbl"><i class="fas fa-calendar-check"></i> تاريخ البدء</div><div class="rd-val">${startDate}</div></div>
+          <div class="rd-row"><div class="rd-lbl"><i class="fas fa-clock"></i> تاريخ التقديم</div><div class="rd-val">${submittedDate}</div></div>
+        </div>
       </div>
       
+      <!-- ID Photos -->
       ${emp.id_front_url || emp.id_back_url ? `
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-id-card"></i> صور البطاقة</div>
         <div class="rd-proofs-grid">
-          ${emp.id_front_url ? `<div class="rd-proof-img" onclick="openLb('${emp.id_front_url}')">
-            <img src="${emp.id_front_url}" alt="البطاقة الأمامية">
-            <p style="text-align:center;margin-top:8px;font-size:0.75rem;color:var(--text-secondary);">أمامية</p>
+          ${emp.id_front_url ? `<div class="rd-proof-item">
+            <div class="rd-proof-img" onclick="openLb('${emp.id_front_url}')">
+              <img src="${emp.id_front_url}" alt="أمامية">
+            </div>
+            <div class="rd-proof-label">الوجه الأمامي</div>
           </div>` : ''}
-          ${emp.id_back_url ? `<div class="rd-proof-img" onclick="openLb('${emp.id_back_url}')">
-            <img src="${emp.id_back_url}" alt="البطاقة الخلفية">
-            <p style="text-align:center;margin-top:8px;font-size:0.75rem;color:var(--text-secondary);">خلفية</p>
+          ${emp.id_back_url ? `<div class="rd-proof-item">
+            <div class="rd-proof-img" onclick="openLb('${emp.id_back_url}')">
+              <img src="${emp.id_back_url}" alt="خلفية">
+            </div>
+            <div class="rd-proof-label">الوجه الخلفي</div>
           </div>` : ''}
         </div>
       </div>` : ''}
       
+      <!-- Selfie -->
       ${emp.selfie_url ? `
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-camera"></i> الصورة الشخصية</div>
-        <div class="rd-proof-img" onclick="openLb('${emp.selfie_url}')" style="width:150px;height:150px;margin:0 auto;">
-          <img src="${emp.selfie_url}" alt="صورة سيلفي" style="border-radius:50%;">
+        <div class="rd-selfie-wrap">
+          <div class="rd-selfie" onclick="openLb('${emp.selfie_url}')">
+            <img src="${emp.selfie_url}" alt="سيلفي">
+          </div>
         </div>
       </div>` : ''}
       
+      <!-- Signature -->
       ${emp.signature_url ? `
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-signature"></i> التوقيع</div>
-        <div class="rd-proof-img" onclick="openLb('${emp.signature_url}')" style="width:250px;height:100px;margin:0 auto;background:#fff;padding:10px;">
-          <img src="${emp.signature_url}" alt="التوقيع">
+        <div class="rd-sig-wrap">
+          <div class="rd-sig" onclick="openLb('${emp.signature_url}')">
+            <img src="${emp.signature_url}" alt="التوقيع">
+          </div>
         </div>
       </div>` : ''}
       
+      <!-- Contract Terms -->
       ${emp.contract_terms ? `
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-file-contract"></i> شروط العقد</div>
-        <div style="padding:12px;background:var(--bg);border-radius:8px;white-space:pre-wrap;font-size:0.85rem;line-height:1.6;">${emp.contract_terms}</div>
+        <div class="rd-terms-box">${emp.contract_terms}</div>
       </div>` : ''}
       
+      <!-- Actions: Pending -->
       ${emp.application_status === 'pending' ? `
-      <div class="rd-actions" style="margin-top:24px;display:flex;gap:12px;justify-content:center;">
-        <button class="btn-primary" onclick="approveEmployeeRequest('${emp.id}')" style="flex:1;max-width:200px;">
-          <i class="fas fa-check"></i> قبول الطلب
+      <div class="rd-actions">
+        <button class="rd-action-btn rd-btn-approve" onclick="approveEmployeeRequest('${emp.id}')">
+          <i class="fas fa-check-circle"></i> قبول الطلب
         </button>
-        <button class="btn-danger" onclick="rejectEmployeeRequest('${emp.id}')" style="flex:1;max-width:200px;">
-          <i class="fas fa-times"></i> رفض الطلب
+        <button class="rd-action-btn rd-btn-reject" onclick="rejectEmployeeRequest('${emp.id}')">
+          <i class="fas fa-times-circle"></i> رفض الطلب
         </button>
       </div>` : ''}
       
+      <!-- Actions: Approved -->
       ${emp.application_status === 'approved' ? `
-      <div class="rd-actions" style="margin-top:24px;display:flex;gap:12px;justify-content:center;">
-        <button class="btn-primary" onclick="downloadEmployeeContractPDF('${emp.id}')" style="flex:1;max-width:300px;">
+      <div class="rd-actions">
+        <button class="rd-action-btn rd-btn-pdf" onclick="downloadEmployeeContractPDF('${emp.id}')">
           <i class="fas fa-file-pdf"></i> تحميل العقد PDF
+        </button>
+        <button class="rd-action-btn rd-btn-send" onclick="sendContractToEmployee('${emp.id}','${(emp.phone||'').replace(/'/g,'')}','${(emp.full_name||'').replace(/'/g,'')}')">
+          <i class="fab fa-whatsapp"></i> إرسال العقد للموظف
         </button>
       </div>` : ''}
     `;
