@@ -619,23 +619,19 @@
         </div>
     </div>
 
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-        import { getFirestore, doc, getDoc, updateDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
-        import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js';
+        // Initialize Supabase Client
+        const { createClient } = supabase;
+        const supabaseClient = createClient(
+            SUPABASE_CONFIG.url,
+            SUPABASE_CONFIG.anonKey
+        );
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
-            authDomain: "akramplatform-2c6be.firebaseapp.com",
-            projectId: "akramplatform-2c6be",
-            storageBucket: "akramplatform-2c6be.appspot.com",
-            messagingSenderId: "132959399686",
-            appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
+        console.log('✅ Supabase client initialized');
 
         let currentEmployeeId = null;
         let employeeData = null;
@@ -656,18 +652,26 @@
             }
             
             try {
-                // Load employee data
-                const empDoc = await getDoc(doc(db, 'employees', currentEmployeeId));
-                if (empDoc.exists()) {
-                    employeeData = empDoc.data();
+                // Load employee data from Supabase
+                const { data, error } = await supabaseClient
+                    .from('employees')
+                    .select('*')
+                    .eq('id', currentEmployeeId)
+                    .single();
+                    
+                if (error) throw error;
+                
+                if (data) {
+                    employeeData = data;
+                    console.log('✅ Employee data loaded:', data);
                     
                     // Pre-fill data if exists
-                    document.getElementById('email').value = employeeData.email || '';
-                    if (employeeData.fullName) document.getElementById('fullName').value = employeeData.fullName;
-                    if (employeeData.phone) document.getElementById('phone').value = employeeData.phone;
-                    if (employeeData.address) document.getElementById('address').value = employeeData.address;
-                    if (employeeData.nationalId) document.getElementById('nationalId').value = employeeData.nationalId;
-                    if (employeeData.jobTitle) document.getElementById('jobTitle').value = employeeData.jobTitle;
+                    document.getElementById('email').value = data.email || '';
+                    if (data.full_name) document.getElementById('fullName').value = data.full_name;
+                    if (data.phone) document.getElementById('phone').value = data.phone;
+                    if (data.address) document.getElementById('address').value = data.address;
+                    if (data.national_id) document.getElementById('nationalId').value = data.national_id;
+                    if (data.job_title) document.getElementById('jobTitle').value = data.job_title;
                 } else {
                     showError('الموظف غير موجود في النظام');
                 }
@@ -990,39 +994,49 @@
             document.getElementById('loadingState').classList.add('active');
             
             try {
-                // Upload files
-                const idFrontURL = await uploadFile(document.getElementById('idFront').files[0], 'id-front');
-                const idBackURL = await uploadFile(document.getElementById('idBack').files[0], 'id-back');
+                // Upload files to Supabase Storage
+                const idFrontURL = await uploadFile(document.getElementById('idFront').files[0], 'id-front.jpg');
+                const idBackURL = await uploadFile(document.getElementById('idBack').files[0], 'id-back.jpg');
                 
                 // Upload selfie
                 const selfieBlob = await new Promise(resolve => {
                     document.getElementById('canvas').toBlob(resolve, 'image/jpeg');
                 });
-                const selfieURL = await uploadFile(selfieBlob, 'selfie');
+                const selfieURL = await uploadFile(selfieBlob, 'selfie.jpg');
                 
                 // Upload signature
                 const signatureBlob = await new Promise(resolve => {
                     canvas.toBlob(resolve, 'image/png');
                 });
-                const signatureURL = await uploadFile(signatureBlob, 'signature');
+                const signatureURL = await uploadFile(signatureBlob, 'signature.png');
                 
-                // Save data to Firestore
-                await updateDoc(doc(db, 'employees', currentEmployeeId), {
-                    fullName: document.getElementById('fullName').value,
-                    phone: document.getElementById('phone').value,
-                    address: document.getElementById('address').value,
-                    nationalId: document.getElementById('nationalId').value,
-                    jobTitle: document.getElementById('jobTitle').value,
-                    idFrontURL,
-                    idBackURL,
-                    selfieURL,
-                    signatureURL,
-                    contractAccepted: true,
-                    contractAcceptedAt: serverTimestamp(),
-                    applicationStatus: 'pending',
-                    applicationSubmittedAt: serverTimestamp(),
-                    updatedAt: serverTimestamp()
-                });
+                console.log('✅ All files uploaded successfully');
+                
+                // Save data to Supabase
+                const { data, error } = await supabaseClient
+                    .from('employees')
+                    .update({
+                        full_name: document.getElementById('fullName').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        address: document.getElementById('address').value,
+                        national_id: document.getElementById('nationalId').value,
+                        job_title: document.getElementById('jobTitle').value,
+                        id_front_url: idFrontURL,
+                        id_back_url: idBackURL,
+                        selfie_url: selfieURL,
+                        signature_url: signatureURL,
+                        contract_accepted: true,
+                        contract_accepted_at: new Date().toISOString(),
+                        application_status: 'pending',
+                        application_submitted_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', currentEmployeeId);
+                
+                if (error) throw error;
+                
+                console.log('✅ Application submitted successfully');
                 
                 // Show success
                 document.getElementById('loadingState').classList.remove('active');
@@ -1036,11 +1050,34 @@
             }
         };
 
-        async function uploadFile(file, type) {
-            const fileName = `${currentEmployeeId}-${type}-${Date.now()}`;
-            const storageRef = ref(storage, `employees/${currentEmployeeId}/${fileName}`);
-            await uploadBytes(storageRef, file);
-            return await getDownloadURL(storageRef);
+        async function uploadFile(file, fileName) {
+            try {
+                const filePath = `${currentEmployeeId}/${fileName}`;
+                
+                console.log(`📤 Uploading ${fileName}...`);
+                
+                // Upload to Supabase Storage
+                const { data, error } = await supabaseClient.storage
+                    .from(SUPABASE_CONFIG.bucketName)
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: true
+                    });
+                
+                if (error) throw error;
+                
+                // Get public URL
+                const { data: urlData } = supabaseClient.storage
+                    .from(SUPABASE_CONFIG.bucketName)
+                    .getPublicUrl(filePath);
+                
+                console.log(`✅ ${fileName} uploaded:`, urlData.publicUrl);
+                
+                return urlData.publicUrl;
+            } catch (error) {
+                console.error(`Error uploading ${fileName}:`, error);
+                throw error;
+            }
         }
 
         function showError(message) {

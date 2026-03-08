@@ -540,10 +540,14 @@ button{cursor:pointer;}
 .slide-field input,.slide-field select,.slide-field textarea{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:.82rem;outline:none;}
 .slide-field textarea{resize:vertical;}
 </style>
-<!-- Firebase -->
+<!-- Firebase (for existing features) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+<!-- Supabase (for employee system) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
 </head>
 <body>
 
@@ -1247,6 +1251,14 @@ const _fbAdmin = firebase.initializeApp({
 }, 'admin');
 const _fdb = firebase.firestore(_fbAdmin);
 const _fst = firebase.storage(_fbAdmin);
+
+// Initialize Supabase Client for Employee System
+const { createClient } = supabase;
+const _supabase = createClient(
+  SUPABASE_CONFIG.url,
+  SUPABASE_CONFIG.anonKey
+);
+console.log('✅ Supabase client initialized for admin');
 
 // join_requests in-memory cache + real-time listener
 let _fsReqs = [];
@@ -3482,23 +3494,31 @@ async function createEmployeeAccount(){
   }
   
   try {
-    // Create employee in Firestore
+    // Create employee in Supabase
     const empId = 'emp_' + Date.now();
     const employeeData = {
+      id: empId,
       username,
       password,
       phone,
-      jobTitle,
+      job_title: jobTitle,
       salary: parseFloat(salary),
-      startDate,
-      contractTerms,
-      status: 'pending',
-      createdAt: new Date().toISOString(),
-      onboardingCompleted: false,
-      applicationStatus: 'waiting'
+      start_date: startDate,
+      contract_terms: contractTerms,
+      application_status: 'incomplete',
+      created_at: new Date().toISOString()
     };
     
-    await _fdb.collection('employees').doc(empId).set(employeeData);
+    const { data, error } = await _supabase
+      .from('employees')
+      .insert([employeeData]);
+    
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error(error.message);
+    }
+    
+    console.log('✅ Employee created in Supabase:', empId);
     
     // Generate onboarding link
     const onboardingLink = `${window.location.origin}/employee-onboarding.html?id=${empId}`;
@@ -3622,13 +3642,18 @@ async function renderEmployeeRequests(){
   if(!grid) return;
   
   try {
-    const snapshot = await _fdb.collection('employees').get();
-    const requests = [];
+    // Load employees from Supabase
+    const { data, error } = await _supabase
+      .from('employees')
+      .select('*')
+      .order('created_at', { ascending: false });
     
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      requests.push({id: doc.id, ...data});
-    });
+    if (error) {
+      console.error('Supabase error:', error);
+      throw error;
+    }
+    
+    const requests = data || [];
     
     // Update global cache
     _fsEmployees = requests;
@@ -3645,19 +3670,16 @@ async function renderEmployeeRequests(){
       return;
     }
     
-    // Sort by date (newest first)
-    requests.sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
-    
     grid.innerHTML = requests.map(req => {
-      const statusClass = req.applicationStatus === 'approved' ? 'approved' : 
-                          req.applicationStatus === 'rejected' ? 'rejected' : 'pending';
+      const statusClass = req.application_status === 'approved' ? 'approved' : 
+                          req.application_status === 'rejected' ? 'rejected' : 'pending';
       
-      const avatarHtml = req.selfieURL ? 
-        `<img src="${req.selfieURL}" alt="${req.fullName||req.name}">` :
-        `${(req.fullName||req.name||'?').charAt(0)}`;
+      const avatarHtml = req.selfie_url ? 
+        `<img src="${req.selfie_url}" alt="${req.full_name||req.username}">` :
+        `${(req.full_name||req.username||'?').charAt(0)}`;
       
-      const submittedDate = req.applicationSubmittedAt ? 
-        new Date(req.applicationSubmittedAt.seconds ? req.applicationSubmittedAt.seconds * 1000 : req.applicationSubmittedAt).toLocaleDateString('ar-EG') : 
+      const submittedDate = req.application_submitted_at ? 
+        new Date(req.application_submitted_at).toLocaleDateString('ar-EG') : 
         'غير محدد';
       
       return `
@@ -3665,24 +3687,24 @@ async function renderEmployeeRequests(){
           <div class="emp-req-header">
             <div class="emp-req-avatar">${avatarHtml}</div>
             <div class="emp-req-info">
-              <h4>${req.fullName || req.name || 'موظف جديد'}</h4>
-              <p>${req.jobTitle || 'لم يكمل البيانات بعد'}</p>
+              <h4>${req.full_name || req.username || 'موظف جديد'}</h4>
+              <p>${req.job_title || 'لم يكمل البيانات بعد'}</p>
             </div>
           </div>
           <div class="emp-req-body">
             <div class="emp-req-row">
               <i class="fas fa-envelope"></i>
-              <span>${req.email}</span>
+              <span>${req.email || 'لم يدخل البريد بعد'}</span>
             </div>
             ${req.phone ? `
             <div class="emp-req-row">
               <i class="fas fa-phone"></i>
               <span>${req.phone}</span>
             </div>` : ''}
-            ${req.nationalId ? `
+            ${req.national_id ? `
             <div class="emp-req-row">
               <i class="fas fa-id-card"></i>
-              <span>${req.nationalId}</span>
+              <span>${req.national_id}</span>
             </div>` : ''}
             ${req.salary ? `
             <div class="emp-req-row">
@@ -3693,20 +3715,20 @@ async function renderEmployeeRequests(){
               <i class="fas fa-calendar"></i>
               <span>تاريخ التقديم: ${submittedDate}</span>
             </div>
-            ${req.idFrontURL || req.idBackURL || req.selfieURL ? `
+            ${req.id_front_url || req.id_back_url || req.selfie_url ? `
             <div class="emp-req-docs">
-              ${req.idFrontURL ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.idFrontURL}')">
-                <img src="${req.idFrontURL}" alt="البطاقة الأمامية">
+              ${req.id_front_url ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.id_front_url}')">
+                <img src="${req.id_front_url}" alt="البطاقة الأمامية">
               </div>` : ''}
-              ${req.idBackURL ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.idBackURL}')">
-                <img src="${req.idBackURL}" alt="البطاقة الخلفية">
+              ${req.id_back_url ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.id_back_url}')">
+                <img src="${req.id_back_url}" alt="البطاقة الخلفية">
               </div>` : ''}
-              ${req.selfieURL ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.selfieURL}')">
-                <img src="${req.selfieURL}" alt="الصورة الشخصية">
+              ${req.selfie_url ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.selfie_url}')">
+                <img src="${req.selfie_url}" alt="الصورة الشخصية">
               </div>` : ''}
             </div>` : ''}
           </div>
-          ${req.applicationStatus === 'pending' && req.applicationSubmittedAt ? `
+          ${req.application_status === 'pending' && req.application_submitted_at ? `
           <div class="emp-req-actions">
             <button class="btn-approve" onclick="approveEmployeeRequest('${req.id}')">
               <i class="fas fa-check"></i> قبول
