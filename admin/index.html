@@ -161,6 +161,25 @@ button{cursor:pointer;}
 .btn-add-user{display:flex;align-items:center;gap:8px;padding:10px 20px;background:var(--grad);border:none;border-radius:11px;color:#fff;font-size:.88rem;font-weight:700;transition:.3s;}
 .btn-add-user:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(233,78,119,0.3);}
 .users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+.marketing-plans-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
+.plan-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;transition:.3s;position:relative;}
+.plan-card:hover{border-color:rgba(34,197,94,0.3);transform:translateY(-3px);box-shadow:0 8px 24px rgba(34,197,94,0.15);}
+.plan-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
+.plan-card-title{font-size:1.1rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;}
+.plan-card-status{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;text-transform:uppercase;}
+.plan-card-status.draft{background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.3);}
+.plan-card-status.completed{background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.3);}
+.plan-card-status.sent{background:rgba(59,130,246,0.15);color:#3b82f6;border:1px solid rgba(59,130,246,0.3);}
+.plan-card-info{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.plan-card-info-row{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted);}
+.plan-card-info-row i{color:var(--green);font-size:.9rem;}
+.plan-card-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.plan-card-btn{flex:1;padding:8px 14px;border:none;border-radius:10px;font-size:.82rem;font-weight:600;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.plan-card-btn.edit{background:rgba(59,130,246,0.15);color:var(--blue);border:1px solid rgba(59,130,246,0.3);}
+.plan-card-btn.view{background:rgba(139,92,246,0.15);color:#8b5cf6;border:1px solid rgba(139,92,246,0.3);}
+.plan-card-btn.send{background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3);}
+.plan-card-btn.delete{background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3);}
+.plan-card-btn:hover{transform:translateY(-2px);opacity:.9;}
 .user-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.3s;}
 .user-card:hover{border-color:rgba(233,78,119,0.25);transform:translateY(-3px);}
 .user-card-header{padding:20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);}
@@ -646,6 +665,7 @@ button{cursor:pointer;}
       <div class="adm-nav-label">إدارة المشاريع</div>
       <div class="adm-nav-item" onclick="showSection('webprices')"><i class="fas fa-globe"></i> تطبيقات الويب<span class="adm-nav-badge">6</span></div>
       <div class="adm-nav-item" onclick="showSection('mobileprices')"><i class="fas fa-mobile-alt"></i> تطبيقات الموبايل<span class="adm-nav-badge">6</span></div>
+      <div class="adm-nav-item" onclick="showSection('marketing-plans');loadMarketingPlans()"><i class="fas fa-chart-line"></i> الخطط التسويقية<span class="adm-nav-badge" id="plansCount">0</span></div>
     </div>
     <div class="adm-nav-section">
       <div class="adm-nav-label">إدارة المستخدمين</div>
@@ -690,7 +710,9 @@ button{cursor:pointer;}
           <h3><i class="fas fa-bolt"></i> إجراءات سريعة</h3>
           <div class="quick-actions">
             <div class="qa-btn" onclick="showSection('joinrequests')"><div class="qa-btn-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;"><i class="fas fa-user-clock"></i></div>طلبات الانضمام</div>
-            <div class="qa-btn" onclick="openAddUser('employee')"><div class="qa-btn-icon" style="background:rgba(59,130,246,0.15);color:var(--blue);"><i class="fas fa-user-plus"></i></div>إضافة موظف جديد</div>
+            <div class="qa-btn" onclick="addEmployeeWithOnboarding()"><div class="qa-btn-icon" style="background:rgba(59,130,246,0.15);color:var(--blue);"><i class="fas fa-user-plus"></i></div>إضافة موظف جديد</div>
+            <div class="qa-btn" onclick="openContractModal()"><div class="qa-btn-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-file-contract"></i></div>عمل عقد جديد</div>
+            <div class="qa-btn" onclick="openPlanModal()"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-chart-line"></i></div>خطة تسويقية جديدة</div>
             <div class="qa-btn" onclick="openAddUser('student')"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-user-graduate"></i></div>إضافة طالب جديد</div>
             <div class="qa-btn" onclick="showSection('portfolio')"><div class="qa-btn-icon" style="background:rgba(233,78,119,0.15);color:var(--pink);"><i class="fas fa-images"></i></div>إدارة معرض الأعمال</div>
             <div class="qa-btn" onclick="showSection('webprices')"><div class="qa-btn-icon" style="background:rgba(247,147,30,0.15);color:var(--orange);"><i class="fas fa-globe"></i></div>تحديث أسعار الويب</div>
@@ -741,8 +763,23 @@ button{cursor:pointer;}
       <div class="users-top">
         <div><div class="adm-section-title">قائمة <span>الموظفين</span></div><div class="adm-breadcrumb">إدارة الموظفين والفريق في المنظومة</div></div>
         <button class="btn-add-user" onclick="addEmployeeWithOnboarding()"><i class="fas fa-plus"></i> إضافة موظف جديد</button>
+        <button class="btn-add-user" onclick="openContractModal()" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.15));color:var(--blue);border:1px solid rgba(59,130,246,0.3);"><i class="fas fa-file-contract"></i> عمل عقد جديد</button>
       </div>
       <div class="users-grid" id="employeesGrid"></div>
+    </div>
+
+    <!-- MARKETING PLANS -->
+    <div class="adm-section" id="sec-marketing-plans">
+      <div class="users-top">
+        <div>
+          <div class="adm-section-title">الخطط <span>التسويقية</span></div>
+          <div class="adm-breadcrumb">إدارة الخطط التسويقية للشركات - إنشاء ومشاركة خطط احترافية</div>
+        </div>
+        <button class="btn-add-user" onclick="openPlanModal()" style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(16,185,129,0.15));color:var(--green);border:1px solid rgba(34,197,94,0.3);"><i class="fas fa-plus"></i> خطة تسويقية جديدة</button>
+      </div>
+      <div class="marketing-plans-grid" id="marketingPlansGrid">
+        <!-- Plans will be rendered here -->
+      </div>
     </div>
 
     <!-- EMPLOYEE REQUESTS -->
@@ -1112,7 +1149,7 @@ button{cursor:pointer;}
 
       <div class="form-field">
         <label><i class="fas fa-briefcase"></i> الوظيفة *</label>
-        <select id="empJobTitle" onchange="updateContractTerms()">
+        <select id="empJobTitle">
           <option value="">اختر الوظيفة</option>
           <option value="مدير تسويق">مدير تسويق</option>
           <option value="موظف مبيعات">موظف مبيعات</option>
@@ -1120,22 +1157,6 @@ button{cursor:pointer;}
           <option value="مصمم جرافيك">مصمم جرافيك</option>
           <option value="مدير عام">مدير عام</option>
         </select>
-      </div>
-
-      <div class="form-row">
-        <div class="form-field">
-          <label><i class="fas fa-money-bill-wave"></i> الراتب الشهري (جنيه) *</label>
-          <input type="number" id="empSalary" placeholder="0000">
-        </div>
-        <div class="form-field">
-          <label><i class="fas fa-calendar-alt"></i> تاريخ بدء العمل *</label>
-          <input type="date" id="empStartDate">
-        </div>
-      </div>
-
-      <div class="form-field">
-        <label><i class="fas fa-file-contract"></i> بنود العقد</label>
-        <textarea id="empContractTerms" readonly style="min-height:120px;background:var(--bg2);color:var(--muted);font-size:.85rem;line-height:1.6;"></textarea>
       </div>
     </div>
 
@@ -1183,6 +1204,218 @@ button{cursor:pointer;}
         <i class="fas fa-plus"></i> إنشاء الحساب
       </button>
       <button class="btn-modal-cancel" onclick="closeEmployeeModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ CONTRACT CREATION MODAL ═══════ -->
+<div class="modal-overlay" id="contractCreationModal">
+  <div class="modal-box" style="max-width:560px;">
+    <div class="modal-header">
+      <h3><i class="fas fa-file-contract" style="color:var(--blue);margin-left:8px"></i> عمل عقد موظف</h3>
+      <button class="modal-close" onclick="closeContractModal()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="emp-contract-form" id="contractFormSection">
+      <p style="color:var(--muted);font-size:.88rem;margin-bottom:20px;line-height:1.6;">
+        <i class="fas fa-info-circle" style="color:var(--blue);"></i>
+        اختر الموظف وأدخل بيانات العقد. يمكنك حفظ العقد وتحميله كـ PDF.
+      </p>
+
+      <div class="form-field">
+        <label><i class="fas fa-user-tie"></i> اختر الموظف *</label>
+        <select id="contractEmpSelect" onchange="onContractEmployeeSelect()">
+          <option value="">-- اختر موظف --</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label><i class="fas fa-briefcase"></i> الوظيفة *</label>
+        <select id="contractJobTitle" onchange="updateContractTermsForContract()">
+          <option value="">اختر الوظيفة</option>
+          <option value="مدير تسويق">مدير تسويق</option>
+          <option value="موظف مبيعات">موظف مبيعات</option>
+          <option value="محاسب">محاسب</option>
+          <option value="مصمم جرافيك">مصمم جرافيك</option>
+          <option value="مدير عام">مدير عام</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label><i class="fas fa-money-bill-wave"></i> الراتب الشهري (جنيه) *</label>
+          <input type="number" id="contractSalary" placeholder="0000">
+        </div>
+        <div class="form-field">
+          <label><i class="fas fa-calendar-alt"></i> تاريخ بدء العمل *</label>
+          <input type="date" id="contractStartDate">
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label><i class="fas fa-file-contract"></i> بنود العقد</label>
+        <textarea id="contractTerms" style="min-height:120px;background:var(--bg2);color:var(--muted);font-size:.85rem;line-height:1.6;"></textarea>
+      </div>
+    </div>
+
+    <!-- Contract Success Section (Hidden initially) -->
+    <div class="emp-send-section" id="contractSuccessSection" style="display:none;">
+      <div class="emp-contract-preview">
+        <div class="emp-preview-header">
+          <i class="fas fa-check-circle" style="color:#22c55e;"></i>
+          <h4>تم حفظ العقد بنجاح!</h4>
+        </div>
+        <div id="contractSummaryDisplay" style="margin-bottom:20px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn-modal-save" onclick="downloadContractPDF()" style="flex:1;">
+            <i class="fas fa-file-pdf"></i> تحميل PDF
+          </button>
+          <button class="btn-modal-save" onclick="sendContractWhatsApp()" style="flex:1;background:rgba(37,211,102,0.15);color:#25d366;border:1px solid rgba(37,211,102,0.3);">
+            <i class="fab fa-whatsapp"></i> إرسال واتساب
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="modal-footer" id="contractFooterBtns">
+      <button class="btn-modal-save" onclick="saveContract(true)" style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.15));color:var(--blue);border:1px solid rgba(59,130,246,0.3);">
+        <i class="fas fa-file-pdf"></i> حفظ وتحميل PDF
+      </button>
+      <button class="btn-modal-save" onclick="saveContract(false)" style="background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3);">
+        <i class="fas fa-save"></i> حفظ فقط
+      </button>
+      <button class="btn-modal-cancel" onclick="closeContractModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MARKETING PLAN MODAL ═══════ -->
+<div class="modal-overlay" id="marketingPlanModal">
+  <div class="modal-box" style="max-width:720px;max-height:85vh;overflow-y:auto;">
+    <div class="modal-header">
+      <h3><i class="fas fa-chart-line" style="color:var(--green);margin-left:8px"></i> <span id="planModalTitle">خطة تسويقية جديدة</span></h3>
+      <button class="modal-close" onclick="closePlanModal()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="emp-contract-form" style="display:block;">
+      <input type="hidden" id="planEditId" value="">
+      
+      <!-- معلومات الشركة -->
+      <div style="background:rgba(34,197,94,0.08);padding:16px;border-radius:12px;margin-bottom:20px;border:1px solid rgba(34,197,94,0.2);">
+        <h4 style="color:var(--green);font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-building"></i> معلومات الشركة
+        </h4>
+        
+        <div class="form-field">
+          <label><i class="fas fa-building"></i> اسم الشركة *</label>
+          <input type="text" id="planCompanyName" placeholder="مثال: شركة النجاح للتجارة">
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label><i class="fas fa-envelope"></i> البريد الإلكتروني *</label>
+            <input type="email" id="planCompanyEmail" placeholder="company@example.com">
+          </div>
+          <div class="form-field">
+            <label><i class="fas fa-phone"></i> الهاتف</label>
+            <input type="tel" id="planCompanyPhone" placeholder="01XXXXXXXXX">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label><i class="fas fa-industry"></i> المجال *</label>
+          <select id="planIndustry">
+            <option value="">اختر المجال</option>
+            <option value="ecommerce">تجارة إلكترونية</option>
+            <option value="restaurants">مطاعم ومقاهي</option>
+            <option value="realestate">عقارات</option>
+            <option value="education">تعليم</option>
+            <option value="health">صحة وجمال</option>
+            <option value="services">خدمات</option>
+            <option value="fashion">أزياء وموضة</option>
+            <option value="tech">تكنولوجيا</option>
+            <option value="other">أخرى</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- تفاصيل الخطة -->
+      <div style="background:rgba(59,130,246,0.08);padding:16px;border-radius:12px;margin-bottom:20px;border:1px solid rgba(59,130,246,0.2);">
+        <h4 style="color:var(--blue);font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-bullseye"></i> تفاصيل الخطة
+        </h4>
+
+        <div class="form-field">
+          <label><i class="fas fa-target"></i> الهدف التسويقي *</label>
+          <input type="text" id="planGoal" placeholder="مثال: زيادة المبيعات بنسبة 50% خلال 3 أشهر">
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label><i class="fas fa-dollar-sign"></i> الميزانية الشهرية (جنيه)</label>
+            <input type="number" id="planBudget" placeholder="0000">
+          </div>
+          <div class="form-field">
+            <label><i class="fas fa-calendar-alt"></i> المدة (شهور)</label>
+            <input type="number" id="planDuration" placeholder="3" min="1">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label><i class="fas fa-share-alt"></i> المنصات المستهدفة</label>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;">
+            <label style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--bg2);border-radius:8px;cursor:pointer;font-size:.85rem;">
+              <input type="checkbox" id="platformFb" name="platforms" value="facebook">
+              <i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--bg2);border-radius:8px;cursor:pointer;font-size:.85rem;">
+              <input type="checkbox" id="platformInsta" name="platforms" value="instagram">
+              <i class="fab fa-instagram" style="color:#e4405f;"></i> Instagram
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--bg2);border-radius:8px;cursor:pointer;font-size:.85rem;">
+              <input type="checkbox" id="platformTiktok" name="platforms" value="tiktok">
+              <i class="fab fa-tiktok"></i> TikTok
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--bg2);border-radius:8px;cursor:pointer;font-size:.85rem;">
+              <input type="checkbox" id="platformSnap" name="platforms" value="snapchat">
+              <i class="fab fa-snapchat" style="color:#fffc00;"></i> Snapchat
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--bg2);border-radius:8px;cursor:pointer;font-size:.85rem;">
+              <input type="checkbox" id="platformTwitter" name="platforms" value="twitter">
+              <i class="fab fa-twitter" style="color:#1da1f2;"></i> Twitter
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--bg2);border-radius:8px;cursor:pointer;font-size:.85rem;">
+              <input type="checkbox" id="platformGoogle" name="platforms" value="google">
+              <i class="fab fa-google" style="color:#ea4335;"></i> Google Ads
+            </label>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label><i class="fas fa-lightbulb"></i> الاستراتيجيات والتوصيات</label>
+          <textarea id="planStrategy" placeholder="• استراتيجية المحتوى&#10;• خطة الإعلانات&#10;• التفاعل مع الجمهور&#10;• التوصيات والنصائح" style="min-height:120px;"></textarea>
+        </div>
+
+        <div class="form-field">
+          <label><i class="fas fa-chart-bar"></i> الأدوات والمقاييس</label>
+          <textarea id="planMetrics" placeholder="• أدوات التحليل&#10;• مؤشرات الأداء (KPIs)&#10;• طرق قياس النتائج" style="min-height:90px;"></textarea>
+        </div>
+      </div>
+
+      <!-- ملاحظات إضافية -->
+      <div class="form-field">
+        <label><i class="fas fa-sticky-note"></i> ملاحظات إضافية</label>
+        <textarea id="planNotes" placeholder="أي ملاحظات أو تفاصيل إضافية..." style="min-height:80px;"></textarea>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="modal-footer">
+      <button class="btn-modal-save" onclick="savePlan()" style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(16,185,129,0.15));color:var(--green);border:1px solid rgba(34,197,94,0.3);">
+        <i class="fas fa-save"></i> حفظ الخطة
+      </button>
+      <button class="btn-modal-cancel" onclick="closePlanModal()">إلغاء</button>
     </div>
   </div>
 </div>
@@ -1589,7 +1822,7 @@ function updateBadges(){
   // employee requests badge
   const empReqEl = document.getElementById('empRequestCount');
   if(empReqEl){
-    const empReqsSnapshot = _fsEmployees.filter(e=>e.applicationStatus==='pending');
+    const empReqsSnapshot = _fsEmployees.filter(e=>e.application_status==='pending');
     empReqEl.textContent = empReqsSnapshot.length;
   }
   // lectures badge
@@ -3429,9 +3662,6 @@ async function addEmployeeWithOnboarding(){
   document.getElementById('empPassword').value = '';
   document.getElementById('empPhone').value = '';
   document.getElementById('empJobTitle').value = '';
-  document.getElementById('empSalary').value = '';
-  document.getElementById('empStartDate').value = new Date().toISOString().split('T')[0];
-  document.getElementById('empContractTerms').value = '';
   
   // Hide send section, show form section
   document.getElementById('empFormSection').style.display = 'block';
@@ -3506,9 +3736,6 @@ async function createEmployeeAccount(){
   const password = document.getElementById('empPassword').value.trim();
   const phone = document.getElementById('empPhone').value.trim();
   const jobTitle = document.getElementById('empJobTitle').value;
-  const salary = document.getElementById('empSalary').value.trim();
-  const startDate = document.getElementById('empStartDate').value;
-  const contractTerms = document.getElementById('empContractTerms').value;
   
   // Validation
   if(!username){
@@ -3537,16 +3764,6 @@ async function createEmployeeAccount(){
     return;
   }
   
-  if(!salary || isNaN(salary) || parseFloat(salary) <= 0){
-    toast('يرجى إدخال راتب صحيح', 'error');
-    return;
-  }
-  
-  if(!startDate){
-    toast('يرجى اختيار تاريخ بدء العمل', 'error');
-    return;
-  }
-  
   try {
     // Check if username already exists
     const { data: existing } = await _supabase
@@ -3568,9 +3785,6 @@ async function createEmployeeAccount(){
       password,
       phone,
       job_title: jobTitle,
-      salary: parseFloat(salary),
-      start_date: startDate,
-      contract_terms: contractTerms,
       application_status: 'incomplete',
       created_at: new Date().toISOString()
     };
@@ -3591,7 +3805,7 @@ async function createEmployeeAccount(){
     window.currentOnboardingLink = onboardingLink;
     
     // Store data for sending
-    currentEmployeeData = { username, phone, jobTitle, salary, empId };
+    currentEmployeeData = { username, phone, jobTitle, empId };
     
     // Show success and send options
     document.getElementById('empFormSection').style.display = 'none';
@@ -3599,13 +3813,7 @@ async function createEmployeeAccount(){
     document.getElementById('empBtnCreate').style.display = 'none';
     document.getElementById('empLinkInput').value = onboardingLink;
     
-    // Show contract summary
-    const formattedDate = new Date(startDate).toLocaleDateString('ar-EG', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    
+    // Show summary
     document.getElementById('empContractSummary').innerHTML = `
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
@@ -3616,13 +3824,9 @@ async function createEmployeeAccount(){
           <span style="color:var(--muted);font-size:.85rem;">💼 الوظيفة:</span>
           <span style="color:#fff;font-weight:700;font-size:.9rem;">${jobTitle}</span>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
-          <span style="color:var(--muted);font-size:.85rem;">💰 الراتب:</span>
-          <span style="color:var(--pink);font-weight:700;font-size:.9rem;">${parseFloat(salary).toLocaleString('ar-EG')} جنيه</span>
-        </div>
         <div style="display:flex;justify-content:space-between;padding:8px 0;">
-          <span style="color:var(--muted);font-size:.85rem;">📅 تاريخ البدء:</span>
-          <span style="color:#fff;font-weight:700;font-size:.9rem;">${formattedDate}</span>
+          <span style="color:var(--muted);font-size:.85rem;">📱 الهاتف:</span>
+          <span style="color:#fff;font-weight:700;font-size:.9rem;">${phone || 'غير محدد'}</span>
         </div>
       </div>
     `;
@@ -3653,8 +3857,7 @@ function sendViaWhatsApp(){
   const message = `مرحباً! 👋\n\n` +
     `تم إنشاء حساب لك في منصة أكرم مصطفى.\n\n` +
     `🔐 اسم المستخدم: ${currentEmployeeData.username}\n` +
-    `💼 الوظيفة: ${currentEmployeeData.jobTitle}\n` +
-    `💰 الراتب: ${parseFloat(currentEmployeeData.salary).toLocaleString('ar-EG')} جنيه\n\n` +
+    `💼 الوظيفة: ${currentEmployeeData.jobTitle}\n\n` +
     `يرجى إكمال بياناتك الشخصية والتوقيع على العقد من الرابط التالي:\n\n` +
     `${window.currentOnboardingLink}\n\n` +
     `⚠️ هذا الرابط خاص بك ولا يجب مشاركته مع أحد.\n\n` +
@@ -3700,6 +3903,570 @@ function sendViaEmail(){
   window.location.href = mailtoLink;
   
   toast('تم فتح تطبيق البريد', 'success');
+}
+
+/* ══════════════════════════════════════════════
+   CONTRACT CREATION SYSTEM (Separate from Employee Creation)
+══════════════════════════════════════════════ */
+
+let _contractSelectedEmpId = null;
+
+async function openContractModal(preselectedEmpId){
+  const modal = document.getElementById('contractCreationModal');
+  modal.classList.add('open');
+  
+  // Reset form
+  document.getElementById('contractJobTitle').value = '';
+  document.getElementById('contractSalary').value = '';
+  document.getElementById('contractStartDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('contractTerms').value = '';
+  document.getElementById('contractFormSection').style.display = 'block';
+  document.getElementById('contractSuccessSection').style.display = 'none';
+  document.getElementById('contractFooterBtns').style.display = 'flex';
+  _contractSelectedEmpId = null;
+  
+  // Load employees into dropdown
+  try {
+    const { data: employees, error } = await _supabase
+      .from('employees')
+      .select('id, username, full_name, job_title, phone')
+      .order('created_at', { ascending: false });
+    
+    if(error) throw error;
+    
+    const select = document.getElementById('contractEmpSelect');
+    select.innerHTML = '<option value="">-- اختر موظف --</option>';
+    
+    if(employees && employees.length > 0){
+      employees.forEach(emp => {
+        const displayName = emp.full_name || emp.username;
+        const opt = document.createElement('option');
+        opt.value = emp.id;
+        opt.textContent = `${displayName} (${emp.job_title || 'بدون وظيفة'})`;
+        opt.dataset.jobTitle = emp.job_title || '';
+        opt.dataset.phone = emp.phone || '';
+        select.appendChild(opt);
+      });
+    }
+    
+    // Pre-select if provided
+    if(preselectedEmpId){
+      select.value = preselectedEmpId;
+      onContractEmployeeSelect();
+    }
+    
+  } catch(err){
+    console.error('Error loading employees for contract:', err);
+    toast('خطأ في تحميل قائمة الموظفين', 'error');
+  }
+}
+
+function onContractEmployeeSelect(){
+  const select = document.getElementById('contractEmpSelect');
+  const selectedOpt = select.options[select.selectedIndex];
+  _contractSelectedEmpId = select.value;
+  
+  if(selectedOpt && selectedOpt.dataset.jobTitle){
+    document.getElementById('contractJobTitle').value = selectedOpt.dataset.jobTitle;
+    updateContractTermsForContract();
+  }
+}
+
+function closeContractModal(){
+  document.getElementById('contractCreationModal').classList.remove('open');
+  _contractSelectedEmpId = null;
+}
+
+function updateContractTermsForContract(){
+  const jobTitle = document.getElementById('contractJobTitle').value;
+  const termsField = document.getElementById('contractTerms');
+  
+  if(jobTitle && JOB_CONTRACT_TERMS[jobTitle]){
+    termsField.value = JOB_CONTRACT_TERMS[jobTitle];
+  } else {
+    termsField.value = '';
+  }
+}
+
+async function saveContract(withPDF){
+  const empId = document.getElementById('contractEmpSelect').value;
+  const jobTitle = document.getElementById('contractJobTitle').value;
+  const salary = document.getElementById('contractSalary').value.trim();
+  const startDate = document.getElementById('contractStartDate').value;
+  const contractTerms = document.getElementById('contractTerms').value;
+  
+  if(!empId){
+    toast('يرجى اختيار الموظف', 'error');
+    return;
+  }
+  if(!jobTitle){
+    toast('يرجى اختيار الوظيفة', 'error');
+    return;
+  }
+  if(!salary || isNaN(salary) || parseFloat(salary) <= 0){
+    toast('يرجى إدخال راتب صحيح', 'error');
+    return;
+  }
+  if(!startDate){
+    toast('يرجى اختيار تاريخ بدء العمل', 'error');
+    return;
+  }
+  
+  try {
+    // Update employee record with contract data
+    const { error } = await _supabase
+      .from('employees')
+      .update({
+        job_title: jobTitle,
+        salary: parseFloat(salary),
+        start_date: startDate,
+        contract_terms: contractTerms,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', empId);
+    
+    if(error) throw error;
+    
+    _contractSelectedEmpId = empId;
+    
+    // Format date for display
+    const formattedDate = new Date(startDate).toLocaleDateString('ar-EG', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+    
+    // Get employee name
+    const select = document.getElementById('contractEmpSelect');
+    const empName = select.options[select.selectedIndex].textContent;
+    
+    // Show success section
+    document.getElementById('contractFormSection').style.display = 'none';
+    document.getElementById('contractSuccessSection').style.display = 'block';
+    document.getElementById('contractFooterBtns').style.display = 'none';
+    
+    document.getElementById('contractSummaryDisplay').innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+          <span style="color:var(--muted);font-size:.85rem;">👤 الموظف:</span>
+          <span style="color:#fff;font-weight:700;font-size:.9rem;">${empName}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+          <span style="color:var(--muted);font-size:.85rem;">💼 الوظيفة:</span>
+          <span style="color:#fff;font-weight:700;font-size:.9rem;">${jobTitle}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+          <span style="color:var(--muted);font-size:.85rem;">💰 الراتب:</span>
+          <span style="color:var(--pink);font-weight:700;font-size:.9rem;">${parseFloat(salary).toLocaleString('ar-EG')} جنيه</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;">
+          <span style="color:var(--muted);font-size:.85rem;">📅 تاريخ البدء:</span>
+          <span style="color:#fff;font-weight:700;font-size:.9rem;">${formattedDate}</span>
+        </div>
+      </div>
+    `;
+    
+    toast('✅ تم حفظ العقد بنجاح!', 'success');
+    renderEmployeeRequests();
+    
+    // Auto-download PDF if requested
+    if(withPDF){
+      setTimeout(() => downloadContractPDF(), 500);
+    }
+    
+  } catch(err){
+    console.error('Error saving contract:', err);
+    toast('حدث خطأ أثناء حفظ العقد: ' + err.message, 'error');
+  }
+}
+
+async function downloadContractPDF(){
+  if(!_contractSelectedEmpId){
+    toast('لا يوجد موظف محدد', 'error');
+    return;
+  }
+  // Reuse existing PDF generation
+  await downloadEmployeeContractPDF(_contractSelectedEmpId);
+}
+
+async function sendContractWhatsApp(){
+  if(!_contractSelectedEmpId){
+    toast('لا يوجد موظف محدد', 'error');
+    return;
+  }
+  await sendContractToEmployee(_contractSelectedEmpId);
+}
+
+/* ══════════════════════════════════════════════
+   MARKETING PLANS SYSTEM
+══════════════════════════════════════════════ */
+
+// Load marketing plans from Supabase
+async function loadMarketingPlans(){
+  const grid = document.getElementById('marketingPlansGrid');
+  if(!grid) return;
+  
+  try {
+    const { data: plans, error } = await _supabase
+      .from('marketing_plans')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if(error) throw error;
+    
+    // Update badge
+    document.getElementById('plansCount').textContent = plans ? plans.length : 0;
+    
+    if(!plans || plans.length === 0){
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);">
+          <i class="fas fa-chart-line" style="font-size:4rem;opacity:.3;margin-bottom:16px;"></i>
+          <p style="font-size:1.1rem;margin-bottom:8px;">لا توجد خطط تسويقية حتى الآن</p>
+          <p style="font-size:.9rem;">ابدأ بإنشاء أول خطة تسويقية للشركات</p>
+        </div>
+      `;
+      return;
+    }
+    
+    // Render plan cards
+    grid.innerHTML = plans.map(plan => {
+      const statusInfo = {
+        draft: { label: 'مسودة', class: 'draft', icon: 'fa-edit' },
+        completed: { label: 'مكتملة', class: 'completed', icon: 'fa-check-circle' },
+        sent: { label: 'تم الإرسال', class: 'sent', icon: 'fa-paper-plane' }
+      };
+      
+      const status = statusInfo[plan.status] || statusInfo.draft;
+      const planData = typeof plan.plan_data === 'string' ? JSON.parse(plan.plan_data) : plan.plan_data;
+      const platforms = planData.platforms || [];
+      const createdDate = new Date(plan.created_at).toLocaleDateString('ar-EG', {
+        year: 'numeric', month: 'short', day: 'numeric'
+      });
+      
+      return `
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-title">
+              <i class="fas fa-building"></i>
+              ${plan.company_name}
+            </div>
+            <span class="plan-card-status ${status.class}">
+              <i class="fas ${status.icon}"></i> ${status.label}
+            </span>
+          </div>
+          
+          <div class="plan-card-info">
+            <div class="plan-card-info-row">
+              <i class="fas fa-industry"></i>
+              <span>${getIndustryLabel(plan.company_industry)}</span>
+            </div>
+            <div class="plan-card-info-row">
+              <i class="fas fa-envelope"></i>
+              <span>${plan.company_email}</span>
+            </div>
+            ${plan.company_phone ? `
+              <div class="plan-card-info-row">
+                <i class="fas fa-phone"></i>
+                <span>${plan.company_phone}</span>
+              </div>
+            ` : ''}
+            <div class="plan-card-info-row">
+              <i class="fas fa-calendar"></i>
+              <span>${createdDate}</span>
+            </div>
+            ${platforms.length > 0 ? `
+              <div class="plan-card-info-row">
+                <i class="fas fa-share-alt"></i>
+                <span style="display:flex;gap:6px;flex-wrap:wrap;">
+                  ${platforms.map(p => getPlatformIcon(p)).join('')}
+                </span>
+              </div>
+            ` : ''}
+          </div>
+          
+          <div class="plan-card-actions">
+            <button class="plan-card-btn edit" onclick="editPlan('${plan.id}')">
+              <i class="fas fa-edit"></i> تعديل
+            </button>
+            ${plan.status === 'completed' || plan.status === 'sent' ? `
+              <button class="plan-card-btn view" onclick="viewPlan('${plan.id}')">
+                <i class="fas fa-eye"></i> عرض
+              </button>
+            ` : ''}
+            ${plan.status === 'completed' ? `
+              <button class="plan-card-btn send" onclick="sendPlanToClient('${plan.id}')">
+                <i class="fas fa-paper-plane"></i> إرسال
+              </button>
+            ` : ''}
+            <button class="plan-card-btn delete" onclick="deletePlan('${plan.id}')">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+  } catch(err){
+    console.error('Error loading marketing plans:', err);
+    toast('خطأ في تحميل الخطط التسويقية', 'error');
+  }
+}
+
+function getIndustryLabel(industry){
+  const labels = {
+    ecommerce: 'تجارة إلكترونية',
+    restaurants: 'مطاعم ومقاهي',
+    realestate: 'عقارات',
+    education: 'تعليم',
+    health: 'صحة وجمال',
+    services: 'خدمات',
+    fashion: 'أزياء وموضة',
+    tech: 'تكنولوجيا',
+    other: 'أخرى'
+  };
+  return labels[industry] || industry;
+}
+
+function getPlatformIcon(platform){
+  const icons = {
+    facebook: '<i class="fab fa-facebook" style="color:#1877f2;" title="Facebook"></i>',
+    instagram: '<i class="fab fa-instagram" style="color:#e4405f;" title="Instagram"></i>',
+    tiktok: '<i class="fab fa-tiktok" title="TikTok"></i>',
+    snapchat: '<i class="fab fa-snapchat" style="color:#fffc00;" title="Snapchat"></i>',
+    twitter: '<i class="fab fa-twitter" style="color:#1da1f2;" title="Twitter"></i>',
+    google: '<i class="fab fa-google" style="color:#ea4335;" title="Google Ads"></i>'
+  };
+  return icons[platform] || '';
+}
+
+// Open plan modal (create or edit)
+function openPlanModal(planId = null){
+  const modal = document.getElementById('marketingPlanModal');
+  modal.classList.add('open');
+  
+  // Reset form
+  document.getElementById('planEditId').value = planId || '';
+  document.getElementById('planModalTitle').textContent = planId ? 'تعديل خطة تسويقية' : 'خطة تسويقية جديدة';
+  document.getElementById('planCompanyName').value = '';
+  document.getElementById('planCompanyEmail').value = '';
+  document.getElementById('planCompanyPhone').value = '';
+  document.getElementById('planIndustry').value = '';
+  document.getElementById('planGoal').value = '';
+  document.getElementById('planBudget').value = '';
+  document.getElementById('planDuration').value = '';
+  document.getElementById('planStrategy').value = '';
+  document.getElementById('planMetrics').value = '';
+  document.getElementById('planNotes').value = '';
+  
+  // Uncheck all platforms
+  document.querySelectorAll('input[name="platforms"]').forEach(cb => cb.checked = false);
+  
+  // If editing, load plan data
+  if(planId){
+    loadPlanForEdit(planId);
+  }
+}
+
+async function loadPlanForEdit(planId){
+  try {
+    const { data: plan, error } = await _supabase
+      .from('marketing_plans')
+      .select('*')
+      .eq('id', planId)
+      .single();
+    
+    if(error) throw error;
+    
+    document.getElementById('planCompanyName').value = plan.company_name || '';
+    document.getElementById('planCompanyEmail').value = plan.company_email || '';
+    document.getElementById('planCompanyPhone').value = plan.company_phone || '';
+    document.getElementById('planIndustry').value = plan.company_industry || '';
+    
+    const planData = typeof plan.plan_data === 'string' ? JSON.parse(plan.plan_data) : plan.plan_data;
+    document.getElementById('planGoal').value = planData.goal || '';
+    document.getElementById('planBudget').value = planData.budget || '';
+    document.getElementById('planDuration').value = planData.duration || '';
+    document.getElementById('planStrategy').value = planData.strategy || '';
+    document.getElementById('planMetrics').value = planData.metrics || '';
+    document.getElementById('planNotes').value = planData.notes || '';
+    
+    // Check platforms
+    (planData.platforms || []).forEach(platform => {
+      const checkbox = document.getElementById(`platform${platform.charAt(0).toUpperCase() + platform.slice(1).replace('google', 'Google')}`);
+      if(checkbox) checkbox.checked = true;
+    });
+    
+  } catch(err){
+    console.error('Error loading plan for edit:', err);
+    toast('خطأ في تحميل بيانات الخطة', 'error');
+  }
+}
+
+function closePlanModal(){
+  document.getElementById('marketingPlanModal').classList.remove('open');
+}
+
+// Save plan
+async function savePlan(){
+  const planId = document.getElementById('planEditId').value;
+  const companyName = document.getElementById('planCompanyName').value.trim();
+  const companyEmail = document.getElementById('planCompanyEmail').value.trim();
+  const companyPhone = document.getElementById('planCompanyPhone').value.trim();
+  const industry = document.getElementById('planIndustry').value;
+  const goal = document.getElementById('planGoal').value.trim();
+  const budget = document.getElementById('planBudget').value.trim();
+  const duration = document.getElementById('planDuration').value.trim();
+  const strategy = document.getElementById('planStrategy').value.trim();
+  const metrics = document.getElementById('planMetrics').value.trim();
+  const notes = document.getElementById('planNotes').value.trim();
+  
+  // Validation
+  if(!companyName){
+    toast('يرجى إدخال اسم الشركة', 'error');
+    return;
+  }
+  if(!companyEmail){
+    toast('يرجى إدخال البريد الإلكتروني', 'error');
+    return;
+  }
+  if(!industry){
+    toast('يرجى اختيار المجال', 'error');
+    return;
+  }
+  if(!goal){
+    toast('يرجى إدخال الهدف التسويقي', 'error');
+    return;
+  }
+  
+  // Get selected platforms
+  const platforms = [];
+  document.querySelectorAll('input[name="platforms"]:checked').forEach(cb => {
+    platforms.push(cb.value);
+  });
+  
+  const planData = {
+    goal,
+    budget: budget ? parseFloat(budget) : null,
+    duration: duration ? parseInt(duration) : null,
+    platforms,
+    strategy,
+    metrics,
+    notes
+  };
+  
+  try {
+    if(planId){
+      // Update existing plan
+      const { error } = await _supabase
+        .from('marketing_plans')
+        .update({
+          company_name: companyName,
+          company_email: companyEmail,
+          company_phone: companyPhone,
+          company_industry: industry,
+          plan_data: planData,
+          status: 'completed',
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', planId);
+      
+      if(error) throw error;
+      toast('✅ تم تحديث الخطة بنجاح!', 'success');
+      
+    } else {
+      // Create new plan
+      const newPlanId = 'plan_' + Date.now();
+      const viewLink = `${window.location.origin}/marketing-plan-view.html?id=${newPlanId}`;
+      
+      const { error } = await _supabase
+        .from('marketing_plans')
+        .insert([{
+          id: newPlanId,
+          company_name: companyName,
+          company_email: companyEmail,
+          company_phone: companyPhone,
+          company_industry: industry,
+          plan_data: planData,
+          status: 'completed',
+          view_link: viewLink,
+          created_at: new Date().toISOString()
+        }]);
+      
+      if(error) throw error;
+      toast('✅ تم إنشاء الخطة بنجاح!', 'success');
+    }
+    
+    closePlanModal();
+    loadMarketingPlans();
+    
+  } catch(err){
+    console.error('Error saving plan:', err);
+    toast('حدث خطأ أثناء حفظ الخطة: ' + err.message, 'error');
+  }
+}
+
+// Edit plan
+function editPlan(planId){
+  openPlanModal(planId);
+}
+
+// View plan (open in new tab)
+function viewPlan(planId){
+  window.open(`/marketing-plan-view.html?id=${planId}`, '_blank');
+}
+
+// Send plan to client via email
+async function sendPlanToClient(planId){
+  try {
+    const { data: plan, error } = await _supabase
+      .from('marketing_plans')
+      .select('*')
+      .eq('id', planId)
+      .single();
+    
+    if(error) throw error;
+    
+    // Update status to sent
+    await _supabase
+      .from('marketing_plans')
+      .update({ status: 'sent', updated_at: new Date().toISOString() })
+      .eq('id', planId);
+    
+    const viewLink = plan.view_link || `${window.location.origin}/marketing-plan-view.html?id=${planId}`;
+    const subject = `خطة تسويقية من أكرم مصطفى - ${plan.company_name}`;
+    const body = `مرحباً،\n\nنرسل لكم الخطة التسويقية المخصصة لشركتكم:\n\n${viewLink}\n\nيمكنكم الاطلاع على تفاصيل الخطة من خلال الرابط أعلاه.\n\nمع تحياتنا،\nفريق أكرم مصطفى`;
+    
+    const mailtoLink = `mailto:${plan.company_email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+    
+    toast('تم فتح تطبيق البريد', 'success');
+    loadMarketingPlans();
+    
+  } catch(err){
+    console.error('Error sending plan:', err);
+    toast('خطأ في إرسال الخطة', 'error');
+  }
+}
+
+// Delete plan
+async function deletePlan(planId){
+  if(!confirm('هل أنت متأكد من حذف هذه الخطة؟')){
+    return;
+  }
+  
+  try {
+    const { error } = await _supabase
+      .from('marketing_plans')
+      .delete()
+      .eq('id', planId);
+    
+    if(error) throw error;
+    
+    toast('تم حذف الخطة', 'success');
+    loadMarketingPlans();
+    
+  } catch(err){
+    console.error('Error deleting plan:', err);
+    toast('خطأ في حذف الخطة', 'error');
+  }
 }
 
 // عرض طلبات الموظفين  
@@ -3806,19 +4573,19 @@ async function renderEmployeeRequests(){
               <i class="fas fa-eye"></i>
             </button>
           </div>` : ''}
-          ${req.applicationStatus === 'approved' ? `
+          ${req.application_status === 'approved' ? `
           <div class="emp-req-status">
             <i class="fas fa-check-circle"></i>
             <span>تم قبول الطلب وإضافة الموظف</span>
           </div>` : ''}
-          ${req.applicationStatus === 'rejected' ? `
+          ${req.application_status === 'rejected' ? `
           <div class="emp-req-status rejected">
             <i class="fas fa-times-circle"></i>
             <span>تم رفض الطلب</span>
           </div>` : ''}
-          ${!req.applicationSubmittedAt ? `
+          ${!req.application_submitted_at ? `
           <div class="emp-req-actions">
-            <button class="btn-whatsapp-notify" onclick="resendEmployeeLink('${req.id}', '${req.email}', '${req.name||''}')">
+            <button class="btn-whatsapp-notify" onclick="resendEmployeeLink('${req.id}', '${req.email}', '${req.full_name||''}')">
               <i class="fab fa-whatsapp"></i> إعادة إرسال الرابط
             </button>
           </div>` : ''}
@@ -3828,57 +4595,6 @@ async function renderEmployeeRequests(){
   } catch(error){
     console.error('Error loading employee requests:', error);
     grid.innerHTML = `<div class="emp-req-empty"><i class="fas fa-exclamation-triangle"></i><p>حدث خطأ في تحميل الطلبات</p></div>`;
-  }
-}
-
-// قبول طلب موظف
-async function approveEmployeeRequest(empId){
-  if(!confirm('هل تريد قبول هذا الطلب وإضافة الموظف للنظام؟')) return;
-  
-  try {
-    const empDoc = await _fdb.collection('employees').doc(empId).get();
-    if(!empDoc.exists){
-      toast('الطلب غير موجود', 'error');
-      return;
-    }
-    
-    const empData = empDoc.data();
-    
-    // Update application status
-    await _fdb.collection('employees').doc(empId).update({
-      applicationStatus: 'approved',
-      approvedAt: new Date().toISOString()
-    });
-    
-    // Add to users list
-    const users = getUsers();
-    users.push({
-      id: empId,
-      type: 'employee',
-      name: empData.fullName,
-      username: empData.email.split('@')[0],
-      password: 'employee123',
-      email: empData.email,
-      phone: empData.phone,
-      role: empData.jobTitle,
-      department: 'قيد التحديد',
-      avatar: empData.selfieURL || '',
-      bio: '',
-      createdAt: new Date().toISOString(),
-      nationalId: empData.nationalId,
-      salary: empData.salary
-    });
-    
-    saveUsers(users);
-    renderEmployeeRequests();
-    renderUsers('employee');
-    updateBadges();
-    
-    toast('✅ تم قبول الطلب وإضافة الموظف بنجاح', 'success');
-    
-  } catch(error){
-    console.error('Error approving request:', error);
-    toast('حدث خطأ أثناء قبول الطلب', 'error');
   }
 }
 
@@ -4348,12 +5064,6 @@ function createReqDetailModal(){
   return modal;
 }
 
-// Update init to load employee requests
-const _originalInitApp = initApp;
-initApp = function(){
-  _originalInitApp();
-  renderEmployeeRequests();
-};
 
 </script>
 </body>

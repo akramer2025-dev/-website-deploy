@@ -132,6 +132,50 @@ CREATE TRIGGER update_join_requests_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
+-- ==================== جدول الخطط التسويقية ====================
+CREATE TABLE IF NOT EXISTS marketing_plans (
+    id TEXT PRIMARY KEY,
+    company_name TEXT NOT NULL,
+    company_email TEXT NOT NULL,
+    company_phone TEXT,
+    company_industry TEXT,
+    
+    -- بيانات الخطة (JSON)
+    plan_data JSONB,
+    
+    -- حالة الخطة
+    status TEXT DEFAULT 'draft', -- draft, completed, sent
+    
+    -- رابط العرض
+    view_link TEXT,
+    
+    -- التواريخ
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Indexes للأداء
+CREATE INDEX IF NOT EXISTS idx_marketing_plans_company ON marketing_plans(company_name);
+CREATE INDEX IF NOT EXISTS idx_marketing_plans_status ON marketing_plans(status);
+CREATE INDEX IF NOT EXISTS idx_marketing_plans_created ON marketing_plans(created_at);
+
+-- Enable RLS
+ALTER TABLE marketing_plans ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Enable all access for marketing_plans" ON marketing_plans;
+CREATE POLICY "Enable all access for marketing_plans"
+    ON marketing_plans
+    FOR ALL
+    USING (true)
+    WITH CHECK (true);
+
+-- Trigger لتحديث updated_at
+DROP TRIGGER IF EXISTS update_marketing_plans_updated_at ON marketing_plans;
+CREATE TRIGGER update_marketing_plans_updated_at
+    BEFORE UPDATE ON marketing_plans
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
 -- ==================== تمام! ====================
 -- ✅ الجداول جاهزة
 -- ✅ RLS مفعّل
@@ -141,3 +185,4 @@ CREATE TRIGGER update_join_requests_updated_at
 -- 1. إنشاء Storage Bucket اسمه: employee-files
 -- 2. Make it public
 -- 3. تعديل js/supabase-config.js بقيمك
+-- 4. تنفيذ هذا الكود في Supabase Dashboard → SQL Editor
