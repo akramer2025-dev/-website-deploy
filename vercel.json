@@ -1,6 +1,4 @@
 ﻿{
-  "version": 2,
-  "name": "akram-mostafa-website",
   "rewrites": [
     { "source": "/akram-mostafa", "destination": "/akram-mostafa.html" }
   ],
