@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار نظام الموظفين</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        
+        p {
+            color: #64748b;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box h3 {
+            color: #1e293b;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            color: #475569;
+            font-size: 14px;
+        }
+        
+        .info-row strong {
+            color: #1e293b;
+            min-width: 100px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #20ba5a;
+            transform: translateY(-2px);
+        }
+        
+        .link-box {
+            background: #f0fdf4;
+            border: 2px dashed #86efac;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 13px;
+            color: #166534;
+        }
+        
+        .success-msg {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #86efac;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .success-msg.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 اختبار نظام الموظفين</h1>
+        <p>هذه الصفحة لاختبار نظام إضافة موظف جديد وإرسال رابط التسجيل</p>
+        
+        <div class="info-box">
+            <h3>📋 معلومات الموظف الافتراضية</h3>
+            <div class="info-row">
+                <strong>الاسم:</strong>
+                <span>إسراء محمد</span>
+            </div>
+            <div class="info-row">
+                <strong>البريد:</strong>
+                <span>esraa@example.com</span>
+            </div>
+            <div class="info-row">
+                <strong>الراتب:</strong>
+                <span>3000 جنيه</span>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>🔗 رابط التسجيل</h3>
+            <div class="link-box" id="employeeLink">
+                سيتم توليد الرابط عند الضغط على الزر
+            </div>
+        </div>
+        
+        <button class="btn btn-primary" onclick="generateLink()">
+            ✨ توليد رابط التسجيل
+        </button>
+        
+        <button class="btn btn-primary" onclick="copyLink()" id="copyBtn" style="display: none;">
+            📋 نسخ الرابط
+        </button>
+        
+        <button class="btn btn-whatsapp" onclick="sendWhatsApp()" id="whatsappBtn" style="display: none;">
+            📱 إرسال عبر WhatsApp
+        </button>
+        
+        <div class="success-msg" id="successMsg"></div>
+    </div>
+    
+    <script>
+        let generatedLink = '';
+        
+        function generateLink() {
+            // Generate unique employee ID
+            const empId = 'emp_' + Date.now();
+            
+            // Generate full link
+            generatedLink = window.location.origin + '/employee-onboarding.html?id=' + empId;
+            
+            // Display link
+            document.getElementById('employeeLink').textContent = generatedLink;
+            
+            // Show buttons
+            document.getElementById('copyBtn').style.display = 'block';
+            document.getElementById('whatsappBtn').style.display = 'block';
+            
+            showSuccess('✅ تم توليد الرابط بنجاح!');
+        }
+        
+        function copyLink() {
+            if (!generatedLink) {
+                showSuccess('❌ يرجى توليد الرابط أولاً', true);
+                return;
+            }
+            
+            navigator.clipboard.writeText(generatedLink).then(() => {
+                showSuccess('✅ تم نسخ الرابط! يمكنك الآن إرساله للموظف');
+            }).catch(err => {
+                showSuccess('❌ فشل النسخ: ' + err.message, true);
+            });
+        }
+        
+        function sendWhatsApp() {
+            if (!generatedLink) {
+                showSuccess('❌ يرجى توليد الرابط أولاً', true);
+                return;
+            }
+            
+            const phone = prompt('أدخل رقم الواتساب:\nمثال: 01012345678');
+            
+            if (!phone || !phone.trim()) {
+                showSuccess('❌ لم يتم إدخال رقم هاتف', true);
+                return;
+            }
+            
+            // Clean phone number (remove spaces and non-digits)
+            const cleanPhone = phone.replace(/\D/g, '');
+            
+            // Create WhatsApp message
+            const message = encodeURIComponent(
+                `مرحباً إسراء!\n\n` +
+                `تم إنشاء حساب لك في المنصة.\n` +
+                `يرجى إكمال بياناتك والتوقيع على العقد من الرابط التالي:\n\n` +
+                `${generatedLink}\n\n` +
+                `شكراً لك! 🌟`
+            );
+            
+            // Open WhatsApp
+            const whatsappLink = `https://wa.me/${cleanPhone}?text=${message}`;
+            window.open(whatsappLink, '_blank');
+            
+            showSuccess('📱 تم فتح WhatsApp - يمكنك إرسال الرسالة الآن');
+        }
+        
+        function showSuccess(message, isError = false) {
+            const msgEl = document.getElementById('successMsg');
+            msgEl.textContent = message;
+            msgEl.classList.add('show');
+            
+            if (isError) {
+                msgEl.style.background = '#fef2f2';
+                msgEl.style.color = '#991b1b';
+                msgEl.style.borderColor = '#fecaca';
+            } else {
+                msgEl.style.background = '#f0fdf4';
+                msgEl.style.color = '#166534';
+                msgEl.style.borderColor = '#86efac';
+            }
+            
+            setTimeout(() => {
+                msgEl.classList.remove('show');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

@@ -35,7 +35,7 @@ button{cursor:pointer;}
 .login-box{width:400px;max-width:95vw;background:var(--card);border:1px solid var(--border);border-radius:24px;
   padding:44px 36px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
 .login-logo{margin-bottom:20px;}
-.login-logo img{width:70px;height:70px;}
+.login-logo img{width:auto;height:70px;max-width:220px;object-fit:contain;}
 .login-box h2{font-size:1.5rem;font-weight:800;margin-bottom:6px;color:#fff;}
 .login-box p{color:var(--muted);font-size:.9rem;margin-bottom:32px;}
 .l-field{margin-bottom:18px;text-align:right;}
@@ -58,7 +58,7 @@ button{cursor:pointer;}
   background:var(--card);border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;padding:0 24px;}
 .adm-header-brand{display:flex;align-items:center;gap:12px;}
-.adm-header-brand img{width:36px;height:36px;}
+.adm-header-brand img{width:auto;height:36px;max-width:130px;object-fit:contain;}
 .adm-header-brand span{font-size:1rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .adm-header-right{display:flex;align-items:center;gap:16px;}
 .adm-admin-pill{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);
@@ -293,14 +293,113 @@ button{cursor:pointer;}
 .gallery-add-btn{width:50px;height:40px;border-radius:6px;border:1px dashed var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.9rem;cursor:pointer;transition:.2s;}
 .gallery-add-btn:hover{border-color:var(--pink);color:var(--pink);}
 
+/* EMPLOYEE REQUESTS GRID */
+.employee-requests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;}
+.emp-req-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:.3s;}
+.emp-req-card:hover{border-color:rgba(233,78,119,0.2);transform:translateY(-3px);}
+.emp-req-card.pending{border-left:3px solid #f59e0b;}
+.emp-req-card.approved{border-left:3px solid #22c55e;}
+.emp-req-card.rejected{border-left:3px solid #ef4444;}
+.emp-req-header{padding:16px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);}
+.emp-req-avatar{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;}
+.emp-req-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.emp-req-info h4{font-size:1rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.emp-req-info p{font-size:.78rem;color:var(--muted);}
+.emp-req-body{padding:16px 18px;}
+.emp-req-row{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.82rem;}
+.emp-req-row i{color:var(--pink);width:16px;}
+.emp-req-row span{color:var(--text);}
+.emp-req-docs{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.emp-req-doc-thumb{width:64px;height:50px;border-radius:8px;overflow:hidden;border:1.5px solid var(--border);cursor:pointer;transition:.2s;}
+.emp-req-doc-thumb:hover{border-color:var(--pink);transform:scale(1.05);}
+.emp-req-doc-thumb img{width:100%;height:100%;object-fit:cover;}
+.emp-req-actions{display:flex;gap:8px;padding:12px 18px;border-top:1px solid var(--border);}
+.emp-req-status{padding:8px 18px;background:rgba(34,197,94,.07);font-size:.78rem;color:#4ade80;display:flex;align-items:center;gap:6px;}
+.emp-req-status.rejected{background:rgba(239,68,68,.07);color:#f87171;}
+.emp-req-empty{text-align:center;padding:60px 20px;color:var(--muted);grid-column:1/-1;}
+.emp-req-empty i{font-size:3rem;margin-bottom:16px;display:block;opacity:.3;}
+
 /* TOAST */
 .toast{position:fixed;bottom:28px;left:28px;z-index:9999;padding:12px 20px;background:var(--card);border:1px solid var(--border);border-radius:13px;font-size:.88rem;font-weight:700;color:var(--text);box-shadow:0 12px 30px rgba(0,0,0,0.4);transform:translateY(30px);opacity:0;transition:.3s;pointer-events:none;}
 .toast.show{transform:translateY(0);opacity:1;}
 .toast.success{border-color:rgba(34,197,94,0.4);color:#4ade80;}
 .toast.error{border-color:rgba(239,68,68,0.4);color:#f87171;}
 
-@media(max-width:1100px){.stats-grid{grid-template-columns:1fr 1fr;}.adm-row{grid-template-columns:1fr;}.projects-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:768px){.adm-sidebar{transform:translateX(100%);transition:.3s;}.adm-sidebar.open{transform:none;}.adm-main{margin-right:0;}.adm-section{padding:20px;}.stats-grid{grid-template-columns:1fr 1fr;}.projects-grid{grid-template-columns:1fr;}}
+/* HAMBURGER TOGGLE */
+.adm-menu-toggle{display:none;align-items:center;justify-content:center;width:40px;height:40px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-size:1.1rem;cursor:pointer;transition:.2s;flex-shrink:0;}
+.adm-menu-toggle:hover{background:var(--card2);color:#fff;}
+
+/* SIDEBAR OVERLAY */
+.adm-sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);
+  z-index:89;backdrop-filter:blur(2px);}
+.adm-sidebar-overlay.show{display:block;}
+
+/* TABLE SCROLL WRAPPER */
+.adm-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+@media(max-width:1100px){
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .adm-row{grid-template-columns:1fr;}
+  .projects-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+@media(max-width:768px){
+  /* Show hamburger */
+  .adm-menu-toggle{display:flex;}
+
+  /* Header */
+  .adm-header{padding:0 14px;gap:10px;}
+  .adm-admin-pill span{display:none;}
+  .adm-admin-pill{padding:7px 10px;}
+  .btn-logout span{display:none;}
+
+  /* Sidebar slides in from right */
+  .adm-sidebar{transform:translateX(100%);transition:.3s;z-index:90;}
+  .adm-sidebar.open{transform:none;box-shadow:-8px 0 40px rgba(0,0,0,0.5);}
+
+  /* Main takes full width */
+  .adm-main{margin-right:0;}
+  .adm-section{padding:16px;}
+  .adm-section-title{font-size:1.15rem;}
+
+  /* Stats — 2 cols */
+  .stats-grid{grid-template-columns:1fr 1fr;gap:12px;}
+  .stat-card{padding:16px;}
+  .stat-num{font-size:1.6rem;}
+
+  /* Projects */
+  .projects-grid{grid-template-columns:1fr;}
+
+  /* Users grid full width */
+  .users-grid{grid-template-columns:1fr;}
+  .users-top{flex-wrap:wrap;gap:10px;}
+  .users-tabs{width:100%;}
+  .users-tab{flex:1;text-align:center;padding:8px 10px;}
+
+  /* Table scroll */
+  .adm-card{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .adm-table-wrap{margin:0 -4px;}
+  .adm-table th,.adm-table td{font-size:.78rem;padding:9px 8px;white-space:nowrap;}
+
+  /* Requests grid */
+  .req-cards{grid-template-columns:1fr;}
+
+  /* Form row single col */
+  .form-row{grid-template-columns:1fr;}
+
+  /* Modal */
+  .modal-box{padding:22px 18px;border-radius:18px;}
+}
+
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .stat-card{padding:14px;}
+  .adm-header-brand span{font-size:.85rem;}
+  .adm-section{padding:12px;}
+  .adm-card{padding:16px;}
+}
 
 /* ===== JOIN REQUESTS ===== */
 .req-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
@@ -426,7 +525,7 @@ button{cursor:pointer;}
 <!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
-    <div class="login-logo"><img src="../images/logo.png" alt="Logo"></div>
+    <div class="login-logo"><img src="../images/1772173627537.png" alt="Logo"></div>
     <h2>لوحة الإدارة</h2>
     <p>أدخل بيانات الدخول</p>
     <div class="login-err" id="loginErr"><i class="fas fa-exclamation-circle"></i><span>اسم المستخدم أو كلمة المرور غير صحيحة</span></div>
@@ -446,12 +545,14 @@ button{cursor:pointer;}
 <!-- ADMIN APP -->
 <div id="adminApp">
   <header class="adm-header">
-    <div class="adm-header-brand"><img src="../images/logo.png" alt="Logo"><span>AKRAM ADMIN</span></div>
+    <button class="adm-menu-toggle" id="menuToggle" onclick="toggleAdminSidebar()" title="القائمة"><i class="fas fa-bars"></i></button>
+    <div class="adm-header-brand"><img src="../images/1772173627537.png" alt="Logo"><span>AKRAM ADMIN</span></div>
     <div class="adm-header-right">
       <div class="adm-admin-pill"><i class="fas fa-shield-alt"></i><span>أدمن النظام</span></div>
-      <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+      <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> <span>خروج</span></button>
     </div>
   </header>
+  <div class="adm-sidebar-overlay" id="sidebarOverlay" onclick="closeAdminSidebar()"></div>
   <aside class="adm-sidebar" id="adminSidebar">
     <div class="adm-nav-section">
       <div class="adm-nav-label">الإدارة الرئيسية</div>
@@ -461,11 +562,12 @@ button{cursor:pointer;}
     <div class="adm-nav-section">
       <div class="adm-nav-label">إدارة المشاريع</div>
       <div class="adm-nav-item" onclick="showSection('webprices')"><i class="fas fa-globe"></i> تطبيقات الويب<span class="adm-nav-badge">6</span></div>
-      <div class="adm-nav-item" onclick="showSection('mobileprices')"><i class="fas fa-mobile-alt"></i> تطبيقات الموبايل<span class="adm-nav-badge">6</span></div>
+      <div class="adm-nav-item" onclick="showSection('mobileprices')"><i class="fas fa-mobile-alt"></i> أدوات وتطبيقات<span class="adm-nav-badge">3</span></div>
     </div>
     <div class="adm-nav-section">
       <div class="adm-nav-label">إدارة المستخدمين</div>
       <div class="adm-nav-item" onclick="showSection('joinrequests')"><i class="fas fa-user-clock"></i> طلبات الانضمام<span class="adm-nav-badge" id="pendingCount" style="background:#f59e0b">0</span></div>
+      <div class="adm-nav-item" onclick="showSection('employee-requests')"><i class="fas fa-clipboard-check"></i> طلبات الموظفين<span class="adm-nav-badge" id="empRequestCount" style="background:#ef4444">0</span></div>
       <div class="adm-nav-item" onclick="showSection('employees')"><i class="fas fa-user-tie"></i> الموظفون<span class="adm-nav-badge" id="empCount">0</span></div>
       <div class="adm-nav-item" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> الطلاب<span class="adm-nav-badge" id="stuCount">0</span></div>
     </div>
@@ -530,8 +632,8 @@ button{cursor:pointer;}
 
     <!-- MOBILE APP PRICES -->
     <div class="adm-section" id="sec-mobileprices">
-      <div class="adm-section-title">تطبيقات <span>الموبايل</span></div>
-      <div class="adm-breadcrumb">حدّث أسعار تطبيقات الموبايل، ستظهر مباشرة في صفحة المنتج</div>
+      <div class="adm-section-title">أدوات <span>وتطبيقات</span></div>
+      <div class="adm-breadcrumb">حدّث أسعار الأدوات والتطبيقات، ستظهر مباشرة في صفحة المنتج</div>
       <div class="projects-grid" id="mobilePricesGrid"></div>
     </div>
 
@@ -554,9 +656,20 @@ button{cursor:pointer;}
     <div class="adm-section" id="sec-employees">
       <div class="users-top">
         <div><div class="adm-section-title">قائمة <span>الموظفين</span></div><div class="adm-breadcrumb">إدارة الموظفين والفريق في المنظومة</div></div>
-        <button class="btn-add-user" onclick="openAddUser('employee')"><i class="fas fa-plus"></i> إضافة جديد</button>
+        <button class="btn-add-user" onclick="addEmployeeWithOnboarding()"><i class="fas fa-plus"></i> إضافة موظف جديد</button>
       </div>
       <div class="users-grid" id="employeesGrid"></div>
+    </div>
+
+    <!-- EMPLOYEE REQUESTS -->
+    <div class="adm-section" id="sec-employee-requests">
+      <div class="users-top">
+        <div>
+          <div class="adm-section-title">طلبات <span>الموظفين</span></div>
+          <div class="adm-breadcrumb">مراجعة واعتماد طلبات تسجيل الموظفين الجدد</div>
+        </div>
+      </div>
+      <div class="employee-requests-grid" id="employeeRequestsGrid"></div>
     </div>
 
     <!-- STUDENTS -->
@@ -896,22 +1009,19 @@ const APP_PRICES_KEY = 'am_app_prices';
 
 // تطبيقات الويب
 const WEB_APPS = {
-  'almodif':   { name:'منصة فندق',      icon:'fas fa-hotel',       color:'linear-gradient(135deg,#667eea,#764ba2)' },
-  'remostore': { name:'متجر ريمو',          icon:'fas fa-shopping-bag', color:'linear-gradient(135deg,#a855f7,#6d28d9)' },
-  'hotel-crm': { name:'نظام CRM للفنادق',  icon:'fas fa-building',     color:'linear-gradient(135deg,#10b981,#059669)' },
-  'linkcall':  { name:'Link Call',           icon:'fas fa-headset',      color:'linear-gradient(135deg,#3b82f6,#1d4ed8)' },
-  'missrim':   { name:'متجر مس ريم',        icon:'fas fa-store-alt',    color:'linear-gradient(135deg,#f43f5e,#e11d48)' },
-  'dentasmart':{ name:'Denta Smart',         icon:'fas fa-tooth',        color:'linear-gradient(135deg,#06b6d4,#0284c7)' }
+  'remostore':      { name:'ريمو ستور',         icon:'fas fa-shopping-bag',  color:'linear-gradient(135deg,#a855f7,#6d28d9)' },
+  'areej':          { name:'اريج',              icon:'fas fa-spa',            color:'linear-gradient(135deg,#ec4899,#db2777)' },
+  'uptime-casher':  { name:'اب تايم كاشير',    icon:'fas fa-cash-register',  color:'linear-gradient(135deg,#f59e0b,#d97706)' },
+  'linkcall':       { name:'Link Call',          icon:'fas fa-headset',        color:'linear-gradient(135deg,#3b82f6,#1d4ed8)' },
+  'osool-system':   { name:'نظام أصول كاشير',  icon:'fas fa-desktop',         color:'linear-gradient(135deg,#10b981,#059669)' },
+  'almodif':        { name:'almodif',            icon:'fas fa-chart-line',     color:'linear-gradient(135deg,#667eea,#764ba2)' }
 };
 
-// تطبيقات الموبايل
+// أدوات وتطبيقات
 const MOBILE_APPS = {
-  'taskmaster':  { name:'مدير المهام',      icon:'fas fa-tasks',       color:'linear-gradient(135deg,#8b5cf6,#7c3aed)' },
-  'fittrack':    { name:'تتبع اللياقة',         icon:'fas fa-heartbeat',   color:'linear-gradient(135deg,#ef4444,#dc2626)' },
-  'quickscan':   { name:'مسح سريع',        icon:'fas fa-qrcode',      color:'linear-gradient(135deg,#10b981,#059669)' },
-  'smartnotes':  { name:'ملاحظات ذكية',       icon:'fas fa-sticky-note', color:'linear-gradient(135deg,#f59e0b,#d97706)' },
-  'prayertime':  { name:'مواقيت الصلاة',    icon:'fas fa-mosque',      color:'linear-gradient(135deg,#14b8a6,#0d9488)' },
-  'moneywise':   { name:'مدير المال',        icon:'fas fa-wallet',      color:'linear-gradient(135deg,#6366f1,#4f46e5)' }
+  'idesign':         { name:'iDesign',          icon:'fas fa-paint-brush',    color:'linear-gradient(135deg,#8b5cf6,#7c3aed)' },
+  'analytics-tool':  { name:'أداة التحليلات',  icon:'fas fa-chart-bar',      color:'linear-gradient(135deg,#14b8a6,#0d9488)' },
+  'project-manager': { name:'مدير المشاريع',   icon:'fas fa-project-diagram', color:'linear-gradient(135deg,#6366f1,#4f46e5)' }
 };
 
 // آخر المستخدمين المضافين
@@ -927,8 +1037,13 @@ function saveUsers(arr){
   localStorage.setItem(USERS_KEY, JSON.stringify(arr));
   _fdb.collection('admin_data').doc('users').set({data:arr,updatedAt:Date.now()}).catch(e=>console.warn('FS users',e));
 }
-function getPortfolio(){ return JSON.parse(localStorage.getItem(PORTFOLIO_KEY)||'{}'); }
-function savePortfolio(p){ localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(p)); }
+let _fsPortfolio = null;
+function getPortfolio(){ return _fsPortfolio!==null ? Object.assign({},_fsPortfolio) : (()=>{try{return JSON.parse(localStorage.getItem(PORTFOLIO_KEY)||'{}')||{};}catch(e){return {};}})(); }
+function savePortfolio(p){
+  _fsPortfolio = Object.assign({},p);
+  localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(p));
+  _fdb.collection('admin_data').doc('portfolio').set({data:p,updatedAt:Date.now()}).catch(e=>console.warn('FS portfolio',e));
+}
 function getAdminPass(){ return ADMIN_PASS; }
 function getAppPrices(){ return _fsAppPrices!==null ? Object.assign({},_fsAppPrices) : (()=>{try{return JSON.parse(localStorage.getItem(APP_PRICES_KEY))||{};}catch(e){return {};}})(); }
 function saveAppPrices(obj){
@@ -958,7 +1073,7 @@ let _fsUnsubscribe = null;
 
 // Load all admin collections from Firestore on login
 async function _loadAdminData(){
-  const cols = ['users','app_prices','recorded_lectures','live_sessions'];
+  const cols = ['users','app_prices','recorded_lectures','live_sessions','portfolio'];
   try {
     // Load admin docs + lectures collection in parallel
     const [snaps, lecsSnap] = await Promise.all([
@@ -972,6 +1087,7 @@ async function _loadAdminData(){
       if(i===1){ _fsAppPrices = d||{}; localStorage.setItem(APP_PRICES_KEY, JSON.stringify(_fsAppPrices)); }
       if(i===2){ _fsRecLecs = Array.isArray(d)?d:[]; localStorage.setItem(REC_LECS_KEY, JSON.stringify(_fsRecLecs)); }
       if(i===3){ _fsLiveSessions = Array.isArray(d)?d:[]; localStorage.setItem('am_live_sessions', JSON.stringify(_fsLiveSessions)); }
+      if(i===4){ _fsPortfolio = d||{}; localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(_fsPortfolio)); }
     });
     // Rebuild lectures object from individual docs (avoids 1MB Firestore limit)
     const lecturesObj = {};
@@ -1025,10 +1141,16 @@ function initFirestore(){
   if(jrEl) jrEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem"></i><br><br>جاري تحميل البيانات...</div>';
   _fsUnsubscribe = _fdb.collection('join_requests')
     .onSnapshot(snapshot=>{
+      const _prevPending = _fsReqs.filter(r=>r.status==='pending').length;
+      const _isFirstLoad = (_fsReqs.length === 0);
       _fsReqs = [];
       snapshot.forEach(doc=>{ _fsReqs.push(doc.data()); });
       // ترتيب client-side بدل orderBy (لا يحتاج index)
       _fsReqs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+      const _newPending = _fsReqs.filter(r=>r.status==='pending').length;
+      if (!_isFirstLoad && _newPending > _prevPending) {
+        toast('🔔 طلب انضمام جديد! تحقق من قسم طلبات الانضمام', 'info');
+      }
       renderJoinRequests(_currentReqFilter||'all');
       updateBadges();
     }, err=>{
@@ -1170,7 +1292,7 @@ function renderRecordedLectures(){
     </div>`).join('');
 }
 
-function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); renderRecordedLectures(); initFirestore(); }
+function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); renderRecordedLectures(); renderEmployeeRequests(); initFirestore(); }
 
 const JOIN_KEY = 'am_join_requests';
 // ددالتي جلب وحفظ طلبات الانضمام — تستخدم كاش Firebase
@@ -2932,6 +3054,441 @@ function aToggleCalc(){ document.getElementById('calcWidgetAdmin').classList.tog
   document.addEventListener('mousemove',e=>{if(!drag)return;w.style.left=(e.clientX-ox)+'px';w.style.top=(e.clientY-oy)+'px';w.style.transform='none';});
   document.addEventListener('mouseup',()=>drag=false);
 })();
+
+// ══════════ MOBILE SIDEBAR TOGGLE ══════════
+function toggleAdminSidebar(){
+  const sb = document.getElementById('adminSidebar');
+  const ov = document.getElementById('sidebarOverlay');
+  const tog = document.getElementById('menuToggle');
+  const isOpen = sb.classList.contains('open');
+  if(isOpen){ closeAdminSidebar(); }
+  else {
+    sb.classList.add('open');
+    ov.classList.add('show');
+    tog.innerHTML = '<i class="fas fa-times"></i>';
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeAdminSidebar(){
+  const sb = document.getElementById('adminSidebar');
+  const ov = document.getElementById('sidebarOverlay');
+  const tog = document.getElementById('menuToggle');
+  sb.classList.remove('open');
+  ov.classList.remove('show');
+  tog.innerHTML = '<i class="fas fa-bars"></i>';
+  document.body.style.overflow = '';
+}
+// Close sidebar when nav item clicked on mobile
+document.querySelectorAll('.adm-nav-item').forEach(item=>{
+  item.addEventListener('click', ()=>{
+    if(window.innerWidth <= 768) closeAdminSidebar();
+  });
+});
+
+/* ══════════════════════════════════════════════
+   EMPLOYEE ONBOARDING SYSTEM
+══════════════════════════════════════════════ */
+
+// إضافة موظف جديد مع إرسال رابط التسجيل
+async function addEmployeeWithOnboarding(){
+  const email = prompt('أدخل البريد الإلكتروني للموظف:');
+  if(!email || !email.includes('@')){
+    toast('يرجى إدخال بريد إلكتروني صحيح', 'error');
+    return;
+  }
+  
+  const name = prompt('أدخل اسم الموظف:');
+  if(!name){
+    toast('يرجى إدخال اسم الموظف', 'error');
+    return;
+  }
+  
+  const salary = prompt('أدخل الراتب الشهري (جنيه مصري):');
+  if(!salary || isNaN(salary)){
+    toast('يرجى إدخال راتب صحيح', 'error');
+    return;
+  }
+  
+  try {
+    // Create user in Firebase Auth (they'll set password later)
+    const tempPassword = 'temp' + Math.random().toString(36).slice(2, 10);
+    
+    // Create employee in Firestore
+    const empId = 'emp_' + Date.now();
+    const employeeData = {
+      email,
+      name,
+      salary: parseFloat(salary),
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      onboardingCompleted: false,
+      applicationStatus: 'waiting'
+    };
+    
+    await _fdb.collection('employees').doc(empId).set(employeeData);
+    
+    // Generate onboarding link
+    const onboardingLink = `${window.location.origin}/employee-onboarding.html?id=${empId}`;
+    
+    // Show success with options to share
+    const shareMessage = `
+✅ تم إضافة الموظف بنجاح!
+
+📧 البريد الإلكتروني: ${email}
+👤 الاسم: ${name}
+💰 الراتب: ${salary} جنيه
+
+🔗 رابط التسجيل:
+${onboardingLink}
+
+اضغط "نسخ الرابط" لإرسال الرابط للموظف`;
+
+    if(confirm(shareMessage + '\n\nهل تريد نسخ الرابط؟')){
+      navigator.clipboard.writeText(onboardingLink);
+      toast('تم نسخ الرابط بنجاح', 'success');
+    }
+    
+    // Offer WhatsApp option
+    const whatsappMsg = encodeURIComponent(`مرحباً ${name}!\n\nتم إنشاء حساب لك في المنصة.\nيرجى إكمال بياناتك والتوقيع على العقد من الرابط التالي:\n\n${onboardingLink}`);
+    const phone = prompt('أدخل رقم الواتساب للموظف (اختياري - اتركه فارغ للتخطي):\nمثال: 01012345678');
+    
+    if(phone && phone.trim()){
+      const cleanPhone = phone.replace(/\D/g, '');
+      const whatsappLink = `https://wa.me/${cleanPhone}?text=${whatsappMsg}`;
+      window.open(whatsappLink, '_blank');
+    }
+    
+    renderEmployeeRequests();
+    updateBadges();
+    
+  } catch(error){
+    console.error('Error adding employee:', error);
+    toast('حدث خطأ أثناء إضافة الموظف: ' + error.message, 'error');
+  }
+}
+
+// عرض طلبات الموظفين
+async function renderEmployeeRequests(){
+  const grid = document.getElementById('employeeRequestsGrid');
+  if(!grid) return;
+  
+  try {
+    const snapshot = await _fdb.collection('employees').get();
+    const requests = [];
+    
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      requests.push({id: doc.id, ...data});
+    });
+    
+    if(requests.length === 0){
+      grid.innerHTML = `
+        <div class="emp-req-empty">
+          <i class="fas fa-clipboard-list"></i>
+          <p>لا توجد طلبات حالياً</p>
+          <button class="btn-add-user" onclick="addEmployeeWithOnboarding()" style="margin-top:16px;display:inline-flex;">
+            <i class="fas fa-plus"></i> إضافة موظف جديد
+          </button>
+        </div>`;
+      return;
+    }
+    
+    // Sort by date (newest first)
+    requests.sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
+    
+    grid.innerHTML = requests.map(req => {
+      const statusClass = req.applicationStatus === 'approved' ? 'approved' : 
+                          req.applicationStatus === 'rejected' ? 'rejected' : 'pending';
+      const statusText = req.applicationStatus === 'approved' ? '✅ تم القبول' :
+                        req.applicationStatus === 'rejected' ? '❌ تم الرفض' : '⏳ قيد المراجعة';
+      const statusColor = req.applicationStatus === 'approved' ? '#22c55e' :
+                         req.applicationStatus === 'rejected' ? '#ef4444' : '#f59e0b';
+      
+      const avatarHtml = req.selfieURL ? 
+        `<img src="${req.selfieURL}" alt="${req.fullName||req.name}">` :
+        `${(req.fullName||req.name||'?').charAt(0)}`;
+      
+      const submittedDate = req.applicationSubmittedAt ? 
+        new Date(req.applicationSubmittedAt.seconds ? req.applicationSubmittedAt.seconds * 1000 : req.applicationSubmittedAt).toLocaleDateString('ar-EG') : 
+        'غير محدد';
+      
+      return `
+        <div class="emp-req-card ${statusClass}">
+          <div class="emp-req-header">
+            <div class="emp-req-avatar">${avatarHtml}</div>
+            <div class="emp-req-info">
+              <h4>${req.fullName || req.name || 'موظف جديد'}</h4>
+              <p>${req.jobTitle || 'لم يكمل البيانات بعد'}</p>
+            </div>
+          </div>
+          <div class="emp-req-body">
+            <div class="emp-req-row">
+              <i class="fas fa-envelope"></i>
+              <span>${req.email}</span>
+            </div>
+            ${req.phone ? `
+            <div class="emp-req-row">
+              <i class="fas fa-phone"></i>
+              <span>${req.phone}</span>
+            </div>` : ''}
+            ${req.nationalId ? `
+            <div class="emp-req-row">
+              <i class="fas fa-id-card"></i>
+              <span>${req.nationalId}</span>
+            </div>` : ''}
+            ${req.salary ? `
+            <div class="emp-req-row">
+              <i class="fas fa-money-bill-wave"></i>
+              <span>${req.salary} جنيه / شهر</span>
+            </div>` : ''}
+            <div class="emp-req-row">
+              <i class="fas fa-calendar"></i>
+              <span>تاريخ التقديم: ${submittedDate}</span>
+            </div>
+            ${req.idFrontURL || req.idBackURL || req.selfieURL ? `
+            <div class="emp-req-docs">
+              ${req.idFrontURL ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.idFrontURL}')">
+                <img src="${req.idFrontURL}" alt="البطاقة الأمامية">
+              </div>` : ''}
+              ${req.idBackURL ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.idBackURL}')">
+                <img src="${req.idBackURL}" alt="البطاقة الخلفية">
+              </div>` : ''}
+              ${req.selfieURL ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.selfieURL}')">
+                <img src="${req.selfieURL}" alt="الصورة الشخصية">
+              </div>` : ''}
+            </div>` : ''}
+          </div>
+          ${req.applicationStatus === 'pending' && req.applicationSubmittedAt ? `
+          <div class="emp-req-actions">
+            <button class="btn-approve" onclick="approveEmployeeRequest('${req.id}')">
+              <i class="fas fa-check"></i> قبول
+            </button>
+            <button class="btn-reject" onclick="rejectEmployeeRequest('${req.id}')">
+              <i class="fas fa-times"></i> رفض
+            </button>
+            <button class="btn-view-req" onclick="viewEmployeeRequestDetails('${req.id}')">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>` : ''}
+          ${req.applicationStatus === 'approved' ? `
+          <div class="emp-req-status">
+            <i class="fas fa-check-circle"></i>
+            <span>تم قبول الطلب وإضافة الموظف</span>
+          </div>` : ''}
+          ${req.applicationStatus === 'rejected' ? `
+          <div class="emp-req-status rejected">
+            <i class="fas fa-times-circle"></i>
+            <span>تم رفض الطلب</span>
+          </div>` : ''}
+          ${!req.applicationSubmittedAt ? `
+          <div class="emp-req-actions">
+            <button class="btn-whatsapp-notify" onclick="resendEmployeeLink('${req.id}', '${req.email}', '${req.name||''}')">
+              <i class="fab fa-whatsapp"></i> إعادة إرسال الرابط
+            </button>
+          </div>` : ''}
+        </div>`;
+    }).join('');
+    
+  } catch(error){
+    console.error('Error loading employee requests:', error);
+    grid.innerHTML = `<div class="emp-req-empty"><i class="fas fa-exclamation-triangle"></i><p>حدث خطأ في تحميل الطلبات</p></div>`;
+  }
+}
+
+// قبول طلب موظف
+async function approveEmployeeRequest(empId){
+  if(!confirm('هل تريد قبول هذا الطلب وإضافة الموظف للنظام؟')) return;
+  
+  try {
+    const empDoc = await _fdb.collection('employees').doc(empId).get();
+    if(!empDoc.exists){
+      toast('الطلب غير موجود', 'error');
+      return;
+    }
+    
+    const empData = empDoc.data();
+    
+    // Update application status
+    await _fdb.collection('employees').doc(empId).update({
+      applicationStatus: 'approved',
+      approvedAt: new Date().toISOString()
+    });
+    
+    // Add to users list
+    const users = getUsers();
+    users.push({
+      id: empId,
+      type: 'employee',
+      name: empData.fullName,
+      username: empData.email.split('@')[0],
+      password: 'employee123', // يمكن تغييره لاحقاً
+      email: empData.email,
+      phone: empData.phone,
+      role: empData.jobTitle,
+      department: 'قيد التحديد',
+      avatar: empData.selfieURL || '',
+      bio: '',
+      createdAt: new Date().toISOString(),
+      nationalId: empData.nationalId,
+      salary: empData.salary
+    });
+    
+    saveUsers(users);
+    renderEmployeeRequests();
+    renderUsers('employee');
+    updateBadges();
+    
+    toast('✅ تم قبول الطلب وإضافة الموظف بنجاح', 'success');
+    
+  } catch(error){
+    console.error('Error approving request:', error);
+    toast('حدث خطأ أثناء قبول الطلب', 'error');
+  }
+}
+
+// رفض طلب موظف
+async function rejectEmployeeRequest(empId){
+  const reason = prompt('سبب الرفض (اختياري):');
+  
+  try {
+    await _fdb.collection('employees').doc(empId).update({
+      applicationStatus: 'rejected',
+      rejectedAt: new Date().toISOString(),
+      rejectionReason: reason || ''
+    });
+    
+    renderEmployeeRequests();
+    updateBadges();
+    toast('تم رفض الطلب', 'success');
+    
+  } catch(error){
+    console.error('Error rejecting request:', error);
+    toast('حدث خطأ أثناء رفض الطلب', 'error');
+  }
+}
+
+// إعادة إرسال رابط التسجيل للموظف
+function resendEmployeeLink(empId, email, name){
+  const onboardingLink = `${window.location.origin}/employee-onboarding.html?id=${empId}`;
+  
+  const whatsappMsg = encodeURIComponent(`مرحباً ${name}!\n\nتذكير: يرجى إكمال بياناتك والتوقيع على العقد من الرابط التالي:\n\n${onboardingLink}`);
+  
+  const phone = prompt('أدخل رقم الواتساب:\nمثال: 01012345678');
+  
+  if(phone && phone.trim()){
+    const cleanPhone = phone.replace(/\D/g, '');
+    const whatsappLink = `https://wa.me/${cleanPhone}?text=${whatsappMsg}`;
+    window.open(whatsappLink, '_blank');
+  } else {
+    // Copy link if no phone provided
+    navigator.clipboard.writeText(onboardingLink);
+    toast('تم نسخ الرابط - يمكنك إرساله عبر البريد الإلكتروني', 'success');
+  }
+}
+
+// عرض تفاصيل طلب الموظف
+async function viewEmployeeRequestDetails(empId){
+  try {
+    const empDoc = await _fdb.collection('employees').doc(empId).get();
+    if(!empDoc.exists) return;
+    
+    const emp = empDoc.data();
+    
+    const modal = document.getElementById('reqDetailModal') || createReqDetailModal();
+    const content = document.getElementById('reqDetailContent');
+    
+    content.innerHTML = `
+      <div class="rd-section">
+        <div class="rd-section-title"><i class="fas fa-user"></i> البيانات الشخصية</div>
+        <div class="rd-row"><div class="rd-lbl">الاسم الكامل:</div><div class="rd-val">${emp.fullName || '-'}</div></div>
+        <div class="rd-row"><div class="rd-lbl">البريد:</div><div class="rd-val">${emp.email || '-'}</div></div>
+        <div class="rd-row"><div class="rd-lbl">الهاتف:</div><div class="rd-val">${emp.phone || '-'}</div></div>
+        <div class="rd-row"><div class="rd-lbl">العنوان:</div><div class="rd-val">${emp.address || '-'}</div></div>
+        <div class="rd-row"><div class="rd-lbl">رقم البطاقة:</div><div class="rd-val">${emp.nationalId || '-'}</div></div>
+        <div class="rd-row"><div class="rd-lbl">المسمى الوظيفي:</div><div class="rd-val">${emp.jobTitle || '-'}</div></div>
+        <div class="rd-row"><div class="rd-lbl">الراتب:</div><div class="rd-val">${emp.salary || '-'} جنيه / شهر</div></div>
+      </div>
+      
+      ${emp.idFrontURL || emp.idBackURL ? `
+      <div class="rd-section">
+        <div class="rd-section-title"><i class="fas fa-id-card"></i> صور البطاقة</div>
+        <div class="rd-proofs-grid">
+          ${emp.idFrontURL ? `<div class="rd-proof-img" onclick="openLb('${emp.idFrontURL}')">
+            <img src="${emp.idFrontURL}" alt="البطاقة الأمامية">
+          </div>` : ''}
+          ${emp.idBackURL ? `<div class="rd-proof-img" onclick="openLb('${emp.idBackURL}')">
+            <img src="${emp.idBackURL}" alt="البطاقة الخلفية">
+          </div>` : ''}
+        </div>
+      </div>` : ''}
+      
+      ${emp.selfieURL ? `
+      <div class="rd-section">
+        <div class="rd-section-title"><i class="fas fa-camera"></i> الصورة الشخصية</div>
+        <div class="rd-proof-img" onclick="openLb('${emp.selfieURL}')" style="width:150px;height:150px;">
+          <img src="${emp.selfieURL}" alt="صورة سيلفي">
+        </div>
+      </div>` : ''}
+      
+      ${emp.signatureURL ? `
+      <div class="rd-section">
+        <div class="rd-section-title"><i class="fas fa-signature"></i> التوقيع</div>
+        <div class="rd-proof-img" onclick="openLb('${emp.signatureURL}')" style="width:200px;height:80px;">
+          <img src="${emp.signatureURL}" alt="التوقيع">
+        </div>
+      </div>` : ''}
+    `;
+    
+    modal.classList.add('open');
+    
+  } catch(error){
+    console.error('Error viewing details:', error);
+    toast('حدث خطأ في عرض التفاصيل', 'error');
+  }
+}
+
+// Create modal if doesn't exist
+function createReqDetailModal(){
+  const modal = document.createElement('div');
+  modal.id = 'reqDetailModal';
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fas fa-user-clock" style="color:var(--pink);margin-left:8px"></i> تفاصيل الطلب</h3>
+        <button class="modal-close" onclick="document.getElementById('reqDetailModal').classList.remove('open')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="reqDetailContent"></div>
+    </div>`;
+  document.body.appendChild(modal);
+  
+  modal.addEventListener('click', (e) => {
+    if(e.target === modal) modal.classList.remove('open');
+  });
+  
+  return modal;
+}
+
+// Update badges to include employee requests
+const originalUpdateBadges = updateBadges;
+updateBadges = async function(){
+  originalUpdateBadges();
+  
+  // Update employee requests count
+  try {
+    const snapshot = await _fdb.collection('employees')
+      .where('applicationStatus', '==', 'pending')
+      .get();
+    const pendingCount = snapshot.size;
+    const badge = document.getElementById('empRequestCount');
+    if(badge) badge.textContent = pendingCount;
+  } catch(error){
+    console.error('Error updating emp request badge:', error);
+  }
+};
+
 </script>
 </body>
 </html>
