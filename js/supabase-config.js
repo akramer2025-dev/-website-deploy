@@ -3,8 +3,8 @@
 
 const SUPABASE_CONFIG = {
     // من Settings → API
-    url: 'YOUR_SUPABASE_URL',  // مثال: https://xxxxx.supabase.co
-    anonKey: 'YOUR_SUPABASE_ANON_KEY',  // anon/public key
+    url: 'https://zwignngqrnzmlpphiqnc.supabase.co',
+    anonKey: 'sb_publishable_zmJ35zrJxa0-xr3nwPGYyg_b6A4eV7H',
     
     // اسم Bucket للصور
     bucketName: 'employee-files'
