@@ -1048,7 +1048,7 @@ button{cursor:pointer;}
       </div>
 
       <div class="form-field">
-        <label><i class="fas fa-phone"></i> رقم الهاتف *</label>
+        <label><i class="fas fa-phone"></i> رقم الهاتف (اختياري)</label>
         <input type="tel" id="empPhone" placeholder="01XXXXXXXXX">
       </div>
     </div>
@@ -3362,8 +3362,9 @@ async function createEmployeeAccount(){
     return;
   }
   
-  if(!phone || !/^01[0-9]{9}$/.test(phone)){
-    toast('يرجى إدخال رقم هاتف صحيح (01XXXXXXXXX)', 'error');
+  // Phone is optional, but validate format if provided
+  if(phone && !/^01[0-9]{9}$/.test(phone)){
+    toast('رقم الهاتف غير صحيح. يجب أن يبدأ بـ 01 ويحتوي على 11 رقم', 'error');
     return;
   }
   
@@ -3409,6 +3410,11 @@ async function createEmployeeAccount(){
 function sendViaWhatsApp(){
   if(!window.currentOnboardingLink){
     toast('حدث خطأ، يرجى المحاولة مرة أخرى', 'error');
+    return;
+  }
+  
+  if(!currentEmployeeData.phone){
+    toast('لم يتم إدخال رقم هاتف للموظف', 'error');
     return;
   }
   
