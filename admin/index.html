@@ -3374,9 +3374,13 @@ async function doAdminLogin(){
       }
       
       // Employee login successful
-      console.log('✅ Employee login successful!');
+      console.log('═══════════════════════════════════════════════');
+      console.log('✅ EMPLOYEE LOGIN SUCCESSFUL');
+      console.log('═══════════════════════════════════════════════');
       console.log('📦 Employee data from database:', employee);
-      console.log('🔑 Permissions to be saved:', employee.permissions);
+      console.log('🔑 Permissions from database:');
+      console.table(employee.permissions);
+      console.log('🔑 Permissions JSON:', JSON.stringify(employee.permissions, null, 2));
       
       localStorage.setItem('am_employee_auth','1');  // ⚠️ Changed: Different auth key for employees
       localStorage.setItem('am_user_type','employee');
@@ -3385,10 +3389,10 @@ async function doAdminLogin(){
       localStorage.setItem('am_employee_type', employee.employee_type);
       localStorage.setItem('am_permissions', JSON.stringify(employee.permissions || {}));
       
-      console.log('💾 Saved to localStorage:');
-      console.log('  - am_employee_auth:', localStorage.getItem('am_employee_auth'));
-      console.log('  - am_user_type:', localStorage.getItem('am_user_type'));
-      console.log('  - am_permissions:', localStorage.getItem('am_permissions'));
+      console.log('💾 SAVED TO LOCALSTORAGE:');
+      console.log('  am_employee_auth:', localStorage.getItem('am_employee_auth'));
+      console.log('  am_user_type:', localStorage.getItem('am_user_type'));
+      console.log('  am_permissions:', localStorage.getItem('am_permissions'));
       
       document.getElementById('loginScreen').style.display='none';
       document.getElementById('adminApp').style.display='block';
@@ -3436,13 +3440,19 @@ document.addEventListener('DOMContentLoaded',()=>{
   const isAdmin = localStorage.getItem('am_admin_auth')==='1';
   const isEmployee = localStorage.getItem('am_employee_auth')==='1';
   
-  console.log('🔍 DOMContentLoaded Check:');
-  console.log('  - am_admin_auth:', localStorage.getItem('am_admin_auth'));
-  console.log('  - am_employee_auth:', localStorage.getItem('am_employee_auth'));
-  console.log('  - am_user_type:', localStorage.getItem('am_user_type'));
-  console.log('  - am_permissions:', localStorage.getItem('am_permissions'));
-  console.log('  - isAdmin:', isAdmin);
-  console.log('  - isEmployee:', isEmployee);
+  console.log('═══════════════════════════════════════════════');
+  console.log('🔍 DOM LOADED - Checking Auth State');
+  console.log('═══════════════════════════════════════════════');
+  console.log('📊 LOCALSTORAGE STATE:');
+  console.log('  am_admin_auth:', localStorage.getItem('am_admin_auth'));
+  console.log('  am_employee_auth:', localStorage.getItem('am_employee_auth'));
+  console.log('  am_user_type:', localStorage.getItem('am_user_type'));
+  console.log('  am_employee_id:', localStorage.getItem('am_employee_id'));
+  console.log('  am_username:', localStorage.getItem('am_username'));
+  console.log('  am_permissions:', localStorage.getItem('am_permissions'));
+  console.log('🎯 LOGIN STATE:');
+  console.log('  isAdmin:', isAdmin);
+  console.log('  isEmployee:', isEmployee);
   
   if(isAdmin || isEmployee){
     document.getElementById('loginScreen').style.display='none';
@@ -3664,9 +3674,11 @@ async function updateBadges(){
 function applyEmployeePermissions() {
   const userType = localStorage.getItem('am_user_type');
   
+  console.log('═══════════════════════════════════════════════');
   console.log('🔒 applyEmployeePermissions() called!');
-  console.log('  - Current user type:', userType);
-  console.log('  - Raw permissions string:', localStorage.getItem('am_permissions'));
+  console.log('═══════════════════════════════════════════════');
+  console.log('User Type:', userType);
+  console.log('Raw permissions string:', localStorage.getItem('am_permissions'));
   
   // If admin, show everything
   if(userType === 'admin') {
@@ -3678,10 +3690,26 @@ function applyEmployeePermissions() {
   if(userType === 'employee') {
     try {
       const permissions = JSON.parse(localStorage.getItem('am_permissions') || '{}');
-      console.log('🔒 Applying employee permissions:', permissions);
-      console.log('🔒 Permission keys found:', Object.keys(permissions));
-      console.log('🔒 Has dashboard permission?', permissions.dashboard);
-      console.log('🔒 Has crm permission?', permissions.crm);
+      
+      console.log('📋 PERMISSIONS OBJECT:');
+      console.table(permissions);
+      console.log('Permission keys:', Object.keys(permissions));
+      console.log('Total permissions:', Object.keys(permissions).length);
+      
+      // Check each permission individually
+      console.log('\n🔍 CHECKING EACH PERMISSION:');
+      console.log('  dashboard:', permissions.dashboard);
+      console.log('  portfolio:', permissions.portfolio);
+      console.log('  projects:', permissions.projects);
+      console.log('  crm:', permissions.crm);
+      console.log('  employees:', permissions.employees);
+      console.log('  courses:', permissions.courses);
+      console.log('  join_requests:', permissions.join_requests);
+      
+      // WARNING if no permissions
+      if(Object.keys(permissions).length === 0) {
+        console.error('⚠️⚠️⚠️ WARNING: Employee has NO permissions! ⚠️⚠️⚠️');
+      }
       
       // Hide ALL navigation items first, then show only allowed ones
       const allNavItems = document.querySelectorAll('.adm-nav-item[onclick*="showSection"]');
