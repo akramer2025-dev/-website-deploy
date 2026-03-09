@@ -1555,8 +1555,6 @@ button{cursor:pointer;}
     <div class="adm-nav-section">
       <div class="adm-nav-label">أخرى</div>
       <div class="adm-nav-item" onclick="showSection('settings')"><i class="fas fa-cog"></i> الإعدادات</div>
-      <div class="adm-nav-item" onclick="window.open('../store.html','_blank')"><i class="fas fa-store"></i> متجر رمو</div>
-      <div class="adm-nav-item" onclick="window.open('../index.html','_blank')"><i class="fas fa-external-link-alt"></i> زيارة الموقع</div>
       <div class="adm-nav-item" onclick="logoutUser()" style="color:#ef4444;border-top:1px solid var(--border);margin-top:12px;padding-top:12px;"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</div>
     </div>
     <div class="adm-sidebar-footer"><p>Akram Mostafa &copy; 2026</p></div>
@@ -3725,7 +3723,8 @@ function applyEmployeePermissions() {
         else if(permissions.portfolio && onclickAttr.includes("'portfolio'")) {
           shouldShow = true;
         }
-        else if(permissions.projects && (onclickAttr.includes("'webprices'") || onclickAttr.includes("'marketing-plans'"))) {
+        // Support both "projects" and "marketing" permission names
+        else if((permissions.projects || permissions.marketing) && (onclickAttr.includes("'webprices'") || onclickAttr.includes("'marketing-plans'"))) {
           shouldShow = true;
         }
         else if(permissions.crm && (onclickAttr.includes("'crm-leads'") || onclickAttr.includes("'crm-distribution'") || onclickAttr.includes("'crm-reports'"))) {

@@ -3,14 +3,10 @@
  * نظام حماية متقدم ضد الاختراقات والهجمات
  * Created by: Akram Mostafa
  * Version: 2.0
- * 
- * ⚠️ TEMPORARILY DISABLED FOR DEBUGGING
  */
 
-/* SECURITY PROTECTION TEMPORARILY DISABLED
-
 (function() {
-    'use strict;
+    'use strict';
 
     // ═══════════════════════════════════════════════════════════
     // 1️⃣ منع فتح Developer Tools (F12, Ctrl+Shift+I, إلخ)
@@ -223,11 +219,6 @@
     };
 
 })();
-
-END OF DISABLED CODE */
-
-console.log('⚠️ Security protection is temporarily disabled for debugging');
-console.log('🔧 Debug mode active - all console functions enabled');
 
     // ═══════════════════════════════════════════════════════════
     // 1️⃣ منع فتح Developer Tools (F12, Ctrl+Shift+I, إلخ)
