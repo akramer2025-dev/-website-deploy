@@ -1529,6 +1529,7 @@ button{cursor:pointer;}
 
     <div class="emp-contract-form" style="display:block;">
       <input type="hidden" id="planEditId" value="">
+      <input type="hidden" id="planLeadId" value="">
       
       <!-- معلومات الشركة -->
       <div style="background:rgba(34,197,94,0.08);padding:16px;border-radius:12px;margin-bottom:20px;border:1px solid rgba(34,197,94,0.2);">
@@ -1783,7 +1784,7 @@ button{cursor:pointer;}
       </div>
 
       <!-- الملاحظات -->
-      <div style="background:rgba(168,85,247,0.08);padding:16px;border-radius:12px;border:1px solid rgba(168,85,247,0.2);">
+      <div style="background:rgba(168,85,247,0.08);padding:16px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(168,85,247,0.2);">
         <h4 style="color:var(--purple);font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
           <i class="fas fa-sticky-note"></i> الملاحظات (<span id="viewLeadNotesCount">0</span>)
         </h4>
@@ -1796,6 +1797,17 @@ button{cursor:pointer;}
             <i class="fas fa-plus"></i> إضافة ملاحظة
           </button>
         </div>
+      </div>
+
+      <!-- الخطط التسويقية -->
+      <div style="background:rgba(34,197,94,0.08);padding:16px;border-radius:12px;border:1px solid rgba(34,197,94,0.2);">
+        <h4 style="color:var(--green);font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;justify-content:space-between;">
+          <span><i class="fas fa-chart-line"></i> الخطط التسويقية (<span id="viewLeadPlansCount">0</span>)</span>
+          <button onclick="createPlanForLead(_currentViewLeadId)" style="padding:6px 12px;background:var(--green);color:white;border:none;border-radius:6px;cursor:pointer;font-size:.8rem;">
+            <i class="fas fa-plus"></i> خطة جديدة
+          </button>
+        </h4>
+        <div id="viewLeadPlans" style="max-height:200px;overflow-y:auto;"></div>
       </div>
     </div>
 
@@ -4806,6 +4818,7 @@ function openPlanModal(planId = null){
   
   // Reset form
   document.getElementById('planEditId').value = planId || '';
+  document.getElementById('planLeadId').value = '';
   document.getElementById('planModalTitle').textContent = planId ? 'تعديل خطة تسويقية' : 'خطة تسويقية جديدة';
   document.getElementById('planCompanyName').value = '';
   document.getElementById('planCompanyEmail').value = '';
@@ -4837,6 +4850,7 @@ async function loadPlanForEdit(planId){
     
     if(error) throw error;
     
+    document.getElementById('planLeadId').value = plan.lead_id || '';
     document.getElementById('planCompanyName').value = plan.company_name || '';
     document.getElementById('planCompanyEmail').value = plan.company_email || '';
     document.getElementById('planCompanyPhone').value = plan.company_phone || '';
@@ -4869,6 +4883,7 @@ function closePlanModal(){
 // Save plan
 async function savePlan(){
   const planId = document.getElementById('planEditId').value;
+  const leadId = document.getElementById('planLeadId').value;
   const companyName = document.getElementById('planCompanyName').value.trim();
   const companyEmail = document.getElementById('planCompanyEmail').value.trim();
   const companyPhone = document.getElementById('planCompanyPhone').value.trim();
@@ -4920,6 +4935,7 @@ async function savePlan(){
       const { error } = await _supabase
         .from('marketing_plans')
         .update({
+          lead_id: leadId ? parseInt(leadId) : null,
           company_name: companyName,
           company_email: companyEmail,
           company_phone: companyPhone,
@@ -4942,6 +4958,7 @@ async function savePlan(){
         .from('marketing_plans')
         .insert([{
           id: newPlanId,
+          lead_id: leadId ? parseInt(leadId) : null,
           company_name: companyName,
           company_email: companyEmail,
           company_phone: companyPhone,
@@ -4958,6 +4975,11 @@ async function savePlan(){
     
     closePlanModal();
     loadMarketingPlans();
+    
+    // Reload lead details if viewing
+    if(_currentViewLeadId && leadId){
+      await loadLeadMarketingPlans(_currentViewLeadId);
+    }
     
   } catch(err){
     console.error('Error saving plan:', err);
@@ -5750,6 +5772,9 @@ function displayCrmLeads(){
           <button class="crm-action-btn crm-action-edit" onclick="editCrmLead('${lead.id}')" title="تعديل">
             <i class="fas fa-edit"></i>
           </button>
+          <button class="crm-action-btn" onclick="createPlanForLead('${lead.id}')" title="إنشاء خطة تسويقية" style="background:rgba(34,197,94,0.1);color:var(--green);">
+            <i class="fas fa-chart-line"></i>
+          </button>
           <button class="crm-action-btn crm-action-delete" onclick="deleteCrmLead('${lead.id}')" title="حذف">
             <i class="fas fa-trash"></i>
           </button>
@@ -6301,11 +6326,77 @@ async function viewLeadDetails(leadId){
     }).join('');
     document.getElementById('viewLeadNotes').innerHTML = notesHtml || '<p style="color:var(--text-muted);padding:10px;">لا توجد ملاحظات</p>';
     
+    // Load marketing plans
+    await loadLeadMarketingPlans(leadId);
+    
     document.getElementById('viewLeadModal').classList.add('open');
     
   } catch(err){
     console.error('Error viewing lead details:', err);
     toast('خطأ في عرض التفاصيل', 'error');
+  }
+}
+
+async function loadLeadMarketingPlans(leadId){
+  try {
+    const { data: plans, error } = await _supabase
+      .from('marketing_plans')
+      .select('*')
+      .eq('lead_id', leadId)
+      .order('created_at', { ascending: false });
+    
+    if(error) throw error;
+    
+    document.getElementById('viewLeadPlansCount').textContent = (plans || []).length;
+    
+    const plansHtml = (plans || []).map(plan => {
+      const date = new Date(plan.created_at).toLocaleDateString('ar-EG', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+      const statusMap = {
+        draft: 'مسودة',
+        completed: 'مكتملة',
+        sent: 'تم الإرسال'
+      };
+      const statusColors = {
+        draft: '#64748b',
+        completed: '#10b981',
+        sent: '#3b82f6'
+      };
+      return `
+        <div style="padding:10px;border-bottom:1px solid var(--border);font-size:.85rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <i class="fas fa-chart-line" style="color:var(--green);"></i>
+              <strong>${plan.company_name}</strong>
+              <span style="padding:3px 8px;background:${statusColors[plan.status]};color:white;border-radius:4px;font-size:.75rem;">
+                ${statusMap[plan.status] || plan.status}
+              </span>
+            </div>
+            <span style="color:var(--text-muted);">${date}</span>
+          </div>
+          <div style="color:var(--text-muted);margin-bottom:6px;">${plan.company_industry || '-'}</div>
+          <div style="display:flex;gap:6px;">
+            <button onclick="viewPlan('${plan.id}')" style="padding:4px 10px;background:var(--blue);color:white;border:none;border-radius:4px;cursor:pointer;font-size:.75rem;">
+              <i class="fas fa-eye"></i> عرض
+            </button>
+            <button onclick="editPlan('${plan.id}')" style="padding:4px 10px;background:var(--orange);color:white;border:none;border-radius:4px;cursor:pointer;font-size:.75rem;">
+              <i class="fas fa-edit"></i> تعديل
+            </button>
+            <button onclick="sendPlanToClient('${plan.id}')" style="padding:4px 10px;background:var(--green);color:white;border:none;border-radius:4px;cursor:pointer;font-size:.75rem;">
+              <i class="fab fa-whatsapp"></i> إرسال
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+    document.getElementById('viewLeadPlans').innerHTML = plansHtml || '<p style="color:var(--text-muted);padding:10px;">لا توجد خطط تسويقية</p>';
+    
+  } catch(err){
+    console.error('Error loading marketing plans:', err);
   }
 }
 
@@ -6755,6 +6846,45 @@ async function populateEmployeeDropdown(selectId){
     
   } catch(err){
     console.error('Error populating employee dropdown:', err);
+  }
+}
+
+// Create marketing plan for specific lead
+async function createPlanForLead(leadId){
+  try {
+    const lead = _crmLeads.find(l => l.id === leadId);
+    if(!lead){
+      toast('لم يتم العثور على العميل', 'error');
+      return;
+    }
+    
+    // Open plan modal with lead data
+    document.getElementById('planModalTitle').textContent = 'خطة تسويقية جديدة';
+    document.getElementById('planEditId').value = '';
+    document.getElementById('planLeadId').value = leadId;
+    
+    // Fill company info from lead
+    document.getElementById('planCompanyName').value = lead.company || lead.name || '';
+    document.getElementById('planCompanyEmail').value = lead.email || '';
+    document.getElementById('planCompanyPhone').value = lead.phone || '';
+    document.getElementById('planIndustry').value = lead.industry || '';
+    
+    // Clear plan details
+    document.getElementById('planGoal').value = '';
+    document.getElementById('planBudget').value = '';
+    document.getElementById('planDuration').value = '';
+    document.getElementById('planStrategy').value = '';
+    document.getElementById('planMetrics').value = '';
+    document.getElementById('planNotes').value = '';
+    
+    // Uncheck all platforms
+    document.querySelectorAll('input[name="platforms"]').forEach(cb => cb.checked = false);
+    
+    document.getElementById('marketingPlanModal').classList.add('open');
+    
+  } catch(err){
+    console.error('Error creating plan for lead:', err);
+    toast('خطأ في إنشاء الخطة', 'error');
   }
 }
 

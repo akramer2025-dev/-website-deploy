@@ -135,6 +135,10 @@ CREATE TRIGGER update_join_requests_updated_at
 -- ==================== جدول الخطط التسويقية ====================
 CREATE TABLE IF NOT EXISTS marketing_plans (
     id TEXT PRIMARY KEY,
+    
+    -- ربط مع العميل من CRM
+    lead_id BIGINT REFERENCES crm_leads(id) ON DELETE SET NULL,
+    
     company_name TEXT NOT NULL,
     company_email TEXT NOT NULL,
     company_phone TEXT,
@@ -155,6 +159,7 @@ CREATE TABLE IF NOT EXISTS marketing_plans (
 );
 
 -- Indexes للأداء
+CREATE INDEX IF NOT EXISTS idx_marketing_plans_lead ON marketing_plans(lead_id);
 CREATE INDEX IF NOT EXISTS idx_marketing_plans_company ON marketing_plans(company_name);
 CREATE INDEX IF NOT EXISTS idx_marketing_plans_status ON marketing_plans(status);
 CREATE INDEX IF NOT EXISTS idx_marketing_plans_created ON marketing_plans(created_at);
