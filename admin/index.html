@@ -7305,13 +7305,48 @@ async function viewEmployeeRequestDetails(empId){
           <div class="rd-row" style="border-bottom: 1px solid rgba(255,255,255,0.2);"><div class="rd-lbl" style="color: rgba(255,255,255,0.9);"><i class="fas fa-lock"></i> كلمة المرور</div><div class="rd-val" style="color: #fff; font-weight: 700; background: rgba(255,255,255,0.15); padding: 8px 12px; border-radius: 6px; font-family: monospace;">${emp.password || '-'}</div></div>
           <div class="rd-row" style="border-bottom: 1px solid rgba(255,255,255,0.2);"><div class="rd-lbl" style="color: rgba(255,255,255,0.9);"><i class="fas fa-user-tag"></i> نوع الموظف</div><div class="rd-val" style="color: #fff;">${emp.employee_type === 'permanent' ? '<span style="background: #22c55e; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">موظف دائم</span>' : '<span style="background: #3b82f6; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">تعاقد</span>'}</div></div>
           <div class="rd-row" style="border-bottom: 1px solid rgba(255,255,255,0.2);"><div class="rd-lbl" style="color: rgba(255,255,255,0.9);"><i class="fas fa-toggle-on"></i> حالة الحساب</div><div class="rd-val" style="color: #fff;">${emp.is_active ? '<span style="background: #22c55e; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> مفعّل</span>' : '<span style="background: #ef4444; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;"><i class="fas fa-times-circle"></i> غير مفعّل</span>'}</div></div>
-          ${emp.permissions && Object.keys(emp.permissions).length > 0 ? `
-          <div class="rd-row" style="align-items: flex-start;">
-            <div class="rd-lbl" style="color: rgba(255,255,255,0.9);"><i class="fas fa-shield-alt"></i> الصلاحيات</div>
-            <div class="rd-val" style="color: #fff; display: flex; flex-wrap: wrap; gap: 6px;">
-              ${Object.keys(emp.permissions).map(perm => `<span style="background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 6px; font-size: 11px; border: 1px solid rgba(255,255,255,0.3);">${perm}</span>`).join('')}
-            </div>
-          </div>` : ''}
+        </div>
+      </div>
+      
+      <!-- Permissions Section -->
+      ${emp.permissions && Object.keys(emp.permissions).length > 0 ? `
+      <div class="rd-section">
+        <div class="rd-section-title"><i class="fas fa-shield-alt"></i> صلاحيات النظام</div>
+        <div class="rd-section-body" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+          ${Object.entries(emp.permissions).map(([perm, val]) => {
+            const permNames = {
+              'dashboard': 'لوحة المعلومات',
+              'portfolio': 'معرض الأعمال',
+              'projects': 'المشاريع',
+              'marketing_plans': 'خطط التسويق',
+              'crm': 'إدارة العملاء',
+              'employees': 'الموظفين',
+              'courses': 'الدورات',
+              'lectures': 'المحاضرات',
+              'live_sessions': 'البث المباشر',
+              'join_requests': 'طلبات الانضمام'
+            };
+            const permName = permNames[perm] || perm;
+            const hasPermission = val === true || (typeof val === 'object' && Object.values(val).some(v => v === true));
+            return `<div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: ${hasPermission ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)'}; border-radius: 6px; border: 1px solid ${hasPermission ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'};">
+              <i class="fas fa-${hasPermission ? 'check-circle' : 'times-circle'}" style="color: ${hasPermission ? '#22c55e' : '#ef4444'};"></i>
+              <span style="font-size: 13px; font-weight: 500;">${permName}</span>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>` : `
+      <div class="rd-section">
+        <div class="rd-section-title"><i class="fas fa-shield-alt"></i> صلاحيات النظام</div>
+        <div class="rd-section-body" style="text-align:center; padding: 30px; color: var(--muted);">
+          <i class="fas fa-exclamation-triangle" style="font-size: 2rem; opacity: 0.3; margin-bottom: 10px;"></i>
+          <p style="font-size: 14px;">⚠️ لم يتم تعيين أي صلاحيات لهذا الموظف</p>
+          <p style="font-size: 12px; margin-top: 8px; opacity: 0.7;">يرجى الموافقة على الطلب وتعيين الصلاحيات المناسبة</p>
+        </div>
+      </div>`}
+      
+      <!-- Account Section Closing -->
+      <div class="rd-section" style="background: transparent; padding: 0; box-shadow: none;">
+        <div class="rd-section-body" style="padding: 0;">
         </div>
       </div>
       
