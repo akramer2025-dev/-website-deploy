@@ -5117,6 +5117,14 @@ let currentEmployeeData = {};
 
 function closeEmployeeModal(){
   document.getElementById('employeeContractModal').classList.remove('open');
+  
+  // Reset form sections visibility
+  document.getElementById('empFormSection').style.display = 'block';
+  document.getElementById('empSendSection').style.display = 'none';
+  document.getElementById('empBtnCreate').style.display = 'block';
+  
+  // Reset filter to 'all' to show any newly added employees
+  filterEmpReqs('all');
 }
 
 async function createEmployeeAccount(){
@@ -5226,7 +5234,8 @@ async function createEmployeeAccount(){
     if(empType === 'permanent'){
       toast('✅ تم إضافة الموظف الدائم بنجاح!', 'success');
       document.getElementById('employeeContractModal').classList.remove('open');
-      renderEmployeeRequests();
+      // Reset filter to 'all' to show new employee
+      filterEmpReqs('all');
       updateBadges();
       return;
     }
@@ -5264,7 +5273,8 @@ async function createEmployeeAccount(){
     
     toast('✅ تم إنشاء الحساب بنجاح!', 'success');
     
-    renderEmployeeRequests();
+    // Reset filter to 'all' to show new employee
+    filterEmpReqs('all');
     updateBadges();
     
   } catch(error){
