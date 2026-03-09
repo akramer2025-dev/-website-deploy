@@ -6611,6 +6611,7 @@ async function downloadEmployeeContractPDF(empId){
             <h1 style="margin:0;font-size:22px;color:#2c3e50;font-weight:900;">Akram Mostafa</h1>
             <p style="margin:4px 0 0;font-size:12px;color:#7f8c8d;">أكرم مصطفى - خبير تسويق رقمي ومطور تطبيقات</p>
             <p style="margin:2px 0 0;font-size:11px;color:#95a5a6;">www.akrammostafa.com</p>
+            <p style="margin:4px 0 0;font-size:10px;color:#22c55e;font-weight:700;">✓ شركة مرخصة أون لاين وموثقة من الجهات المختصة</p>
           </div>
           <div style="text-align:left;">
             <img src="../images/1772173627537.png" style="width:70px;height:70px;object-fit:contain;" onerror="this.style.display='none'">
@@ -6622,6 +6623,42 @@ async function downloadEmployeeContractPDF(empId){
           <h2 style="margin:0;font-size:28px;color:#2c3e50;font-weight:900;">عقد عمل</h2>
           <p style="margin:5px 0 0;font-size:14px;color:#7f8c8d;">Employment Contract</p>
           <p style="margin:8px 0 0;font-size:13px;color:#555;">تاريخ العقد: ${contractDate}</p>
+        </div>
+        
+        <!-- Contract Parties Section -->
+        <div style="background:linear-gradient(135deg,rgba(52,152,219,0.08),rgba(46,213,115,0.08));border:2px solid #3498db;border-radius:12px;padding:20px;margin-bottom:25px;">
+          <h3 style="font-size:16px;color:#2c3e50;margin:0 0 15px 0;font-weight:900;text-align:center;">أطراف العقد</h3>
+          <div style="display:flex;gap:20px;flex-wrap:wrap;">
+            <!-- الطرف الأول -->
+            <div style="flex:1;min-width:200px;">
+              <div style="background:#fff;border-radius:8px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+                <h4 style="font-size:14px;color:#3498db;margin:0 0 10px 0;font-weight:800;">الطرف الأول (صاحب العمل)</h4>
+                <p style="margin:5px 0;font-size:13px;color:#2c3e50;line-height:1.8;">
+                  <strong>شركة أكرم مصطفى</strong><br>
+                  <span style="color:#22c55e;font-weight:700;">✓</span> مرخصة أون لاين<br>
+                  <span style="color:#22c55e;font-weight:700;">✓</span> موثقة من الجهات المختصة<br>
+                  <span style="color:#555;">📧 info@akrammostafa.com</span><br>
+                  <span style="color:#555;">🌐 www.akrammostafa.com</span>
+                </p>
+              </div>
+            </div>
+            <!-- الطرف الثاني -->
+            <div style="flex:1;min-width:200px;">
+              <div style="background:#fff;border-radius:8px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+                <h4 style="font-size:14px;color:#3498db;margin:0 0 10px 0;font-weight:800;">الطرف الثاني (الموظف)</h4>
+                <p style="margin:5px 0;font-size:13px;color:#2c3e50;line-height:1.8;">
+                  <strong>${emp.full_name || '-'}</strong><br>
+                  <span style="color:#555;">البطاقة: ${emp.national_id || '-'}</span><br>
+                  <span style="color:#555;">📧 ${emp.email || '-'}</span><br>
+                  <span style="color:#555;">📱 ${emp.phone || '-'}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <p style="margin:15px 0 0 0;font-size:12px;color:#555;text-align:center;line-height:1.6;">
+            <strong>تم إبرام هذا العقد بالتراضي بين الطرفين</strong> وفقاً للقوانين المصرية المنظمة لعلاقات العمل،<br>
+            وتلتزم شركة أكرم مصطفى بكونها جهة مرخصة وموثقة بتوفير بيئة عمل آمنة ومستقرة للموظف.
+          </p>
         </div>
         
         <!-- Employee Info Section -->
@@ -6712,8 +6749,12 @@ async function downloadEmployeeContractPDF(empId){
         
         <!-- Footer -->
         <div style="margin-top:30px;padding-top:15px;border-top:1px solid #ecf0f1;text-align:center;">
-          <p style="font-size:10px;color:#bdc3c7;margin:0;">هذا العقد ملزم قانونياً لكلا الطرفين بمجرد التوقيع عليه</p>
-          <p style="font-size:10px;color:#bdc3c7;margin:3px 0 0;">Akram Mostafa - أكرم مصطفى | www.akrammostafa.com</p>
+          <div style="background:rgba(52,152,219,0.05);padding:15px;border-radius:8px;margin-bottom:10px;">
+            <p style="font-size:11px;color:#2c3e50;margin:0;font-weight:700;">هذا العقد ملزم قانونياً لكلا الطرفين بمجرد التوقيع عليه</p>
+            <p style="font-size:10px;color:#555;margin:5px 0 0;line-height:1.6;">تم إصدار هذا العقد من شركة أكرم مصطفى المرخصة أون لاين والموثقة من الجهات المختصة</p>
+          </div>
+          <p style="font-size:10px;color:#bdc3c7;margin:0;">Akram Mostafa - أكرم مصطفى | www.akrammostafa.com</p>
+          <p style="font-size:9px;color:#22c55e;margin:3px 0 0;font-weight:700;">✓ Licensed Online Company | Certified by Relevant Authorities</p>
         </div>
       </div>
     `;
