@@ -3348,16 +3348,6 @@ async function doAdminLogin(){
     console.log('Entered password:', p);
     console.log('Passwords match?', empCheck.password === p);
     
-    // TEMPORARY DEBUG: Show comparison on screen
-    if(empCheck.password !== p) {
-      const msg = `❌ تطابق كلمة المرور فشل!\n\n` +
-                  `المحفوظ في القاعدة: "${empCheck.password}"\n` +
-                  `المدخل: "${p}"\n\n` +
-                  `طول المحفوظ: ${empCheck.password?.length || 0}\n` +
-                  `طول المدخل: ${p.length}`;
-      alert(msg);
-    }
-    
     // Check if password matches
     if(empCheck.password !== p){
       console.log('❌ Password mismatch');
@@ -3659,6 +3649,7 @@ function applyEmployeePermissions() {
   
   // If admin, show everything
   if(userType === 'admin') {
+    console.log('✅ Admin user - showing all sections');
     return;
   }
   
@@ -3668,57 +3659,72 @@ function applyEmployeePermissions() {
       const permissions = JSON.parse(localStorage.getItem('am_permissions') || '{}');
       console.log('🔒 Applying employee permissions:', permissions);
       
-      // Map of section IDs to permission keys
-      const sectionPermissions = {
-        'dashboard': 'dashboard',
-        'employees': 'employees',
-        'students': null, // Always hide students for employees
-        'portfolio': 'portfolio',
-        'webPrices': 'projects',
-        'mobilePrices': 'projects',
-        'requests': 'join_requests',
-        'lectures': 'courses',
-        'recordedLectures': 'lectures',
-        'empRequests': 'employees',
-        'crm': 'crm'
-      };
+      // Hide ALL navigation items first, then show only allowed ones
+      const allNavItems = document.querySelectorAll('.adm-nav-item[onclick*="showSection"]');
       
-      // Hide navigation items based on permissions
-      Object.entries(sectionPermissions).forEach(([section, permKey]) => {
-        const navItem = document.querySelector(`.adm-nav-item[onclick*="'${section}'"]`);
-        if(navItem) {
-          // If no permission key or employee doesn't have permission
-          if(!permKey || !permissions[permKey]) {
-            navItem.style.display = 'none';
-            console.log(`🔒 Hidden section: ${section}`);
-          }
+      allNavItems.forEach(item => {
+        const onclickAttr = item.getAttribute('onclick');
+        let shouldShow = false;
+        
+        // Check each permission
+        if(permissions.dashboard && onclickAttr.includes("'dashboard'")) {
+          shouldShow = true;
+        }
+        else if(permissions.portfolio && onclickAttr.includes("'portfolio'")) {
+          shouldShow = true;
+        }
+        else if(permissions.projects && (onclickAttr.includes("'webprices'") || onclickAttr.includes("'marketing-plans'"))) {
+          shouldShow = true;
+        }
+        else if(permissions.crm && (onclickAttr.includes("'crm-leads'") || onclickAttr.includes("'crm-distribution'") || onclickAttr.includes("'crm-reports'"))) {
+          shouldShow = true;
+        }
+        else if(permissions.join_requests && onclickAttr.includes("'joinrequests'")) {
+          shouldShow = true;
+        }
+        else if(permissions.employees && (onclickAttr.includes("'employee-requests'") || onclickAttr.includes("'employees'"))) {
+          shouldShow = true;
+        }
+        else if(permissions.courses && (onclickAttr.includes("'lectures'") || onclickAttr.includes("'live'") || onclickAttr.includes("'recorded'"))) {
+          shouldShow = true;
+        }
+        
+        // Always hide students and settings for employees
+        if(onclickAttr.includes("'students'") || onclickAttr.includes("'settings'")) {
+          shouldShow = false;
+        }
+        
+        // Apply visibility
+        item.style.display = shouldShow ? '' : 'none';
+        if(!shouldShow) {
+          console.log('🔒 Hidden:', onclickAttr);
         }
       });
       
-      // Always hide students section for employees
-      const studentsNav = document.querySelector(`.adm-nav-item[onclick*="'students'"]`);
-      if(studentsNav) studentsNav.style.display = 'none';
-      
-      // Hide settings for employees
-      const settingsNav = document.querySelector(`.adm-nav-item[onclick*="'settings'"]`);
-      if(settingsNav) settingsNav.style.display = 'none';
-      
-      // Show only allowed first section
-      const allowedSections = Object.keys(sectionPermissions).filter(s => permissions[sectionPermissions[s]]);
-      if(allowedSections.length > 0) {
-        showSection(allowedSections[0]);
+      // Show first allowed section
+      const firstVisible = document.querySelector('.adm-nav-item[onclick*="showSection"]:not([style*="display: none"])');
+      if(firstVisible) {
+        const match = firstVisible.getAttribute('onclick').match(/showSection\('([^']+)'\)/);
+        if(match) {
+          console.log('📍 Showing first allowed section:', match[1]);
+          showSection(match[1]);
+          firstVisible.click();
+        }
       } else {
-        // No permissions? Show message
+        // No permissions at all
         document.getElementById('adminApp').innerHTML = `
-          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;color:var(--muted);">
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;color:var(--muted);padding:20px;">
             <i class="fas fa-lock" style="font-size:4rem;margin-bottom:20px;opacity:0.3;"></i>
-            <h2>لا توجد صلاحيات</h2>
-            <p>لم يتم منحك أي صلاحيات بعد. يرجى التواصل مع المدير.</p>
+            <h2 style="font-size:1.5rem;margin-bottom:10px;color:#fff;">لا توجد صلاحيات</h2>
+            <p style="font-size:1rem;max-width:400px;">لم يتم منحك أي صلاحيات بعد. يرجى التواصل مع المدير لإضافة الصلاحيات المناسبة.</p>
+            <button onclick="logoutUser()" style="margin-top:30px;padding:12px 30px;background:linear-gradient(135deg,#e94e77,#f7931e);color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:700;">
+              <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+            </button>
           </div>`;
       }
       
     } catch(e) {
-      console.error('Error applying permissions:', e);
+      console.error('❌ Error applying permissions:', e);
     }
   }
 }
