@@ -1125,14 +1125,44 @@ button{cursor:pointer;}
 .lead-phone-sub{font-size:.75rem;color:#94a3b8;direction:ltr;display:block;text-align:right;margin-top:4px;font-weight:500;}
 
 .history-timeline{padding:24px 28px;}
-.timeline-item{position:relative;padding:0 28px 28px 0;border-right:3px solid rgba(233,78,119,0.2);margin-right:10px;transition:all .3s;}
-.timeline-item:hover{border-right-color:rgba(233,78,119,0.5);}
+.timeline-item{position:relative;padding:0 34px 32px 0;border-right:3px solid rgba(233,78,119,0.2);margin-right:14px;transition:all .3s ease;}
+.timeline-item:hover{border-right-color:rgba(233,78,119,0.6);}
 .timeline-item:last-child{border-right-color:transparent;padding-bottom:0;}
-.timeline-dot{position:absolute;right:-9px;top:4px;width:14px;height:14px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 3px rgba(233,78,119,0.3),0 0 12px rgba(233,78,119,0.5);}
-.timeline-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px;}
-.timeline-user{font-weight:800;font-size:.85rem;color:#fff;display:flex;align-items:center;gap:8px;}
-.timeline-date{font-size:.72rem;color:#6b82a8;white-space:nowrap;font-weight:600;}
-.timeline-content{background:linear-gradient(135deg,var(--bg2),var(--bg));border:1px solid rgba(233,78,119,0.15);border-radius:10px;padding:12px 16px;font-size:.82rem;color:#e2eaf6;box-shadow:0 2px 8px rgba(0,0,0,0.2);}
+.timeline-dot{
+  position:absolute;
+  right:-15px;
+  top:2px;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  border:3px solid var(--card);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .3s ease;
+}
+.timeline-item:hover .timeline-dot{
+  transform:scale(1.15) rotate(8deg);
+  box-shadow:0 0 0 5px rgba(233,78,119,0.15), 0 0 20px currentColor;
+}
+.timeline-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;flex-wrap:wrap;}
+.timeline-user{font-weight:800;font-size:.85rem;color:#fff;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.timeline-date{font-size:.72rem;color:#6b82a8;white-space:nowrap;font-weight:600;padding:4px 10px;background:rgba(107,130,168,0.1);border-radius:8px;}
+.timeline-content{
+  background:linear-gradient(135deg,var(--bg2),var(--bg));
+  border:1px solid rgba(233,78,119,0.15);
+  border-radius:12px;
+  padding:14px 18px;
+  font-size:.82rem;
+  color:#e2eaf6;
+  box-shadow:0 2px 12px rgba(0,0,0,0.25);
+  transition:all .3s ease;
+}
+.timeline-item:hover .timeline-content{
+  box-shadow:0 4px 20px rgba(233,78,119,0.2);
+  border-color:rgba(233,78,119,0.3);
+  transform:translateX(-3px);
+}
 .timeline-empty{text-align:center;padding:60px 20px;color:#6b82a8;}
 .timeline-empty i{font-size:3rem;margin-bottom:14px;display:block;opacity:.2;background:var(--crm-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .crm-action-btn{width:36px;height:36px;border-radius:10px;border:1px solid rgba(233,78,119,0.2);background:linear-gradient(135deg,var(--card2),var(--card));color:#94a3b8;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.82rem;transition:all .25s ease;position:relative;overflow:hidden;}
@@ -8457,18 +8487,77 @@ async function openCrmHistory(leadId) {
     document.getElementById('crmHistoryBody').innerHTML = '<div class="timeline-empty"><i class="fas fa-spinner fa-spin"></i><div style="margin-top:10px">جاري التحميل...</div></div>';
 
     try {
-        const { data: statusLog, error: err1 } = await _supabase
-            .from('crm_status_log')
-            .select('*')
-            .eq('lead_id', leadId)
-            .order('created_at', { ascending: false });
+        // Fetch all history types in parallel
+        const [statusResult, callsResult, notesResult, distResult] = await Promise.all([
+            _supabase.from('crm_status_log').select('*').eq('lead_id', leadId),
+            _supabase.from('crm_calls').select('*').eq('lead_id', leadId),
+            _supabase.from('crm_notes').select('*').eq('lead_id', leadId),
+            _supabase.from('crm_distribution_log').select('*').eq('lead_id', leadId)
+        ]);
 
-        if (err1) throw err1;
+        // Combine all events into timeline
+        const timeline = [];
+        
+        // Add status changes
+        if(statusResult.data){
+            statusResult.data.forEach(item => {
+                timeline.push({
+                    type: 'status',
+                    date: new Date(item.created_at),
+                    data: item
+                });
+            });
+        }
+        
+        // Add calls
+        if(callsResult.data){
+            callsResult.data.forEach(item => {
+                timeline.push({
+                    type: 'call',
+                    date: new Date(item.created_at),
+                    data: item
+                });
+            });
+        }
+        
+        // Add notes
+        if(notesResult.data){
+            notesResult.data.forEach(item => {
+                timeline.push({
+                    type: 'note',
+                    date: new Date(item.created_at),
+                    data: item
+                });
+            });
+        }
+        
+        // Add distribution events
+        if(distResult.data){
+            distResult.data.forEach(item => {
+                timeline.push({
+                    type: 'distribution',
+                    date: new Date(item.created_at),
+                    data: item
+                });
+            });
+        }
+        
+        // Add lead creation event
+        if(lead.created_at){
+            timeline.push({
+                type: 'created',
+                date: new Date(lead.created_at),
+                data: { created_by: lead.created_by || 'النظام' }
+            });
+        }
 
-        if (!statusLog || statusLog.length === 0) {
+        if(timeline.length === 0){
             document.getElementById('crmHistoryBody').innerHTML = '<div class="timeline-empty"><i class="fas fa-clock"></i><div style="margin-top:10px">لا يوجد سجل بعد لهذا العميل</div></div>';
             return;
         }
+
+        // Sort by date (newest first)
+        timeline.sort((a, b) => b.date - a.date);
 
         const statusNames = {
             'new': { name: 'جديد', color: '#3B82F6' },
@@ -8480,39 +8569,101 @@ async function openCrmHistory(leadId) {
         };
 
         let html = '<div class="history-timeline">';
-        statusLog.forEach(item => {
-            const dateStr = new Date(item.created_at).toLocaleString('ar-EG', {
+        
+        timeline.forEach(event => {
+            const dateStr = event.date.toLocaleString('ar-EG', {
                 year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
             });
             
-            const oldSt = statusNames[item.old_status] || { name: item.old_status, color: '#6B7280' };
-            const newSt = statusNames[item.new_status] || { name: item.new_status, color: '#6B7280' };
+            let icon, color, title, content;
+            
+            switch(event.type){
+                case 'status':
+                    const oldSt = statusNames[event.data.old_status] || { name: event.data.old_status, color: '#6B7280' };
+                    const newSt = statusNames[event.data.new_status] || { name: event.data.new_status, color: '#6B7280' };
+                    icon = 'fas fa-exchange-alt';
+                    color = newSt.color;
+                    title = 'تغيير الحالة';
+                    content = `
+                        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                            <span class="crm-status-badge crm-status-${event.data.old_status}" style="cursor:default;font-size:.7rem;padding:3px 9px;">
+                                ${oldSt.name}
+                            </span>
+                            <i class="fas fa-long-arrow-alt-left" style="color:var(--text-light);"></i>
+                            <span class="crm-status-badge crm-status-${event.data.new_status}" style="cursor:default;font-size:.7rem;padding:3px 9px;">
+                                ${newSt.name}
+                            </span>
+                        </div>
+                        ${event.data.note ? `<div style="margin-top:8px;color:var(--text-secondary);font-size:.75rem;">${event.data.note}</div>` : ''}
+                    `;
+                    break;
+                    
+                case 'call':
+                    icon = event.data.status === 'answered' ? 'fas fa-phone' : 'fas fa-phone-slash';
+                    color = event.data.status === 'answered' ? '#10B981' : '#F59E0B';
+                    title = event.data.status === 'answered' ? 'مكالمة - تم الرد' : 'مكالمة - لم يرد';
+                    content = `
+                        <div style="color:var(--text-secondary);font-size:.75rem;">
+                            ${event.data.duration ? `<div><i class="fas fa-clock" style="margin-left:5px;color:${color};"></i>المدة: ${event.data.duration}</div>` : ''}
+                            ${event.data.notes ? `<div style="margin-top:6px;">${event.data.notes}</div>` : ''}
+                        </div>
+                    `;
+                    break;
+                    
+                case 'note':
+                    icon = 'fas fa-sticky-note';
+                    color = '#8B5CF6';
+                    title = 'ملاحظة';
+                    content = `<div style="color:var(--text-secondary);font-size:.75rem;">${event.data.content || ''}</div>`;
+                    break;
+                    
+                case 'distribution':
+                    icon = 'fas fa-user-check';
+                    color = '#06B6D4';
+                    title = 'توزيع على موظف';
+                    content = `
+                        <div style="font-size:.78rem;color:var(--text-secondary);">
+                            <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:8px;background:linear-gradient(135deg,rgba(6,182,212,0.12),rgba(8,145,178,0.08));border:1.5px solid rgba(6,182,212,0.25);">
+                                <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#06b6d4,#22d3ee);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.65rem;font-weight:800;">
+                                    ${(event.data.to_employee || 'M').charAt(0).toUpperCase()}
+                                </div>
+                                <span style="font-weight:700;color:#06b6d4;">${event.data.to_employee || 'موظف'}</span>
+                            </div>
+                            ${event.data.reason ? `<div style="margin-top:6px;font-size:0.72rem;">${event.data.reason}</div>` : ''}
+                        </div>
+                    `;
+                    break;
+                    
+                case 'created':
+                    icon = 'fas fa-plus-circle';
+                    color = '#3B82F6';
+                    title = 'تم إنشاء العميل';
+                    content = `<div style="color:var(--text-secondary);font-size:.75rem;">تمت إضافة العميل للنظام</div>`;
+                    break;
+            }
             
             html += `
                 <div class="timeline-item">
-                    <div class="timeline-dot" style="background:${newSt.color}"></div>
+                    <div class="timeline-dot" style="background:${color};box-shadow:0 0 0 4px rgba(${hexToRgb(color)}, 0.2), 0 0 16px ${color};">
+                        <i class="${icon}" style="font-size:0.5rem;color:#fff;"></i>
+                    </div>
                     <div class="timeline-header">
                         <span class="timeline-user">
-                            <i class="fas fa-user-edit" style="color:${newSt.color};margin-left:5px;font-size:.72rem;"></i>
-                            ${item.changed_by || 'النظام'}
+                            <i class="${icon}" style="color:${color};margin-left:5px;font-size:.72rem;"></i>
+                            <span style="font-weight:800;color:#fff;">${title}</span>
+                            ${event.data.changed_by || event.data.created_by || event.data.distributed_by ? 
+                                `<span style="margin-right:8px;color:${color};font-size:0.75rem;">• ${event.data.changed_by || event.data.created_by || event.data.distributed_by}</span>` 
+                                : ''}
                         </span>
                         <span class="timeline-date">${dateStr}</span>
                     </div>
                     <div class="timeline-content">
-                        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-                            <span class="crm-status-badge crm-status-${item.old_status}" style="cursor:default;font-size:.7rem;padding:3px 9px;">
-                                ${oldSt.name}
-                            </span>
-                            <i class="fas fa-long-arrow-alt-left" style="color:var(--text-light);"></i>
-                            <span class="crm-status-badge crm-status-${item.new_status}" style="cursor:default;font-size:.7rem;padding:3px 9px;">
-                                ${newSt.name}
-                            </span>
-                        </div>
-                        ${item.note ? `<div style="margin-top:8px;color:var(--text-secondary);font-size:.75rem;">${item.note}</div>` : ''}
+                        ${content}
                     </div>
                 </div>
             `;
         });
+        
         html += '</div>';
         
         document.getElementById('crmHistoryBody').innerHTML = html;
@@ -8520,6 +8671,14 @@ async function openCrmHistory(leadId) {
         console.error('Error loading history:', err);
         document.getElementById('crmHistoryBody').innerHTML = '<div class="timeline-empty"><i class="fas fa-exclamation-triangle"></i><div style="margin-top:8px;">خطأ في تحميل السجل</div></div>';
     }
+}
+
+// Helper function to convert hex to RGB
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? 
+        `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` 
+        : '107, 130, 168';
 }
 
 function closeCrmHistoryModal() {
