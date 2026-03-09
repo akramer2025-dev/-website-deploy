@@ -5540,6 +5540,8 @@ async function sendContractWhatsApp(){
    MARKETING PLANS SYSTEM
 ══════════════════════════════════════════════ */
 
+const MARKETING_PLANS_KEY = '_fsAdminMarketingPlans';
+
 // Load marketing plans from Supabase
 async function loadMarketingPlans(){
   const grid = document.getElementById('marketingPlansGrid');
@@ -5552,6 +5554,11 @@ async function loadMarketingPlans(){
       .order('created_at', { ascending: false });
     
     if(error) throw error;
+    
+    // 🛡️ Backup to localStorage
+    if(plans && plans.length > 0){
+      localStorage.setItem(MARKETING_PLANS_KEY, JSON.stringify(plans));
+    }
     
     // Update badge
     document.getElementById('plansCount').textContent = plans ? plans.length : 0;
@@ -5567,7 +5574,43 @@ async function loadMarketingPlans(){
       return;
     }
     
-    // Render plan cards
+    renderMarketingPlans(plans, grid);
+    
+  } catch(err){
+    console.error('Error loading marketing plans:', err);
+    
+    // 🔄 Fallback to localStorage
+    const cached = localStorage.getItem(MARKETING_PLANS_KEY);
+    if(cached){
+      try {
+        const plans = JSON.parse(cached);
+        console.log('✅ Loaded marketing plans from localStorage backup');
+        toast('تم تحميل الخطط من النسخة الاحتياطية', 'warning');
+        document.getElementById('plansCount').textContent = plans.length;
+        renderMarketingPlans(plans, grid);
+      } catch(e){
+        console.error('Error parsing cached plans:', e);
+        grid.innerHTML = `
+          <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#dc3545;">
+            <i class="fas fa-exclamation-triangle" style="font-size:3rem;margin-bottom:16px;"></i>
+            <p style="font-size:1.1rem;margin-bottom:8px;">⚠️ خطأ في تحميل الخطط التسويقية</p>
+            <p style="font-size:.9rem;">يرجى إعداد قاعدة البيانات - راجع ملف <strong>SETUP-CRM-DATABASE.md</strong></p>
+          </div>
+        `;
+      }
+    } else {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#dc3545;">
+          <i class="fas fa-database" style="font-size:3rem;margin-bottom:16px;"></i>
+          <p style="font-size:1.1rem;margin-bottom:8px;">⚠️ قاعدة البيانات غير جاهزة</p>
+          <p style="font-size:.9rem;">يرجى إعداد قاعدة البيانات - راجع ملف <strong>SETUP-CRM-DATABASE.md</strong></p>
+        </div>
+      `;
+    }
+  }
+}
+
+function renderMarketingPlans(plans, grid){
     grid.innerHTML = plans.map(plan => {
       const statusInfo = {
         draft: { label: 'مسودة', class: 'draft', icon: 'fa-edit' },
@@ -5841,7 +5884,7 @@ async function savePlan(){
     }
     
     closePlanModal();
-    loadMarketingPlans();
+    loadMarketingPlans(); // Will also backup to localStorage
     
     // Reload lead details if viewing
     if(_currentViewLeadId && leadId){
@@ -5850,7 +5893,12 @@ async function savePlan(){
     
   } catch(err){
     console.error('Error saving plan:', err);
-    toast('حدث خطأ أثناء حفظ الخطة: ' + err.message, 'error');
+    
+    if(err.message.includes('relation') || err.message.includes('does not exist')){
+      toast('⚠️ قاعدة البيانات غير جاهزة - راجع ملف SETUP-CRM-DATABASE.md', 'error');
+    } else {
+      toast('حدث خطأ أثناء حفظ الخطة: ' + err.message, 'error');
+    }
   }
 }
 
@@ -6700,6 +6748,8 @@ let _importedLeadsData = [];
 // Lead Loading and Display
 // ─────────────────────────────────────────────────────────────────
 
+const CRM_LEADS_KEY = '_fsAdminCrmLeads';
+
 async function loadCrmLeads(){
   try {
     const { data: leads, error } = await _supabase
@@ -6710,6 +6760,11 @@ async function loadCrmLeads(){
     if(error) throw error;
     
     _crmLeads = leads || [];
+    
+    // 🛡️ Backup to localStorage
+    if(_crmLeads.length > 0){
+      localStorage.setItem(CRM_LEADS_KEY, JSON.stringify(_crmLeads));
+    }
     
     // Update stats
     updateCrmStats();
@@ -6722,7 +6777,27 @@ async function loadCrmLeads(){
     
   } catch(err){
     console.error('Error loading CRM leads:', err);
-    toast('خطأ في تحميل العملاء', 'error');
+    
+    // 🔄 Fallback to localStorage
+    const cached = localStorage.getItem(CRM_LEADS_KEY);
+    if(cached){
+      try {
+        _crmLeads = JSON.parse(cached);
+        console.log('✅ Loaded CRM leads from localStorage backup');
+        toast('تم تحميل البيانات من النسخة الاحتياطية', 'warning');
+        
+        updateCrmStats();
+        updateCrmTabCounts();
+        displayCrmLeads();
+      } catch(e){
+        console.error('Error parsing cached leads:', e);
+        _crmLeads = [];
+        toast('خطأ في تحميل العملاء', 'error');
+      }
+    } else {
+      _crmLeads = [];
+      toast('خطأ في تحميل العملاء - يرجى إعداد قاعدة البيانات', 'error');
+    }
   }
 }
 
@@ -7226,13 +7301,15 @@ async function saveCrmLead(){
     }
     
     closeLeadModal();
-    loadCrmLeads();
+    loadCrmLeads(); // Will also backup to localStorage
     
   } catch(err){
     console.error('Error saving lead:', err);
     
     if(err.message.includes('duplicate') || err.message.includes('unique')){
       toast('رقم الهاتف مسجل مسبقاً', 'error');
+    } else if(err.message.includes('relation') || err.message.includes('does not exist')){
+      toast('⚠️ قاعدة البيانات غير جاهزة - راجع ملف SETUP-CRM-DATABASE.md', 'error');
     } else {
       toast('خطأ في حفظ العميل', 'error');
     }
