@@ -276,7 +276,7 @@ button{cursor:pointer;}
 .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(233,78,119,0.12);}
 .form-field textarea{resize:vertical;min-height:90px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.modal-footer{display:flex;gap:10px;margin-top:24px;justify-content:flex-start;}
+.modal-footer{display:flex;gap:10px;padding:20px 28px;justify-content:flex-start;background:linear-gradient(135deg,rgba(233,78,119,0.05),rgba(247,147,30,0.03));border-top:1px solid rgba(233,78,119,0.15);position:sticky;bottom:0;z-index:10;}
 .btn-modal-save{padding:11px 28px;background:var(--grad);border:none;border-radius:11px;color:#fff;font-size:.9rem;font-weight:700;transition:.3s;}
 .btn-modal-save:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(233,78,119,0.3);}
 .btn-modal-cancel{padding:11px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:11px;color:var(--muted);font-size:.9rem;font-weight:700;transition:.25s;}
@@ -1777,86 +1777,88 @@ button{cursor:pointer;}
       <h3><i class="fas fa-user-plus" style="color:var(--blue);margin-left:8px;"></i> <span id="leadModalTitle">عميل جديد</span></h3>
       <button class="modal-close" onclick="closeLeadModal()"><i class="fas fa-times"></i></button>
     </div>
-    <div class="emp-contract-form" style="display:block;">
-      <input type="hidden" id="leadEditId" value="">
-      
-      <div class="form-row">
-        <div class="form-field">
-          <label><i class="fas fa-user"></i> الاسم *</label>
-          <input type="text" id="leadName" placeholder="اسم العميل">
+    <div class="modal-body" style="max-height:calc(90vh - 180px);overflow-y:auto;padding:28px;">
+      <div class="emp-contract-form" style="display:block;">
+        <input type="hidden" id="leadEditId" value="">
+        
+        <div class="form-row">
+          <div class="form-field">
+            <label><i class="fas fa-user"></i> الاسم *</label>
+            <input type="text" id="leadName" placeholder="اسم العميل">
+          </div>
+          <div class="form-field">
+            <label><i class="fas fa-phone"></i> رقم الهاتف *</label>
+            <input type="tel" id="leadPhone" placeholder="01XXXXXXXXX">
+          </div>
         </div>
-        <div class="form-field">
-          <label><i class="fas fa-phone"></i> رقم الهاتف *</label>
-          <input type="tel" id="leadPhone" placeholder="01XXXXXXXXX">
-        </div>
-      </div>
 
-      <div class="form-row">
-        <div class="form-field">
-          <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
-          <input type="email" id="leadEmail" placeholder="email@example.com">
+        <div class="form-row">
+          <div class="form-field">
+            <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+            <input type="email" id="leadEmail" placeholder="email@example.com">
+          </div>
+          <div class="form-field">
+            <label><i class="fas fa-building"></i> الشركة</label>
+            <input type="text" id="leadCompany" placeholder="اسم الشركة">
+          </div>
         </div>
-        <div class="form-field">
-          <label><i class="fas fa-building"></i> الشركة</label>
-          <input type="text" id="leadCompany" placeholder="اسم الشركة">
-        </div>
-      </div>
 
-      <div class="form-row">
+        <div class="form-row">
+          <div class="form-field">
+            <label><i class="fas fa-industry"></i> المجال</label>
+            <select id="leadIndustry">
+              <option value="">اختر المجال</option>
+              <option value="تجارة إلكترونية">تجارة إلكترونية</option>
+              <option value="مطاعم ومقاهي">مطاعم ومقاهي</option>
+              <option value="عقارات">عقارات</option>
+              <option value="تعليم">تعليم</option>
+              <option value="صحة وجمال">صحة وجمال</option>
+              <option value="خدمات">خدمات</option>
+              <option value="أزياء وموضة">أزياء وموضة</option>
+              <option value="تكنولوجيا">تكنولوجيا</option>
+              <option value="أخرى">أخرى</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label><i class="fas fa-flag"></i> الأولوية</label>
+            <select id="leadPriority">
+              <option value="low">منخفضة</option>
+              <option value="medium" selected>متوسطة</option>
+              <option value="high">مرتفعة</option>
+              <option value="urgent">عاجلة</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label><i class="fas fa-info-circle"></i> الحالة</label>
+            <select id="leadStatus">
+              <option value="new" selected>جديد</option>
+              <option value="interested">مهتم</option>
+              <option value="negotiating">تفاوض</option>
+              <option value="converted">تم التحويل</option>
+              <option value="not_interested">غير مهتم</option>
+              <option value="no_answer">لا يرد</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label><i class="fas fa-dollar-sign"></i> القيمة المتوقعة</label>
+            <input type="number" id="leadValue" placeholder="0">
+          </div>
+        </div>
+
         <div class="form-field">
-          <label><i class="fas fa-industry"></i> المجال</label>
-          <select id="leadIndustry">
-            <option value="">اختر المجال</option>
-            <option value="تجارة إلكترونية">تجارة إلكترونية</option>
-            <option value="مطاعم ومقاهي">مطاعم ومقاهي</option>
-            <option value="عقارات">عقارات</option>
-            <option value="تعليم">تعليم</option>
-            <option value="صحة وجمال">صحة وجمال</option>
-            <option value="خدمات">خدمات</option>
-            <option value="أزياء وموضة">أزياء وموضة</option>
-            <option value="تكنولوجيا">تكنولوجيا</option>
-            <option value="أخرى">أخرى</option>
+          <label><i class="fas fa-user-tie"></i> تعيين لموظف</label>
+          <select id="leadAssignedTo">
+            <option value="">غير محدد</option>
           </select>
         </div>
-        <div class="form-field">
-          <label><i class="fas fa-flag"></i> الأولوية</label>
-          <select id="leadPriority">
-            <option value="low">منخفضة</option>
-            <option value="medium" selected>متوسطة</option>
-            <option value="high">مرتفعة</option>
-            <option value="urgent">عاجلة</option>
-          </select>
-        </div>
-      </div>
 
-      <div class="form-row">
         <div class="form-field">
-          <label><i class="fas fa-info-circle"></i> الحالة</label>
-          <select id="leadStatus">
-            <option value="new" selected>جديد</option>
-            <option value="interested">مهتم</option>
-            <option value="negotiating">تفاوض</option>
-            <option value="converted">تم التحويل</option>
-            <option value="not_interested">غير مهتم</option>
-            <option value="no_answer">لا يرد</option>
-          </select>
+          <label><i class="fas fa-sticky-note"></i> ملاحظات</label>
+          <textarea id="leadNotes" placeholder="أي ملاحظات عن العميل..." style="min-height:80px;"></textarea>
         </div>
-        <div class="form-field">
-          <label><i class="fas fa-dollar-sign"></i> القيمة المتوقعة</label>
-          <input type="number" id="leadValue" placeholder="0">
-        </div>
-      </div>
-
-      <div class="form-field">
-        <label><i class="fas fa-user-tie"></i> تعيين لموظف</label>
-        <select id="leadAssignedTo">
-          <option value="">غير محدد</option>
-        </select>
-      </div>
-
-      <div class="form-field">
-        <label><i class="fas fa-sticky-note"></i> ملاحظات</label>
-        <textarea id="leadNotes" placeholder="أي ملاحظات عن العميل..." style="min-height:80px;"></textarea>
       </div>
     </div>
     <div class="modal-footer">
