@@ -2835,9 +2835,9 @@ function savePortfolio(p){
   const sizeInMB = (jsonStr.length / (1024 * 1024)).toFixed(2);
   console.log('Portfolio size:', sizeInMB, 'MB');
   
-  // تحذير إذا اقترب من الحد (1MB limit لـ Firestore)
-  if(jsonStr.length > 900 * 1024){
-    toast('⚠️ حجم البيانات كبير (' + sizeInMB + 'MB). قد يفشل الحفظ. احذف بعض الصور.', 'warning', 5000);
+  // تحذير إذا اقترب من الحد (4MB limit لـ localStorage)
+  if(jsonStr.length > 3.5 * 1024 * 1024){
+    toast('⚠️ حجم البيانات كبير (' + sizeInMB + 'MB). يُنصح بحذف بعض الصور القديمة.', 'warning', 5000);
   }
   
   // Don't save to localStorage if data is too large (> 4MB)
@@ -2845,24 +2845,17 @@ function savePortfolio(p){
     if (jsonStr.length < 4 * 1024 * 1024) {
       localStorage.setItem(PORTFOLIO_KEY, jsonStr);
     } else {
-      console.warn('Portfolio data too large for localStorage, saving to Firestore only');
-      localStorage.removeItem(PORTFOLIO_KEY);
+      console.warn('Portfolio data too large for localStorage (>4MB)');
+      toast('⚠️ حجم البيانات كبير جداً - يرجى حذف بعض الصور', 'warning');
     }
   } catch(e) {
-    console.warn('localStorage quota exceeded, using Firestore only:', e);
-    localStorage.removeItem(PORTFOLIO_KEY);
+    console.warn('localStorage quota exceeded:', e);
+    toast('⚠️ مساحة التخزين المحلية ممتلئة - يرجى حذف بعض الصور', 'warning');
   }
   
-  // حفظ في Firestore مع معالجة خطأ الحجم
-  _fdb.collection('admin_data').doc('portfolio').set({data:p,updatedAt:Date.now()})
-    .catch(e => {
-      console.error('Firestore save failed:', e);
-      if(e.code === 'invalid-argument' || e.message.includes('exceeds the maximum allowed size')){
-        toast('❌ فشل الحفظ: حجم البيانات أكبر من 1MB! احذف بعض الصور أو استخدم روابط URL.', 'error', 8000);
-      } else {
-        toast('❌ فشل الحفظ في Firestore: ' + e.message, 'error');
-      }
-    });
+  // ملاحظة: تم تعطيل Firestore save لتجنب خطأ 1MB limit
+  // البيانات محفوظة في localStorage فقط (حد التخزين 4MB+)
+  // يمكن إضافة Supabase Storage مستقبلاً إذا لزم الأمر
 }
 function getAdminPass(){ return ADMIN_PASS; }
 function getAppPrices(){ return _fsAppPrices!==null ? Object.assign({},_fsAppPrices) : (()=>{try{return JSON.parse(localStorage.getItem(APP_PRICES_KEY))||{};}catch(e){return {};}})(); }
