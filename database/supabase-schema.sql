@@ -309,7 +309,10 @@ CREATE TRIGGER update_crm_leads_updated_at
     EXECUTE FUNCTION update_updated_at_column();
 
 -- ==================== جدول الخطط التسويقية ====================
-CREATE TABLE IF NOT EXISTS marketing_plans (
+-- حذف الجدول القديم إذا كان موجوداً (لإضافة lead_id)
+DROP TABLE IF EXISTS marketing_plans CASCADE;
+
+CREATE TABLE marketing_plans (
     id TEXT PRIMARY KEY,
     
     -- ربط مع العميل من CRM
