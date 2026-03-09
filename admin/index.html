@@ -778,9 +778,20 @@ button{cursor:pointer;}
   .adm-admin-pill{padding:7px 10px;}
   .btn-logout span{display:none;}
 
-  /* Sidebar slides in from right */
-  .adm-sidebar{transform:translateX(100%);transition:.3s;z-index:90;}
-  .adm-sidebar.open{transform:none;box-shadow:-8px 0 40px rgba(0,0,0,0.5);}
+  /* Sidebar slides in from LEFT (RTL Arabic layout) */
+  .adm-sidebar{
+    left:0;
+    right:auto;
+    transform:translateX(-100%);
+    transition:transform .3s ease;
+    z-index:90;
+    border-left:none;
+    border-right:1px solid var(--border);
+  }
+  .adm-sidebar.open{
+    transform:translateX(0);
+    box-shadow:8px 0 40px rgba(0,0,0,0.5);
+  }
 
   /* Main takes full width */
   .adm-main{margin-right:0;}
@@ -1137,6 +1148,28 @@ button{cursor:pointer;}
 .crm-history-btn::before{content:'';position:absolute;inset:0;background:var(--crm-grad);opacity:0;transition:opacity .25s;}
 .crm-history-btn:hover{border-color:var(--pink);color:#fff;transform:translateY(-2px);box-shadow:0 4px 16px rgba(233,78,119,0.3);}
 .crm-history-btn:hover::before{opacity:0.15;}
+
+/* Priority Badge Styles */
+.crm-priority-badge{
+  transition:all .28s cubic-bezier(0.4,0,0.2,1);
+  position:relative;
+  overflow:hidden;
+}
+.crm-priority-badge::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:currentColor;
+  opacity:0;
+  transition:opacity .3s;
+}
+.crm-priority-badge:hover{
+  transform:translateY(-2px) scale(1.05);
+  box-shadow:0 4px 16px currentColor;
+}
+.crm-priority-badge:hover::before{
+  opacity:0.1;
+}
 .crm-history-btn .badge{background:var(--crm-grad);color:#fff;padding:2px 7px;border-radius:8px;font-size:.7rem;margin-right:4px;box-shadow:0 2px 6px rgba(233,78,119,0.4);}
 .crm-status-dropdown{position:fixed;z-index:9999;min-width:220px;background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid rgba(233,78,119,0.3);border-radius:12px;padding:8px 0;box-shadow:0 20px 80px rgba(0,0,0,.75),0 0 0 1px rgba(233,78,119,0.15);display:none;animation:ctxFadeIn .2s ease;backdrop-filter:blur(10px);}
 .crm-status-dropdown.show{display:block;}
@@ -6843,9 +6876,23 @@ function displayCrmLeads(){
   }
   
   tbody.innerHTML = filteredLeads.map(lead => {
-    // Generate avatar initials
+    // Generate avatar initials with dynamic color
     const nameWords = (lead.name || 'عميل').trim().split(/\s+/);
     const initials = nameWords.map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    
+    // Generate dynamic gradient based on name
+    const colors = [
+      ['#e94e77', '#f7931e'], // pink-orange
+      ['#3b82f6', '#8b5cf6'], // blue-purple
+      ['#10b981', '#34d399'], // green-emerald
+      ['#f59e0b', '#fb923c'], // amber-orange
+      ['#ec4899', '#f472b6'], // pink-rose
+      ['#8b5cf6', '#a78bfa'], // purple-violet
+      ['#06b6d4', '#22d3ee'], // cyan-sky
+      ['#14b8a6', '#5eead4'], // teal-emerald
+    ];
+    const colorIndex = (lead.name || 'A').charCodeAt(0) % colors.length;
+    const [color1, color2] = colors[colorIndex];
     
     const lastContact = lead.last_contact ? new Date(lead.last_contact).toLocaleDateString('ar-EG', {month:'short', day:'numeric'}) : '-';
     const isSelected = _selectedCrmLeads.has(lead.id);
@@ -6868,7 +6915,7 @@ function displayCrmLeads(){
         </td>
         <td>
           <div class="lead-name-cell">
-            <div class="lead-avatar">${initials}</div>
+            <div class="lead-avatar" style="background:linear-gradient(135deg,${color1},${color2});">${initials}</div>
             <div>
               <div class="lead-name-text">${lead.name || '-'}</div>
               ${lead.phone ? `<span class="lead-phone-sub">${lead.phone}</span>` : ''}
@@ -6886,15 +6933,29 @@ function displayCrmLeads(){
           </span>
         </td>
         <td>
-          <span style="font-size:0.8rem;padding:4px 10px;border-radius:6px;
-                       ${lead.priority === 'urgent' ? 'background:rgba(239,68,68,0.1);color:#ef4444;' : ''}
-                       ${lead.priority === 'high' ? 'background:rgba(245,158,11,0.1);color:#f59e0b;' : ''}
-                       ${lead.priority === 'medium' ? 'background:rgba(59,130,246,0.1);color:#3b82f6;' : ''}
-                       ${lead.priority === 'low' ? 'background:rgba(100,116,139,0.1);color:#64748b;' : ''}">
+          <span class="crm-priority-badge" style="
+                       ${lead.priority === 'urgent' ? 'background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));color:#ef4444;border:1.5px solid rgba(239,68,68,0.3);' : ''}
+                       ${lead.priority === 'high' ? 'background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(217,119,6,0.1));color:#f59e0b;border:1.5px solid rgba(245,158,11,0.3);' : ''}
+                       ${lead.priority === 'medium' ? 'background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(37,99,235,0.1));color:#3b82f6;border:1.5px solid rgba(59,130,246,0.3);' : ''}
+                       ${lead.priority === 'low' ? 'background:linear-gradient(135deg,rgba(100,116,139,0.15),rgba(71,85,105,0.1));color:#64748b;border:1.5px solid rgba(100,116,139,0.3);' : ''}
+                       font-size:0.78rem;padding:5px 12px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;font-weight:700;">
+            ${lead.priority === 'urgent' ? '<i class="fas fa-exclamation-circle"></i>' : ''}
+            ${lead.priority === 'high' ? '<i class="fas fa-arrow-up"></i>' : ''}
+            ${lead.priority === 'medium' ? '<i class="fas fa-minus"></i>' : ''}
+            ${lead.priority === 'low' ? '<i class="fas fa-arrow-down"></i>' : ''}
             ${getPriorityLabel(lead.priority)}
           </span>
         </td>
-        <td style="font-size:0.83rem;">${lead.assigned_to ? `<i class="fas fa-user" style="font-size:0.7rem;color:var(--accent);margin-left:5px;"></i>${lead.assigned_to}` : '<span style="color:var(--text-muted);">غير موزع</span>'}</td>
+        <td>
+          ${lead.assigned_to ? `
+            <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:8px;background:linear-gradient(135deg,rgba(16,185,129,0.12),rgba(5,150,105,0.08));border:1.5px solid rgba(16,185,129,0.25);">
+              <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#10b981,#34d399);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.65rem;font-weight:800;box-shadow:0 2px 8px rgba(16,185,129,0.3);">
+                ${lead.assigned_to.charAt(0).toUpperCase()}
+              </div>
+              <span style="font-size:0.82rem;font-weight:700;color:#10b981;">${lead.assigned_to}</span>
+            </div>
+          ` : '<span style="color:var(--text-muted);font-size:0.82rem;"><i class="fas fa-user-slash" style="font-size:0.7rem;margin-left:5px;opacity:0.5;"></i>غير موزع</span>'}
+        </td>
         <td style="font-size:0.78rem;color:var(--text-secondary);">${lastContact}</td>
         <td>
           <button class="crm-history-btn" onclick="openCrmHistory(${lead.id})">
