@@ -309,15 +309,9 @@ CREATE TRIGGER update_crm_leads_updated_at
     EXECUTE FUNCTION update_updated_at_column();
 
 -- ==================== جدول الخطط التسويقية ====================
--- حذف الجدول القديم إذا كان موجوداً (لإضافة lead_id)
-DROP TABLE IF EXISTS marketing_plans CASCADE;
-
-CREATE TABLE marketing_plans (
+-- إنشاء الجدول إذا لم يكن موجوداً
+CREATE TABLE IF NOT EXISTS marketing_plans (
     id TEXT PRIMARY KEY,
-    
-    -- ربط مع العميل من CRM
-    lead_id BIGINT REFERENCES crm_leads(id) ON DELETE SET NULL,
-    
     company_name TEXT NOT NULL,
     company_email TEXT NOT NULL,
     company_phone TEXT,
@@ -336,6 +330,18 @@ CREATE TABLE marketing_plans (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- إضافة عمود lead_id إذا لم يكن موجوداً (للربط مع CRM)
+DO $$ 
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'marketing_plans' AND column_name = 'lead_id'
+    ) THEN
+        ALTER TABLE marketing_plans 
+        ADD COLUMN lead_id BIGINT REFERENCES crm_leads(id) ON DELETE SET NULL;
+    END IF;
+END $$;
 
 -- Indexes للأداء
 CREATE INDEX IF NOT EXISTS idx_marketing_plans_lead ON marketing_plans(lead_id);
