@@ -176,6 +176,182 @@ CREATE TRIGGER update_marketing_plans_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
+-- ==================== نظام CRM ====================
+
+-- ==================== جدول العملاء المحتملين (Leads) ====================
+CREATE TABLE IF NOT EXISTS crm_leads (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    phone TEXT NOT NULL UNIQUE,
+    email TEXT,
+    company TEXT,
+    industry TEXT,
+    
+    -- حالة العميل
+    status TEXT DEFAULT 'new', -- new, interested, negotiating, converted, not_interested, no_answer
+    source TEXT DEFAULT 'يدوي', -- يدوي, موقع, فيسبوك, إنستجرام, صديق
+    priority TEXT DEFAULT 'medium', -- low, medium, high, urgent
+    
+    -- التعيين والمتابعة
+    assigned_to TEXT, -- username من جدول employees
+    assigned_at TIMESTAMP WITH TIME ZONE,
+    last_contact TIMESTAMP WITH TIME ZONE,
+    next_followup TIMESTAMP WITH TIME ZONE,
+    
+    -- الإحصائيات
+    call_count INTEGER DEFAULT 0,
+    note_count INTEGER DEFAULT 0,
+    total_value DECIMAL(12, 2) DEFAULT 0,
+    
+    -- معلومات إضافية
+    notes TEXT,
+    tags TEXT[], -- مصفوفة tags
+    
+    -- التواريخ
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    converted_at TIMESTAMP WITH TIME ZONE
+);
+
+-- Indexes
+CREATE INDEX IF NOT EXISTS idx_crm_leads_status ON crm_leads(status);
+CREATE INDEX IF NOT EXISTS idx_crm_leads_assigned ON crm_leads(assigned_to);
+CREATE INDEX IF NOT EXISTS idx_crm_leads_phone ON crm_leads(phone);
+CREATE INDEX IF NOT EXISTS idx_crm_leads_created ON crm_leads(created_at);
+CREATE INDEX IF NOT EXISTS idx_crm_leads_priority ON crm_leads(priority);
+
+-- Enable RLS
+ALTER TABLE crm_leads ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Enable all access for crm_leads" ON crm_leads;
+CREATE POLICY "Enable all access for crm_leads"
+    ON crm_leads
+    FOR ALL
+    USING (true)
+    WITH CHECK (true);
+
+-- ==================== سجل تغييرات حالة العملاء ====================
+CREATE TABLE IF NOT EXISTS crm_status_log (
+    id BIGSERIAL PRIMARY KEY,
+    lead_id BIGINT NOT NULL REFERENCES crm_leads(id) ON DELETE CASCADE,
+    old_status TEXT,
+    new_status TEXT NOT NULL,
+    changed_by TEXT, -- username
+    note TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Index
+CREATE INDEX IF NOT EXISTS idx_crm_status_log_lead ON crm_status_log(lead_id);
+CREATE INDEX IF NOT EXISTS idx_crm_status_log_created ON crm_status_log(created_at);
+
+-- Enable RLS
+ALTER TABLE crm_status_log ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Enable all access for crm_status_log" ON crm_status_log;
+CREATE POLICY "Enable all access for crm_status_log"
+    ON crm_status_log
+    FOR ALL
+    USING (true)
+    WITH CHECK (true);
+
+-- ==================== ملاحظات العملاء ====================
+CREATE TABLE IF NOT EXISTS crm_notes (
+    id BIGSERIAL PRIMARY KEY,
+    lead_id BIGINT NOT NULL REFERENCES crm_leads(id) ON DELETE CASCADE,
+    user_name TEXT, -- username
+    note TEXT NOT NULL,
+    note_type TEXT DEFAULT 'general', -- general, call, meeting, email
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Index
+CREATE INDEX IF NOT EXISTS idx_crm_notes_lead ON crm_notes(lead_id);
+CREATE INDEX IF NOT EXISTS idx_crm_notes_created ON crm_notes(created_at);
+
+-- Enable RLS
+ALTER TABLE crm_notes ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Enable all access for crm_notes" ON crm_notes;
+CREATE POLICY "Enable all access for crm_notes"
+    ON crm_notes
+    FOR ALL
+    USING (true)
+    WITH CHECK (true);
+
+-- ==================== سجل المكالمات ====================
+CREATE TABLE IF NOT EXISTS crm_calls (
+    id BIGSERIAL PRIMARY KEY,
+    lead_id BIGINT REFERENCES crm_leads(id) ON DELETE SET NULL,
+    lead_name TEXT,
+    lead_phone TEXT,
+    
+    employee_name TEXT,
+    
+    -- تفاصيل المكالمة
+    status TEXT DEFAULT 'no_answer', -- answered, no_answer, busy, failed, completed
+    result TEXT DEFAULT 'no_answer', -- interested, not_interested, callback, meeting_scheduled
+    duration INTEGER DEFAULT 0, -- بالثواني
+    
+    -- ملاحظات
+    notes TEXT,
+    
+    -- الاتجاه
+    direction TEXT DEFAULT 'outbound', -- outbound, inbound
+    
+    -- التواريخ
+    started_at TIMESTAMP WITH TIME ZONE,
+    ended_at TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Indexes
+CREATE INDEX IF NOT EXISTS idx_crm_calls_lead ON crm_calls(lead_id);
+CREATE INDEX IF NOT EXISTS idx_crm_calls_employee ON crm_calls(employee_name);
+CREATE INDEX IF NOT EXISTS idx_crm_calls_created ON crm_calls(created_at);
+
+-- Enable RLS
+ALTER TABLE crm_calls ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Enable all access for crm_calls" ON crm_calls;
+CREATE POLICY "Enable all access for crm_calls"
+    ON crm_calls
+    FOR ALL
+    USING (true)
+    WITH CHECK (true);
+
+-- ==================== سجل توزيع العملاء ====================
+CREATE TABLE IF NOT EXISTS crm_distribution_log (
+    id BIGSERIAL PRIMARY KEY,
+    lead_id BIGINT REFERENCES crm_leads(id) ON DELETE CASCADE,
+    from_employee TEXT,
+    to_employee TEXT NOT NULL,
+    distributed_by TEXT, -- username من عمل التوزيع
+    reason TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Index
+CREATE INDEX IF NOT EXISTS idx_crm_distribution_lead ON crm_distribution_log(lead_id);
+CREATE INDEX IF NOT EXISTS idx_crm_distribution_created ON crm_distribution_log(created_at);
+
+-- Enable RLS
+ALTER TABLE crm_distribution_log ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Enable all access for crm_distribution_log" ON crm_distribution_log;
+CREATE POLICY "Enable all access for crm_distribution_log"
+    ON crm_distribution_log
+    FOR ALL
+    USING (true)
+    WITH CHECK (true);
+
+-- Trigger لتحديث updated_at في crm_leads
+DROP TRIGGER IF EXISTS update_crm_leads_updated_at ON crm_leads;
+CREATE TRIGGER update_crm_leads_updated_at
+    BEFORE UPDATE ON crm_leads
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
 -- ==================== تمام! ====================
 -- ✅ الجداول جاهزة
 -- ✅ RLS مفعّل

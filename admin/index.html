@@ -608,6 +608,40 @@ button{cursor:pointer;}
 .slide-field label{display:block;font-size:.75rem;font-weight:700;color:var(--muted);margin-bottom:5px;}
 .slide-field input,.slide-field select,.slide-field textarea{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:.82rem;outline:none;}
 .slide-field textarea{resize:vertical;}
+
+/* ========== CRM STYLES ========== */
+.crm-status-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;}
+.crm-status-tabs::-webkit-scrollbar{display:none;}
+.crm-status-tab{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:var(--bg-card);border:1px solid var(--border);cursor:pointer;transition:all .3s;white-space:nowrap;font-size:.85rem;font-weight:600;color:var(--text-secondary);}
+.crm-status-tab:hover{border-color:var(--tab-color,var(--accent));color:var(--text-primary);}
+.crm-status-tab.active{background:rgba(var(--tab-color-rgb,59,130,246),.1);border-color:var(--tab-color,#3b82f6);color:var(--tab-color,#3b82f6);}
+.crm-status-tab .tab-count{background:var(--bg);padding:2px 8px;border-radius:6px;font-size:.75rem;font-weight:700;}
+.crm-status-tab.active .tab-count{background:var(--tab-color,#3b82f6);color:white;}
+.crm-lead-row{cursor:pointer;transition:all .3s;}
+.crm-lead-row:hover{background:rgba(59,130,246,.03);}
+.crm-lead-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(37,99,235,.1));color:#3b82f6;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800;margin-left:10px;}
+.crm-status-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .3s;user-select:none;}
+.crm-status-badge:hover{filter:brightness(1.15);transform:scale(1.04);}
+.crm-status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.crm-status-new{background:rgba(59,130,246,.15);color:#3b82f6;}.crm-status-new .crm-status-dot{background:#3b82f6;}
+.crm-status-interested{background:rgba(16,185,129,.15);color:#10b981;}.crm-status-interested .crm-status-dot{background:#10b981;}
+.crm-status-negotiating{background:rgba(245,158,11,.15);color:#f59e0b;}.crm-status-negotiating .crm-status-dot{background:#f59e0b;}
+.crm-status-converted{background:rgba(34,197,94,.15);color:#22c55e;}.crm-status-converted .crm-status-dot{background:#22c55e;}
+.crm-status-not_interested{background:rgba(239,68,68,.15);color:#ef4444;}.crm-status-not_interested .crm-status-dot{background:#ef4444;}
+.crm-status-no_answer{background:rgba(100,116,139,.15);color:#64748b;}.crm-status-no_answer .crm-status-dot{background:#64748b;}
+.crm-priority-badge{padding:4px 10px;border-radius:12px;font-size:.72rem;font-weight:700;}
+.crm-priority-urgent{background:rgba(239,68,68,.15);color:#ef4444;}
+.crm-priority-high{background:rgba(245,158,11,.15);color:#f59e0b;}
+.crm-priority-medium{background:rgba(59,130,246,.15);color:#3b82f6;}
+.crm-priority-low{background:rgba(100,116,139,.15);color:#64748b;}
+.crm-action-btn{padding:6px 12px;border-radius:8px;border:none;cursor:pointer;font-size:.8rem;font-weight:600;transition:all .3s;font-family:inherit;}
+.crm-action-btn i{margin-left:6px;}
+.crm-action-view{background:rgba(59,130,246,.1);color:#3b82f6;border:1px solid rgba(59,130,246,.2);}
+.crm-action-view:hover{background:rgba(59,130,246,.2);}
+.crm-action-edit{background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.2);}
+.crm-action-edit:hover{background:rgba(16,185,129,.2);}
+.crm-action-delete{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.2);}
+.crm-action-delete:hover{background:rgba(239,68,68,.2);}
 </style>
 <!-- Firebase (for existing features) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -666,6 +700,12 @@ button{cursor:pointer;}
       <div class="adm-nav-item" onclick="showSection('webprices')"><i class="fas fa-globe"></i> تطبيقات الويب<span class="adm-nav-badge">6</span></div>
       <div class="adm-nav-item" onclick="showSection('mobileprices')"><i class="fas fa-mobile-alt"></i> تطبيقات الموبايل<span class="adm-nav-badge">6</span></div>
       <div class="adm-nav-item" onclick="showSection('marketing-plans');loadMarketingPlans()"><i class="fas fa-chart-line"></i> الخطط التسويقية<span class="adm-nav-badge" id="plansCount">0</span></div>
+    </div>
+    <div class="adm-nav-section">
+      <div class="adm-nav-label">نظام CRM</div>
+      <div class="adm-nav-item" onclick="showSection('crm-leads');loadCrmLeads()"><i class="fas fa-users"></i> إدارة العملاء<span class="adm-nav-badge" id="crmLeadsCount">0</span></div>
+      <div class="adm-nav-item" onclick="showSection('crm-distribution');loadCrmDistribution()"><i class="fas fa-random"></i> توزيع العملاء<span class="adm-nav-badge" id="crmAssignedCount" style="background:#10b981">0</span></div>
+      <div class="adm-nav-item" onclick="showSection('crm-reports')"><i class="fas fa-chart-bar"></i> تقارير CRM<span class="adm-nav-badge" id="crmReportsCount" style="background:#8b5cf6">0</span></div>
     </div>
     <div class="adm-nav-section">
       <div class="adm-nav-label">إدارة المستخدمين</div>
@@ -782,8 +822,197 @@ button{cursor:pointer;}
       </div>
     </div>
 
+    <!-- CRM - LEADS MANAGEMENT -->
+    <div class="adm-section" id="sec-crm-leads">
+      <div class="users-top">
+        <div>
+          <div class="adm-section-title">إدارة <span>العملاء</span></div>
+          <div class="adm-breadcrumb">نظام CRM المتكامل - تتبع العملاء المحتملين وإدارة عملية البيع</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button class="btn-add-user" onclick="openImportLeadsModal()" style="background:rgba(59,130,246,0.1);color:#3b82f6;border:1px solid rgba(59,130,246,0.3);"><i class="fas fa-file-excel"></i> استيراد Excel</button>
+          <button class="btn-add-user" onclick="openAddLeadModal()"><i class="fas fa-plus"></i> عميل جديد</button>
+        </div>
+      </div>
+      
+      <!-- CRM Stats -->
+      <div class="crm-stats-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px">
+        <div class="crm-stat-card" style="background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(37,99,235,0.05));border:1px solid rgba(59,130,246,0.2);border-radius:16px;padding:20px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(59,130,246,0.15);display:flex;align-items:center;justify-content:center"><i class="fas fa-users" style="color:#3b82f6;font-size:1.4rem"></i></div>
+            <div>
+              <div style="font-size:1.8rem;font-weight:800;color:#3b82f6" id="crmTotalLeads">0</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">إجمالي العملاء</div>
+            </div>
+          </div>
+        </div>
+        <div class="crm-stat-card" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.05));border:1px solid rgba(16,185,129,0.2);border-radius:16px;padding:20px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(16,185,129,0.15);display:flex;align-items:center;justify-content:center"><i class="fas fa-check-circle" style="color:#10b981;font-size:1.4rem"></i></div>
+            <div>
+              <div style="font-size:1.8rem;font-weight:800;color:#10b981" id="crmConvertedLeads">0</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">عملاء محولين</div>
+            </div>
+          </div>
+        </div>
+        <div class="crm-stat-card" style="background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(217,119,6,0.05));border:1px solid rgba(245,158,11,0.2);border-radius:16px;padding:20px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center"><i class="fas fa-user-clock" style="color:#f59e0b;font-size:1.4rem"></i></div>
+            <div>
+              <div style="font-size:1.8rem;font-weight:800;color:#f59e0b" id="crmPendingLeads">0</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">قيد المتابعة</div>
+            </div>
+          </div>
+        </div>
+        <div class="crm-stat-card" style="background:linear-gradient(135deg,rgba(239,68,68,0.1),rgba(220,38,38,0.05));border:1px solid rgba(239,68,68,0.2);border-radius:16px;padding:20px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(239,68,68,0.15);display:flex;align-items:center;justify-content:center"><i class="fas fa-times-circle" style="color:#ef4444;font-size:1.4rem"></i></div>
+            <div>
+              <div style="font-size:1.8rem;font-weight:800;color:#ef4444" id="crmLostLeads">0</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px">غير مهتمين</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status Tabs -->
+      <div class="crm-status-tabs" style="display:flex;gap:10px;padding:16px 0;overflow-x:auto;margin-bottom:20px">
+        <button class="crm-status-tab active" data-status="all" onclick="filterCrmLeadsByStatus('all')"><i class="fas fa-list"></i> الكل <span class="tab-count" id="tabCountAll">0</span></button>
+        <button class="crm-status-tab" data-status="new" onclick="filterCrmLeadsByStatus('new')" style="--tab-color:#3b82f6"><i class="fas fa-star"></i> جديد <span class="tab-count" id="tabCountNew">0</span></button>
+        <button class="crm-status-tab" data-status="interested" onclick="filterCrmLeadsByStatus('interested')" style="--tab-color:#10b981"><i class="fas fa-thumbs-up"></i> مهتم <span class="tab-count" id="tabCountInterested">0</span></button>
+        <button class="crm-status-tab" data-status="negotiating" onclick="filterCrmLeadsByStatus('negotiating')" style="--tab-color:#f59e0b"><i class="fas fa-handshake"></i> تفاوض <span class="tab-count" id="tabCountNegotiating">0</span></button>
+        <button class="crm-status-tab" data-status="converted" onclick="filterCrmLeadsByStatus('converted')" style="--tab-color:#22c55e"><i class="fas fa-check-circle"></i> محول <span class="tab-count" id="tabCountConverted">0</span></button>
+        <button class="crm-status-tab" data-status="not_interested" onclick="filterCrmLeadsByStatus('not_interested')" style="--tab-color:#ef4444"><i class="fas fa-times-circle"></i> غير مهتم <span class="tab-count" id="tabCountNotInterested">0</span></button>
+        <button class="crm-status-tab" data-status="no_answer" onclick="filterCrmLeadsByStatus('no_answer')" style="--tab-color:#64748b"><i class="fas fa-phone-slash"></i> لا يرد <span class="tab-count" id="tabCountNoAnswer">0</span></button>
+      </div>
+
+      <!-- Search and Filters -->
+      <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+        <input type="text" id="crmLeadSearch" placeholder="بحث بالاسم أو رقم التليفون..." style="flex:1;min-width:250px;padding:10px 16px;border-radius:10px;border:1px solid var(--border);font-family:inherit" oninput="searchCrmLeads()">
+        <select id="crmAssignedFilter" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);font-family:inherit" onchange="filterCrmLeads()">
+          <option value="">كل الموظفين</option>
+          <option value="unassigned">غير موزع</option>
+        </select>
+        <select id="crmPriorityFilter" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);font-family:inherit" onchange="filterCrmLeads()">
+          <option value="">كل الأولويات</option>
+          <option value="urgent">عاجل</option>
+          <option value="high">عالي</option>
+          <option value="medium">متوسط</option>
+          <option value="low">منخفض</option>
+        </select>
+      </div>
+
+      <!-- Leads Table -->
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="selectAllCrmLeads" onchange="toggleSelectAllCrmLeads()"></th>
+              <th>العميل</th>
+              <th>التليفون</th>
+              <th>الحالة</th>
+              <th>الأولوية</th>
+              <th>موزع إلى</th>
+              <th>آخر تواصل</th>
+              <th>المكالمات</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="crmLeadsTableBody">
+            <tr><td colspan="9" style="text-align:center;padding:40px">لا يوجد عملاء حتى الآن</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Bulk Actions -->
+      <div id="crmBulkActions" style="display:none;position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 24px;box-shadow:0 10px 40px rgba(0,0,0,0.2);z-index:1000">
+        <div style="display:flex;gap:12px;align-items:center">
+          <span style="font-size:0.9rem;font-weight:600"><span id="selectedCrmLeadsCount">0</span> محدد</span>
+          <button onclick="bulkAssignCrmLeads()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(16,185,129,0.3);background:rgba(16,185,129,0.1);color:#10b981;cursor:pointer;font-family:inherit"><i class="fas fa-user-plus"></i> توزيع</button>
+          <button onclick="bulkChangeStatus()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:#3b82f6;cursor:pointer;font-family:inherit"><i class="fas fa-exchange-alt"></i> تغيير الحالة</button>
+          <button onclick="bulkDeleteCrmLeads()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.1);color:#ef4444;cursor:pointer;font-family:inherit"><i class="fas fa-trash"></i> حذف</button>
+          <button onclick="clearCrmSelection()" style="padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg);cursor:pointer;font-family:inherit"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRM - DISTRIBUTION -->
+    <div class="adm-section" id="sec-crm-distribution">
+      <div class="users-top">
+        <div>
+          <div class="adm-section-title">توزيع <span>العملاء</span></div>
+          <div class="adm-breadcrumb">توزيع العملاء على الموظفين بشكل عادل وتلقائي</div>
+        </div>
+        <button class="btn-add-user" onclick="openAutoDistributeModal()"><i class="fas fa-random"></i> توزيع تلقائي</button>
+      </div>
+
+      <!-- Distribution Stats -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px">
+        <div style="background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(124,58,237,0.05));border:1px solid rgba(139,92,246,0.2);border-radius:16px;padding:20px">
+          <div style="font-size:1.8rem;font-weight:800;color:#8b5cf6" id="distUnassignedCount">0</div>
+          <div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">عملاء غير موزعة</div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.05));border:1px solid rgba(16,185,129,0.2);border-radius:16px;padding:20px">
+          <div style="font-size:1.8rem;font-weight:800;color:#10b981" id="distAssignedCount">0</div>
+          <div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">عملاء موزعة</div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(37,99,235,0.05));border:1px solid rgba(59,130,246,0.2);border-radius:16px;padding:20px">
+          <div style="font-size:1.8rem;font-weight:800;color:#3b82f6" id="distActiveEmployees">0</div>
+          <div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">موظفين نشطين</div>
+        </div>
+      </div>
+
+      <!-- Employee Distribution Table -->
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>الموظف</th>
+              <th>العملاء الإجمالي</th>
+              <th>جديد</th>
+              <th>مهتم</th>
+              <th>محول</th>
+              <th>معدل التحويل</th>
+              <th>آخر نشاط</th>
+            </tr>
+          </thead>
+          <tbody id="distEmployeesTableBody">
+            <tr><td colspan="7" style="text-align:center;padding:40px">لا يوجد موظفين</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CRM - REPORTS -->
+    <div class="adm-section" id="sec-crm-reports">
+      <div class="users-top">
+        <div>
+          <div class="adm-section-title">تقارير <span>CRM</span></div>
+          <div class="adm-breadcrumb">تقارير شاملة عن أداء المبيعات والموظفين</div>
+        </div>
+        <button class="btn-add-user" onclick="exportCrmReport()" style="background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.3)"><i class="fas fa-download"></i> تصدير تقرير</button>
+      </div>
+
+      <!-- Date Range Filter -->
+      <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+        <input type="date" id="reportDateFrom" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);font-family:inherit">
+        <input type="date" id="reportDateTo" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);font-family:inherit">
+        <button onclick="loadCrmReports()" style="padding:10px 20px;border-radius:10px;border:1px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:#3b82f6;cursor:pointer;font-family:inherit;font-weight:600"><i class="fas fa-search"></i> عرض التقرير</button>
+      </div>
+
+      <!-- Report Summary Cards -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px" id="reportSummaryCards">
+        <!-- Cards will be rendered here -->
+      </div>
+
+      <!-- Charts Placeholder -->
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:30px;text-align:center;color:var(--text-secondary)">
+        <i class="fas fa-chart-line" style="font-size:3rem;margin-bottom:16px;opacity:0.5"></i>
+        <p>اختر نطاق التاريخ لعرض التقارير والرسوم البيانية</p>
+      </div>
+    </div>
+
     <!-- EMPLOYEE REQUESTS -->
-    <div class="adm-section" id="sec-employee-requests">
       <div class="users-top">
         <div>
           <div class="adm-section-title">طلبات <span>الموظفين</span></div>
@@ -1416,6 +1645,339 @@ button{cursor:pointer;}
         <i class="fas fa-save"></i> حفظ الخطة
       </button>
       <button class="btn-modal-cancel" onclick="closePlanModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ CRM MODALS ═══════ -->
+
+<!-- Add/Edit Lead Modal -->
+<div class="modal-overlay" id="addLeadModal">
+  <div class="modal-box" style="max-width:650px;">
+    <div class="modal-header">
+      <h3><i class="fas fa-user-plus" style="color:var(--blue);margin-left:8px;"></i> <span id="leadModalTitle">عميل جديد</span></h3>
+      <button class="modal-close" onclick="closeLeadModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="emp-contract-form" style="display:block;">
+      <input type="hidden" id="leadEditId" value="">
+      
+      <div class="form-row">
+        <div class="form-field">
+          <label><i class="fas fa-user"></i> الاسم *</label>
+          <input type="text" id="leadName" placeholder="اسم العميل">
+        </div>
+        <div class="form-field">
+          <label><i class="fas fa-phone"></i> رقم الهاتف *</label>
+          <input type="tel" id="leadPhone" placeholder="01XXXXXXXXX">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+          <input type="email" id="leadEmail" placeholder="email@example.com">
+        </div>
+        <div class="form-field">
+          <label><i class="fas fa-building"></i> الشركة</label>
+          <input type="text" id="leadCompany" placeholder="اسم الشركة">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label><i class="fas fa-industry"></i> المجال</label>
+          <select id="leadIndustry">
+            <option value="">اختر المجال</option>
+            <option value="تجارة إلكترونية">تجارة إلكترونية</option>
+            <option value="مطاعم ومقاهي">مطاعم ومقاهي</option>
+            <option value="عقارات">عقارات</option>
+            <option value="تعليم">تعليم</option>
+            <option value="صحة وجمال">صحة وجمال</option>
+            <option value="خدمات">خدمات</option>
+            <option value="أزياء وموضة">أزياء وموضة</option>
+            <option value="تكنولوجيا">تكنولوجيا</option>
+            <option value="أخرى">أخرى</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label><i class="fas fa-flag"></i> الأولوية</label>
+          <select id="leadPriority">
+            <option value="low">منخفضة</option>
+            <option value="medium" selected>متوسطة</option>
+            <option value="high">مرتفعة</option>
+            <option value="urgent">عاجلة</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label><i class="fas fa-info-circle"></i> الحالة</label>
+          <select id="leadStatus">
+            <option value="new" selected>جديد</option>
+            <option value="interested">مهتم</option>
+            <option value="negotiating">تفاوض</option>
+            <option value="converted">تم التحويل</option>
+            <option value="not_interested">غير مهتم</option>
+            <option value="no_answer">لا يرد</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label><i class="fas fa-dollar-sign"></i> القيمة المتوقعة</label>
+          <input type="number" id="leadValue" placeholder="0">
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label><i class="fas fa-user-tie"></i> تعيين لموظف</label>
+        <select id="leadAssignedTo">
+          <option value="">غير محدد</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label><i class="fas fa-sticky-note"></i> ملاحظات</label>
+        <textarea id="leadNotes" placeholder="أي ملاحظات عن العميل..." style="min-height:80px;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal-save" onclick="saveCrmLead()">
+        <i class="fas fa-save"></i> حفظ
+      </button>
+      <button class="btn-modal-cancel" onclick="closeLeadModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- View Lead Details Modal -->
+<div class="modal-overlay" id="viewLeadModal">
+  <div class="modal-box" style="max-width:750px;max-height:85vh;overflow-y:auto;">
+    <div class="modal-header">
+      <h3><i class="fas fa-user" style="color:var(--blue);margin-left:8px;"></i> <span id="viewLeadName">تفاصيل العميل</span></h3>
+      <button class="modal-close" onclick="closeViewLeadModal()"><i class="fas fa-times"></i></button>
+    </div>
+    
+    <div style="padding:20px;">
+      <!-- معلومات العميل -->
+      <div style="background:rgba(59,130,246,0.08);padding:16px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(59,130,246,0.2);">
+        <h4 style="color:var(--blue);font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-info-circle"></i> معلومات العميل
+        </h4>
+        <div id="viewLeadInfo" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.9rem;"></div>
+      </div>
+
+      <!-- سجل الحالة -->
+      <div style="background:rgba(34,197,94,0.08);padding:16px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(34,197,94,0.2);">
+        <h4 style="color:var(--green);font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-history"></i> سجل الحالة
+        </h4>
+        <div id="viewLeadStatusLog" style="max-height:200px;overflow-y:auto;"></div>
+      </div>
+
+      <!-- المكالمات -->
+      <div style="background:rgba(245,158,11,0.08);padding:16px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(245,158,11,0.2);">
+        <h4 style="color:var(--orange);font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-phone"></i> المكالمات (<span id="viewLeadCallsCount">0</span>)
+        </h4>
+        <div id="viewLeadCalls" style="max-height:200px;overflow-y:auto;"></div>
+      </div>
+
+      <!-- الملاحظات -->
+      <div style="background:rgba(168,85,247,0.08);padding:16px;border-radius:12px;border:1px solid rgba(168,85,247,0.2);">
+        <h4 style="color:var(--purple);font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-sticky-note"></i> الملاحظات (<span id="viewLeadNotesCount">0</span>)
+        </h4>
+        <div id="viewLeadNotes" style="max-height:200px;overflow-y:auto;"></div>
+        
+        <!-- إضافة ملاحظة -->
+        <div style="margin-top:12px;">
+          <textarea id="newLeadNote" placeholder="إضافة ملاحظة جديدة..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-family:inherit;min-height:60px;"></textarea>
+          <button onclick="addLeadNote()" style="margin-top:8px;padding:8px 16px;background:var(--purple);color:white;border:none;border-radius:8px;cursor:pointer;font-size:.85rem;">
+            <i class="fas fa-plus"></i> إضافة ملاحظة
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-modal-save" onclick="editCrmLeadFromView()">
+        <i class="fas fa-edit"></i> تعديل
+      </button>
+      <button class="btn-modal-cancel" onclick="closeViewLeadModal()">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- Import Leads Modal -->
+<div class="modal-overlay" id="importLeadsModal">
+  <div class="modal-box" style="max-width:600px;">
+    <div class="modal-header">
+      <h3><i class="fas fa-file-excel" style="color:var(--green);margin-left:8px;"></i> استيراد عملاء من Excel</h3>
+      <button class="modal-close" onclick="closeImportModal()"><i class="fas fa-times"></i></button>
+    </div>
+    
+    <div style="padding:20px;">
+      <div style="background:rgba(59,130,246,0.08);padding:16px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(59,130,246,0.2);">
+        <h4 style="color:var(--blue);font-size:.9rem;margin-bottom:8px;">
+          <i class="fas fa-info-circle"></i> تنسيق الملف المطلوب
+        </h4>
+        <p style="font-size:.85rem;color:var(--text-muted);line-height:1.6;">
+          يجب أن يحتوي ملف Excel على الأعمدة التالية:<br>
+          <strong>الاسم، الهاتف، البريد الإلكتروني، الشركة، المجال</strong>
+        </p>
+      </div>
+
+      <div style="border:2px dashed var(--border);border-radius:12px;padding:30px;text-align:center;background:var(--bg2);">
+        <i class="fas fa-cloud-upload-alt" style="font-size:3rem;color:var(--text-muted);margin-bottom:12px;"></i>
+        <p style="margin-bottom:16px;color:var(--text-muted);">اختر ملف Excel للاستيراد</p>
+        <input type="file" id="excelFileInput" accept=".xlsx,.xls,.csv" style="display:none;" onchange="handleExcelFile(this)">
+        <button onclick="document.getElementById('excelFileInput').click()" style="padding:10px 24px;background:var(--green);color:white;border:none;border-radius:8px;cursor:pointer;font-size:.9rem;">
+          <i class="fas fa-folder-open"></i> اختيار ملف
+        </button>
+      </div>
+
+      <div id="importPreview" style="margin-top:16px;display:none;">
+        <div style="background:rgba(34,197,94,0.08);padding:16px;border-radius:12px;border:1px solid rgba(34,197,94,0.2);">
+          <h4 style="color:var(--green);font-size:.9rem;margin-bottom:8px;">
+            <i class="fas fa-check-circle"></i> معاينة البيانات
+          </h4>
+          <p style="font-size:.85rem;color:var(--text-muted);">
+            عدد العملاء: <strong id="importCount">0</strong>
+          </p>
+          <div id="importDataPreview" style="max-height:200px;overflow-y:auto;margin-top:12px;font-size:.85rem;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-modal-save" onclick="confirmImportLeads()" id="importConfirmBtn" style="display:none;">
+        <i class="fas fa-check"></i> استيراد العملاء
+      </button>
+      <button class="btn-modal-cancel" onclick="closeImportModal()">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- Auto Distribute Modal -->
+<div class="modal-overlay" id="autoDistributeModal">
+  <div class="modal-box" style="max-width:600px;">
+    <div class="modal-header">
+      <h3><i class="fas fa-random" style="color:var(--purple);margin-left:8px;"></i> التوزيع التلقائي</h3>
+      <button class="modal-close" onclick="closeAutoDistributeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    
+    <div style="padding:20px;">
+      <div style="background:rgba(168,85,247,0.08);padding:16px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(168,85,247,0.2);">
+        <h4 style="color:var(--purple);font-size:.9rem;margin-bottom:12px;">
+          <i class="fas fa-info-circle"></i> إحصائيات التوزيع
+        </h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.85rem;">
+          <div>عدد العملاء غير الموزعين: <strong id="autoDistUnassigned">0</strong></div>
+          <div>عدد الموظفين النشطين: <strong id="autoDistEmployees">0</strong></div>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label><i class="fas fa-users"></i> اختيار الموظفين</label>
+        <div id="autoDistEmployeeList" style="max-height:200px;overflow-y:auto;padding:12px;background:var(--bg2);border-radius:8px;border:1px solid var(--border);">
+          <!-- سيتم ملؤها من JavaScript -->
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label><i class="fas fa-sort-amount-down"></i> طريقة التوزيع</label>
+        <select id="distributionMethod">
+          <option value="equal">توزيع متساوي</option>
+          <option value="weighted">توزيع بناءً على الأداء</option>
+          <option value="priority">توزيع حسب الأولوية</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label><i class="fas fa-filter"></i> فلترة العملاء</label>
+        <select id="distributionFilter">
+          <option value="all_unassigned">كل العملاء الغير موزعين</option>
+          <option value="new_only">العملاء الجدد فقط</option>
+          <option value="high_priority">الأولوية المرتفعة فقط</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-modal-save" onclick="confirmAutoDistribute()">
+        <i class="fas fa-random"></i> بدء التوزيع
+      </button>
+      <button class="btn-modal-cancel" onclick="closeAutoDistributeModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk Assign Modal -->
+<div class="modal-overlay" id="bulkAssignModal">
+  <div class="modal-box" style="max-width:500px;">
+    <div class="modal-header">
+      <h3><i class="fas fa-user-check" style="color:var(--blue);margin-left:8px;"></i> توزيع العملاء المحددين</h3>
+      <button class="modal-close" onclick="closeBulkAssignModal()"><i class="fas fa-times"></i></button>
+    </div>
+    
+    <div style="padding:20px;">
+      <p style="margin-bottom:16px;color:var(--text-muted);font-size:.9rem;">
+        عدد العملاء المحددين: <strong id="bulkAssignCount">0</strong>
+      </p>
+
+      <div class="form-field">
+        <label><i class="fas fa-user-tie"></i> اختيار الموظف</label>
+        <select id="bulkAssignEmployee">
+          <option value="">اختر موظف</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-modal-save" onclick="confirmBulkAssign()">
+        <i class="fas fa-check"></i> توزيع
+      </button>
+      <button class="btn-modal-cancel" onclick="closeBulkAssignModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk Change Status Modal -->
+<div class="modal-overlay" id="bulkStatusModal">
+  <div class="modal-box" style="max-width:500px;">
+    <div class="modal-header">
+      <h3><i class="fas fa-exchange-alt" style="color:var(--orange);margin-left:8px;"></i> تغيير حالة العملاء</h3>
+      <button class="modal-close" onclick="closeBulkStatusModal()"><i class="fas fa-times"></i></button>
+    </div>
+    
+    <div style="padding:20px;">
+      <p style="margin-bottom:16px;color:var(--text-muted);font-size:.9rem;">
+        عدد العملاء المحددين: <strong id="bulkStatusCount">0</strong>
+      </p>
+
+      <div class="form-field">
+        <label><i class="fas fa-info-circle"></i> الحالة الجديدة</label>
+        <select id="bulkNewStatus">
+          <option value="new">جديد</option>
+          <option value="interested">مهتم</option>
+          <option value="negotiating">تفاوض</option>
+          <option value="converted">تم التحويل</option>
+          <option value="not_interested">غير مهتم</option>
+          <option value="no_answer">لا يرد</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label><i class="fas fa-comment"></i> ملاحظة (اختياري)</label>
+        <textarea id="bulkStatusNote" placeholder="سبب تغيير الحالة..." style="min-height:80px;width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-family:inherit;"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-modal-save" onclick="confirmBulkStatus()">
+        <i class="fas fa-check"></i> تغيير الحالة
+      </button>
+      <button class="btn-modal-cancel" onclick="closeBulkStatusModal()">إلغاء</button>
     </div>
   </div>
 </div>
@@ -5062,6 +5624,1138 @@ function createReqDetailModal(){
   });
   
   return modal;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CRM SYSTEM FUNCTIONS
+// ═══════════════════════════════════════════════════════════════════
+
+// Global CRM state
+let _crmLeads = [];
+let _crmFilterStatus = 'all';
+let _currentViewLeadId = null;
+let _selectedCrmLeads = new Set();
+let _importedLeadsData = [];
+
+// ─────────────────────────────────────────────────────────────────
+// Lead Loading and Display
+// ─────────────────────────────────────────────────────────────────
+
+async function loadCrmLeads(){
+  try {
+    const { data: leads, error } = await _supabase
+      .from('crm_leads')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if(error) throw error;
+    
+    _crmLeads = leads || [];
+    
+    // Update stats
+    updateCrmStats();
+    
+    // Update tab counts
+    updateCrmTabCounts();
+    
+    // Display leads
+    displayCrmLeads();
+    
+  } catch(err){
+    console.error('Error loading CRM leads:', err);
+    toast('خطأ في تحميل العملاء', 'error');
+  }
+}
+
+function displayCrmLeads(){
+  const tbody = document.getElementById('crmLeadsTableBody');
+  if(!tbody) return;
+  
+  // Filter leads based on current status filter
+  let filteredLeads = _crmLeads;
+  
+  if(_crmFilterStatus !== 'all'){
+    filteredLeads = _crmLeads.filter(l => l.status === _crmFilterStatus);
+  }
+  
+  // Apply additional filters
+  const searchText = (document.getElementById('crmLeadSearch')?.value || '').toLowerCase();
+  const assignedFilter = document.getElementById('crmAssignedFilter')?.value || '';
+  const priorityFilter = document.getElementById('crmPriorityFilter')?.value || '';
+  
+  if(searchText){
+    filteredLeads = filteredLeads.filter(l => 
+      (l.name||'').toLowerCase().includes(searchText) ||
+      (l.phone||'').includes(searchText) ||
+      (l.company||'').toLowerCase().includes(searchText)
+    );
+  }
+  
+  if(assignedFilter){
+    filteredLeads = filteredLeads.filter(l => l.assigned_to === assignedFilter);
+  }
+  
+  if(priorityFilter){
+    filteredLeads = filteredLeads.filter(l => l.priority === priorityFilter);
+  }
+  
+  // Generate table rows
+  if(filteredLeads.length === 0){
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="9" style="text-align:center;padding:40px;color:var(--text-muted);">
+          <i class="fas fa-inbox" style="font-size:3rem;margin-bottom:16px;opacity:0.3;display:block;"></i>
+          لا توجد عملاء
+        </td>
+      </tr>
+    `;
+    return;
+  }
+  
+  tbody.innerHTML = filteredLeads.map(lead => {
+    const initials = (lead.name || 'ع').split(' ').map(w => w[0]).join('').slice(0, 2);
+    const lastContact = lead.last_contact ? new Date(lead.last_contact).toLocaleDateString('ar-EG', {month:'short', day:'numeric'}) : '-';
+    const isSelected = _selectedCrmLeads.has(lead.id);
+    
+    return `
+      <tr class="crm-lead-row">
+        <td style="width:40px;">
+          <input type="checkbox" class="crm-lead-checkbox" 
+                 ${isSelected ? 'checked' : ''} 
+                 onchange="toggleCrmLeadSelection('${lead.id}', this.checked)">
+        </td>
+        <td>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="crm-lead-avatar">${initials}</div>
+            <div>
+              <div style="font-weight:600;">${lead.name || '-'}</div>
+              <div style="font-size:.8rem;color:var(--text-muted);">${lead.company || ''}</div>
+            </div>
+          </div>
+        </td>
+        <td>${lead.phone || '-'}</td>
+        <td>
+          <span class="crm-status-badge crm-status-${lead.status}">${getStatusLabel(lead.status)}</span>
+        </td>
+        <td>
+          <span class="crm-priority-badge crm-priority-${lead.priority}">${getPriorityLabel(lead.priority)}</span>
+        </td>
+        <td>${lead.assigned_to || '<span style="color:var(--text-muted);">غير موزع</span>'}</td>
+        <td>${lastContact}</td>
+        <td>${lead.call_count || 0}</td>
+        <td style="white-space:nowrap;">
+          <button class="crm-action-btn crm-action-view" onclick="viewLeadDetails('${lead.id}')" title="عرض">
+            <i class="fas fa-eye"></i>
+          </button>
+          <button class="crm-action-btn crm-action-edit" onclick="editCrmLead('${lead.id}')" title="تعديل">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="crm-action-btn crm-action-delete" onclick="deleteCrmLead('${lead.id}')" title="حذف">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function updateCrmStats(){
+  const total = _crmLeads.length;
+  const converted = _crmLeads.filter(l => l.status === 'converted').length;
+  const pending = _crmLeads.filter(l => ['new','interested','negotiating'].includes(l.status)).length;
+  const lost = _crmLeads.filter(l => ['not_interested','no_answer'].includes(l.status)).length;
+  
+  document.getElementById('crmTotalLeads').textContent = total;
+  document.getElementById('crmConvertedLeads').textContent = converted;
+  document.getElementById('crmPendingLeads').textContent = pending;
+  document.getElementById('crmLostLeads').textContent = lost;
+  
+  // Update nav counts
+  document.getElementById('crmLeadsCount').textContent = total;
+}
+
+function updateCrmTabCounts(){
+  const counts = {
+    all: _crmLeads.length,
+    new: _crmLeads.filter(l => l.status === 'new').length,
+    interested: _crmLeads.filter(l => l.status === 'interested').length,
+    negotiating: _crmLeads.filter(l => l.status === 'negotiating').length,
+    converted: _crmLeads.filter(l => l.status === 'converted').length,
+    not_interested: _crmLeads.filter(l => l.status === 'not_interested').length,
+    no_answer: _crmLeads.filter(l => l.status === 'no_answer').length
+  };
+  
+  Object.keys(counts).forEach(status => {
+    const el = document.getElementById(`tabCount${status.charAt(0).toUpperCase()}${status.slice(1).replace('_', '')}`);
+    if(el) el.textContent = counts[status];
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Filtering and Search
+// ─────────────────────────────────────────────────────────────────
+
+function filterCrmLeadsByStatus(status){
+  _crmFilterStatus = status;
+  
+  // Update active tab
+  document.querySelectorAll('.crm-status-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  event.target.closest('.crm-status-tab').classList.add('active');
+  
+  displayCrmLeads();
+}
+
+function searchCrmLeads(){
+  displayCrmLeads();
+}
+
+function filterCrmLeads(){
+  displayCrmLeads();
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Lead Selection and Bulk Operations
+// ─────────────────────────────────────────────────────────────────
+
+function toggleCrmLeadSelection(leadId, checked){
+  if(checked){
+    _selectedCrmLeads.add(leadId);
+  } else {
+    _selectedCrmLeads.delete(leadId);
+  }
+  
+  updateBulkActionsBar();
+}
+
+function toggleSelectAllCrmLeads(){
+  const checkboxes = document.querySelectorAll('.crm-lead-checkbox');
+  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+  
+  checkboxes.forEach(cb => {
+    cb.checked = !allChecked;
+    const leadId = cb.onchange.toString().match(/'([^']+)'/)?.[1];
+    if(leadId){
+      if(!allChecked){
+        _selectedCrmLeads.add(leadId);
+      } else {
+        _selectedCrmLeads.delete(leadId);
+      }
+    }
+  });
+  
+  updateBulkActionsBar();
+}
+
+function updateBulkActionsBar(){
+  const count = _selectedCrmLeads.size;
+  const bar = document.getElementById('crmBulkActions');
+  const countEl = document.getElementById('selectedCrmLeadsCount');
+  
+  if(count > 0){
+    bar.style.display = 'flex';
+    countEl.textContent = count;
+  } else {
+    bar.style.display = 'none';
+  }
+}
+
+function clearCrmSelection(){
+  _selectedCrmLeads.clear();
+  document.querySelectorAll('.crm-lead-checkbox').forEach(cb => cb.checked = false);
+  updateBulkActionsBar();
+}
+
+function bulkAssignCrmLeads(){
+  if(_selectedCrmLeads.size === 0){
+    toast('اختر عملاء أولاً', 'error');
+    return;
+  }
+  
+  document.getElementById('bulkAssignCount').textContent = _selectedCrmLeads.size;
+  populateEmployeeDropdown('bulkAssignEmployee');
+  document.getElementById('bulkAssignModal').classList.add('open');
+}
+
+async function confirmBulkAssign(){
+  const employee = document.getElementById('bulkAssignEmployee').value;
+  
+  if(!employee){
+    toast('اختر موظف', 'error');
+    return;
+  }
+  
+  try {
+    const leadIds = Array.from(_selectedCrmLeads);
+    
+    for(const leadId of leadIds){
+      await _supabase
+        .from('crm_leads')
+        .update({
+          assigned_to: employee,
+          assigned_at: new Date().toISOString()
+        })
+        .eq('id', leadId);
+      
+      // Log distribution
+      await _supabase
+        .from('crm_distribution_log')
+        .insert([{
+          lead_id: leadId,
+          to_employee: employee,
+          distributed_by: ADMIN_USER,
+          reason: 'bulk_assign',
+          created_at: new Date().toISOString()
+        }]);
+    }
+    
+    toast(`تم توزيع ${leadIds.length} عميل بنجاح`, 'success');
+    closeBulkAssignModal();
+    clearCrmSelection();
+    loadCrmLeads();
+    
+  } catch(err){
+    console.error('Error bulk assigning:', err);
+    toast('خطأ في التوزيع', 'error');
+  }
+}
+
+function bulkChangeStatus(){
+  if(_selectedCrmLeads.size === 0){
+    toast('اختر عملاء أولاً', 'error');
+    return;
+  }
+  
+  document.getElementById('bulkStatusCount').textContent = _selectedCrmLeads.size;
+  document.getElementById('bulkStatusModal').classList.add('open');
+}
+
+async function confirmBulkStatus(){
+  const newStatus = document.getElementById('bulkNewStatus').value;
+  const note = document.getElementById('bulkStatusNote').value.trim();
+  
+  try {
+    const leadIds = Array.from(_selectedCrmLeads);
+    
+    for(const leadId of leadIds){
+      const lead = _crmLeads.find(l => l.id === leadId);
+      if(!lead) continue;
+      
+      const oldStatus = lead.status;
+      
+      await _supabase
+        .from('crm_leads')
+        .update({
+          status: newStatus,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', leadId);
+      
+      // Log status change
+      await _supabase
+        .from('crm_status_log')
+        .insert([{
+          lead_id: leadId,
+          old_status: oldStatus,
+          new_status: newStatus,
+          changed_by: ADMIN_USER,
+          note: note,
+          created_at: new Date().toISOString()
+        }]);
+    }
+    
+    toast(`تم تغيير حالة ${leadIds.length} عميل بنجاح`, 'success');
+    closeBulkStatusModal();
+    clearCrmSelection();
+    loadCrmLeads();
+    
+  } catch(err){
+    console.error('Error bulk status change:', err);
+    toast('خطأ في تغيير الحالة', 'error');
+  }
+}
+
+async function bulkDeleteCrmLeads(){
+  if(_selectedCrmLeads.size === 0){
+    toast('اختر عملاء أولاً', 'error');
+    return;
+  }
+  
+  if(!confirm(`هل أنت متأكد من حذف ${_selectedCrmLeads.size} عميل؟\nهذا الإجراء لا يمكن التراجع عنه.`)){
+    return;
+  }
+  
+  try {
+    const leadIds = Array.from(_selectedCrmLeads);
+    
+    const { error } = await _supabase
+      .from('crm_leads')
+      .delete()
+      .in('id', leadIds);
+    
+    if(error) throw error;
+    
+    toast(`تم حذف ${leadIds.length} عميل بنجاح`, 'success');
+    clearCrmSelection();
+    loadCrmLeads();
+    
+  } catch(err){
+    console.error('Error bulk delete:', err);
+    toast('خطأ في الحذف', 'error');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Add/Edit Lead
+// ─────────────────────────────────────────────────────────────────
+
+function openAddLeadModal(){
+  document.getElementById('leadModalTitle').textContent = 'عميل جديد';
+  document.getElementById('leadEditId').value = '';
+  
+  // Clear form
+  document.getElementById('leadName').value = '';
+  document.getElementById('leadPhone').value = '';
+  document.getElementById('leadEmail').value = '';
+  document.getElementById('leadCompany').value = '';
+  document.getElementById('leadIndustry').value = '';
+  document.getElementById('leadPriority').value = 'medium';
+  document.getElementById('leadStatus').value = 'new';
+  document.getElementById('leadValue').value = '';
+  document.getElementById('leadNotes').value = '';
+  
+  populateEmployeeDropdown('leadAssignedTo');
+  
+  document.getElementById('addLeadModal').classList.add('open');
+}
+
+async function editCrmLead(leadId){
+  const lead = _crmLeads.find(l => l.id === leadId);
+  if(!lead) return;
+  
+  document.getElementById('leadModalTitle').textContent = 'تعديل عميل';
+  document.getElementById('leadEditId').value = leadId;
+  
+  document.getElementById('leadName').value = lead.name || '';
+  document.getElementById('leadPhone').value = lead.phone || '';
+  document.getElementById('leadEmail').value = lead.email || '';
+  document.getElementById('leadCompany').value = lead.company || '';
+  document.getElementById('leadIndustry').value = lead.industry || '';
+  document.getElementById('leadPriority').value = lead.priority || 'medium';
+  document.getElementById('leadStatus').value = lead.status || 'new';
+  document.getElementById('leadValue').value = lead.total_value || '';
+  document.getElementById('leadNotes').value = lead.notes || '';
+  
+  populateEmployeeDropdown('leadAssignedTo');
+  document.getElementById('leadAssignedTo').value = lead.assigned_to || '';
+  
+  document.getElementById('addLeadModal').classList.add('open');
+}
+
+async function saveCrmLead(){
+  const leadId = document.getElementById('leadEditId').value;
+  const name = document.getElementById('leadName').value.trim();
+  const phone = document.getElementById('leadPhone').value.trim();
+  const email = document.getElementById('leadEmail').value.trim();
+  const company = document.getElementById('leadCompany').value.trim();
+  const industry = document.getElementById('leadIndustry').value;
+  const priority = document.getElementById('leadPriority').value;
+  const status = document.getElementById('leadStatus').value;
+  const totalValue = document.getElementById('leadValue').value.trim();
+  const assignedTo = document.getElementById('leadAssignedTo').value;
+  const notes = document.getElementById('leadNotes').value.trim();
+  
+  if(!name){
+    toast('أدخل اسم العميل', 'error');
+    return;
+  }
+  
+  if(!phone){
+    toast('أدخل رقم الهاتف', 'error');
+    return;
+  }
+  
+  try {
+    const leadData = {
+      name,
+      phone,
+      email,
+      company,
+      industry,
+      priority,
+      status,
+      total_value: totalValue ? parseFloat(totalValue) : null,
+      assigned_to: assignedTo || null,
+      notes,
+      updated_at: new Date().toISOString()
+    };
+    
+    if(leadId){
+      // Update existing lead
+      const oldLead = _crmLeads.find(l => l.id === leadId);
+      
+      const { error } = await _supabase
+        .from('crm_leads')
+        .update(leadData)
+        .eq('id', leadId);
+      
+      if(error) throw error;
+      
+      // Log status change if changed
+      if(oldLead && oldLead.status !== status){
+        await _supabase
+          .from('crm_status_log')
+          .insert([{
+            lead_id: leadId,
+            old_status: oldLead.status,
+            new_status: status,
+            changed_by: ADMIN_USER,
+            note: 'تحديث من نموذج التعديل',
+            created_at: new Date().toISOString()
+          }]);
+      }
+      
+      toast('تم تحديث العميل بنجاح', 'success');
+      
+    } else {
+      // Create new lead
+      leadData.id = 'lead_' + Date.now();
+      leadData.created_at = new Date().toISOString();
+      leadData.call_count = 0;
+      leadData.note_count = 0;
+      
+      const { error } = await _supabase
+        .from('crm_leads')
+        .insert([leadData]);
+      
+      if(error) throw error;
+      
+      toast('تم إضافة العميل بنجاح', 'success');
+    }
+    
+    closeLeadModal();
+    loadCrmLeads();
+    
+  } catch(err){
+    console.error('Error saving lead:', err);
+    
+    if(err.message.includes('duplicate') || err.message.includes('unique')){
+      toast('رقم الهاتف مسجل مسبقاً', 'error');
+    } else {
+      toast('خطأ في حفظ العميل', 'error');
+    }
+  }
+}
+
+function closeLeadModal(){
+  document.getElementById('addLeadModal').classList.remove('open');
+}
+
+async function deleteCrmLead(leadId){
+  if(!confirm('هل أنت متأكد من حذف هذا العميل؟')){
+    return;
+  }
+  
+  try {
+    const { error } = await _supabase
+      .from('crm_leads')
+      .delete()
+      .eq('id', leadId);
+    
+    if(error) throw error;
+    
+    toast('تم حذف العميل بنجاح', 'success');
+    loadCrmLeads();
+    
+  } catch(err){
+    console.error('Error deleting lead:', err);
+    toast('خطأ في الحذف', 'error');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// View Lead Details
+// ─────────────────────────────────────────────────────────────────
+
+async function viewLeadDetails(leadId){
+  _currentViewLeadId = leadId;
+  
+  try {
+    // Load lead
+    const { data: lead, error: leadError } = await _supabase
+      .from('crm_leads')
+      .select('*')
+      .eq('id', leadId)
+      .single();
+    
+    if(leadError || !lead){
+      toast('لم يتم العثور على العميل', 'error');
+      return;
+    }
+    
+    // Load status log
+    const { data: statusLog } = await _supabase
+      .from('crm_status_log')
+      .select('*')
+      .eq('lead_id', leadId)
+      .order('created_at', { ascending: false });
+    
+    // Load notes
+    const { data: notes } = await _supabase
+      .from('crm_notes')
+      .select('*')
+      .eq('lead_id', leadId)
+      .order('created_at', { ascending: false });
+    
+    // Load calls
+    const { data: calls } = await _supabase
+      .from('crm_calls')
+      .select('*')
+      .eq('lead_id', leadId)
+      .order('created_at', { ascending: false });
+    
+    // Display lead info
+    document.getElementById('viewLeadName').textContent = lead.name || 'تفاصيل العميل';
+    
+    const infoHtml = `
+      <div><strong>الهاتف:</strong> ${lead.phone || '-'}</div>
+      <div><strong>البريد:</strong> ${lead.email || '-'}</div>
+      <div><strong>الشركة:</strong> ${lead.company || '-'}</div>
+      <div><strong>المجال:</strong> ${lead.industry || '-'}</div>
+      <div><strong>الحالة:</strong> <span class="crm-status-badge crm-status-${lead.status}">${getStatusLabel(lead.status)}</span></div>
+      <div><strong>الأولوية:</strong> <span class="crm-priority-badge crm-priority-${lead.priority}">${getPriorityLabel(lead.priority)}</span></div>
+      <div><strong>الموظف:</strong> ${lead.assigned_to || 'غير موزع'}</div>
+      <div><strong>القيمة:</strong> ${lead.total_value || '0'} جنيه</div>
+      <div style="grid-column:1/-1;"><strong>ملاحظات:</strong> ${lead.notes || '-'}</div>
+    `;
+    document.getElementById('viewLeadInfo').innerHTML = infoHtml;
+    
+    // Display status log
+    const statusLogHtml = (statusLog || []).map(log => {
+      const date = new Date(log.created_at).toLocaleString('ar-EG', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      return `
+        <div style="padding:10px;border-bottom:1px solid var(--border);font-size:.85rem;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <div>
+              <span class="crm-status-badge crm-status-${log.old_status}">${getStatusLabel(log.old_status)}</span>
+              <i class="fas fa-arrow-left" style="margin:0 6px;"></i>
+              <span class="crm-status-badge crm-status-${log.new_status}">${getStatusLabel(log.new_status)}</span>
+            </div>
+            <span style="color:var(--text-muted);">${date}</span>
+          </div>
+          ${log.note ? `<div style="color:var(--text-muted);">${log.note}</div>` : ''}
+          <div style="color:var(--text-muted);font-size:.8rem;">بواسطة: ${log.changed_by}</div>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('viewLeadStatusLog').innerHTML = statusLogHtml || '<p style="color:var(--text-muted);padding:10px;">لا يوجد سجل</p>';
+    
+    // Display calls
+    document.getElementById('viewLeadCallsCount').textContent = (calls || []).length;
+    const callsHtml = (calls || []).map(call => {
+      const date = new Date(call.created_at).toLocaleString('ar-EG', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      return `
+        <div style="padding:10px;border-bottom:1px solid var(--border);font-size:.85rem;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <div><i class="fas fa-phone" style="color:var(--blue);"></i> ${call.employee_name || '-'}</div>
+            <span style="color:var(--text-muted);">${date}</span>
+          </div>
+          <div>المدة: ${call.duration || 0} ثانية | الحالة: ${call.status || '-'}</div>
+          ${call.notes ? `<div style="color:var(--text-muted);margin-top:4px;">${call.notes}</div>` : ''}
+        </div>
+      `;
+    }).join('');
+    document.getElementById('viewLeadCalls').innerHTML = callsHtml || '<p style="color:var(--text-muted);padding:10px;">لا توجد مكالمات</p>';
+    
+    // Display notes
+    document.getElementById('viewLeadNotesCount').textContent = (notes || []).length;
+    const notesHtml = (notes || []).map(note => {
+      const date = new Date(note.created_at).toLocaleString('ar-EG', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      return `
+        <div style="padding:10px;border-bottom:1px solid var(--border);font-size:.85rem;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <strong>${note.user_name}</strong>
+            <span style="color:var(--text-muted);">${date}</span>
+          </div>
+          <div>${note.note}</div>
+          ${note.note_type ? `<div style="color:var(--purple);font-size:.8rem;margin-top:4px;"><i class="fas fa-tag"></i> ${note.note_type}</div>` : ''}
+        </div>
+      `;
+    }).join('');
+    document.getElementById('viewLeadNotes').innerHTML = notesHtml || '<p style="color:var(--text-muted);padding:10px;">لا توجد ملاحظات</p>';
+    
+    document.getElementById('viewLeadModal').classList.add('open');
+    
+  } catch(err){
+    console.error('Error viewing lead details:', err);
+    toast('خطأ في عرض التفاصيل', 'error');
+  }
+}
+
+async function addLeadNote(){
+  const note = document.getElementById('newLeadNote').value.trim();
+  
+  if(!note){
+    toast('أدخل الملاحظة', 'error');
+    return;
+  }
+  
+  if(!_currentViewLeadId){
+    toast('خطأ في تحديد العميل', 'error');
+    return;
+  }
+  
+  try {
+    await _supabase
+      .from('crm_notes')
+      .insert([{
+        lead_id: _currentViewLeadId,
+        user_name: ADMIN_USER,
+        note: note,
+        note_type: 'general',
+        created_at: new Date().toISOString()
+      }]);
+    
+    // Update note count
+    await _supabase
+      .from('crm_leads')
+      .update({ note_count: _supabase.raw('note_count + 1') })
+      .eq('id', _currentViewLeadId);
+    
+    document.getElementById('newLeadNote').value = '';
+    toast('تم إضافة الملاحظة', 'success');
+    
+    // Refresh view
+    viewLeadDetails(_currentViewLeadId);
+    
+  } catch(err){
+    console.error('Error adding note:', err);
+    toast('خطأ في إضافة الملاحظة', 'error');
+  }
+}
+
+function editCrmLeadFromView(){
+  closeViewLeadModal();
+  if(_currentViewLeadId){
+    editCrmLead(_currentViewLeadId);
+  }
+}
+
+function closeViewLeadModal(){
+  document.getElementById('viewLeadModal').classList.remove('open');
+  _currentViewLeadId = null;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Import from Excel
+// ─────────────────────────────────────────────────────────────────
+
+function openImportModal(){
+  _importedLeadsData = [];
+  document.getElementById('importPreview').style.display = 'none';
+  document.getElementById('importConfirmBtn').style.display = 'none';
+  document.getElementById('excelFileInput').value = '';
+  document.getElementById('importLeadsModal').classList.add('open');
+}
+
+function closeImportModal(){
+  document.getElementById('importLeadsModal').classList.remove('open');
+}
+
+function handleExcelFile(input){
+  const file = input.files[0];
+  if(!file){
+    return;
+  }
+  
+  // For now, show info that this requires xlsx library
+  toast('Import Excel feature requires SheetJS library. Contact developer to enable.', 'info', 5000);
+  
+  // TODO: Implement Excel parsing with SheetJS
+  // This would parse the file and populate _importedLeadsData
+  // Then show preview and enable import button
+}
+
+async function confirmImportLeads(){
+  if(_importedLeadsData.length === 0){
+    toast('لا توجد بيانات للاستيراد', 'error');
+    return;
+  }
+  
+  try {
+    const leadsToInsert = _importedLeadsData.map(row => ({
+      id: 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+      name: row.name || row['الاسم'] || '',
+      phone: row.phone || row['الهاتف'] || '',
+      email: row.email || row['البريد الإلكتروني'] || '',
+      company: row.company || row['الشركة'] || '',
+      industry: row.industry || row['المجال'] || '',
+      status: 'new',
+      priority: 'medium',
+      call_count: 0,
+      note_count: 0,
+      created_at: new Date().toISOString()
+    }));
+    
+    const { error } = await _supabase
+      .from('crm_leads')
+      .insert(leadsToInsert);
+    
+    if(error) throw error;
+    
+    toast(`تم استيراد ${leadsToInsert.length} عميل بنجاح`, 'success');
+    closeImportModal();
+    loadCrmLeads();
+    
+  } catch(err){
+    console.error('Error importing leads:', err);
+    toast('خطأ في الاستيراد: ' + err.message, 'error');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Distribution System
+// ─────────────────────────────────────────────────────────────────
+
+async function loadCrmDistribution(){
+  try {
+    // Load distribution stats
+    const unassigned = _crmLeads.filter(l => !l.assigned_to).length;
+    const assigned = _crmLeads.filter(l => l.assigned_to).length;
+    
+    document.getElementById('distUnassignedCount').textContent = unassigned;
+    document.getElementById('distAssignedCount').textContent = assigned;
+    
+    // Load employees and their stats
+    const { data: employees, error } = await _supabase
+      .from('employees')
+      .select('username, full_name')
+      .eq('application_status', 'approved');
+    
+    if(error) throw error;
+    
+    document.getElementById('distActiveEmployees').textContent = (employees || []).length;
+    
+    // Calculate stats per employee
+    const tbody = document.getElementById('distEmployeesTableBody');
+    if(!tbody) return;
+    
+    if(!employees || employees.length === 0){
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted);">
+            لا يوجد موظفين نشطين
+          </td>
+        </tr>
+      `;
+      return;
+    }
+    
+    tbody.innerHTML = employees.map(emp => {
+      const empLeads = _crmLeads.filter(l => l.assigned_to === emp.username);
+      const total = empLeads.length;
+      const newCount = empLeads.filter(l => l.status === 'new').length;
+      const interested = empLeads.filter(l => l.status === 'interested').length;
+      const converted = empLeads.filter(l => l.status === 'converted').length;
+      const conversionRate = total > 0 ? ((converted / total) * 100).toFixed(1) : '0';
+      
+      // Get last activity
+      const lastActivity = empLeads.length > 0 
+        ? Math.max(...empLeads.map(l => new Date(l.updated_at || l.created_at).getTime()))
+        : null;
+      const lastActivityStr = lastActivity 
+        ? new Date(lastActivity).toLocaleDateString('ar-EG', {month: 'short', day: 'numeric'})
+        : '-';
+      
+      return `
+        <tr>
+          <td><strong>${emp.full_name || emp.username}</strong></td>
+          <td>${total}</td>
+          <td>${newCount}</td>
+          <td>${interested}</td>
+          <td>${converted}</td>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="flex:1;background:var(--bg2);height:6px;border-radius:3px;overflow:hidden;">
+                <div style="width:${conversionRate}%;height:100%;background:var(--green);"></div>
+              </div>
+              <span style="font-size:.85rem;color:var(--green);font-weight:600;">${conversionRate}%</span>
+            </div>
+          </td>
+          <td>${lastActivityStr}</td>
+        </tr>
+      `;
+    }).join('');
+    
+  } catch(err){
+    console.error('Error loading distribution:', err);
+    toast('خطأ في تحميل التوزيع', 'error');
+  }
+}
+
+function openAutoDistributeModal(){
+  const unassigned = _crmLeads.filter(l => !l.assigned_to).length;
+  
+  if(unassigned === 0){
+    toast('لا يوجد عملاء غير موزعين', 'info');
+    return;
+  }
+  
+  document.getElementById('autoDistUnassigned').textContent = unassigned;
+  
+  // Load employees
+  loadAutoDistEmployeeList();
+  
+  document.getElementById('autoDistributeModal').classList.add('open');
+}
+
+async function loadAutoDistEmployeeList(){
+  try {
+    const { data: employees, error } = await _supabase
+      .from('employees')
+      .select('username, full_name')
+      .eq('application_status', 'approved');
+    
+    if(error) throw error;
+    
+    document.getElementById('autoDistEmployees').textContent = (employees || []).length;
+    
+    const list = document.getElementById('autoDistEmployeeList');
+    if(!employees || employees.length === 0){
+      list.innerHTML = '<p style="color:var(--text-muted);padding:10px;">لا يوجد موظفين</p>';
+      return;
+    }
+    
+    list.innerHTML = employees.map(emp => `
+      <label style="display:flex;align-items:center;gap:8px;padding:8px;cursor:pointer;border-radius:6px;" 
+             onmouseover="this.style.background='var(--bg)'" 
+             onmouseout="this.style.background='transparent'">
+        <input type="checkbox" class="auto-dist-emp-check" value="${emp.username}" checked>
+        <span>${emp.full_name || emp.username}</span>
+      </label>
+    `).join('');
+    
+  } catch(err){
+    console.error('Error loading employees:', err);
+  }
+}
+
+async function confirmAutoDistribute(){
+  try {
+    const method = document.getElementById('distributionMethod').value;
+    const filter = document.getElementById('distributionFilter').value;
+    
+    // Get selected employees
+    const selectedEmps = Array.from(document.querySelectorAll('.auto-dist-emp-check:checked')).map(cb => cb.value);
+    
+    if(selectedEmps.length === 0){
+      toast('اختر موظف واحد على الأقل', 'error');
+      return;
+    }
+    
+    // Get leads to distribute
+    let leadsToDistribute = _crmLeads.filter(l => !l.assigned_to);
+    
+    if(filter === 'new_only'){
+      leadsToDistribute = leadsToDistribute.filter(l => l.status === 'new');
+    } else if(filter === 'high_priority'){
+      leadsToDistribute = leadsToDistribute.filter(l => ['high', 'urgent'].includes(l.priority));
+    }
+    
+    if(leadsToDistribute.length === 0){
+      toast('لا يوجد عملاء متطابقين مع  الفلتر', 'info');
+      return;
+    }
+    
+    // Simple equal distribution
+    const leadsPerEmp = Math.floor(leadsToDistribute.length / selectedEmps.length);
+    let empIndex = 0;
+    
+    for(let i = 0; i < leadsToDistribute.length; i++){
+      const lead = leadsToDistribute[i];
+      const employee = selectedEmps[empIndex];
+      
+      await _supabase
+        .from('crm_leads')
+        .update({
+          assigned_to: employee,
+          assigned_at: new Date().toISOString()
+        })
+        .eq('id', lead.id);
+      
+      // Log distribution
+      await _supabase
+        .from('crm_distribution_log')
+        .insert([{
+          lead_id: lead.id,
+          to_employee: employee,
+          distributed_by: ADMIN_USER,
+          reason: 'auto_distribute',
+          created_at: new Date().toISOString()
+        }]);
+      
+      // Round-robin assignment
+      empIndex = (empIndex + 1) % selectedEmps.length;
+    }
+    
+    toast(`تم توزيع ${leadsToDistribute.length} عميل على ${selectedEmps.length} موظف`, 'success');
+    closeAutoDistributeModal();
+    loadCrmLeads();
+    loadCrmDistribution();
+    
+  } catch(err){
+    console.error('Error auto distributing:', err);
+    toast('خطأ في التوزيع التلقائي', 'error');
+  }
+}
+
+function closeAutoDistributeModal(){
+  document.getElementById('autoDistributeModal').classList.remove('open');
+}
+
+function closeBulkAssignModal(){
+  document.getElementById('bulkAssignModal').classList.remove('open');
+}
+
+function closeBulkStatusModal(){
+  document.getElementById('bulkStatusModal').classList.remove('open');
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Reports and Export
+// ─────────────────────────────────────────────────────────────────
+
+async function loadCrmReports(){
+  const dateFrom = document.getElementById('reportDateFrom').value;
+  const dateTo = document.getElementById('reportDateTo').value;
+  
+  if(!dateFrom || !dateTo){
+    toast('اختر نطاق التاريخ', 'error');
+    return;
+  }
+  
+  try {
+    // Load leads within date range
+    const { data: leads, error } = await _supabase
+      .from('crm_leads')
+      .select('*')
+      .gte('created_at', dateFrom)
+      .lte('created_at', dateTo + 'T23:59:59');
+    
+    if(error) throw error;
+    
+    // Calculate summary
+    const total = (leads || []).length;
+    const converted = (leads || []).filter(l => l.status === 'converted').length;
+    const conversionRate = total > 0 ? ((converted / total) * 100).toFixed(1) : '0';
+    const totalValue = (leads || []).reduce((sum, l) => sum + (l.total_value || 0), 0);
+    
+    const summaryHtml = `
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+        <div style="background:rgba(59,130,246,0.1);padding:16px;border-radius:12px;text-align:center;">
+          <div style="font-size:2rem;font-weight:700;color:var(--blue);">${total}</div>
+          <div style="color:var(--text-muted);font-size:.9rem;">إجمالي العملاء</div>
+        </div>
+        <div style="background:rgba(34,197,94,0.1);padding:16px;border-radius:12px;text-align:center;">
+          <div style="font-size:2rem;font-weight:700;color:var(--green);">${converted}</div>
+          <div style="color:var(--text-muted);font-size:.9rem;">تم التحويل</div>
+        </div>
+        <div style="background:rgba(245,158,11,0.1);padding:16px;border-radius:12px;text-align:center;">
+          <div style="font-size:2rem;font-weight:700;color:var(--orange);">${conversionRate}%</div>
+          <div style="color:var(--text-muted);font-size:.9rem;">نسبة التحويل</div>
+        </div>
+        <div style="background:rgba(168,85,247,0.1);padding:16px;border-radius:12px;text-align:center;">
+          <div style="font-size:2rem;font-weight:700;color:var(--purple);">${totalValue}</div>
+          <div style="color:var(--text-muted);font-size:.9rem;">القيمة الإجمالية</div>
+        </div>
+      </div>
+    `;
+    
+    document.getElementById('reportSummaryCards').innerHTML = summaryHtml;
+    toast('تم تحميل التقرير', 'success');
+    
+  } catch(err){
+    console.error('Error loading reports:', err);
+    toast('خطأ في تحميل التقرير', 'error');
+  }
+}
+
+function exportCrmReport(){
+  toast('Export feature will be available soon', 'info');
+  // TODO: Implement CSV/Excel export
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Helper Functions
+// ─────────────────────────────────────────────────────────────────
+
+function getStatusLabel(status){
+  const labels = {
+    new: 'جديد',
+    interested: 'مهتم',
+    negotiating: 'تفاوض',
+    converted: 'تم التحويل',
+    not_interested: 'غير مهتم',
+    no_answer: 'لا يرد'
+  };
+  return labels[status] || status;
+}
+
+function getPriorityLabel(priority){
+  const labels = {
+    low: 'منخفضة',
+    medium: 'متوسطة',
+    high: 'مرتفعة',
+    urgent: 'عاجلة'
+  };
+  return labels[priority] || priority;
+}
+
+async function populateEmployeeDropdown(selectId){
+  try {
+    const { data: employees, error } = await _supabase
+      .from('employees')
+      .select('username, full_name')
+      .eq('application_status', 'approved')
+      .order('full_name');
+    
+    if(error) throw error;
+    
+    const select = document.getElementById(selectId);
+    if(!select) return;
+    
+    // Keep first option (empty/default)
+    const firstOption = select.options[0];
+    select.innerHTML = '';
+    if(firstOption) select.appendChild(firstOption);
+    
+    (employees || []).forEach(emp => {
+      const option = document.createElement('option');
+      option.value = emp.username;
+      option.textContent = emp.full_name || emp.username;
+      select.appendChild(option);
+    });
+    
+  } catch(err){
+    console.error('Error populating employee dropdown:', err);
+  }
 }
 
 
