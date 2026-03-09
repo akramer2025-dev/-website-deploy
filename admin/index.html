@@ -6608,9 +6608,9 @@ async function downloadEmployeeContractPDF(empId){
         <!-- Header -->
         <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #3498db;padding-bottom:20px;margin-bottom:30px;">
           <div style="text-align:right;">
-            <h1 style="margin:0;font-size:22px;color:#2c3e50;font-weight:900;">RemuStore</h1>
-            <p style="margin:4px 0 0;font-size:12px;color:#7f8c8d;">Digital Marketing Solutions</p>
-            <p style="margin:2px 0 0;font-size:11px;color:#95a5a6;">www.remostoreegy.com</p>
+            <h1 style="margin:0;font-size:22px;color:#2c3e50;font-weight:900;">Akram Mostafa</h1>
+            <p style="margin:4px 0 0;font-size:12px;color:#7f8c8d;">أكرم مصطفى - خبير تسويق رقمي ومطور تطبيقات</p>
+            <p style="margin:2px 0 0;font-size:11px;color:#95a5a6;">www.akrammostafa.com</p>
           </div>
           <div style="text-align:left;">
             <img src="../images/1772173627537.png" style="width:70px;height:70px;object-fit:contain;" onerror="this.style.display='none'">
@@ -6703,7 +6703,7 @@ async function downloadEmployeeContractPDF(empId){
               <p style="font-size:14px;font-weight:700;color:#2c3e50;margin-bottom:10px;">توقيع ممثل الشركة</p>
               <div style="height:60px;"></div>
               <div style="border-top:1px solid #bdc3c7;padding-top:8px;">
-                <p style="font-size:12px;color:#555;margin:0;">إدارة RemuStore</p>
+                <p style="font-size:12px;color:#555;margin:0;">أكرم مصطفى</p>
                 <p style="font-size:11px;color:#999;margin:2px 0 0;">${contractDate}</p>
               </div>
             </div>
@@ -6713,7 +6713,7 @@ async function downloadEmployeeContractPDF(empId){
         <!-- Footer -->
         <div style="margin-top:30px;padding-top:15px;border-top:1px solid #ecf0f1;text-align:center;">
           <p style="font-size:10px;color:#bdc3c7;margin:0;">هذا العقد ملزم قانونياً لكلا الطرفين بمجرد التوقيع عليه</p>
-          <p style="font-size:10px;color:#bdc3c7;margin:3px 0 0;">RemuStore - Digital Marketing Solutions | www.remostoreegy.com</p>
+          <p style="font-size:10px;color:#bdc3c7;margin:3px 0 0;">Akram Mostafa - أكرم مصطفى | www.akrammostafa.com</p>
         </div>
       </div>
     `;
@@ -6784,16 +6784,16 @@ async function sendContractToEmployee(empId, phone, name){
   if (!formattedPhone.startsWith('20')) formattedPhone = '20' + formattedPhone;
   
   // Build contract download link message
-  const siteUrl = window.location.origin || 'https://remostoreegy.com';
+  const siteUrl = window.location.origin || 'https://akrammostafa.com';
   const contractMsg = encodeURIComponent(
     `مرحباً ${name}! 🎉\n\n` +
-    `تم قبول طلبك للعمل في RemuStore بنجاح! ✅\n\n` +
+    `تم قبول طلبك للعمل معنا بنجاح! ✅\n\n` +
     `📋 تفاصيل العقد:\n` +
     `• الوظيفة: سيتم إرفاق العقد\n` +
     `• يرجى الاحتفاظ بنسخة من العقد\n\n` +
     `ملاحظة: سيتم إرسال نسخة PDF من العقد في رسالة منفصلة.\n\n` +
     `مرحباً بك في فريق العمل! 🚀\n` +
-    `RemuStore - Digital Marketing`
+    `Akram Mostafa - أكرم مصطفى`
   );
   
   window.open(`https://wa.me/${formattedPhone}?text=${contractMsg}`, '_blank');
