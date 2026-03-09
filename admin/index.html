@@ -1048,26 +1048,34 @@ button{cursor:pointer;}
 .slide-field input,.slide-field select,.slide-field textarea{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:.82rem;outline:none;}
 .slide-field textarea{resize:vertical;}
 
-/* ========== CRM STYLES ========== */
+/* ========== CRM STYLES - ENHANCED ========== */
 .crm-status-tabs{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:4px 0;}
 .crm-status-tabs::-webkit-scrollbar{display:none;}
-.crm-status-tab{display:flex;align-items:center;gap:8px;padding:11px 20px;border-radius:12px;background:var(--card2);border:1px solid var(--border);cursor:pointer;transition:all .3s ease;white-space:nowrap;font-size:.85rem;font-weight:700;color:var(--muted);position:relative;overflow:hidden;}
-.crm-status-tab::before{content:'';position:absolute;inset:0;background:var(--crm-grad);opacity:0;transition:opacity .3s;}
-.crm-status-tab:hover{border-color:var(--pink);color:var(--text-primary);transform:translateY(-2px);box-shadow:0 4px 12px rgba(233,78,119,0.2);}
-.crm-status-tab.active{background:var(--crm-primary-light);border-color:var(--pink);color:#fff;box-shadow:0 0 20px rgba(233,78,119,0.25);}
-.crm-status-tab.active::before{opacity:0.08;}
-.crm-status-tab .tab-count{background:var(--bg);padding:3px 9px;border-radius:8px;font-size:.72rem;font-weight:800;z-index:1;position:relative;}
-.crm-status-tab.active .tab-count{background:var(--crm-grad);color:white;box-shadow:0 2px 8px rgba(233,78,119,0.3);}
+.crm-status-tab{display:flex;align-items:center;gap:8px;padding:12px 22px;border-radius:14px;background:var(--card2);border:1.5px solid var(--border);cursor:pointer;transition:all .35s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;font-size:.87rem;font-weight:700;color:var(--muted);position:relative;overflow:hidden;}
+.crm-status-tab::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--tab-color,var(--pink)),rgba(247,147,30,0.8));opacity:0;transition:opacity .35s ease;z-index:0;}
+.crm-status-tab i{z-index:1;position:relative;transition:transform .35s ease;}
+.crm-status-tab:hover{border-color:var(--tab-color,var(--pink));color:var(--text-primary);transform:translateY(-3px);box-shadow:0 8px 20px rgba(var(--tab-color-rgb,233,78,119),0.25);}
+.crm-status-tab:hover::before{opacity:0.08;}
+.crm-status-tab:hover i{transform:rotate(10deg) scale(1.1);}
+.crm-status-tab.active{background:linear-gradient(135deg,var(--tab-color,#e94e77),rgba(var(--tab-color-rgb,233,78,119),0.9));border-color:transparent;color:#fff;box-shadow:0 8px 28px rgba(var(--tab-color-rgb,233,78,119),0.4),inset 0 1px 0 rgba(255,255,255,0.1);}
+.crm-status-tab.active::before{opacity:0.15;background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);}
+.crm-status-tab.active .tab-count{background:rgba(255,255,255,0.25);color:#fff;backdrop-filter:blur(10px);box-shadow:0 2px 10px rgba(0,0,0,0.15);}
+.crm-status-tab .tab-count{background:var(--bg);padding:4px 11px;border-radius:10px;font-size:.74rem;font-weight:800;z-index:1;position:relative;transition:all .3s ease;}
+.crm-stat-card{transition:all .4s cubic-bezier(0.4,0,0.2,1);cursor:pointer;position:relative;}
+.crm-stat-card::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);opacity:0;transition:opacity .3s;pointer-events:none;}
+.crm-stat-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.12)!important;}
+.crm-stat-card:hover::after{opacity:1;}
 .crm-lead-row{cursor:pointer;transition:all .3s ease;}
-.crm-lead-row:hover{background:linear-gradient(135deg,rgba(233,78,119,0.04),rgba(247,147,30,0.03));border-color:rgba(233,78,119,0.2)!important;}
-.crm-lead-avatar{width:40px;height:40px;border-radius:50%;background:var(--crm-grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;margin-left:10px;box-shadow:0 4px 12px rgba(233,78,119,0.3);border:2px solid rgba(233,78,119,0.2);position:relative;}
-.crm-lead-avatar::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);}
-.crm-status-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .25s ease;user-select:none;border:1px solid transparent;position:relative;overflow:hidden;}
-.crm-status-badge::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:inherit;}
-.crm-status-badge:hover{transform:scale(1.06) translateY(-1px);box-shadow:0 4px 16px currentColor;border-color:currentColor;}
-.crm-status-badge:hover::before{opacity:0.1;}
-.crm-status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:0 0 8px currentColor;animation:statusPulse 2s ease infinite;}
-@keyframes statusPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.7;transform:scale(0.9);}}
+.crm-lead-row:hover{background:linear-gradient(135deg,rgba(233,78,119,0.05),rgba(247,147,30,0.04));border-color:rgba(233,78,119,0.25)!important;transform:translateX(-4px);}
+.crm-lead-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#e94e77,#f7931e);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:800;margin-left:10px;box-shadow:0 6px 16px rgba(233,78,119,0.35);border:2.5px solid rgba(255,255,255,0.2);position:relative;transition:all .3s ease;}
+.crm-lead-avatar::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);transition:opacity .3s;}
+.crm-lead-row:hover .crm-lead-avatar{transform:scale(1.1) rotate(5deg);box-shadow:0 8px 24px rgba(233,78,119,0.5);}
+.crm-status-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 15px;border-radius:20px;font-size:.76rem;font-weight:700;cursor:pointer;transition:all .28s cubic-bezier(0.4,0,0.2,1);user-select:none;border:1.5px solid transparent;position:relative;overflow:hidden;}
+.crm-status-badge::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:inherit;background:currentColor;}
+.crm-status-badge:hover{transform:scale(1.08) translateY(-2px);box-shadow:0 6px 20px currentColor;border-color:currentColor;}
+.crm-status-badge:hover::before{opacity:0.12;}
+.crm-status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:0 0 10px currentColor;animation:statusPulse 2.5s ease-in-out infinite;}
+@keyframes statusPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(0.85);}}
 .crm-status-new{background:linear-gradient(135deg,rgba(96,165,250,0.2),rgba(59,130,246,0.15));color:#60a5fa;}.crm-status-new .crm-status-dot{background:#60a5fa;}.crm-status-new:hover::before{background:linear-gradient(135deg,#60a5fa,#3b82f6);}
 .crm-status-interested{background:linear-gradient(135deg,rgba(52,211,153,0.2),rgba(16,185,129,0.15));color:#34d399;}.crm-status-interested .crm-status-dot{background:#34d399;}.crm-status-interested:hover::before{background:linear-gradient(135deg,#34d399,#10b981);}
 .crm-status-negotiating{background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(245,158,11,0.15));color:#fbbf24;}.crm-status-negotiating .crm-status-dot{background:#fbbf24;}.crm-status-negotiating:hover::before{background:linear-gradient(135deg,#fbbf24,#f59e0b);}
@@ -1413,13 +1421,13 @@ button{cursor:pointer;}
 
       <!-- Status Tabs -->
       <div class="crm-status-tabs" style="display:flex;gap:10px;padding:16px 0;overflow-x:auto;margin-bottom:20px">
-        <button class="crm-status-tab active" data-status="all" onclick="filterCrmLeadsByStatus('all')"><i class="fas fa-list"></i> الكل <span class="tab-count" id="tabCountAll">0</span></button>
-        <button class="crm-status-tab" data-status="new" onclick="filterCrmLeadsByStatus('new')" style="--tab-color:#3b82f6"><i class="fas fa-star"></i> جديد <span class="tab-count" id="tabCountNew">0</span></button>
-        <button class="crm-status-tab" data-status="interested" onclick="filterCrmLeadsByStatus('interested')" style="--tab-color:#10b981"><i class="fas fa-thumbs-up"></i> مهتم <span class="tab-count" id="tabCountInterested">0</span></button>
-        <button class="crm-status-tab" data-status="negotiating" onclick="filterCrmLeadsByStatus('negotiating')" style="--tab-color:#f59e0b"><i class="fas fa-handshake"></i> تفاوض <span class="tab-count" id="tabCountNegotiating">0</span></button>
-        <button class="crm-status-tab" data-status="converted" onclick="filterCrmLeadsByStatus('converted')" style="--tab-color:#22c55e"><i class="fas fa-check-circle"></i> محول <span class="tab-count" id="tabCountConverted">0</span></button>
-        <button class="crm-status-tab" data-status="not_interested" onclick="filterCrmLeadsByStatus('not_interested')" style="--tab-color:#ef4444"><i class="fas fa-times-circle"></i> غير مهتم <span class="tab-count" id="tabCountNotInterested">0</span></button>
-        <button class="crm-status-tab" data-status="no_answer" onclick="filterCrmLeadsByStatus('no_answer')" style="--tab-color:#64748b"><i class="fas fa-phone-slash"></i> لا يرد <span class="tab-count" id="tabCountNoAnswer">0</span></button>
+        <button class="crm-status-tab active" data-status="all" onclick="filterCrmLeadsByStatus('all')" style="--tab-color:#6366f1;--tab-color-rgb:99,102,241"><i class="fas fa-list"></i> الكل <span class="tab-count" id="tabCountAll">0</span></button>
+        <button class="crm-status-tab" data-status="new" onclick="filterCrmLeadsByStatus('new')" style="--tab-color:#3b82f6;--tab-color-rgb:59,130,246"><i class="fas fa-star"></i> جديد <span class="tab-count" id="tabCountNew">0</span></button>
+        <button class="crm-status-tab" data-status="interested" onclick="filterCrmLeadsByStatus('interested')" style="--tab-color:#10b981;--tab-color-rgb:16,185,129"><i class="fas fa-thumbs-up"></i> مهتم <span class="tab-count" id="tabCountInterested">0</span></button>
+        <button class="crm-status-tab" data-status="negotiating" onclick="filterCrmLeadsByStatus('negotiating')" style="--tab-color:#f59e0b;--tab-color-rgb:245,158,11"><i class="fas fa-handshake"></i> تفاوض <span class="tab-count" id="tabCountNegotiating">0</span></button>
+        <button class="crm-status-tab" data-status="converted" onclick="filterCrmLeadsByStatus('converted')" style="--tab-color:#22c55e;--tab-color-rgb:34,197,94"><i class="fas fa-check-circle"></i> محول <span class="tab-count" id="tabCountConverted">0</span></button>
+        <button class="crm-status-tab" data-status="not_interested" onclick="filterCrmLeadsByStatus('not_interested')" style="--tab-color:#ef4444;--tab-color-rgb:239,68,68"><i class="fas fa-times-circle"></i> غير مهتم <span class="tab-count" id="tabCountNotInterested">0</span></button>
+        <button class="crm-status-tab" data-status="no_answer" onclick="filterCrmLeadsByStatus('no_answer')" style="--tab-color:#64748b;--tab-color-rgb:100,116,139"><i class="fas fa-phone-slash"></i> لا يرد <span class="tab-count" id="tabCountNoAnswer">0</span></button>
       </div>
 
       <!-- Search and Filters -->
