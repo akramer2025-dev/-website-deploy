@@ -1557,6 +1557,7 @@ button{cursor:pointer;}
       <div class="adm-nav-item" onclick="showSection('settings')"><i class="fas fa-cog"></i> الإعدادات</div>
       <div class="adm-nav-item" onclick="window.open('../store.html','_blank')"><i class="fas fa-store"></i> متجر رمو</div>
       <div class="adm-nav-item" onclick="window.open('../index.html','_blank')"><i class="fas fa-external-link-alt"></i> زيارة الموقع</div>
+      <div class="adm-nav-item" onclick="logoutUser()" style="color:#ef4444;border-top:1px solid var(--border);margin-top:12px;padding-top:12px;"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</div>
     </div>
     <div class="adm-sidebar-footer"><p>Akram Mostafa &copy; 2026</p></div>
   </aside>
@@ -3347,6 +3348,16 @@ async function doAdminLogin(){
     console.log('Entered password:', p);
     console.log('Passwords match?', empCheck.password === p);
     
+    // TEMPORARY DEBUG: Show comparison on screen
+    if(empCheck.password !== p) {
+      const msg = `❌ تطابق كلمة المرور فشل!\n\n` +
+                  `المحفوظ في القاعدة: "${empCheck.password}"\n` +
+                  `المدخل: "${p}"\n\n` +
+                  `طول المحفوظ: ${empCheck.password?.length || 0}\n` +
+                  `طول المدخل: ${p.length}`;
+      alert(msg);
+    }
+    
     // Check if password matches
     if(empCheck.password !== p){
       console.log('❌ Password mismatch');
@@ -3373,7 +3384,7 @@ async function doAdminLogin(){
       }
       
       // Employee login successful
-      localStorage.setItem('am_admin_auth','1');
+      localStorage.setItem('am_employee_auth','1');  // ⚠️ Changed: Different auth key for employees
       localStorage.setItem('am_user_type','employee');
       localStorage.setItem('am_employee_id', employee.id);
       localStorage.setItem('am_username', employee.username);
@@ -3386,7 +3397,11 @@ async function doAdminLogin(){
       // Show welcome message
       toast(`مرحباً ${employee.full_name || employee.username}! 👋`, 'success');
       
-      try { initApp(); } catch(e) { console.error('initApp error:', e); }
+      try { 
+        initApp();
+        // Apply permission restrictions after init
+        setTimeout(() => applyEmployeePermissions(), 100);
+      } catch(e) { console.error('initApp error:', e); }
       return;
     }
     
@@ -3417,10 +3432,21 @@ function doLogout(){
 }
 document.addEventListener('DOMContentLoaded',()=>{
   ['loginUser','loginPass'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')doAdminLogin();}));
-  if(localStorage.getItem('am_admin_auth')==='1'){
+  
+  // Check if user is already logged in (admin or employee)
+  const isAdmin = localStorage.getItem('am_admin_auth')==='1';
+  const isEmployee = localStorage.getItem('am_employee_auth')==='1';
+  
+  if(isAdmin || isEmployee){
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminApp').style.display='block';
-    try { initApp(); } catch(e) { console.error('initApp error:', e); }
+    try { 
+      initApp();
+      // If employee, apply permissions
+      if(isEmployee) {
+        setTimeout(() => applyEmployeePermissions(), 100);
+      }
+    } catch(e) { console.error('initApp error:', e); }
   }
 });
 
@@ -3625,6 +3651,93 @@ async function updateBadges(){
   let totalLecs = 0; Object.values(allLecs).forEach(v=>{ totalLecs += v.length; });
   const lecsEl = document.getElementById('lecsCount'); if(lecsEl) lecsEl.textContent = totalLecs;
   const recLecsEl = document.getElementById('recLecsBadge'); if(recLecsEl) recLecsEl.textContent = getRecordedLectures().length;
+}
+
+// 🔒 Apply employee permission restrictions
+function applyEmployeePermissions() {
+  const userType = localStorage.getItem('am_user_type');
+  
+  // If admin, show everything
+  if(userType === 'admin') {
+    return;
+  }
+  
+  // If employee, check permissions
+  if(userType === 'employee') {
+    try {
+      const permissions = JSON.parse(localStorage.getItem('am_permissions') || '{}');
+      console.log('🔒 Applying employee permissions:', permissions);
+      
+      // Map of section IDs to permission keys
+      const sectionPermissions = {
+        'dashboard': 'dashboard',
+        'employees': 'employees',
+        'students': null, // Always hide students for employees
+        'portfolio': 'portfolio',
+        'webPrices': 'projects',
+        'mobilePrices': 'projects',
+        'requests': 'join_requests',
+        'lectures': 'courses',
+        'recordedLectures': 'lectures',
+        'empRequests': 'employees',
+        'crm': 'crm'
+      };
+      
+      // Hide navigation items based on permissions
+      Object.entries(sectionPermissions).forEach(([section, permKey]) => {
+        const navItem = document.querySelector(`.adm-nav-item[onclick*="'${section}'"]`);
+        if(navItem) {
+          // If no permission key or employee doesn't have permission
+          if(!permKey || !permissions[permKey]) {
+            navItem.style.display = 'none';
+            console.log(`🔒 Hidden section: ${section}`);
+          }
+        }
+      });
+      
+      // Always hide students section for employees
+      const studentsNav = document.querySelector(`.adm-nav-item[onclick*="'students'"]`);
+      if(studentsNav) studentsNav.style.display = 'none';
+      
+      // Hide settings for employees
+      const settingsNav = document.querySelector(`.adm-nav-item[onclick*="'settings'"]`);
+      if(settingsNav) settingsNav.style.display = 'none';
+      
+      // Show only allowed first section
+      const allowedSections = Object.keys(sectionPermissions).filter(s => permissions[sectionPermissions[s]]);
+      if(allowedSections.length > 0) {
+        showSection(allowedSections[0]);
+      } else {
+        // No permissions? Show message
+        document.getElementById('adminApp').innerHTML = `
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;color:var(--muted);">
+            <i class="fas fa-lock" style="font-size:4rem;margin-bottom:20px;opacity:0.3;"></i>
+            <h2>لا توجد صلاحيات</h2>
+            <p>لم يتم منحك أي صلاحيات بعد. يرجى التواصل مع المدير.</p>
+          </div>`;
+      }
+      
+    } catch(e) {
+      console.error('Error applying permissions:', e);
+    }
+  }
+}
+
+// 🚪 Logout function
+function logoutUser() {
+  if(!confirm('هل تريد تسجيل الخروج؟')) return;
+  
+  // Clear all auth data
+  localStorage.removeItem('am_admin_auth');
+  localStorage.removeItem('am_employee_auth');
+  localStorage.removeItem('am_user_type');
+  localStorage.removeItem('am_employee_id');
+  localStorage.removeItem('am_username');
+  localStorage.removeItem('am_employee_type');
+  localStorage.removeItem('am_permissions');
+  
+  // Reload page to show login screen
+  window.location.reload();
 }
 
 function showSection(name){
