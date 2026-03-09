@@ -24,6 +24,11 @@ CREATE TABLE IF NOT EXISTS employees (
     selfie_url TEXT,
     signature_url TEXT,
     
+    -- نوع الموظف وصلاحياته
+    employee_type TEXT DEFAULT 'contract', -- permanent, contract
+    permissions JSONB DEFAULT '{}',
+    is_active BOOLEAN DEFAULT TRUE,
+    
     -- حالة الطلب
     application_status TEXT DEFAULT 'incomplete',
     contract_accepted BOOLEAN DEFAULT FALSE,

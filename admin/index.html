@@ -260,6 +260,19 @@ button{cursor:pointer;}
 .btn-send-email{background:rgba(59,130,246,0.15);color:#3b82f6;border:1px solid rgba(59,130,246,0.3);}
 .btn-send-email:hover{background:#3b82f6;color:#fff;}
 
+/* PERMISSIONS SYSTEM */
+.radio-option input[type="radio"]:checked + div,
+.radio-option:has(input[type="radio"]:checked){border-color:var(--pink);background:rgba(233,78,119,0.08);}
+.permission-group{margin-bottom:16px;}
+.permission-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:all .25s;font-size:.85rem;font-weight:600;}
+.permission-item:hover{border-color:var(--pink);background:rgba(233,78,119,0.05);}
+.permission-item.main-permission{font-weight:700;background:linear-gradient(135deg,rgba(233,78,119,0.08),rgba(247,147,30,0.05));border-color:rgba(233,78,119,0.2);}
+.permission-item.sub-permission{margin-right:32px;font-size:.8rem;background:var(--bg);font-weight:600;color:var(--muted);}
+.permission-item input[type="checkbox"]{width:18px;height:18px;cursor:pointer;accent-color:var(--pink);}
+.permission-item.main-permission i{font-size:1rem;}
+.permission-item span{flex:1;}
+.sub-permissions{display:flex;flex-direction:column;gap:6px;margin-top:6px;}
+
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,13,27,0.85);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(8px);}
 .modal-overlay.open{display:flex;}
@@ -1504,6 +1517,234 @@ button{cursor:pointer;}
           <option value="مصمم جرافيك">مصمم جرافيك</option>
           <option value="مدير عام">مدير عام</option>
         </select>
+      </div>
+
+      <!-- نوع الموظف -->
+      <div class="form-field">
+        <label><i class="fas fa-user-tag"></i> نوع الموظف *</label>
+        <div style="display:flex;gap:16px;margin-top:10px;">
+          <label class="radio-option" style="flex:1;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg2);border:2px solid var(--border);border-radius:12px;transition:all .3s;">
+            <input type="radio" name="empType" value="permanent" onchange="toggleEmployeeTypeFields()" style="width:18px;height:18px;cursor:pointer;">
+            <div>
+              <div style="font-weight:700;color:#fff;font-size:.9rem;"><i class="fas fa-user-check" style="color:#22c55e;margin-left:6px;"></i>موظف دائم</div>
+              <div style="font-size:.75rem;color:var(--muted);margin-top:2px;">يعمل معنا بشكل مباشر</div>
+            </div>
+          </label>
+          <label class="radio-option" style="flex:1;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg2);border:2px solid var(--border);border-radius:12px;transition:all .3s;">
+            <input type="radio" name="empType" value="contract" checked onchange="toggleEmployeeTypeFields()" style="width:18px;height:18px;cursor:pointer;">
+            <div>
+              <div style="font-weight:700;color:#fff;font-size:.9rem;"><i class="fas fa-file-signature" style="color:#3b82f6;margin-left:6px;"></i>تعاقد</div>
+              <div style="font-size:.75rem;color:var(--muted);margin-top:2px;">إرسال عقد للموظف</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- الصلاحيات - تظهر فقط للموظف الدائم -->
+      <div class="form-field" id="empPermissionsSection" style="display:none;">
+        <label style="margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-shield-alt"></i> صلاحيات الموظف
+          <button type="button" onclick="toggleAllPermissions()" style="margin-right:auto;padding:4px 12px;background:var(--crm-grad);border:none;border-radius:8px;color:#fff;font-size:.75rem;font-weight:700;cursor:pointer;">
+            <i class="fas fa-check-double"></i> تحديد الكل
+          </button>
+        </label>
+        <div style="max-height:250px;overflow-y:auto;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;">
+          
+          <!-- لوحة التحكم -->
+          <div class="permission-group">
+            <label class="permission-item main-permission">
+              <input type="checkbox" class="perm-checkbox main-checkbox" data-group="dashboard" onchange="toggleGroupPermissions('dashboard')">
+              <i class="fas fa-th-large" style="color:var(--pink);"></i>
+              <span>لوحة التحكم</span>
+            </label>
+          </div>
+
+          <!-- معرض الأعمال -->
+          <div class="permission-group">
+            <label class="permission-item main-permission">
+              <input type="checkbox" class="perm-checkbox main-checkbox" data-group="portfolio" onchange="toggleGroupPermissions('portfolio')">
+              <i class="fas fa-images" style="color:#3b82f6;"></i>
+              <span>معرض الأعمال</span>
+            </label>
+            <div class="sub-permissions" data-group="portfolio">
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="portfolio" data-action="view">
+                <span>عرض</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="portfolio" data-action="edit">
+                <span>تعديل</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="portfolio" data-action="delete">
+                <span>حذف</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- المشاريع -->
+          <div class="permission-group">
+            <label class="permission-item main-permission">
+              <input type="checkbox" class="perm-checkbox main-checkbox" data-group="projects" onchange="toggleGroupPermissions('projects')">
+              <i class="fas fa-project-diagram" style="color:#22c55e;"></i>
+              <span>المشاريع</span>
+            </label>
+            <div class="sub-permissions" data-group="projects">
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="projects" data-action="view">
+                <span>عرض</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="projects" data-action="edit">
+                <span>تعديل</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="projects" data-action="delete">
+                <span>حذف</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- الخطط التسويقية -->
+          <div class="permission-group">
+            <label class="permission-item main-permission">
+              <input type="checkbox" class="perm-checkbox main-checkbox" data-group="marketing" onchange="toggleGroupPermissions('marketing')">
+              <i class="fas fa-chart-line" style="color:#f59e0b;"></i>
+              <span>الخطط التسويقية</span>
+            </label>
+            <div class="sub-permissions" data-group="marketing">
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="marketing" data-action="view">
+                <span>عرض</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="marketing" data-action="create">
+                <span>إنشاء</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="marketing" data-action="edit">
+                <span>تعديل</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="marketing" data-action="delete">
+                <span>حذف</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- CRM -->
+          <div class="permission-group">
+            <label class="permission-item main-permission">
+              <input type="checkbox" class="perm-checkbox main-checkbox" data-group="crm" onchange="toggleGroupPermissions('crm')">
+              <i class="fas fa-users" style="color:#8b5cf6;"></i>
+              <span>نظام CRM</span>
+            </label>
+            <div class="sub-permissions" data-group="crm">
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="crm" data-action="view">
+                <span>عرض العملاء</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="crm" data-action="create">
+                <span>إضافة عميل</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="crm" data-action="edit">
+                <span>تعديل</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="crm" data-action="delete">
+                <span>حذف</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="crm" data-action="assign">
+                <span>توزيع العملاء</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- الموظفين -->
+          <div class="permission-group">
+            <label class="permission-item main-permission">
+              <input type="checkbox" class="perm-checkbox main-checkbox" data-group="employees" onchange="toggleGroupPermissions('employees')">
+              <i class="fas fa-user-friends" style="color:#ef4444;"></i>
+              <span>إدارة الموظفين</span>
+            </label>
+            <div class="sub-permissions" data-group="employees">
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="employees" data-action="view">
+                <span>عرض</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="employees" data-action="create">
+                <span>إضافة</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="employees" data-action="edit">
+                <span>تعديل</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="employees" data-action="delete">
+                <span>حذف</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- الكورسات -->
+          <div class="permission-group">
+            <label class="permission-item main-permission">
+              <input type="checkbox" class="perm-checkbox main-checkbox" data-group="courses" onchange="toggleGroupPermissions('courses')">
+              <i class="fas fa-graduation-cap" style="color:#10b981;"></i>
+              <span>الكورسات والمحاضرات</span>
+            </label>
+            <div class="sub-permissions" data-group="courses">
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="courses" data-action="view">
+                <span>عرض</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="courses" data-action="create">
+                <span>إنشاء</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="courses" data-action="edit">
+                <span>تعديل</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="courses" data-action="delete">
+                <span>حذف</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- طلبات الانضمام -->
+          <div class="permission-group">
+            <label class="permission-item main-permission">
+              <input type="checkbox" class="perm-checkbox main-checkbox" data-group="requests" onchange="toggleGroupPermissions('requests')">
+              <i class="fas fa-inbox" style="color:#06b6d4;"></i>
+              <span>طلبات الانضمام</span>
+            </label>
+            <div class="sub-permissions" data-group="requests">
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="requests" data-action="view">
+                <span>عرض</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="requests" data-action="approve">
+                <span>قبول</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="requests" data-action="reject">
+                <span>رفض</span>
+              </label>
+              <label class="permission-item sub-permission">
+                <input type="checkbox" class="perm-checkbox sub-checkbox" data-parent="requests" data-action="delete">
+                <span>حذف</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
 
@@ -4346,6 +4587,39 @@ document.querySelectorAll('.adm-nav-item').forEach(item=>{
    EMPLOYEE ONBOARDING SYSTEM
 ══════════════════════════════════════════════ */
 
+// ══════════ EMPLOYEE PERMISSIONS SYSTEM ══════════
+function toggleEmployeeTypeFields(){
+  const empType = document.querySelector('input[name="empType"]:checked')?.value;
+  const permissionsSection = document.getElementById('empPermissionsSection');
+  
+  if(empType === 'permanent'){
+    permissionsSection.style.display = 'block';
+  } else {
+    permissionsSection.style.display = 'none';
+  }
+}
+
+function toggleGroupPermissions(groupName){
+  const mainCheckbox = document.querySelector(`.main-checkbox[data-group="${groupName}"]`);
+  const isChecked = mainCheckbox.checked;
+  
+  // Toggle all sub-checkboxes for this group
+  const subCheckboxes = document.querySelectorAll(`.sub-checkbox[data-parent="${groupName}"]`);
+  subCheckboxes.forEach(sub => {
+    sub.checked = isChecked;
+  });
+}
+
+function toggleAllPermissions(){
+  const allCheckboxes = document.querySelectorAll('.perm-checkbox');
+  const hasUnchecked = Array.from(allCheckboxes).some(cb => !cb.checked);
+  
+  // If any unchecked, check all. If all checked, uncheck all
+  allCheckboxes.forEach(cb => {
+    cb.checked = hasUnchecked;
+  });
+}
+
 // إضافة موظف جديد مع إرسال رابط التسجيل
 async function addEmployeeWithOnboarding(){
   // Open the modal
@@ -4356,6 +4630,13 @@ async function addEmployeeWithOnboarding(){
   document.getElementById('empPassword').value = '';
   document.getElementById('empPhone').value = '';
   document.getElementById('empJobTitle').value = '';
+  
+  // Reset employee type to contract (default)
+  document.querySelector('input[name="empType"][value="contract"]').checked = true;
+  toggleEmployeeTypeFields();
+  
+  // Uncheck all permissions
+  document.querySelectorAll('.perm-checkbox').forEach(cb => cb.checked = false);
   
   // Hide send section, show form section
   document.getElementById('empFormSection').style.display = 'block';
@@ -4430,6 +4711,7 @@ async function createEmployeeAccount(){
   const password = document.getElementById('empPassword').value.trim();
   const phone = document.getElementById('empPhone').value.trim();
   const jobTitle = document.getElementById('empJobTitle').value;
+  const empType = document.querySelector('input[name="empType"]:checked')?.value || 'contract';
   
   // Validation
   if(!username){
@@ -4458,6 +4740,36 @@ async function createEmployeeAccount(){
     return;
   }
   
+  // Collect permissions for permanent employees
+  let permissions = {};
+  if(empType === 'permanent'){
+    // Collect all checked permissions
+    const mainCheckboxes = document.querySelectorAll('.main-checkbox:checked');
+    
+    mainCheckboxes.forEach(mainCb => {
+      const group = mainCb.dataset.group;
+      const subCheckboxes = document.querySelectorAll(`.sub-checkbox[data-parent="${group}"]:checked`);
+      
+      // If no sub-permissions, set main permission to true
+      if(subCheckboxes.length === 0){
+        permissions[group] = true;
+      } else {
+        // Collect sub-permissions
+        permissions[group] = {};
+        subCheckboxes.forEach(subCb => {
+          const action = subCb.dataset.action;
+          permissions[group][action] = true;
+        });
+      }
+    });
+    
+    // If no permissions selected, warning
+    if(Object.keys(permissions).length === 0){
+      const confirm = window.confirm('لم يتم اختيار أي صلاحيات! هل تريد المتابعة؟');
+      if(!confirm) return;
+    }
+  }
+  
   try {
     // Check if username already exists
     const { data: existing } = await _supabase
@@ -4479,7 +4791,10 @@ async function createEmployeeAccount(){
       password,
       phone,
       job_title: jobTitle,
-      application_status: 'incomplete',
+      employee_type: empType,
+      permissions: permissions,
+      is_active: empType === 'permanent', // Permanent employees are active immediately
+      application_status: empType === 'permanent' ? 'approved' : 'incomplete',
       created_at: new Date().toISOString()
     };
     
@@ -4494,7 +4809,16 @@ async function createEmployeeAccount(){
     
     console.log('✅ Employee created in Supabase:', empId);
     
-    // Generate onboarding link
+    // If permanent employee, show success and close
+    if(empType === 'permanent'){
+      toast('✅ تم إضافة الموظف الدائم بنجاح!', 'success');
+      document.getElementById('employeeContractModal').classList.remove('open');
+      renderEmployeeRequests();
+      updateBadges();
+      return;
+    }
+    
+    // For contract employees, generate onboarding link
     const onboardingLink = `${window.location.origin}/employee-onboarding.html?id=${empId}`;
     window.currentOnboardingLink = onboardingLink;
     
