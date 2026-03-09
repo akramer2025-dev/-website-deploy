@@ -1,0 +1,682 @@
+<!-- ========== PROFESSIONAL CRM STYLES ========== -->
+<style>
+/* Context Menu */
+.crm-ctx-menu {
+    position: fixed;
+    z-index: 10000;
+    min-width: 220px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 6px 0;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    display: none;
+    animation: ctxFadeIn 0.15s ease;
+}
+@keyframes ctxFadeIn { 
+    from { opacity: 0; transform: scale(0.93) translateY(-6px); } 
+    to { opacity: 1; transform: scale(1) translateY(0); } 
+}
+.crm-ctx-menu.show { display: block; }
+.crm-ctx-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    transition: all 0.15s;
+    font-family: var(--font);
+}
+.crm-ctx-item:hover { 
+    background: var(--accent-light); 
+    color: var(--accent); 
+}
+.crm-ctx-item i { 
+    width: 18px; 
+    text-align: center; 
+    font-size: 0.82rem; 
+}
+.crm-ctx-separator { 
+    height: 1px; 
+    background: var(--border); 
+    margin: 4px 0; 
+}
+
+/* Lead Avatar */
+.lead-avatar {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-light), rgba(255,78,32,0.15));
+    color: var(--accent);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 0.8rem; 
+    font-weight: 700; 
+    flex-shrink: 0;
+    border: 2px solid var(--bg);
+    box-shadow: 0 2px 8px rgba(255,78,32,0.2);
+}
+
+.lead-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.lead-name-text {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.lead-phone-sub {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    direction: ltr;
+    display: block;
+    text-align: right;
+    margin-top: 3px;
+}
+
+/* Status Badge Enhanced */
+.crm-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    position: relative;
+}
+
+.crm-status-badge:hover {
+    filter: brightness(1.15);
+    transform: scale(1.05);
+}
+
+.crm-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Status Colors */
+.crm-status-new {
+    background: rgba(59,130,246,0.15);
+    color: #3B82F6;
+}
+.crm-status-new .crm-status-dot {
+    background: #3B82F6;
+}
+
+.crm-status-interested {
+    background: rgba(16,185,129,0.15);
+    color: #10B981;
+}
+.crm-status-interested .crm-status-dot {
+    background: #10B981;
+}
+
+.crm-status-negotiating {
+    background: rgba(245,158,11,0.15);
+    color: #F59E0B;
+}
+.crm-status-negotiating .crm-status-dot {
+    background: #F59E0B;
+}
+
+.crm-status-converted {
+    background: rgba(34,197,94,0.15);
+    color: #22C55E;
+}
+.crm-status-converted .crm-status-dot {
+    background: #22C55E;
+}
+
+.crm-status-not_interested {
+    background: rgba(239,68,68,0.15);
+    color: #EF4444;
+}
+.crm-status-not_interested .crm-status-dot {
+    background: #EF4444;
+}
+
+.crm-status-no_answer {
+    background: rgba(100,116,139,0.15);
+    color: #64748B;
+}
+.crm-status-no_answer .crm-status-dot {
+    background: #64748B;
+}
+
+/* History Timeline */
+.history-timeline {
+    padding: 20px 24px;
+}
+
+.timeline-item {
+    position: relative;
+    padding: 0 24px 24px 0;
+    border-right: 2px solid var(--border);
+    margin-right: 8px;
+}
+
+.timeline-item:last-child {
+    border-right-color: transparent;
+    padding-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    right: -7px;
+    top: 3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-card);
+}
+
+.timeline-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 8px;
+}
+
+.timeline-user {
+    font-weight: 700;
+    font-size: 0.82rem;
+}
+
+.timeline-date {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    white-space: nowrap;
+}
+
+.timeline-content {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+}
+
+.timeline-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+}
+
+.timeline-empty i {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    display: block;
+    opacity: 0.25;
+}
+
+/* Enhanced Action Buttons */
+.crm-action-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.crm-action-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+    transform: translateY(-2px);
+}
+
+.crm-action-btn.whatsapp:hover {
+    border-color: #25D366;
+    color: #25D366;
+    background: rgba(37,211,102,0.1);
+}
+
+.crm-action-btn.call:hover {
+    border-color: #10B981;
+    color: #10B981;
+    background: rgba(16,185,129,0.1);
+}
+
+.crm-action-btn.danger:hover {
+    border-color: #EF4444;
+    color: #EF4444;
+    background: rgba(239,68,68,0.1);
+}
+
+.crm-action-btn.history:hover {
+    border-color: #3B82F6;
+    color: #3B82F6;
+    background: rgba(59,130,246,0.1);
+}
+
+.crm-actions-cell {
+    display: flex;
+    gap: 6px;
+}
+
+/* History Button */
+.crm-history-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-family: var(--font);
+}
+
+.crm-history-btn:hover {
+    border-color: #3B82F6;
+    color: #3B82F6;
+    background: rgba(59,130,246,0.08);
+}
+
+/* Status Dropdown */
+.crm-status-dropdown {
+    position: fixed;
+    z-index: 9999;
+    min-width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px 0;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    display: none;
+    animation: ctxFadeIn 0.15s ease;
+}
+
+.crm-status-dropdown.show {
+    display: block;
+}
+
+.crm-status-dd-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    transition: all 0.15s;
+    font-family: var(--font);
+}
+
+.crm-status-dd-item:hover {
+    background: var(--accent-light);
+}
+
+.crm-status-dd-item.current {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+/* Enhanced Tabs */
+.crm-status-tab.active {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.crm-status-tab:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.crm-status-tab .tab-count {
+    background: var(--bg);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.crm-status-tab.active .tab-count {
+    background: var(--accent);
+    color: white;
+}
+</style>
+
+<!-- Context Menu HTML -->
+<div id="crmCtxMenu" class="crm-ctx-menu">
+    <div class="crm-ctx-item" onclick="crmCtxCall()">
+        <i class="fas fa-phone"></i> إجراء مكالمة
+    </div>
+    <div class="crm-ctx-item" onclick="crmCtxWhatsApp()">
+        <i class="fab fa-whatsapp"></i> فتح واتساب
+    </div>
+    <div class="crm-ctx-item" onclick="crmCtxAddNote()">
+        <i class="fas fa-sticky-note"></i> إضافة ملاحظة
+    </div>
+    <div class="crm-ctx-separator"></div>
+    <div class="crm-ctx-item" onclick="crmCtxEdit()">
+        <i class="fas fa-edit"></i> تعديل البيانات
+    </div>
+    <div class="crm-ctx-item" onclick="crmCtxHistory()">
+        <i class="fas fa-history"></i> عرض السجل
+    </div>
+    <div class="crm-ctx-item" onclick="crmCtxCreatePlan()">
+        <i class="fas fa-chart-line"></i> إنشاء خطة تسويقية
+    </div>
+    <div class="crm-ctx-separator"></div>
+    <div class="crm-ctx-item" onclick="crmCtxDelete()">
+        <i class="fas fa-trash" style="color:#EF4444"></i> <span style="color:#EF4444">حذف العميل</span>
+    </div>
+</div>
+
+<!-- Status Dropdown -->
+<div id="crmStatusDropdown" class="crm-status-dropdown"></div>
+
+<!-- History Modal -->
+<div class="modal" id="crmHistoryModal">
+    <div class="modal-content" style="max-width:650px">
+        <div class="modal-header">
+            <h3><i class="fas fa-history"></i> <span id="crmHistoryTitle">سجل العميل</span></h3>
+            <button class="modal-close" onclick="closeCrmHistoryModal()">&times;</button>
+        </div>
+        <div class="modal-body" style="padding:0;max-height:480px;overflow-y:auto">
+            <div id="crmHistoryBody">
+                <div class="timeline-empty">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <div style="margin-top:10px">جاري التحميل...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ========== PROFESSIONAL CRM JAVASCRIPT ==========
+
+let crmCtxLeadId = null;
+let crmCurrentLeadData = null;
+
+// Context Menu
+function showCrmContextMenu(e, leadId) {
+    e.preventDefault();
+    e.stopPropagation();
+    crmCtxLeadId = leadId;
+    crmCurrentLeadData = _crmLeads.find(l => l.id == leadId);
+    
+    const menu = document.getElementById('crmCtxMenu');
+    const x = Math.min(e.clientX, window.innerWidth - 240);
+    const y = Math.min(e.clientY, window.innerHeight - 360);
+    menu.style.left = x + 'px';
+    menu.style.top = y + 'px';
+    menu.classList.add('show');
+}
+
+// Context Menu Actions
+function crmCtxCall() {
+    document.getElementById('crmCtxMenu').classList.remove('show');
+    if (crmCurrentLeadData) {
+        window.open(`tel:${crmCurrentLeadData.phone}`);
+    }
+}
+
+function crmCtxWhatsApp() {
+    document.getElementById('crmCtxMenu').classList.remove('show');
+    if (crmCurrentLeadData) {
+        const msg = encodeURIComponent(`مرحباً ${crmCurrentLeadData.name}، نود التواصل معك بخصوص خدماتنا.`);
+        window.open(`https://wa.me/${crmCurrentLeadData.phone.replace(/[^0-9]/g, '')}?text=${msg}`, '_blank');
+    }
+}
+
+function crmCtxAddNote() {
+    document.getElementById('crmCtxMenu').classList.remove('show');
+    // TODO: Open note modal
+    toast('سيتم إضافة هذه الميزة قريباً', 'info');
+}
+
+function crmCtxEdit() {
+    document.getElementById('crmCtxMenu').classList.remove('show');
+    if (crmCtxLeadId) {
+        editCrmLead(crmCtxLeadId);
+    }
+}
+
+function crmCtxHistory() {
+    document.getElementById('crmCtxMenu').classList.remove('show');
+    if (crmCtxLeadId) {
+        openCrmHistory(crmCtxLeadId);
+    }
+}
+
+function crmCtxCreatePlan() {
+    document.getElementById('crmCtxMenu').classList.remove('show');
+    if (crmCtxLeadId) {
+        openMarketingPlanForLead(crmCtxLeadId);
+    }
+}
+
+function crmCtxDelete() {
+    document.getElementById('crmCtxMenu').classList.remove('show');
+    if (crmCtxLeadId) {
+        deleteCrmLead(crmCtxLeadId);
+    }
+}
+
+// Status Badge Click - Show Dropdown
+function showCrmStatusDropdown(e, leadId) {
+    e.stopPropagation();
+    const lead = _crmLeads.find(l => l.id == leadId);
+    if (!lead) return;
+
+    const statuses = [
+        { id: 'new', name: 'جديد', color: '#3B82F6' },
+        { id: 'interested', name: 'مهتم', color: '#10B981' },
+        { id: 'negotiating', name: 'تفاوض', color: '#F59E0B' },
+        { id: 'converted', name: 'محول', color: '#22C55E' },
+        { id: 'not_interested', name: 'غير مهتم', color: '#EF4444' },
+        { id: 'no_answer', name: 'لا يرد', color: '#64748B' }
+    ];
+
+    const dd = document.getElementById('crmStatusDropdown');
+    dd.innerHTML = statuses.map(s => `
+        <div class="crm-status-dd-item ${lead.status === s.id ? 'current' : ''}" onclick="changeCrmLeadStatus(${leadId}, '${s.id}')">
+            <span class="crm-status-dot" style="background:${s.color}"></span>
+            ${s.name}
+            ${lead.status === s.id ? '<i class="fas fa-check" style="margin-right:auto;font-size:0.65rem;color:#10B981"></i>' : ''}
+        </div>
+    `).join('');
+
+    const badge = e.target.closest('.crm-status-badge');
+    const rect = badge.getBoundingClientRect();
+    dd.style.top = (rect.bottom + window.scrollY + 4) + 'px';
+    dd.style.right = (window.innerWidth - rect.right) + 'px';
+    dd.classList.add('show');
+}
+
+// Change Lead Status
+async function changeCrmLeadStatus(leadId, newStatus) {
+    document.getElementById('crmStatusDropdown').classList.remove('show');
+    const lead = _crmLeads.find(l => l.id == leadId);
+    if (!lead || lead.status === newStatus) return;
+
+    const oldStatus = lead.status;
+
+    try {
+        // Update in Supabase
+        const { error } = await _supabase
+            .from('crm_leads')
+            .update({ status: newStatus, updated_at: new Date().toISOString() })
+            .eq('id', leadId);
+
+        if (error) throw error;
+
+        // Log status change
+        await _supabase
+            .from('crm_status_log')
+            .insert([{
+                lead_id: leadId,
+                old_status: oldStatus,
+                new_status: newStatus,
+                changed_by: 'admin',
+                note: 'تغيير من الواجهة',
+                created_at: new Date().toISOString()
+            }]);
+
+        // Update local data
+        lead.status = newStatus;
+        
+        // Reload
+        await loadCrmLeads();
+        
+        const statusNames = {
+            'new': 'جديد',
+            'interested': 'مهتم',
+            'negotiating': 'تفاوض',
+            'converted': 'محول',
+            'not_interested': 'غير مهتم',
+            'no_answer': 'لا يرد'
+        };
+        
+        toast(`تم التحويل إلى: ${statusNames[newStatus]}`, 'success');
+    } catch (err) {
+        console.error('Error changing status:', err);
+        toast('خطأ في تغيير الحالة', 'error');
+    }
+}
+
+// Open History Timeline
+async function openCrmHistory(leadId) {
+    const lead = _crmLeads.find(l => l.id == leadId);
+    if (!lead) return;
+
+    document.getElementById('crmHistoryTitle').textContent = `سجل ${lead.name}`;
+    document.getElementById('crmHistoryModal').classList.add('open');
+    document.getElementById('crmHistoryBody').innerHTML = '<div class="timeline-empty"><i class="fas fa-spinner fa-spin"></i><div style="margin-top:10px">جاري التحميل...</div></div>';
+
+    try {
+        // Load status log
+        const { data: statusLog, error: err1 } = await _supabase
+            .from('crm_status_log')
+            .select('*')
+            .eq('lead_id', leadId)
+            .order('created_at', { ascending: false });
+
+        if (err1) throw err1;
+
+        if (!statusLog || statusLog.length === 0) {
+            document.getElementById('crmHistoryBody').innerHTML = '<div class="timeline-empty"><i class="fas fa-clock"></i><div style="margin-top:10px">لا يوجد سجل بعد لهذا العميل</div></div>';
+            return;
+        }
+
+        const statusNames = {
+            'new': { name: 'جديد', color: '#3B82F6' },
+            'interested': { name: 'مهتم', color: '#10B981' },
+            'negotiating': { name: 'تفاوض', color: '#F59E0B' },
+            'converted': { name: 'محول', color: '#22C55E' },
+            'not_interested': { name: 'غير مهتم', color: '#EF4444' },
+            'no_answer': { name: 'لا يرد', color: '#64748B' }
+        };
+
+        let html = '<div class="history-timeline">';
+        statusLog.forEach(item => {
+            const dateStr = new Date(item.created_at).toLocaleString('ar-EG', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            const oldSt = statusNames[item.old_status] || { name: item.old_status, color: '#6B7280' };
+            const newSt = statusNames[item.new_status] || { name: item.new_status, color: '#6B7280' };
+            
+            html += `
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:${newSt.color}"></div>
+                    <div class="timeline-header">
+                        <span class="timeline-user">
+                            <i class="fas fa-user-edit" style="color:${newSt.color};margin-left:5px;font-size:0.72rem;"></i>
+                            ${item.changed_by || 'النظام'}
+                        </span>
+                        <span class="timeline-date">${dateStr}</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                            <span class="crm-status-badge crm-status-${item.old_status}" style="cursor:default;font-size:0.7rem;padding:3px 9px;">
+                                ${oldSt.name}
+                            </span>
+                            <i class="fas fa-long-arrow-alt-left" style="color:var(--text-light);"></i>
+                            <span class="crm-status-badge crm-status-${item.new_status}" style="cursor:default;font-size:0.7rem;padding:3px 9px;">
+                                ${newSt.name}
+                            </span>
+                        </div>
+                        ${item.note ? `<div style="margin-top:8px;color:var(--text-secondary);font-size:0.75rem;">${item.note}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        
+        document.getElementById('crmHistoryBody').innerHTML = html;
+    } catch (err) {
+        console.error('Error loading history:', err);
+        document.getElementById('crmHistoryBody').innerHTML = '<div class="timeline-empty"><i class="fas fa-exclamation-triangle"></i><div style="margin-top:8px;">خطأ في تحميل السجل</div></div>';
+    }
+}
+
+function closeCrmHistoryModal() {
+    document.getElementById('crmHistoryModal').classList.remove('open');
+}
+
+// Hide dropdowns on click outside
+document.addEventListener('click', () => {
+    document.getElementById('crmCtxMenu').classList.remove('show');
+    document.getElementById('crmStatusDropdown').classList.remove('show');
+});
+
+// Open Marketing Plan for Lead
+function openMarketingPlanForLead(leadId) {
+    const lead = _crmLeads.find(l => l.id == leadId);
+    if (!lead) return;
+    
+    // Pre-fill lead data in marketing plan modal
+    document.getElementById('planLeadId').value = leadId;
+    document.getElementById('companyName').value = lead.company || lead.name;
+    document.getElementById('companyEmail').value = lead.email || '';
+    document.getElementById('companyPhone').value = lead.phone || '';
+    
+    // Open marketing plan modal
+    document.getElementById('marketingPlanModal').classList.add('open');
+    toast(`إنشاء خطة تسويقية لـ ${lead.name}`, 'info');
+}
+
+</script>
