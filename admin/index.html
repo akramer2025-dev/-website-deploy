@@ -1013,11 +1013,19 @@ button{cursor:pointer;}
     </div>
 
     <!-- EMPLOYEE REQUESTS -->
+    <div class="adm-section" id="sec-employee-requests">
       <div class="users-top">
         <div>
           <div class="adm-section-title">طلبات <span>الموظفين</span></div>
           <div class="adm-breadcrumb">مراجعة واعتماد طلبات تسجيل الموظفين الجدد</div>
         </div>
+      </div>
+      <div class="req-filters">
+        <button class="req-filter-btn active" id="empReqAll" onclick="filterEmpReqs('all')"><i class="fas fa-list"></i> الكل <span id="empReqAllCount"></span></button>
+        <button class="req-filter-btn" id="empReqPending" onclick="filterEmpReqs('pending')" style="color:#fbbf24"><i class="fas fa-clock"></i> قيد الانتظار <span id="empReqPendingCount"></span></button>
+        <button class="req-filter-btn" id="empReqIncomplete" onclick="filterEmpReqs('incomplete')" style="color:#8b5cf6"><i class="fas fa-edit"></i> غير مكتمل <span id="empReqIncompleteCount"></span></button>
+        <button class="req-filter-btn" id="empReqApproved" onclick="filterEmpReqs('approved')" style="color:#4ade80"><i class="fas fa-check"></i> مقبول <span id="empReqApprovedCount"></span></button>
+        <button class="req-filter-btn" id="empReqRejected" onclick="filterEmpReqs('rejected')" style="color:#f87171"><i class="fas fa-times"></i> مرفوض <span id="empReqRejectedCount"></span></button>
       </div>
       <div class="employee-requests-grid" id="employeeRequestsGrid"></div>
     </div>
@@ -5053,6 +5061,9 @@ async function deletePlan(planId){
   }
 }
 
+// متغير للفلتر الحالي لطلبات الموظفين
+let _empReqFilter = 'all';
+
 // عرض طلبات الموظفين  
 async function renderEmployeeRequests(){
   const grid = document.getElementById('employeeRequestsGrid');
@@ -5070,16 +5081,53 @@ async function renderEmployeeRequests(){
       throw error;
     }
     
-    const requests = data || [];
+    const allRequests = data || [];
     
     // Update global cache
-    _fsEmployees = requests;
+    _fsEmployees = allRequests;
+    
+    // Apply filter
+    let requests = allRequests;
+    if (_empReqFilter !== 'all') {
+      requests = allRequests.filter(req => {
+        if (_empReqFilter === 'pending') {
+          return req.application_status === 'pending' && req.application_submitted_at;
+        } else if (_empReqFilter === 'incomplete') {
+          return !req.application_submitted_at;
+        } else if (_empReqFilter === 'approved') {
+          return req.application_status === 'approved';
+        } else if (_empReqFilter === 'rejected') {
+          return req.application_status === 'rejected';
+        }
+        return true;
+      });
+    }
+    
+    // Update badge counts
+    const allCount = allRequests.length;
+    const pendingCount = allRequests.filter(r => r.application_status === 'pending' && r.application_submitted_at).length;
+    const incompleteCount = allRequests.filter(r => !r.application_submitted_at).length;
+    const approvedCount = allRequests.filter(r => r.application_status === 'approved').length;
+    const rejectedCount = allRequests.filter(r => r.application_status === 'rejected').length;
+    
+    // Update badge spans
+    const allBadge = document.getElementById('empReqAllCount');
+    const pendingBadge = document.getElementById('empReqPendingCount');
+    const incompleteBadge = document.getElementById('empReqIncompleteCount');
+    const approvedBadge = document.getElementById('empReqApprovedCount');
+    const rejectedBadge = document.getElementById('empReqRejectedCount');
+    
+    if (allBadge) allBadge.textContent = allCount;
+    if (pendingBadge) pendingBadge.textContent = pendingCount;
+    if (incompleteBadge) incompleteBadge.textContent = incompleteCount;
+    if (approvedBadge) approvedBadge.textContent = approvedCount;
+    if (rejectedBadge) rejectedBadge.textContent = rejectedCount;
     
     if(requests.length === 0){
       grid.innerHTML = `
         <div class="emp-req-empty">
           <i class="fas fa-clipboard-list"></i>
-          <p>لا توجد طلبات حالياً</p>
+          <p>لا توجد طلبات ${_empReqFilter === 'all' ? '' : 'في هذه الفئة'} حالياً</p>
           <button class="btn-add-user" onclick="addEmployeeWithOnboarding()" style="margin-top:16px;display:inline-flex;">
             <i class="fas fa-plus"></i> إضافة موظف جديد
           </button>
@@ -5156,21 +5204,37 @@ async function renderEmployeeRequests(){
             <button class="btn-view-req" onclick="viewEmployeeRequestDetails('${req.id}')">
               <i class="fas fa-eye"></i>
             </button>
+            <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف الطلب" style="background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.15));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
+              <i class="fas fa-trash"></i>
+            </button>
           </div>` : ''}
           ${req.application_status === 'approved' ? `
           <div class="emp-req-status">
             <i class="fas fa-check-circle"></i>
             <span>تم قبول الطلب وإضافة الموظف</span>
+          </div>
+          <div class="emp-req-actions">
+            <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف السجل" style="background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.15));color:#ef4444;border:1px solid rgba(239,68,68,0.3);margin-top:8px;">
+              <i class="fas fa-trash"></i> حذف
+            </button>
           </div>` : ''}
           ${req.application_status === 'rejected' ? `
           <div class="emp-req-status rejected">
             <i class="fas fa-times-circle"></i>
             <span>تم رفض الطلب</span>
+          </div>
+          <div class="emp-req-actions">
+            <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف السجل" style="background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.15));color:#ef4444;border:1px solid rgba(239,68,68,0.3);margin-top:8px;">
+              <i class="fas fa-trash"></i> حذف
+            </button>
           </div>` : ''}
           ${!req.application_submitted_at ? `
           <div class="emp-req-actions">
             <button class="btn-whatsapp-notify" onclick="resendEmployeeLink('${req.id}', '${req.email}', '${req.full_name||''}')">
               <i class="fab fa-whatsapp"></i> إعادة إرسال الرابط
+            </button>
+            <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف الطلب" style="background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.15));color:#ef4444;border:1px solid rgba(239,68,68,0.3);margin-right:8px;">
+              <i class="fas fa-trash"></i>
             </button>
           </div>` : ''}
         </div>`;
@@ -5237,6 +5301,61 @@ async function rejectEmployeeRequest(empId){
     console.error('Error rejecting request:', error);
     toast('حدث خطأ أثناء رفض الطلب', 'error');
   }
+}
+
+// حذف طلب موظف
+async function deleteEmployeeRequest(empId){
+  if (!confirm('هل أنت متأكد من حذف هذا الطلب نهائياً؟\nلا يمكن التراجع عن هذا الإجراء.')) {
+    return;
+  }
+  
+  try {
+    const { error } = await _supabase
+      .from('employees')
+      .delete()
+      .eq('id', empId);
+    
+    if (error) throw error;
+    
+    // Close modal if open
+    const modal = document.getElementById('reqDetailModal');
+    if (modal) modal.classList.remove('open');
+    
+    renderEmployeeRequests();
+    updateBadges();
+    toast('تم حذف الطلب بنجاح', 'success');
+    
+  } catch(error){
+    console.error('Error deleting request:', error);
+    toast('حدث خطأ أثناء حذف الطلب', 'error');
+  }
+}
+
+// فلترة طلبات الموظفين
+function filterEmpReqs(status) {
+  _empReqFilter = status;
+  
+  // Update button active states
+  const buttons = ['empReqAll', 'empReqPending', 'empReqIncomplete', 'empReqApproved', 'empReqRejected'];
+  buttons.forEach(btnId => {
+    const btn = document.getElementById(btnId);
+    if (btn) {
+      if (btnId === `empReq${status.charAt(0).toUpperCase() + status.slice(1)}`) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    }
+  });
+  
+  // Set empReqAll as active if status is 'all'
+  if (status === 'all') {
+    const allBtn = document.getElementById('empReqAll');
+    if (allBtn) allBtn.classList.add('active');
+  }
+  
+  // Re-render with filter
+  renderEmployeeRequests();
 }
 
 // تحميل عقد الموظف بصيغة PDF
