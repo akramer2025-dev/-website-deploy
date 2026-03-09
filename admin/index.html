@@ -212,29 +212,384 @@ button{cursor:pointer;}
 .no-users-msg i{font-size:2.5rem;margin-bottom:14px;opacity:.4;}
 
 /* EMPLOYEE REQUESTS */
-.employee-requests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:22px;}
-.emp-req-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.3s;}
-.emp-req-card:hover{border-color:rgba(233,78,119,0.25);transform:translateY(-3px);}
-.emp-req-header{padding:20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);}
-.emp-req-avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid var(--border);}
-.emp-req-name{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:3px;}
-.emp-req-sub{font-size:.78rem;color:var(--muted);}
-.emp-req-body{padding:14px 20px;}
-.emp-req-info{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
-.emp-req-docs{display:flex;gap:8px;margin-bottom:14px;}
-.emp-req-doc-thumb{width:70px;height:70px;border-radius:8px;object-fit:cover;cursor:pointer;border:1px solid var(--border);transition:.2s;}
-.emp-req-doc-thumb:hover{border-color:var(--pink);transform:scale(1.05);}
-.emp-req-actions{display:flex;gap:8px;}
-.btn-approve{flex:1;padding:10px 0;border-radius:9px;border:none;font-size:.85rem;font-weight:700;background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.25);cursor:pointer;transition:.2s;}
-.btn-approve:hover{background:#22c55e;color:#fff;}
-.btn-reject{flex:1;padding:10px 0;border-radius:9px;border:none;font-size:.85rem;font-weight:700;background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.2);cursor:pointer;transition:.2s;}
-.btn-reject:hover{background:#ef4444;color:#fff;}
-.btn-whatsapp-notify{width:100%;padding:10px 0;border-radius:9px;border:none;font-size:.85rem;font-weight:700;background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.25);cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
-.btn-whatsapp-notify:hover{background:#22c55e;color:#fff;}
-.emp-req-status{padding:6px 12px;border-radius:8px;font-size:.75rem;font-weight:700;display:inline-block;margin-bottom:10px;}
-.emp-req-status.pending{background:rgba(234,179,8,0.15);color:#eab308;}
-.emp-req-status.approved{background:rgba(34,197,94,0.15);color:#22c55e;}
-.emp-req-status.rejected{background:rgba(239,68,68,0.1);color:#f87171;}
+.employee-requests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:24px;padding:8px 0;}
+
+/* Employee Request Cards - Professional Design */
+.emp-req-card{
+  background:linear-gradient(135deg,var(--card),var(--card2));
+  border:1px solid rgba(233,78,119,0.15);
+  border-radius:20px;
+  overflow:hidden;
+  transition:all .35s cubic-bezier(0.4,0,0.2,1);
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
+  position:relative;
+}
+.emp-req-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:4px;
+  background:var(--grad);
+  opacity:0;
+  transition:opacity .3s;
+}
+.emp-req-card:hover{
+  border-color:rgba(233,78,119,0.4);
+  transform:translateY(-6px);
+  box-shadow:0 12px 32px rgba(233,78,119,0.15),0 0 60px rgba(233,78,119,0.08);
+}
+.emp-req-card:hover::before{opacity:1;}
+
+/* Card Header */
+.emp-req-header{
+  padding:24px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  background:linear-gradient(135deg,rgba(233,78,119,0.05),rgba(247,147,30,0.03));
+  position:relative;
+}
+.emp-req-header::after{
+  content:'';
+  position:absolute;
+  bottom:-1px;
+  left:24px;
+  right:24px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--pink),transparent);
+  opacity:0.3;
+}
+
+/* Avatar with Gradient */
+.emp-req-avatar{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.6rem;
+  font-weight:800;
+  color:#fff;
+  background:linear-gradient(135deg,#e94e77,#f7931e);
+  border:3px solid rgba(233,78,119,0.2);
+  box-shadow:0 4px 16px rgba(233,78,119,0.25),inset 0 -2px 8px rgba(0,0,0,0.2);
+  position:relative;
+  overflow:hidden;
+  transition:all .3s;
+}
+.emp-req-avatar::before{
+  content:'';
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background:linear-gradient(45deg,transparent,rgba(255,255,255,0.3),transparent);
+  transform:rotate(45deg);
+  transition:all .5s;
+}
+.emp-req-card:hover .emp-req-avatar::before{
+  left:100%;
+}
+.emp-req-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+}
+
+/* Employee Info */
+.emp-req-info h4{
+  font-size:1.05rem;
+  font-weight:800;
+  color:#fff;
+  margin:0 0 6px 0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.emp-req-info p{
+  font-size:.85rem;
+  color:var(--muted);
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.emp-req-info p i{
+  color:var(--pink);
+  font-size:.75rem;
+}
+
+/* Card Body */
+.emp-req-body{padding:20px 24px;}
+
+/* Info Rows */
+.emp-req-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 14px;
+  background:var(--bg);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
+  margin-bottom:10px;
+  font-size:.85rem;
+  transition:all .25s;
+}
+.emp-req-row:hover{
+  background:rgba(233,78,119,0.05);
+  border-color:rgba(233,78,119,0.2);
+  transform:translateX(-2px);
+}
+.emp-req-row i{
+  width:32px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  font-size:.9rem;
+  flex-shrink:0;
+}
+.emp-req-row i.fa-envelope{
+  background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(37,99,235,0.1));
+  color:#3b82f6;
+}
+.emp-req-row i.fa-phone{
+  background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(22,163,74,0.1));
+  color:#22c55e;
+}
+.emp-req-row i.fa-id-card{
+  background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(124,58,237,0.1));
+  color:#8b5cf6;
+}
+.emp-req-row i.fa-money-bill-wave{
+  background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(217,119,6,0.1));
+  color:#f59e0b;
+}
+.emp-req-row i.fa-calendar{
+  background:linear-gradient(135deg,rgba(236,72,153,0.15),rgba(219,39,119,0.1));
+  color:#ec4899;
+}
+.emp-req-row i.fa-user-tag{
+  background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(14,165,233,0.1));
+  color:#06b6d4;
+}
+.emp-req-row span{
+  color:var(--muted);
+  font-weight:600;
+  flex:1;
+}
+
+/* Documents Thumbnails */
+.emp-req-docs{
+  display:flex;
+  gap:10px;
+  margin:16px 0;
+  padding-top:16px;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+.emp-req-doc-thumb{
+  width:80px;
+  height:80px;
+  border-radius:12px;
+  overflow:hidden;
+  cursor:pointer;
+  border:2px solid rgba(233,78,119,0.2);
+  transition:all .3s;
+  position:relative;
+  background:var(--bg);
+}
+.emp-req-doc-thumb::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(233,78,119,0.2),rgba(247,147,30,0.1));
+  opacity:0;
+  transition:opacity .3s;
+}
+.emp-req-doc-thumb:hover{
+  border-color:var(--pink);
+  transform:scale(1.08) rotate(2deg);
+  box-shadow:0 8px 24px rgba(233,78,119,0.3);
+}
+.emp-req-doc-thumb:hover::before{opacity:1;}
+.emp-req-doc-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Status Badge */
+.emp-req-status{
+  padding:8px 16px;
+  border-radius:10px;
+  font-size:.8rem;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:14px;
+  border:1px solid;
+  position:relative;
+  overflow:hidden;
+}
+.emp-req-status::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:3px;
+  background:currentColor;
+}
+.emp-req-status i{
+  font-size:.95rem;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:.7;transform:scale(0.95);}
+}
+.emp-req-status.pending{
+  background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(245,158,11,0.1));
+  color:#fbbf24;
+  border-color:rgba(251,191,36,0.3);
+}
+.emp-req-status.approved{
+  background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(22,163,74,0.1));
+  color:#22c55e;
+  border-color:rgba(34,197,94,0.3);
+}
+.emp-req-status.rejected{
+  background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));
+  color:#ef4444;
+  border-color:rgba(239,68,68,0.3);
+}
+.emp-req-status.incomplete{
+  background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(124,58,237,0.1));
+  color:#8b5cf6;
+  border-color:rgba(139,92,246,0.3);
+}
+
+/* Action Buttons */
+.emp-req-actions{
+  display:flex;
+  gap:10px;
+  padding-top:16px;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+.btn-approve,.btn-reject,.btn-view-req,.btn-delete{
+  flex:1;
+  padding:11px 16px;
+  border-radius:11px;
+  border:none;
+  font-size:.85rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .25s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  position:relative;
+  overflow:hidden;
+}
+.btn-approve{
+  background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(22,163,74,0.1));
+  color:#22c55e;
+  border:1px solid rgba(34,197,94,0.25);
+}
+.btn-approve:hover{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(34,197,94,0.4);
+}
+.btn-reject{
+  background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));
+  color:#ef4444;
+  border:1px solid rgba(239,68,68,0.25);
+}
+.btn-reject:hover{
+  background:linear-gradient(135deg,#ef4444,#dc2626);
+  color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(239,68,68,0.4);
+}
+.btn-view-req{
+  flex:0 0 auto;
+  padding:11px 14px;
+  background:linear-gradient(135deg,rgba(233,78,119,0.15),rgba(247,147,30,0.1));
+  color:var(--pink);
+  border:1px solid rgba(233,78,119,0.25);
+}
+.btn-view-req:hover{
+  background:var(--grad);
+  color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(233,78,119,0.4);
+}
+.btn-whatsapp-notify{
+  width:100%;
+  padding:12px 20px;
+  border-radius:12px;
+  border:none;
+  font-size:.9rem;
+  font-weight:700;
+  background:linear-gradient(135deg,rgba(37,211,102,0.15),rgba(34,197,94,0.1));
+  color:#25d366;
+  border:1px solid rgba(37,211,102,0.3);
+  cursor:pointer;
+  transition:all .3s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+.btn-whatsapp-notify:hover{
+  background:linear-gradient(135deg,#25d366,#22c55e);
+  color:#fff;
+  transform:translateY(-3px);
+  box-shadow:0 8px 24px rgba(37,211,102,0.4);
+}
+.btn-whatsapp-notify i{
+  font-size:1.1rem;
+  animation:wobble 1s infinite;
+}
+@keyframes wobble{
+  0%,100%{transform:rotate(0deg);}
+  25%{transform:rotate(-10deg);}
+  75%{transform:rotate(10deg);}
+}
+
+/* Empty State */
+.emp-req-empty{
+  grid-column:1/-1;
+  text-align:center;
+  padding:80px 40px;
+  background:linear-gradient(135deg,var(--card),var(--card2));
+  border:2px dashed rgba(233,78,119,0.2);
+  border-radius:24px;
+}
+.emp-req-empty i{
+  font-size:4rem;
+  background:var(--grad);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:20px;
+  display:block;
+}
+.emp-req-empty p{
+  font-size:1.1rem;
+  color:var(--muted);
+  margin:0;
+}
 
 /* EMPLOYEE CONTRACT MODAL */
 .emp-contract-form{margin-top:0;}
@@ -470,10 +825,70 @@ button{cursor:pointer;}
 }
 
 /* ===== JOIN REQUESTS ===== */
-.req-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
-.req-filter-btn{padding:7px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;color:var(--muted);font-size:.82rem;font-weight:700;cursor:pointer;transition:.2s;}
-.req-filter-btn:hover{color:var(--text);border-color:rgba(255,255,255,.15);}
-.req-filter-btn.active{background:linear-gradient(135deg,rgba(233,78,119,.2),rgba(247,147,30,.13));border-color:rgba(233,78,119,.4);color:#fff;}
+/* Request Filters - Professional */
+.req-filters{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:28px;
+  padding:16px;
+  background:linear-gradient(135deg,var(--card),var(--card2));
+  border:1px solid rgba(233,78,119,0.1);
+  border-radius:16px;
+}
+.req-filter-btn{
+  padding:10px 20px;
+  background:var(--bg);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
+  color:var(--muted);
+  font-size:.85rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .3s;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  position:relative;
+  overflow:hidden;
+}
+.req-filter-btn::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(233,78,119,0.1),rgba(247,147,30,0.05));
+  opacity:0;
+  transition:opacity .3s;
+}
+.req-filter-btn:hover{
+  color:#fff;
+  border-color:rgba(233,78,119,0.3);
+  transform:translateY(-2px);
+}
+.req-filter-btn:hover::before{opacity:1;}
+.req-filter-btn.active{
+  background:linear-gradient(135deg,rgba(233,78,119,0.2),rgba(247,147,30,0.15));
+  border-color:rgba(233,78,119,0.5);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(233,78,119,0.3);
+}
+.req-filter-btn i{
+  font-size:.9rem;
+  opacity:0.8;
+}
+.req-filter-btn span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:22px;
+  height:22px;
+  padding:0 6px;
+  background:rgba(255,255,255,0.1);
+  border-radius:8px;
+  font-size:.75rem;
+  font-weight:800;
+  margin-right:-4px;
+}
 .req-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;}
 .req-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.3s;}
 .req-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.3);}
@@ -5570,50 +5985,88 @@ async function renderEmployeeRequests(){
     }
     
     grid.innerHTML = requests.map(req => {
-      const statusClass = req.application_status === 'approved' ? 'approved' : 
-                          req.application_status === 'rejected' ? 'rejected' : 'pending';
+      // Determine status
+      let statusBadge = '';
+      let statusClass = 'incomplete';
+      
+      if(req.application_status === 'approved'){
+        statusBadge = '<div class="emp-req-status approved"><i class="fas fa-check-circle"></i> تم القبول</div>';
+        statusClass = 'approved';
+      } else if(req.application_status === 'rejected'){
+        statusBadge = '<div class="emp-req-status rejected"><i class="fas fa-times-circle"></i> مرفوض</div>';
+        statusClass = 'rejected';
+      } else if(req.application_status === 'pending' && req.application_submitted_at){
+        statusBadge = '<div class="emp-req-status pending"><i class="fas fa-clock"></i> قيد المراجعة</div>';
+        statusClass = 'pending';
+      } else if(!req.application_submitted_at){
+        statusBadge = '<div class="emp-req-status incomplete"><i class="fas fa-edit"></i> لم يكمل البيانات</div>';
+        statusClass = 'incomplete';
+      }
       
       const avatarHtml = req.selfie_url ? 
         `<img src="${req.selfie_url}" alt="${req.full_name||req.username}">` :
-        `${(req.full_name||req.username||'?').charAt(0)}`;
+        `${(req.full_name||req.username||'؟').charAt(0).toUpperCase()}`;
       
       const submittedDate = req.application_submitted_at ? 
-        new Date(req.application_submitted_at).toLocaleDateString('ar-EG') : 
-        'غير محدد';
+        new Date(req.application_submitted_at).toLocaleDateString('ar-EG', {year:'numeric',month:'long',day:'numeric'}) : 
+        'لم يحدد بعد';
+      
+      // Employee type badge
+      const empTypeBadge = req.employee_type === 'permanent' ? 
+        '<i class="fas fa-user-check" style="color:#22c55e;" title="موظف دائم"></i>' : 
+        '<i class="fas fa-file-signature" style="color:#3b82f6;" title="تعاقد"></i>';
       
       return `
         <div class="emp-req-card ${statusClass}">
           <div class="emp-req-header">
             <div class="emp-req-avatar">${avatarHtml}</div>
             <div class="emp-req-info">
-              <h4>${req.full_name || req.username || 'موظف جديد'}</h4>
-              <p>${req.job_title || 'لم يكمل البيانات بعد'}</p>
+              <h4>${req.full_name || req.username || 'موظف جديد'} ${empTypeBadge}</h4>
+              <p><i class="fas fa-briefcase"></i> ${req.job_title || 'لم يحدد الوظيفة'}</p>
             </div>
           </div>
           <div class="emp-req-body">
+            ${statusBadge}
+            
+            ${req.email ? `
             <div class="emp-req-row">
               <i class="fas fa-envelope"></i>
-              <span>${req.email || 'لم يدخل البريد بعد'}</span>
-            </div>
+              <span>${req.email}</span>
+            </div>` : `
+            <div class="emp-req-row">
+              <i class="fas fa-envelope"></i>
+              <span style="color:#f59e0b;">لم يدخل الإيميل بعد</span>
+            </div>`}
+            
             ${req.phone ? `
             <div class="emp-req-row">
               <i class="fas fa-phone"></i>
               <span>${req.phone}</span>
             </div>` : ''}
+            
             ${req.national_id ? `
             <div class="emp-req-row">
               <i class="fas fa-id-card"></i>
-              <span>${req.national_id}</span>
+              <span>الرقم القومي: ${req.national_id}</span>
             </div>` : ''}
+            
             ${req.salary ? `
             <div class="emp-req-row">
               <i class="fas fa-money-bill-wave"></i>
               <span>${req.salary} جنيه / شهر</span>
             </div>` : ''}
+            
             <div class="emp-req-row">
               <i class="fas fa-calendar"></i>
               <span>تاريخ التقديم: ${submittedDate}</span>
             </div>
+            
+            ${req.employee_type === 'permanent' && req.permissions && Object.keys(req.permissions).length > 0 ? `
+            <div class="emp-req-row">
+              <i class="fas fa-user-tag"></i>
+              <span>صلاحيات: ${Object.keys(req.permissions).length} قسم</span>
+            </div>` : ''}
+            
             ${req.id_front_url || req.id_back_url || req.selfie_url ? `
             <div class="emp-req-docs">
               ${req.id_front_url ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.id_front_url}')">
@@ -5626,28 +6079,49 @@ async function renderEmployeeRequests(){
                 <img src="${req.selfie_url}" alt="الصورة الشخصية">
               </div>` : ''}
             </div>` : ''}
+            
+            ${req.application_status === 'pending' && req.application_submitted_at ? `
+            <div class="emp-req-actions">
+              <button class="btn-approve" onclick="approveEmployeeRequest('${req.id}')">
+                <i class="fas fa-check"></i> قبول
+              </button>
+              <button class="btn-reject" onclick="rejectEmployeeRequest('${req.id}')">
+                <i class="fas fa-times"></i> رفض
+              </button>
+              <button class="btn-view-req" onclick="viewEmployeeRequestDetails('${req.id}')" title="عرض التفاصيل">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف" style="flex:0 0 auto;padding:11px 14px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>` : ''}
+            
+            ${req.application_status === 'approved' ? `
+            <div class="emp-req-actions">
+              <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف السجل" style="width:100%;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
+                <i class="fas fa-trash"></i> حذف السجل
+              </button>
+            </div>` : ''}
+            
+            ${req.application_status === 'rejected' ? `
+            <div class="emp-req-actions">
+              <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف السجل" style="width:100%;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
+                <i class="fas fa-trash"></i> حذف السجل
+              </button>
+            </div>` : ''}
+            
+            ${!req.application_submitted_at ? `
+            <div class="emp-req-actions">
+              <button class="btn-whatsapp-notify" onclick="resendEmployeeLink('${req.id}', '${req.phone||''}', '${req.full_name||req.username||''}')">
+                <i class="fab fa-whatsapp"></i> إعادة إرسال الرابط
+              </button>
+              <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف" style="flex:0 0 auto;padding:12px 16px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>` : ''}
           </div>
-          ${req.application_status === 'pending' && req.application_submitted_at ? `
-          <div class="emp-req-actions">
-            <button class="btn-approve" onclick="approveEmployeeRequest('${req.id}')">
-              <i class="fas fa-check"></i> قبول
-            </button>
-            <button class="btn-reject" onclick="rejectEmployeeRequest('${req.id}')">
-              <i class="fas fa-times"></i> رفض
-            </button>
-            <button class="btn-view-req" onclick="viewEmployeeRequestDetails('${req.id}')">
-              <i class="fas fa-eye"></i>
-            </button>
-            <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف الطلب" style="background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.15));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>` : ''}
-          ${req.application_status === 'approved' ? `
-          <div class="emp-req-status">
-            <i class="fas fa-check-circle"></i>
-            <span>تم قبول الطلب وإضافة الموظف</span>
-          </div>
-          <div class="emp-req-actions">
+        </div>`;
+    }).join('');
             <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف السجل" style="background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.15));color:#ef4444;border:1px solid rgba(239,68,68,0.3);margin-top:8px;">
               <i class="fas fa-trash"></i> حذف
             </button>
