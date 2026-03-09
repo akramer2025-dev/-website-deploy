@@ -6263,8 +6263,7 @@ async function saveCrmLead(){
       toast('تم تحديث العميل بنجاح', 'success');
       
     } else {
-      // Create new lead
-      leadData.id = 'lead_' + Date.now();
+      // Create new lead - Supabase will auto-generate id (BIGSERIAL)
       leadData.created_at = new Date().toISOString();
       leadData.call_count = 0;
       leadData.note_count = 0;
