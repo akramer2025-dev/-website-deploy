@@ -3293,20 +3293,113 @@ function genStudentId(){
   return 'STU-'+String(max+1).padStart(3,'0');
 }
 
-function doAdminLogin(){
+async function doAdminLogin(){
   const u=document.getElementById('loginUser').value.trim();
   const p=document.getElementById('loginPass').value;
   const err=document.getElementById('loginErr');
+  
+  console.log('🔐 Login attempt - Username:', u, '| Password length:', p.length);
+  
+  // Check if it's the main admin
   if(u.toLowerCase()===ADMIN_USER.toLowerCase() && p===ADMIN_PASS){
+    console.log('✅ Admin login successful');
     localStorage.setItem('am_admin_auth','1');
+    localStorage.setItem('am_user_type','admin');
+    localStorage.setItem('am_username', ADMIN_USER);
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminApp').style.display='block';
     try { initApp(); } catch(e) { console.error('initApp error:', e); }
-  } else {
+    return;
+  }
+  
+  console.log('❌ Not admin, checking employee database...');
+  
+  // Check if it's an employee
+  try {
+    // First, let's check if employee exists by username only
+    const { data: empCheck, error: checkError } = await _supabase
+      .from('employees')
+      .select('*')
+      .eq('username', u)
+      .maybeSingle();
+    
+    console.log('🔍 Employee check result:', empCheck);
+    
+    if(checkError){
+      console.error('❌ Database error:', checkError);
+      alert('خطأ في الاتصال بقاعدة البيانات: ' + checkError.message);
+      throw checkError;
+    }
+    
+    if(!empCheck){
+      console.log('❌ Username not found in database');
+      err.textContent = 'اسم المستخدم غير موجود';
+      err.classList.add('show');
+      return;
+    }
+    
+    console.log('✅ Username found! Checking password...');
+    console.log('Stored password:', empCheck.password);
+    console.log('Entered password:', p);
+    console.log('Passwords match?', empCheck.password === p);
+    
+    // Check if password matches
+    if(empCheck.password !== p){
+      console.log('❌ Password mismatch');
+      err.textContent = 'كلمة المرور غير صحيحة';
+      err.classList.add('show');
+      return;
+    }
+    
+    console.log('✅ Password correct! Checking account status...');
+    const employee = empCheck;
+    
+    if(employee){
+      // Check if employee is active and approved
+      if(!employee.is_active){
+        err.textContent = 'هذا الحساب غير مفعّل';
+        err.classList.add('show');
+        return;
+      }
+      
+      if(employee.application_status !== 'approved'){
+        err.textContent = 'لم يتم اعتماد حسابك بعد';
+        err.classList.add('show');
+        return;
+      }
+      
+      // Employee login successful
+      localStorage.setItem('am_admin_auth','1');
+      localStorage.setItem('am_user_type','employee');
+      localStorage.setItem('am_employee_id', employee.id);
+      localStorage.setItem('am_username', employee.username);
+      localStorage.setItem('am_employee_type', employee.employee_type);
+      localStorage.setItem('am_permissions', JSON.stringify(employee.permissions || {}));
+      
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('adminApp').style.display='block';
+      
+      // Show welcome message
+      toast(`مرحباً ${employee.full_name || employee.username}! 👋`, 'success');
+      
+      try { initApp(); } catch(e) { console.error('initApp error:', e); }
+      return;
+    }
+    
+    // If we reach here, credentials are wrong
+    console.log('❌ No matching employee found in database');
+    console.log('📝 Username tried:', u);
+    console.log('📝 Password tried:', p);
+    err.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
     err.classList.add('show');
     const box=document.querySelector('.login-box');
     box.style.transition='transform .08s';
     [8,-6,4,0].forEach((x,i)=>setTimeout(()=>box.style.transform=`translateX(${x}px)`,i*80));
+    
+  } catch(error){
+    console.error('❌ Login error:', error);
+    err.textContent = 'حدث خطأ أثناء تسجيل الدخول';
+    err.classList.add('show');
   }
 }
 function doLogout(){
@@ -3418,6 +3511,51 @@ function renderRecordedLectures(){
     </div>`).join('');
 }
 
+// 🔍 Debug function: Show all employees data
+async function showAllEmployees() {
+  try {
+    const { data: employees, error } = await _supabase
+      .from('employees')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if(error){
+      console.error('❌ Error:', error);
+      alert('خطأ في جلب البيانات: ' + error.message);
+      return;
+    }
+    
+    console.log('👥 Total Employees:', employees.length);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━');
+    
+    employees.forEach((emp, i) => {
+      console.log(`\n📋 Employee #${i+1}:`);
+      console.log('   Username:', emp.username);
+      console.log('   Password:', emp.password);
+      console.log('   Phone:', emp.phone);
+      console.log('   Full Name:', emp.full_name);
+      console.log('   Job Title:', emp.job_title);
+      console.log('   Employee Type:', emp.employee_type);
+      console.log('   Is Active:', emp.is_active);
+      console.log('   Status:', emp.application_status);
+    });
+    
+    // Create a table view
+    console.table(employees.map(e => ({
+      'Username': e.username,
+      'Password': e.password,
+      'Active': e.is_active,
+      'Status': e.application_status,
+      'Type': e.employee_type
+    })));
+    
+    alert(`تم العثور على ${employees.length} موظف. شاهد Console للتفاصيل.`);
+  } catch(error) {
+    console.error('❌ Error:', error);
+    alert('حدث خطأ: ' + error.message);
+  }
+}
+
 function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); renderRecordedLectures(); renderEmployeeRequests(); initFirestore(); }
 
 const JOIN_KEY = 'am_join_requests';
@@ -3435,16 +3573,35 @@ function saveJoinRequests(newArr){
   _fsReqs = newArr.slice();
 }
 
-function updateBadges(){
-  const users=getUsers(); const emps=users.filter(u=>u.type==='employee'); const stus=users.filter(u=>u.type==='student');
+async function updateBadges(){
+  // Load employees count from Supabase (approved only)
+  let empsCount = 0;
+  try {
+    const { data: employees, error } = await _supabase
+      .from('employees')
+      .select('id', { count: 'exact', head: true })
+      .eq('application_status', 'approved')
+      .eq('is_active', true);
+    
+    if (!error && employees !== null) {
+      empsCount = employees.length || 0;
+    }
+  } catch(e) {
+    console.error('Error counting employees:', e);
+  }
+  
+  // Students from localStorage (old system)
+  const users=getUsers(); 
+  const stus=users.filter(u=>u.type==='student');
+  
   const portfolio=getPortfolio(); const totalImgs=Object.values(portfolio).reduce((s,imgs)=>s+(imgs||[]).length,0);
   const reqs=getJoinRequests(); const pending=reqs.filter(r=>r.status==='pending');
-  document.getElementById('empCount').textContent=emps.length;
+  document.getElementById('empCount').textContent=empsCount;
   document.getElementById('stuCount').textContent=stus.length;
   document.getElementById('portfolioImgCount').textContent=totalImgs;
   document.getElementById('pendingCount').textContent=pending.length;
-  document.getElementById('dash-total').textContent=users.length;
-  document.getElementById('dash-emp').textContent=emps.length;
+  document.getElementById('dash-total').textContent=empsCount + stus.length;
+  document.getElementById('dash-emp').textContent=empsCount;
   document.getElementById('dash-stu').textContent=stus.length;
   document.getElementById('dash-imgs').textContent=totalImgs;
   // update filter counts
@@ -4166,24 +4323,82 @@ function initDragDrop(){
   });
 }
 
-function renderUsers(type){
+async function renderUsers(type){
+  if(type === 'employee'){
+    // For employees: Load from Supabase (approved employees only)
+    const grid = document.getElementById('employeesGrid');
+    
+    try {
+      const { data: employees, error } = await _supabase
+        .from('employees')
+        .select('*')
+        .eq('application_status', 'approved')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+      
+      const users = employees || [];
+      
+      if(!users.length){
+        grid.innerHTML=`<div class="no-users-msg" style="grid-column:1/-1"><div><i class="fas fa-user-tie"></i></div><p>لا يوجد موظف بعد</p><button class="btn-add-user" onclick="addEmployeeWithOnboarding()" style="margin-top:14px;display:inline-flex;"><i class="fas fa-plus"></i> إضافة موظف</button></div>`;
+        return;
+      }
+      
+      grid.innerHTML=users.map(u=>{
+        const avatarBg='linear-gradient(135deg,#3b82f6,#6366f1)';
+        const initial=(u.full_name || u.username || '?').charAt(0);
+        const avatarHtml = u.selfie_url ? 
+          `<img class="user-avatar" src="${u.selfie_url}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="user-avatar-placeholder" style="background:${avatarBg};display:none">${initial}</div>` :
+          `<div class="user-avatar-placeholder" style="background:${avatarBg}">${initial}</div>`;
+        
+        const empTypeBadge = u.employee_type === 'permanent' ? 
+          '<span style="background:#22c55e;color:#fff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;margin-right:6px;"><i class="fas fa-user-check"></i> دائم</span>' : 
+          '<span style="background:#3b82f6;color:#fff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;margin-right:6px;"><i class="fas fa-file-signature"></i> تعاقد</span>';
+        
+        const sub = (u.job_title || 'موظف') + ' ' + empTypeBadge;
+        
+        return `<div class="user-card"><div class="user-card-header">${avatarHtml}<div><div class="user-card-name">${u.full_name || u.username}</div><div class="user-card-sub">${sub}</div></div></div>
+          <div class="user-card-body"><div class="user-card-info">
+            <div class="user-info-row"><i class="fas fa-user"></i><span>اسم الدخول: ${u.username}</span></div>
+            ${u.phone?`<div class="user-info-row"><i class="fas fa-phone"></i><span>${u.phone}</span></div>`:''}
+            ${u.email?`<div class="user-info-row"><i class="fas fa-envelope"></i><span>${u.email}</span></div>`:''}
+            ${u.salary?`<div class="user-info-row"><i class="fas fa-money-bill-wave"></i><span>${u.salary} جنيه / شهر</span></div>`:''}
+            ${u.permissions && Object.keys(u.permissions).length > 0?`<div class="user-info-row"><i class="fas fa-shield-alt"></i><span>صلاحيات: ${Object.keys(u.permissions).length} قسم</span></div>`:''}
+          </div>
+          <div class="user-card-actions">
+            <button class="btn-sm btn-sm-primary" onclick="viewEmployeeRequestDetails('${u.id}')"><i class="fas fa-eye"></i> عرض</button>
+            <button class="btn-sm btn-sm-danger" onclick="deleteEmployeeRequest('${u.id}')"><i class="fas fa-trash"></i></button>
+          </div></div></div>`;
+      }).join('');
+      
+    } catch(error){
+      console.error('Error loading employees:', error);
+      grid.innerHTML = `<div class="no-users-msg" style="grid-column:1/-1"><div><i class="fas fa-exclamation-triangle"></i></div><p>حدث خطأ في تحميل الموظفين</p></div>`;
+    }
+    
+    return;
+  }
+  
+  // For students: Keep using localStorage (old system)
   const users=getUsers().filter(u=>u.type===type);
-  const grid=document.getElementById(type==='employee'?'employeesGrid':'studentsGrid');
-  if(!users.length){const lbl=type==='employee'?'موظف':'طالب';grid.innerHTML=`<div class="no-users-msg" style="grid-column:1/-1"><div><i class="fas fa-${type==='employee'?'user-tie':'user-graduate'}"></i></div><p>لا يوجد ${lbl} بعد</p><button class="btn-add-user" onclick="openAddUser('${type}')" style="margin-top:14px;display:inline-flex;"><i class="fas fa-plus"></i> إضافة ${type==='employee'?'موظف':'طالب'}</button></div>`;return;}
+  const grid=document.getElementById('studentsGrid');
+  if(!users.length){const lbl='طالب';grid.innerHTML=`<div class="no-users-msg" style="grid-column:1/-1"><div><i class="fas fa-user-graduate"></i></div><p>لا يوجد ${lbl} بعد</p><button class="btn-add-user" onclick="openAddUser('${type}')" style="margin-top:14px;display:inline-flex;"><i class="fas fa-plus"></i> إضافة طالب</button></div>`;return;}
   grid.innerHTML=users.map(u=>{
-    const isEmp=u.type==='employee';
-    const avatarBg=isEmp?'linear-gradient(135deg,#3b82f6,#6366f1)':'linear-gradient(135deg,#22c55e,#16a34a)';
+    const avatarBg='linear-gradient(135deg,#22c55e,#16a34a)';
     const initial=u.name?u.name.charAt(0):'?';
     const avatarHtml=u.avatar?`<img class="user-avatar" src="${u.avatar}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="user-avatar-placeholder" style="background:${avatarBg};display:none">${initial}</div>`:`<div class="user-avatar-placeholder" style="background:${avatarBg}">${initial}</div>`;
-    const sub=isEmp?(u.role||'موظف'):(u.level?`المستوى: ${u.level}`:'طالب');
+    const sub=(u.level?`المستوى: ${u.level}`:'طالب');
     return `<div class="user-card"><div class="user-card-header">${avatarHtml}<div><div class="user-card-name">${u.name}</div><div class="user-card-sub">${sub}</div></div></div>
       <div class="user-card-body"><div class="user-card-info">
         <div class="user-info-row"><i class="fas fa-at"></i><span>${u.username}</span></div>
         ${u.phone?`<div class="user-info-row"><i class="fas fa-phone"></i><span>${u.phone}</span></div>`:''}
         ${u.email?`<div class="user-info-row"><i class="fas fa-envelope"></i><span>${u.email}</span></div>`:''}
-        ${isEmp&&u.department?`<div class="user-info-row"><i class="fas fa-building"></i><span>${u.department}</span></div>`:''}
-        ${!isEmp&&u.id?`<div class="user-info-row" style="color:#fbbf24"><i class="fas fa-id-badge"></i><span>ID: <strong>${u.id}</strong></span></div>`:''}
-        ${!isEmp&&u.courses?`<div class="user-info-row"><i class="fas fa-graduation-cap"></i><span>${Array.isArray(u.courses)?u.courses.map(c=>COURSES_NAMES[c]||c).join('، '):u.courses}</span></div>`:''}
+        ${u.id?`<div class="user-info-row" style="color:#fbbf24"><i class="fas fa-id-badge"></i><span>ID: <strong>${u.id}</strong></span></div>`:''}
+        ${u.courses?`<div class="user-info-row"><i class="fas fa-graduation-cap"></i><span>${Array.isArray(u.courses)?u.courses.map(c=>COURSES_NAMES[c]||c).join('، '):u.courses}</span></div>`:''}
       </div>
       <div class="user-card-actions">
         <button class="btn-sm btn-sm-primary" onclick="viewProfile('${u.id}')"><i class="fas fa-eye"></i> عرض</button>
@@ -6437,22 +6652,31 @@ async function renderEmployeeRequests(){
             
             ${req.application_status === 'approved' ? `
             <div class="emp-req-actions">
-              <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف السجل" style="width:100%;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
-                <i class="fas fa-trash"></i> حذف السجل
+              <button class="btn-view-req" onclick="viewEmployeeRequestDetails('${req.id}')" title="عرض التفاصيل" style="flex:1;">
+                <i class="fas fa-eye"></i> عرض التفاصيل
+              </button>
+              <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف السجل" style="flex:0 0 auto;padding:11px 14px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
+                <i class="fas fa-trash"></i>
               </button>
             </div>` : ''}
             
             ${req.application_status === 'rejected' ? `
             <div class="emp-req-actions">
-              <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف السجل" style="width:100%;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
-                <i class="fas fa-trash"></i> حذف السجل
+              <button class="btn-view-req" onclick="viewEmployeeRequestDetails('${req.id}')" title="عرض التفاصيل" style="flex:1;">
+                <i class="fas fa-eye"></i> عرض التفاصيل
+              </button>
+              <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف السجل" style="flex:0 0 auto;padding:11px 14px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
+                <i class="fas fa-trash"></i>
               </button>
             </div>` : ''}
             
             ${!req.application_submitted_at ? `
             <div class="emp-req-actions">
-              <button class="btn-whatsapp-notify" onclick="resendEmployeeLink('${req.id}', '${req.phone||''}', '${req.full_name||req.username||''}')">
-                <i class="fab fa-whatsapp"></i> إعادة إرسال الرابط
+              <button class="btn-view-req" onclick="viewEmployeeRequestDetails('${req.id}')" title="عرض التفاصيل" style="flex:1;">
+                <i class="fas fa-eye"></i> عرض
+              </button>
+              <button class="btn-whatsapp-notify" onclick="resendEmployeeLink('${req.id}', '${req.phone||''}', '${req.full_name||req.username||''}')" style="flex:1.5;">
+                <i class="fab fa-whatsapp"></i> إرسال الرابط
               </button>
               <button class="btn-delete" onclick="deleteEmployeeRequest('${req.id}')" title="حذف" style="flex:0 0 auto;padding:12px 16px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1));color:#ef4444;border:1px solid rgba(239,68,68,0.3);">
                 <i class="fas fa-trash"></i>
@@ -6923,6 +7147,24 @@ async function viewEmployeeRequestDetails(empId){
           <div class="rd-row"><div class="rd-lbl"><i class="fas fa-coins"></i> الراتب</div><div class="rd-val">${emp.salary || '-'} جنيه / شهر</div></div>
           <div class="rd-row"><div class="rd-lbl"><i class="fas fa-calendar-check"></i> تاريخ البدء</div><div class="rd-val">${startDate}</div></div>
           <div class="rd-row"><div class="rd-lbl"><i class="fas fa-clock"></i> تاريخ التقديم</div><div class="rd-val">${submittedDate}</div></div>
+        </div>
+      </div>
+      
+      <!-- Account Info -->
+      <div class="rd-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 20px; color: #fff; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+        <div class="rd-section-title" style="color: #fff; border-bottom: 2px solid rgba(255,255,255,0.3);"><i class="fas fa-key"></i> بيانات تسجيل الدخول</div>
+        <div class="rd-section-body">
+          <div class="rd-row" style="border-bottom: 1px solid rgba(255,255,255,0.2);"><div class="rd-lbl" style="color: rgba(255,255,255,0.9);"><i class="fas fa-user"></i> اسم المستخدم</div><div class="rd-val" style="color: #fff; font-weight: 700; background: rgba(255,255,255,0.15); padding: 8px 12px; border-radius: 6px;">${emp.username || '-'}</div></div>
+          <div class="rd-row" style="border-bottom: 1px solid rgba(255,255,255,0.2);"><div class="rd-lbl" style="color: rgba(255,255,255,0.9);"><i class="fas fa-lock"></i> كلمة المرور</div><div class="rd-val" style="color: #fff; font-weight: 700; background: rgba(255,255,255,0.15); padding: 8px 12px; border-radius: 6px; font-family: monospace;">${emp.password || '-'}</div></div>
+          <div class="rd-row" style="border-bottom: 1px solid rgba(255,255,255,0.2);"><div class="rd-lbl" style="color: rgba(255,255,255,0.9);"><i class="fas fa-user-tag"></i> نوع الموظف</div><div class="rd-val" style="color: #fff;">${emp.employee_type === 'permanent' ? '<span style="background: #22c55e; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">موظف دائم</span>' : '<span style="background: #3b82f6; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">تعاقد</span>'}</div></div>
+          <div class="rd-row" style="border-bottom: 1px solid rgba(255,255,255,0.2);"><div class="rd-lbl" style="color: rgba(255,255,255,0.9);"><i class="fas fa-toggle-on"></i> حالة الحساب</div><div class="rd-val" style="color: #fff;">${emp.is_active ? '<span style="background: #22c55e; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> مفعّل</span>' : '<span style="background: #ef4444; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;"><i class="fas fa-times-circle"></i> غير مفعّل</span>'}</div></div>
+          ${emp.permissions && Object.keys(emp.permissions).length > 0 ? `
+          <div class="rd-row" style="align-items: flex-start;">
+            <div class="rd-lbl" style="color: rgba(255,255,255,0.9);"><i class="fas fa-shield-alt"></i> الصلاحيات</div>
+            <div class="rd-val" style="color: #fff; display: flex; flex-wrap: wrap; gap: 6px;">
+              ${Object.keys(emp.permissions).map(perm => `<span style="background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 6px; font-size: 11px; border: 1px solid rgba(255,255,255,0.3);">${perm}</span>`).join('')}
+            </div>
+          </div>` : ''}
         </div>
       </div>
       
