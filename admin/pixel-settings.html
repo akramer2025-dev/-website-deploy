@@ -364,10 +364,16 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // Check authentication
+        // Check authentication - redirect to admin page if not logged in
+        let isAuthenticated = false;
         onAuthStateChanged(auth, (user) => {
             if (!user) {
-                window.location.href = '../login.html';
+                // Not logged in - redirect to admin page
+                alert('يجب تسجيل الدخول أولاً');
+                window.location.href = 'index.html';
+            } else {
+                isAuthenticated = true;
+                loadCurrentPixel();
             }
         });
 
@@ -460,9 +466,6 @@
                 showStatus('فشل النسخ', 'error');
             });
         };
-
-        // Load on page load
-        loadCurrentPixel();
     </script>
 </body>
 </html>
