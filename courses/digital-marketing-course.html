@@ -733,7 +733,7 @@
                 </div>
                 
                 <div class="cta-buttons">
-                    <a href="#register" class="btn btn-primary" onclick="fbAddToCart('course-digital-marketing', 2000)">
+                    <a href="#register" class="btn btn-primary" onclick="fbAddToCartServer('course-digital-marketing', 2000)">
                         <i class="fas fa-rocket"></i>
                         سجل الآن
                     </a>
@@ -893,7 +893,7 @@
                 <li><i class="fas fa-check-circle"></i> مواد تعليمية إضافية</li>
             </ul>
 
-            <a href="#register" class="btn btn-primary" style="margin-top: 30px;" onclick="fbAddToCart('course-digital-marketing', 2000)">
+            <a href="#register" class="btn btn-primary" style="margin-top: 30px;" onclick="fbAddToCartServer('course-digital-marketing', 2000)">
                 <i class="fas fa-shopping-cart"></i>
                 سجل الآن
             </a>
@@ -1022,5 +1022,9 @@
             });
         }
     </script>
+
+    <!-- Meta Pixel + Conversions API -->
+    <script src="/js/meta-pixel.js" defer></script>
+    <script src="/js/meta-conversion-client.js" defer></script>
 </body>
 </html>
