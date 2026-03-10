@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعدادات Meta Pixel | Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(233, 78, 119, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 16px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(233, 78, 119, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2 i {
+            color: #f7931e;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #f7931e;
+            box-shadow: 0 0 0 3px rgba(247, 147, 30, 0.1);
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Cairo', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(233, 78, 119, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #1a1a2e;
+        }
+
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #81C784;
+        }
+
+        .status.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #EF5350;
+        }
+
+        .status.info {
+            background: rgba(33, 150, 243, 0.2);
+            border: 1px solid #2196F3;
+            color: #64B5F6;
+        }
+
+        .info-box {
+            background: rgba(33, 150, 243, 0.1);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #64B5F6;
+        }
+
+        .info-box ol {
+            padding-right: 25px;
+            line-height: 2;
+        }
+
+        .info-box ol li {
+            margin-bottom: 8px;
+        }
+
+        .code-box {
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 8px 15px;
+            background: #f7931e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .copy-btn:hover {
+            background: #e07800;
+        }
+
+        .current-pixel {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .current-pixel h3 {
+            font-size: 18px;
+            color: #81C784;
+            margin-bottom: 10px;
+        }
+
+        .current-pixel .pixel-id {
+            font-size: 24px;
+            font-weight: 900;
+            color: #4CAF50;
+            font-family: 'Courier New', monospace;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-right"></i>
+            العودة للوحة التحكم
+        </a>
+
+        <div class="header">
+            <h1><i class="fab fa-facebook"></i> إعدادات Meta Pixel</h1>
+            <p>إدارة Facebook Pixel لتتبع الزوار والتحويلات على موقعك</p>
+        </div>
+
+        <div id="statusMessage"></div>
+
+        <div class="current-pixel" id="currentPixelBox" style="display:none;">
+            <h3><i class="fas fa-check-circle"></i> الـ Pixel الحالي</h3>
+            <div class="pixel-id" id="currentPixelId">-</div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-cog"></i> تحديث Pixel ID</h2>
+            
+            <form id="pixelForm">
+                <div class="form-group">
+                    <label for="pixelId">
+                        <i class="fas fa-fingerprint"></i> رقم الـ Pixel ID
+                    </label>
+                    <input 
+                        type="text" 
+                        id="pixelId" 
+                        name="pixelId" 
+                        placeholder="مثال: 4345157159075105"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    حفظ التعديلات
+                </button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-lightbulb"></i> كيف تحصل على Pixel ID؟</h2>
+            
+            <div class="info-box">
+                <ol>
+                    <li>اذهب إلى <strong>Facebook Events Manager</strong></li>
+                    <li>اختر موقعك أو أنشئ Pixel جديد</li>
+                    <li>انسخ رقم الـ Pixel ID (مكون من 15-16 رقم)</li>
+                    <li>الصقه في الخانة أعلاه واضغط حفظ</li>
+                    <li>بعد الحفظ، ارفع التحديثات على Git لتفعيل البيكسل</li>
+                </ol>
+            </div>
+
+            <a href="https://business.facebook.com/events_manager2" target="_blank" class="btn btn-secondary">
+                <i class="fas fa-external-link-alt"></i>
+                فتح Events Manager
+            </a>
+        </div>
+
+        <div class="card" id="codeInstructions" style="display:none;">
+            <h2><i class="fas fa-code"></i> خطوة أخيرة: تحديث الكود</h2>
+            
+            <div class="info-box">
+                <h3>افتح الملف التالي وحدث الـ Pixel ID:</h3>
+                <p><strong>js/meta-pixel.js</strong></p>
+                
+                <p style="margin-top:15px;">ابحث عن السطر:</p>
+                <div class="code-box">
+                    <button class="copy-btn" onclick="copyCode('oldCode')">نسخ</button>
+                    <pre id="oldCode">var PIXEL_ID = 'القيمة_القديمة';</pre>
+                </div>
+
+                <p style="margin-top:15px;">واستبدله بـ:</p>
+                <div class="code-box">
+                    <button class="copy-btn" onclick="copyCode('newCode')">نسخ</button>
+                    <pre id="newCode">var PIXEL_ID = '<span id="newPixelValue">YOUR_NEW_ID</span>';</pre>
+                </div>
+
+                <p style="margin-top:20px;"><strong>ثم:</strong></p>
+                <ol style="padding-right:25px;line-height:2;margin-top:10px;">
+                    <li>احفظ الملف</li>
+                    <li>ارفع التحديثات على Git: <code style="background:rgba(0,0,0,0.3);padding:3px 8px;border-radius:5px;">git add js/meta-pixel.js && git commit -m "Update pixel ID" && git push</code></li>
+                    <li>تحقق من Meta Events Manager بعد بضع دقائق</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDyfxI_L44t5klB6aij3h1Z3NB0x6wHL0g",
+            authDomain: "courses-d0e66.firebaseapp.com",
+            projectId: "courses-d0e66",
+            storageBucket: "courses-d0e66.firebasestorage.app",
+            messagingSenderId: "552001830521",
+            appId: "1:552001830521:web:78569fb9fb8e3e54b1b5b2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Check authentication
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = '../login.html';
+            }
+        });
+
+        // Load current pixel ID
+        async function loadCurrentPixel() {
+            try {
+                const docRef = doc(db, 'settings', 'metaPixel');
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.pixelId) {
+                        document.getElementById('currentPixelId').textContent = data.pixelId;
+                        document.getElementById('currentPixelBox').style.display = 'block';
+                        document.getElementById('pixelId').value = data.pixelId;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading pixel:', error);
+            }
+        }
+
+        // Show status message
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.innerHTML = `
+                <div class="status ${type}">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    ${message}
+                </div>
+            `;
+            
+            setTimeout(() => {
+                statusDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        // Handle form submission
+        document.getElementById('pixelForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const pixelId = document.getElementById('pixelId').value.trim();
+            
+            if (!pixelId) {
+                showStatus('الرجاء إدخال Pixel ID', 'error');
+                return;
+            }
+
+            // Validate pixel ID (should be numbers)
+            if (!/^\d{15,16}$/.test(pixelId)) {
+                showStatus('Pixel ID غير صحيح. يجب أن يكون 15-16 رقم', 'error');
+                return;
+            }
+
+            try {
+                // Save to Firestore
+                await setDoc(doc(db, 'settings', 'metaPixel'), {
+                    pixelId: pixelId,
+                    updatedAt: new Date().toISOString(),
+                    updatedBy: auth.currentUser.email
+                });
+
+                showStatus('تم الحفظ بنجاح! الآن حدث الكود في ملف js/meta-pixel.js', 'success');
+                
+                // Update display
+                document.getElementById('currentPixelId').textContent = pixelId;
+                document.getElementById('currentPixelBox').style.display = 'block';
+                
+                // Show code instructions
+                document.getElementById('newPixelValue').textContent = pixelId;
+                document.getElementById('codeInstructions').style.display = 'block';
+                
+                // Scroll to instructions
+                document.getElementById('codeInstructions').scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                console.error('Error saving pixel:', error);
+                showStatus('حدث خطأ أثناء الحفظ: ' + error.message, 'error');
+            }
+        });
+
+        // Copy code function
+        window.copyCode = function(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showStatus('تم النسخ!', 'success');
+            }).catch(err => {
+                showStatus('فشل النسخ', 'error');
+            });
+        };
+
+        // Load on page load
+        loadCurrentPixel();
+    </script>
+</body>
+</html>
