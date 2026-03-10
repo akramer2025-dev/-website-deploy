@@ -8,6 +8,7 @@
    
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,47 +35,14 @@
             z-index: -1;
         }
         
-        /* Navigation */
-        nav {
-            position: sticky;
-            top: 0;
-            background: rgba(10, 31, 68, 0.95);
-            backdrop-filter: blur(15px);
-            padding: 20px;
-            z-index: 1000;
-            box-shadow: 0 5px 30px rgba(233, 78, 119, 0.3);
+        /* Navigation - استخدام نفس navbar الصفحة الرئيسية */
+        .nav-logo {
+            height: 90px !important;
+            width: auto !important;
+            max-width: 300px !important;
         }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: 900;
-            background: linear-gradient(45deg, #e94e77, #f7931e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-back {
-            color: white;
-            text-decoration: none;
-            padding: 12px 30px;
-            border: 2px solid #e94e77;
-            border-radius: 50px;
-            transition: 0.3s;
-            font-weight: 700;
-        }
-
-        .nav-back:hover {
-            background: linear-gradient(45deg, #e94e77, #f7931e);
-            box-shadow: 0 0 30px rgba(233, 78, 119, 0.6);
-            transform: translateY(-2px);
+        .navbar.scrolled .nav-logo {
+            height: 70px !important;
         }
 
         /* HERO - قوي جداً! */
@@ -604,8 +572,14 @@
             }
 
             .btn {
-                padding: 15px 30px;
-                font-size: 18px;
+                padding: 12px 24px !important;
+                font-size: 15px !important;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 12px 24px !important;
+                font-size: 15px !important;
             }
 
             .modules-grid {
@@ -627,6 +601,30 @@
                 top: 15px;
                 right: 15px;
             }
+
+            .nav-logo {
+                height: 70px !important;
+                max-width: 230px !important;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .cta-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero-features {
+                gap: 10px;
+            }
+
+            .hero-feature {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -635,10 +633,32 @@
     <div id="particles-js"></div>
 
     <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">أكرم مصطفى</div>
-            <a href="/" class="nav-back">← الرجوع للرئيسية</a>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" style="display:flex;align-items:center;gap:4px;text-decoration:none;">
+                    <img src="images/1772173627537.png" alt="Akram Mostafa" class="nav-logo">
+                    <span class="brand-name">AKRAM<br>MOSTAFA</span>
+                </a>
+            </div>
+            <a href="login.html" class="nav-login-btn">
+                <i class="fas fa-user-circle"></i>
+                <span>تسجيل الدخول</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+                <li><a href="about.html" class="nav-link">من أنا</a></li>
+                <li><a href="courses.html" class="nav-link active">الكورسات</a></li>
+                <li><a href="services.html" class="nav-link">الخدمات</a></li>
+                <li><a href="store.html" class="nav-link">المتجر</a></li>
+                <li><a href="contact.html" class="nav-link">تواصل معي</a></li>
+                <li><a href="login.html" class="nav-link nav-login-menu"><i class="fas fa-user-circle"></i> تسجيل الدخول</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -922,6 +942,44 @@
             card.style.transition = 'all 0.6s ease';
             observer.observe(card);
         });
+
+        // Navbar Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                }
+            });
+
+            // Close menu when clicking a link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                });
+            });
+        }
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
     </script>
 </body>
 </html>
