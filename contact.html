@@ -464,6 +464,15 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   const service = document.getElementById('fservice').value;
   const msg = document.getElementById('fmessage').value.trim();
   const text = `أهلاً أكرم 👋\nأنا ${name} (${phone})\nعايز أستفسر عن: ${service}\n\n${msg}`;
+  
+  // Track Lead event with Meta Pixel
+  if (typeof fbLead === 'function') {
+    fbLead({
+      content_name: 'نموذج التواصل - ' + service,
+      content_category: 'Contact Form'
+    });
+  }
+  
   // Show success msg
   document.getElementById('contactForm').style.display = 'none';
   document.getElementById('formSuccess').style.display = 'block';
