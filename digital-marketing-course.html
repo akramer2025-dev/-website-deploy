@@ -409,11 +409,143 @@
             50% { transform: translateY(-10px); }
         }
 
+        /* Journey Section */
+        .journey-section {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #16213e 0%, #0a1f44 100%);
+            position: relative;
+        }
+
+        .journey-steps {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            gap: 60px;
+        }
+
+        .journey-step {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(233, 78, 119, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .journey-step::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(233,78,119,0.1), transparent);
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .journey-step:hover::before {
+            opacity: 1;
+        }
+
+        .journey-step:nth-child(2) .step-image {
+            order: 2;
+        }
+
+        .journey-step:nth-child(2) .step-content {
+            order: 1;
+        }
+
+        .step-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .step-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+            transition: transform 0.5s;
+        }
+
+        .step-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .step-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            box-shadow: 0 10px 30px rgba(233, 78, 119, 0.5);
+            z-index: 2;
+        }
+
+        .step-content h3 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .step-content p {
+            font-size: 18px;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .step-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-content ul li {
+            padding: 12px 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.85;
+        }
+
+        .step-content ul li i {
+            color: #f7931e;
+            font-size: 18px;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .hero-container {
                 grid-template-columns: 1fr;
                 text-align: center;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .hero-images {
+                order: 1;
+            }
+
+            .hero-content {
+                order: 2;
             }
 
             .hero h1 {
@@ -426,6 +558,27 @@
 
             .cta-buttons {
                 justify-content: center;
+            }
+
+            .journey-step {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+            }
+
+            .journey-step:nth-child(2) .step-image {
+                order: 1;
+            }
+
+            .journey-step:nth-child(2) .step-content {
+                order: 2;
+            }
+
+            .step-content h3 {
+                font-size: 24px;
+            }
+
+            .step-content p {
+                font-size: 16px;
             }
         }
 
@@ -457,6 +610,22 @@
 
             .modules-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .journey-section {
+                padding: 60px 15px;
+            }
+
+            .journey-steps {
+                gap: 40px;
+            }
+
+            .step-number {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                top: 15px;
+                right: 15px;
             }
         }
     </style>
@@ -520,6 +689,67 @@
                     <div class="price-badge-amount">2,000 ج</div>
                 </div>
                 <img src="/images/slides/1772817045966.png" alt="كورس التسويق الإلكتروني" class="hero-img-main">
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Steps Section -->
+    <section class="journey-section">
+        <h2 class="section-title">🚀 رحلتك معنا خطوة بخطوة</h2>
+        
+        <div class="journey-steps">
+            <!-- Step 1 -->
+            <div class="journey-step">
+                <div class="step-image">
+                    <div class="step-number">1</div>
+                    <img src="/images/slides/1772817045966.png" alt="بناء الأساس">
+                </div>
+                <div class="step-content">
+                    <h3>بناء الأساس القوي</h3>
+                    <p>ابدأ ببناء هويتك الرقمية من الصفر - فهم السوق، تحديد جمهورك، ووضع استراتيجيتك الفريدة</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> تحليل المنافسين وفهم السوق</li>
+                        <li><i class="fas fa-check-circle"></i> بناء الهوية البصرية والعلامة التجارية</li>
+                        <li><i class="fas fa-check-circle"></i> تحديد الجمهور المستهدف بدقة</li>
+                        <li><i class="fas fa-check-circle"></i> وضع الخطة التسويقية الشاملة</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="journey-step">
+                <div class="step-image">
+                    <div class="step-number">2</div>
+                    <img src="/images/slides/1772816537303.png" alt="بناء الحضور الرقمي">
+                </div>
+                <div class="step-content">
+                    <h3>بناء الحضور الرقمي</h3>
+                    <p>أنشئ موقعك وحساباتك بشكل احترافي يجذب عملائك ويبني ثقتهم في علامتك</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> تصميم موقع إلكتروني بدون برمجة</li>
+                        <li><i class="fas fa-check-circle"></i> إنشاء حسابات احترافية على كل المنصات</li>
+                        <li><i class="fas fa-check-circle"></i> إعداد محتوى جذاب وفعّال</li>
+                        <li><i class="fas fa-check-circle"></i> تحسين محركات البحث (SEO)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="journey-step">
+                <div class="step-image">
+                    <div class="step-number">3</div>
+                    <img src="/images/slides/1772810760523.png" alt="إطلاق الحملات">
+                </div>
+                <div class="step-content">
+                    <h3>إطلاق الحملات الإعلانية</h3>
+                    <p>تعلّم إدارة الحملات الإعلانية الممولة على فيسبوك، إنستجرام وتحقيق نتائج حقيقية</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> إنشاء وإدارة حملات فيسبوك مربحة</li>
+                        <li><i class="fas fa-check-circle"></i> استهداف دقيق للجمهور</li>
+                        <li><i class="fas fa-check-circle"></i> قياس وتحليل النتائج</li>
+                        <li><i class="fas fa-check-circle"></i> تحسين الحقلات وزيادة المبيعات</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
