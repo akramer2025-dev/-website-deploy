@@ -4,338 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/images/1772173627537.png">
-    <meta name="description" content="كورس التسويق الإلكتروني الشامل - من الصفر إلى الاحتراف في 3 أسابيع مع المهندس أكرم مصطفى">
-    <meta name="keywords" content="تسويق إلكتروني, كورس تسويق, تعليم تسويق, سوشيال ميديا, إعلانات فيسبوك, أكرم مصطفى">
-    <meta property="og:title" content="كورس التسويق الإلكتروني الشامل - أكرم مصطفى">
-    <meta property="og:description" content="تعلم التسويق الإلكتروني من الصفر حتى الاحتراف في 3 أسابيع فقط">
-    <meta property="og:image" content="https://www.akrammostafa.com/images/slides/1772817045966.png">
-    <title>كورس التسويق الإلكتروني الشامل | أكرم مصطفى</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>🚀 كورس التسويق الإلكتروني الشامل | أكرم مصطفى</title>
+   
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+   
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent: #f6d365;
-            --dark: #2d3748;
-            --light: #f7fafc;
-            --success: #48bb78;
+            --primary: #0a1f44;
+            --gradient-pink: #e94e77;
+            --gradient-orange: #f7931e;
+            --white: #ffffff;
         }
-
+        
         body {
-            font-family: 'Segoe UI', 'Cairo', Tahoma, sans-serif;
-            line-height: 1.8;
-            color: var(--dark);
-            background: #fff;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a1f44 0%, #0d1b3e 100%);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+        
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Navigation - استخدام نفس navbar الصفحة الرئيسية */
+        .nav-logo {
+            height: 90px !important;
+            width: auto !important;
+            max-width: 300px !important;
+        }
+        .navbar.scrolled .nav-logo {
+            height: 70px !important;
         }
 
-        /* Hero Section */
+        /* HERO - قوي جداً! */
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 80px 20px 100px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 50px 20px;
             position: relative;
-            overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom;
-            background-size: cover;
-            opacity: 0.5;
-        }
-
-        .container {
-            max-width: 1200px;
+        .hero-container {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
         }
 
         .hero-content {
-            text-align: center;
-            animation: fadeInUp 1s ease;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
         }
 
         .hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 20px;
+            font-size: 56px;
+            font-weight: 900;
             line-height: 1.2;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            margin-bottom: 25px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-subtitle {
             font-size: 24px;
             margin-bottom: 30px;
-            opacity: 0.95;
+            opacity: 0.9;
+            line-height: 1.6;
         }
 
         .hero-features {
             display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
+            gap: 20px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
         }
 
         .hero-feature {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
-            padding: 20px 30px;
+            padding: 15px 25px;
             border-radius: 15px;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 600;
-            transition: transform 0.3s;
-        }
-
-        .hero-feature:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.3);
-        }
-
-        .cta-primary {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--dark);
-            padding: 18px 50px;
-            font-size: 22px;
-            font-weight: 700;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin-top: 20px;
-        }
-
-        .cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-        }
-
-        /* Course Images */
-        .course-showcase {
-            margin: -60px auto 80px;
-            max-width: 1400px;
-            padding: 0 20px;
-        }
-
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .showcase-img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
-        }
-
-        .showcase-img:hover {
-            transform: scale(1.05);
-        }
-
-        /* What You'll Learn */
-        .section {
-            padding: 80px 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 20px;
-            color: #666;
-            margin-bottom: 60px;
-        }
-
-        .modules {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .module {
-            background: white;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .module:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            border-color: var(--primary);
-        }
-
-        .module-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 32px;
-            color: white;
-        }
-
-        .module h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-
-        .module ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .module li {
-            padding: 10px 0;
-            padding-right: 30px;
-            position: relative;
-            color: #555;
-        }
-
-        .module li::before {
-            content: '✓';
-            position: absolute;
-            right: 0;
-            color: var(--success);
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        /* Pricing Section */
-        .pricing-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 20px;
-        }
-
-        .pricing-card {
-            background: white;
-            color: var(--dark);
-            border-radius: 30px;
-            padding: 50px;
-            max-width: 600px;
-            margin: 0 auto;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-
-        .price {
-            font-size: 72px;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 20px 0;
-        }
-
-        .price-currency {
-            font-size: 36px;
-        }
-
-        .price-features {
-            list-style: none;
-            padding: 30px 0;
-            text-align: right;
-        }
-
-        .price-features li {
-            padding: 15px 0;
-            font-size: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .price-features li i {
-            color: var(--success);
-            margin-left: 10px;
-        }
-
-        /* Instructor Section */
-        .instructor-section {
-            background: #f7fafc;
-        }
-
-        .instructor-card {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            background: white;
-            padding: 50px;
-            border-radius: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .instructor-img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid var(--primary);
-        }
-
-        .instructor-info h3 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .instructor-info p {
-            font-size: 18px;
-            color: #666;
-            line-height: 1.8;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--accent) 0%, #fda085 100%);
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 30px;
-            color: var(--dark);
+            border: 1px solid rgba(233, 78, 119, 0.3);
         }
 
         .cta-buttons {
             display: flex;
             gap: 20px;
-            justify-content: center;
             flex-wrap: wrap;
         }
 
@@ -349,43 +132,424 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            cursor: pointer;
+            border: none;
+            font-family: 'لCairo', sans-serif;
         }
 
-        .btn-whatsapp {
+        .btn-primary {
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            color: white;
+            box-shadow: 0 10px 40px rgba(233, 78, 119, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(233, 78, 119, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #0a1f44;
+        }
+
+        /* Hero Images */
+        .hero-images {
+            position: relative;
+            animation: fadeInRight 1s ease;
+        }
+
+        .hero-img-main {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Price Badge على الصورة */
+        .price-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            animation: bounce 2s infinite;
+        }
+
+        .price-badge-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .price-badge-amount {
+            font-size: 36px;
+            font-weight: 900;
+        }
+
+        /* Modules Section */
+        .modules-section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 60px;
+        }
+
+        .modules-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .module-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 25px;
+            border: 1px solid rgba(233, 78, 119, 0.3);
+            transition: all 0.3s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(233, 78, 119, 0.4);
+            border-color: #e94e77;
+        }
+
+        .module-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: 25px;
+        }
+
+        .module-card h3 {
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        .module-card ul {
+            list-style: none;
+        }
+
+        .module-card li {
+            padding: 12px 0;
+            padding-right: 30px;
+            position: relative;
+            opacity: 0.9;
+        }
+
+        .module-card li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: #f7931e;
+            font-weight: 900;
+            font-size: 20px;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 100px 20px;
+            background: rgba(233, 78, 119, 0.05);
+        }
+
+        .pricing-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            padding: 60px;
+            border-radius: 40px;
+            border: 2px solid rgba(233, 78, 119, 0.3);
+            text-align: center;
+        }
+
+        .price {
+            font-size: 80px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 30px 0;
+        }
+
+        .price-features {
+            list-style: none;
+            text-align: right;
+            margin: 40px 0;
+        }
+
+        .price-features li {
+            padding: 20px 0;
+            font-size: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .price-features li i {
+            color: #f7931e;
+            font-size: 24px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 48px;
+            margin-bottom: 30px;
+        }
+
+        .cta-section p {
+            font-size: 22px;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+
+        .whatsapp-btn {
             background: #25D366;
             color: white;
+            padding: 20px 50px;
+            font-size: 24px;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
+            transition: 0.3s;
         }
 
-        .btn-whatsapp:hover {
-            background: #128C7E;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .btn-call {
-            background: var(--dark);
-            color: white;
-        }
-
-        .btn-call:hover {
-            background: #1a202c;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .whatsapp-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(37, 211, 102, 0.6);
         }
 
         /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Journey Section */
+        .journey-section {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #16213e 0%, #0a1f44 100%);
+            position: relative;
+        }
+
+        .journey-steps {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            gap: 60px;
+        }
+
+        .journey-step {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(233, 78, 119, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .journey-step::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(233,78,119,0.1), transparent);
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .journey-step:hover::before {
+            opacity: 1;
+        }
+
+        .journey-step:nth-child(2) .step-image {
+            order: 2;
+        }
+
+        .journey-step:nth-child(2) .step-content {
+            order: 1;
+        }
+
+        .step-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .step-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+            transition: transform 0.5s;
+        }
+
+        .step-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .step-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            box-shadow: 0 10px 30px rgba(233, 78, 119, 0.5);
+            z-index: 2;
+        }
+
+        .step-content h3 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .step-content p {
+            font-size: 18px;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .step-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-content ul li {
+            padding: 12px 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0.85;
+        }
+
+        .step-content ul li i {
+            color: #f7931e;
+            font-size: 18px;
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .hero-images {
+                order: 1;
+            }
+
+            .hero-content {
+                order: 2;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero-features {
+                justify-content: center;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .journey-step {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+            }
+
+            .journey-step:nth-child(2) .step-image {
+                order: 1;
+            }
+
+            .journey-step:nth-child(2) .step-content {
+                order: 2;
+            }
+
+            .step-content h3 {
+                font-size: 24px;
+            }
+
+            .step-content p {
+                font-size: 16px;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 32px;
@@ -393,11 +557,6 @@
 
             .hero-subtitle {
                 font-size: 18px;
-            }
-
-            .hero-features {
-                flex-direction: column;
-                gap: 15px;
             }
 
             .section-title {
@@ -408,56 +567,117 @@
                 font-size: 56px;
             }
 
-            .instructor-card {
-                flex-direction: column;
-                text-align: center;
-                padding: 30px;
+            .pricing-card {
+                padding: 40px 20px;
             }
 
-            .showcase-grid {
+            .btn {
+                padding: 12px 24px !important;
+                font-size: 15px !important;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 12px 24px !important;
+                font-size: 15px !important;
+            }
+
+            .modules-grid {
                 grid-template-columns: 1fr;
             }
 
-            .showcase-img {
-                height: 300px;
+            .journey-section {
+                padding: 60px 15px;
             }
-        }
 
-        /* Floating Animation */
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
+            .journey-steps {
+                gap: 40px;
             }
-            50% {
-                transform: translateY(-20px);
+
+            .step-number {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                top: 15px;
+                right: 15px;
             }
-        }
 
-        .float {
-            animation: float 3s ease-in-out infinite;
-        }
+            .nav-logo {
+                height: 70px !important;
+                max-width: 230px !important;
+            }
 
-        /* Badge */
-        .badge {
-            display: inline-block;
-            background: var(--success);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 20px;
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .cta-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero-features {
+                gap: 10px;
+            }
+
+            .hero-feature {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
         <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" style="display:flex;align-items:center;gap:4px;text-decoration:none;">
+                    <img src="images/1772173627537.png" alt="Akram Mostafa" class="nav-logo">
+                    <span class="brand-name">AKRAM<br>MOSTAFA</span>
+                </a>
+            </div>
+            <a href="login.html" class="nav-login-btn">
+                <i class="fas fa-user-circle"></i>
+                <span>تسجيل الدخول</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+                <li><a href="about.html" class="nav-link">من أنا</a></li>
+                <li><a href="courses.html" class="nav-link active">الكورسات</a></li>
+                <li><a href="services.html" class="nav-link">الخدمات</a></li>
+                <li><a href="store.html" class="nav-link">المتجر</a></li>
+                <li><a href="contact.html" class="nav-link">تواصل معي</a></li>
+                <li><a href="login.html" class="nav-link nav-login-menu"><i class="fas fa-user-circle"></i> تسجيل الدخول</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO Section - مبهر! -->
+    <section class="hero">
+        <div class="hero-container">
             <div class="hero-content">
                 <div class="badge">🔥 العرض الحصري لفترة محدودة</div>
-                <h1>كورس التسويق الإلكتروني الشامل</h1>
-                <p class="hero-subtitle">من الصفر إلى الاحتراف في 3 أسابيع فقط</p>
+                
+                <h1>
+                    كورس<br>
+                    <span class="gradient-text">التسويق الإلكتروني</span><br>
+                    الشامل
+                </h1>
+                
+                <p class="hero-subtitle">
+                    من الصفر إلى الاحتراف في 3 أسابيع فقط!<br>
+                    تعلم أسرار التسويق الرقمي واحترف إدارة حسابات التواصل الاجتماعي
+                </p>
                 
                 <div class="hero-features">
                     <div class="hero-feature">
@@ -470,207 +690,243 @@
                         <i class="fas fa-certificate"></i> شهادة معتمدة
                     </div>
                 </div>
-
-                <a href="#register" class="cta-primary">
-                    🚀 سجل الآن واحجز مكانك
-                </a>
+                
+                <div class="cta-buttons">
+                    <a href="#register" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        سجل الآن
+                    </a>
+                    <a href="#modules" class="btn btn-secondary">
+                        <i class="fas fa-book"></i>
+                        تفاصيل الكورس
+                    </a>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Course Showcase Images -->
-    <section class="course-showcase">
-        <div class="container">
-            <div class="showcase-grid">
-                <img src="/images/slides/1772817045966.png" alt="التسويق الإلكتروني" class="showcase-img float">
-                <img src="/images/slides/1772816537303.png" alt="السوشيال ميديا" class="showcase-img">
-                <img src="/images/slides/1772810760523.png" alt="الإعلانات الممولة" class="showcase-img float">
-            </div>
-        </div>
-    </section>
-
-    <!-- What You'll Learn -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">🎯 هتتعلم إيه في الكورس؟</h2>
-            <p class="section-subtitle">رحلة شاملة من الصفر حتى الاحتراف في 4 محاور رئيسية</p>
             
-            <div class="modules">
-                <!-- Module 1 -->
-                <div class="module">
-                    <div class="module-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h3>بناء الهوية الرقمية</h3>
-                    <ul>
-                        <li>تصميم هوية بصرية احترافية</li>
-                        <li>إنشاء علامة تجارية قوية</li>
-                        <li>بناء حضور رقمي فعال</li>
-                        <li>تطوير اسم ولوجو مميز</li>
-                    </ul>
+            <div class="hero-images">
+                <div class="price-badge">
+                    <div class="price-badge-title">السعر الحصري</div>
+                    <div class="price-badge-amount">2,000 ج</div>
                 </div>
+                <img src="/images/slides/1772817045966.png" alt="كورس التسويق الإلكتروني" class="hero-img-main">
+            </div>
+        </div>
+    </section>
 
-                <!-- Module 2 -->
-                <div class="module">
-                    <div class="module-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>التخطيط الاستراتيجي</h3>
+    <!-- Journey Steps Section -->
+    <section class="journey-section">
+        <h2 class="section-title">🚀 رحلتك معنا خطوة بخطوة</h2>
+        
+        <div class="journey-steps">
+            <!-- Step 1 -->
+            <div class="journey-step">
+                <div class="step-image">
+                    <div class="step-number">1</div>
+                    <img src="/images/slides/1772817045966.png" alt="بناء الأساس">
+                </div>
+                <div class="step-content">
+                    <h3>بناء الأساس القوي</h3>
+                    <p>ابدأ ببناء هويتك الرقمية من الصفر - فهم السوق، تحديد جمهورك، ووضع استراتيجيتك الفريدة</p>
                     <ul>
-                        <li>وضع خطة تسويقية متكاملة</li>
-                        <li>تحليل المنافسين بذكاء</li>
-                        <li>دراسة السوق المستهدف</li>
-                        <li>تحديد الجمهور المثالي</li>
+                        <li><i class="fas fa-check-circle"></i> تحليل المنافسين وفهم السوق</li>
+                        <li><i class="fas fa-check-circle"></i> بناء الهوية البصرية والعلامة التجارية</li>
+                        <li><i class="fas fa-check-circle"></i> تحديد الجمهور المستهدف بدقة</li>
+                        <li><i class="fas fa-check-circle"></i> وضع الخطة التسويقية الشاملة</li>
                     </ul>
                 </div>
+            </div>
 
-                <!-- Module 3 -->
-                <div class="module">
-                    <div class="module-icon">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <h3>الموقع الإلكتروني</h3>
+            <!-- Step 2 -->
+            <div class="journey-step">
+                <div class="step-image">
+                    <div class="step-number">2</div>
+                    <img src="/images/slides/1772816537303.png" alt="بناء الحضور الرقمي">
+                </div>
+                <div class="step-content">
+                    <h3>بناء الحضور الرقمي</h3>
+                    <p>أنشئ موقعك وحساباتك بشكل احترافي يجذب عملائك ويبني ثقتهم في علامتك</p>
                     <ul>
-                        <li>إنشاء موقع بدون برمجة</li>
-                        <li>تصميم صفحات جذابة</li>
-                        <li>تحسين محركات البحث (SEO)</li>
-                        <li>ربط أدوات التسويق</li>
+                        <li><i class="fas fa-check-circle"></i> تصميم موقع إلكتروني بدون برمجة</li>
+                        <li><i class="fas fa-check-circle"></i> إنشاء حسابات احترافية على كل المنصات</li>
+                        <li><i class="fas fa-check-circle"></i> إعداد محتوى جذاب وفعّال</li>
+                        <li><i class="fas fa-check-circle"></i> تحسين محركات البحث (SEO)</li>
                     </ul>
                 </div>
+            </div>
 
-                <!-- Module 4 -->
-                <div class="module">
-                    <div class="module-icon">
-                        <i class="fas fa-bullhorn"></i>
-                    </div>
-                    <h3>الحملات الإعلانية</h3>
+            <!-- Step 3 -->
+            <div class="journey-step">
+                <div class="step-image">
+                    <div class="step-number">3</div>
+                    <img src="/images/slides/1772810760523.png" alt="إطلاق الحملات">
+                </div>
+                <div class="step-content">
+                    <h3>إطلاق الحملات الإعلانية</h3>
+                    <p>تعلّم إدارة الحملات الإعلانية الممولة على فيسبوك، إنستجرام وتحقيق نتائج حقيقية</p>
                     <ul>
-                        <li>إطلاق حملات على فيسبوك</li>
-                        <li>إعلانات إنستجرام الاحترافية</li>
-                        <li>الاستهداف الدقيق للعملاء</li>
-                        <li>قياس وتحليل النتائج</li>
+                        <li><i class="fas fa-check-circle"></i> إنشاء وإدارة حملات فيسبوك مربحة</li>
+                        <li><i class="fas fa-check-circle"></i> استهداف دقيق للجمهور</li>
+                        <li><i class="fas fa-check-circle"></i> قياس وتحليل النتائج</li>
+                        <li><i class="fas fa-check-circle"></i> تحسين الحقلات وزيادة المبيعات</li>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section class="modules-section" id="modules">
+        <h2 class="section-title">🎯 هتتعلم إيه في الكورس؟</h2>
+        
+        <div class="modules-grid">
+            <div class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3>بناء الهوية الرقمية</h3>
+                <ul>
+                    <li>تصميم هوية بصرية احترافية</li>
+                    <li>إنشاء علامة تجارية قوية</li>
+                    <li>بناء حضور رقمي فعال</li>
+                    <li>تطوير اسم ولوجو مميز</li>
+                </ul>
+            </div>
+
+            <div class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>التخطيط الاستراتيجي</h3>
+                <ul>
+                    <li>وضع خطة تسويقية متكاملة</li>
+                    <li>تحليل المنافسين بذكاء</li>
+                    <li>دراسة السوق المستهدف</li>
+                    <li>تحديد الجمهور المثالي</li>
+                </ul>
+            </div>
+
+            <div class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3>الموقع الإلكتروني</h3>
+                <ul>
+                    <li>إنشاء موقع بدون برمجة</li>
+                    <li>تصميم صفحات جذابة</li>
+                    <li>تحسين محركات البحث (SEO)</li>
+                    <li>ربط أدوات التسويق</li>
+                </ul>
+            </div>
+
+            <div class="module-card">
+                <div class="module-icon">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <h3>الحملات الإعلانية</h3>
+                <ul>
+                    <li>إطلاق حملات على فيسبوك</li>
+                    <li>إعلانات إنستجرام الاحترافية</li>
+                    <li>الاستهداف الدقيق للعملاء</li>
+                    <li>قياس وتحليل النتائج</li>
+                </ul>
             </div>
         </div>
     </section>
 
     <!-- Pricing Section -->
     <section class="pricing-section">
-        <div class="container">
-            <h2 class="section-title" style="color: white;">💰 استثمر في مستقبلك</h2>
+        <h2 class="section-title">💰 استثمر في مستقبلك</h2>
+        
+        <div class="pricing-card">
+            <h3 style="font-size: 32px; margin-bottom: 20px;">الباقة الكاملة</h3>
+            <div class="price">2,000 جنيه</div>
+            <p style="font-size: 18px; opacity: 0.8; margin-bottom: 40px;">فقط لمدة محدودة!</p>
             
-            <div class="pricing-card">
-                <h3>الباقة الكاملة</h3>
-                <div class="price">
-                    <span class="price-currency">2,000</span> جنيه
-                </div>
-                
-                <ul class="price-features">
-                    <li><i class="fas fa-check-circle"></i> 3 أسابيع تدريب مكثف</li>
-                    <li><i class="fas fa-check-circle"></i> 6 حصص تفاعلية (حصتين أسبوعياً)</li>
-                    <li><i class="fas fa-check-circle"></i> شهادة معتمدة بعد الانتهاء</li>
-                    <li><i class="fas fa-check-circle"></i> متابعة شخصية من المدرب</li>
-                    <li><i class="fas fa-check-circle"></i> مجموعة دعم حصرية</li>
-                    <li><i class="fas fa-check-circle"></i> تسجيلات الحصص</li>
-                    <li><i class="fas fa-check-circle"></i> مواد تعليمية إضافية</li>
-                </ul>
+            <ul class="price-features">
+                <li><i class="fas fa-check-circle"></i> 3 أسابيع تدريب مكثف</li>
+                <li><i class="fas fa-check-circle"></i> 6 حصص تفاعلية (حصتين أسبوعياً)</li>
+                <li><i class="fas fa-check-circle"></i> شهادة معتمدة بعد الانتهاء</li>
+                <li><i class="fas fa-check-circle"></i> متابعة شخصية من المدرب</li>
+                <li><i class="fas fa-check-circle"></i> مجموعة دعم حصرية</li>
+                <li><i class="fas fa-check-circle"></i> تسجيلات الحصص</li>
+                <li><i class="fas fa-check-circle"></i> مواد تعليمية إضافية</li>
+            </ul>
 
-                <a href="#register" class="cta-primary" style="margin-top: 30px;">
-                    📝 سجل الآن
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Instructor Section -->
-    <section class="section instructor-section">
-        <div class="container">
-            <h2 class="section-title">👨‍🏫 من هو المدرب؟</h2>
-            
-            <div class="instructor-card">
-                <img src="/images/akram-avatar.jpg" alt="أكرم مصطفى" class="instructor-img">
-                <div class="instructor-info">
-                    <h3>م. أكرم مصطفى</h3>
-                    <p><strong>خبير تسويق إلكتروني واستشاري رقمي</strong></p>
-                    <p>
-                        مع خبرة تزيد عن 8 سنوات في مجال التسويق الإلكتروني، ساعدت مئات الشركات والأفراد 
-                        على بناء حضورهم الرقمي وتحقيق أهدافهم التسويقية. متخصص في إعلانات فيسبوك وإنستجرام 
-                        والتسويق عبر محركات البحث.
-                    </p>
-                    <p style="margin-top: 20px;">
-                        <i class="fas fa-graduation-cap"></i> أكثر من 500 متدرب  •  
-                        <i class="fas fa-star"></i> تقييم 4.9/5  •  
-                        <i class="fas fa-award"></i> 15+ شهادة دولية
-                    </p>
-                </div>
-            </div>
+            <a href="#register" class="btn btn-primary" style="margin-top: 30px;">
+                <i class="fas fa-shopping-cart"></i>
+                سجل الآن
+            </a>
         </div>
     </section>
 
     <!-- CTA Section -->
     <section class="cta-section" id="register">
-        <div class="container">
-            <h2>🎯 جاهز تبدأ رحلتك في التسويق الإلكتروني؟</h2>
-            <p style="font-size: 20px; margin-bottom: 40px; color: var(--dark);">
-                تواصل معنا الآن واحجز مكانك في الدفعة القادمة
-            </p>
-            
-            <div class="cta-buttons">
-                <a href="https://wa.me/201234567890?text=مرحباً، أريد التسجيل في كورس التسويق الإلكتروني" 
-                   class="btn btn-whatsapp" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    تواصل واتساب
-                </a>
-                <a href="tel:+201234567890" class="btn btn-call">
-                    <i class="fas fa-phone"></i>
-                    اتصل الآن
-                </a>
-            </div>
-
-            <p style="margin-top: 30px; font-size: 18px; color: var(--dark);">
-                📧 أو راسلنا على: eng.akram@akrammostafa.com
-            </p>
-        </div>
+        <h2>🚀 جاهز تبدأ رحلتك؟</h2>
+        <p>تواصل معنا الآن واحجز مكانك في الدفعة القادمة</p>
+        
+        <a href="https://wa.me/201555512778?text=مرحباً، أريد التسجيل في كورس التسويق الإلكتروني" 
+           class="whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            تواصل عبر واتساب
+        </a>
+        
+        <p style="margin-top: 40px; font-size: 18px; opacity: 0.7;">
+            📧 eng.akram@akrammostafa.com | 📞 01555512778
+        </p>
     </section>
 
-    <!-- Footer -->
-    <footer style="background: var(--dark); color: white; padding: 40px 20px; text-align: center;">
-        <div class="container">
-            <h3 style="margin-bottom: 20px;">أكرم مصطفى للحلول الرقمية</h3>
-            <p>جميع الحقوق محفوظة © 2026</p>
-            <div style="margin-top: 20px;">
-                <a href="https://facebook.com/akrammostafa" style="color: white; margin: 0 10px; font-size: 24px;">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a href="https://instagram.com/akrammostafa" style="color: white; margin: 0 10px; font-size: 24px;">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://linkedin.com/in/akrammostafa" style="color: white; margin: 0 10px; font-size: 24px;">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
-
+    <!-- Particles JS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // Particles
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: ['#e94e77', '#f7931e'] },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#e94e77',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
         // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
 
-        // Animation on Scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
+        // Scroll Animation
+        const cards = document.querySelectorAll('.module-card');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -678,23 +934,52 @@
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.module, .showcase-img').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
         });
 
-        // Track clicks for analytics
-        document.querySelectorAll('.btn, .cta-primary').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const action = this.textContent.trim();
-                console.log('CTA Clicked:', action);
-                // يمكنك إضافة Google Analytics أو Facebook Pixel هنا
+        // Navbar Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
             });
-        });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                }
+            });
+
+            // Close menu when clicking a link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                });
+            });
+        }
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
     </script>
 </body>
 </html>
