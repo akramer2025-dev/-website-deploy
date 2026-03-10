@@ -349,7 +349,6 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
         import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
-        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyDyfxI_L44t5klB6aij3h1Z3NB0x6wHL0g",
@@ -362,20 +361,28 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const auth = getAuth(app);
 
-        // Check authentication - redirect to admin page if not logged in
-        let isAuthenticated = false;
-        onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                // Not logged in - redirect to admin page
+        // Check authentication using localStorage (same as admin page)
+        function checkAuth() {
+            const isAdmin = localStorage.getItem('am_admin_auth') === '1';
+            const isEmployee = localStorage.getItem('am_employee_auth') === '1';
+            const username = localStorage.getItem('am_username');
+            
+            if (!isAdmin && !isEmployee) {
                 alert('يجب تسجيل الدخول أولاً');
                 window.location.href = 'index.html';
-            } else {
-                isAuthenticated = true;
-                loadCurrentPixel();
+                return false;
             }
-        });
+            
+            console.log('✅ Authenticated as:', username);
+            return true;
+        }
+
+        // Check auth on page load
+        if (!checkAuth()) {
+            // Stop execution if not authenticated
+            throw new Error('Not authenticated');
+        }
 
         // Load current pixel ID
         async function loadCurrentPixel() {
@@ -430,10 +437,11 @@
 
             try {
                 // Save to Firestore
+                const username = localStorage.getItem('am_username') || 'unknown';
                 await setDoc(doc(db, 'settings', 'metaPixel'), {
                     pixelId: pixelId,
                     updatedAt: new Date().toISOString(),
-                    updatedBy: auth.currentUser.email
+                    updatedBy: username
                 });
 
                 showStatus('تم الحفظ بنجاح! الآن حدث الكود في ملف js/meta-pixel.js', 'success');
@@ -465,6 +473,9 @@
             }).catch(err => {
                 showStatus('فشل النسخ', 'error');
             });
+
+        // Load current pixel on page load
+        loadCurrentPixel();
         };
     </script>
 </body>
