@@ -41,7 +41,8 @@
     'course-tiktok':   { id:'course-tiktok',   name:'كورس تيك توك للاعمال والاعلانات',          category:'Online Course', price:397, currency:'EGP', urlPattern:/\/courses\/tiktok/ },
     'course-snapchat': { id:'course-snapchat', name:'كورس اعلانات سناب شات',                    category:'Online Course', price:397, currency:'EGP', urlPattern:/\/courses\/snapchat/ },
     'course-twitter':  { id:'course-twitter',  name:'كورس تويتر X للتسويق والاعلانات',          category:'Online Course', price:297, currency:'EGP', urlPattern:/\/courses\/twitter/ },
-    'course-strategy': { id:'course-strategy', name:'كورس الاستراتيجية التسويقية المتكاملة',    category:'Online Course', price:797, currency:'EGP', urlPattern:/\/courses\/integrated-strategy/ }
+    'course-strategy': { id:'course-strategy', name:'كورس الاستراتيجية التسويقية المتكاملة',    category:'Online Course', price:797, currency:'EGP', urlPattern:/\/courses\/integrated-strategy/ },
+    'course-digital-marketing': { id:'course-digital-marketing', name:'كورس التسويق الإلكتروني الشامل', category:'Online Course', price:2000, currency:'EGP', urlPattern:/\/digital-marketing-course/ }
   };
 
   /* ------------------- 1. INIT PIXEL ------------------- */
@@ -104,11 +105,36 @@
   window.fbTrack = function(ev,params){ fire(ev, params); };
 
   /* ------------------- 4. AUTO PAGE EVENTS ------------------- */
+  /*
+   * البيكسل بيسجل كل حاجة أوتوماتيكياً:
+   * 
+   * ✅ PageView          - كل صفحة (أوتوماتيك)
+   * ✅ ViewContent       - لما حد يشوف منتج/كورس/صفحة مهمة
+   * ✅ AddToCart         - لما يضغط "شراء" (يدوي من الأزرار)
+   * ✅ InitiateCheckout  - لما يدخل صفحة الدفع
+   * ✅ Purchase          - لما الدفع ينجح (يدوي من نظام الدفع)
+   * ✅ Lead              - لما يسجل حساب أو يبعت رسالة
+   * 
+   * فوائد للحملات الإعلانية:
+   * - تقدر تعمل Retargeting لكل اللي شافوا صفحة معينة
+   * - تقدر تستهدف اللي ضافوا للسلة ومدفعوش (Abandoned Checkout)
+   * - تقدر تعمل Lookalike من العملاء اللي اشتروا
+   * - Facebook يحسن الحملات بناءً على التحويلات الفعلية
+   */
 
   var path   = window.location.pathname;
   var search = new URLSearchParams(window.location.search);
 
-  /* صفحة منتج/كورس منفردة */
+  /* الصفحة الرئيسية - الزوار الجدد */
+  if(/^\/(index(\.html)?)?$/.test(path)){
+    fire('ViewContent',{
+      content_name:'الصفحة الرئيسية  اكرم مصطفى',
+      content_type:'website',
+      content_category:'Homepage'
+    });
+  }
+
+  /* صفحة منتج/كورس منفردة - اهتمام بمنتج معين */
   var current = findProduct(path);
   if(current){
     fire('ViewContent',{
@@ -118,27 +144,29 @@
     });
   }
 
-  /* صفحة المتجر */
+  /* صفحة المتجر (البرامج) - اهتمام بالتطبيقات */
   if(/\/store(\.html)?$/.test(path)){
     var apps=['linkcall','almodif','remostore','dentasmart','hotel-crm','missrim'];
     fire('ViewContent',{
       content_type:'product_group', content_name:'تطبيقات اكرم مصطفى',
+      content_category:'Software Products',
       contents: apps.map(function(id){ var p=CATALOG[id]; return{id:p.id,quantity:1,item_price:p.price}; }),
       currency:'EGP'
     });
   }
 
-  /* صفحة الكورسات */
+  /* صفحة الكورسات - اهتمام بالتعليم */
   if(/\/courses(\.html)?$/.test(path)){
     var courses=['course-ai','course-facebook','course-instagram','course-tiktok','course-snapchat','course-twitter','course-strategy'];
     fire('ViewContent',{
       content_type:'product_group', content_name:'كورسات التسويق الرقمي',
+      content_category:'Online Courses',
       contents: courses.map(function(id){ var c=CATALOG[id]; return{id:c.id,quantity:1,item_price:c.price}; }),
       currency:'EGP'
     });
   }
 
-  /* صفحة الدفع */
+  /* صفحة الدفع - بدأ عملية الشراء (ABANDONED CHECKOUT!) */
   if(/\/payment(\.html)?/.test(path)){
     var appId=search.get('app');
     var product=appId?getById(appId):null;
@@ -151,10 +179,51 @@
     });
   }
 
-  /* باقي الصفحات */
+  /* صفحات الخدمات - شوف إيه اللي بيهتم بيه */
+  if(/\/services\//.test(path)){
+    var serviceName = path.split('/').pop().replace('.html','').replace(/-/g,' ');
+    fire('ViewContent',{
+      content_name:'خدمة  '+serviceName,
+      content_type:'service',
+      content_category:'Services'
+    });
+  }
+
+  /* صفحة الأعمال/Portfolio - اهتمام بشغلك */
+  if(/\/portfolio(\.html)?/.test(path)){
+    fire('ViewContent',{
+      content_name:'أعمال اكرم مصطفى',
+      content_type:'website',
+      content_category:'Portfolio'
+    });
+  }
+
+  /* صفحة اكرم مصطفى الشخصية */
+  if(/\/akram-mostafa|\/about/.test(path)){
+    fire('ViewContent',{
+      content_name:'اكرم مصطفى  السيرة الذاتية',
+      content_type:'website',
+      content_category:'About'
+    });
+  }
+
+  /* صفحات التسجيل والدخول - Leads محتملة */
   if(/\/register(\.html)?/.test(path))    fire('Lead',{ content_name:'تسجيل حساب جديد' });
-  if(/\/login(\.html)?/.test(path))       fire('CompleteRegistration',{ status:'login' });
+  if(/\/login(\.html)?/.test(path))       fire('CompleteRegistration',{ status:'login_page' });
+  
+  /* صفحة التواصل - Lead محتمل */
   if(/\/contact(\.html)?/.test(path))     fire('Contact');
-  if(/\/akram-mostafa|\/about/.test(path)) fire('ViewContent',{ content_name:'اكرم مصطفى  السيرة الذاتية', content_type:'website' });
+
+  /* صفحة لاندينج كورس التسويق الرقمي */
+  if(/\/digital-marketing-course(\.html)?/.test(path)){
+    fire('ViewContent',{
+      content_ids:['course-digital-marketing'],
+      content_name:'كورس التسويق الإلكتروني الشامل',
+      content_type:'product',
+      content_category:'Online Course',
+      value:2000,
+      currency:'EGP'
+    });
+  }
 
 })();
