@@ -3697,19 +3697,41 @@ function applyEmployeePermissions() {
       
       // Check each permission individually
       console.log('\n🔍 CHECKING EACH PERMISSION:');
-      console.log('  dashboard:', permissions.dashboard);
-      console.log('  portfolio:', permissions.portfolio);
-      console.log('  projects:', permissions.projects);
       console.log('  crm:', permissions.crm);
       console.log('  employees:', permissions.employees);
       console.log('  courses:', permissions.courses);
-      console.log('  join_requests:', permissions.join_requests);
+      console.log('  join_requests/requests:', permissions.join_requests || permissions.requests);
+      console.log('  marketing:', permissions.marketing);
+      console.log('  projects:', permissions.projects);
+      console.log('  portfolio:', permissions.portfolio);
+      console.log('  dashboard:', permissions.dashboard);
       
       // WARNING if no permissions
       if(Object.keys(permissions).length === 0) {
         console.error('⚠️⚠️⚠️ WARNING: Employee has NO permissions! ⚠️⚠️⚠️');
       }
       
+      // ==================== HIDE RESTRICTED ITEMS ====================
+      // 1. Hide Meta Pixel link (always hidden for employees)
+      const pixelLink = document.querySelector('a[href="pixel-settings.html"]');
+      if (pixelLink) {
+        pixelLink.style.display = 'none';
+        console.log('🔒 Hidden: Meta Pixel settings (always hidden for employees)');
+      }
+      
+      // 2. Hide settings and students sections (always hidden for employees)
+      const settingsItem = document.querySelector('.adm-nav-item[onclick*="showSection(\'settings\')"]');
+      const studentsItem = document.querySelector('.adm-nav-item[onclick*="showSection(\'students\')"]');
+      if (settingsItem) {
+        settingsItem.style.display = 'none';
+        console.log('🔒 Hidden: Settings section (always hidden for employees)');
+      }
+      if (studentsItem) {
+        studentsItem.style.display = 'none';
+        console.log('🔒 Hidden: Students section (always hidden for employees)');
+      }
+      
+      // ==================== APPLY PERMISSION-BASED VISIBILITY ====================
       // Hide ALL navigation items first, then show only allowed ones
       const allNavItems = document.querySelectorAll('.adm-nav-item[onclick*="showSection"]');
       
@@ -3731,7 +3753,7 @@ function applyEmployeePermissions() {
         else if(permissions.crm && (onclickAttr.includes("'crm-leads'") || onclickAttr.includes("'crm-distribution'") || onclickAttr.includes("'crm-reports'"))) {
           shouldShow = true;
         }
-        else if(permissions.join_requests && onclickAttr.includes("'joinrequests'")) {
+        else if((permissions.join_requests || permissions.requests) && onclickAttr.includes("'joinrequests'")) {
           shouldShow = true;
         }
         else if(permissions.employees && (onclickAttr.includes("'employee-requests'") || onclickAttr.includes("'employees'"))) {
@@ -3799,9 +3821,19 @@ function logoutUser() {
 }
 
 function showSection(name){
+  console.log('🔄 showSection() called with:', name);
   document.querySelectorAll('.adm-section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.adm-nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('sec-'+name).classList.add('active');
+  
+  const targetSection = document.getElementById('sec-'+name);
+  if (!targetSection) {
+    console.error('❌ Section not found: sec-' + name);
+    return;
+  }
+  
+  targetSection.classList.add('active');
+  console.log('✅ Section activated:', 'sec-' + name);
+  
   document.querySelectorAll('.adm-nav-item').forEach(item=>{
     if(item.getAttribute('onclick')&&item.getAttribute('onclick').includes("'"+name+"'")) item.classList.add('active');
   });
