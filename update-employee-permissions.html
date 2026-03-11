@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تحديث صلاحيات الموظف</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Cairo','Segoe UI',Tahoma,sans-serif;background:#1e1b4b;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px}
+        .box{background:#fff;color:#333;padding:40px;border-radius:16px;max-width:550px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+        h2{margin-bottom:8px;color:#667eea;font-size:22px;font-weight:800}
+        .subtitle{color:#64748b;font-size:14px;margin-bottom:24px}
+        .permissions-list{background:#f9fafb;border:2px solid #e5e7eb;border-radius:12px;padding:20px;margin-bottom:20px}
+        .permissions-list h3{font-size:16px;color:#374151;margin-bottom:12px;font-weight:700}
+        .permissions-list ul{list-style:none;padding:0}
+        .permissions-list li{padding:8px 0;color:#64748b;font-size:14px;display:flex;align-items:center;gap:8px}
+        .permissions-list li::before{content:'✓';color:#10b981;font-weight:800;font-size:16px}
+        .btn{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:14px 36px;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;width:100%;font-family:inherit;transition:.3s}
+        .btn:hover{box-shadow:0 6px 20px rgba(102,126,234,.4);transform:translateY(-2px)}
+        .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+        .result{background:#f0fdf4;border:2px solid #10b981;padding:20px;border-radius:12px;margin-top:20px;display:none}
+        .result.show{display:block}
+        .result p{margin-bottom:8px;font-size:14px;color:#166534;font-weight:600}
+        .error{background:#fef2f2;border:2px solid #fecaca;color:#991b1b;padding:14px;border-radius:10px;margin-top:12px;display:none;font-size:14px;font-weight:600}
+        .error.show{display:block}
+        .spinner{display:none;margin:16px auto;text-align:center;color:#667eea;font-weight:600}
+        .spinner.show{display:block}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>🔐 تحديث صلاحيات موظف المبيعات</h2>
+        <p class="subtitle">سيتم منح موظفة "اسراء حامد" كافة صلاحيات موظف المبيعات</p>
+        
+        <div class="permissions-list">
+            <h3>📋 الصلاحيات التي سيتم إضافتها:</h3>
+            <ul>
+                <li>لوحة التحكم (Dashboard)</li>
+                <li>نظام CRM - إدارة العملاء</li>
+                <li>توزيع العملاء على الموظفين</li>
+                <li>تقارير CRM</li>
+                <li>طلبات الانضمام (العملاء الجدد)</li>
+                <li>إدارة المشاريع (تطبيقات الويب والموبايل)</li>
+                <li>معرض الأعمال</li>
+                <li>الخطط التسويقية</li>
+            </ul>
+        </div>
+        
+        <button class="btn" id="updateBtn" onclick="updatePermissions()">✅ تحديث الصلاحيات الآن</button>
+        
+        <div class="spinner" id="spinner">⏳ جاري التحديث...</div>
+        <div class="error" id="error"></div>
+        
+        <div class="result" id="result">
+            <p>✅ <strong>تم تحديث الصلاحيات بنجاح!</strong></p>
+            <p>الموظفة "اسراء حامد" دلوقتي عندها كل صلاحيات موظف المبيعات.</p>
+            <p style="margin-top:12px;font-size:13px">👉 اخرج من الحساب وادخل تاني عشان التحديثات تطبق.</p>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        firebase.initializeApp({
+            apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+            authDomain: "akramplatform-2c6be.firebaseapp.com",
+            projectId: "akramplatform-2c6be",
+            storageBucket: "akramplatform-2c6be.firebasestorage.app",
+            messagingSenderId: "132959399686",
+            appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+        });
+        var db = firebase.firestore();
+
+        async function updatePermissions(){
+            var btn = document.getElementById('updateBtn');
+            var spinner = document.getElementById('spinner');
+            var errorEl = document.getElementById('error');
+            var resultEl = document.getElementById('result');
+            
+            btn.disabled = true;
+            spinner.classList.add('show');
+            errorEl.classList.remove('show');
+            resultEl.classList.remove('show');
+            
+            try {
+                // صلاحيات موظف المبيعات الكاملة
+                var salesPermissions = {
+                    dashboard: true,           // لوحة التحكم
+                    crm: true,                 // نظام CRM
+                    crm_distribution: true,    // توزيع العملاء
+                    crm_reports: true,         // تقارير CRM
+                    join_requests: true,       // طلبات الانضمام (العملاء الجدد)
+                    requests: true,            // طلبات الانضمام (alias)
+                    projects: true,            // المشاريع
+                    portfolio: true,           // معرض الأعمال
+                    marketing: true,           // الخطط التسويقية
+                    employees: false,          // مش محتاج يشوف الموظفين
+                    courses: false             // مش محتاج المحاضرات
+                };
+                
+                // تحديث في employees collection
+                var employeesQuery = await db.collection('employees')
+                    .where('email', '==', 'esraa@akrammostafa.com')
+                    .get();
+                
+                if(!employeesQuery.empty){
+                    var empDoc = employeesQuery.docs[0];
+                    await empDoc.ref.update({
+                        permissions: salesPermissions,
+                        updatedAt: new Date().toISOString()
+                    });
+                }
+                
+                // تحديث في admin_data/users
+                var usersDoc = await db.collection('admin_data').doc('users').get();
+                if(usersDoc.exists){
+                    var usersArr = usersDoc.data().data || [];
+                    var esraaIndex = usersArr.findIndex(function(u){ 
+                        return u.username === 'esraa' || u.email === 'esraa@akrammostafa.com'; 
+                    });
+                    
+                    if(esraaIndex !== -1){
+                        usersArr[esraaIndex].permissions = salesPermissions;
+                        
+                        await db.collection('admin_data').doc('users').set({
+                            data: usersArr,
+                            updatedAt: Date.now()
+                        });
+                    }
+                }
+                
+                spinner.classList.remove('show');
+                resultEl.classList.add('show');
+                
+            } catch(err){
+                spinner.classList.remove('show');
+                errorEl.textContent = '❌ خطأ: ' + err.message;
+                errorEl.classList.add('show');
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
