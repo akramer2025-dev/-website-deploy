@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Supabase for Employee System -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase-config.js"></script>
+    
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
@@ -414,6 +419,14 @@
         appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
     }, 'login');
     const _db = firebase.firestore(_fb);
+    
+    // Initialize Supabase Client for Employee System
+    const { createClient } = supabase;
+    const _supabase = createClient(
+        SUPABASE_CONFIG.url,
+        SUPABASE_CONFIG.anonKey
+    );
+    console.log('✅ Supabase client initialized for login');
 
     const ADMINS = { "akram": "Aazxc" };
     let _pending = null;
@@ -445,13 +458,52 @@
             localStorage.setItem('akram_client_name', 'Akram Mostafa');
             localStorage.setItem('akram_username', user);
             localStorage.setItem('am_admin_auth', '1');
+            localStorage.setItem('am_user_type', 'admin'); // Mark as admin
             showSuccess('مرحباً بك يا أدمن! جاري الدخول...');
             setLoading(btn, false);
             setTimeout(() => window.location.href = 'admin/index.html', 1100);
             return;
         }
 
-        // Check cached users first
+        // ✅ Check Employee System First (Supabase)
+        try {
+            console.log('🔍 Checking employee in Supabase...');
+            const { data: employee, error: empError } = await _supabase
+                .from('employees')
+                .select('*')
+                .eq('username', user)
+                .maybeSingle();
+
+            if (employee && employee.password === pass) {
+                // Employee found and password matches
+                console.log('✅ Employee login successful:', employee.username);
+                
+                sessionStorage.setItem('akram_logged_in', 'true');
+                sessionStorage.setItem('akram_username', employee.username);
+                sessionStorage.setItem('akram_client_name', employee.username);
+                sessionStorage.setItem('am_admin_auth', '1'); // Grant admin panel access
+                
+                localStorage.setItem('akram_logged_in', 'true');
+                localStorage.setItem('akram_username', employee.username);
+                localStorage.setItem('akram_client_name', employee.username);
+                localStorage.setItem('am_admin_auth', '1');
+                localStorage.setItem('am_user_type', 'employee'); // ← Key: Mark as employee
+                localStorage.setItem('am_employee_id', employee.id);
+                
+                showSuccess('مرحباً ' + employee.username + '! جاري الدخول...');
+                setLoading(btn, false);
+                setTimeout(() => window.location.href = 'admin/index.html', 1100);
+                return;
+            }
+            
+            if (empError && empError.code !== 'PGRST116') { // 116 = no rows returned
+                console.warn('Supabase employee check error:', empError);
+            }
+        } catch(err) {
+            console.warn('Employee check failed, continuing to student check:', err);
+        }
+
+        // Check cached users (Students) 
         let found = null;
         try {
             const cached = JSON.parse(localStorage.getItem('am_users') || '[]');
@@ -526,6 +578,8 @@
         localStorage.setItem('akram_student_id', found.id);
         localStorage.setItem('akram_client_name', found.name || found.username || '');
         localStorage.removeItem('am_admin_auth');
+        localStorage.removeItem('am_user_type'); // Clear employee type for students
+        localStorage.removeItem('am_employee_id');
         showSuccess('مرحباً ' + (found.name || '') + '! جاري الدخول...');
         if (btn) setLoading(btn, false);
         setTimeout(() => window.location.href = 'my-courses.html', 1100);
