@@ -922,7 +922,7 @@ function buildSlideHTML(s, i){
   // media content
   let mediaHTML = '';
   if(s.type==='image'&&isRealSrc){
-    mediaHTML = `<div class="slide-media-frame"><img src="${s.src}" alt="${s.title||\'\'}" onclick="openLightbox('${s.src.replace(/'/g,"\\'")}')"
+    mediaHTML = `<div class="slide-media-frame"><img src="${s.src}" alt="${s.title||''}" onclick="openLightbox('${s.src.replace(/'/g,"&#39;")}')"
       style="cursor:zoom-in" title="اضغط للتكبير"></div>`;
   } else if(s.type==='video'&&s.src){
     const isYT = s.src.includes('youtube.com')||s.src.includes('youtu.be');
