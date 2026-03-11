@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تحديث صلاحيات الموظف (Supabase)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Cairo','Segoe UI',Tahoma,sans-serif;background:#1e1b4b;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+        .box{background:#fff;color:#333;padding:40px;border-radius:16px;max-width:550px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+        h2{margin-bottom:8px;color:#667eea;font-size:22px;font-weight:800}
+        .subtitle{color:#64748b;font-size:14px;margin-bottom:24px}
+        .permissions-list{background:#f9fafb;border:2px solid #e5e7eb;border-radius:12px;padding:20px;margin-bottom:20px}
+        .permissions-list h3{font-size:16px;color:#374151;margin-bottom:12px;font-weight:700}
+        .permissions-list ul{list-style:none;padding:0}
+        .permissions-list li{padding:8px 0;color:#64748b;font-size:14px;display:flex;align-items:center;gap:8px}
+        .permissions-list li::before{content:'✓';color:#10b981;font-weight:800;font-size:16px}
+        .btn{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:14px 36px;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;width:100%;font-family:inherit;transition:.3s}
+        .btn:hover{box-shadow:0 6px 20px rgba(102,126,234,.4);transform:translateY(-2px)}
+        .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+        .result{background:#f0fdf4;border:2px solid #10b981;padding:20px;border-radius:12px;margin-top:20px;display:none}
+        .result.show{display:block}
+        .result p{margin-bottom:8px;font-size:14px;color:#166534;font-weight:600}
+        .error{background:#fef2f2;border:2px solid #fecaca;color:#991b1b;padding:14px;border-radius:10px;margin-top:12px;display:none;font-size:14px;font-weight:600}
+        .error.show{display:block}
+        .spinner{display:none;margin:16px auto;text-align:center;color:#667eea;font-weight:600}
+        .spinner.show{display:block}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>🔐 تحديث صلاحيات موظف المبيعات (Supabase)</h2>
+        <p class="subtitle">سيتم منح "اسراء حامد" كافة صلاحيات موظف المبيعات في قاعدة بيانات Super اليوم!</p>
+        
+        <div class="permissions-list">
+            <h3>📋 الصلاحيات:</h3>
+            <ul>
+                <li>لوحة التحكم</li>
+                <li>نظام CRM (إدارة العملاء + توزيع + تقارير)</li>
+                <li>طلبات الانضمام</li>
+                <li>إدارة المشاريع</li>
+                <li>معرض الأعمال</li>
+                <li>الخطط التسويقية</li>
+            </ul>
+        </div>
+        
+        <button class="btn" id="updateBtn" onclick="updatePermissions()">✅ تحديث الصلاحيات</button>
+        
+        <div class="spinner" id="spinner">⏳ جاري التحديث...</div>
+        <div class="error" id="error"></div>
+        
+        <div class="result" id="result">
+            <p>✅ <strong>تم التحديث بنجاح!</strong></p>
+            <p>🎯 الصلاحيات اتحدثت في Supabase</p>
+            <p style="margin-top:14px;font-size:13px;font-weight:800">👉 دلوقتي اعمل الآتي:</p>
+            <ol style="margin:10px 0 0 20px;font-size:13px;color:#166534">
+                <li>اضغط F12 واكتب: <code style="background:#fff;padding:2px 6px;border-radius:4px">localStorage.clear()</code></li>
+                <li>اعمل Refresh للصفحة (F5)</li>
+                <li>ادخل باسم المستخدم: <strong>esraa</strong> والباسورد: <strong>Aa123456</strong></li>
+                <li>هتلاقي كل الأزرار شغالة! 🎉</li>
+            </ol>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script>
+        const { createClient } = supabase;
+        const _supabase = createClient(
+            SUPABASE_CONFIG.url,
+            SUPABASE_CONFIG.anonKey
+        );
+
+        async function updatePermissions(){
+            var btn = document.getElementById('updateBtn');
+            var spinner = document.getElementById('spinner');
+            var errorEl = document.getElementById('error');
+            var resultEl = document.getElementById('result');
+            
+            btn.disabled = true;
+            spinner.classList.add('show');
+            errorEl.classList.remove('show');
+            resultEl.classList.remove('show');
+            
+            try {
+                // صلاحيات موظف المبيعات الكاملة
+                var salesPermissions = {
+                    dashboard: true,
+                    crm: true,
+                    crm_distribution: true,
+                    crm_reports: true,
+                    join_requests: true,
+                    requests: true,
+                    projects: true,
+                    portfolio: true,
+                    marketing: true,
+                    employees: false,
+                    courses: false
+                };
+                
+                // تحديث في Supabase employees table
+                const { data, error } = await _supabase
+                    .from('employees')
+                    .update({ 
+                        permissions: salesPermissions,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('username', 'esraa');
+                
+                if(error){
+                    throw new Error(error.message);
+                }
+                
+                spinner.classList.remove('show');
+                resultEl.classList.add('show');
+                
+            } catch(err){
+                spinner.classList.remove('show');
+                errorEl.textContent = '❌ خطأ: ' + err.message;
+                errorEl.classList.add('show');
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
