@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إنشاء موظف تجريبي</title>
+    <style>
+        body{font-family:'Segoe UI',Tahoma,sans-serif;background:#1e1b4b;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
+        .box{background:#fff;color:#333;padding:40px;border-radius:16px;max-width:500px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+        h2{margin-bottom:20px;color:#667eea}
+        .result{background:#f0fdf4;border:2px solid #10b981;padding:20px;border-radius:12px;margin-top:20px;display:none;text-align:right;direction:rtl}
+        .result.show{display:block}
+        .result a{color:#667eea;font-weight:bold;word-break:break-all}
+        .btn{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:14px 36px;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:16px}
+        .btn:hover{box-shadow:0 6px 20px rgba(102,126,234,.4)}
+        .btn:disabled{opacity:.5;cursor:not-allowed}
+        .error{color:#ef4444;margin-top:12px;display:none}
+        .error.show{display:block}
+        .spinner{display:none;margin:16px auto}
+        .spinner.show{display:block}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>🧪 إنشاء موظف تجريبي</h2>
+        <p>اضغط الزر لإنشاء حساب موظف تجريبي في Firestore</p>
+        
+        <button class="btn" id="createBtn" onclick="createTestEmployee()">➕ إنشاء موظف تجريبي</button>
+        
+        <div class="spinner" id="spinner">⏳ جاري الإنشاء...</div>
+        <div class="error" id="error"></div>
+        
+        <div class="result" id="result">
+            <p><strong>✅ تم إنشاء الموظف بنجاح!</strong></p>
+            <p>🆔 ID: <code id="empId"></code></p>
+            <p>👤 الاسم: موظف تجريبي</p>
+            <p>📧 البريد: test@example.com</p>
+            <br>
+            <p><strong>🔗 رابط الصفحة:</strong></p>
+            <p><a id="empLink" href="#" target="_blank">افتح صفحة الموظف</a></p>
+            <br>
+            <p style="font-size:13px;color:#64748b">انسخ الرابط أعلاه وافتحه لاختبار صفحة التسجيل</p>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        firebase.initializeApp({
+            apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+            authDomain: "akramplatform-2c6be.firebaseapp.com",
+            projectId: "akramplatform-2c6be",
+            storageBucket: "akramplatform-2c6be.firebasestorage.app",
+            messagingSenderId: "132959399686",
+            appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+        });
+        var db = firebase.firestore();
+
+        async function createTestEmployee(){
+            var btn = document.getElementById('createBtn');
+            var spinner = document.getElementById('spinner');
+            var errorEl = document.getElementById('error');
+            var resultEl = document.getElementById('result');
+            
+            btn.disabled = true;
+            spinner.classList.add('show');
+            errorEl.classList.remove('show');
+            resultEl.classList.remove('show');
+            
+            try {
+                var docRef = await db.collection('employees').add({
+                    name: 'موظف تجريبي',
+                    full_name: 'موظف تجريبي للاختبار',
+                    email: 'test@example.com',
+                    phone: '01000000000',
+                    job_title: 'موظف مبيعات',
+                    jobTitle: 'موظف مبيعات',
+                    salary: '5000',
+                    status: 'new',
+                    applicationStatus: 'new',
+                    onboardingCompleted: false,
+                    createdAt: new Date().toISOString()
+                });
+                
+                var empId = docRef.id;
+                document.getElementById('empId').textContent = empId;
+                
+                var baseUrl = window.location.origin;
+                var link = baseUrl + '/employee-onboarding.html?id=' + empId;
+                var linkEl = document.getElementById('empLink');
+                linkEl.href = link;
+                linkEl.textContent = link;
+                
+                resultEl.classList.add('show');
+                spinner.classList.remove('show');
+                
+            } catch(err){
+                spinner.classList.remove('show');
+                errorEl.textContent = '❌ خطأ: ' + err.message;
+                errorEl.classList.add('show');
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
