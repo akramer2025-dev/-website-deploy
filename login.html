@@ -489,7 +489,9 @@
                 localStorage.setItem('am_admin_auth', '1');
                 localStorage.setItem('am_user_type', 'employee'); // ← Key: Mark as employee
                 localStorage.setItem('am_employee_id', employee.id);
+                localStorage.setItem('am_permissions', JSON.stringify(employee.permissions || {})); // ← Store permissions
                 
+                console.log('✅ Stored permissions:', employee.permissions);
                 showSuccess('مرحباً ' + employee.username + '! جاري الدخول...');
                 setLoading(btn, false);
                 setTimeout(() => window.location.href = 'admin/index.html', 1100);
