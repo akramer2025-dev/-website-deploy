@@ -1580,14 +1580,14 @@ button{cursor:pointer;}
         <div class="adm-card">
           <h3><i class="fas fa-bolt"></i> إجراءات سريعة</h3>
           <div class="quick-actions">
-            <div class="qa-btn" onclick="showSection('joinrequests')"><div class="qa-btn-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;"><i class="fas fa-user-clock"></i></div>طلبات الانضمام</div>
-            <div class="qa-btn" onclick="addEmployeeWithOnboarding()"><div class="qa-btn-icon" style="background:rgba(59,130,246,0.15);color:var(--blue);"><i class="fas fa-user-plus"></i></div>إضافة موظف جديد</div>
-            <div class="qa-btn" onclick="openContractModal()"><div class="qa-btn-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-file-contract"></i></div>عمل عقد جديد</div>
-            <div class="qa-btn" onclick="openPlanModal()"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-chart-line"></i></div>خطة تسويقية جديدة</div>
-            <div class="qa-btn" onclick="openAddUser('student')"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-user-graduate"></i></div>إضافة طالب جديد</div>
-            <div class="qa-btn" onclick="showSection('portfolio')"><div class="qa-btn-icon" style="background:rgba(233,78,119,0.15);color:var(--pink);"><i class="fas fa-images"></i></div>إدارة معرض الأعمال</div>
-            <div class="qa-btn" onclick="showSection('webprices')"><div class="qa-btn-icon" style="background:rgba(247,147,30,0.15);color:var(--orange);"><i class="fas fa-globe"></i></div>تحديث أسعار الويب</div>
-            <div class="qa-btn" onclick="showSection('mobileprices')"><div class="qa-btn-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-mobile-alt"></i></div>تحديث أسعار الموبايل</div>
+            <div class="qa-btn" data-permission="requests" onclick="showSection('joinrequests')"><div class="qa-btn-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b;"><i class="fas fa-user-clock"></i></div>طلبات الانضمام</div>
+            <div class="qa-btn" data-admin-only="true" onclick="addEmployeeWithOnboarding()"><div class="qa-btn-icon" style="background:rgba(59,130,246,0.15);color:var(--blue);"><i class="fas fa-user-plus"></i></div>إضافة موظف جديد</div>
+            <div class="qa-btn" data-admin-only="true" onclick="openContractModal()"><div class="qa-btn-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-file-contract"></i></div>عمل عقد جديد</div>
+            <div class="qa-btn" data-permission="marketing" onclick="openPlanModal()"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-chart-line"></i></div>خطة تسويقية جديدة</div>
+            <div class="qa-btn" data-admin-only="true" onclick="openAddUser('student')"><div class="qa-btn-icon" style="background:rgba(34,197,94,0.15);color:var(--green);"><i class="fas fa-user-graduate"></i></div>إضافة طالب جديد</div>
+            <div class="qa-btn" data-permission="portfolio" onclick="showSection('portfolio')"><div class="qa-btn-icon" style="background:rgba(233,78,119,0.15);color:var(--pink);"><i class="fas fa-images"></i></div>إدارة معرض الأعمال</div>
+            <div class="qa-btn" data-admin-only="true" onclick="showSection('webprices')"><div class="qa-btn-icon" style="background:rgba(247,147,30,0.15);color:var(--orange);"><i class="fas fa-globe"></i></div>تحديث أسعار الويب</div>
+            <div class="qa-btn" data-admin-only="true" onclick="showSection('mobileprices')"><div class="qa-btn-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6;"><i class="fas fa-mobile-alt"></i></div>تحديث أسعار الموبايل</div>
           </div>
         </div>
       </div>
@@ -3602,7 +3602,24 @@ async function showAllEmployees() {
   }
 }
 
-function initApp(){ updateBadges(); renderDashboard(); renderPortfolio(); renderWebPrices(); renderMobilePrices(); renderUsers('employee'); renderUsers('student'); renderJoinRequests('all'); renderRecordedLectures(); renderEmployeeRequests(); initFirestore(); }
+function initApp(){ 
+  updateBadges(); 
+  renderDashboard(); 
+  renderPortfolio(); 
+  renderWebPrices(); 
+  renderMobilePrices(); 
+  renderUsers('employee'); 
+  renderUsers('student'); 
+  renderJoinRequests('all'); 
+  renderRecordedLectures(); 
+  renderEmployeeRequests(); 
+  initFirestore(); 
+  
+  // Attach mobile sidebar handlers after elements are rendered
+  if (typeof attachMobileSidebarHandlers === 'function') {
+    attachMobileSidebarHandlers();
+  }
+}
 
 const JOIN_KEY = 'am_join_requests';
 // ددالتي جلب وحفظ طلبات الانضمام — تستخدم كاش Firebase
@@ -3775,6 +3792,35 @@ function applyEmployeePermissions() {
         }
       });
       
+      // ==================== HIDE QUICK ACTIONS BUTTONS ====================
+      console.log('\n🎯 Filtering Quick Actions buttons...');
+      const qaButtons = document.querySelectorAll('.qa-btn');
+      
+      qaButtons.forEach(btn => {
+        const isAdminOnly = btn.getAttribute('data-admin-only') === 'true';
+        const requiredPermission = btn.getAttribute('data-permission');
+        
+        let shouldShow = true;
+        
+        // If admin-only, hide for employees
+        if (isAdminOnly) {
+          shouldShow = false;
+          console.log('🔒 Hidden Quick Action (admin-only):', btn.textContent.trim());
+        }
+        // If requires specific permission, check if employee has it
+        else if (requiredPermission) {
+          if (!permissions[requiredPermission]) {
+            shouldShow = false;
+            console.log(`🔒 Hidden Quick Action (no ${requiredPermission} permission):`, btn.textContent.trim());
+          } else {
+            console.log(`✅ Showing Quick Action (has ${requiredPermission} permission):`, btn.textContent.trim());
+          }
+        }
+        
+        btn.style.display = shouldShow ? '' : 'none';
+      });
+      
+      // ==================== SHOW FIRST ALLOWED SECTION ====================
       // Show first allowed section
       const firstVisible = document.querySelector('.adm-nav-item[onclick*="showSection"]:not([style*="display: none"])');
       if(firstVisible) {
@@ -3795,6 +3841,13 @@ function applyEmployeePermissions() {
               <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
             </button>
           </div>`;
+      }
+      
+      // ==================== RE-ATTACH MOBILE HANDLERS ====================
+      // Re-attach handlers after hiding/showing elements
+      if (typeof attachMobileSidebarHandlers === 'function') {
+        attachMobileSidebarHandlers();
+        console.log('✅ Mobile sidebar handlers re-attached');
       }
       
     } catch(e) {
@@ -5698,11 +5751,22 @@ function closeAdminSidebar(){
   document.body.style.overflow = '';
 }
 // Close sidebar when nav item clicked on mobile
-document.querySelectorAll('.adm-nav-item').forEach(item=>{
-  item.addEventListener('click', ()=>{
-    if(window.innerWidth <= 768) closeAdminSidebar();
+function attachMobileSidebarHandlers() {
+  console.log('📱 Attaching mobile sidebar close handlers...');
+  document.querySelectorAll('.adm-nav-item').forEach(item=>{
+    // Remove old listener if exists (to avoid duplicates)
+    item.removeEventListener('click', handleNavItemClick);
+    // Add new listener
+    item.addEventListener('click', handleNavItemClick);
   });
-});
+}
+
+function handleNavItemClick() {
+  if(window.innerWidth <= 768) {
+    console.log('📱 Mobile nav item clicked, closing sidebar...');
+    closeAdminSidebar();
+  }
+}
 
 /* ══════════════════════════════════════════════
    EMPLOYEE ONBOARDING SYSTEM
