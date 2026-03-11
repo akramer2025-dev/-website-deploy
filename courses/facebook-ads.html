@@ -839,9 +839,16 @@
     <p class="footer-copyright">&copy; 2026 Akram Mostafa — جميع الحقوق محفوظة</p>
 </footer>
 
+<!-- Meta Pixel & Conversions API -->
+<script src="../js/meta-pixel.js"></script>
+<script src="../js/meta-conversion-client.js"></script>
+
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init({ duration: 600, once: true });
+    
+    // Track ViewContent event
+    fbViewContentServer('course-facebook', 'كورس إعلانات فيسبوك', 999, 'EGP');
     
     // Hide floating price when at top
     window.addEventListener('scroll', function() {

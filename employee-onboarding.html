@@ -4,404 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إكمال بيانات الموظف</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Cairo','Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px}
+        .container{max-width:820px;margin:0 auto;background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
+        .header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:30px;text-align:center}
+        .header h1{font-size:26px;margin-bottom:8px;font-weight:800}
+        .header p{font-size:15px;opacity:.9}
+
+        /* Progress Bar */
+        .progress-bar{display:flex;justify-content:space-between;padding:28px 24px;background:#f8f9fa}
+        .progress-step{flex:1;text-align:center;position:relative}
+        .progress-step::before{content:'';position:absolute;top:20px;right:50%;width:100%;height:3px;background:#ddd;z-index:0}
+        .progress-step:first-child::before{display:none}
+        .progress-step.active::before,.progress-step.completed::before{background:#667eea}
+        .step-circle{width:42px;height:42px;border-radius:50%;background:#ddd;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;position:relative;z-index:1;transition:.3s}
+        .progress-step.active .step-circle{background:#667eea;color:#fff;box-shadow:0 4px 12px rgba(102,126,234,.4)}
+        .progress-step.completed .step-circle{background:#10b981;color:#fff}
+        .step-label{font-size:13px;color:#888;font-weight:600}
+        .progress-step.active .step-label{color:#667eea;font-weight:700}
+        .progress-step.completed .step-label{color:#10b981}
+
+        /* Form Content */
+        .form-content{padding:36px}
+        .form-step{display:none}
+        .form-step.active{display:block;animation:fadeIn .3s ease}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .step-title{font-size:20px;font-weight:800;color:#1f2937;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+
+        /* Form Groups */
+        .form-group{margin-bottom:22px}
+        .form-group label{display:block;margin-bottom:7px;font-weight:700;color:#374151;font-size:14px}
+        .form-group label .required-star{color:#ef4444;margin-right:4px}
+        .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:2px solid #e5e7eb;border-radius:10px;font-size:15px;font-family:inherit;transition:.25s;background:#fafbfc}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#667eea;background:#fff;box-shadow:0 0 0 3px rgba(102,126,234,.12)}
+        .form-group textarea{resize:vertical;min-height:80px}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+        /* File Upload */
+        .file-upload-box{border:2px dashed #cbd5e1;border-radius:14px;padding:28px;text-align:center;cursor:pointer;transition:.3s;background:#f8fafc;position:relative}
+        .file-upload-box:hover{border-color:#667eea;background:#f1f5f9}
+        .file-upload-box.has-file{border-color:#10b981;border-style:solid;background:#f0fdf4}
+        .file-upload-box input[type="file"]{display:none}
+        .file-upload-icon{font-size:44px;margin-bottom:10px}
+        .file-upload-box p{color:#64748b;font-size:14px;font-weight:600}
+        .file-upload-box small{color:#94a3b8;font-size:12px}
+        .file-upload-box.has-file .file-upload-icon{color:#10b981}
+        .preview-image{max-width:200px;max-height:180px;margin:12px auto 0;border-radius:10px;display:none;border:2px solid #e5e7eb}
+        .preview-image.show{display:block}
+
+        /* Camera */
+        .camera-container{max-width:420px;margin:0 auto;text-align:center}
+        .camera-container video,.camera-container canvas{width:100%;border-radius:14px;display:none;border:2px solid #e5e7eb}
+        .camera-container video.active{display:block}
+        .camera-controls{margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+        /* Buttons */
+        .btn{padding:12px 28px;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:.3s;font-family:inherit;display:inline-flex;align-items:center;gap:8px}
+        .btn:active{transform:scale(.97)}
+        .btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+        .btn-primary:hover{box-shadow:0 6px 20px rgba(102,126,234,.4);transform:translateY(-2px)}
+        .btn-secondary{background:#64748b;color:#fff}
+        .btn-secondary:hover{background:#475569}
+        .btn-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
+        .btn-success:hover{box-shadow:0 6px 20px rgba(16,185,129,.4);transform:translateY(-2px)}
+        .btn-danger{background:#ef4444;color:#fff}
+        .btn-danger:hover{background:#dc2626}
+        .btn-outline{background:transparent;border:2px solid #e5e7eb;color:#64748b}
+        .btn-outline:hover{border-color:#667eea;color:#667eea}
+        .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+
+        .form-actions{display:flex;justify-content:space-between;margin-top:30px;gap:14px}
+
+        /* Contract */
+        .contract-box{border:2px solid #e5e7eb;border-radius:14px;padding:24px;max-height:380px;overflow-y:auto;background:#f9fafb;margin-bottom:18px;line-height:1.9}
+        .contract-box h3{color:#667eea;margin-bottom:14px;font-size:18px}
+        .contract-box p{margin-bottom:10px;color:#374151;font-size:14px}
+
+        /* Signature */
+        .signature-wrapper{text-align:center}
+        .signature-pad{width:100%;max-width:600px;height:200px;border:3px solid #667eea;border-radius:14px;background:#fff;cursor:crosshair;touch-action:none;display:block;margin:0 auto;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+        .signature-pad:hover{border-color:#5a6fd6;box-shadow:0 6px 16px rgba(102,126,234,.2)}
+        .signature-hint{background:linear-gradient(135deg,#eff6ff,#f0f9ff);padding:14px;border-radius:10px;border:1px solid #bae6fd;margin-bottom:16px;text-align:right}
+        .signature-hint p{margin:0;color:#0369a1;font-size:13px;font-weight:600;line-height:1.8}
+
+        /* Checkbox */
+        .checkbox-group{display:flex;align-items:center;gap:10px;margin:18px 0}
+        .checkbox-group input[type="checkbox"]{width:20px;height:20px;cursor:pointer;accent-color:#667eea}
+        .checkbox-group label{cursor:pointer;font-size:14px;font-weight:600;color:#374151}
+
+        /* Alerts */
+        .alert{padding:14px 18px;border-radius:10px;margin-bottom:18px;font-size:14px;font-weight:600;display:none;align-items:center;gap:8px}
+        .alert.show{display:flex}
+        .alert-error{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+        .alert-success{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+
+        /* Loading */
+        .loading{display:none;text-align:center;padding:50px 20px}
+        .loading.active{display:block}
+        .spinner{border:4px solid #e5e7eb;border-top:4px solid #667eea;border-radius:50%;width:48px;height:48px;animation:spin .8s linear infinite;margin:0 auto 18px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .loading p{color:#64748b;font-size:16px;font-weight:600}
+
+        /* Success */
+        .success-message{display:none;text-align:center;padding:50px 20px}
+        .success-message.active{display:block;animation:fadeIn .5s ease}
+        .success-icon{font-size:72px;margin-bottom:18px}
+        .success-message h2{color:#10b981;margin-bottom:12px;font-size:22px}
+        .success-message p{color:#64748b;font-size:15px;line-height:1.8}
+
+        /* Responsive */
+        @media(max-width:768px){
+            body{padding:0}
+            .container{border-radius:0;min-height:100vh}
+            .form-content{padding:20px}
+            .form-row{grid-template-columns:1fr}
+            .form-actions{flex-direction:column}
+            .btn{width:100%;justify-content:center}
+            .progress-bar{padding:18px 12px}
+            .step-label{font-size:11px}
+            .step-circle{width:36px;height:36px;font-size:13px}
+            .header{padding:20px}
+            .header h1{font-size:22px}
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        .progress-bar {
-            display: flex;
-            justify-content: space-between;
-            padding: 30px;
-            background: #f8f9fa;
-        }
-
-        .progress-step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-        }
-
-        .progress-step::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            right: 50%;
-            width: 100%;
-            height: 3px;
-            background: #ddd;
-            z-index: 0;
-        }
-
-        .progress-step:first-child::before {
-            display: none;
-        }
-
-        .progress-step.active::before {
-            background: #667eea;
-        }
-
-        .step-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #ddd;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            position: relative;
-            z-index: 1;
-        }
-
-        .progress-step.active .step-circle {
-            background: #667eea;
-            color: white;
-        }
-
-        .progress-step.completed .step-circle {
-            background: #10b981;
-            color: white;
-        }
-
-        .step-label {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .progress-step.active .step-label {
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        .form-content {
-            padding: 40px;
-        }
-
-        .form-step {
-            display: none;
-        }
-
-        .form-step.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .form-group label.required::after {
-            content: ' *';
-            color: #ef4444;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .file-upload-box {
-            border: 2px dashed #cbd5e1;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: #f8fafc;
-        }
-
-        .file-upload-box:hover {
-            border-color: #667eea;
-            background: #f1f5f9;
-        }
-
-        .file-upload-box.has-file {
-            border-color: #10b981;
-            background: #f0fdf4;
-        }
-
-        .file-upload-box input[type="file"] {
-            display: none;
-        }
-
-        .file-upload-icon {
-            font-size: 48px;
-            color: #94a3b8;
-            margin-bottom: 15px;
-        }
-
-        .file-upload-box.has-file .file-upload-icon {
-            color: #10b981;
-        }
-
-        .preview-image {
-            max-width: 200px;
-            max-height: 200px;
-            margin: 15px auto;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .preview-image.show {
-            display: block;
-        }
-
-        .camera-container {
-            position: relative;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        #video, #canvas {
-            width: 100%;
-            border-radius: 12px;
-            display: none;
-        }
-
-        #video.active {
-            display: block;
-        }
-
-        .camera-controls {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #64748b;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #475569;
-        }
-
-        .btn-success {
-            background: #10b981;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #059669;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            gap: 15px;
-        }
-
-        .contract-box {
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 25px;
-            max-height: 400px;
-            overflow-y: auto;
-            background: #f9fafb;
-            margin-bottom: 20px;
-        }
-
-        .contract-box h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-        }
-
-        .contract-box p {
-            margin-bottom: 12px;
-            line-height: 1.8;
-            color: #374151;
-        }
-
-        .signature-pad {
-            width: 100%;
-            max-width: 600px;
-            height: 200px;
-            border: 4px solid #3b82f6;
-            border-radius: 12px;
-            background: white;
-            cursor: crosshair;
-            touch-action: none;
-            display: block;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin: 0 auto;
-        }
-        
-        .signature-pad:hover {
-            border-color: #2563eb;
-            box-shadow: 0 6px 10px rgba(59, 130, 246, 0.3);
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .alert {
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .alert-error {
-            background: #fef2f2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        .alert-success {
-            background: #f0fdf4;
-            color: #166534;
-            border: 1px solid #bbf7d0;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .loading.active {
-            display: block;
-        }
-
-        .spinner {
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .success-message {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .success-message.active {
-            display: block;
-        }
-
-        .success-icon {
-            font-size: 80px;
-            color: #10b981;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 0;
-                border-radius: 0;
-            }
-
-            .form-actions {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
+        @media(max-width:480px){
+            .camera-controls{flex-direction:column}
+            .camera-controls .btn{width:100%}
         }
     </style>
 </head>
@@ -409,9 +138,10 @@
     <div class="container">
         <div class="header">
             <h1>🎯 إكمال بيانات الموظف</h1>
-            <p>مرحباً بك! يرجى إكمال البيانات المطلوبة</p>
+            <p>مرحباً بك! يرجى إكمال البيانات المطلوبة للانضمام للفريق</p>
         </div>
 
+        <!-- Progress Bar -->
         <div class="progress-bar">
             <div class="progress-step active" data-step="1">
                 <div class="step-circle">1</div>
@@ -432,117 +162,117 @@
         </div>
 
         <div class="form-content">
-            <div id="error-message" class="alert alert-error" style="display: none;"></div>
-            
-            <!-- Step 1: Personal Information -->
+            <!-- Error Message -->
+            <div id="errorMsg" class="alert alert-error">
+                <span>⚠️</span>
+                <span id="errorText"></span>
+            </div>
+
+            <!-- ═══ Step 1: Personal Info ═══ -->
             <div class="form-step active" data-step="1">
-                <h2 style="margin-bottom: 25px; color: #1f2937;">📝 البيانات الشخصية</h2>
+                <div class="step-title">📝 البيانات الشخصية</div>
                 
                 <div class="form-group">
-                    <label class="required">الاسم بالكامل</label>
-                    <input type="text" id="fullName" placeholder="أدخل الاسم الكامل" required>
+                    <label><span class="required-star">*</span> الاسم بالكامل</label>
+                    <input type="text" id="fullName" placeholder="أدخل الاسم الثلاثي أو الرباعي">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><span class="required-star">*</span> رقم الهاتف</label>
+                        <input type="tel" id="phone" placeholder="01xxxxxxxxx" maxlength="11">
+                    </div>
+                    <div class="form-group">
+                        <label><span class="required-star">*</span> البريد الإلكتروني</label>
+                        <input type="email" id="email" placeholder="example@email.com">
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="required">رقم الهاتف</label>
-                    <input type="tel" id="phone" placeholder="01xxxxxxxxx" required>
+                    <label><span class="required-star">*</span> العنوان</label>
+                    <textarea id="address" rows="2" placeholder="أدخل العنوان بالتفصيل"></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label class="required">البريد الإلكتروني</label>
-                    <input type="email" id="email" placeholder="example@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="required">العنوان</label>
-                    <textarea id="address" rows="3" placeholder="أدخل العنوان بالتفصيل" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label class="required">رقم البطاقة</label>
-                    <input type="text" id="nationalId" placeholder="رقم البطاقة الوطنية (14 رقم)" maxlength="14" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="required">المسمى الوظيفي</label>
-                    <input type="text" id="jobTitle" placeholder="مثال: موظف مبيعات" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><span class="required-star">*</span> رقم البطاقة الوطنية</label>
+                        <input type="text" id="nationalId" placeholder="14 رقم" maxlength="14">
+                    </div>
+                    <div class="form-group">
+                        <label><span class="required-star">*</span> المسمى الوظيفي</label>
+                        <input type="text" id="jobTitle" placeholder="مثال: موظف مبيعات">
+                    </div>
                 </div>
 
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" disabled>السابق</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep(1)">التالي</button>
+                    <button type="button" class="btn btn-primary" id="btnNext1">التالي ←</button>
                 </div>
             </div>
 
-            <!-- Step 2: ID Upload -->
+            <!-- ═══ Step 2: ID Upload ═══ -->
             <div class="form-step" data-step="2">
-                <h2 style="margin-bottom: 25px; color: #1f2937;">📄 رفع صورة البطاقة</h2>
-                
+                <div class="step-title">📄 رفع صورة البطاقة</div>
+
                 <div class="form-group">
-                    <label class="required">صورة البطاقة (الوجه الأمامي)</label>
-                    <div class="file-upload-box" id="idFrontBox" onclick="document.getElementById('idFront').click()">
+                    <label><span class="required-star">*</span> صورة البطاقة (الوجه الأمامي)</label>
+                    <div class="file-upload-box" id="idFrontBox">
                         <div class="file-upload-icon">📤</div>
                         <p>اضغط لرفع صورة البطاقة الأمامية</p>
-                        <small style="color: #64748b;">PNG, JPG (الحد الأقصى 5MB)</small>
-                        <input type="file" id="idFront" accept="image/*" onchange="handleFileUpload(this, 'idFrontBox', 'idFrontPreview')">
-                        <img id="idFrontPreview" class="preview-image">
+                        <small>PNG, JPG (الحد الأقصى 5MB)</small>
+                        <input type="file" id="idFront" accept="image/*">
+                        <img id="idFrontPreview" class="preview-image" alt="معاينة">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="required">صورة البطاقة (الوجه الخلفي)</label>
-                    <div class="file-upload-box" id="idBackBox" onclick="document.getElementById('idBack').click()">
+                    <label><span class="required-star">*</span> صورة البطاقة (الوجه الخلفي)</label>
+                    <div class="file-upload-box" id="idBackBox">
                         <div class="file-upload-icon">📤</div>
                         <p>اضغط لرفع صورة البطاقة الخلفية</p>
-                        <small style="color: #64748b;">PNG, JPG (الحد الأقصى 5MB)</small>
-                        <input type="file" id="idBack" accept="image/*" onchange="handleFileUpload(this, 'idBackBox', 'idBackPreview')">
-                        <img id="idBackPreview" class="preview-image">
+                        <small>PNG, JPG (الحد الأقصى 5MB)</small>
+                        <input type="file" id="idBack" accept="image/*">
+                        <img id="idBackPreview" class="preview-image" alt="معاينة">
                     </div>
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep(2)">السابق</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep(2)">التالي</button>
+                    <button type="button" class="btn btn-secondary" id="btnPrev2">→ السابق</button>
+                    <button type="button" class="btn btn-primary" id="btnNext2">التالي ←</button>
                 </div>
             </div>
 
-            <!-- Step 3: Selfie -->
+            <!-- ═══ Step 3: Selfie ═══ -->
             <div class="form-step" data-step="3">
-                <h2 style="margin-bottom: 25px; color: #1f2937;">📸 الصورة الشخصية (سيلفي)</h2>
-                
+                <div class="step-title">📸 الصورة الشخصية (سيلفي)</div>
+
                 <div class="camera-container">
-                    <video id="video" autoplay></video>
-                    <canvas id="canvas"></canvas>
-                    <img id="selfiePreview" class="preview-image">
+                    <video id="video" autoplay playsinline></video>
+                    <canvas id="canvas" style="display:none"></canvas>
+                    <img id="selfiePreview" class="preview-image" alt="معاينة السيلفي">
                 </div>
 
                 <div class="camera-controls">
-                    <button type="button" class="btn btn-primary" id="startCamera" onclick="startCamera()">
-                        📷 تشغيل الكاميرا
-                    </button>
-                    <button type="button" class="btn btn-success" id="captureBtn" onclick="captureSelfie()" style="display: none;">
-                        ✨ التقاط الصورة
-                    </button>
-                    <button type="button" class="btn btn-secondary" id="retakeBtn" onclick="retakeSelfie()" style="display: none;">
-                        🔄 إعادة التصوير
-                    </button>
+                    <button type="button" class="btn btn-primary" id="btnStartCamera">📷 تشغيل الكاميرا</button>
+                    <button type="button" class="btn btn-success" id="btnCapture" style="display:none">✨ التقاط الصورة</button>
+                    <button type="button" class="btn btn-outline" id="btnRetake" style="display:none">🔄 إعادة التصوير</button>
                 </div>
 
-                <div class="form-actions" style="margin-top: 30px;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep(3)">السابق</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep(3)">التالي</button>
+                <div class="form-actions" style="margin-top:28px">
+                    <button type="button" class="btn btn-secondary" id="btnPrev3">→ السابق</button>
+                    <button type="button" class="btn btn-primary" id="btnNext3">التالي ←</button>
                 </div>
             </div>
 
-            <!-- Step 4: Contract & Signature -->
+            <!-- ═══ Step 4: Contract & Signature ═══ -->
             <div class="form-step" data-step="4">
-                <h2 style="margin-bottom: 25px; color: #1f2937;">📋 عقد العمل</h2>
-                
+                <div class="step-title">📋 عقد العمل والتوقيع</div>
+
                 <div class="contract-box" id="contractContent">
                     <h3>عقد عمل فترة تجريبية</h3>
                     <p><strong>بين:</strong></p>
-                    <p>الطرف الأول (صاحب العمل): <span id="contractEmployerName">اسم الشركة</span></p>
-                    <p>الطرف الثاني (الموظف): <span id="contractEmployeeName"></span></p>
+                    <p>الطرف الأول (صاحب العمل): <strong id="contractEmployerName">Akram Mostafa Platform</strong></p>
+                    <p>الطرف الثاني (الموظف): <strong id="contractEmployeeName">—</strong></p>
                     
                     <p><strong>تم الاتفاق على ما يلي:</strong></p>
                     
@@ -552,10 +282,10 @@
                     <p>مدة العقد: شهر واحد (فترة تجريبية)</p>
                     
                     <p><strong>المادة الثانية - المسمى الوظيفي:</strong></p>
-                    <p>يعمل الطرف الثاني في وظيفة: <span id="contractJobTitle"></span></p>
+                    <p>يعمل الطرف الثاني في وظيفة: <strong id="contractJobTitle">—</strong></p>
                     
                     <p><strong>المادة الثالثة - الراتب:</strong></p>
-                    <p>الراتب الشهري المتفق عليه: <span id="contractSalary"></span> جنيه مصري</p>
+                    <p>الراتب الشهري المتفق عليه: <strong id="contractSalary">—</strong> جنيه مصري</p>
                     <p>يُصرف الراتب في نهاية الفترة التجريبية بعد تقييم الأداء</p>
                     
                     <p><strong>المادة الرابعة - ساعات العمل:</strong></p>
@@ -572,308 +302,258 @@
                     <p>يلتزم الموظف بالحفاظ على سرية معلومات الشركة</p>
                     <p>يلتزم الموظف بالالتزام بمواعيد العمل والانضباط</p>
                     
-                    <p style="margin-top: 20px;"><strong>تم التوقيع في:</strong> <span id="contractSignDate"></span></p>
+                    <p style="margin-top:18px"><strong>تم التوقيع في:</strong> <span id="contractSignDate"></span></p>
                 </div>
 
                 <div class="checkbox-group">
-                    <input type="checkbox" id="agreeTerms" required>
+                    <input type="checkbox" id="agreeTerms">
                     <label for="agreeTerms">أوافق على جميع شروط وبنود العقد أعلاه</label>
                 </div>
 
-                <div class="form-group" style="margin-top: 25px;">
-                    <label class="required">التوقيع</label>
-                    <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; border: 1px solid #bae6fd; margin-bottom: 15px;">
-                        <p style="margin: 0; color: #0369a1; font-size: 14px; font-weight: 600;">
-                            ✍️ يرجى التوقيع داخل المربع أدناه:
-                        </p>
-                        <p style="margin: 5px 0 0 0; color: #0c4a6e; font-size: 13px;">
-                            • استخدم الماوس على الكمبيوتر<br>
-                            • أو استخدم إصبعك على الموبايل/التابلت
-                        </p>
+                <div class="form-group" style="margin-top:22px">
+                    <label><span class="required-star">*</span> التوقيع</label>
+                    <div class="signature-hint">
+                        <p>✍️ يرجى التوقيع داخل المربع أدناه باستخدام الماوس أو الإصبع على الموبايل</p>
                     </div>
-                    <canvas id="signaturePad" class="signature-pad" width="600" height="200"></canvas>
-                    <button type="button" class="btn btn-secondary" onclick="clearSignature()" style="margin-top: 10px;">
-                        🗑️ مسح التوقيع
-                    </button>
+                    <div class="signature-wrapper">
+                        <canvas id="signaturePad" class="signature-pad" width="600" height="200"></canvas>
+                    </div>
+                    <div style="text-align:center;margin-top:10px">
+                        <button type="button" class="btn btn-outline" id="btnClearSig">🗑️ مسح التوقيع</button>
+                    </div>
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep(4)">السابق</button>
-                    <button type="button" class="btn btn-success" onclick="submitApplication()">✅ إرسال الطلب</button>
+                    <button type="button" class="btn btn-secondary" id="btnPrev4">→ السابق</button>
+                    <button type="button" class="btn btn-success" id="btnSubmit">✅ إرسال الطلب</button>
                 </div>
             </div>
 
-            <!-- Loading State -->
+            <!-- Loading -->
             <div class="loading" id="loadingState">
                 <div class="spinner"></div>
-                <p>جاري إرسال البيانات...</p>
+                <p>جاري إرسال البيانات... يرجى الانتظار</p>
             </div>
 
-            <!-- Success Message -->
+            <!-- Success -->
             <div class="success-message" id="successMessage">
                 <div class="success-icon">✅</div>
-                <h2 style="color: #10b981; margin-bottom: 15px;">تم إرسال الطلب بنجاح!</h2>
-                <p style="color: #64748b;">شكراً لك! تم استلام بياناتك وسيتم مراجعتها قريباً.</p>
-                <p style="color: #64748b; margin-top: 10px;">سيتم التواصل معك في أقرب وقت.</p>
+                <h2>تم إرسال الطلب بنجاح!</h2>
+                <p>شكراً لك! تم استلام بياناتك وسيتم مراجعتها قريباً.</p>
+                <p>سيتم التواصل معك في أقرب وقت.</p>
             </div>
         </div>
     </div>
 
-    <!-- Supabase Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-config.js"></script>
-    
-    <script type="module">
-        // Initialize Supabase Client
-        const { createClient } = supabase;
-        const supabaseClient = createClient(
-            SUPABASE_CONFIG.url,
-            SUPABASE_CONFIG.anonKey
-        );
+    <!-- Firebase for Firestore (used by admin system) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
-        console.log('✅ Supabase client initialized');
+    <script>
+    (function(){
+        'use strict';
 
+        // ═══════════════════════════════════
+        //  Firebase Configuration
+        // ═══════════════════════════════════
+        const fbApp = firebase.initializeApp({
+            apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+            authDomain: "akramplatform-2c6be.firebaseapp.com",
+            projectId: "akramplatform-2c6be",
+            storageBucket: "akramplatform-2c6be.firebasestorage.app",
+            messagingSenderId: "132959399686",
+            appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+        });
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // ═══════════════════════════════════
+        //  State
+        // ═══════════════════════════════════
         let currentEmployeeId = null;
         let employeeData = null;
-        let stream = null;
-        let signaturePad = null;
+        let cameraStream = null;
         let isDrawing = false;
-        let hasSignature = false;
+        let hasDrawnSignature = false;
+        let selfieDataUrl = null;
+        let signatureCanvas = null;
+        let signatureCtx = null;
 
-        // Get employee ID from URL
+        // ═══════════════════════════════════
+        //  Get employee ID from URL
+        // ═══════════════════════════════════
         const urlParams = new URLSearchParams(window.location.search);
         currentEmployeeId = urlParams.get('id');
 
-        // Load employee data
-        window.addEventListener('DOMContentLoaded', async () => {
-            if (!currentEmployeeId) {
-                showError('رابط غير صحيح - يرجى استخدام الرابط المرسل إليك');
+        // ═══════════════════════════════════
+        //  DOM Ready
+        // ═══════════════════════════════════
+        document.addEventListener('DOMContentLoaded', function(){
+            if(!currentEmployeeId){
+                showError('رابط غير صحيح — يرجى استخدام الرابط المرسل إليك من الإدارة');
+                disableAllButtons();
                 return;
             }
-            
+            loadEmployeeData();
+            initSignaturePad();
+            bindAllButtons();
+        });
+
+        // ═══════════════════════════════════
+        //  Load Employee Data from Firestore
+        // ═══════════════════════════════════
+        async function loadEmployeeData(){
             try {
-                // Load employee data from Supabase
-                const { data, error } = await supabaseClient
-                    .from('employees')
-                    .select('*')
-                    .eq('id', currentEmployeeId)
-                    .single();
-                    
-                if (error) throw error;
-                
-                if (data) {
-                    employeeData = data;
-                    console.log('✅ Employee data loaded:', data);
-                    
-                    // Pre-fill data if exists
-                    document.getElementById('email').value = data.email || '';
-                    if (data.full_name) document.getElementById('fullName').value = data.full_name;
-                    if (data.phone) document.getElementById('phone').value = data.phone;
-                    if (data.address) document.getElementById('address').value = data.address;
-                    if (data.national_id) document.getElementById('nationalId').value = data.national_id;
-                    if (data.job_title) document.getElementById('jobTitle').value = data.job_title;
-                } else {
-                    showError('الموظف غير موجود في النظام');
+                const doc = await db.collection('employees').doc(currentEmployeeId).get();
+                if(!doc.exists){
+                    showError('الموظف غير موجود في النظام — تأكد من الرابط');
+                    disableAllButtons();
+                    return;
                 }
-            } catch (error) {
-                console.error('Error loading employee:', error);
-                showError('حدث خطأ في تحميل البيانات: ' + error.message);
+                employeeData = doc.data();
+                
+                // Pre-fill data if available
+                if(employeeData.email) document.getElementById('email').value = employeeData.email;
+                if(employeeData.name) document.getElementById('fullName').value = employeeData.name;
+                if(employeeData.full_name) document.getElementById('fullName').value = employeeData.full_name;
+                if(employeeData.phone) document.getElementById('phone').value = employeeData.phone;
+                if(employeeData.address) document.getElementById('address').value = employeeData.address;
+                if(employeeData.national_id) document.getElementById('nationalId').value = employeeData.national_id;
+                if(employeeData.nationalId) document.getElementById('nationalId').value = employeeData.nationalId;
+                if(employeeData.job_title) document.getElementById('jobTitle').value = employeeData.job_title;
+                if(employeeData.jobTitle) document.getElementById('jobTitle').value = employeeData.jobTitle;
+                
+            } catch(err){
+                console.error('Error loading employee:', err);
+                showError('حدث خطأ في تحميل البيانات: ' + err.message);
             }
-        });
-
-        // Initialize signature pad
-        window.addEventListener('DOMContentLoaded', () => {
-            const canvas = document.getElementById('signaturePad');
-            console.log('🎨 Initializing signature pad...', canvas);
-            
-            if (!canvas) {
-                console.error('❌ Canvas element not found!');
-                return;
-            }
-            
-            const ctx = canvas.getContext('2d');
-            console.log('✅ Canvas context obtained', ctx);
-            
-            // Set fixed canvas size
-            canvas.width = 600;
-            canvas.height = 200;
-            console.log('📐 Canvas size set to', canvas.width, 'x', canvas.height);
-            
-            // Configure drawing style
-            ctx.strokeStyle = '#1e293b';
-            ctx.lineWidth = 3;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            
-            // Add watermark text
-            ctx.font = 'bold 20px Arial';
-            ctx.fillStyle = '#cbd5e1';
-            ctx.textAlign = 'center';
-            ctx.fillText('وقّع هنا ✍️', canvas.width / 2, canvas.height / 2);
-            console.log('✅ Watermark added');
-            
-            // Mouse events
-            canvas.addEventListener('mousedown', startDrawing);
-            canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('mouseup', stopDrawing);
-            canvas.addEventListener('mouseout', stopDrawing);
-            console.log('✅ Mouse events attached');
-            
-            // Touch events
-            canvas.addEventListener('touchstart', (e) => {
-                console.log('👆 Touch start detected');
-                e.preventDefault();
-                hasSignature = true; // Mark that user started drawing
-                const touch = e.touches[0];
-                const rect = canvas.getBoundingClientRect();
-                const x = touch.clientX - rect.left;
-                const y = touch.clientY - rect.top;
-                ctx.beginPath();
-                ctx.moveTo(x, y);
-                isDrawing = true;
-            });
-            
-            canvas.addEventListener('touchmove', (e) => {
-                if (!isDrawing) return;
-                console.log('👆 Touch move');
-                e.preventDefault();
-                const touch = e.touches[0];
-                const rect = canvas.getBoundingClientRect();
-                const x = touch.clientX - rect.left;
-                const y = touch.clientY - rect.top;
-                ctx.lineTo(x, y);
-                ctx.stroke();
-            });
-            
-            canvas.addEventListener('touchend', (e) => {
-                console.log('👆 Touch end');
-                e.preventDefault();
-                isDrawing = false;
-            });
-            
-            console.log('✅ Touch events attached');
-            console.log('🎉 Signature pad fully initialized!');
-        });
-
-        function startDrawing(e) {
-            console.log('🖱️ Mouse down - starting drawing');
-            isDrawing = true;
-            hasSignature = true; // Mark that user has started drawing
-            const rect = e.target.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const ctx = e.target.getContext('2d');
-            ctx.beginPath();
-            ctx.moveTo(x, y);
         }
 
-        function draw(e) {
-            if (!isDrawing) return;
-            const rect = e.target.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const ctx = e.target.getContext('2d');
-            ctx.lineTo(x, y);
-            ctx.stroke();
+        // ═══════════════════════════════════
+        //  Bind ALL Buttons
+        // ═══════════════════════════════════
+        function bindAllButtons(){
+            // Step 1 → Next
+            document.getElementById('btnNext1').addEventListener('click', function(){ goNext(1); });
+            
+            // Step 2 → Prev / Next
+            document.getElementById('btnPrev2').addEventListener('click', function(){ goPrev(2); });
+            document.getElementById('btnNext2').addEventListener('click', function(){ goNext(2); });
+            
+            // Step 3 → Prev / Next
+            document.getElementById('btnPrev3').addEventListener('click', function(){ goPrev(3); });
+            document.getElementById('btnNext3').addEventListener('click', function(){ goNext(3); });
+            
+            // Step 4 → Prev / Submit
+            document.getElementById('btnPrev4').addEventListener('click', function(){ goPrev(4); });
+            document.getElementById('btnSubmit').addEventListener('click', function(){ submitApplication(); });
+            
+            // Camera buttons
+            document.getElementById('btnStartCamera').addEventListener('click', function(){ startCamera(); });
+            document.getElementById('btnCapture').addEventListener('click', function(){ captureSelfie(); });
+            document.getElementById('btnRetake').addEventListener('click', function(){ retakeSelfie(); });
+            
+            // Clear signature
+            document.getElementById('btnClearSig').addEventListener('click', function(){ clearSignature(); });
+            
+            // File upload boxes
+            document.getElementById('idFrontBox').addEventListener('click', function(e){
+                if(e.target.tagName !== 'INPUT') document.getElementById('idFront').click();
+            });
+            document.getElementById('idBackBox').addEventListener('click', function(e){
+                if(e.target.tagName !== 'INPUT') document.getElementById('idBack').click();
+            });
+            
+            // File change handlers
+            document.getElementById('idFront').addEventListener('change', function(){
+                handleFilePreview(this, 'idFrontBox', 'idFrontPreview');
+            });
+            document.getElementById('idBack').addEventListener('change', function(){
+                handleFilePreview(this, 'idBackBox', 'idBackPreview');
+            });
         }
 
-        function stopDrawing() {
-            if (isDrawing) console.log('🖱️ Mouse up - stopping drawing');
-            isDrawing = false;
+        // ═══════════════════════════════════
+        //  Navigation
+        // ═══════════════════════════════════
+        function goNext(currentStep){
+            if(!validateStep(currentStep)) return;
+            
+            // Prepare contract details before step 4
+            if(currentStep === 3) updateContractDetails();
+            
+            // Transition
+            var curForm = document.querySelector('.form-step[data-step="'+currentStep+'"]');
+            var curProg = document.querySelector('.progress-step[data-step="'+currentStep+'"]');
+            var nextForm = document.querySelector('.form-step[data-step="'+(currentStep+1)+'"]');
+            var nextProg = document.querySelector('.progress-step[data-step="'+(currentStep+1)+'"]');
+            
+            curForm.classList.remove('active');
+            curProg.classList.add('completed');
+            curProg.classList.remove('active');
+            nextForm.classList.add('active');
+            nextProg.classList.add('active');
+            
+            window.scrollTo({top:0, behavior:'smooth'});
         }
 
-        window.clearSignature = function() {
-            console.log('🗑️ Clearing signature');
-            const canvas = document.getElementById('signaturePad');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            hasSignature = false;
+        function goPrev(currentStep){
+            var curForm = document.querySelector('.form-step[data-step="'+currentStep+'"]');
+            var curProg = document.querySelector('.progress-step[data-step="'+currentStep+'"]');
+            var prevForm = document.querySelector('.form-step[data-step="'+(currentStep-1)+'"]');
+            var prevProg = document.querySelector('.progress-step[data-step="'+(currentStep-1)+'"]');
             
-            // Redraw watermark
-            ctx.font = 'bold 20px Arial';
-            ctx.fillStyle = '#cbd5e1';
-            ctx.textAlign = 'center';
-            ctx.fillText('وقّع هنا ✍️', canvas.width / 2, canvas.height / 2);
-            console.log('✅ Signature cleared and watermark redrawn');
-        };
-
-        // Navigation functions
-        window.nextStep = async function(currentStep) {
-            // Validate current step
-            if (!validateStep(currentStep)) {
-                return;
-            }
-
-            // Update contract details before moving to step 4
-            if (currentStep === 3) {
-                updateContractDetails();
-            }
-
-            // Move to next step
-            document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.remove('active');
-            document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.add('completed');
-            document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('active');
+            curForm.classList.remove('active');
+            curProg.classList.remove('active');
+            prevForm.classList.add('active');
+            prevProg.classList.remove('completed');
+            prevProg.classList.add('active');
             
-            const nextStep = currentStep + 1;
-            document.querySelector(`.form-step[data-step="${nextStep}"]`).classList.add('active');
-            document.querySelector(`.progress-step[data-step="${nextStep}"]`).classList.add('active');
-            
-            window.scrollTo(0, 0);
-        };
+            window.scrollTo({top:0, behavior:'smooth'});
+        }
 
-        window.prevStep = function(currentStep) {
-            document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.remove('active');
-            document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('active');
-            
-            const prevStep = currentStep - 1;
-            document.querySelector(`.form-step[data-step="${prevStep}"]`).classList.add('active');
-            document.querySelector(`.progress-step[data-step="${prevStep}"]`).classList.remove('completed');
-            document.querySelector(`.progress-step[data-step="${prevStep}"]`).classList.add('active');
-            
-            window.scrollTo(0, 0);
-        };
-
-        function validateStep(step) {
+        // ═══════════════════════════════════
+        //  Validation
+        // ═══════════════════════════════════
+        function validateStep(step){
             hideError();
             
-            if (step === 1) {
-                const fullName = document.getElementById('fullName').value.trim();
-                const phone = document.getElementById('phone').value.trim();
-                const address = document.getElementById('address').value.trim();
-                const nationalId = document.getElementById('nationalId').value.trim();
-                const jobTitle = document.getElementById('jobTitle').value.trim();
+            if(step === 1){
+                var fullName = document.getElementById('fullName').value.trim();
+                var phone = document.getElementById('phone').value.trim();
+                var address = document.getElementById('address').value.trim();
+                var nationalId = document.getElementById('nationalId').value.trim();
+                var jobTitle = document.getElementById('jobTitle').value.trim();
                 
-                if (!fullName || !phone || !address || !nationalId || !jobTitle) {
+                if(!fullName || !phone || !address || !nationalId || !jobTitle){
                     showError('يرجى ملء جميع الحقول المطلوبة');
                     return false;
                 }
-                
-                if (nationalId.length !== 14) {
+                if(!/^\d{14}$/.test(nationalId)){
                     showError('رقم البطاقة يجب أن يكون 14 رقم');
                     return false;
                 }
-                
-                if (!/^01[0-9]{9}$/.test(phone)) {
-                    showError('رقم الهاتف غير صحيح');
+                if(!/^01[0-9]{9}$/.test(phone)){
+                    showError('رقم الهاتف غير صحيح — يجب أن يبدأ بـ 01 ويكون 11 رقم');
                     return false;
                 }
             }
             
-            if (step === 2) {
-                const idFront = document.getElementById('idFront').files[0];
-                const idBack = document.getElementById('idBack').files[0];
-                
-                if (!idFront || !idBack) {
-                    showError('يرجى رفع صورة البطاقة (الوجهين)');
+            if(step === 2){
+                if(!document.getElementById('idFront').files[0]){
+                    showError('يرجى رفع صورة البطاقة الأمامية');
+                    return false;
+                }
+                if(!document.getElementById('idBack').files[0]){
+                    showError('يرجى رفع صورة البطاقة الخلفية');
                     return false;
                 }
             }
             
-            if (step === 3) {
-                const selfie = document.getElementById('selfiePreview').src;
-                
-                if (!selfie || selfie === window.location.href) {
-                    showError('يرجى التقاط صورة سيلفي');
+            if(step === 3){
+                if(!selfieDataUrl){
+                    showError('يرجى التقاط صورة سيلفي أولاً');
                     return false;
                 }
             }
@@ -881,215 +561,331 @@
             return true;
         }
 
-        function updateContractDetails() {
-            const fullName = document.getElementById('fullName').value;
-            const jobTitle = document.getElementById('jobTitle').value;
-            
-            document.getElementById('contractEmployeeName').textContent = fullName;
-            document.getElementById('contractJobTitle').textContent = jobTitle;
-            
-            // Set dates
-            const today = new Date();
-            const startDate = today.toLocaleDateString('ar-EG');
-            const endDate = new Date(today.setMonth(today.getMonth() + 1)).toLocaleDateString('ar-EG');
-            
-            document.getElementById('contractStartDate').textContent = startDate;
-            document.getElementById('contractEndDate').textContent = endDate;
-            document.getElementById('contractSignDate').textContent = new Date().toLocaleDateString('ar-EG');
-            
-            // Set salary from employee data
-            if (employeeData && employeeData.salary) {
-                document.getElementById('contractSalary').textContent = employeeData.salary;
+        // ═══════════════════════════════════
+        //  File Upload Preview
+        // ═══════════════════════════════════
+        function handleFilePreview(input, boxId, previewId){
+            var file = input.files[0];
+            if(!file) return;
+            if(file.size > 5 * 1024 * 1024){
+                showError('حجم الصورة كبير جداً (الحد الأقصى 5MB)');
+                input.value = '';
+                return;
+            }
+            var reader = new FileReader();
+            reader.onload = function(e){
+                var img = document.getElementById(previewId);
+                img.src = e.target.result;
+                img.classList.add('show');
+                document.getElementById(boxId).classList.add('has-file');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ═══════════════════════════════════
+        //  Camera
+        // ═══════════════════════════════════
+        async function startCamera(){
+            try {
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode:'user', width:{ideal:1280}, height:{ideal:720} }
+                });
+                var video = document.getElementById('video');
+                video.srcObject = cameraStream;
+                video.classList.add('active');
+                
+                document.getElementById('btnStartCamera').style.display = 'none';
+                document.getElementById('btnCapture').style.display = 'inline-flex';
+                document.getElementById('selfiePreview').classList.remove('show');
+                selfieDataUrl = null;
+            } catch(err){
+                showError('لا يمكن الوصول للكاميرا: ' + err.message);
             }
         }
 
-        // File upload handler
-        window.handleFileUpload = function(input, boxId, previewId) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById(previewId).src = e.target.result;
-                    document.getElementById(previewId).classList.add('show');
-                    document.getElementById(boxId).classList.add('has-file');
-                };
-                reader.readAsDataURL(file);
-            }
-        };
-
-        // Camera functions
-        window.startCamera = async function() {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: 'user',
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    } 
-                });
-                
-                const video = document.getElementById('video');
-                video.srcObject = stream;
-                video.classList.add('active');
-                
-                document.getElementById('startCamera').style.display = 'none';
-                document.getElementById('captureBtn').style.display = 'inline-block';
-                document.getElementById('selfiePreview').classList.remove('show');
-            } catch (err) {
-                showError('لا يمكن الوصول إلى الكاميرا: ' + err.message);
-            }
-        };
-
-        window.captureSelfie = function() {
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-            const preview = document.getElementById('selfiePreview');
+        function captureSelfie(){
+            var video = document.getElementById('video');
+            var canvas = document.getElementById('canvas');
+            var preview = document.getElementById('selfiePreview');
             
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
             
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(video, 0, 0);
-            
-            preview.src = canvas.toDataURL('image/jpeg');
+            selfieDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+            preview.src = selfieDataUrl;
             preview.classList.add('show');
             
             // Stop camera
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-            }
-            
+            stopCamera();
             video.classList.remove('active');
-            document.getElementById('captureBtn').style.display = 'none';
-            document.getElementById('retakeBtn').style.display = 'inline-block';
-        };
+            document.getElementById('btnCapture').style.display = 'none';
+            document.getElementById('btnRetake').style.display = 'inline-flex';
+        }
 
-        window.retakeSelfie = function() {
+        function retakeSelfie(){
             document.getElementById('selfiePreview').classList.remove('show');
-            document.getElementById('retakeBtn').style.display = 'none';
+            document.getElementById('btnRetake').style.display = 'none';
+            selfieDataUrl = null;
             startCamera();
-        };
+        }
 
-        // Submit application
-        window.submitApplication = async function() {
-            // Validate
-            const agreeTerms = document.getElementById('agreeTerms').checked;
-            const canvas = document.getElementById('signaturePad');
-            const ctx = canvas.getContext('2d');
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const hasSignature = imageData.data.some(channel => channel !== 0);
+        function stopCamera(){
+            if(cameraStream){
+                cameraStream.getTracks().forEach(function(t){ t.stop(); });
+                cameraStream = null;
+            }
+        }
+
+        // ═══════════════════════════════════
+        //  Signature Pad
+        // ═══════════════════════════════════
+        function initSignaturePad(){
+            signatureCanvas = document.getElementById('signaturePad');
+            signatureCtx = signatureCanvas.getContext('2d');
             
-            if (!agreeTerms) {
-                showError('يجب الموافقة على شروط العقد');
+            // Set canvas internal size
+            signatureCanvas.width = 600;
+            signatureCanvas.height = 200;
+            
+            // Drawing style
+            signatureCtx.strokeStyle = '#1e293b';
+            signatureCtx.lineWidth = 3;
+            signatureCtx.lineCap = 'round';
+            signatureCtx.lineJoin = 'round';
+            
+            drawWatermark();
+            
+            // Mouse events
+            signatureCanvas.addEventListener('mousedown', sigMouseDown);
+            signatureCanvas.addEventListener('mousemove', sigMouseMove);
+            signatureCanvas.addEventListener('mouseup', sigMouseUp);
+            signatureCanvas.addEventListener('mouseout', sigMouseUp);
+            
+            // Touch events
+            signatureCanvas.addEventListener('touchstart', sigTouchStart, {passive:false});
+            signatureCanvas.addEventListener('touchmove', sigTouchMove, {passive:false});
+            signatureCanvas.addEventListener('touchend', sigTouchEnd, {passive:false});
+        }
+
+        function drawWatermark(){
+            signatureCtx.save();
+            signatureCtx.font = 'bold 20px Cairo, Arial';
+            signatureCtx.fillStyle = '#cbd5e1';
+            signatureCtx.textAlign = 'center';
+            signatureCtx.fillText('وقّع هنا ✍️', signatureCanvas.width / 2, signatureCanvas.height / 2 + 7);
+            signatureCtx.restore();
+            // Restore drawing style
+            signatureCtx.strokeStyle = '#1e293b';
+            signatureCtx.lineWidth = 3;
+            signatureCtx.lineCap = 'round';
+            signatureCtx.lineJoin = 'round';
+        }
+
+        function getCanvasPos(canvas, clientX, clientY){
+            var rect = canvas.getBoundingClientRect();
+            var scaleX = canvas.width / rect.width;
+            var scaleY = canvas.height / rect.height;
+            return {
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
+            };
+        }
+
+        function sigMouseDown(e){
+            isDrawing = true;
+            hasDrawnSignature = true;
+            var pos = getCanvasPos(signatureCanvas, e.clientX, e.clientY);
+            signatureCtx.beginPath();
+            signatureCtx.moveTo(pos.x, pos.y);
+        }
+        function sigMouseMove(e){
+            if(!isDrawing) return;
+            var pos = getCanvasPos(signatureCanvas, e.clientX, e.clientY);
+            signatureCtx.lineTo(pos.x, pos.y);
+            signatureCtx.stroke();
+        }
+        function sigMouseUp(){ isDrawing = false; }
+
+        function sigTouchStart(e){
+            e.preventDefault();
+            isDrawing = true;
+            hasDrawnSignature = true;
+            var touch = e.touches[0];
+            var pos = getCanvasPos(signatureCanvas, touch.clientX, touch.clientY);
+            signatureCtx.beginPath();
+            signatureCtx.moveTo(pos.x, pos.y);
+        }
+        function sigTouchMove(e){
+            if(!isDrawing) return;
+            e.preventDefault();
+            var touch = e.touches[0];
+            var pos = getCanvasPos(signatureCanvas, touch.clientX, touch.clientY);
+            signatureCtx.lineTo(pos.x, pos.y);
+            signatureCtx.stroke();
+        }
+        function sigTouchEnd(e){
+            e.preventDefault();
+            isDrawing = false;
+        }
+
+        function clearSignature(){
+            signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+            hasDrawnSignature = false;
+            drawWatermark();
+        }
+
+        // ═══════════════════════════════════
+        //  Contract Details
+        // ═══════════════════════════════════
+        function updateContractDetails(){
+            document.getElementById('contractEmployeeName').textContent = document.getElementById('fullName').value;
+            document.getElementById('contractJobTitle').textContent = document.getElementById('jobTitle').value;
+            
+            var today = new Date();
+            document.getElementById('contractStartDate').textContent = today.toLocaleDateString('ar-EG');
+            var endDate = new Date(today);
+            endDate.setMonth(endDate.getMonth() + 1);
+            document.getElementById('contractEndDate').textContent = endDate.toLocaleDateString('ar-EG');
+            document.getElementById('contractSignDate').textContent = new Date().toLocaleDateString('ar-EG');
+            
+            if(employeeData && employeeData.salary){
+                document.getElementById('contractSalary').textContent = Number(employeeData.salary).toLocaleString('ar-EG');
+            }
+        }
+
+        // ═══════════════════════════════════
+        //  Submit Application
+        // ═══════════════════════════════════
+        async function submitApplication(){
+            hideError();
+            
+            if(!document.getElementById('agreeTerms').checked){
+                showError('يجب الموافقة على شروط العقد أولاً');
                 return;
             }
-            
-            if (!hasSignature) {
+            if(!hasDrawnSignature){
                 showError('يرجى التوقيع على العقد');
                 return;
             }
             
             // Show loading
-            document.querySelector('.form-step.active').style.display = 'none';
+            var activeStep = document.querySelector('.form-step.active');
+            if(activeStep) activeStep.style.display = 'none';
             document.getElementById('loadingState').classList.add('active');
             
             try {
-                // Upload files to Supabase Storage
-                const idFrontURL = await uploadFile(document.getElementById('idFront').files[0], 'id-front.jpg');
-                const idBackURL = await uploadFile(document.getElementById('idBack').files[0], 'id-back.jpg');
+                // Upload ID front
+                var idFrontURL = await uploadFileToStorage(
+                    document.getElementById('idFront').files[0], 
+                    currentEmployeeId + '/id-front.jpg'
+                );
+                
+                // Upload ID back
+                var idBackURL = await uploadFileToStorage(
+                    document.getElementById('idBack').files[0],
+                    currentEmployeeId + '/id-back.jpg'
+                );
                 
                 // Upload selfie
-                const selfieBlob = await new Promise(resolve => {
-                    document.getElementById('canvas').toBlob(resolve, 'image/jpeg');
-                });
-                const selfieURL = await uploadFile(selfieBlob, 'selfie.jpg');
+                var selfieBlob = dataURLtoBlob(selfieDataUrl);
+                var selfieURL = await uploadFileToStorage(
+                    selfieBlob,
+                    currentEmployeeId + '/selfie.jpg'
+                );
                 
                 // Upload signature
-                const signatureBlob = await new Promise(resolve => {
-                    canvas.toBlob(resolve, 'image/png');
+                var sigBlob = await new Promise(function(resolve){
+                    signatureCanvas.toBlob(resolve, 'image/png');
                 });
-                const signatureURL = await uploadFile(signatureBlob, 'signature.png');
+                var signatureURL = await uploadFileToStorage(
+                    sigBlob,
+                    currentEmployeeId + '/signature.png'
+                );
                 
-                console.log('✅ All files uploaded successfully');
-                
-                // Save data to Supabase
-                const { data, error } = await supabaseClient
-                    .from('employees')
-                    .update({
-                        full_name: document.getElementById('fullName').value,
-                        email: document.getElementById('email').value,
-                        phone: document.getElementById('phone').value,
-                        address: document.getElementById('address').value,
-                        national_id: document.getElementById('nationalId').value,
-                        job_title: document.getElementById('jobTitle').value,
-                        id_front_url: idFrontURL,
-                        id_back_url: idBackURL,
-                        selfie_url: selfieURL,
-                        signature_url: signatureURL,
-                        contract_accepted: true,
-                        contract_accepted_at: new Date().toISOString(),
-                        application_status: 'pending',
-                        application_submitted_at: new Date().toISOString(),
-                        updated_at: new Date().toISOString()
-                    })
-                    .eq('id', currentEmployeeId);
-                
-                if (error) throw error;
-                
-                console.log('✅ Application submitted successfully');
+                // Save all data to Firestore
+                await db.collection('employees').doc(currentEmployeeId).update({
+                    fullName: document.getElementById('fullName').value.trim(),
+                    full_name: document.getElementById('fullName').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                    address: document.getElementById('address').value.trim(),
+                    nationalId: document.getElementById('nationalId').value.trim(),
+                    national_id: document.getElementById('nationalId').value.trim(),
+                    jobTitle: document.getElementById('jobTitle').value.trim(),
+                    job_title: document.getElementById('jobTitle').value.trim(),
+                    idFrontURL: idFrontURL,
+                    id_front_url: idFrontURL,
+                    idBackURL: idBackURL,
+                    id_back_url: idBackURL,
+                    selfieURL: selfieURL,
+                    selfie_url: selfieURL,
+                    signatureURL: signatureURL,
+                    signature_url: signatureURL,
+                    contractAccepted: true,
+                    contract_accepted: true,
+                    contractAcceptedAt: new Date().toISOString(),
+                    contract_accepted_at: new Date().toISOString(),
+                    applicationStatus: 'pending',
+                    application_status: 'pending',
+                    applicationSubmittedAt: new Date().toISOString(),
+                    application_submitted_at: new Date().toISOString(),
+                    onboardingCompleted: true,
+                    updatedAt: new Date().toISOString()
+                });
                 
                 // Show success
                 document.getElementById('loadingState').classList.remove('active');
                 document.getElementById('successMessage').classList.add('active');
+                stopCamera();
                 
-            } catch (error) {
-                console.error('Error submitting application:', error);
+            } catch(err){
+                console.error('Submit error:', err);
                 document.getElementById('loadingState').classList.remove('active');
-                document.querySelector('.form-step.active').style.display = 'block';
-                showError('حدث خطأ أثناء إرسال البيانات: ' + error.message);
-            }
-        };
-
-        async function uploadFile(file, fileName) {
-            try {
-                const filePath = `${currentEmployeeId}/${fileName}`;
-                
-                console.log(`📤 Uploading ${fileName}...`);
-                
-                // Upload to Supabase Storage
-                const { data, error } = await supabaseClient.storage
-                    .from(SUPABASE_CONFIG.bucketName)
-                    .upload(filePath, file, {
-                        cacheControl: '3600',
-                        upsert: true
-                    });
-                
-                if (error) throw error;
-                
-                // Get public URL
-                const { data: urlData } = supabaseClient.storage
-                    .from(SUPABASE_CONFIG.bucketName)
-                    .getPublicUrl(filePath);
-                
-                console.log(`✅ ${fileName} uploaded:`, urlData.publicUrl);
-                
-                return urlData.publicUrl;
-            } catch (error) {
-                console.error(`Error uploading ${fileName}:`, error);
-                throw error;
+                if(activeStep) activeStep.style.display = 'block';
+                showError('حدث خطأ أثناء إرسال البيانات: ' + err.message);
             }
         }
 
-        function showError(message) {
-            const errorDiv = document.getElementById('error-message');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            window.scrollTo(0, 0);
+        // ═══════════════════════════════════
+        //  Upload to Firebase Storage
+        // ═══════════════════════════════════
+        async function uploadFileToStorage(file, path){
+            var ref = storage.ref(path);
+            var snapshot = await ref.put(file);
+            var url = await snapshot.ref.getDownloadURL();
+            return url;
         }
 
-        function hideError() {
-            document.getElementById('error-message').style.display = 'none';
+        // ═══════════════════════════════════
+        //  Helpers
+        // ═══════════════════════════════════
+        function dataURLtoBlob(dataurl){
+            var parts = dataurl.split(',');
+            var mime = parts[0].match(/:(.*?);/)[1];
+            var bstr = atob(parts[1]);
+            var n = bstr.length;
+            var u8arr = new Uint8Array(n);
+            while(n--) u8arr[n] = bstr.charCodeAt(n);
+            return new Blob([u8arr], {type: mime});
         }
+
+        function showError(msg){
+            var el = document.getElementById('errorMsg');
+            document.getElementById('errorText').textContent = msg;
+            el.classList.add('show');
+            window.scrollTo({top:0, behavior:'smooth'});
+        }
+
+        function hideError(){
+            document.getElementById('errorMsg').classList.remove('show');
+        }
+
+        function disableAllButtons(){
+            var btns = document.querySelectorAll('.btn');
+            btns.forEach(function(b){ b.disabled = true; });
+        }
+    })();
     </script>
 </body>
 </html>

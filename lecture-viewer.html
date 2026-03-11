@@ -1109,6 +1109,9 @@ document.addEventListener('keydown',e=>{
       case ' ': e.preventDefault(); toggleAutoPlay(); break;
       case '?': toggleShortcuts(); break;
       case 'Escape': closeLightbox(); document.getElementById('shortcutsModal').classList.remove('show'); break;
+  }
+});
+
 let touchStartX=0, touchStartY=0;
 document.getElementById('stage').addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;},{passive:true});
 document.getElementById('stage').addEventListener('touchend',e=>{

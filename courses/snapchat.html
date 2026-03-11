@@ -107,7 +107,7 @@
             <div class="meta-badge"><i class="fas fa-video"></i><span>فيديو مسجل</span></div>
         </div>
         <div class="hero-cta">
-            <a href="https://wa.me/201555512778?text=عايز%20اشترك%20في%20كورس%20سناب%20شات" class="btn-enroll" target="_blank" onclick="fbAddToCart('course-snapchat', 397)"><i class="fab fa-whatsapp"></i>اشترك دلوقتي</a>
+            <a href="https://wa.me/201555512778?text=عايز%20اشترك%20في%20كورس%20سناب%20شات" class="btn-enroll" target="_blank" onclick="fbAddToCartServer('course-snapchat', 'كورس سناب شات', 699, 'EGP')"><i class="fab fa-whatsapp"></i>اشترك دلوقتي</a>
         </div>
     </div>
 </section>
@@ -186,8 +186,15 @@
     </div>
     <p class="footer-copyright">&copy; 2026 Akram Mostafa — جميع الحقوق محفوظة</p>
 </footer>
+<!-- Meta Pixel & Conversions API -->
+<script src="../js/meta-pixel.js"></script>
+<script src="../js/meta-conversion-client.js"></script>
+
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
+    // Track ViewContent event
+    fbViewContentServer('course-snapchat', 'كورس سناب شات', 699, 'EGP');
+    
     AOS.init({ duration: 600, once: true });
     window.addEventListener('scroll', function() {
         const floatingPrice = document.querySelector('.price-floating');

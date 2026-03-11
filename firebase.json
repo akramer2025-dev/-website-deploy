@@ -10,7 +10,13 @@
         "firebase.json",
         "**/.*",
         "**/node_modules/**",
-        "linkcall/"
+        "linkcall/",
+        "**/*.ps1",
+        "**/*.bat",
+        "**/*.cmd",
+        "**/*.sh",
+        "**/*.exe",
+        "functions/"
       ],
       "cleanUrls": true,
       "trailingSlash": false,
@@ -65,7 +71,13 @@
       "ignore": [
         "firebase.json",
         "**/.*",
-        "**/node_modules/**"
+        "**/node_modules/**",
+        "**/*.ps1",
+        "**/*.bat",
+        "**/*.cmd",
+        "**/*.sh",
+        "**/*.exe",
+        "scripts/"
       ],
       "rewrites": [
         {

@@ -107,7 +107,7 @@
             <div class="meta-badge"><i class="fas fa-video"></i><span>فيديو مسجل</span></div>
         </div>
         <div class="hero-cta">
-            <a href="https://wa.me/201555512778?text=عايز%20اشترك%20في%20كورس%20الاستراتيجية%20المتكاملة" class="btn-enroll" target="_blank" onclick="fbAddToCart('course-strategy', 797)"><i class="fab fa-whatsapp"></i>اشترك دلوقتي</a>
+            <a href="https://wa.me/201555512778?text=عايز%20اشترك%20في%20كورس%20الاستراتيجية%20المتكاملة" class="btn-enroll" target="_blank" onclick="fbAddToCartServer('course-strategy', 'كورس استراتيجية متكاملة', 1499, 'EGP')"><i class="fab fa-whatsapp"></i>اشترك دلوقتي</a>
         </div>
     </div>
 </section>
@@ -191,8 +191,15 @@
     </div>
     <p class="footer-copyright">&copy; 2026 Akram Mostafa — جميع الحقوق محفوظة</p>
 </footer>
+<!-- Meta Pixel & Conversions API -->
+<script src="../js/meta-pixel.js"></script>
+<script src="../js/meta-conversion-client.js"></script>
+
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
+    // Track ViewContent event
+    fbViewContentServer('course-strategy', 'كورس استراتيجية متكاملة', 1499, 'EGP');
+    
     AOS.init({ duration: 600, once: true });
     window.addEventListener('scroll', function() {
         const floatingPrice = document.querySelector('.price-floating');
