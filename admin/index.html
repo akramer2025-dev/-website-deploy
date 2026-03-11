@@ -4545,7 +4545,7 @@ async function renderUsers(type){
             ${u.permissions && Object.keys(u.permissions).length > 0?`<div class="user-info-row"><i class="fas fa-shield-alt"></i><span>صلاحيات: ${Object.keys(u.permissions).length} قسم</span></div>`:''}
           </div>
           <div class="user-card-actions">
-            <button class="btn-sm btn-sm-primary" onclick="viewEmployeeRequestDetails('${u.id}')"><i class="fas fa-eye"></i> عرض</button>
+            <button class="btn-sm btn-sm-primary" onclick="editEmployee('${u.id}')"><i class="fas fa-edit"></i> تعديل</button>
             <button class="btn-sm btn-sm-danger" onclick="deleteEmployeeRequest('${u.id}')"><i class="fas fa-trash"></i></button>
           </div></div></div>`;
       }).join('');
@@ -5709,10 +5709,19 @@ function toggleAllPermissions(){
   });
 }
 
+// Employee editing mode: null for new, {id, data} for editing
+let employeeEditMode = null;
+
 // إضافة موظف جديد مع إرسال رابط التسجيل
 async function addEmployeeWithOnboarding(){
+  // Set to ADD mode
+  employeeEditMode = null;
+  
   // Open the modal
   document.getElementById('employeeContractModal').classList.add('open');
+  
+  // Update modal title
+  document.querySelector('#employeeContractModal .modal-header h3').innerHTML = '<i class="fas fa-user-plus" style="color:var(--pink);margin-left:8px"></i> إنشاء حساب موظف جديد';
   
   // Reset form
   document.getElementById('empUsername').value = '';
@@ -5731,6 +5740,78 @@ async function addEmployeeWithOnboarding(){
   document.getElementById('empFormSection').style.display = 'block';
   document.getElementById('empSendSection').style.display = 'none';
   document.getElementById('empBtnCreate').style.display = 'flex';
+}
+
+// تعديل بيانات موظف موجود
+async function editEmployee(empId){
+  try {
+    // Fetch employee data from Supabase
+    const { data: employee, error } = await _supabase
+      .from('employees')
+      .select('*')
+      .eq('id', empId)
+      .single();
+    
+    if (error || !employee) {
+      toast('فشل تحميل بيانات الموظف', 'error');
+      console.error('Error loading employee:', error);
+      return;
+    }
+    
+    // Set EDIT mode
+    employeeEditMode = { id: empId, data: employee };
+    
+    // Open modal
+    document.getElementById('employeeContractModal').classList.add('open');
+    
+    // Update modal title
+    document.querySelector('#employeeContractModal .modal-header h3').innerHTML = '<i class="fas fa-user-edit" style="color:var(--blue);margin-left:8px"></i> تعديل بيانات الموظف';
+    
+    // Fill form with employee data
+    document.getElementById('empUsername').value = employee.username || '';
+    document.getElementById('empPassword').value = employee.password || '';
+    document.getElementById('empPhone').value = employee.phone || '';
+    document.getElementById('empJobTitle').value = employee.job_title || '';
+    
+    // Set employee type
+    const empType = employee.employee_type || 'contract';
+    document.querySelector(`input[name="empType"][value="${empType}"]`).checked = true;
+    toggleEmployeeTypeFields();
+    
+    // Load permissions
+    const permissions = employee.permissions || {};
+    
+    // Reset all checkboxes first
+    document.querySelectorAll('.perm-checkbox').forEach(cb => cb.checked = false);
+    
+    // Check permissions according to stored data
+    Object.keys(permissions).forEach(group => {
+      const mainCheckbox = document.querySelector(`.main-checkbox[data-group="${group}"]`);
+      
+      if (mainCheckbox) {
+        mainCheckbox.checked = true;
+        
+        // If permissions[group] is an object with sub-permissions
+        if (typeof permissions[group] === 'object' && permissions[group] !== null && !Array.isArray(permissions[group])) {
+          Object.keys(permissions[group]).forEach(action => {
+            const subCheckbox = document.querySelector(`.sub-checkbox[data-parent="${group}"][data-action="${action}"]`);
+            if (subCheckbox && permissions[group][action]) {
+              subCheckbox.checked = true;
+            }
+          });
+        }
+      }
+    });
+    
+    // Show form section
+    document.getElementById('empFormSection').style.display = 'block';
+    document.getElementById('empSendSection').style.display = 'none';
+    document.getElementById('empBtnCreate').style.display = 'flex';
+    
+  } catch (err) {
+    console.error('Error in editEmployee:', err);
+    toast('حدث خطأ أثناء تحميل بيانات الموظف', 'error');
+  }
 }
 
 // Contract terms based on job title
@@ -5794,10 +5875,16 @@ let currentEmployeeData = {};
 function closeEmployeeModal(){
   document.getElementById('employeeContractModal').classList.remove('open');
   
+  // Reset edit mode
+  employeeEditMode = null;
+  
   // Reset form sections visibility
   document.getElementById('empFormSection').style.display = 'block';
   document.getElementById('empSendSection').style.display = 'none';
   document.getElementById('empBtnCreate').style.display = 'block';
+  
+  // Reload employees list to show any changes
+  renderUsers('employee');
   
   // Reset filter to 'all' to show any newly added employees
   filterEmpReqs('all');
@@ -5868,6 +5955,61 @@ async function createEmployeeAccount(){
   }
   
   try {
+    // ============ EDIT MODE: Update existing employee ============
+    if (employeeEditMode && employeeEditMode.id) {
+      const empId = employeeEditMode.id;
+      
+      // Check if username changed and conflicts with another employee
+      if (username !== employeeEditMode.data.username) {
+        const { data: existing } = await _supabase
+          .from('employees')
+          .select('id')
+          .eq('username', username)
+          .neq('id', empId)
+          .maybeSingle();
+        
+        if (existing) {
+          toast('اسم المستخدم موجود بالفعل! اختر اسم آخر', 'error');
+          return;
+        }
+      }
+      
+      // Update employee data
+      const updatedData = {
+        username,
+        password,
+        phone,
+        job_title: jobTitle,
+        employee_type: empType,
+        permissions: permissions,
+        is_active: empType === 'permanent',
+        application_status: empType === 'permanent' ? 'approved' : employeeEditMode.data.application_status
+      };
+      
+      const { data, error } = await _supabase
+        .from('employees')
+        .update(updatedData)
+        .eq('id', empId);
+      
+      if (error) {
+        console.error('Supabase update error:', error);
+        throw new Error(error.message);
+      }
+      
+      console.log('✅ Employee updated in Supabase:', empId);
+      toast('✅ تم تحديث بيانات الموظف بنجاح!', 'success');
+      
+      // Close modal and refresh
+      document.getElementById('employeeContractModal').classList.remove('open');
+      employeeEditMode = null; // Reset edit mode
+      
+      // Reload employees list
+      renderUsers('employee');
+      updateBadges();
+      return;
+    }
+    
+    // ============ ADD MODE: Create new employee ============
     // Check if username already exists
     const { data: existing } = await _supabase
       .from('employees')
