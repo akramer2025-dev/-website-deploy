@@ -412,10 +412,8 @@
     // ═══════════════════════════════════
     //  Global functions for sidebar (called from onclick)
     // ═══════════════════════════════════
-    var _switchStep = null;
-    
     function goToStep(step){
-        if(_switchStep) _switchStep(step);
+        if(window.switchToStep) window.switchToStep(step);
     }
     
     function toggleSidebar(){
@@ -609,7 +607,7 @@
         }
 
         // Expose switchStep globally for sidebar clicks
-        _switchStep = switchStep;
+        window.switchToStep = switchStep;
 
         // ═══════════════════════════════════
         //  Validation
