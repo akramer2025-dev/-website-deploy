@@ -2,7 +2,10 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>لوحة الإدارة | Akram Mostafa</title>
 
 <link rel="icon" type="image/png" href="../images/akram.png">
@@ -26,7 +29,17 @@
   --bg-card: #0d1e38; --bg-modal: rgba(5,13,27,0.95);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  -webkit-text-size-adjust:100%;
+  text-rendering:optimizeLegibility;
+}
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:6px;height:6px;}
@@ -748,11 +761,12 @@ button{cursor:pointer;}
 .toast.success{border-color:rgba(34,197,94,0.4);color:#4ade80;}
 .toast.error{border-color:rgba(239,68,68,0.4);color:#f87171;}
 
-/* HAMBURGER TOGGLE */
-.adm-menu-toggle{display:none;align-items:center;justify-content:center;width:40px;height:40px;
-  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
-  color:var(--text);font-size:1.1rem;cursor:pointer;transition:.2s;flex-shrink:0;}
-.adm-menu-toggle:hover{background:var(--card2);color:#fff;}
+/* HAMBURGER TOGGLE - Enhanced for Mobile */
+.adm-menu-toggle{display:none;align-items:center;justify-content:center;width:48px;height:48px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+  color:var(--text);font-size:1.2rem;cursor:pointer;transition:.2s;flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.adm-menu-toggle:hover,.adm-menu-toggle:active{background:var(--card2);color:#fff;transform:scale(0.95);}
 
 /* SIDEBAR OVERLAY */
 .adm-sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);
@@ -772,67 +786,277 @@ button{cursor:pointer;}
   /* Show hamburger */
   .adm-menu-toggle{display:flex;}
 
-  /* Header */
-  .adm-header{padding:0 14px;gap:10px;}
+  /* Header - Enhanced for Mobile */
+  .adm-header{padding:0 12px;gap:12px;height:60px;}
   .adm-admin-pill span{display:none;}
-  .adm-admin-pill{padding:7px 10px;}
+  .adm-admin-pill{padding:8px 12px;font-size:.85rem;}
+  .adm-admin-pill i{font-size:1rem;}
   .btn-logout span{display:none;}
+  .btn-logout{padding:10px 14px;font-size:.85rem;}
+  .btn-logout i{font-size:1rem;}
 
-  /* Sidebar slides in from LEFT (RTL Arabic layout) */
+  /* Sidebar slides in from LEFT (RTL Arabic layout) - Enhanced */
   .adm-sidebar{
     left:0;
     right:auto;
+    width:280px;
     transform:translateX(-100%);
-    transition:transform .3s ease;
-    z-index:90;
+    transition:transform .3s cubic-bezier(0.4,0,0.2,1);
+    z-index:95;
     border-left:none;
     border-right:1px solid var(--border);
   }
   .adm-sidebar.open{
     transform:translateX(0);
-    box-shadow:8px 0 40px rgba(0,0,0,0.5);
+    box-shadow:12px 0 48px rgba(0,0,0,0.6);
   }
+  
+  /* Sidebar Navigation - Better Touch Targets */
+  .adm-nav-item{
+    padding:14px 18px;
+    font-size:.95rem;
+    min-height:50px;
+    margin-bottom:4px;
+  }
+  .adm-nav-item i{font-size:1.1rem;width:22px;}
+  .adm-nav-label{font-size:.75rem;padding:0 18px 12px;}
 
   /* Main takes full width */
-  .adm-main{margin-right:0;}
-  .adm-section{padding:16px;}
-  .adm-section-title{font-size:1.15rem;}
+  .adm-main{margin-right:0;padding-top:60px;}
+  .adm-section{padding:16px 14px;}
+  .adm-section-title{font-size:1.2rem;margin-bottom:8px;}
+  .adm-breadcrumb{font-size:.8rem;margin-bottom:20px;}
 
-  /* Stats — 2 cols */
-  .stats-grid{grid-template-columns:1fr 1fr;gap:12px;}
-  .stat-card{padding:16px;}
-  .stat-num{font-size:1.6rem;}
+  /* Stats — 2 cols with better spacing */
+  .stats-grid{grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+  .stat-card{padding:18px 16px;}
+  .stat-card-icon{width:44px;height:44px;font-size:1.2rem;margin-bottom:12px;}
+  .stat-num{font-size:1.7rem;}
+  .stat-lbl{font-size:.8rem;}
 
   /* Projects */
-  .projects-grid{grid-template-columns:1fr;}
+  .projects-grid{grid-template-columns:1fr;gap:16px;}
+  .project-card-header{padding:14px 16px;}
+  .project-card-icon{width:38px;height:38px;font-size:1rem;}
 
   /* Users grid full width */
   .users-grid{grid-template-columns:1fr;}
-  .users-top{flex-wrap:wrap;gap:10px;}
-  .users-tabs{width:100%;}
-  .users-tab{flex:1;text-align:center;padding:8px 10px;}
+  .users-top{flex-wrap:wrap;gap:12px;}
+  .users-tabs{width:100%;order:-1;}
+  .users-tab{flex:1;text-align:center;padding:10px 8px;font-size:.85rem;min-height:44px;}
 
-  /* Table scroll */
-  .adm-card{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-  .adm-table-wrap{margin:0 -4px;}
-  .adm-table th,.adm-table td{font-size:.78rem;padding:9px 8px;white-space:nowrap;}
+  /* Table scroll - Enhanced */
+  .adm-card{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:16px;}
+  .adm-table-wrap{margin:0 -4px;overflow-x:auto;}
+  .adm-table{min-width:600px;}
+  .adm-table th,.adm-table td{font-size:.8rem;padding:10px 8px;white-space:nowrap;}
+  
+  /* Action Buttons in Tables - Better Touch */
+  .btn-sm{padding:9px 12px;font-size:.8rem;min-height:40px;}
 
   /* Requests grid */
   .req-cards{grid-template-columns:1fr;}
+  .req-filter-btn{padding:11px 16px;font-size:.85rem;min-height:44px;}
+  
+  /* Employee Request Cards */
+  .employee-requests-grid{grid-template-columns:1fr;gap:16px;}
+  .emp-req-card{border-radius:16px;}
+  .emp-req-header{padding:18px 16px;}
+  .emp-req-body{padding:16px;}
 
-  /* Form row single col */
-  .form-row{grid-template-columns:1fr;}
+  /* Form row single col - Enhanced */
+  .form-row{grid-template-columns:1fr;gap:14px;}
+  .form-field label{font-size:.88rem;margin-bottom:8px;}
+  .form-field input,
+  .form-field select,
+  .form-field textarea{
+    padding:12px 14px;
+    font-size:.9rem;
+    min-height:46px;
+  }
+  .btn-primary,
+  .btn-save,
+  .btn-cancel{
+    padding:13px 24px;
+    font-size:.9rem;
+    min-height:48px;
+  }
 
-  /* Modal */
-  .modal-box{padding:22px 18px;border-radius:18px;}
+  /* Modal - Enhanced */
+  .modal-box{
+    padding:24px 18px;
+    border-radius:20px;
+    max-width:95vw;
+    max-height:90vh;
+    overflow-y:auto;
+  }
+  .modal-header h3{font-size:1.1rem;}
+  .modal-close{width:32px;height:32px;font-size:1.1rem;}
+
+  /* Quick Actions - Better Touch */
+  .qa-btn{
+    padding:15px 18px;
+    font-size:.9rem;
+    min-height:54px;
+  }
+  .qa-btn-icon{width:40px;height:40px;font-size:1.05rem;}
 }
 
 @media(max-width:480px){
-  .stats-grid{grid-template-columns:1fr 1fr;gap:10px;}
-  .stat-card{padding:14px;}
-  .adm-header-brand span{font-size:.85rem;}
-  .adm-section{padding:12px;}
-  .adm-card{padding:16px;}
+  /* Extra Small Screens - Optimized for One-Handed Use */
+  
+  /* Header */
+  .adm-header{padding:0 10px;height:56px;gap:8px;}
+  .adm-header-brand img{height:32px;}
+  .adm-header-brand span{font-size:.8rem;}
+  .adm-menu-toggle{width:44px;height:44px;font-size:1.1rem;}
+  
+  /* Sidebar */
+  .adm-sidebar{width:85vw;max-width:300px;}
+  
+  /* Main Content */
+  .adm-main{padding-top:56px;}
+  .adm-section{padding:12px 10px;}
+  .adm-section-title{font-size:1.1rem;}
+  .adm-breadcrumb{font-size:.75rem;}
+  
+  /* Stats - Single Column on Very Small Screens */
+  .stats-grid{grid-template-columns:1fr;gap:10px;}
+  .stat-card{padding:16px 14px;}
+  .stat-card-icon{width:40px;height:40px;font-size:1.1rem;}
+  .stat-num{font-size:1.6rem;}
+  .stat-lbl{font-size:.78rem;}
+  
+  /* Cards */
+  .adm-card{padding:14px 12px;}
+  .adm-card h3{font-size:.95rem;}
+  
+  /* Quick Actions */
+  .qa-btn{padding:13px 14px;min-height:52px;}
+  .qa-btn-icon{width:38px;height:38px;}
+  
+  /* Forms */
+  .form-field input,
+  .form-field select,
+  .form-field textarea{padding:11px 12px;font-size:.88rem;}
+  
+  /* Buttons */
+  .btn-primary,
+  .btn-save{font-size:.88rem;padding:12px 20px;min-height:46px;}
+  
+  /* Projects Grid */
+  .projects-grid{gap:14px;}
+  
+  /* Employee Request Cards */
+  .emp-req-card{border-radius:14px;}
+  .emp-req-header{padding:16px 14px;flex-direction:column;text-align:center;}
+  .emp-req-avatar{width:56px;height:56px;font-size:1.4rem;}
+  .emp-req-body{padding:14px;}
+  .emp-req-row{padding:10px 12px;font-size:.82rem;}
+  .emp-req-row i{width:30px;height:30px;font-size:.85rem;}
+  
+  /* Request Detail Modal */
+  .rd-actions{flex-direction:column;gap:8px;}
+  .rd-btn{min-height:44px;font-size:.85rem;}
+  
+  /* Modal */
+  .modal-box{padding:20px 14px;max-width:96vw;}
+  .modal-header{padding:0 0 16px;}
+  .modal-header h3{font-size:1rem;}
+  
+  /* Table */
+  .adm-table th,.adm-table td{font-size:.75rem;padding:8px 6px;}
+  
+  /* Login Screen */
+  .login-box{padding:32px 24px;}
+  .login-logo img{height:60px;}
+  .login-box h2{font-size:1.3rem;}
+}
+
+/* ===== TABLET PORTRAIT (481px - 768px) ===== */
+@media(min-width:481px) and (max-width:768px){
+  /* Header */
+  .adm-header{gap:14px;}
+  
+  /* Stats - Keep 2 columns for tablets */
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+  .stat-card{padding:20px;}
+  
+  /* Sidebar wider for tablets */
+  .adm-sidebar{width:300px;}
+  
+  /* Cards with better spacing */
+  .adm-card{padding:20px;}
+  
+  /* Forms with 2 columns when appropriate */
+  .form-row{grid-template-columns:repeat(2,1fr);gap:16px;}
+  .form-row.single{grid-template-columns:1fr;}
+  
+  /* Employee cards in 2 columns on tablet */
+  .employee-requests-grid{grid-template-columns:repeat(2,1fr);gap:18px;}
+  
+  /* Projects can show 2 per row */
+  .projects-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ===== MOBILE ENHANCEMENTS ===== */
+/* Floating Quick Menu Button (Mobile Only) */
+.mobile-quick-fab{
+  display:none;
+  position:fixed;
+  bottom:80px;
+  left:20px;
+  width:56px;
+  height:56px;
+  background:var(--grad);
+  border-radius:50%;
+  box-shadow:0 6px 20px rgba(233,78,119,0.4),0 2px 8px rgba(0,0,0,0.3);
+  align-items:center;
+  justify-content:center;
+  font-size:1.3rem;
+  color:#fff;
+  cursor:pointer;
+  z-index:80;
+  transition:all .3s cubic-bezier(0.4,0,0.2,1);
+  border:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.mobile-quick-fab:active{
+  transform:scale(0.9);
+}
+.mobile-quick-fab:hover{
+  box-shadow:0 8px 28px rgba(233,78,119,0.5);
+  transform:translateY(-3px);
+}
+@media(max-width:768px){
+  .mobile-quick-fab{display:flex;}
+}
+
+/* Better Touch Feedback */
+button,
+.qa-btn,
+.adm-nav-item,
+.btn-sm,
+.req-filter-btn{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+
+/* Smooth Scrolling for Mobile */
+.adm-main,
+.adm-sidebar,
+.modal-content,
+.adm-table-wrap{
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+}
+
+/* Better Focus States for Mobile */
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  box-shadow:0 0 0 3px rgba(233,78,119,0.2);
 }
 
 /* ===== JOIN REQUESTS ===== */
@@ -1560,6 +1784,12 @@ button{cursor:pointer;}
     </div>
     <div class="adm-sidebar-footer"><p>Akram Mostafa &copy; 2026</p></div>
   </aside>
+  
+  <!-- Mobile Quick Access FAB -->
+  <button class="mobile-quick-fab" onclick="toggleAdminSidebar()" title="القائمة السريعة" aria-label="فتح القائمة">
+    <i class="fas fa-th-large"></i>
+  </button>
+  
   <main class="adm-main">
 
     <!-- DASHBOARD -->
@@ -3899,6 +4129,14 @@ function showSection(name){
   document.querySelectorAll('.adm-nav-item').forEach(item=>{
     if(item.getAttribute('onclick')&&item.getAttribute('onclick').includes("'"+name+"'")) item.classList.add('active');
   });
+  
+  // Close sidebar on mobile after selection
+  if(window.innerWidth <= 768){
+    setTimeout(()=>{ closeAdminSidebar(); }, 150);
+  }
+  
+  // Scroll to top of main content
+  document.querySelector('.adm-main').scrollTop = 0;
 }
 
 function renderDashboard(){
