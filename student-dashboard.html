@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة تحكم الطالب | Akram Mostafa</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<style>
+:root{
+  --bg:#050d1b; --bg2:#09162b; --card:#0d1e38; --card2:#112446;
+  --border:rgba(255,255,255,0.07); --pink:#e94e77; --orange:#f7931e;
+  --grad:linear-gradient(135deg,#e94e77,#f7931e); --green:#22c55e;
+  --blue:#3b82f6; --text:#e2eaf6; --muted:#6b82a8; --purple:#a78bfa;
+  --sidebar-width:270px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+button{cursor:pointer;font-family:'Cairo',sans-serif;}
+a{text-decoration:none;color:inherit;}
+
+/* ─── LAYOUT ─── */
+.layout{display:flex;min-height:100vh;}
+
+/* ─── SIDEBAR ─── */
+.sidebar{
+  width:var(--sidebar-width);background:var(--bg2);border-left:1px solid var(--border);
+  position:fixed;top:0;right:0;bottom:0;z-index:200;
+  display:flex;flex-direction:column;
+  transition:transform .3s;
+}
+.sidebar-header{
+  padding:20px 22px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;
+}
+.sidebar-logo{width:42px;height:42px;}
+.sidebar-brand-text{flex:1;}
+.sidebar-brand-title{font-size:1.05rem;font-weight:900;color:#fff;line-height:1.3;}
+.sidebar-brand-sub{font-size:.72rem;color:var(--muted);}
+
+.sidebar-user{
+  padding:18px 22px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;
+}
+.sidebar-avatar{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--grad);display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;font-weight:900;color:#fff;flex-shrink:0;
+}
+.sidebar-user-info{flex:1;min-width:0;}
+.sidebar-user-name{font-size:.9rem;font-weight:800;color:#fff;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sidebar-user-role{font-size:.72rem;color:var(--muted);}
+
+.sidebar-nav{flex:1;overflow-y:auto;padding:12px 0;}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 22px;margin:4px 14px;border-radius:12px;
+  color:var(--muted);font-size:.9rem;font-weight:700;
+  cursor:pointer;transition:.2s;
+}
+.nav-item:hover{background:rgba(255,255,255,.03);color:var(--text);}
+.nav-item.active{background:var(--grad);color:#fff;}
+.nav-item i{width:20px;font-size:1rem;}
+.nav-item .badge{
+  margin-right:auto;padding:2px 8px;border-radius:10px;
+  background:rgba(233,78,119,.15);color:var(--pink);font-size:.7rem;font-weight:800;
+}
+
+.sidebar-footer{padding:14px 22px;border-top:1px solid var(--border);}
+.logout-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);
+  border-radius:11px;color:#ef4444;font-size:.85rem;font-weight:800;transition:.2s;
+}
+.logout-btn:hover{background:rgba(239,68,68,.15);}
+
+/* Mobile Sidebar Toggle */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:199;opacity:0;pointer-events:none;transition:.3s;}
+.sidebar-overlay.active{opacity:1;pointer-events:all;}
+.mobile-toggle{
+  display:none;position:fixed;top:16px;left:16px;z-index:100;
+  width:44px;height:44px;border-radius:12px;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);font-size:1.1rem;
+  align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+
+/* ─── MAIN CONTENT ─── */
+.main-content{flex:1;margin-right:var(--sidebar-width);padding:28px 32px;position:relative;}
+
+/* Top Bar inside Main */
+.content-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);
+}
+.content-title h1{font-size:1.7rem;font-weight:900;color:#fff;margin-bottom:4px;}
+.content-title p{font-size:.88rem;color:var(--muted);}
+.content-actions{display:flex;align-items:center;gap:10px;}
+.btn-secondary{
+  display:flex;align-items:center;gap:7px;
+  padding:10px 18px;background:var(--card);border:1px solid var(--border);
+  border-radius:11px;color:var(--text);font-size:.85rem;font-weight:700;
+  transition:.2s;
+}
+.btn-secondary:hover{border-color:rgba(233,78,119,.3);background:rgba(233,78,119,.05);}
+.btn-primary{
+  display:flex;align-items:center;gap:7px;
+  padding:10px 20px;background:var(--grad);border:none;
+  border-radius:11px;color:#fff;font-size:.85rem;font-weight:800;
+  transition:.2s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(233,78,119,.35);}
+
+/* ─── DASHBOARD VIEW ─── */
+.view{display:none;}
+.view.active{display:block;}
+
+/* Stats Grid */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:32px;}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:20px 22px;position:relative;overflow:hidden;
+}
+.stat-card::before{
+  content:'';position:absolute;top:0;right:0;width:60px;height:60px;
+  border-radius:50%;filter:blur(30px);opacity:.15;
+}
+.stat-card.pink::before{background:var(--pink);}
+.stat-card.blue::before{background:var(--blue);}
+.stat-card.green::before{background:var(--green);}
+.stat-card.purple::before{background:var(--purple);}
+.stat-card-icon{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:14px;
+}
+.stat-card.pink .stat-card-icon{background:rgba(233,78,119,.15);color:var(--pink);}
+.stat-card.blue .stat-card-icon{background:rgba(59,130,246,.15);color:var(--blue);}
+.stat-card.green .stat-card-icon{background:rgba(34,197,94,.15);color:var(--green);}
+.stat-card.purple .stat-card-icon{background:rgba(167,139,250,.15);color:var(--purple);}
+.stat-card-value{font-size:2rem;font-weight:900;color:#fff;margin-bottom:4px;}
+.stat-card-label{font-size:.82rem;color:var(--muted);}
+
+/* Courses Section */
+.section{margin-bottom:36px;}
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;
+}
+.section-header h2{font-size:1.25rem;font-weight:900;color:#fff;display:flex;align-items:center;gap:10px;}
+.section-header h2 i{
+  width:36px;height:36px;border-radius:10px;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;font-size:.95rem;
+}
+.section-link{color:var(--pink);font-size:.82rem;font-weight:700;}
+
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
+.course-card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  overflow:hidden;transition:.25s;cursor:pointer;
+}
+.course-card:hover{transform:translateY(-4px);border-color:rgba(233,78,119,.3);box-shadow:0 12px 32px rgba(0,0,0,.4);}
+.course-banner{
+  height:130px;background:linear-gradient(135deg,var(--bg2),var(--card2));
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.course-banner-icon{font-size:3rem;opacity:.25;}
+.course-badge{
+  position:absolute;top:12px;right:12px;
+  padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:800;
+}
+.badge-paid{background:rgba(247,147,30,.12);color:var(--orange);border:1px solid rgba(247,147,30,.25);}
+.badge-free{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.course-body{padding:18px 20px;}
+.course-name{font-size:1.05rem;font-weight:900;color:#fff;margin-bottom:10px;}
+.course-meta{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.course-meta span{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:5px;}
+.course-meta span i{color:var(--pink);font-size:.75rem;}
+.course-progress-wrap{margin-bottom:14px;}
+.course-progress-label{font-size:.75rem;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;}
+.course-progress-bar{
+  height:8px;background:var(--bg2);border-radius:20px;overflow:hidden;
+}
+.course-progress-fill{height:100%;background:var(--grad);transition:.3s;}
+.course-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px;background:var(--grad);border:none;border-radius:11px;
+  color:#fff;font-size:.88rem;font-weight:800;transition:.2s;
+}
+.course-btn:hover{transform:scale(1.02);box-shadow:0 6px 18px rgba(233,78,119,.35);}
+
+/* ─── SETTINGS VIEW ─── */
+.settings-container{max-width:700px;}
+.settings-section{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:24px;margin-bottom:20px;
+}
+.settings-section h3{
+  font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:18px;
+  display:flex;align-items:center;gap:10px;
+}
+.settings-section h3 i{
+  width:36px;height:36px;border-radius:10px;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;
+}
+.form-group{margin-bottom:18px;}
+.form-group:last-child{margin-bottom:0;}
+.form-label{display:block;font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:8px;}
+.form-input{
+  width:100%;padding:12px 16px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);font-size:.9rem;font-family:'Cairo',sans-serif;
+  transition:.2s;
+}
+.form-input:focus{outline:none;border-color:rgba(233,78,119,.4);background:var(--bg);}
+.form-input:disabled{opacity:.6;cursor:not-allowed;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.btn-save{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 28px;background:var(--grad);border:none;border-radius:11px;
+  color:#fff;font-size:.9rem;font-weight:800;transition:.2s;
+}
+.btn-save:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(233,78,119,.35);}
+.btn-save:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* Avatar Upload */
+.avatar-upload-wrap{display:flex;align-items:center;gap:20px;margin-bottom:20px;}
+.avatar-preview{
+  width:100px;height:100px;border-radius:50%;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;color:#fff;font-weight:900;
+  border:3px solid var(--border);
+}
+.avatar-actions{flex:1;}
+.avatar-actions p{font-size:.82rem;color:var(--muted);margin-bottom:10px;}
+.btn-upload{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 16px;background:var(--card2);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);font-size:.82rem;font-weight:700;
+  transition:.2s;
+}
+.btn-upload:hover{border-color:rgba(233,78,119,.3);}
+
+/* Alert Messages */
+.alert{
+  padding:14px 18px;border-radius:12px;margin-bottom:18px;
+  font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:10px;
+}
+.alert i{font-size:1.1rem;}
+.alert-success{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.25);}
+.alert-error{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.25);}
+.alert-info{background:rgba(59,130,246,.1);color:#3b82f6;border:1px solid rgba(59,130,246,.25);}
+
+/* Empty State */
+.empty-state{
+  text-align:center;padding:60px 20px;background:var(--card);
+  border:1px solid var(--border);border-radius:16px;
+}
+.empty-state i{font-size:3rem;color:var(--muted);opacity:.3;margin-bottom:16px;}
+.empty-state h3{font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:8px;}
+.empty-state p{font-size:.88rem;color:var(--muted);margin-bottom:20px;}
+
+/* ─── CERTIFICATES ─── */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+.cert-card{
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:20px;position:relative;overflow:hidden;transition:.25s;
+}
+.cert-card::before{
+  content:'';position:absolute;top:-40px;left:-40px;
+  width:120px;height:120px;background:var(--grad);
+  border-radius:50%;filter:blur(60px);opacity:.12;
+}
+.cert-card:hover{transform:translateY(-3px);border-color:rgba(233,78,119,.3);}
+.cert-icon{
+  width:52px;height:52px;border-radius:12px;background:rgba(247,147,30,.15);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--orange);font-size:1.5rem;margin-bottom:14px;
+}
+.cert-title{font-size:1rem;font-weight:900;color:#fff;margin-bottom:6px;}
+.cert-course{font-size:.78rem;color:var(--muted);margin-bottom:12px;}
+.cert-date{font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:6px;margin-bottom:14px;}
+.cert-date i{color:var(--pink);}
+.cert-actions{display:flex;gap:8px;}
+.btn-cert{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px;background:var(--card2);border:1px solid var(--border);
+  border-radius:9px;color:var(--text);font-size:.78rem;font-weight:700;
+  transition:.2s;
+}
+.btn-cert:hover{background:var(--grad);color:#fff;border-color:transparent;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .sidebar{transform:translateX(100%);}
+  .sidebar.active{transform:translateX(0);}
+  .sidebar-overlay{display:block;}
+  .mobile-toggle{display:flex;}
+  .main-content{margin-right:0;padding:20px 16px;}
+  .content-topbar{flex-direction:column;align-items:flex-start;gap:14px;}
+  .stats-grid{grid-template-columns:1fr;}
+  .courses-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .cert-grid{grid-template-columns:1fr;}
+}
+
+/* Loading Spinner */
+.spinner{
+  display:inline-block;width:16px;height:16px;
+  border:2px solid rgba(255,255,255,.2);
+  border-top-color:#fff;border-radius:50%;
+  animation:spin .6s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+<script src="/js/meta-pixel.js" defer></script>
+</head>
+<body>
+
+<!-- Mobile Toggle -->
+<button class="mobile-toggle" onclick="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- Sidebar Overlay (Mobile) -->
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- Layout -->
+<div class="layout">
+  
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="images/1772173627537.png" alt="Logo" class="sidebar-logo">
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-title">Akram Mostafa</div>
+        <div class="sidebar-brand-sub">منصة التعليم</div>
+      </div>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" id="sidebarAvatar">A</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sidebarUserName">جاري التحميل...</div>
+        <div class="sidebar-user-role">طالب</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-view="dashboard">
+        <i class="fas fa-home"></i>
+        <span>الصفحة الرئيسية</span>
+      </div>
+      <div class="nav-item" data-view="courses">
+        <i class="fas fa-graduation-cap"></i>
+        <span>كورساتي</span>
+        <span class="badge" id="coursesCount">0</span>
+      </div>
+      <div class="nav-item" data-view="certificates">
+        <i class="fas fa-certificate"></i>
+        <span>الشهادات</span>
+        <span class="badge" id="certsCount">0</span>
+      </div>
+      <div class="nav-item" data-view="profile">
+        <i class="fas fa-user"></i>
+        <span>الملف الشخصي</span>
+      </div>
+      <div class="nav-item" data-view="settings">
+        <i class="fas fa-cog"></i>
+        <span>الإعدادات</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>تسجيل الخروج</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- ═══ DASHBOARD VIEW ═══ -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="view active" id="view-dashboard">
+      <div class="content-topbar">
+        <div class="content-title">
+          <h1>أهلاً بك، <span id="dashboardUserName">طالب</span> 👋</h1>
+          <p>هنا ملخص إحصائياتك وتقدمك في الكورسات</p>
+        </div>
+        <div class="content-actions">
+          <button class="btn-secondary" onclick="location.reload()">
+            <i class="fas fa-sync-alt"></i> تحديث
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card pink">
+          <div class="stat-card-icon"><i class="fas fa-book-open"></i></div>
+          <div class="stat-card-value" id="statCourses">0</div>
+          <div class="stat-card-label">كورس مسجل</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-card-icon"><i class="fas fa-play-circle"></i></div>
+          <div class="stat-card-value" id="statLectures">0</div>
+          <div class="stat-card-label">محاضرة متاحة</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-card-icon"><i class="fas fa-check-circle"></i></div>
+          <div class="stat-card-value" id="statCompleted">0</div>
+          <div class="stat-card-label">محاضرة مكتملة</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-card-icon"><i class="fas fa-certificate"></i></div>
+          <div class="stat-card-value" id="statCertificates">0</div>
+          <div class="stat-card-label">شهادة حصلت عليها</div>
+        </div>
+      </div>
+
+      <!-- Courses Section -->
+      <div class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-book-open"></i> كورساتي</h2>
+          <a href="#" class="section-link" onclick="switchView('courses'); return false;">عرض الكل</a>
+        </div>
+        <div class="courses-grid" id="dashboardCoursesGrid">
+          <div class="empty-state">
+            <i class="fas fa-spinner fa-spin"></i>
+            <h3>جاري التحميل...</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- ═══ COURSES VIEW ═══ -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="view" id="view-courses">
+      <div class="content-topbar">
+        <div class="content-title">
+          <h1>كورساتي 📚</h1>
+          <p>جميع الكورسات المسجل فيها مع تفاصيل المحاضرات</p>
+        </div>
+      </div>
+
+      <div class="courses-grid" id="allCoursesGrid">
+        <div class="empty-state">
+          <i class="fas fa-box-open"></i>
+          <h3>لم تسجل في أي كورس بعد</h3>
+          <p>قم بالتسجيل في كورس للبدء بالتعلم</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- ═══ CERTIFICATES VIEW ═══ -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="view" id="view-certificates">
+      <div class="content-topbar">
+        <div class="content-title">
+          <h1>شهاداتي 🏆</h1>
+          <p>الشهادات التي حصلت عليها من إتمام الكورسات</p>
+        </div>
+      </div>
+
+      <div class="cert-grid" id="certificatesGrid">
+        <div class="empty-state">
+          <i class="fas fa-certificate"></i>
+          <h3>لا توجد شهادات بعد</h3>
+          <p>أكمل الكورسات للحصول على الشهادات</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- ═══ PROFILE VIEW ═══ -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="view" id="view-profile">
+      <div class="content-topbar">
+        <div class="content-title">
+          <h1>الملف الشخصي 👤</h1>
+          <p>معلوماتك الشخصية وبيانات حسابك</p>
+        </div>
+      </div>
+
+      <div class="settings-container">
+        <div class="settings-section">
+          <h3><i class="fas fa-id-card"></i> المعلومات الأساسية</h3>
+          
+          <div class="avatar-upload-wrap">
+            <div class="avatar-preview" id="profileAvatar">A</div>
+            <div class="avatar-actions">
+              <p>صورة الملف الشخصي</p>
+              <button class="btn-upload">
+                <i class="fas fa-camera"></i> تغيير الصورة
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">رقم الطالب</label>
+            <input type="text" class="form-input" id="profileId" disabled>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">الاسم</label>
+              <input type="text" class="form-input" id="profileName" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">اسم المستخدم</label>
+              <input type="text" class="form-input" id="profileUsername" disabled>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">البريد الإلكتروني</label>
+            <input type="email" class="form-input" id="profileEmail" disabled>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">رقم الهاتف</label>
+            <input type="text" class="form-input" id="profilePhone" disabled>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">تاريخ التسجيل</label>
+            <input type="text" class="form-input" id="profileJoinDate" disabled>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- ═══ SETTINGS VIEW ═══ -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="view" id="view-settings">
+      <div class="content-topbar">
+        <div class="content-title">
+          <h1>الإعدادات ⚙️</h1>
+          <p>إدارة إعدادات حسابك وتحديث معلوماتك</p>
+        </div>
+      </div>
+
+      <div class="settings-container">
+        
+        <!-- Personal Info -->
+        <div class="settings-section">
+          <h3><i class="fas fa-user-edit"></i> تحديث المعلومات الشخصية</h3>
+          
+          <div id="updateInfoAlert"></div>
+
+          <div class="form-group">
+            <label class="form-label">الاسم الكامل</label>
+            <input type="text" class="form-input" id="settingsName" placeholder="أدخل اسمك الكامل">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">رقم الهاتف</label>
+            <input type="text" class="form-input" id="settingsPhone" placeholder="رقم الواتساب">
+          </div>
+
+          <button class="btn-save" onclick="updatePersonalInfo()">
+            <i class="fas fa-save"></i> حفظ التغييرات
+          </button>
+        </div>
+
+        <!-- Change Password -->
+        <div class="settings-section">
+          <h3><i class="fas fa-key"></i> تغيير كلمة المرور</h3>
+          
+          <div id="passwordAlert"></div>
+
+          <div class="form-group">
+            <label class="form-label">كلمة المرور الحالية</label>
+            <input type="password" class="form-input" id="currentPassword" placeholder="أدخل كلمة المرور الحالية">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">كلمة المرور الجديدة</label>
+            <input type="password" class="form-input" id="newPassword" placeholder="على الأقل 6 أحرف">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">تأكيد كلمة المرور الجديدة</label>
+            <input type="password" class="form-input" id="confirmPassword" placeholder="أعد إدخال كلمة المرور الجديدة">
+          </div>
+
+          <button class="btn-save" onclick="changePassword()">
+            <i class="fas fa-lock"></i> تغيير كلمة المرور
+          </button>
+        </div>
+
+        <!-- Delete Account -->
+        <div class="settings-section" style="border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.03);">
+          <h3 style="color:#ef4444;"><i class="fas fa-exclamation-triangle"></i> منطقة الخطر</h3>
+          <p style="font-size:.85rem;color:var(--muted);margin-bottom:16px;">
+            حذف الحساب عملية دائمة ولا يمكن التراجع عنها. ستفقد كل بياناتك وتقدمك في الكورسات.
+          </p>
+          <button class="btn-save" style="background:#ef4444;" onclick="alert('للأمان، تواصل مع الإدارة لحذف الحساب')">
+            <i class="fas fa-trash-alt"></i> طلب حذف الحساب
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const USERS_KEY = 'am_users';
+const LECTURES_KEY = 'am_lectures';
+const COURSES_META = {
+  'free':      { name:'الكورس المجاني',   icon:'fa-gift',           color:'#22c55e', paid:false },
+  'facebook-ads':{ name:'إعلانات فيسبوك', icon:'fa-facebook',       color:'#1877f2', paid:true  },
+  'instagram': { name:'إنستجرام',         icon:'fa-instagram',      color:'#e1306c', paid:true  },
+  'tiktok':    { name:'تيك توك',          icon:'fa-music',          color:'#69c9d0', paid:true  },
+  'snapchat':  { name:'سناب شات',         icon:'fa-snapchat',       color:'#fffc00', paid:true  },
+  'twitter':   { name:'تويتر / X',        icon:'fa-x-twitter',      color:'#fff',    paid:true  },
+  'ai-marketing':{ name:'الذكاء الاصطناعي',icon:'fa-robot',         color:'#a78bfa', paid:true  },
+  'integrated-strategy':{ name:'الاستراتيجية المتكاملة',icon:'fa-layer-group',color:'#f7931e',paid:true },
+  'programming':{ name:'البرمجة',          icon:'fa-code',           color:'#38bdf8', paid:true  },
+};
+
+/* ─── FIREBASE ─── */
+const _fb = firebase.initializeApp({
+  apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+  authDomain: "akramplatform-2c6be.firebaseapp.com",
+  projectId: "akramplatform-2c6be",
+  storageBucket: "akramplatform-2c6be.firebasestorage.app",
+  messagingSenderId: "132959399686",
+  appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+}, 'studentDashboard');
+const _db = firebase.firestore(_fb);
+
+let currentUser = null;
+let allUsers = [];
+let allLectures = {};
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ INIT ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+async function init(){
+  const uid = sessionStorage.getItem('akram_student_id');
+  if(!uid){ logout(); return; }
+
+  // Load from localStorage first (fast)
+  try{ allUsers = JSON.parse(localStorage.getItem(USERS_KEY)||'[]'); }catch(e){}
+  try{ allLectures = JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}'); }catch(e){}
+  currentUser = allUsers.find(u=>String(u.id)===String(uid));
+
+  // Load from Firebase (authoritative)
+  try {
+    const [usersSnap, lecsSnap] = await Promise.all([
+      _db.collection('admin_data').doc('users').get(),
+      _db.collection('lectures').get()
+    ]);
+    
+    if(usersSnap.exists){ 
+      allUsers = usersSnap.data().data||[]; 
+      try{localStorage.setItem(USERS_KEY,JSON.stringify(allUsers))}catch(e){} 
+    }
+    
+    // Rebuild lectures
+    const lecsObj = {};
+    lecsSnap.forEach(doc=>{
+      const d = doc.data();
+      const ck = d.courseKey;
+      if(ck){ 
+        if(!lecsObj[ck]) lecsObj[ck]=[]; 
+        const {courseKey:_,savedAt:__,...ld}=d; 
+        lecsObj[ck].push(ld); 
+      }
+    });
+    Object.keys(lecsObj).forEach(ck=>lecsObj[ck].sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)));
+    if(lecsSnap.size > 0){
+      allLectures = lecsObj;
+      try{localStorage.setItem(LECTURES_KEY,JSON.stringify(allLectures))}catch(e){}
+    }
+    
+    currentUser = allUsers.find(u=>String(u.id)===String(uid));
+  } catch(e){ console.warn('Firebase load failed:', e); }
+
+  if(!currentUser){ logout(); return; }
+
+  renderUserData();
+  renderDashboard();
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ RENDER USER DATA ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+function renderUserData(){
+  const name = currentUser.name || currentUser.username || 'طالب';
+  const firstName = name.split(' ')[0];
+  const initial = firstName.charAt(0).toUpperCase();
+
+  // Sidebar
+  document.getElementById('sidebarUserName').textContent = name;
+  document.getElementById('sidebarAvatar').textContent = initial;
+  
+  // Dashboard
+  document.getElementById('dashboardUserName').textContent = firstName;
+
+  // Courses count badge
+  let courses = currentUser.courses || [];
+  if(typeof courses === 'string') courses = courses.split(',').map(s=>s.trim()).filter(Boolean);
+  document.getElementById('coursesCount').textContent = courses.length;
+  
+  // Certificates count (mock for now)
+  document.getElementById('certsCount').textContent = '0';
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ RENDER DASHBOARD ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+function renderDashboard(){
+  let courses = currentUser.courses || [];
+  if(typeof courses === 'string') courses = courses.split(',').map(s=>s.trim()).filter(Boolean);
+
+  let totalLecs = 0;
+  courses.forEach(ck=>{
+    const lecs = allLectures[ck]||[];
+    totalLecs += lecs.length;
+  });
+
+  // Update stats
+  document.getElementById('statCourses').textContent = courses.length;
+  document.getElementById('statLectures').textContent = totalLecs;
+  document.getElementById('statCompleted').textContent = '0'; // TODO: track progress
+  document.getElementById('statCertificates').textContent = '0';
+
+  // Render courses grid (show first 3 on dashboard)
+  const grid = document.getElementById('dashboardCoursesGrid');
+  if(!courses.length){
+    grid.innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i><h3>لم تسجل في أي كورس بعد</h3><p>سجل في كورس من <a href="courses.html" style="color:var(--pink)">صفحة الكورسات</a></p></div>`;
+  } else {
+    grid.innerHTML = courses.slice(0,3).map(ck => renderCourseCard(ck)).join('');
+  }
+
+  // Render all courses view
+  renderAllCourses();
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ RENDER COURSE CARD ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+function renderCourseCard(courseKey){
+  const meta = COURSES_META[courseKey] || {name:courseKey, icon:'fa-book', color:'var(--pink)', paid:true};
+  const lecs = allLectures[courseKey] || [];
+  const totalSlides = lecs.reduce((a,l)=>a+(l.slides||[]).length, 0);
+  
+  // Mock progress (TODO: track real progress)
+  const progress = lecs.length > 0 ? Math.floor(Math.random() * 70) + 10 : 0;
+
+  return `
+    <div class="course-card" onclick="viewCourse('${courseKey}')">
+      <div class="course-banner">
+        <i class="fas ${meta.icon} course-banner-icon" style="color:${meta.color};"></i>
+        <span class="course-badge ${meta.paid?'badge-paid':'badge-free'}">${meta.paid?'مدفوع':'مجاني'}</span>
+      </div>
+      <div class="course-body">
+        <div class="course-name">${meta.name}</div>
+        <div class="course-meta">
+          <span><i class="fas fa-play-circle"></i> ${lecs.length} محاضرة</span>
+          <span><i class="fas fa-images"></i> ${totalSlides} شريحة</span>
+        </div>
+        <div class="course-progress-wrap">
+          <div class="course-progress-label">
+            <span>التقدم</span>
+            <span>${progress}%</span>
+          </div>
+          <div class="course-progress-bar">
+            <div class="course-progress-fill" style="width:${progress}%;"></div>
+          </div>
+        </div>
+        <button class="course-btn" onclick="viewCourse('${courseKey}'); event.stopPropagation();">
+          <i class="fas fa-arrow-left"></i> الذهاب للمحاضرات
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function viewCourse(courseKey){
+  // Redirect to my-courses.html or filter by course
+  window.location.href = `my-courses.html#${courseKey}`;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ RENDER ALL COURSES ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+function renderAllCourses(){
+  let courses = currentUser.courses || [];
+  if(typeof courses === 'string') courses = courses.split(',').map(s=>s.trim()).filter(Boolean);
+
+  const grid = document.getElementById('allCoursesGrid');
+  if(!courses.length){
+    grid.innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i><h3>لم تسجل في أي كورس بعد</h3></div>`;
+  } else {
+    grid.innerHTML = courses.map(ck => renderCourseCard(ck)).join('');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ PROFILE VIEW ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+function renderProfile(){
+  const name = currentUser.name || '';
+  const username = currentUser.username || '';
+  const email = currentUser.email || '';
+  const phone = currentUser.phone || '';
+  const id = currentUser.id || '';
+  const joinDate = currentUser.createdAt ? new Date(currentUser.createdAt).toLocaleDateString('ar-EG') : '—';
+  const initial = (name || username).charAt(0).toUpperCase();
+
+  document.getElementById('profileAvatar').textContent = initial;
+  document.getElementById('profileId').value = id;
+  document.getElementById('profileName').value = name;
+  document.getElementById('profileUsername').value = username;
+  document.getElementById('profileEmail').value = email;
+  document.getElementById('profilePhone').value = phone;
+  document.getElementById('profileJoinDate').value = joinDate;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ SETTINGS - UPDATE PERSONAL INFO ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+function loadSettingsData(){
+  document.getElementById('settingsName').value = currentUser.name || '';
+  document.getElementById('settingsPhone').value = currentUser.phone || '';
+}
+
+async function updatePersonalInfo(){
+  const btn = event.target;
+  const originalHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> جاري الحفظ...';
+
+  const alertDiv = document.getElementById('updateInfoAlert');
+  alertDiv.innerHTML = '';
+
+  const name = document.getElementById('settingsName').value.trim();
+  const phone = document.getElementById('settingsPhone').value.trim();
+
+  if(!name){
+    alertDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> الاسم مطلوب</div>';
+    btn.disabled = false;
+    btn.innerHTML = originalHTML;
+    return;
+  }
+
+  // Update locally
+  currentUser.name = name;
+  currentUser.phone = phone;
+
+  const userIndex = allUsers.findIndex(u=>String(u.id)===String(currentUser.id));
+  if(userIndex >= 0) allUsers[userIndex] = currentUser;
+
+  // Save to localStorage
+  try{ localStorage.setItem(USERS_KEY, JSON.stringify(allUsers)); }catch(e){}
+
+  // Save to Firebase
+  try {
+    await _db.collection('admin_data').doc('users').set({data:allUsers});
+    alertDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-check-circle"></i> تم حفظ التغييرات بنجاح!</div>';
+    renderUserData(); // Update sidebar
+  } catch(e){
+    alertDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> فشل الحفظ: '+e.message+'</div>';
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = originalHTML;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ SETTINGS - CHANGE PASSWORD ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+async function changePassword(){
+  const btn = event.target;
+  const originalHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> جاري التغيير...';
+
+  const alertDiv = document.getElementById('passwordAlert');
+  alertDiv.innerHTML = '';
+
+  const current = document.getElementById('currentPassword').value;
+  const newPass = document.getElementById('newPassword').value;
+  const confirm = document.getElementById('confirmPassword').value;
+
+  if(!current || !newPass || !confirm){
+    alertDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> جميع الحقول مطلوبة</div>';
+    btn.disabled = false;
+    btn.innerHTML = originalHTML;
+    return;
+  }
+
+  if(current !== currentUser.password){
+    alertDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> كلمة المرور الحالية غير صحيحة</div>';
+    btn.disabled = false;
+    btn.innerHTML = originalHTML;
+    return;
+  }
+
+  if(newPass.length < 6){
+    alertDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> كلمة المرور يجب أن تكون 6 أحرف على الأقل</div>';
+    btn.disabled = false;
+    btn.innerHTML = originalHTML;
+    return;
+  }
+
+  if(newPass !== confirm){
+    alertDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> كلمة المرور الجديدة غير متطابقة</div>';
+    btn.disabled = false;
+    btn.innerHTML = originalHTML;
+    return;
+  }
+
+  // Update password
+  currentUser.password = newPass;
+  const userIndex = allUsers.findIndex(u=>String(u.id)===String(currentUser.id));
+  if(userIndex >= 0) allUsers[userIndex] = currentUser;
+
+  // Save
+  try{ localStorage.setItem(USERS_KEY, JSON.stringify(allUsers)); }catch(e){}
+
+  try {
+    await _db.collection('admin_data').doc('users').set({data:allUsers});
+    alertDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-check-circle"></i> تم تغيير كلمة المرور بنجاح!</div>';
+    // Clear inputs
+    document.getElementById('currentPassword').value = '';
+    document.getElementById('newPassword').value = '';
+    document.getElementById('confirmPassword').value = '';
+  } catch(e){
+    alertDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> فشل التحديث: '+e.message+'</div>';
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = originalHTML;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ NAVIGATION ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+function switchView(viewName){
+  // Hide all views
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  // Show selected view
+  document.getElementById('view-'+viewName).classList.add('active');
+  
+  // Update nav items
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelector(`.nav-item[data-view="${viewName}"]`).classList.add('active');
+
+  // Load data for specific views
+  if(viewName === 'profile') renderProfile();
+  if(viewName === 'settings') loadSettingsData();
+
+  // Close mobile sidebar
+  if(window.innerWidth <= 900){
+    document.getElementById('sidebar').classList.remove('active');
+    document.querySelector('.sidebar-overlay').classList.remove('active');
+  }
+}
+
+// Nav item click handler
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click', ()=>{
+    const view = item.getAttribute('data-view');
+    switchView(view);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ MOBILE SIDEBAR TOGGLE ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-overlay').classList.toggle('active');
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ LOGOUT ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+function logout(){
+  sessionStorage.clear();
+  localStorage.removeItem('akram_logged_in');
+  localStorage.removeItem('akram_user_id');
+  localStorage.removeItem('akram_student_id');
+  window.location.href = 'login.html';
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/* ═══ INIT ON LOAD ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+init();
+</script>
+</body>
+</html>

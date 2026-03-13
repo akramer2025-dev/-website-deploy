@@ -405,7 +405,7 @@
         }
         // طالب - يشترط akram_logged_in مع وجود user_id
         if (ls.getItem('akram_logged_in') === 'true' && ls.getItem('akram_user_id')) {
-            window.location.replace('my-courses.html'); return;
+            window.location.replace('student-dashboard.html'); return;
         }
     })();
 
@@ -584,7 +584,7 @@
         localStorage.removeItem('am_employee_id');
         showSuccess('مرحباً ' + (found.name || '') + '! جاري الدخول...');
         if (btn) setLoading(btn, false);
-        setTimeout(() => window.location.href = 'my-courses.html', 1100);
+        setTimeout(() => window.location.href = 'student-dashboard.html', 1100);
     }
 
     function showWarnBox(found) {
