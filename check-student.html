@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check Student in Firebase</title>
+<style>
+body{font-family:Arial;padding:20px;background:#0a1f44;color:#fff;}
+.student{background:#1a2f54;padding:15px;margin:10px 0;border-radius:8px;border-left:4px solid #22c55e;}
+.student h3{margin:0 0 10px;color:#22c55e;}
+.student p{margin:5px 0;font-size:14px;}
+.not-found{background:#ef4444;padding:20px;border-radius:8px;text-align:center;}
+#loading{text-align:center;padding:40px;font-size:18px;}
+.search-box{background:#1a2f54;padding:20px;border-radius:8px;margin-bottom:20px;}
+.search-box input{width:100%;padding:10px;font-size:16px;border-radius:8px;border:2px solid #3b82f6;background:#0a1f44;color:#fff;}
+</style>
+</head>
+<body>
+
+<h1>🔍 Check Student in Firebase</h1>
+
+<div class="search-box">
+  <p style="margin-bottom:10px;">بحث عن طالب:</p>
+  <input type="text" id="searchInput" placeholder="ادخل username أو email أو ID..." onkeyup="searchStudent()">
+</div>
+
+<div id="loading">⏳ جاري تحميل البيانات من Firebase...</div>
+<div id="results"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+// Firebase init
+const app = firebase.initializeApp({
+  apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+  authDomain: "akramplatform-2c6be.firebaseapp.com",
+  projectId: "akramplatform-2c6be",
+  storageBucket: "akramplatform-2c6be.firebasestorage.app",
+  messagingSenderId: "132959399686",
+  appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+});
+
+const db = firebase.firestore(app);
+let allStudents = [];
+
+console.log('🔥 Firebase initialized');
+
+// Load students
+db.collection('admin_data').doc('users').get()
+  .then(doc => {
+    const loading = document.getElementById('loading');
+    const results = document.getElementById('results');
+    
+    loading.style.display = 'none';
+    
+    if(!doc.exists || !doc.data() || !doc.data().data){
+      results.innerHTML = '<div class="not-found">❌ لا توجد بيانات طلاب في Firebase!</div>';
+      return;
+    }
+    
+    allStudents = doc.data().data || [];
+    console.log(`✅ Found ${allStudents.length} students`);
+    
+    displayStudents(allStudents);
+    
+    // Auto search for "abo khaled"
+    setTimeout(() => {
+      document.getElementById('searchInput').value = 'abo khaled';
+      searchStudent();
+    }, 500);
+  })
+  .catch(err => {
+    console.error('❌ Firebase error:', err);
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('results').innerHTML = `<div class="not-found">❌ خطأ في الاتصال بـ Firebase<br><pre>${err.message}</pre></div>`;
+  });
+
+function displayStudents(students) {
+  const results = document.getElementById('results');
+  
+  if(students.length === 0){
+    results.innerHTML = '<div class="not-found">❌ لا يوجد طلاب!</div>';
+    return;
+  }
+  
+  results.innerHTML = `<h2>📋 عدد الطلاب: ${students.length}</h2>` + students.map(s => {
+    const date = s.createdAt ? new Date(s.createdAt).toLocaleString('ar-EG') : 'غير محدد';
+    const courses = (s.courses||[]).join(', ') || 'لا يوجد';
+    
+    return `<div class="student">
+      <h3>🆔 ${s.id || '—'}</h3>
+      <p><strong>الاسم:</strong> ${s.name || '—'}</p>
+      <p><strong>Username:</strong> ${s.username || '—'}</p>
+      <p><strong>Password:</strong> <code style="background:#0a1f44;padding:2px 8px;border-radius:4px;">${s.password || '—'}</code></p>
+      <p><strong>البريد:</strong> ${s.email || '—'}</p>
+      <p><strong>الهاتف:</strong> ${s.phone || '—'}</p>
+      <p><strong>المجال:</strong> ${s.field || '—'}</p>
+      <p><strong>النوع:</strong> ${s.type || '—'}</p>
+      <p><strong>المستوى:</strong> ${s.level || '—'}</p>
+      <p><strong>الكورسات:</strong> ${courses}</p>
+      <p><strong>تاريخ التسجيل:</strong> ${date}</p>
+    </div>`;
+  }).join('');
+}
+
+function searchStudent() {
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  
+  if(!query){
+    displayStudents(allStudents);
+    return;
+  }
+  
+  const filtered = allStudents.filter(s => 
+    (s.id||'').toLowerCase().includes(query) ||
+    (s.username||'').toLowerCase().includes(query) ||
+    (s.email||'').toLowerCase().includes(query) ||
+    (s.name||'').toLowerCase().includes(query)
+  );
+  
+  displayStudents(filtered);
+}
+</script>
+
+</body>
+</html>
