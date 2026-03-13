@@ -3342,9 +3342,18 @@ let _fsLectures = null, _fsLiveSessions = null;
 
 function getUsers(){ return _fsUsers!==null ? _fsUsers.slice() : (()=>{try{return JSON.parse(localStorage.getItem(USERS_KEY)||'[]');}catch(e){return [];}})(); }
 function saveUsers(arr){
+  console.log('💾 saveUsers() called with', arr.length, 'users');
   _fsUsers = arr.slice();
   localStorage.setItem(USERS_KEY, JSON.stringify(arr));
-  _fdb.collection('admin_data').doc('users').set({data:arr,updatedAt:Date.now()}).catch(e=>console.warn('FS users',e));
+  console.log('  - Saved to localStorage');
+  console.log('  - Saving to Firebase admin_data/users...');
+  _fdb.collection('admin_data').doc('users').set({data:arr,updatedAt:Date.now()})
+    .then(()=>console.log('  ✅ Firebase save successful!'))
+    .catch(e=>{
+      console.error('  ❌ FS users save failed:', e);
+      console.error('     Error code:', e.code);
+      console.error('     Error message:', e.message);
+    });
 }
 let _fsPortfolio = null;
 let _fsPortfolioSavedAt = 0; // timestamp of last LOCAL save (to detect race conditions)
@@ -4593,27 +4602,64 @@ function renderJoinRequests(filter){
 }
 
 function approveReq(id){
+  console.log('✅ approveReq() called for request:', id);
   const reqs = getJoinRequests();
   const r = reqs.find(x=>x.id===id);
-  if(!r) return;
+  if(!r) {
+    console.error('❌ Request not found:', id);
+    return;
+  }
+  console.log('📋 Request data:', r);
+  
   // create student user
   const users = getUsers();
+  console.log('👥 Current users count:', users.length);
+  
   const exists = users.find(u=>u.username===r.username||u.email===r.email);
-  if(exists && r.status!=='approved'){ toast('يوجد مستخدم بنفس البيانات مسبقاً','error'); return; }
+  if(exists && r.status!=='approved'){ 
+    console.warn('⚠️ User already exists:', exists);
+    toast('يوجد مستخدم بنفس البيانات مسبقاً','error'); 
+    return; 
+  }
+  
   if(r.status!=='approved'){
     const newId = genStudentId();
-    users.push({ id:newId, name:r.name, username:r.username, password:r.password, email:r.email, phone:r.phone, type:'student', level:'مبتدئ', courses:(r.courses||[]), field:r.field||'', createdAt:r.createdAt });
+    console.log('🆔 Generated new student ID:', newId);
+    
+    const newStudent = { 
+      id:newId, 
+      name:r.name, 
+      username:r.username, 
+      password:r.password, 
+      email:r.email, 
+      phone:r.phone, 
+      type:'student', 
+      level:'مبتدئ', 
+      courses:(r.courses||[]), 
+      field:r.field||'', 
+      createdAt:r.createdAt 
+    };
+    
+    console.log('👤 New student object:', newStudent);
+    users.push(newStudent);
+    
+    console.log('💾 Calling saveUsers...');
     saveUsers(users);
+    
     r.approvedId = newId;
     setTimeout(()=>{
       alert('✅ تمت الموافقة على الطالب\n\n👤 الاسم: '+r.name+'\n🆔 الرقم التعريفي: '+newId+'\n👤 اسم المستخدم: '+(r.username||'—')+'\n🔒 كلمة المرور: '+(r.password||'—')+'\n\n📲 ابعت للطالب:\nالرقم التعريفي: '+newId+'\nاسم المستخدم: '+(r.username||'—')+'\nكلمة المرور: '+(r.password||'—')+'\n\n✔️ يدخل بـ اسم المستخدم أو الرقم التعريفي + كلمة المرور');
     },300);
   }
-  r.status='approved'; r.reviewedAt=Date.now();
+  
+  r.status='approved'; 
+  r.reviewedAt=Date.now();
+  console.log('💾 Calling saveJoinRequests...');
   saveJoinRequests(reqs);
   renderJoinRequests(_currentReqFilter);
   updateBadges();
   toast('تمت الموافقة وإضافة الطالب ✓','success');
+  console.log('✅ Approval complete!');
 }
 
 function rejectReq(id){
