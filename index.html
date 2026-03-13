@@ -185,15 +185,23 @@
     </script>
     -->
     
-    <!-- 🔒 ADVANCED SECURITY PROTECTION (15 LAYERS) - MUST BE FIRST -->
-    <script src="js/advanced-security.js"></script>
-    <script src="js/security-protection.js" defer></script>
+    <!-- 🔒 ADVANCED SECURITY PROTECTION - Optimized -->
+    <script src="js/security-optimized.js" defer></script>
     
+    <!-- ⚡ تحميل الخطوط بشكل محسّن (فقط الأوزان المطلوبة) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- ⚡ تحميل Font Awesome بشكل مؤجل -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
+    <!-- ⚡ تحميل AOS بشكل مؤجل -->
+    <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"></noscript>
+    
+    <!-- CSS Files -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/service.css">
     <link rel="stylesheet" href="css/store.css">
@@ -298,15 +306,35 @@
       }
     </style>
     <script src="/js/meta-pixel.js" defer></script>
+    
+    <!-- ⚡ Critical CSS لتسريع التحميل الأول -->
+    <style>
+        /* تحميل فوري للعناصر الحرجة */
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Cairo',sans-serif;background:#0a1f44;color:#fff;overflow-x:hidden}
+        img{max-width:100%;height:auto}
+        .page-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a1f44;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
+        .page-loader.hidden{opacity:0;pointer-events:none}
+    </style>
 </head>
 <body>
+    <!-- ⚡ Page Loader -->
+    <div class="page-loader">
+        <div style="width:50px;height:50px;border:3px solid rgba(233,78,119,0.2);border-top-color:#e94e77;border-radius:50%;animation:spin 1s linear infinite;"></div>
+    </div>
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+    
     <div id="particles-js"></div>
     
     <nav class="navbar" id="navbar">
         <div class="container">
             <div class="nav-brand">
                 <a href="index.html" style="display:flex;align-items:center;gap:4px;text-decoration:none;">
-                    <img src="images/1772173627537.png" alt="Akram Mostafa" class="nav-logo">
+                    <img src="images/1772173627537.png" alt="Akram Mostafa" class="nav-logo" loading="eager">
                     <span class="brand-name">AKRAM<br>MOSTAFA</span>
                 </a>
             </div>
@@ -325,6 +353,7 @@
                 <li><a href="courses.html" class="nav-link">الكورسات</a></li>
                 <li><a href="services.html" class="nav-link">الخدمات</a></li>
                 <li><a href="store.html" class="nav-link">المتجر</a></li>
+                <li><a href="ready-websites.html" class="nav-link">مواقع جاهزة</a></li>
                 <li><a href="contact.html" class="nav-link">تواصل معي</a></li>
                 <li><a href="login.html" class="nav-link nav-login-menu"><i class="fas fa-user-circle"></i> تسجيل الدخول</a></li>
             </ul>
@@ -343,7 +372,7 @@
                     <div class="hero-image-container">
                         <div class="hero-image-frame">
                             <div class="hero-image-frame-inner">
-                                <img src="images/Screenshot_1.png" alt="أكرم مصطفى" class="hero-profile-image">
+                                <img src="images/Screenshot_1.png" alt="أكرم مصطفى" class="hero-profile-image" loading="eager">
                             </div>
                             <div class="hero-image-glow"></div>
                         </div>
@@ -460,7 +489,7 @@
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:50px;max-width:1200px;margin:50px auto 0;align-items:center;" data-aos="fade-up" data-aos-delay="200">
                 <div style="position:relative;">
-                    <img src="/images/slides/1772817045966.png" alt="كورس التسويق الإلكتروني" style="width:100%;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.4);">
+                    <img src="/images/slides/1772817045966.png" alt="كورس التسويق الإلكتروني" style="width:100%;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.4);" loading="lazy">
                     <div style="position:absolute;top:20px;left:20px;background:linear-gradient(45deg,#e94e77,#f7931e);padding:15px 25px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
                         <div style="font-size:12px;opacity:0.9;margin-bottom:3px;">سعر الكورس</div>
                         <div style="font-size:28px;font-weight:900;">2000 جنيه</div>
@@ -552,7 +581,7 @@
                     </a>
                 </div>
                 <div style="position:relative;">
-                    <img src="images/Screenshot_1.png" alt="أكرم مصطفى" style="width:100%;border-radius:20px;border:1px solid rgba(255,255,255,0.1);">
+                    <img src="images/Screenshot_1.png" alt="أكرم مصطفى" style="width:100%;border-radius:20px;border:1px solid rgba(255,255,255,0.1);" loading="lazy">
                 </div>
             </div>
         </div>
@@ -632,7 +661,7 @@
 
           <!-- PHOTO -->
           <img src="images/Screenshot_5.png" alt="أكرم مصطفى"
-               style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%;max-height:560px;width:auto;max-width:100%;object-fit:contain;object-position:bottom center;z-index:1;filter:drop-shadow(-10px 0 30px rgba(233,78,119,0.2));">
+               style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%;max-height:560px;width:auto;max-width:100%;object-fit:contain;object-position:bottom center;z-index:1;filter:drop-shadow(-10px 0 30px rgba(233,78,119,0.2));" loading="lazy">
 
           <!-- INFO CARD -->
           <div style="position:absolute;top:32px;right:16px;z-index:2;background:rgba(7,18,42,0.88);backdrop-filter:blur(14px);border:1px solid rgba(233,78,119,0.3);border-radius:14px;padding:12px 18px;min-width:155px;box-shadow:0 8px 32px rgba(0,0,0,0.5);">
@@ -777,7 +806,7 @@
     <footer class="page-footer" style="background:#050d1b;border-top:1px solid rgba(255,255,255,0.08);padding:40px 0 20px;">
         <div class="container">
             <div class="page-footer-brand" style="display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:25px;">
-                <img src="images/1772173627537.png" alt="Logo" style="width:auto;height:45px;max-width:160px;object-fit:contain;">
+                <img src="images/1772173627537.png" alt="Logo" style="width:auto;height:45px;max-width:160px;object-fit:contain;" loading="lazy">
                 <span style="font-size:1.15rem;font-weight:900;background:linear-gradient(135deg,#e94e77,#f7931e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AKRAM MOSTAFA</span>
             </div>
             <div class="page-footer-links" style="display:flex;gap:25px;justify-content:center;flex-wrap:wrap;margin-bottom:25px;">
@@ -797,11 +826,24 @@
     </a>
     <button id="scrollTop" title="العودة للأعلى"><i class="fas fa-chevron-up"></i></button>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="js/script.js"></script>
+    <!-- ⚡ تحميل JavaScript بشكل مؤجل لتسريع التحميل -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="js/script.js" defer></script>
+    
+    <!-- Page Loader Script -->
+    <script>
+        // إخفاء اللودر بعد التحميل
+        window.addEventListener('load', function() {
+            const loader = document.querySelector('.page-loader');
+            if(loader) {
+                loader.classList.add('hidden');
+                setTimeout(() => loader.remove(), 500);
+            }
+        });
+    </script>
     <style>
       /* ===== APPS PRO GRID ===== */
       .apps-pro-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px;margin-top:50px;}
