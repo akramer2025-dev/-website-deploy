@@ -3491,26 +3491,47 @@ async function _loadAdminData(){
 }
 
 function initFirestore(){
+  console.log('🔥 initFirestore() called');
   if(_fsUnsubscribe) _fsUnsubscribe();
   _loadAdminData();
   const jrEl = document.getElementById('joinRequestsList');
   if(jrEl) jrEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem"></i><br><br>جاري تحميل البيانات...</div>';
+  
+  console.log('📡 Setting up Firebase snapshot listener for join_requests...');
+  
   _fsUnsubscribe = _fdb.collection('join_requests')
     .onSnapshot(snapshot=>{
+      console.log('📬 Firebase snapshot received!');
+      console.log('  - Total documents:', snapshot.size);
+      console.log('  - Empty:', snapshot.empty);
+      
       const _prevPending = _fsReqs.filter(r=>r.status==='pending').length;
       const _isFirstLoad = (_fsReqs.length === 0);
       _fsReqs = [];
-      snapshot.forEach(doc=>{ _fsReqs.push(doc.data()); });
+      
+      snapshot.forEach(doc=>{ 
+        const data = doc.data();
+        console.log('  - Document:', doc.id, data);
+        _fsReqs.push(data); 
+      });
+      
+      console.log('✅ Total requests loaded:', _fsReqs.length);
+      
       // ترتيب client-side بدل orderBy (لا يحتاج index)
       _fsReqs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
       const _newPending = _fsReqs.filter(r=>r.status==='pending').length;
+      
+      console.log('📊 Pending requests:', _newPending);
+      
       if (!_isFirstLoad && _newPending > _prevPending) {
         toast('🔔 طلب انضمام جديد! تحقق من قسم طلبات الانضمام', 'info');
       }
       renderJoinRequests(_currentReqFilter||'all');
       updateBadges();
     }, err=>{
-      console.warn('Firestore snapshot error:', err);
+      console.error('❌ Firestore snapshot error:', err);
+      console.error('  - Error code:', err.code);
+      console.error('  - Error message:', err.message);
       try{ _fsReqs = JSON.parse(localStorage.getItem(JOIN_KEY)||'[]'); }catch(e){ _fsReqs=[]; }
       renderJoinRequests(_currentReqFilter||'all');
       updateBadges();
@@ -4473,14 +4494,23 @@ function buildWaLink(phone, name){
 }
 
 function renderJoinRequests(filter){
+  console.log('🎨 renderJoinRequests() called with filter:', filter);
   _currentReqFilter = filter||'all';
   const reqs = getJoinRequests().sort((a,b)=>b.createdAt-a.createdAt);
+  console.log('  - Total requests from getJoinRequests():', reqs.length);
   const filtered = filter==='all' ? reqs : reqs.filter(r=>r.status===filter);
-  const grid = document.getElementById('reqCardsGrid'); if(!grid) return;
+  console.log('  - Filtered requests:', filtered.length);
+  const grid = document.getElementById('reqCardsGrid'); 
+  if(!grid) {
+    console.warn('⚠️ reqCardsGrid element not found!');
+    return;
+  }
   if(!filtered.length){
+    console.log('📭 No requests to display');
     grid.innerHTML=`<div class="req-empty"><i class="fas fa-inbox"></i><p>لا توجد طلبات ${filter==='all'?'':filter==='pending'?'قيد الانتظار':filter==='approved'?'مقبولة':'مرفوضة'} بعد</p></div>`;
     return;
   }
+  console.log('✅ Rendering', filtered.length, 'requests to grid');
   const statusLabel={'pending':'<span class="req-status-badge pending"><i class="fas fa-clock"></i> قيد المراجعة</span>','approved':'<span class="req-status-badge approved"><i class="fas fa-check"></i> مقبول</span>','rejected':'<span class="req-status-badge rejected"><i class="fas fa-times"></i> مرفوض</span>'};
   grid.innerHTML = filtered.map(r=>{
     const initial = r.name?r.name.trim().charAt(0).toUpperCase():'?';
