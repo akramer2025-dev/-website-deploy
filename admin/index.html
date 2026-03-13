@@ -84,6 +84,10 @@ button{cursor:pointer;}
 .adm-header-brand img{width:auto;height:36px;max-width:130px;object-fit:contain;}
 .adm-header-brand span{font-size:1rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .adm-header-right{display:flex;align-items:center;gap:16px;}
+.notif-bell{position:relative;width:40px;height:40px;border-radius:10px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;color:var(--muted);}
+.notif-bell:hover{background:var(--card2);color:var(--text);border-color:rgba(233,78,119,.3);}
+.notif-bell .badge{position:absolute;top:-4px;left:-4px;background:linear-gradient(135deg,#e94e77,#f7931e);color:#fff;font-size:.7rem;font-weight:800;min-width:18px;height:18px;border-radius:20px;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid var(--bg);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
 .adm-admin-pill{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);
   border-radius:30px;padding:7px 16px;font-size:.85rem;font-weight:700;color:var(--text);}
 .adm-admin-pill i{color:var(--pink);}
@@ -1741,6 +1745,10 @@ textarea:focus{
     <button class="adm-menu-toggle" id="menuToggle" onclick="toggleAdminSidebar()" title="القائمة"><i class="fas fa-bars"></i></button>
     <div class="adm-header-brand"><img src="../images/1772173627537.png" alt="Logo"><span>AKRAM ADMIN</span></div>
     <div class="adm-header-right">
+      <div class="notif-bell" onclick="showSection('joinrequests')" title="طلبات الانضمام">
+        <i class="fas fa-bell"></i>
+        <span class="badge" id="headerPendingBadge" style="display:none;">0</span>
+      </div>
       <div class="adm-admin-pill"><i class="fas fa-shield-alt"></i><span>أدمن النظام</span></div>
       <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> <span>خروج</span></button>
     </div>
@@ -3885,15 +3893,20 @@ const JOIN_KEY = 'am_join_requests';
 // ددالتي جلب وحفظ طلبات الانضمام — تستخدم كاش Firebase
 function getJoinRequests(){ return _fsReqs.slice(); }
 function saveJoinRequests(newArr){
+  console.log('💾 saveJoinRequests() called with', newArr.length, 'requests');
   const newIds = new Set(newArr.map(r=>r.id));
   newArr.forEach(r=>{
     const old = _fsReqs.find(x=>x.id===r.id);
     if(!old || JSON.stringify(old)!==JSON.stringify(r)){
-      _fdb.collection('join_requests').doc(r.id).set(r).catch(e=>console.warn('FS set err',e));
+      console.log('  - Updating request in Firebase:', r.id, 'status:', r.status);
+      _fdb.collection('join_requests').doc(r.id).set(r)
+        .then(()=>console.log('  ✅ Firebase update successful for:', r.id))
+        .catch(e=>console.error('  ❌ FS set err:', e));
     }
   });
   _fsReqs.forEach(r=>{ if(!newIds.has(r.id)){ _fdb.collection('join_requests').doc(r.id).delete().catch(e=>console.warn('FS del err',e)); } });
   _fsReqs = newArr.slice();
+  updateBadges();
 }
 
 async function updateBadges(){
@@ -3927,6 +3940,18 @@ async function updateBadges(){
   document.getElementById('dash-emp').textContent=empsCount;
   document.getElementById('dash-stu').textContent=stus.length;
   document.getElementById('dash-imgs').textContent=totalImgs;
+  
+  // Update header notification bell
+  const headerBadge = document.getElementById('headerPendingBadge');
+  if(headerBadge){
+    if(pending.length > 0){
+      headerBadge.textContent = pending.length;
+      headerBadge.style.display = 'flex';
+    } else {
+      headerBadge.style.display = 'none';
+    }
+  }
+  
   // update filter counts
   const rfAll=document.getElementById('rfAllCount'), rfP=document.getElementById('rfPendingCount'), rfA=document.getElementById('rfApprovedCount'), rfR=document.getElementById('rfRejectedCount');
   if(rfAll) rfAll.textContent=`(${reqs.length})`;
