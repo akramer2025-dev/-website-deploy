@@ -765,7 +765,7 @@ function renderCourseCard(courseKey){
     <div class="course-card" onclick="viewCourse('${courseKey}')">
       <div class="course-banner">
         <i class="fas ${meta.icon} course-banner-icon" style="color:${meta.color};"></i>
-        <span class="course-badge ${meta.paid?'badge-paid':'badge-free'}">${meta.paid?'مدفوع':'مجاني'}</span>
+        <span class="course-badge ${meta.paid?'badge-free':'badge-free'}">${meta.paid?'الحصة الأولى مجاناً 🎁':'مجاني'}</span>
       </div>
       <div class="course-body">
         <div class="course-name">${meta.name}</div>
