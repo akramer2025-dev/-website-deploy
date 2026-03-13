@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Firebase Requests</title>
+<style>
+body{font-family:Arial;padding:20px;background:#0a1f44;color:#fff;}
+.req{background:#1a2f54;padding:15px;margin:10px 0;border-radius:8px;border-left:4px solid #f59e0b;}
+.req h3{margin:0 0 10px;color:#f59e0b;}
+.req p{margin:5px 0;font-size:14px;}
+.status{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:bold;}
+.status.pending{background:#f59e0b;color:#000;}
+.status.approved{background:#22c55e;color:#000;}
+.status.rejected{background:#ef4444;color:#fff;}
+#loading{text-align:center;padding:40px;font-size:18px;}
+</style>
+</head>
+<body>
+
+<h1>🔍 Firebase Join Requests Test</h1>
+<div id="loading">⏳ جاري تحميل الطلبات من Firebase...</div>
+<div id="results"></div>
+<div id="error" style="color:#ef4444;padding:20px;display:none;"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+// Firebase init
+const app = firebase.initializeApp({
+  apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+  authDomain: "akramplatform-2c6be.firebaseapp.com",
+  projectId: "akramplatform-2c6be",
+  storageBucket: "akramplatform-2c6be.firebasestorage.app",
+  messagingSenderId: "132959399686",
+  appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+});
+
+const db = firebase.firestore(app);
+
+console.log('🔥 Firebase initialized');
+
+// Load requests
+db.collection('join_requests').get()
+  .then(snapshot => {
+    const loading = document.getElementById('loading');
+    const results = document.getElementById('results');
+    
+    loading.style.display = 'none';
+    
+    if(snapshot.empty){
+      results.innerHTML = '<div style="text-align:center;padding:40px;color:#f59e0b;">❌ لا توجد طلبات في Firebase!</div>';
+      return;
+    }
+    
+    console.log(`✅ Found ${snapshot.size} requests`);
+    
+    const reqs = [];
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      reqs.push({id: doc.id, ...data});
+    });
+    
+    // Sort by date
+    reqs.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+    
+    results.innerHTML = `<h2>📋 عدد الطلبات: ${reqs.length}</h2>` + reqs.map(r => {
+      const date = r.createdAt ? new Date(r.createdAt).toLocaleString('ar-EG') : 'غير محدد';
+      const courses = (r.courses||[]).join(', ') || 'لا يوجد';
+      const payments = Object.keys(r.payments||{}).length;
+      
+      return `<div class="req">
+        <h3>🆔 ${r.id}</h3>
+        <p><strong>الاسم:</strong> ${r.name || '—'}</p>
+        <p><strong>البريد:</strong> ${r.email || '—'}</p>
+        <p><strong>الهاتف:</strong> ${r.phone || '—'}</p>
+        <p><strong>الكورسات:</strong> ${courses}</p>
+        <p><strong>إيصالات الدفع:</strong> ${payments} صورة</p>
+        <p><strong>التاريخ:</strong> ${date}</p>
+        <p><strong>الحالة:</strong> <span class="status ${r.status||'pending'}">${r.status||'pending'}</span></p>
+      </div>`;
+    }).join('');
+  })
+  .catch(err => {
+    console.error('❌ Firebase error:', err);
+    document.getElementById('loading').style.display = 'none';
+    const errorDiv = document.getElementById('error');
+    errorDiv.style.display = 'block';
+    errorDiv.innerHTML = `<h2>❌ خطأ في الاتصال بـ Firebase</h2><pre>${err.message}</pre>`;
+  });
+</script>
+
+</body>
+</html>
