@@ -4514,7 +4514,7 @@ function buildWaLink(phone, name){
   // normalise Egyptian number → international format
   let num = (phone||'').replace(/\D/g,'');
   if(num.startsWith('0')) num = '2' + num;  // 01xxxxxxxx → 201xxxxxxxx
-  const msg = encodeURIComponent('السلام عليكم ورحمة الله وبركاته 🌟\n\nتم قبول طلب انضمامك للكورس بنجاح ✅\n\nخليك جاهز، أول يوم للكورس هيكون يوم 15 مارس 🗓️\n\n⏰ المواعيد:\n• الساعة 9 صباحاً بتوقيت القاهرة 🇪🇬\n• الساعة 10 صباحاً بتوقيت السعودية 🇸🇦\n\nهنبعتلك كل التفاصيل قريباً إن شاء الله 💪');
+  const msg = encodeURIComponent('السلام عليكم ورحمة الله وبركاته 🌟\n\nتم قبول طلب انضمامك للكورس بنجاح ✅\n\nخليك جاهز، أول يوم للكورس هيكون يوم 15 مارس 🗓️\n\n⏰ المواعيد:\n• الساعة 9 مساءً بتوقيت القاهرة 🇪🇬\n• الساعة 10 مساءً بتوقيت السعودية 🇸🇦\n\nهنبعتلك كل التفاصيل قريباً إن شاء الله 💪');
   return 'https://wa.me/' + num + '?text=' + msg;
 }
 
