@@ -453,6 +453,7 @@ COURSES.forEach(c=>{ if(!c.free && adminCoursePrices[c.key]) c.price = adminCour
 const JOIN_KEY = 'am_join_requests';
 
 // ── Firebase init ──────────────────────────────────────────────
+console.log('🔥 Initializing Firebase...');
 const _fbApp = firebase.initializeApp({
   apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
   authDomain: "akramplatform-2c6be.firebaseapp.com",
@@ -463,6 +464,9 @@ const _fbApp = firebase.initializeApp({
 });
 const _db = firebase.firestore(_fbApp);
 const _storage = firebase.storage(_fbApp);
+console.log('✅ Firebase initialized successfully');
+console.log('📊 Firestore instance:', _db);
+console.log('📦 Storage instance:', _storage);
 
 let selectedCourses = new Set();
 let paymentImages = {};
@@ -661,20 +665,33 @@ function removeProof(key){
 
 // رفع الإيصالات لـ Firebase Storage وإرجاع URLs
 async function uploadPaymentImages(reqId){
+  console.log('📤 uploadPaymentImages() called for reqId:', reqId);
   const result = {};
   const keys = Object.keys(paymentImages);
+  console.log('  - Payment images to upload:', keys.length);
+  
   for(const key of keys){
     const entry = paymentImages[key];
-    if(!entry || !entry.file){ if(entry && entry.uploadedUrl) result[key]=entry.uploadedUrl; continue; }
+    if(!entry || !entry.file){ 
+      if(entry && entry.uploadedUrl){
+        result[key]=entry.uploadedUrl;
+        console.log('  - Already uploaded:', key);
+      }
+      continue; 
+    }
     try{
+      console.log('  - Uploading:', key);
       const storageRef = _storage.ref('payment_proofs/'+reqId+'/'+key+'_'+Date.now());
       const snap = await storageRef.put(entry.file);
       result[key] = await snap.ref.getDownloadURL();
+      console.log('  ✅ Uploaded successfully:', key, result[key]);
     } catch(err){
-      console.warn('Storage upload failed for',key,err);
+      console.error('  ❌ Storage upload failed for', key, err);
       result[key] = entry.previewUrl; // fallback to base64
+      console.log('  - Using preview URL as fallback');
     }
   }
+  console.log('✅ Total payment images processed:', Object.keys(result).length);
   return result;
 }
 
@@ -700,14 +717,18 @@ function buildSummary(){
 function genId(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,5); }
 
 async function submitRequest(){
+  console.log('📝 submitRequest() called');
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري رفع الصور...';
 
   const id = genId().toUpperCase();
+  console.log('🆔 Generated ID:', id);
 
   // رفع الإيصالات لـ Firebase Storage أولاً
+  console.log('📤 Uploading payment images...');
   const paymentsUrls = await uploadPaymentImages(id);
+  console.log('✅ Payment images uploaded:', paymentsUrls);
 
   const req = {
     id,
@@ -726,6 +747,8 @@ async function submitRequest(){
     adminNote: ''
   };
 
+  console.log('📋 Request data:', req);
+
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
 
   // backup localStorage أولاً (دايماً)
@@ -733,20 +756,34 @@ async function submitRequest(){
     const requests = JSON.parse(localStorage.getItem(JOIN_KEY)||'[]');
     requests.push(req);
     localStorage.setItem(JOIN_KEY, JSON.stringify(requests));
-  } catch(e){}
+    console.log('💾 Saved to localStorage successfully');
+  } catch(e){
+    console.error('❌ localStorage save failed:', e);
+  }
 
   // حفظ في Firestore (في الخلفية — مش شرط ينجح عشان نعرض النجاح)
+  console.log('🔥 Saving to Firestore...');
   try {
     await _db.collection('join_requests').doc(id).set(req);
+    console.log('✅ Firestore save successful!');
   } catch(err) {
-    console.warn('Firebase save failed (saved locally):', err);
+    console.error('❌ Firebase save failed:', err);
+    console.error('  - Error code:', err.code);
+    console.error('  - Error message:', err.message);
     // محاولة ثانية بعد ثانيتين
     setTimeout(async ()=>{
-      try{ await _db.collection('join_requests').doc(id).set(req); }catch(e2){}
+      console.log('🔄 Retrying Firestore save...');
+      try{ 
+        await _db.collection('join_requests').doc(id).set(req); 
+        console.log('✅ Retry successful!');
+      }catch(e2){
+        console.error('❌ Retry failed:', e2);
+      }
     }, 2000);
   }
 
   // نعرض النجاح دايماً (البيانات محفوظة محلياً على الأقل)
+  console.log('🎉 Showing success screen');
   document.getElementById('mainForm').style.display='none';
   document.getElementById('successState').style.display='block';
   document.getElementById('reqIdDisplay').textContent = id;
