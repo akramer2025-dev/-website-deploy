@@ -1,11 +1,4 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false,
-  "redirects": [
-    {
-      "source": "/admin",
-      "destination": "/admin/index.html",
-      "permanent": false
-    }
-  ]
+  "trailingSlash": false
 }
