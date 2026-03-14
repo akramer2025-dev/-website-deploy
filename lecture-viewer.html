@@ -431,6 +431,33 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .slide-inner.media-only{grid-template-columns:1fr;}
 .slide-inner.media-only .slide-notes-col{display:none;}
 
+/* ══════════ CAPTION-ON-SCREEN MODE ══════════ */
+.slide-inner.caption-on-screen .slide-media-wrap{display:none;}
+.slide-inner.caption-on-screen .slide-media-col{
+  background:var(--bg);
+  align-items:flex-start;justify-content:flex-start;
+  padding:40px 60px;overflow-y:auto;
+}
+.slide-caption-display{
+  display:none;width:100%;max-width:1000px;margin:0 auto;
+  font-size:1.15rem;line-height:2;color:var(--text);font-weight:500;
+}
+.slide-inner.caption-on-screen .slide-caption-display{display:block;}
+.slide-caption-display h1{
+  font-size:2rem;font-weight:900;color:#fff;margin-bottom:24px;
+  border-bottom:3px solid var(--pink);padding-bottom:16px;
+}
+.slide-caption-display p{
+  margin-bottom:18px;padding:14px 20px;
+  background:rgba(255,255,255,.02);border-radius:10px;
+  border-right:3px solid var(--pink);
+}
+.slide-caption-display p:last-child{margin-bottom:0;}
+.caption-empty-msg{
+  text-align:center;color:var(--muted);font-size:1.1rem;
+  font-style:italic;padding:80px 20px;
+}
+
 /* CANVAS OVERLAY */
 #annoCanvas{
   position:absolute;inset:0;width:100%;height:100%;
@@ -540,7 +567,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
     <div class="sc-group">
       <div class="sc-group-title">أخرى</div>
       <div class="sc-row"><span class="sc-desc">ملء الشاشة</span><span class="sc-keys"><kbd>F</kbd></span></div>
-      <div class="sc-row"><span class="sc-desc">عرض الشرح الكامل</span><span class="sc-keys"><kbd>N</kbd></span></div>
+      <div class="sc-row"><span class="sc-desc">عرض/إخفاء الشرح على الشاشة</span><span class="sc-keys"><kbd>N</kbd></span></div>
       <div class="sc-row"><span class="sc-desc">تشغيل/إيقاف تلقائي</span><span class="sc-keys"><kbd>Space</kbd></span></div>
       <div class="sc-row"><span class="sc-desc">تبديل وضع الميديا</span><span class="sc-keys"><kbd>M</kbd></span></div>
       <div class="sc-row"><span class="sc-desc">هذه القائمة</span><span class="sc-keys"><kbd>?</kbd></span></div>
@@ -602,7 +629,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   <div class="tb-right">
     <div class="autoplay-badge" id="apBadge"><span class="ap-dot"></span>تشغيل تلقائي</div>
     <button class="tb-btn" id="autoPlayBtn" onclick="toggleAutoPlay()" title="تشغيل تلقائي (Space)"><i class="fas fa-play"></i></button>
-    <button class="tb-btn" onclick="showCaptionOverlay()" id="captionBtn" title="عرض الشرح الكامل (N)"><i class="fas fa-book-open"></i></button>
+    <button class="tb-btn" onclick="toggleCaptionOnScreen()" id="captionOnScreenBtn" title="عرض الشرح على الشاشة (N)"><i class="fas fa-file-text"></i></button>
     <button class="tb-btn" onclick="toggleMediaOnly()" id="mediaOnlyBtn" title="وضع الميديا الكاملة (M)"><i class="fas fa-expand-arrows-alt"></i></button>
     <button class="tb-btn" onclick="toggleShortcuts()" title="اختصارات لوحة المفاتيح (?)"><i class="fas fa-keyboard"></i></button>
     <button class="tb-btn" onclick="toggleSidebar()" title="إخفاء/إظهار الشرائح"><i class="fas fa-th-list"></i></button>
@@ -916,12 +943,51 @@ function changeNotesFont(delta){
 // ─── MEDIA-ONLY MODE ───────────────────────────────────────────
 let mediaOnly = false;
 function toggleMediaOnly(){
+  if(captionOnScreen) return; // Don't allow media-only when caption is on screen
   mediaOnly = !mediaOnly;
   document.querySelectorAll('.slide-inner').forEach(el=>el.classList.toggle('media-only', mediaOnly));
   const btn = document.getElementById('mediaOnlyBtn');
   btn.classList.toggle('active', mediaOnly);
   btn.style.color = mediaOnly ? 'var(--pink)' : '';
   showToast(mediaOnly ? 'وضع الميديا الكاملة' : 'وضع عادي');
+}
+
+// ─── CAPTION ON SCREEN MODE ────────────────────────────────────
+let captionOnScreen = false;
+function toggleCaptionOnScreen(){
+  captionOnScreen = !captionOnScreen;
+  
+  // Remove media-only mode if active
+  if(captionOnScreen && mediaOnly){
+    mediaOnly = false;
+    document.getElementById('mediaOnlyBtn').classList.remove('active');
+    document.getElementById('mediaOnlyBtn').style.color = '';
+  }
+  
+  // Toggle caption display
+  document.querySelectorAll('.slide-inner').forEach(el=>{
+    el.classList.toggle('caption-on-screen', captionOnScreen);
+    if(captionOnScreen) el.classList.remove('media-only');
+  });
+  
+  // Update button appearance
+  const btn = document.getElementById('captionOnScreenBtn');
+  const ico = btn.querySelector('i');
+  if(captionOnScreen){
+    ico.className = 'fas fa-image';
+    btn.title = 'عرض المحتوى (N)';
+    btn.style.background = 'rgba(233,78,119,.25)';
+    btn.style.borderColor = 'var(--pink)';
+    btn.style.color = '#fff';
+    showToast('عرض الشرح على الشاشة', 'success');
+  } else {
+    ico.className = 'fas fa-file-text';
+    btn.title = 'عرض الشرح على الشاشة (N)';
+    btn.style.background = '';
+    btn.style.borderColor = '';
+    btn.style.color = '';
+    showToast('عرض المحتوى', 'success');
+  }
 }
 
 // ─── SLIDE SEARCH ──────────────────────────────────────────────
@@ -1106,6 +1172,10 @@ function buildSlideHTML(s, i){
           ${mediaHTML}
           ${s.title?`<div class="slide-media-title">${s.title}</div>`:''}
         </div>
+        <div class="slide-caption-display">
+          <h1>${s.title||'شريحة '+(i+1)}</h1>
+          ${notesHTML}
+        </div>
       </div>
       <div class="slide-notes-col">
         <div class="notes-badge"><i class="fas fa-book-open"></i> شرح الشريحة</div>
@@ -1259,7 +1329,7 @@ document.addEventListener('keydown',e=>{
     case 'ArrowDown':  gotoNext(); break;
     case 'f': case 'F': toggleFullscreen(); break;
       case 'm': case 'M': toggleMediaOnly(); break;
-      case 'n': case 'N': showCaptionOverlay(); break;
+      case 'n': case 'N': toggleCaptionOnScreen(); break;
       case ' ': e.preventDefault(); toggleAutoPlay(); break;
       case '?': toggleShortcuts(); break;
       case 'Escape': 
