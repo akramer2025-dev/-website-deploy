@@ -5454,15 +5454,66 @@ async function addNew5Lectures(){
       duration: 50,
       order: 2,
       slides: [
-        { type: 'text', title: 'الغلاف', label: 'صفحة الغلاف' },
-        { type: 'text', title: 'ما هي الهوية البصرية؟', label: 'مقدمة' },
-        { type: 'text', title: 'اختيار الاسم', label: 'خطوات التسمية' },
-        { type: 'text', title: 'سيكولوجية الألوان', label: 'اختيار الألوان المناسبة' },
-        { type: 'text', title: 'تصميم الشعار بـ Gemini', label: 'AI Logo Design' },
-        { type: 'text', title: 'تحسين الشعار بـ Canva', label: 'الإخراج النهائي' },
-        { type: 'text', title: 'أنواع الشعارات', label: '4 نسخ مختلفة' },
-        { type: 'text', title: 'Brand Kit', label: 'ملف الهوية الكامل' },
-        { type: 'text', title: 'الواجب المنزلي', label: 'صمم شعارك' }
+        { 
+          type: 'image', 
+          title: 'الحصة الثانية: تصميم الهوية البصرية بالذكاء الاصطناعي', 
+          label: 'Gemini AI + Canva',
+          src: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&h=800&fit=crop',
+          caption: '🎨 في هذه الحصة ستتعلم:\n• ما هي الهوية البصرية وأهميتها\n• اختيار اسم احترافي لعلامتك\n• سيكولوجية الألوان\n• تصميم شعار بـ Gemini AI\n• تحسين الشعار بـ Canva\n• إنشاء Brand Kit كامل'
+        },
+        { 
+          type: 'text',
+          title: 'ما هي الهوية البصرية؟',
+          label: 'المفهوم والأهمية',
+          caption: '🎯 التعريف:\nالهوية البصرية = كل ما يُرى من علامتك التجارية\n\n📦 تتكون من:\n1️⃣ الشعار (Logo)\n2️⃣ الألوان الرئيسية\n3️⃣ الخطوط (Fonts)\n4️⃣ الأيقونات والرموز\n5️⃣ الأنماط البصرية (Patterns)\n6️⃣ أسلوب التصوير\n\n💡 لماذا مهمة؟\n✅ تميزك عن المنافسين\n✅ تسهّل التعرّف عليك\n✅ تبني الثقة والمصداقية\n✅ تزيد قيمة العلامة التجارية\n\n📊 إحصائية:\n80% من المستهلكين يتذكرون علامة تجارية من شعارها فقط!'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 1: اختيار اسم احترافي',
+          label: 'Brand Naming',
+          src: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&h=800&fit=crop',
+          caption: '✍️ معايير الاسم الناجح:\n\n✅ قصير (2-3 كلمات)\n✅ سهل النطق\n✅ سهل التذكر\n✅ له معنى\n✅ Domain متاح (.com)\n\n🔍 كيف تختار:\n1️⃣ اكتب 20 فكرة\n2️⃣ تحقق من التوافر:\n   • namecheckr.com\n   • namechk.com\n3️⃣ اختبر مع 5 أشخاص\n4️⃣ تحقق من Google Search\n5️⃣ احجز الدومين فوراً!\n\n⚠️ تجنب:\n❌ أسماء معقدة\n❌ أرقام وحروف مختلطة\n❌ كلمات سلبية\n❌ تقليد شركات كبرى'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 2: سيكولوجية الألوان',
+          label: 'Color Psychology',
+          src: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&h=800&fit=crop',
+          caption: '🎨 معاني الألوان:\n\n🔴 الأحمر:\n• طاقة، شغف، إثارة\n• مثال: Coca-Cola, Netflix\n• يجذب الانتباه سريعاً\n\n🔵 الأزرق:\n• ثقة، احترافية، أمان\n• مثال: Facebook, PayPal\n• الأكثر استخداماً (33%)\n\n🟢 الأخضر:\n• نمو، صحة، طبيعة\n• مثال: Starbucks, WhatsApp\n• مثالي للعضوي/Eco\n\n🟡 الأصفر:\n• تفاؤل، سعادة، طاقة\n• مثال: McDonald\'s, IKEA\n• يحفز النشاط\n\n🟣 البنفسجي:\n• فخامة، إبداع، روحانية\n• مثال: Hallmark, Cadbury\n\n⚫ الأسود:\n• فخامة، قوة، أناقة\n• مثال: Nike, Chanel\n\n💡 اختر لونين أساسيين فقط!'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 3: تصميم الشعار بـ Gemini AI',
+          label: 'AI Logo Generation',
+          src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=800&fit=crop',
+          caption: '🤖 استخدام Gemini (مجاناً):\n\n1️⃣ افتح: gemini.google.com\n\n2️⃣ اكتب Prompt احترافي:\n━━━━━━━━━━━━━━━━━━\n"Create a modern, minimalist logo design concept for [اسم علامتك], a [مجال العمل] business. \n\nStyle: Clean, professional, memorable\nColors: [لونك الأساسي] and [اللون الثانوي]\nMood: [احترافي/إبداعي/عصري]\n\nThe logo should:\n- Work well in small sizes\n- Be versatile (color + black/white versions)\n- Include an icon that represents [فكرة رمزية]\n- Use modern sans-serif typography\n\nProvide 3 different concept directions with detailed descriptions."\n━━━━━━━━━━━━━━━━━━\n\n3️⃣ راجع الأفكار\n4️⃣ اطلب تعديلات\n5️⃣ احفظ الوصف النهائي'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 4: تنفيذ الشعار بـ Canva',
+          label: 'Canva Design',
+          src: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&h=800&fit=crop',
+          caption: '🎨 التنفيذ على Canva:\n\n1️⃣ افتح canva.com\n\n2️⃣ اختر:\n   • Logo (500x500 px)\n   • أو ابدأ من فارغ\n\n3️⃣ استخدم أدوات Canva:\n   📐 Elements → Shapes\n   🔤 Text → Modern Fonts\n   🎨 Colors → اختر palette\n   ✨ Effects → Shadow, Gradient\n\n4️⃣ صمم 4 نسخ:\n   🟦 ملون (Color)\n   ⚫ أسود (Black)\n   ⚪ أبيض (White)\n   🔲 Icon Only (أيقونة فقط)\n\n5️⃣ حمّل بجودة عالية:\n   • PNG (شفاف)\n   • SVG (متجه)\n   • PDF (طباعة)\n\n💡 نصيحة: استخدم Canva Pro (30 يوم مجاني) للأدوات المتقدمة'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 5: إنشاء Brand Kit كامل',
+          label: 'Brand Guidelines',
+          src: 'https://images.unsplash.com/photo-1634942537034-2531766767d1?w=1200&h=800&fit=crop',
+          caption: '📁 محتويات Brand Kit:\n\n1️⃣ اللوجو (4 نسخ):\n   • Logo-Color.png\n   • Logo-Black.png\n   • Logo-White.png\n   • Logo-Icon.png\n\n2️⃣ الألوان:\n   • الأساسي (HEX code)\n   • الثانوي\n   • الخلفية\n   • النص\n\n3️⃣ الخطوط:\n   • العنوان (Heading)\n   • المتن (Body)\n   • الرابط لتحميلها\n\n4️⃣ أمثلة الاستخدام:\n   • بطاقة عمل\n   • غلاف Facebook\n   • ستوري Instagram\n   • ورقة رسمية\n\n5️⃣ ما يُمنع:\n   ❌ تغيير الألوان\n   ❌ تشويه الشعار\n   ❌ إضافة ظلال غريبة\n\n💾 احفظ كل شيء في:\nGoogle Drive → Brand Kit Folder'
+        },
+        { 
+          type: 'text',
+          title: 'أدوات مساعدة مجانية',
+          label: 'Free Tools',
+          caption: '🛠️ أدوات تصميم مجانية:\n\n🎨 تصميم الشعار:\n• Canva.com (الأسهل)\n• Figma.com (احترافي)\n• Looka.com (AI)\n• LogoMakr.com (بسيط)\n\n🎨 الألوان:\n• Coolors.co (Color Palettes)\n• Adobe Color (Harmony)\n• Paletton.com (Color Schemes)\n\n✂️ إزالة الخلفية:\n• Remove.bg (ممتاز!)\n• Canva Background Remover\n\n🔤 الخطوط:\n• Google Fonts (مجاني)\n• DaFont.com\n• Font Squirrel\n\n📐 أيقونات:\n• FlatIcon.com\n• Icons8.com\n• Noun Project\n\n🖼️ صور مجانية:\n• Unsplash.com\n• Pexels.com\n• Pixabay.com'
+        },
+        { 
+          type: 'text',
+          title: '📝 الواجب المنزلي',
+          label: 'تطبيق عملي',
+          caption: '✅ المطلوب منك:\n\n1️⃣ اختر اسم علامتك:\n   • اكتب 10 أفكار\n   • تحقق من التوافر\n   • اختر الأفضل\n\n2️⃣ حدد لونين أساسيين:\n   • استخدم Coolors.co\n   • اختر palette متناسق\n   • احفظ HEX codes\n\n3️⃣ صمم شعارك:\n   • استخدم Gemini للأفكار\n   • نفّذ بـ Canva\n   • صمم 4 نسخ:\n     ✅ ملون\n     ✅ أسود\n     ✅ أبيض\n     ✅ أيقونة فقط\n\n4️⃣ أنشئ Brand Kit:\n   • مجلد على Google Drive\n   • احفظ كل الملفات\n   • اكتب الألوان والخطوط\n\n⏰ الوقت المتوقع: 2-3 ساعات\n📤 أرسل: لوجوك + Brand Kit PDF'
+        }
       ]
     },
     {
@@ -5472,15 +5523,64 @@ async function addNew5Lectures(){
       duration: 55,
       order: 3,
       slides: [
-        { type: 'text', title: 'الغلاف', label: 'صفحة الغلاف' },
-        { type: 'text', title: 'تشريح البوست', label: 'العناصر الأساسية' },
-        { type: 'text', title: 'Hook الجذاب', label: '4 أنواع مختلفة' },
-        { type: 'text', title: 'Caption الاحترافي', label: 'القصة والمشكلة' },
-        { type: 'text', title: 'Call to Action', label: 'أنواع الـ CTA' },
-        { type: 'text', title: 'مثال عملي', label: 'بوست مطعم متكامل' },
-        { type: 'text', title: 'CTA في الصور', label: 'التصميم البصري' },
-        { type: 'text', title: 'A/B Testing', label: 'اختبار النتائج' },
-        { type: 'text', title: 'الواجب المنزلي', label: 'اكتب 5 بوستات' }
+        { 
+          type: 'image', 
+          title: 'الحصة الثالثة: كتابة البوستات الاحترافية', 
+          label: 'Hook + Caption + CTA',
+          src: 'https://images.unsplash.com/photo-1542435503-956c469947f6?w=1200&h=800&fit=crop',
+          caption: '✍️ في هذه الحصة ستتعلم:\n• معادلة البوست الناجح\n• كتابة Hook يوقف السكرول\n• صياغة Caption احترافي\n• أنواع Call-to-Action\n• أمثلة حقيقية ناجحة\n• A/B Testing للمحتوى'
+        },
+        { 
+          type: 'text',
+          title: 'معادلة البوست الناجح',
+          label: 'The Winning Formula',
+          caption: '🎯 المعادلة الذهبية:\n\n━━━━━━━━━━━━━━━━━━━━\nHook قوي\n     ⬇️\nProblem (المشكلة)\n     ⬇️\nSolution (الحل)\n     ⬇️\nProof (الدليل)\n     ⬇️\nCTA واضح\n━━━━━━━━━━━━━━━━━━━━\n\n📊 لماذا تنجح هذه المعادلة؟\n\n1️⃣ Hook: يوقف السكرول (3 ثواني)\n2️⃣ Problem: يخلق ارتباط عاطفي\n3️⃣ Solution: يقدم قيمة حقيقية\n4️⃣ Proof: يبني الثقة\n5️⃣ CTA: يدفع للعمل\n\n💡 كل عنصر مهم!\nحذف أي جزء = انخفاض ٥٠٪ في التفاعل'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 1: Hook الجذاب (السطر الأول)',
+          label: 'Stop The Scroll',
+          src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=800&fit=crop',
+          caption: '🎣 4 أنواع Hook قاتلة:\n\n1️⃣ السؤال الصادم:\n"هل تعرف أن 90% من المشاريع تفشل في السنة الأولى؟"\n\n2️⃣ الرقم المذهل:\n"3 ملايين جنيه... من صفحة فيسبوك فقط!"\n\n3️⃣ الاعتراف الجريء:\n"أضعت 50 ألف جنيه قبل أن أتعلم هذا..."\n\n4️⃣ الوعد السريع:\n"احصل على 1000 متابع حقيقي في 7 أيام"\n\n📏 طول Hook المثالي:\n✅ 8-12 كلمة\n✅ سطر واحد فقط\n✅ بدون Emoji في البداية\n\n⚠️ تجنب:\n❌ "مرحباً، أنا..."\n❌ "في هذا البوست سأ..."\n❌ "اليوم سوف نتحدث عن..."'
+        },
+        { 
+          type: 'text',
+          title: 'خطوة 2: Caption الاحترافي (المتن)',
+          label: 'The Body Copy',
+          caption: '📝 صياغة Caption ممتاز:\n\n🔹 الطول المثالي:\n• Facebook: 50-150 كلمة\n• Instagram: 125-150 كلمة\n• LinkedIn: 150-300 كلمة\n\n🔹 البنية:\n\n1️⃣ المشكلة (Problem):\n"كل يوم تخسر عملاء محتملين لأن صفحتك غير احترافية..."\n\n2️⃣ الحل (Solution):\n"لكن مع الخطوات الـ 3 البسيطة دي، هتغيّر كل شيء:"\n\n3️⃣ التفاصيل:\n• نقاط واضحة (Bullet Points)\n• خطوات مرقمة\n• أمثلة قصيرة\n\n4️⃣ الدليل (Proof):\n"استخدمت هذه الطريقة مع 50+ عميل، والنتيجة؟"\n"متوسط الزيادة: 300% في التفاعل!"\n\n💡 نصيحة:\nاكتب بلغة سهلة، وكأنك بتتكلم مع صاحبك'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 3: Call-to-Action (CTA)',
+          label: 'أنواع الـ CTA',
+          src: 'https://images.unsplash.com/photo-1557838923-2985c318be48?w=1200&h=800&fit=crop',
+          caption: '🎯 6 أنواع CTA فعّالة:\n\n1️⃣ البيع المباشر:\n"اطلب الآن! العرض ينتهي بعد ساعتين ⏰"\n\n2️⃣ التفاعل:\n"علّق بكلمة YES إذا كنت موافق 👇"\n\n3️⃣ الحفظ:\n"احفظ هذا البوست عشان ترجعله بعدين 💾"\n\n4️⃣ المشاركة:\n"شارك مع صديق محتاج يعرف ده 🔄"\n\n5️⃣ التواصل:\n"ابعتلنا رسالة دلوقتي واحصل على استشارة مجانية 📩"\n\n6️⃣ زيارة الموقع:\n"اضغط الرابط في أول كومنت 🔗"\n\n📏 صياغة CTA مثالية:\n✅ فعل واضح (اطلب، علّق، احفظ)\n✅ حافز قوي (خصم، هدية، محدود)\n✅ سهل التنفيذ (خطوة واحدة)\n✅ emoji مناسب'
+        },
+        { 
+          type: 'text',
+          title: 'مثال حقيقي كامل: بوست مطعم بيتزا',
+          label: 'Real Example',
+          caption: '🍕 البوست:\n\n━━━━━━━━━━━━━━━━━━━━\n[HOOK]\n"3 آلاف جنيه شهرياً... ضايعين بسبب غلطة واحدة!"\n\n[PROBLEM]\n"معظم المطاعم بتنشر صور الأكل وبس... وبعدين تستغرب: ليه مفيش طلبات؟ 🤔"\n\n[SOLUTION]\n"السر بسيط:\nالناس مش بتشتري بيتزا... بتشتري الشعور!\n\n✨ نحن في [اسم المطعم]:\n• عجينة طازجة يومياً\n• جبنة موتزاريلا إيطالية 100%\n• توصيل خلال 30 دقيقة أو البيتزا مجاناً!\n\n[PROOF]\n⭐⭐⭐⭐⭐ (تقييم 4.9 من 2,340 عميل)"\n\n[IMAGE: صورة بيتزا ساخنة شهية]\n\n[CTA]\n"اطلب الآن واحصل على خصم 25% 🎁\nالعرض لأول 50 طلب فقط!\n👉 اتصل: 0100-XXX-XXXX\n\n#بيتزا #القاهرة #توصيل"\n━━━━━━━━━━━━━━━━━━━━\n\n📊 لماذا نجح؟\n✅ Hook صادم\n✅ Problem واضح\n✅ Solution مقنع\n✅ Proof (تقييمات)\n✅ CTA عاجل'
+        },
+        { 
+          type: 'image',
+          title: 'CTA في الصور والفيديو',
+          label: 'Visual CTA',
+          src: 'https://images.unsplash.com/photo-1634128221889-82ed6efebfc3?w=1200&h=800&fit=crop',
+          caption: '🖼️ تصميم CTA بصري:\n\n1️⃣ على الصور:\n━━━━━━━━━━━━━\n[صورة المنتج]\n\nفي الزاوية السفلى:\n🔥 خصم 50% اليوم فقط!\n👉 اطلب الآن: 0100-XXX-XXXX\n━━━━━━━━━━━━━\n\n2️⃣ على الفيديو:\n• CTA في أول 3 ثواني\n• CTA مكتوب في النص\n• CTA صوتي في الفيديو\n• CTA في آخر 5 ثواني\n\n3️⃣ أدوات التصميم:\n• Canva.com (قوالب جاهزة)\n• RemoveBG.com (إزالة الخلفية)\n• Unfold (للستوريز)\n\n📐 مقاسات الصور:\n• Facebook Post: 1200x630\n• Instagram Post: 1080x1080\n• Story: 1080x1920\n\n💡 قاعدة:\nالصورة تجذب، النص يبيع!'
+        },
+        { 
+          type: 'text',
+          title: 'A/B Testing: اختبر وحسّن',
+          label: 'Testing Strategy',
+          caption: '🧪 كيف تختبر بوستاتك:\n\n📊 المنهجية:\n\n1️⃣ اكتب نسختين مختلفتين:\n\nVersion A:\nHook: "هل جربت هذه الطريقة من قبل؟"\nCTA: "علّق بكلمة نعم"\n\nVersion B:\nHook: "3 أسرار لن يخبرك بها أحد!"\nCTA: "احفظ البوست الآن"\n\n2️⃣ انشرهم في أوقات مختلفة:\n• A: الأحد 7 مساءً\n• B: الثلاثاء 7 مساءً\n\n3️⃣ قيس النتائج بعد 24 ساعة:\n📈 Reach (الوصول)\n❤️ Engagement (التفاعل)\n💬 Comments (التعليقات)\n🔄 Shares (المشاركات)\n🔗 Clicks (النقرات)\n\n4️⃣ الفائز = النموذج الأساسي\n\n💡 اختبر:\n• Hook مختلف\n• طول Caption\n• نوع CTA\n• وقت النشر\n• نوع الصورة'
+        },
+        { 
+          type: 'text',
+          title: '📝 الواجب المنزلي',
+          label: 'تطبيق عملي',
+          caption: '✅ المطلوب منك:\n\n1️⃣ اكتب 5 بوستات كاملة:\n   • استخدم المعادلة:\n     Hook + Problem + Solution + Proof + CTA\n   • كل بوست عن منتج/خدمة مختلفة\n   • طول: 80-120 كلمة\n\n2️⃣ جرّب 3 أنواع Hook:\n   ✅ سؤال صادم\n   ✅ رقم مذهل\n   ✅ وعد سريع\n\n3️⃣ صمم صورة واحدة بـCTA:\n   • استخدم Canva\n   • مقاس 1200x630\n   • أضف نص CTA واضح\n\n4️⃣ انشر بوست واحد:\n   • على صفحتك\n   • قيس النتائج بعد 24 ساعة\n   • سجّل: Reach + Engagement\n\n⏰ الوقت المتوقع: 2-3 ساعات\n📤 أرسل: 5 بوستات + صورة + screenshot النتائج'
+        }
       ]
     },
     {
@@ -5490,35 +5590,151 @@ async function addNew5Lectures(){
       duration: 60,
       order: 4,
       slides: [
-        { type: 'text', title: 'الغلاف', label: 'صفحة الغلاف' },
-        { type: 'text', title: 'لماذا تحتاج موقع؟', label: 'الأهمية' },
-        { type: 'text', title: 'أدوات الذكاء الاصطناعي', label: 'مقارنة الخيارات' },
-        { type: 'text', title: 'v0.dev - الأسهل', label: 'موقع في 3 دقائق' },
-        { type: 'text', title: 'VS Code + Codeium', label: 'للمحترفين' },
-        { type: 'text', title: 'WordPress + AI', label: 'الأكثر مرونة' },
-        { type: 'text', title: 'الاستضافة والدومين', label: 'إطلاق الموقع' },
-        { type: 'text', title: 'SEO الأساسي', label: 'تحسين محركات البحث' },
-        { type: 'text', title: 'الواجب المنزلي', label: 'أطلق موقعك' }
+        { 
+          type: 'image', 
+          title: 'الحصة الرابعة: إنشاء موقع بالذكاء الاصطناعي', 
+          label: 'من الصفر في دقائق!',
+          src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop',
+          caption: '💻 في هذه الحصة ستتعلم:\n• لماذا تحتاج موقع إلكتروني\n• 3 طرق مختلفة بالذكاء الاصطناعي\n• v0.dev (أسهل طريقة)\n• VS Code + Codeium (احترافي)\n• WordPress + AI (مرن)\n• استضافة ونشر الموقع مجاناً'
+        },
+        { 
+          type: 'text',
+          title: 'لماذا تحتاج موقع إلكتروني؟',
+          label: 'الضرورة والفوائد',
+          caption: '🌐 5 أسباب قوية:\n\n1️⃣ الملكية الكاملة:\n• Facebook/Instagram يمكن يقفل حسابك\n• الموقع ملكك للأبد\n\n2️⃣ المصداقية:\n• 75% من العملاء يحكمون على مصداقيتك من موقعك\n• موقع احترافي = شركة احترافية\n\n3️⃣ SEO  (محركات البحث):\n• ظهور في جوجل مجاناً\n• عملاء يبحثون عنك بالاسم\n\n4️⃣ التحكم الكامل:\n• تصميم حسب رغبتك\n• لا قيود على المحتوى\n• analytics تفصيلية\n\n5️⃣ البيع المباشر:\n• متجر إلكتروني\n• دفع أونلاين\n• أتمتة كاملة\n\n💰 التكلفة؟\n✅ مجاني 100% (الحلول اللي هنشرحها)\n✅ أو 200-500 جنيه سنوياً (دومين + استضافة)'
+        },
+        { 
+          type: 'image',
+          title: 'الطريقة 1: v0.dev (الأسهل على الإطلاق)',
+          label: 'AI Website in 3 Minutes',
+          src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=800&fit=crop',
+          caption: '⚡ v0.dev (من Vercel):\n\n🎯 المميزات:\n✅ ذكاء اصطناعي كامل\n✅ لا تحتاج برمجة نهائياً\n✅ تصميم احترافي فوري\n✅ responsive (متجاوب مع الموبايل)\n\n📝 الخطوات:\n\n1️⃣ افتح: v0.dev\n\n2️⃣ سجل دخول بـ Google/GitHub\n\n3️⃣ اكتب طلبك بالإنجليزية:\n"Create a modern landing page for [نوع نشاطك] with:\n- Hero section with call-to-action\n- Services/Products section (3 cards)\n- About us section\n- Contact form\n- Footer with social media links\nColors: [ألوانك]\nStyle: modern, clean, professional"\n\n4️⃣ اضغط Generate\n\n5️⃣ انتظر 30 ثانية\n\n6️⃣ عدّل لو محتاج ("Make it more...")\n\n7️⃣ اضغط "Copy Code" أو "Deploy"\n\n💡 مجاني: 10 مواقع شهرياً'
+        },
+        { 
+          type: 'image',
+          title: 'الطريقة 2: VS Code + Codeium (للمحترفين)',
+          label: 'AI Code Completion',
+          src: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=800&fit=crop',
+          caption: '👨‍💻 VS Code مع AI:\n\n📥 التحضير:\n\n1️⃣ حمّل VS Code:\n   • code.visualstudio.com\n   • مجاني للأبد\n\n2️⃣ ثبّت Extension:\n   • Codeium (مجاني)\n   • أو GitHub Copilot (10$/شهر)\n\n3️⃣ سجل دخول في الـ Extension\n\n✨ كيف تستخدمه:\n\n1️⃣ أنشئ ملف index.html\n\n2️⃣ اكتب تعليق:\n<!-- Modern landing page for digital marketing agency -->\n\n3️⃣ Codeium يكتب الكود تلقائياً!\n\n4️⃣ اضغط Tab للقبول\n\n5️⃣ كمّل بالتعليقات:\n<!-- Add hero section -->\n<!-- Add services cards -->\n\n💡 يكتب:\n• HTML\n• CSS\n• JavaScript\n• كل شيء!'
+        },
+        { 
+          type: 'image',
+          title: 'الطريقة 3: WordPress + AI Plugins',
+          label: 'الأكثر مرونة',
+          src: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=1200&h=800&fit=crop',
+          caption: '🎨 WordPress مع AI:\n\n🌟 المميزات:\n✅ أسهل في الإدارة\n✅ آلاف القوالب الجاهزة\n✅ Plugins قوية\n✅ مناسب للمدونات والمتاجر\n\n📝 الخطوات:\n\n1️⃣ أنشئ موقع WordPress:\n   • wordpress.com (مجاني)\n   • أو استضافة (Hostinger, Bluehost)\n\n2️⃣ ثبّت AI Plugins:\n   🤖 Elementor AI (بناء صفحات)\n   🤖 AI Engine (محتوى ذكي)\n   🤖 10Web AI Builder (موقع كامل)\n\n3️⃣ استخدم Elementor AI:\n   • اختر قالب\n   • اضغط "Generate with AI"\n   • اكتب وصف قصير\n   • عدّل النتيجة\n\n4️⃣ AI Engine للمحتوى:\n   • كتابة مقالات\n   • ترجمة\n   • SEO optimization\n\n💰 التكلفة:\nمجاني (محدود) أو 50-200 جنيه/شهر'
+        },
+        { 
+          type: 'text',
+          title: 'الاستضافة والدومين',
+          label: 'Hosting & Domain',
+          caption: '🌍 رفع الموقع للإنترنت:\n\n1️⃣ استضافة مجانية:\n\n🆓 Vercel (الأفضل):\n• vercel.com\n• رفع مباشر من v0.dev\n• SSL مجاني\n• سريع جداً\n\n🆓 Netlify:\n• netlify.com\n• سهل\n• مناسب للمواقع الثابتة\n\n🆓 GitHub Pages:\n• pages.github.com\n• يحتاج حساب GitHub\n\n2️⃣ استضافة مدفوعة:\n\n💳 Hostinger (20 جنيه/شهر):\n• سريعة\n• دعم عربي\n• WordPress بضغطة\n\n💳 Bluehost (50 جنيه/شهر):\n• موصى بها من WordPress\n• دومين مجاني السنة الأولى\n\n3️⃣ شراء دومين:\n\n🌐 Namecheap.com (80-150 جنيه/سنة)\n🌐 Google Domains (100 جنيه/سنة)\n🌐 GoDaddy (120 جنيه/سنة)\n\n💡 نصيحة:\nابدأ مجاني (Vercel) ← بعد النجاح ← اشتري دومين!'
+        },
+        { 
+          type: 'image',
+          title: 'نشر موقعك على Vercel',
+          label: 'Deployment Steps',
+          src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop',
+          caption: '🚀 خطوات النشر:\n\n1️⃣ سجل في Vercel:\n   • vercel.com\n   • Sign up بـ GitHub\n\n2️⃣ رفع الموقع:\n\nطريقة A (من v0.dev):\n   • اضغط "Deploy to Vercel"\n   • تم! 🎉\n\nطريقة B (من VS Code):\n   • ارفع الملفات على GitHub\n   • New Project في Vercel\n   • Import من GitHub\n   • Deploy\n\n3️⃣ ربط دومين (اختياري):\n   • Settings → Domains\n   • Add Domain\n   • غيّر DNS عند الشركة\n   • انتظر ساعة\n\n✅ موقعك الآن LIVE:\nyour-site.vercel.app\n\n💡 Vercel يدعم:\n• SSL مجاني (https://)\n• تحديثات تلقائية\n• سرعة عالية (CDN عالمي)'
+        },
+        { 
+          type: 'text',
+          title: 'SEO الأساسي (تحسين محركات البحث)',
+          label: 'Google Ranking',
+          caption: '📈 كيف تظهر في جوجل:\n\n1️⃣ Meta Tags (في <head>):\n\n<title>اسم موقعك - وصف قصير</title>\n<meta name="description" content="وصف 150-160 حرف عن خدماتك">\n<meta name="keywords" content="كلمات مفتاحية، تسويق، القاهرة">\n\n2️⃣ Heading Structure:\n\nH1 → عنوان واحد فقط (الأهم)\nH2 → عناوين الأقسام\nH3 → عناوين فرعية\n\n3️⃣ Image Alt Text:\n\n<img src="logo.png" alt="شعار شركة التسويق">\n\n4️⃣ URL البسيطة:\n\n✅ موقعك.com/خدماتنا\n❌ موقعك.com/page?id=123\n\n5️⃣ سرعة الموقع:\n\n• ضغط الصور (TinyPNG.com)\n• استخدام CDN (Vercel)\n• تقليل الـ JavaScript\n\n📊 قيس السرعة:\nPageSpeed Insights (Google)\n\n💡 الهدف: 90+ نقطة'
+        },
+        { 
+          type: 'text',
+          title: '📝 الواجب المنزلي',
+          label: 'تطبيق عملي',
+          caption: '✅ المطلوب منك (اختر طريقة واحدة):\n\n🥇 خيار 1: v0.dev (الأسهل - ساعة واحدة):\n   1. أنشئ موقع بـ v0.dev\n   2. اطلب: Landing page بـ 3 أقسام\n   3. انشره على Vercel\n   4. أرسل الرابط\n\n🥈 خيار 2: VS Code (متقدم - 2-3 ساعات):\n   1. حمّل VS Code + Codeium\n   2. أنشئ موقع HTML/CSS بسيط\n   3. ارفعه على GitHub\n   4. انشره على Vercel\n\n🥉 خيار 3: WordPress (مرن - ساعتان):\n   1. أنشئ حساب WordPress.com\n   2. ثبّت Elementor AI\n   3. صمم 3 صفحات على الأقل\n   4. أرسل الرابط\n\n📋 المطلوب في كل الحالات:\n✅ موقع live على الإنترنت\n✅ 3 صفحات على الأقل\n✅ متجاوب مع الموبايل\n✅ فيه معلومات اتصال\n\n⏰ الوقت: 2-4 ساعات\n📤 أرسل: رابط الموقع'
+        }
       ]
     },
     {
       id: 'lec_fb_5',
-      title: 'الحصة 5: التسويق عبر Meta Business Manager',
-      description: 'إطلاق أول حملة إعلانية ناجحة على Facebook و Instagram',
-      duration: 65,
+      title: 'الحصة 5: Meta Business Manager',
+      description: 'إدارة احترافية للإعلانات والصفحات',
+      duration: 90,
       order: 5,
       slides: [
-        { type: 'text', title: 'الغلاف', label: 'صفحة الغلاف' },
-        { type: 'text', title: 'ما هو Business Manager؟', label: 'مركز التحكم' },
-        { type: 'text', title: 'إعداد الحساب', label: 'الخطوات الكاملة' },
-        { type: 'text', title: 'أهداف الحملة', label: '5 أنواع رئيسية' },
-        { type: 'text', title: 'إطلاق أول حملة', label: 'من الألف للياء' },
-        { type: 'text', title: 'الاستهداف الذكي', label: 'الجمهور المثالي' },
-        { type: 'text', title: 'الميزانية والمزايدة', label: 'كم تصرف؟' },
-        { type: 'text', title: 'قياس النتائج', label: 'المقاييس الأساسية' },
-        { type: 'text', title: 'تحسين الحملات', label: 'Optimization' },
-        { type: 'text', title: 'نصائح احترافية', label: 'أسرار المحترفين' },
-        { type: 'text', title: 'المشروع النهائي', label: 'تكليف الكورس' }
+        { 
+          type: 'image', 
+          title: 'الحصة الخامسة: Meta Business Manager', 
+          label: 'إدارة احترافية شاملة',
+          src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop',
+          caption: '🎯 في هذه الحصة النهائية:\n• ما هو Business Manager وأهميته\n• إنشاء حساب احترافي\n• إعداد Ad Account\n• فهم أهداف الحملات\n• إطلاق حملتك الأولى\n• الاستهداف الدقيق\n• إدارة الميزانيات\n• قياس النتائج\n• تحسين الأداء\n• أسرار المحترفين'
+        },
+        { 
+          type: 'text',
+          title: 'ما هو Meta Business Manager؟',
+          label: 'التعريف والأهمية',
+          caption: '🏢 Business Manager هو:\n\nلوحة تحكم مركزية لـ:\n✅ إدارة صفحات Facebook\n✅ إدارة حسابات Instagram\n✅ إدارة الإعلانات\n✅ إدارة البيكسل\n✅ إدارة الفريق والصلاحيات\n✅ إدارة طرق الدفع\n\n🎯 لماذا ضروري:\n\n1️⃣ الفصل التام:\n• حسابك الشخصي منفصل\n• لو اتقفل حسابك، البيزنس سليم\n\n2️⃣ الاحترافية:\n• عملاء وشركاء يشوفوك "بيزنس"\n• ثقة أكبر من Meta\n\n3️⃣ إدارة فريق:\n• إضافة موظفين\n• صلاحيات محددة (مدير، محرر، محلل)\n\n4️⃣ تقارير متقدمة:\n• رؤية شاملة\n• مقارنة الحملات\n• Excel exports\n\n5️⃣ أمان أعلى:\n• Two-factor authentication\n• Audit log (سجل كل التغييرات)\n\n💡 مجاني 100% ← لكن ضروري!'
+        },
+        { 
+          type: 'image',
+          title: 'إنشاء Business Manager',
+          label: 'Setup Steps',
+          src: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&h=800&fit=crop',
+          caption: '📝 خطوات الإنشاء (10 دقائق):\n\n1️⃣ افتح: business.facebook.com\n\n2️⃣ اضغط "Create Account"\n\n3️⃣ املأ البيانات:\n   • اسم الشركة (رسمي، لا تغيير)\n   • اسمك\n   • بريدك الإلكتروني (مهم جداً)\n\n4️⃣ تأكيد البريد:\n   • افتح الإيميل\n   • اضغط Verify\n\n5️⃣ إضافة Business Details:\n   • العنوان (يفضل حقيقي)\n   • رقم الهاتف\n   • الموقع (لو موجود)\n\n6️⃣ إضافة صفحتك:\n   • Business Settings\n   • Pages → Add\n   • اختار صفحتك\n   • تأكيد الصلاحيات\n\n7️⃣ إضافة Instagram:\n   • Instagram Accounts → Add\n   • Log in\n\n⚠️ مهم جداً:\n• استخدم بريد إلكتروني حقيقي تصل له\n• احفظ بيانات الدخول\n• فعّل 2FA (Two-Factor Authentication)'
+        },
+        { 
+          type: 'text',
+          title: 'إنشاء Ad Account (حساب إعلانات)',
+          label: 'Ad Account Setup',
+          caption: '💳 خطوات إنشاء Ad Account:\n\n1️⃣ من Business Settings:\n   • Ad Accounts\n   • Add → Create New\n\n2️⃣ املأ التفاصيل:\n   • اسم Ad Account (مثلاً: إعلانات 2024)\n   • Time Zone (Africa/Cairo)\n   • Currency (EGP - جنيه مصري)\n\n⚠️ تحذير:\n• العملة لا تتغير أبداً بعد الإنشاء!\n\n3️⃣ إضافة طريقة دفع:\n   • Payment Methods\n   • Add Payment Method\n\nطرق الدفع المتاحة:\n💳 بطاقة Visa/Mastercard\n💳 Fawry (فوري)\n💳 Vodafone Cash / Orange Money\n\n4️⃣ تعيين حد إنفاق:\n   • Account Spending Limit (اختياري)\n   • مثلاً: 5000 جنيه شهرياً\n\n5️⃣ Verification (التحقق):\n• Meta قد تطلب:\n  - صورة بطاقة الرقم القومي\n  - فاتورة مرافق\n  - سجل تجاري (للشركات)\n\n⏰ التحقق: فوري إلى 48 ساعة'
+        },
+        { 
+          type: 'image',
+          title: 'أهداف الحملات (Campaign Objectives)',
+          label: '6 أنواع رئيسية',
+          src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop',
+          caption: '🎯 اختر الهدف الصح:\n\n1️⃣ Awareness (الوعي بالعلامة):\n📊 الهدف: أكبر عدد يشوف إعلانك\n💰 التكلفة: رخيصة (20-50 قرش/وصول)\n📈 المقياس: Reach (الوصول)\n✅ متى: إطلاق منتج جديد\n\n2️⃣ Traffic (زيارات للموقع):\n🔗 الهدف: ضغطات على الرابط\n💰 التكلفة: متوسطة (50 قرش-2 جنيه/ضغطة)\n📈 المقياس: Link Clicks\n✅ متى: عندك موقع أو مقال\n\n3️⃣ Engagement (تفاعل):\n❤️ الهدف: لايكات، تعليقات، مشاركات\n💰 التكلفة: رخيصة (10-30 قرش/تفاعل)\n📈 المقياس: Post Engagement\n✅ متى: بناء community\n\n4️⃣ Leads (عملاء محتملين):\n📝 الهدف: جمع بيانات (اسم، تليفون، إيميل)\n💰 التكلفة: عالية (5-20 جنيه/ليد)\n📈 المقياس: Lead Forms\n✅ متى: خدمات أو منتجات غالية\n\n5️⃣ App Promotion (تطبيقات):\n📱 الهدف: تحميلات\n💰 التكلفة: متوسطة (2-10 جنيه/تحميل)\n📈 المقياس: App Installs\n✅ متى: عندك تطبيق\n\n6️⃣ Sales (مبيعات):\n💵 الهدف: شراء من الموقع/المتجر\n💰 التكلفة: الأعلى (حسب المنتج)\n📈 المقياس: ROAS (العائد على الإنفاق)\n✅ متى: متجر إلكتروني جاهز\n\n💡 نصيحة للمبتدئين:\nابدأ بـ Engagement ← ثم Traffic ← ثم Sales'
+        },
+        { 
+          type: 'image',
+          title: 'إطلاق حملتك الأولى',
+          label: 'Campaign Structure',
+          src: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=800&fit=crop',
+          caption: '🚀 الهيكل الإعلاني (3 مستويات):\n\n1️⃣ Campaign (الحملة):\n📌 تحدد: الهدف (Traffic, Engagement...)\n📌 مثال: "حملة صيف 2024"\n\n2️⃣ Ad Set (المجموعات):\n📌 تحدد:\n   • الجمهور المستهدف\n   • الميزانية\n   • المدة\n   • المواضع (Facebook, Instagram...)\n📌 مثال: "Ad Set - رجال 25-40"\n\n3️⃣ Ad (الإعلان نفسه):\n📌 تحدد:\n   • الصورة/الفيديو\n   • النص\n   • الـ CTA\n   • الرابط\n📌 مثال: "إعلان صورة رئيسي"\n\n✨ روتين الإطلاق (20 دقيقة):\n\n✅ Create Campaign → اختار Engagement\n✅ Campaign Name: "تفاعل - منتج X"\n✅ Next\n\n✅ Ad Set Settings:\n   • Daily Budget: 50 جنيه\n   • Location: Egypt → Cairo (أو مدينتك)\n   • Age: 20-45\n   • Gender: All\n   • Detailed Targeting: اهتمامات (مثلاً: Online Shopping)\n   • Placements: Automatic (دع Meta يختار)\n\n✅ Ad Creative:\n   • Upload Image/Video (1080x1080)\n   • Primary Text (النص الأساسي): 125 حرف\n   • Headline: عنوان قصير\n   • Call-to-Action: Learn More أو Shop Now\n\n✅ Review → Publish\n\n⏰ المراجعة: 30 دقيقة - 24 ساعة'
+        },
+        { 
+          type: 'text',
+          title: 'الاستهداف الدقيق (Targeting)',
+          label: 'الوصول للجمهور الصح',
+          caption: '🎯 3 أنواع استهداف:\n\n1️⃣ Core Audiences (الأساسي):\n\n📍 Location:\n• استهدف مدن محددة (القاهرة، الإسكندرية)\n• أو People living here (الساكنين)\n• Radius (دائرة 10-50 كم)\n\n👤 Demographics:\n• العمر: 18-65+\n• الجنس: All / Men / Women\n• Relationship: Single / Married\n• Education: College / High School\n• Job Title: مثلاً "Marketing Manager"\n\n❤️ Interests (الاهتمامات):\n• Shopping & Fashion\n• Technology\n• Sports\n• Food & Dining\n• Travel\n💡 اكتب في البحث واختار المناسب\n\n📱 Behaviors:\n• Online shoppers\n• Mobile device users\n• Engaged shoppers\n\n2️⃣ Custom Audiences (جماهير مخصصة):\n\n📧 Customer List:\n• ارفع قائمة إيميلات/أرقام\n• Meta يطابقها مع حسابات\n\n🌐 Website Traffic:\n• كل من زار موقعك (آخر 30 يوم)\n• يحتاج Meta Pixel\n\n📱 App Activity:\n• من حمّل تطبيقك\n• من اشترى\n\n❤️ Engagement:\n• من تفاعل مع صفحتك\n• من شاف فيديوهاتك\n\n3️⃣ Lookalike Audiences (الجماهير الشبيهة):\n\n🔍 Meta يلاقي ناس شبه عملائك:\n• من Custom Audience\n• اختار Similarity (1%-10%)\n• 1% = الأقرب (الأفضل)\n• 10% = أوسع\n\n💡 الأقوى:\nCustom Audience (عملاء فعليين) ← ثم Lookalike'
+        },
+        { 
+          type: 'text',
+          title: 'إدارة الميزانية والمزايدة',
+          label: 'Budget & Bidding',
+          caption: '💰 إدارة الميزانية:\n\n1️⃣ نوعين:\n\n📅 Daily Budget (يومية):\n• مثلاً: 50 جنيه/يوم\n• الإعلان يشتغل للأبد\n• توقف لما تريد\n✅ الأفضل للمبتدئين\n\n⏰ Lifetime Budget (إجمالية):\n• مثلاً: 1000 جنيه لمدة 10 أيام\n• توقف تلقائياً بعد المدة\n• Meta يوزع الميزانية بذكاء\n✅ للحملات الموسمية\n\n2️⃣ كم تبدأ؟\n\n🥉 مبتدئ: 30-50 جنيه/يوم\n🥈 متوسط: 100-200 جنيه/يوم\n🥇 محترف: 500+ جنيه/يوم\n\n💡 قاعدة ذهبية:\n"ميزانية 7 أيام على الأقل"\nلأن Meta يحتاج وقت للتعلم\n\n3️⃣ استراتيجيات المزايدة:\n\n🤖 Lowest Cost (الأرخص):\n• Meta يحصل أقصى نتائج بأقل سعر\n• تلقائي\n✅ الأفضل للمبتدئين\n\n🎯 Cost Cap (سقف التكلفة):\n• تحدد أقصى سعر للنتيجة\n• مثلاً: 2 جنيه/ضغطة كحد أقصى\n• Meta يحاول ما يتجاوزش\n✅ للميزانيات المحدودة\n\n💎 Bid Cap (سقف المزايدة):\n• أنت تحدد سعر المزايدة\n• للمحترفين فقط\n\n4️⃣ Campaign Budget Optimization (CBO):\n\n✨ Meta يوزع الميزانية تلقائياً:\n• على Ad Sets الأفضل أداءً\n• توفير وقت\n• نتائج أحسن\n✅ فعّله دائماً!'
+        },
+        { 
+          type: 'image',
+          title: 'قياس النتائج (Metrics)',
+          label: 'ماذا تقيس؟',
+          src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop',
+          caption: '📊 المقاييس الأساسية:\n\n1️⃣ Impressions (مرات الظهور):\n• كم مرة ظهر إعلانك\n• ارتفاعه = وصول واسع\n\n2️⃣ Reach (الوصول):\n• عدد الأشخاص الفريدين\n• أهم من Impressions\n\n3️⃣ CTR (Click-Through Rate):\n• نسبة الضغط = (Clicks ÷ Impressions) × 100\n• 1%+ = ممتاز\n• 0.5%-1% = جيد\n• أقل من 0.5% = ضعيف (غيّر الإعلان)\n\n4️⃣ CPC (Cost Per Click):\n• تكلفة الضغطة الواحدة\n• متوسط مصر: 50 قرش - 3 جنيه\n• كلما قل = أفضل\n\n5️⃣ CPM (Cost Per 1000 Impressions):\n• تكلفة 1000 ظهور\n• متوسط: 5-20 جنيه\n\n6️⃣ Frequency (التكرار):\n• كم مرة الشخص الواحد شاف الإعلان\n• 1-3 = مثالي\n• 5+ = الناس زهقت (غيّر الإعلان)\n\n7️⃣ ROAS (Return on Ad Spend):\n• العائد على الإنفاق الإعلاني\n• الصيغة: (Revenue ÷ Ad Spend) × 100%\n• 3x = ممتاز (كل 1 جنيه → 3 جنيه)\n• 2x = جيد\n• 1x = التعادل\n• أقل من 1x = خسارة!\n\n📈 تابع يومياً:\nAds Manager → Campaigns → Columns → Customize\n\n💡 أهم 3 أرقام:\nCTR, CPC, ROAS'
+        },
+        { 
+          type: 'text',
+          title: 'تحسين الحملات (Optimization)',
+          label: 'متى توقف؟ متى تحسّن؟',
+          caption: '🔧 قواعد التحسين:\n\n1️⃣ متى توقف الإعلان:\n\n❌ أوقف فوراً إذا:\n• CTR أقل من 0.3% بعد 3 أيام\n• CPC أعلى من 5 جنيه\n• Frequency أكثر من 7\n• لا مبيعات بعد 500 جنيه إنفاق\n\n2️⃣ متى تزيد الميزانية:\n\n✅ زوّد 20%-30% إذا:\n• CTR أعلى من 1.5%\n• ROAS أعلى من 2x\n• Conversions مستقرة\n\n⚠️ لا تزوّد أكثر من 30% مرة واحدة!\n(Meta يحتاج إعادة تعلم)\n\n3️⃣ A/B Testing:\n\n🧪 اختبر:\n• نصين مختلفين\n• صورتين مختلفتين\n• CTA مختلف\n• جمهورين مختلفين\n\n📊 بعد 3 أيام:\n• الأفضل أداءً ← زود ميزانيته\n• الأضعف ← أوقفه\n\n4️⃣ Creative Fatigue (الملل):\n\n😴 العلامات:\n• CTR ينزل تدريجياً\n• Frequency فوق 5\n• Cost يزيد\n\n✨ الحل:\n• جدد الصورة/الفيديو كل 7-10 أيام\n• أو وقف 3 أيام ← أعد تشغيل\n\n5️⃣ Ad Scheduling:\n\n⏰ وقّت إعلاناتك:\n• Business hours (9 صباحاً - 6 مساءً)\n• أو حسب Analytics بتاعك\n• وقف الإعلانات 2-6 صباحاً (توفير)\n\n6️⃣ Retargeting (إعادة الاستهداف):\n\n🔄 استهدف:\n• من زار موقعك ولم يشتري\n• من أضاف للسلة ولم يكمل\n• من شاف المنتج 3 مرات\n\n💰 الأرخص والأقوى!'
+        },
+        { 
+          type: 'text',
+          title: '💎 أسرار المحترفين',
+          label: 'Pro Tips',
+          caption: '🔥 10 أسرار للنجاح:\n\n1️⃣ Golden Hour:\n📱 انشر الإعلانات 8-10 صباحاً أو 7-9 مساءً\n(الناس بتتصفح أكتر)\n\n2️⃣ Video > Image:\n🎥 الفيديو يحقق CTR أعلى بـ 30%-50%\n• حتى لو 15 ثانية\n• Reels format (9:16)\n\n3️⃣ Lookalike 1%:\n🎯 أقوى استهداف:\n• من قائمة 1000+ عميل حقيقي\n• Similarity 1%\n• Location: مصر\n= نتائج خرافية\n\n4️⃣ Dynamic Ads:\n🤖 إعلانات تلقائية:\n• Meta يختار المنتج الأنسب لكل شخص\n• من Product Catalog\n• Retargeting ذكي\n\n5️⃣ Exclusions (الاستثناءات):\n🚫 استبعد:\n• من اشترى فعلاً\n• موظيفك\n• المنافسين\n= توفير ميزانية\n\n6️⃣ Advantage+ Campaigns:\n✨ الجديد من Meta (2023):\n• AI يدير كل شيء\n• تحسين تلقائي\n• نتائج أفضل بـ 20%\n\n7️⃣ Comment Automation:\n💬 رد تلقائي على التعليقات:\n• ManyChat\n• Chatfuel\n= تحويل التعليقات لعملاء\n\n8️⃣ Whitelisting:\n👥 استخدم حسابات أشخاص (Influencers):\n• ينشر من حسابهم الشخصي\n• أكثر مصداقية\n• CTR أعلى بـ 40%\n\n9️⃣ Breakdowns:\n📊 حلل النتائج حسب:\n• Age\n• Gender\n• Device (أغلب الشراء من موبايل!)\n• Hour of Day\n= تكتشف أفضل جمهور\n\n🔟 Pixel Everything:\n🎯 ركب Meta Pixel على:\n• الموقع\n• صفحة الشكر\n• صفحة الدفع\n= تتبع دقيق للمبيعات'
+        },
+        { 
+          type: 'text',
+          title: '📝 المشروع النهائي',
+          label: 'أطلق حملتك الاحترافية',
+          caption: '🚀 المطلوب (التطبيق الشامل):\n\n✅ المرحلة 1: الإعداد (30 دقيقة)\n   1. أنشئ Business Manager\n   2. أضف صفحتك + Instagram\n   3. أنشئ Ad Account\n   4. أضف طريقة دفع\n   5. تحقق من الحساب\n\n✅ المرحلة 2: الحملة (ساعة واحدة)\n   1. اختر هدف: Engagement أو Traffic\n   2. أنشئ Ad Set:\n      • Location: مدينتك\n      • Age: حسب منتجك\n      • Interests: 3-5 اهتمامات\n      • Budget: 30-50 جنيه/يوم\n   3. صمم إعلان:\n      • صورة 1080x1080\n      • نص 125 حرف\n      • CTA مناسب\n   4. انشر\n\n✅ المرحلة 3: المتابعة (7 أيام):\n   1. تابع يومياً:\n      • CTR\n      • CPC\n      • Frequency\n   2. سجل النتائج في Excel:\n      • اليوم | Reach | Clicks | Cost | CTR\n   3. بعد 3 أيام:\n      • لو CTR > 1% ← زود الميزانية 20%\n      • لو CTR < 0.5% ← غير الصورة/النص\n   4. بعد 7 أيام:\n      • احسب ROAS (لو فيه مبيعات)\n      • اعمل A/B Test\n\n✅ المرحلة 4: التقرير (ساعة):\n   📊 أعد تقرير PDF فيه:\n   • Screenshot من Ads Manager\n   • أهم 5 أرقام (Reach, CTR, CPC, Clicks, Cost)\n   • ما نجح؟\n   • ما فشل؟\n   • ماذا ستغيّر المرة القادمة؟\n\n⏰ الوقت الإجمالي: 3-5 ساعات (على 7 أيام)\n💰 الميزانية المطلوبة: 210-350 جنيه (7 أيام × 30-50 جنيه)\n\n📤 سلّم:\n1. لينك الحملة\n2. تقرير PDF\n3. أكثر شيء تعلمته\n\n🎓 مبروك! أنت الآن Digital Marketer 🚀'
+        }
       ]
     }
   ];
