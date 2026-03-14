@@ -2250,6 +2250,7 @@ textarea:focus{
         <div class="lec-panel-head">
           <h3 id="lecPanelTitle">اختر كورساً</h3>
           <div style="display:flex;gap:8px;">
+            <button class="btn-add-user" onclick="addNew5Lectures()" id="btnAdd5Lecs" style="display:none;background:linear-gradient(135deg,#667eea,#764ba2);"><i class="fas fa-magic"></i> إضافة الـ 5 محاضرات</button>
             <button class="btn-add-user" onclick="forceReloadFacebookAds()" id="btnReloadFB" style="display:none;background:#1877f2;"><i class="fas fa-sync-alt"></i> إعادة تحميل</button>
             <button class="btn-add-user" onclick="openAddLecture()" id="btnAddLec" style="display:none"><i class="fas fa-plus"></i> محاضرة جديدة</button>
           </div>
@@ -5368,6 +5369,154 @@ function compressImg(src, maxW, quality){
   });
 }
 
+// ─── ADD 5 NEW LECTURES ────────────────────────────────────────
+async function addNew5Lectures(){
+  if(!confirm('هل تريد إضافة المحاضرات الـ 5 الجديدة لكورس Facebook Ads؟\n\nستتم إضافة:\n1. إنشاء صفحة Facebook\n2. تصميم الهوية البصرية\n3. كتابة البوستات\n4. إنشاء موقع بالذكاء\n5. Meta Business Manager')){
+    return;
+  }
+
+  const loadingToast = toast('⏳ جاري إضافة المحاضرات...', 'loading', 30000);
+
+  const newLectures = [
+    {
+      id: 'lec_fb_1',
+      title: 'الحصة 1: إنشاء صفحة Facebook + ربط Instagram و WhatsApp',
+      description: 'تعلم كيف تنشئ صفحة احترافية على Facebook وتربطها مع Instagram و WhatsApp Business',
+      duration: 45,
+      order: 1,
+      slides: [
+        { type: 'text', title: 'الغلاف', label: 'صفحة الغلاف' },
+        { type: 'text', title: 'أهداف الحصة', label: 'ما ستتعلمه اليوم' },
+        { type: 'text', title: 'لماذا الصفحات؟', label: 'أهمية صفحات البيزنس' },
+        { type: 'text', title: 'إنشاء صفحة Facebook', label: 'خطوة بخطوة' },
+        { type: 'text', title: 'ربط Instagram', label: 'تحويل لحساب بيزنس' },
+        { type: 'text', title: 'ربط WhatsApp Business', label: 'زر الاتصال السريع' },
+        { type: 'text', title: 'توثيق الصفحة', label: 'العلامة الزرقاء' },
+        { type: 'text', title: 'نصائح احترافية', label: 'أفضل الممارسات' },
+        { type: 'text', title: 'الواجب المنزلي', label: 'تطبيق عملي' }
+      ]
+    },
+    {
+      id: 'lec_fb_2',
+      title: 'الحصة 2: تصميم الهوية البصرية (Gemini + Canva)',
+      description: 'صمم شعارك الاحترافي باستخدام الذكاء الاصطناعي Gemini و Canva',
+      duration: 50,
+      order: 2,
+      slides: [
+        { type: 'text', title: 'الغلاف', label: 'صفحة الغلاف' },
+        { type: 'text', title: 'ما هي الهوية البصرية؟', label: 'مقدمة' },
+        { type: 'text', title: 'اختيار الاسم', label: 'خطوات التسمية' },
+        { type: 'text', title: 'سيكولوجية الألوان', label: 'اختيار الألوان المناسبة' },
+        { type: 'text', title: 'تصميم الشعار بـ Gemini', label: 'AI Logo Design' },
+        { type: 'text', title: 'تحسين الشعار بـ Canva', label: 'الإخراج النهائي' },
+        { type: 'text', title: 'أنواع الشعارات', label: '4 نسخ مختلفة' },
+        { type: 'text', title: 'Brand Kit', label: 'ملف الهوية الكامل' },
+        { type: 'text', title: 'الواجب المنزلي', label: 'صمم شعارك' }
+      ]
+    },
+    {
+      id: 'lec_fb_3',
+      title: 'الحصة 3: كتابة البوستات الاحترافية',
+      description: 'معادلة البوست الناجح: Hook + Caption + CTA',
+      duration: 55,
+      order: 3,
+      slides: [
+        { type: 'text', title: 'الغلاف', label: 'صفحة الغلاف' },
+        { type: 'text', title: 'تشريح البوست', label: 'العناصر الأساسية' },
+        { type: 'text', title: 'Hook الجذاب', label: '4 أنواع مختلفة' },
+        { type: 'text', title: 'Caption الاحترافي', label: 'القصة والمشكلة' },
+        { type: 'text', title: 'Call to Action', label: 'أنواع الـ CTA' },
+        { type: 'text', title: 'مثال عملي', label: 'بوست مطعم متكامل' },
+        { type: 'text', title: 'CTA في الصور', label: 'التصميم البصري' },
+        { type: 'text', title: 'A/B Testing', label: 'اختبار النتائج' },
+        { type: 'text', title: 'الواجب المنزلي', label: 'اكتب 5 بوستات' }
+      ]
+    },
+    {
+      id: 'lec_fb_4',
+      title: 'الحصة 4: إنشاء موقع بالذكاء الاصطناعي',
+      description: '3 طرق لإنشاء موقعك: v0.dev + VS Code + WordPress',
+      duration: 60,
+      order: 4,
+      slides: [
+        { type: 'text', title: 'الغلاف', label: 'صفحة الغلاف' },
+        { type: 'text', title: 'لماذا تحتاج موقع؟', label: 'الأهمية' },
+        { type: 'text', title: 'أدوات الذكاء الاصطناعي', label: 'مقارنة الخيارات' },
+        { type: 'text', title: 'v0.dev - الأسهل', label: 'موقع في 3 دقائق' },
+        { type: 'text', title: 'VS Code + Codeium', label: 'للمحترفين' },
+        { type: 'text', title: 'WordPress + AI', label: 'الأكثر مرونة' },
+        { type: 'text', title: 'الاستضافة والدومين', label: 'إطلاق الموقع' },
+        { type: 'text', title: 'SEO الأساسي', label: 'تحسين محركات البحث' },
+        { type: 'text', title: 'الواجب المنزلي', label: 'أطلق موقعك' }
+      ]
+    },
+    {
+      id: 'lec_fb_5',
+      title: 'الحصة 5: التسويق عبر Meta Business Manager',
+      description: 'إطلاق أول حملة إعلانية ناجحة على Facebook و Instagram',
+      duration: 65,
+      order: 5,
+      slides: [
+        { type: 'text', title: 'الغلاف', label: 'صفحة الغلاف' },
+        { type: 'text', title: 'ما هو Business Manager؟', label: 'مركز التحكم' },
+        { type: 'text', title: 'إعداد الحساب', label: 'الخطوات الكاملة' },
+        { type: 'text', title: 'أهداف الحملة', label: '5 أنواع رئيسية' },
+        { type: 'text', title: 'إطلاق أول حملة', label: 'من الألف للياء' },
+        { type: 'text', title: 'الاستهداف الذكي', label: 'الجمهور المثالي' },
+        { type: 'text', title: 'الميزانية والمزايدة', label: 'كم تصرف؟' },
+        { type: 'text', title: 'قياس النتائج', label: 'المقاييس الأساسية' },
+        { type: 'text', title: 'تحسين الحملات', label: 'Optimization' },
+        { type: 'text', title: 'نصائح احترافية', label: 'أسرار المحترفين' },
+        { type: 'text', title: 'المشروع النهائي', label: 'تكليف الكورس' }
+      ]
+    }
+  ];
+
+  try {
+    // Get existing lectures
+    const all = getLectures();
+    const fbLectures = all['facebook-ads'] || [];
+
+    // Check if lectures already exist
+    const existingIds = fbLectures.map(l => l.id);
+    const newOnly = newLectures.filter(l => !existingIds.includes(l.id));
+
+    if (newOnly.length === 0) {
+      toast('✅ المحاضرات موجودة بالفعل!', 'success');
+      return;
+    }
+
+    // Add new lectures
+    all['facebook-ads'] = [...fbLectures, ...newOnly];
+
+    // Save to Firebase and localStorage
+    await saveLectures(all);
+
+    // Save each lecture individually to Firebase
+    if (_db) {
+      for (const lec of newOnly) {
+        try {
+          await _db.collection('lectures').doc(lec.id).set({
+            ...lec,
+            courseKey: 'facebook-ads',
+            savedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            createdBy: _user?.uid || 'admin',
+            isPublished: true
+          });
+        } catch (e) {
+          console.warn('Failed to save lecture', lec.id, e);
+        }
+      }
+    }
+
+    toast(`✅ تم إضافة ${newOnly.length} محاضرات بنجاح!`, 'success');
+    renderLecList('facebook-ads');
+  } catch (error) {
+    console.error('Error adding lectures:', error);
+    toast('❌ فشل إضافة المحاضرات: ' + error.message, 'error');
+  }
+}
+
 async function saveLectures(obj){
   _fsLectures = Object.assign({},obj);
   // Strip base64 images from localStorage (only keep http:// URLs) to avoid quota errors
@@ -5454,6 +5603,9 @@ function renderLecList(key){
   // Show reload button only for facebook-ads course
   const reloadBtn = document.getElementById('btnReloadFB');
   if(reloadBtn) reloadBtn.style.display = (key === 'facebook-ads') ? 'flex' : 'none';
+  // Show "Add 5 Lectures" button only for facebook-ads course
+  const add5Btn = document.getElementById('btnAdd5Lecs');
+  if(add5Btn) add5Btn.style.display = (key === 'facebook-ads') ? 'flex' : 'none';
   
   const all = getLectures();
   const lecs = all[key]||[];
