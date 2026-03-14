@@ -5766,50 +5766,53 @@ async function addNew5Lectures(){
     if (_fdb) {
       for (const lec of newLectures) {
         try {
-          // Build lecture object with explicit fields
-          const lectureData = {
-            id: lec.id || '',
-            title: lec.title || '',
-            description: lec.description || '',
-            duration: lec.duration || 0,
-            order: lec.order || 0,
-            courseKey: 'facebook-ads',
-            createdBy: 'admin',
-            isPublished: true
-          };
+          console.log(`🔍 Processing lecture: ${lec.id}`);
           
-          // Clean slides - build each slide explicitly
-          const cleanedSlides = [];
-          for (const slide of lec.slides) {
-            const cleanSlide = {
-              type: slide.type || 'text',
-              title: slide.title || '',
-              label: slide.label || ''
-            };
+          // Extract and validate each field explicitly
+          const lecId = String(lec.id || '');
+          const lecTitle = String(lec.title || '');
+          const lecDesc = String(lec.description || '');
+          const lecDuration = Number(lec.duration) || 0;
+          const lecOrder = Number(lec.order) || 0;
+          
+          // Process slides one by one
+          const processedSlides = [];
+          for (let i = 0; i < lec.slides.length; i++) {
+            const s = lec.slides[i];
+            const slideObj = {};
             
-            // Only add caption if it has content
-            if (slide.caption && slide.caption.trim()) {
-              cleanSlide.caption = slide.caption;
+            slideObj.type = String(s.type || 'text');
+            slideObj.title = String(s.title || '');
+            slideObj.label = String(s.label || '');
+            
+            if (s.caption && String(s.caption).trim()) {
+              slideObj.caption = String(s.caption);
             }
             
-            // Only add src for image slides with actual URL
-            if (slide.type === 'image' && slide.src && slide.src.trim()) {
-              cleanSlide.src = slide.src;
+            if (s.type === 'image' && s.src && String(s.src).trim()) {
+              slideObj.src = String(s.src);
             }
             
-            cleanedSlides.push(cleanSlide);
+            processedSlides.push(slideObj);
           }
           
-          lectureData.slides = cleanedSlides;
+          // Build final object step by step
+          const dataToSave = {};
+          dataToSave.id = lecId;
+          dataToSave.title = lecTitle;
+          dataToSave.description = lecDesc;
+          dataToSave.duration = lecDuration;
+          dataToSave.order = lecOrder;
+          dataToSave.slides = processedSlides;
+          dataToSave.courseKey = 'facebook-ads';
+          dataToSave.createdBy = 'admin';
+          dataToSave.isPublished = true;
+          dataToSave.savedAt = firebase.firestore.FieldValue.serverTimestamp();
           
-          // Use JSON parse/stringify to remove any remaining undefined
-          const finalData = JSON.parse(JSON.stringify(lectureData));
+          console.log(`💾 Saving lecture ${lecId} with ${processedSlides.length} slides`);
           
-          // Add timestamp after JSON cleaning
-          finalData.savedAt = firebase.firestore.FieldValue.serverTimestamp();
-          
-          await _fdb.collection('lectures').doc(lec.id).set(finalData);
-          console.log(`✅ Saved new lecture: ${lec.id}`);
+          await _fdb.collection('lectures').doc(lecId).set(dataToSave);
+          console.log(`✅ Saved new lecture: ${lecId}`);
         } catch (e) {
           console.warn('Failed to save lecture', lec.id, e);
         }
