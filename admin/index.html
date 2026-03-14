@@ -5766,13 +5766,39 @@ async function addNew5Lectures(){
     if (_fdb) {
       for (const lec of newLectures) {
         try {
-          await _fdb.collection('lectures').doc(lec.id).set({
-            ...lec,
+          // Clean slides - remove undefined values from each slide
+          const cleanSlides = lec.slides.map(slide => {
+            const cleanSlide = { ...slide };
+            Object.keys(cleanSlide).forEach(key => {
+              if (cleanSlide[key] === undefined) {
+                delete cleanSlide[key];
+              }
+            });
+            return cleanSlide;
+          });
+          
+          // Clean data - remove undefined values
+          const cleanData = {
+            id: lec.id,
+            title: lec.title,
+            description: lec.description,
+            duration: lec.duration,
+            order: lec.order,
+            slides: cleanSlides,
             courseKey: 'facebook-ads',
             savedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            createdBy: _user?.uid || 'admin',
+            createdBy: 'admin',
             isPublished: true
+          };
+          
+          // Remove any undefined fields
+          Object.keys(cleanData).forEach(key => {
+            if (cleanData[key] === undefined) {
+              delete cleanData[key];
+            }
           });
+          
+          await _fdb.collection('lectures').doc(lec.id).set(cleanData);
           console.log(`✅ Saved new lecture: ${lec.id}`);
         } catch (e) {
           console.warn('Failed to save lecture', lec.id, e);
