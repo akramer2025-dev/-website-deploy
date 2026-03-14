@@ -5762,49 +5762,53 @@ async function addNew5Lectures(){
     // Save to Firebase and localStorage
     await saveLectures(all);
 
-    // Clean slides function - only include fields that have values
-    function cleanSlide(slide) {
-      const cleaned = {
-        type: slide.type,
-        title: slide.title,
-        label: slide.label
-      };
-      
-      // Only add caption if it exists
-      if (slide.caption) {
-        cleaned.caption = slide.caption;
-      }
-      
-      // Only add src for image slides
-      if (slide.type === 'image' && slide.src) {
-        cleaned.src = slide.src;
-      }
-      
-      return cleaned;
-    }
-
     // Save each new lecture individually to Firebase
     if (_fdb) {
       for (const lec of newLectures) {
         try {
-          // Clean slides
-          const cleanedSlides = lec.slides.map(slide => cleanSlide(slide));
-          
-          // Build clean lecture object
-          const cleanedLecture = {
-            id: lec.id,
-            title: lec.title,
-            description: lec.description,
-            duration: lec.duration,
-            order: lec.order,
-            slides: cleanedSlides,
+          // Build lecture object with explicit fields
+          const lectureData = {
+            id: lec.id || '',
+            title: lec.title || '',
+            description: lec.description || '',
+            duration: lec.duration || 0,
+            order: lec.order || 0,
             courseKey: 'facebook-ads',
             createdBy: 'admin',
-            isPublished: true,
-            savedAt: firebase.firestore.FieldValue.serverTimestamp()
+            isPublished: true
           };
           
-          await _fdb.collection('lectures').doc(lec.id).set(cleanedLecture);
+          // Clean slides - build each slide explicitly
+          const cleanedSlides = [];
+          for (const slide of lec.slides) {
+            const cleanSlide = {
+              type: slide.type || 'text',
+              title: slide.title || '',
+              label: slide.label || ''
+            };
+            
+            // Only add caption if it has content
+            if (slide.caption && slide.caption.trim()) {
+              cleanSlide.caption = slide.caption;
+            }
+            
+            // Only add src for image slides with actual URL
+            if (slide.type === 'image' && slide.src && slide.src.trim()) {
+              cleanSlide.src = slide.src;
+            }
+            
+            cleanedSlides.push(cleanSlide);
+          }
+          
+          lectureData.slides = cleanedSlides;
+          
+          // Use JSON parse/stringify to remove any remaining undefined
+          const finalData = JSON.parse(JSON.stringify(lectureData));
+          
+          // Add timestamp after JSON cleaning
+          finalData.savedAt = firebase.firestore.FieldValue.serverTimestamp();
+          
+          await _fdb.collection('lectures').doc(lec.id).set(finalData);
           console.log(`✅ Saved new lecture: ${lec.id}`);
         } catch (e) {
           console.warn('Failed to save lecture', lec.id, e);
