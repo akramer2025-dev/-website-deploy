@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>عارض المحاضرة | Akram Mostafa</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -956,6 +957,7 @@ function toggleMediaOnly(){
 let captionOnScreen = false;
 function toggleCaptionOnScreen(){
   captionOnScreen = !captionOnScreen;
+  console.log('Caption on screen:', captionOnScreen);
   
   // Remove media-only mode if active
   if(captionOnScreen && mediaOnly){
@@ -969,6 +971,14 @@ function toggleCaptionOnScreen(){
     el.classList.toggle('caption-on-screen', captionOnScreen);
     if(captionOnScreen) el.classList.remove('media-only');
   });
+  
+  // Debug: Check if caption content exists
+  if(captionOnScreen){
+    const currentSlide = slides[currentIdx];
+    const captionText = currentSlide?.notes || currentSlide?.caption || '';
+    console.log('Current slide caption:', captionText);
+    console.log('Caption display elements:', document.querySelectorAll('.slide-caption-display'));
+  }
   
   // Update button appearance
   const btn = document.getElementById('captionOnScreenBtn');
@@ -1160,9 +1170,19 @@ function buildSlideHTML(s, i){
 
   // notes - support both 'notes' and 'caption' fields
   const notesText = s.notes || s.caption || '';
-  const notesHTML = notesText
-    ? notesText.split('\n').map(line=>line.trim()?`<p>${line}</p>`:'').join('')
-    : '<span class="notes-empty">لا يوجد شرح نصي لهذه الشريحة</span>';
+  let notesHTML = '';
+  if(notesText && notesText.trim()){
+    // Split by double newline for paragraphs, or single newline if no double exists
+    const paragraphs = notesText.includes('\n\n') 
+      ? notesText.split('\n\n')
+      : notesText.split('\n');
+    notesHTML = paragraphs
+      .filter(p => p.trim())
+      .map(p => `<p>${p.trim().replace(/\n/g, '<br>')}</p>`)
+      .join('');
+  } else {
+    notesHTML = '<div class="caption-empty-msg">لا يوجد شرح لهذه الشريحة</div>';
+  }
 
   return `
     <div class="slide-inner">
