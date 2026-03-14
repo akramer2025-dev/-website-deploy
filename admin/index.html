@@ -4502,7 +4502,7 @@ function removeGalleryImage(key, index, type){
 
 // ======= JOIN REQUESTS FUNCTIONS =======
 const COURSES_NAMES = {
-  'free':'الكورس المجاني','facebook-ads':'إعلانات فيسبوك',
+  'free':'كورس التسويق الاحترافي','facebook-ads':'إعلانات فيسبوك',
   'instagram':'إنستجرام','tiktok':'تيك توك','snapchat':'سناب شات',
   'twitter':'تويتر / X','ai-marketing':'ذكاء اصطناعي',
   'integrated-strategy':'استراتيجية متكاملة','programming':'البرمجة'
@@ -5126,7 +5126,7 @@ function toast(msg,type='success'){
 // ══════════════════════════════════════
 const LECTURES_KEY = 'am_lectures';
 const LEC_COURSES = [
-  {key:'free',        name:'الكورس المجاني',          icon:'fa-gift'},
+  {key:'free',        name:'كورس التسويق الاحترافي',          icon:'fa-graduation-cap'},
   {key:'facebook-ads',name:'إعلانات فيسبوك',           icon:'fa-facebook'},
   {key:'instagram',   name:'إنستجرام',                 icon:'fa-instagram'},
   {key:'tiktok',      name:'تيك توك',                  icon:'fa-music'},
@@ -5143,7 +5143,7 @@ var slideRows = []; // must be var for inline HTML handlers to access it
 
 function getLectures(){ return _fsLectures!==null ? Object.assign({},_fsLectures) : (()=>{try{return JSON.parse(localStorage.getItem(LECTURES_KEY)||'{}');}catch(e){return {};}})(); }
 
-/* ══ SEED: الكورس المجاني — 8 محاضرات افتراضية ══ */
+/* ══ SEED: كورس التسويق الاحترافي — 8 محاضرات افتراضية ══ */
 function getDefaultFreeLectures(){
   const ts = Date.now();
   const sl=(id,title,notes)=>({id,type:'image',src:'',title,notes});
@@ -5743,7 +5743,7 @@ document.getElementById('lecModal').addEventListener('click',function(e){if(e.ta
    LIVE SESSIONS
    ============================================= */
 const LIVE_COURSE_NAMES = {
-  free:'كورس التسويق المجاني', programming:'برمجة المواقع',
+  free:'كورس التسويق الاحترافي', programming:'برمجة المواقع',
   facebook:'إعلانات فيسبوك', instagram:'إنستاغرام', tiktok:'تيك توك',
   snapchat:'سناب شات', twitter:'إكس (تويتر)', integrated:'استراتيجية متكاملة'
 };

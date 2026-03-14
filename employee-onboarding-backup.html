@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إكمال بيانات الموظف</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .progress-step::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 50%;
+            width: 100%;
+            height: 3px;
+            background: #ddd;
+            z-index: 0;
+        }
+
+        .progress-step:first-child::before {
+            display: none;
+        }
+
+        .progress-step.active::before {
+            background: #667eea;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ddd;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-step.active .step-circle {
+            background: #667eea;
+            color: white;
+        }
+
+        .progress-step.completed .step-circle {
+            background: #10b981;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .progress-step.active .step-label {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .form-content {
+            padding: 40px;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group label.required::after {
+            content: ' *';
+            color: #ef4444;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .file-upload-box {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+
+        .file-upload-box:hover {
+            border-color: #667eea;
+            background: #f1f5f9;
+        }
+
+        .file-upload-box.has-file {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .file-upload-box input[type="file"] {
+            display: none;
+        }
+
+        .file-upload-icon {
+            font-size: 48px;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+
+        .file-upload-box.has-file .file-upload-icon {
+            color: #10b981;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 15px auto;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .preview-image.show {
+            display: block;
+        }
+
+        .camera-container {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        #video, #canvas {
+            width: 100%;
+            border-radius: 12px;
+            display: none;
+        }
+
+        #video.active {
+            display: block;
+        }
+
+        .camera-controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #64748b;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .contract-box {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: #f9fafb;
+            margin-bottom: 20px;
+        }
+
+        .contract-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .contract-box p {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            color: #374151;
+        }
+
+        .signature-pad {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            border: 4px solid #3b82f6;
+            border-radius: 12px;
+            background: white;
+            cursor: crosshair;
+            touch-action: none;
+            display: block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+        
+        .signature-pad:hover {
+            border-color: #2563eb;
+            box-shadow: 0 6px 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: #10b981;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 إكمال بيانات الموظف</h1>
+            <p>مرحباً بك! يرجى إكمال البيانات المطلوبة</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">البيانات الشخصية</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">رفع المستندات</div>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">الصورة الشخصية</div>
+            </div>
+            <div class="progress-step" data-step="4">
+                <div class="step-circle">4</div>
+                <div class="step-label">توقيع العقد</div>
+            </div>
+        </div>
+
+        <div class="form-content">
+            <div id="error-message" class="alert alert-error" style="display: none;"></div>
+            
+            <!-- Step 1: Personal Information -->
+            <div class="form-step active" data-step="1">
+                <h2 style="margin-bottom: 25px; color: #1f2937;">📝 البيانات الشخصية</h2>
+                
+                <div class="form-group">
+                    <label class="required">الاسم بالكامل</label>
+                    <input type="text" id="fullName" placeholder="أدخل الاسم الكامل" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">رقم الهاتف</label>
+                    <input type="tel" id="phone" placeholder="01xxxxxxxxx" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">البريد الإلكتروني</label>
+                    <input type="email" id="email" placeholder="example@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">العنوان</label>
+                    <textarea id="address" rows="3" placeholder="أدخل العنوان بالتفصيل" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">رقم البطاقة</label>
+                    <input type="text" id="nationalId" placeholder="رقم البطاقة الوطنية (14 رقم)" maxlength="14" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">المسمى الوظيفي</label>
+                    <input type="text" id="jobTitle" placeholder="مثال: موظف مبيعات" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" disabled>السابق</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep(1)">التالي</button>
+                </div>
+            </div>
+
+            <!-- Step 2: ID Upload -->
+            <div class="form-step" data-step="2">
+                <h2 style="margin-bottom: 25px; color: #1f2937;">📄 رفع صورة البطاقة</h2>
+                
+                <div class="form-group">
+                    <label class="required">صورة البطاقة (الوجه الأمامي)</label>
+                    <div class="file-upload-box" id="idFrontBox" onclick="document.getElementById('idFront').click()">
+                        <div class="file-upload-icon">📤</div>
+                        <p>اضغط لرفع صورة البطاقة الأمامية</p>
+                        <small style="color: #64748b;">PNG, JPG (الحد الأقصى 5MB)</small>
+                        <input type="file" id="idFront" accept="image/*" onchange="handleFileUpload(this, 'idFrontBox', 'idFrontPreview')">
+                        <img id="idFrontPreview" class="preview-image">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">صورة البطاقة (الوجه الخلفي)</label>
+                    <div class="file-upload-box" id="idBackBox" onclick="document.getElementById('idBack').click()">
+                        <div class="file-upload-icon">📤</div>
+                        <p>اضغط لرفع صورة البطاقة الخلفية</p>
+                        <small style="color: #64748b;">PNG, JPG (الحد الأقصى 5MB)</small>
+                        <input type="file" id="idBack" accept="image/*" onchange="handleFileUpload(this, 'idBackBox', 'idBackPreview')">
+                        <img id="idBackPreview" class="preview-image">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(2)">السابق</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep(2)">التالي</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Selfie -->
+            <div class="form-step" data-step="3">
+                <h2 style="margin-bottom: 25px; color: #1f2937;">📸 الصورة الشخصية (سيلفي)</h2>
+                
+                <div class="camera-container">
+                    <video id="video" autoplay></video>
+                    <canvas id="canvas"></canvas>
+                    <img id="selfiePreview" class="preview-image">
+                </div>
+
+                <div class="camera-controls">
+                    <button type="button" class="btn btn-primary" id="startCamera" onclick="startCamera()">
+                        📷 تشغيل الكاميرا
+                    </button>
+                    <button type="button" class="btn btn-success" id="captureBtn" onclick="captureSelfie()" style="display: none;">
+                        ✨ التقاط الصورة
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="retakeBtn" onclick="retakeSelfie()" style="display: none;">
+                        🔄 إعادة التصوير
+                    </button>
+                </div>
+
+                <div class="form-actions" style="margin-top: 30px;">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(3)">السابق</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep(3)">التالي</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Contract & Signature -->
+            <div class="form-step" data-step="4">
+                <h2 style="margin-bottom: 25px; color: #1f2937;">📋 عقد العمل</h2>
+                
+                <div class="contract-box" id="contractContent">
+                    <h3>عقد عمل فترة تجريبية</h3>
+                    <p><strong>بين:</strong></p>
+                    <p>الطرف الأول (صاحب العمل): <span id="contractEmployerName">اسم الشركة</span></p>
+                    <p>الطرف الثاني (الموظف): <span id="contractEmployeeName"></span></p>
+                    
+                    <p><strong>تم الاتفاق على ما يلي:</strong></p>
+                    
+                    <p><strong>المادة الأولى - مدة العقد:</strong></p>
+                    <p>يبدأ هذا العقد في: <span id="contractStartDate"></span></p>
+                    <p>وينتهي في: <span id="contractEndDate"></span></p>
+                    <p>مدة العقد: شهر واحد (فترة تجريبية)</p>
+                    
+                    <p><strong>المادة الثانية - المسمى الوظيفي:</strong></p>
+                    <p>يعمل الطرف الثاني في وظيفة: <span id="contractJobTitle"></span></p>
+                    
+                    <p><strong>المادة الثالثة - الراتب:</strong></p>
+                    <p>الراتب الشهري المتفق عليه: <span id="contractSalary"></span> جنيه مصري</p>
+                    <p>يُصرف الراتب في نهاية الفترة التجريبية بعد تقييم الأداء</p>
+                    
+                    <p><strong>المادة الرابعة - ساعات العمل:</strong></p>
+                    <p>ساعات العمل: من 9 صباحاً حتى 5 مساءً (8 ساعات يومياً)</p>
+                    <p>أيام العمل: من الأحد إلى الخميس</p>
+                    
+                    <p><strong>المادة الخامسة - الفترة التجريبية:</strong></p>
+                    <p>هذا العقد عبارة عن فترة تجريبية لمدة شهر واحد</p>
+                    <p>يحق لأي من الطرفين إنهاء العقد خلال الفترة التجريبية دون إشعار مسبق</p>
+                    <p>في حالة النجاح في الفترة التجريبية، سيتم تجديد العقد أو توقيع عقد دائم</p>
+                    
+                    <p><strong>المادة السادسة - الواجبات:</strong></p>
+                    <p>يلتزم الموظف بأداء جميع المهام المطلوبة منه بكفاءة وإخلاص</p>
+                    <p>يلتزم الموظف بالحفاظ على سرية معلومات الشركة</p>
+                    <p>يلتزم الموظف بالالتزام بمواعيد العمل والانضباط</p>
+                    
+                    <p style="margin-top: 20px;"><strong>تم التوقيع في:</strong> <span id="contractSignDate"></span></p>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms">أوافق على جميع شروط وبنود العقد أعلاه</label>
+                </div>
+
+                <div class="form-group" style="margin-top: 25px;">
+                    <label class="required">التوقيع</label>
+                    <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; border: 1px solid #bae6fd; margin-bottom: 15px;">
+                        <p style="margin: 0; color: #0369a1; font-size: 14px; font-weight: 600;">
+                            ✍️ يرجى التوقيع داخل المربع أدناه:
+                        </p>
+                        <p style="margin: 5px 0 0 0; color: #0c4a6e; font-size: 13px;">
+                            • استخدم الماوس على الكمبيوتر<br>
+                            • أو استخدم إصبعك على الموبايل/التابلت
+                        </p>
+                    </div>
+                    <canvas id="signaturePad" class="signature-pad" width="600" height="200"></canvas>
+                    <button type="button" class="btn btn-secondary" onclick="clearSignature()" style="margin-top: 10px;">
+                        🗑️ مسح التوقيع
+                    </button>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep(4)">السابق</button>
+                    <button type="button" class="btn btn-success" onclick="submitApplication()">✅ إرسال الطلب</button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading" id="loadingState">
+                <div class="spinner"></div>
+                <p>جاري إرسال البيانات...</p>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">✅</div>
+                <h2 style="color: #10b981; margin-bottom: 15px;">تم إرسال الطلب بنجاح!</h2>
+                <p style="color: #64748b;">شكراً لك! تم استلام بياناتك وسيتم مراجعتها قريباً.</p>
+                <p style="color: #64748b; margin-top: 10px;">سيتم التواصل معك في أقرب وقت.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    
+    <script type="module">
+        // Initialize Supabase Client
+        const { createClient } = supabase;
+        const supabaseClient = createClient(
+            SUPABASE_CONFIG.url,
+            SUPABASE_CONFIG.anonKey
+        );
+
+        console.log('✅ Supabase client initialized');
+
+        let currentEmployeeId = null;
+        let employeeData = null;
+        let stream = null;
+        let signaturePad = null;
+        let isDrawing = false;
+        let hasSignature = false;
+
+        // Get employee ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        currentEmployeeId = urlParams.get('id');
+
+        // Load employee data
+        window.addEventListener('DOMContentLoaded', async () => {
+            if (!currentEmployeeId) {
+                showError('رابط غير صحيح - يرجى استخدام الرابط المرسل إليك');
+                return;
+            }
+            
+            try {
+                // Load employee data from Supabase
+                const { data, error } = await supabaseClient
+                    .from('employees')
+                    .select('*')
+                    .eq('id', currentEmployeeId)
+                    .single();
+                    
+                if (error) throw error;
+                
+                if (data) {
+                    employeeData = data;
+                    console.log('✅ Employee data loaded:', data);
+                    
+                    // Pre-fill data if exists
+                    document.getElementById('email').value = data.email || '';
+                    if (data.full_name) document.getElementById('fullName').value = data.full_name;
+                    if (data.phone) document.getElementById('phone').value = data.phone;
+                    if (data.address) document.getElementById('address').value = data.address;
+                    if (data.national_id) document.getElementById('nationalId').value = data.national_id;
+                    if (data.job_title) document.getElementById('jobTitle').value = data.job_title;
+                } else {
+                    showError('الموظف غير موجود في النظام');
+                }
+            } catch (error) {
+                console.error('Error loading employee:', error);
+                showError('حدث خطأ في تحميل البيانات: ' + error.message);
+            }
+        });
+
+        // Initialize signature pad
+        window.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('signaturePad');
+            console.log('🎨 Initializing signature pad...', canvas);
+            
+            if (!canvas) {
+                console.error('❌ Canvas element not found!');
+                return;
+            }
+            
+            const ctx = canvas.getContext('2d');
+            console.log('✅ Canvas context obtained', ctx);
+            
+            // Set fixed canvas size
+            canvas.width = 600;
+            canvas.height = 200;
+            console.log('📐 Canvas size set to', canvas.width, 'x', canvas.height);
+            
+            // Configure drawing style
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            // Add watermark text
+            ctx.font = 'bold 20px Arial';
+            ctx.fillStyle = '#cbd5e1';
+            ctx.textAlign = 'center';
+            ctx.fillText('وقّع هنا ✍️', canvas.width / 2, canvas.height / 2);
+            console.log('✅ Watermark added');
+            
+            // Mouse events
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            console.log('✅ Mouse events attached');
+            
+            // Touch events
+            canvas.addEventListener('touchstart', (e) => {
+                console.log('👆 Touch start detected');
+                e.preventDefault();
+                hasSignature = true; // Mark that user started drawing
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                isDrawing = true;
+            });
+            
+            canvas.addEventListener('touchmove', (e) => {
+                if (!isDrawing) return;
+                console.log('👆 Touch move');
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            });
+            
+            canvas.addEventListener('touchend', (e) => {
+                console.log('👆 Touch end');
+                e.preventDefault();
+                isDrawing = false;
+            });
+            
+            console.log('✅ Touch events attached');
+            console.log('🎉 Signature pad fully initialized!');
+        });
+
+        function startDrawing(e) {
+            console.log('🖱️ Mouse down - starting drawing');
+            isDrawing = true;
+            hasSignature = true; // Mark that user has started drawing
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const ctx = e.target.getContext('2d');
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const ctx = e.target.getContext('2d');
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            if (isDrawing) console.log('🖱️ Mouse up - stopping drawing');
+            isDrawing = false;
+        }
+
+        window.clearSignature = function() {
+            console.log('🗑️ Clearing signature');
+            const canvas = document.getElementById('signaturePad');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hasSignature = false;
+            
+            // Redraw watermark
+            ctx.font = 'bold 20px Arial';
+            ctx.fillStyle = '#cbd5e1';
+            ctx.textAlign = 'center';
+            ctx.fillText('وقّع هنا ✍️', canvas.width / 2, canvas.height / 2);
+            console.log('✅ Signature cleared and watermark redrawn');
+        };
+
+        // Navigation functions
+        window.nextStep = async function(currentStep) {
+            // Validate current step
+            if (!validateStep(currentStep)) {
+                return;
+            }
+
+            // Update contract details before moving to step 4
+            if (currentStep === 3) {
+                updateContractDetails();
+            }
+
+            // Move to next step
+            document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.remove('active');
+            document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.add('completed');
+            document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('active');
+            
+            const nextStep = currentStep + 1;
+            document.querySelector(`.form-step[data-step="${nextStep}"]`).classList.add('active');
+            document.querySelector(`.progress-step[data-step="${nextStep}"]`).classList.add('active');
+            
+            window.scrollTo(0, 0);
+        };
+
+        window.prevStep = function(currentStep) {
+            document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.remove('active');
+            document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('active');
+            
+            const prevStep = currentStep - 1;
+            document.querySelector(`.form-step[data-step="${prevStep}"]`).classList.add('active');
+            document.querySelector(`.progress-step[data-step="${prevStep}"]`).classList.remove('completed');
+            document.querySelector(`.progress-step[data-step="${prevStep}"]`).classList.add('active');
+            
+            window.scrollTo(0, 0);
+        };
+
+        function validateStep(step) {
+            hideError();
+            
+            if (step === 1) {
+                const fullName = document.getElementById('fullName').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const address = document.getElementById('address').value.trim();
+                const nationalId = document.getElementById('nationalId').value.trim();
+                const jobTitle = document.getElementById('jobTitle').value.trim();
+                
+                if (!fullName || !phone || !address || !nationalId || !jobTitle) {
+                    showError('يرجى ملء جميع الحقول المطلوبة');
+                    return false;
+                }
+                
+                if (nationalId.length !== 14) {
+                    showError('رقم البطاقة يجب أن يكون 14 رقم');
+                    return false;
+                }
+                
+                if (!/^01[0-9]{9}$/.test(phone)) {
+                    showError('رقم الهاتف غير صحيح');
+                    return false;
+                }
+            }
+            
+            if (step === 2) {
+                const idFront = document.getElementById('idFront').files[0];
+                const idBack = document.getElementById('idBack').files[0];
+                
+                if (!idFront || !idBack) {
+                    showError('يرجى رفع صورة البطاقة (الوجهين)');
+                    return false;
+                }
+            }
+            
+            if (step === 3) {
+                const selfie = document.getElementById('selfiePreview').src;
+                
+                if (!selfie || selfie === window.location.href) {
+                    showError('يرجى التقاط صورة سيلفي');
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        function updateContractDetails() {
+            const fullName = document.getElementById('fullName').value;
+            const jobTitle = document.getElementById('jobTitle').value;
+            
+            document.getElementById('contractEmployeeName').textContent = fullName;
+            document.getElementById('contractJobTitle').textContent = jobTitle;
+            
+            // Set dates
+            const today = new Date();
+            const startDate = today.toLocaleDateString('ar-EG');
+            const endDate = new Date(today.setMonth(today.getMonth() + 1)).toLocaleDateString('ar-EG');
+            
+            document.getElementById('contractStartDate').textContent = startDate;
+            document.getElementById('contractEndDate').textContent = endDate;
+            document.getElementById('contractSignDate').textContent = new Date().toLocaleDateString('ar-EG');
+            
+            // Set salary from employee data
+            if (employeeData && employeeData.salary) {
+                document.getElementById('contractSalary').textContent = employeeData.salary;
+            }
+        }
+
+        // File upload handler
+        window.handleFileUpload = function(input, boxId, previewId) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(previewId).src = e.target.result;
+                    document.getElementById(previewId).classList.add('show');
+                    document.getElementById(boxId).classList.add('has-file');
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        // Camera functions
+        window.startCamera = async function() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'user',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    } 
+                });
+                
+                const video = document.getElementById('video');
+                video.srcObject = stream;
+                video.classList.add('active');
+                
+                document.getElementById('startCamera').style.display = 'none';
+                document.getElementById('captureBtn').style.display = 'inline-block';
+                document.getElementById('selfiePreview').classList.remove('show');
+            } catch (err) {
+                showError('لا يمكن الوصول إلى الكاميرا: ' + err.message);
+            }
+        };
+
+        window.captureSelfie = function() {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const preview = document.getElementById('selfiePreview');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
+            
+            preview.src = canvas.toDataURL('image/jpeg');
+            preview.classList.add('show');
+            
+            // Stop camera
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            
+            video.classList.remove('active');
+            document.getElementById('captureBtn').style.display = 'none';
+            document.getElementById('retakeBtn').style.display = 'inline-block';
+        };
+
+        window.retakeSelfie = function() {
+            document.getElementById('selfiePreview').classList.remove('show');
+            document.getElementById('retakeBtn').style.display = 'none';
+            startCamera();
+        };
+
+        // Submit application
+        window.submitApplication = async function() {
+            // Validate
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            const canvas = document.getElementById('signaturePad');
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const hasSignature = imageData.data.some(channel => channel !== 0);
+            
+            if (!agreeTerms) {
+                showError('يجب الموافقة على شروط العقد');
+                return;
+            }
+            
+            if (!hasSignature) {
+                showError('يرجى التوقيع على العقد');
+                return;
+            }
+            
+            // Show loading
+            document.querySelector('.form-step.active').style.display = 'none';
+            document.getElementById('loadingState').classList.add('active');
+            
+            try {
+                // Upload files to Supabase Storage
+                const idFrontURL = await uploadFile(document.getElementById('idFront').files[0], 'id-front.jpg');
+                const idBackURL = await uploadFile(document.getElementById('idBack').files[0], 'id-back.jpg');
+                
+                // Upload selfie
+                const selfieBlob = await new Promise(resolve => {
+                    document.getElementById('canvas').toBlob(resolve, 'image/jpeg');
+                });
+                const selfieURL = await uploadFile(selfieBlob, 'selfie.jpg');
+                
+                // Upload signature
+                const signatureBlob = await new Promise(resolve => {
+                    canvas.toBlob(resolve, 'image/png');
+                });
+                const signatureURL = await uploadFile(signatureBlob, 'signature.png');
+                
+                console.log('✅ All files uploaded successfully');
+                
+                // Save data to Supabase
+                const { data, error } = await supabaseClient
+                    .from('employees')
+                    .update({
+                        full_name: document.getElementById('fullName').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        address: document.getElementById('address').value,
+                        national_id: document.getElementById('nationalId').value,
+                        job_title: document.getElementById('jobTitle').value,
+                        id_front_url: idFrontURL,
+                        id_back_url: idBackURL,
+                        selfie_url: selfieURL,
+                        signature_url: signatureURL,
+                        contract_accepted: true,
+                        contract_accepted_at: new Date().toISOString(),
+                        application_status: 'pending',
+                        application_submitted_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', currentEmployeeId);
+                
+                if (error) throw error;
+                
+                console.log('✅ Application submitted successfully');
+                
+                // Show success
+                document.getElementById('loadingState').classList.remove('active');
+                document.getElementById('successMessage').classList.add('active');
+                
+            } catch (error) {
+                console.error('Error submitting application:', error);
+                document.getElementById('loadingState').classList.remove('active');
+                document.querySelector('.form-step.active').style.display = 'block';
+                showError('حدث خطأ أثناء إرسال البيانات: ' + error.message);
+            }
+        };
+
+        async function uploadFile(file, fileName) {
+            try {
+                const filePath = `${currentEmployeeId}/${fileName}`;
+                
+                console.log(`📤 Uploading ${fileName}...`);
+                
+                // Upload to Supabase Storage
+                const { data, error } = await supabaseClient.storage
+                    .from(SUPABASE_CONFIG.bucketName)
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: true
+                    });
+                
+                if (error) throw error;
+                
+                // Get public URL
+                const { data: urlData } = supabaseClient.storage
+                    .from(SUPABASE_CONFIG.bucketName)
+                    .getPublicUrl(filePath);
+                
+                console.log(`✅ ${fileName} uploaded:`, urlData.publicUrl);
+                
+                return urlData.publicUrl;
+            } catch (error) {
+                console.error(`Error uploading ${fileName}:`, error);
+                throw error;
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function hideError() {
+            document.getElementById('error-message').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

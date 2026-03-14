@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار طلبات الانضمام</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050d1b;--card:#0d1e38;--border:rgba(255,255,255,0.07);--text:#e2eaf6;--muted:#6b82a8;--pink:#e94e77;--green:#22c55e;--orange:#f7931e;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);padding:40px 20px;min-height:100vh;}
+.container{max-width:1200px;margin:0 auto;}
+h1{font-size:2rem;font-weight:900;margin-bottom:10px;background:linear-gradient(135deg,var(--pink),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.info{color:var(--muted);margin-bottom:30px;font-size:.95rem;}
+.status{padding:20px;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:30px;}
+.status-item{display:flex;align-items:center;gap:12px;padding:10px;margin:5px 0;}
+.status-label{font-weight:700;color:var(--muted);min-width:200px;}
+.status-value{color:var(--text);font-weight:600;}
+.btn{padding:12px 24px;background:linear-gradient(135deg,var(--pink),var(--orange));border:none;border-radius:10px;color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;margin:5px;}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(233,78,119,0.4);}
+.requests-list{display:grid;gap:20px;}
+.req-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;}
+.req-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.req-id{font-size:.85rem;color:var(--orange);font-weight:700;}
+.req-status{padding:6px 14px;border-radius:20px;font-size:.8rem;font-weight:700;}
+.req-status.pending{background:rgba(245,158,11,0.15);color:#f59e0b;}
+.req-status.approved{background:rgba(34,197,94,0.15);color:#22c55e;}
+.req-status.rejected{background:rgba(239,68,68,0.15);color:#ef4444;}
+.req-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;}
+.req-field{margin-bottom:12px;}
+.req-field-label{font-size:.8rem;color:var(--muted);font-weight:700;margin-bottom:4px;}
+.req-field-value{font-size:.95rem;color:var(--text);font-weight:600;}
+.empty{text-align:center;padding:60px 20px;color:var(--muted);}
+.error{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#ef4444;padding:16px;border-radius:12px;margin:20px 0;}
+</style>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1>🔍 اختبار طلبات الانضمام</h1>
+  <div class="info">هذه الصفحة للتحقق من وجود الطلبات في Firebase بشكل مباشر</div>
+  
+  <div class="status" id="status">
+    <div class="status-item">
+      <div class="status-label">🔌 حالة Firebase:</div>
+      <div class="status-value" id="firebaseStatus">جاري الاتصال...</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">📊 عدد الطلبات الكلي:</div>
+      <div class="status-value" id="totalCount">-</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">⏳ طلبات قيد الانتظار:</div>
+      <div class="status-value" id="pendingCount">-</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">✅ طلبات موافق عليها:</div>
+      <div class="status-value" id="approvedCount">-</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">❌ طلبات مرفوضة:</div>
+      <div class="status-value" id="rejectedCount">-</div>
+    </div>
+  </div>
+  
+  <div style="margin-bottom:20px;">
+    <button class="btn" onclick="loadRequests()">🔄 تحديث البيانات</button>
+    <button class="btn" onclick="showAll()">عرض الكل</button>
+    <button class="btn" onclick="showPending()">قيد الانتظار فقط</button>
+  </div>
+  
+  <div id="errorMsg"></div>
+  <div class="requests-list" id="requestsList"></div>
+</div>
+
+<script>
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+  authDomain: "akramplatform-2c6be.firebaseapp.com",
+  projectId: "akramplatform-2c6be",
+  storageBucket: "akramplatform-2c6be.firebasestorage.app",
+  messagingSenderId: "132959399686",
+  appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+};
+
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(app);
+
+let allRequests = [];
+
+async function loadRequests() {
+  const errorMsg = document.getElementById('errorMsg');
+  const list = document.getElementById('requestsList');
+  errorMsg.innerHTML = '';
+  list.innerHTML = '<div class="empty">جاري التحميل...</div>';
+  
+  try {
+    document.getElementById('firebaseStatus').textContent = 'متصل ✅';
+    document.getElementById('firebaseStatus').style.color = '#22c55e';
+    
+    const snapshot = await db.collection('join_requests').get();
+    allRequests = [];
+    
+    snapshot.forEach(doc => {
+      allRequests.push({
+        docId: doc.id,
+        ...doc.data()
+      });
+    });
+    
+    // ترتيب حسب التاريخ
+    allRequests.sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
+    
+    // تحديث الإحصائيات
+    document.getElementById('totalCount').textContent = allRequests.length;
+    document.getElementById('pendingCount').textContent = allRequests.filter(r => r.status === 'pending').length;
+    document.getElementById('approvedCount').textContent = allRequests.filter(r => r.status === 'approved').length;
+    document.getElementById('rejectedCount').textContent = allRequests.filter(r => r.status === 'rejected').length;
+    
+    renderRequests(allRequests);
+    
+  } catch(error) {
+    console.error('Error:', error);
+    document.getElementById('firebaseStatus').textContent = 'خطأ في الاتصال ❌';
+    document.getElementById('firebaseStatus').style.color = '#ef4444';
+    errorMsg.innerHTML = `<div class="error"><strong>خطأ:</strong> ${error.message}</div>`;
+    list.innerHTML = '';
+  }
+}
+
+function renderRequests(requests) {
+  const list = document.getElementById('requestsList');
+  
+  if (requests.length === 0) {
+    list.innerHTML = '<div class="empty">لا توجد طلبات 🤷‍♂️</div>';
+    return;
+  }
+  
+  list.innerHTML = requests.map(req => {
+    const date = req.createdAt ? new Date(req.createdAt).toLocaleString('ar-EG') : 'غير متاح';
+    const courses = Array.isArray(req.courses) ? req.courses.join(', ') : 'لا يوجد';
+    
+    return `
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-id">ID: ${req.id || req.docId || 'غير متاح'}</div>
+          <div class="req-status ${req.status || 'pending'}">${req.status === 'pending' ? 'قيد الانتظار' : req.status === 'approved' ? 'موافق عليه' : 'مرفوض'}</div>
+        </div>
+        <div class="req-body">
+          <div class="req-field">
+            <div class="req-field-label">👤 الاسم</div>
+            <div class="req-field-value">${req.name || 'غير متاح'}</div>
+          </div>
+          <div class="req-field">
+            <div class="req-field-label">📧 البريد الإلكتروني</div>
+            <div class="req-field-value">${req.email || 'غير متاح'}</div>
+          </div>
+          <div class="req-field">
+            <div class="req-field-label">📱 الهاتف</div>
+            <div class="req-field-value">${req.phone || 'غير متاح'}</div>
+          </div>
+          <div class="req-field">
+            <div class="req-field-label">💼 المجال</div>
+            <div class="req-field-value">${req.field || 'غير متاح'}</div>
+          </div>
+          <div class="req-field">
+            <div class="req-field-label">📚 الكورسات المختارة</div>
+            <div class="req-field-value">${courses}</div>
+          </div>
+          <div class="req-field">
+            <div class="req-field-label">📅 تاريخ التقديم</div>
+            <div class="req-field-value">${date}</div>
+          </div>
+        </div>
+        ${req.notes ? `<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);"><div class="req-field-label">💬 ملاحظات</div><div class="req-field-value">${req.notes}</div></div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function showAll() {
+  renderRequests(allRequests);
+}
+
+function showPending() {
+  const pending = allRequests.filter(r => r.status === 'pending');
+  renderRequests(pending);
+}
+
+// تحميل تلقائي عند فتح الصفحة
+window.addEventListener('DOMContentLoaded', loadRequests);
+</script>
+</body>
+</html>
