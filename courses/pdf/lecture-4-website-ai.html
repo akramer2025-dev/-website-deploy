@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الحصة 4: إنشاء موقع إلكتروني بالذكاء الاصطناعي</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Cairo', sans-serif;
+      line-height: 1.8;
+      color: #1a1a1a;
+      background: #ffffff;
+    }
+    
+    @media print {
+      .slide { page-break-after: always; }
+      .slide:last-child { page-break-after: auto; }
+    }
+    
+    .slide {
+      min-height: 100vh;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      border-bottom: 3px solid #f0f0f0;
+    }
+    
+    .slide-number {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+    
+    .cover-slide {
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      color: white;
+      text-align: center;
+      justify-content: center;
+    }
+    
+    .cover-slide h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+    
+    .cover-slide .subtitle {
+      font-size: 1.5rem;
+      opacity: 0.9;
+      margin-bottom: 40px;
+    }
+    
+    .cover-slide .meta {
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-top: 60px;
+    }
+    
+    .slide h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+    
+    .slide h3 {
+      font-size: 1.8rem;
+      margin: 25px 0 15px;
+      color: #f5576c;
+      font-weight: 700;
+    }
+    
+    .content {
+      font-size: 1.2rem;
+      line-height: 2;
+    }
+    
+    .content ul {
+      list-style: none;
+      margin: 20px 0;
+    }
+    
+    .content li {
+      margin: 15px 0;
+      padding-right: 30px;
+      position: relative;
+    }
+    
+    .content li:before {
+      content: '✓';
+      position: absolute;
+      right: 0;
+      color: #f5576c;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+    
+    .note-box {
+      background: #fff5f7;
+      border-right: 5px solid #f5576c;
+      padding: 25px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+    
+    .good-example {
+      background: #e8f5e9;
+      border-right: 5px solid #4caf50;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+    
+    .tool-card {
+      background: #ffffff;
+      border: 2px solid #f093fb;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+    
+    .real-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      border-radius: 15px;
+      margin: 30px 0;
+      border: 3px solid #e0e0e0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .steps {
+      counter-reset: step-counter;
+    }
+    
+    .steps li {
+      counter-increment: step-counter;
+    }
+    
+    .steps li:before {
+      content: counter(step-counter) "️⃣";
+      font-size: 1.2rem;
+    }
+    
+    .highlight {
+      background: #fff3cd;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    
+    .link-box {
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    
+    .link-box a {
+      color: white;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+    
+    .code-box {
+      background: #2d2d2d;
+      color: #0f0;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      direction: ltr;
+      text-align: left;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER SLIDE -->
+  <div class="slide cover-slide">
+    <h1>💻 الحصة الرابعة</h1>
+    <div class="subtitle">إنشاء موقع إلكتروني بالذكاء الاصطناعي<br>من الصفر في دقائق!</div>
+    <img src="https://i.imgur.com/snapchat-creative.jpg" alt="Creative AI" class="real-image" 
+         style="max-width: 400px; margin: 40px auto; border: none; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
+    <div class="meta">
+      <strong>كورس التسويق الاحترافي</strong><br>
+      الحصة 4 من 5 | المدرب: أكرم مصطفى
+    </div>
+  </div>
+
+  <!-- SLIDE 1: WHY WEBSITE -->
+  <div class="slide">
+    <div class="slide-number">1</div>
+    <h2>ليه محتاج موقع إلكتروني؟</h2>
+    
+    <div class="content">
+      <h3>🌐 الموقع = بيتك على الإنترنت</h3>
+      
+      <div class="note-box">
+        <p><strong>Facebook و Instagram ملكهم مش ملكك!</strong></p>
+        <p>ممكن يقفلوا صفحتك أو حسابك في أي وقت 🚫</p>
+      </div>
+      
+      <h3>✅ مميزات الموقع الإلكتروني:</h3>
+      <ul>
+        <li><strong>ملكية كاملة:</strong> محدش يقدر يشيله منك</li>
+        <li><strong>مصداقية عالية:</strong> الموقع يدل على احترافية</li>
+        <li><strong>SEO:</strong> يظهر في نتائج جوجل</li>
+        <li><strong>تحكم كامل:</strong> تصميم، محتوى، تحليلات</li>
+        <li><strong>بيع مباشر:</strong> متجر إلكتروني + دفع أونلاين</li>
+        <li><strong>24/7:</strong> يشتغل طول الوقت بدون توقف</li>
+      </ul>
+      
+      <div class="good-example">
+        <strong>💡 إحصائية مهمة:</strong> 84% من العملاء يدوروا على موقعك قبل ما يشتروا منك!
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: AI TOOLS OVERVIEW -->
+  <div class="slide">
+    <div class="slide-number">2</div>
+    <h2>أدوات الذكاء الاصطناعي 🤖</h2>
+    
+    <div class="content">
+      <h3>🚀 3 طرق لإنشاء موقع بالـ AI:</h3>
+      
+      <div class="tool-card">
+        <strong>1️⃣ VS Code + GitHub Copilot (للمحترفين):</strong><br>
+        برمجة احترافية بمساعدة الذكاء الاصطناعي<br>
+        <em>✅ مجاني ✅ تحكم كامل ❌ يحتاج خبرة بسيطة</em>
+      </div>
+      
+      <div class="tool-card">
+        <strong>2️⃣ v0.dev by Vercel (الأسرع!):</strong><br>
+        اكتب وصف واحصل على موقع جاهز في ثواني<br>
+        <em>✅ سريع جداً ✅ كود نظيف ⚠️ محدود مجاناً</em>
+      </div>
+      
+      <div class="tool-card">
+        <strong>3️⃣ WordPress + AI Plugins:</strong><br>
+        أشهر منصة + إضافات ذكاء اصطناعي<br>
+        <em>✅ سهل ✅ آلاف القوالب ⚠️ استضافة مدفوعة</em>
+      </div>
+      
+      <div class="note-box">
+        <strong>🎯 في هذه الحصة:</strong> هنركز على v0.dev (الأسرع) و VS Code (الأقوى)
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: V0.DEV -->
+  <div class="slide">
+    <div class="slide-number">3</div>
+    <h2>v0.dev - موقع في ثواني ⚡</h2>
+    
+    <div class="link-box">
+      🚀 <strong>الرابط المباشر:</strong><br>
+      <a href="https://v0.dev" target="_blank">v0.dev</a>
+    </div>
+    
+    <div class="content">
+      <h3>📝 كيف تستخدمه؟</h3>
+      
+      <ul class="steps">
+        <li>افتح <a href="https://v0.dev" target="_blank" style="color: #f5576c;">v0.dev</a></li>
+        <li>سجل دخول بحساب GitHub (مجاني)</li>
+        <li>اكتب Prompt واضح بالإنجليزية:
+          <div class="code-box">
+"Create a modern landing page for a pizza restaurant.<br>
+Include: hero section, menu, about us, contact form.<br>
+Use red and yellow colors. Add a CTA button 'Order Now'."
+          </div>
+        </li>
+        <li>اضغط <span class="highlight">Generate</span></li>
+        <li>انتظر 10-30 ثانية ⏱️</li>
+        <li>شاهد 3 نسخ مختلفة من الموقع</li>
+        <li>اختار الأفضل → <span class="highlight">Edit</span> لو عايز تعدل</li>
+        <li>حمّل الكود → <span class="highlight">Export Code</span></li>
+      </ul>
+      
+      <div class="good-example">
+        <strong>✅ المميزات:</strong>
+        <ul>
+          <li>كود نظيف واحترافي (React + Tailwind CSS)</li>
+          <li>Responsive (يشتغل على الموبايل)</li>
+          <li>سريع جداً</li>
+        </ul>
+      </div>
+      
+      <div class="note-box">
+        <strong>💰 السعر:</strong> مجاني ل 200 credit شهرياً (10-20 موقع)
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: VS CODE + AI -->
+  <div class="slide">
+    <div class="slide-number">4</div>
+    <h2>VS Code + AI - للمحترفين 💪</h2>
+    
+    <div class="link-box">
+      📥 <strong>تحميل VS Code:</strong><br>
+      <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a>
+    </div>
+    
+    <div class="content">
+      <h3>🛠️ الإعداد:</h3>
+      
+      <ul class="steps">
+        <li>نزّل وثبّت <strong>VS Code</strong></li>
+        <li>افتح VS Code → Extensions (Ctrl+Shift+X)</li>
+        <li>ابحث عن:
+          <ul style="margin-right: 40px;">
+            <li><strong>GitHub Copilot</strong> (مجاني للطلاب)</li>
+            <li>أو <strong>Codeium</strong> (مجاني للجميع!)</li>
+            <li>أو <strong>Tabnine</strong></li>
+          </ul>
+        </li>
+        <li>ثبّت الإضافة وسجل دخول</li>
+      </ul>
+      
+      <h3>✍️ كيف تستخدمه؟</h3>
+      <ul class="steps">
+        <li>افتح ملف جديد: <code>index.html</code></li>
+        <li>اكتب تعليق بالعربي أو الإنجليزي:
+          <div class="code-box">
+&lt;!-- Create a hero section with a background image --&gt;
+          </div>
+        </li>
+        <li>AI هيكتبلك الكود تلقائياً!</li>
+        <li>اضغط <span class="highlight">Tab</span> للقبول</li>
+      </ul>
+      
+      <div class="link-box">
+        🆓 <strong>Codeium (مجاني):</strong><br>
+        <a href="https://codeium.com" target="_blank">codeium.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: WORDPRESS -->
+  <div class="slide">
+    <div class="slide-number">5</div>
+    <h2>WordPress + AI Plugins 🔌</h2>
+    
+    <div class="link-box">
+      🌐 <strong>إنشاء موقع WordPress:</strong><br>
+      <a href="https://wordpress.com" target="_blank">wordpress.com</a>
+    </div>
+    
+    <div class="content">
+      <h3>📦 أفضل إضافات AI لـ WordPress:</h3>
+      
+      <div class="tool-card">
+        <strong>1️⃣ Elementor AI:</strong><br>
+        تصميم صفحات بالسحب والإفلات + AI لكتابة المحتوى<br>
+        💰 مجاني (نسخة محدودة)
+      </div>
+      
+      <div class="tool-card">
+        <strong>2️⃣ AI Engine:</strong><br>
+        ChatGPT مدمج في WordPress - كتابة مقالات، ترجمة، SEO<br>
+        💰 29$ سنوياً
+      </div>
+      
+      <div class="tool-card">
+        <strong>3️⃣ 10Web AI Builder:</strong><br>
+        إنشاء موقع كامل بالذكاء الاصطناعي<br>
+        💰 10$ شهرياً
+      </div>
+      
+      <h3>🚀 خطوات سريعة:</h3>
+      <ul class="steps">
+        <li>افتح <a href="https://wordpress.com" style="color: #f5576c;">wordpress.com</a></li>
+        <li>اختر <span class="highlight">"Start your website"</span></li>
+        <li>اجب على الأسئلة (نوع الموقع، الاسم...</li>
+        <li>اختر قالب جاهز</li>
+        <li>ثبّت Elementor AI من Plugins</li>
+        <li>ابدأ التعديل!</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: HOSTING & DOMAIN -->
+  <div class="slide">
+    <div class="slide-number">6</div>
+    <h2>الاستضافة والدومين 🌐</h2>
+    
+    <div class="content">
+      <h3>🏠 الاستضافة (Hosting):</h3>
+      <div class="note-box">
+        <p>الاستضافة = المكان اللي الموقع بتاعك عايش فيه على الإنترنت</p>
+      </div>
+      
+      <h3>✅ أفضل شركات استضافة:</h3>
+      
+      <div class="tool-card">
+        <strong>🅰️ للمبتدئين:</strong>
+        <ul style="margin-top: 10px;">
+          <li><strong>Hostinger:</strong> 2.99$ شهرياً</li>
+          <li><strong>Bluehost:</strong> 2.95$ شهرياً</li>
+        </ul>
+      </div>
+      
+      <div class="tool-card">
+        <strong>🅱️ مجاني تماماً:</strong>
+        <ul style="margin-top: 10px;">
+          <li><strong>Vercel:</strong> لمواقع React/Next.js</li>
+          <li><strong>Netlify:</strong> لمواقع HTML/CSS/JS</li>
+          <li><strong>GitHub Pages:</strong> استضافة مجانية</li>
+        </ul>
+      </div>
+      
+      <h3>📌 الدومين (Domain):</h3>
+      <div class="note-box">
+        <p>الدومين = عنوان موقعك (مثال: mybusiness.com)</p>
+      </div>
+      
+      <div class="link-box">
+        🔍 <strong>شراء دومين:</strong><br>
+        <a href="https://www.namecheap.com" target="_blank">Namecheap</a> (8.88$ سنوياً)<br>
+        <a href="https://domains.google" target="_blank">Google Domains</a> (12$ سنوياً)
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: DEPLOYMENT -->
+  <div class="slide">
+    <div class="slide-number">7</div>
+    <h2>نشر الموقع على الإنترنت 🚀</h2>
+    
+    <div class="content">
+      <h3>🌐 Vercel - أسهل طريقة (مجاني):</h3>
+      
+      <div class="link-box">
+        🔗 <strong>رابط Vercel:</strong><br>
+        <a href="https://vercel.com" target="_blank">vercel.com</a>
+      </div>
+      
+      <ul class="steps">
+        <li>افتح <a href="https://vercel.com" style="color: #f5576c;">vercel.com</a></li>
+        <li>سجل دخول بحساب GitHub</li>
+        <li>ارفع ملفات الموقع إلى GitHub Repository</li>
+        <li>في Vercel: <span class="highlight">New Project</span></li>
+        <li>اختار الـ Repository</li>
+        <li>اضغط <span class="highlight">Deploy</span></li>
+        <li>انتظر دقيقة ⏱️</li>
+        <li>✅ موقعك LIVE على الإنترنت!</li>
+      </ul>
+      
+      <div class="good-example">
+        <strong>✅ المميزات:</strong>
+        <ul>
+          <li>مجاني 100%</li>
+          <li>SSL مجاني (HTTPS)</li>
+          <li>سرعة فائقة</li>
+          <li>تحديث تلقائي عند رفع كود جديد</li>
+        </ul>
+      </div>
+      
+      <div class="note-box">
+        <strong>💡 نصيحة:</strong> ممكن تربط دومينك الخاص بـ Vercel مجاناً!
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: SEO BASICS -->
+  <div class="slide">
+    <div class="slide-number">8</div>
+    <h2>SEO - اظهر في جوجل 🔍</h2>
+    
+    <div class="content">
+      <h3>🎯 أساسيات SEO للموقع:</h3>
+      
+      <ul class="steps">
+        <li><strong>Title Tag:</strong> عنوان الصفحة (50-60 حرف)
+          <div class="code-box">
+&lt;title&gt;بيتزا توب - أفضل بيتزا في القاهرة&lt;/title&gt;
+          </div>
+        </li>
+        <li><strong>Meta Description:</strong> وصف الصفحة (150-160 حرف)
+          <div class="code-box">
+&lt;meta name="description" content="توصيل بيتزا سريع في القاهرة خلال 20 دقيقة. اطلب الآن!"&gt;
+          </div>
+        </li>
+        <li><strong>Keywords:</strong> الكلمات المفتاحية في المحتوى</li>
+        <li><strong>Alt Text للصور:</strong> وصف الصورة
+          <div class="code-box">
+&lt;img src="pizza.jpg" alt="بيتزا مارجريتا طازجة"&gt;
+          </div>
+        </li>
+        <li><strong>سرعة الموقع:</strong> استخدم أدوات ضغط الصور</li>
+        <li><strong>Mobile-Friendly:</strong> تأكد إن الموقع يشتغل على الموبايل</li>
+      </ul>
+      
+      <div class="link-box">
+        🛠️ <strong>أداة فحص SEO مجانية:</strong><br>
+        <a href="https://pagespeed.web.dev" target="_blank">Google PageSpeed Insights</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: HOMEWORK -->
+  <div class="slide">
+    <div class="slide-number">9</div>
+    <h2>📝 تكليف الحصة الرابعة</h2>
+    
+    <div class="content">
+      <h3>المطلوب منك (اختر واحد):</h3>
+      
+      <div class="tool-card">
+        <strong>خيار 1 (الأسهل):</strong>
+        <ul class="steps" style="list-style-position: inside;">
+          <li>استخدم v0.dev لإنشاء موقع</li>
+          <li>حمّل الكود</li>
+          <li>ارفعه على Vercel</li>
+          <li>اربط دومين (اختياري)</li>
+        </ul>
+      </div>
+      
+      <div class="tool-card">
+        <strong>خيار 2 (للمحترفين):</strong>
+        <ul class="steps" style="list-style-position: inside;">
+          <li>استخدم VS Code + AI (Codeium)</li>
+          <li>اكتب كود الموقع بمساعدة AI</li>
+          <li>ارفعه على GitHub</li>
+          <li>انشره على Vercel</li>
+        </ul>
+      </div>
+      
+      <div class="tool-card">
+        <strong>خيار 3 (المرن):</strong>
+        <ul class="steps" style="list-style-position: inside;">
+          <li>أنشئ موقع WordPress</li>
+          <li>ثبّت Elementor AI</li>
+          <li>صمم 3 صفحات على الأقل</li>
+        </ul>
+      </div>
+      
+      <h3>✅ المتطلبات:</h3>
+      <ul>
+        <li>الموقع يحتوي على 3 صفحات على الأقل</li>
+        <li>متجاوب مع الموبايل</li>
+        <li>SEO أساسي (Title + Description)</li>
+      </ul>
+      
+      <div class="note-box">
+        <p><strong>⏰ الوقت المتوقع:</strong> 2-4 ساعات</p>
+        <p><strong>📤 التسليم:</strong> رابط الموقع الحي (Live)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL SLIDE -->
+  <div class="slide cover-slide">
+    <h1>✅ انتهت الحصة الرابعة</h1>
+    <div class="subtitle">الحصة القادمة (الأخيرة):<br>التسويق الاحترافي عبر Meta Business Manager<br>+ إطلاق أول حملة إعلانية</div>
+    <div class="meta" style="margin-top: 80px;">
+      <strong>أي أسئلة؟</strong><br>
+      تواصل معنا | المدرب: أكرم مصطفى<br>
+      📧 info@akrammostafa.com
+    </div>
+  </div>
+
+</body>
+</html>

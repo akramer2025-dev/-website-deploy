@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الحصة 2: الهوية البصرية وتصميم الشعار بالذكاء الاصطناعي</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Cairo', sans-serif;
+      line-height: 1.8;
+      color: #1a1a1a;
+      background: #ffffff;
+    }
+    
+    @media print {
+      .slide { page-break-after: always; }
+      .slide:last-child { page-break-after: auto; }
+    }
+    
+    .slide {
+      min-height: 100vh;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      border-bottom: 3px solid #f0f0f0;
+    }
+    
+    .slide-number {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+    
+    .cover-slide {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      text-align: center;
+      justify-content: center;
+    }
+    
+    .cover-slide h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+    
+    .cover-slide .subtitle {
+      font-size: 1.5rem;
+      opacity: 0.9;
+      margin-bottom: 40px;
+    }
+    
+    .cover-slide .meta {
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-top: 60px;
+    }
+    
+    .slide h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #667eea;
+      font-weight: 800;
+    }
+    
+    .slide h3 {
+      font-size: 1.8rem;
+      margin: 25px 0 15px;
+      color: #764ba2;
+      font-weight: 700;
+    }
+    
+    .content {
+      font-size: 1.2rem;
+      line-height: 2;
+    }
+    
+    .content ul {
+      list-style: none;
+      margin: 20px 0;
+    }
+    
+    .content li {
+      margin: 15px 0;
+      padding-right: 30px;
+      position: relative;
+    }
+    
+    .content li:before {
+      content: '✓';
+      position: absolute;
+      right: 0;
+      color: #667eea;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+    
+    .note-box {
+      background: #f8f9fa;
+      border-right: 5px solid #667eea;
+      padding: 25px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+    
+    .good-example {
+      background: #e8f5e9;
+      border-right: 5px solid #4caf50;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+    
+    .bad-example {
+      background: #ffebee;
+      border-right: 5px solid #f44336;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+    
+    .real-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      border-radius: 15px;
+      margin: 30px 0;
+      border: 3px solid #e0e0e0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .steps {
+      counter-reset: step-counter;
+    }
+    
+    .steps li {
+      counter-increment: step-counter;
+    }
+    
+    .steps li:before {
+      content: counter(step-counter) "️⃣";
+      font-size: 1.2rem;
+    }
+    
+    .highlight {
+      background: #fff3cd;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    
+    .link-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    
+    .link-box a {
+      color: white;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+    
+    .tool-card {
+      background: #ffffff;
+      border: 2px solid #667eea;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER SLIDE -->
+  <div class="slide cover-slide">
+    <h1>🎨 الحصة الثانية</h1>
+    <div class="subtitle">الهوية البصرية الاحترافية<br>+ تصميم الشعار بالذكاء الاصطناعي</div>
+    <img src="https://i.imgur.com/placeholder-linkedin.jpg" alt="أكرم مصطفى" class="real-image" 
+         style="max-width: 400px; margin: 40px auto; border: none; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
+    <div class="meta">
+      <strong>كورس التسويق الاحترافي</strong><br>
+      الحصة 2 من 5 | المدرب: أكرم مصطفى
+    </div>
+  </div>
+
+  <!-- SLIDE 1: WHAT IS BRAND IDENTITY -->
+  <div class="slide">
+    <div class="slide-number">1</div>
+    <h2>ما هي الهوية البصرية؟</h2>
+    
+    <div class="content">
+      <h3>🎨 الهوية البصرية = وجه مشروعك!</h3>
+      
+      <div class="note-box">
+        <p><strong>الهوية البصرية</strong> هي كل العناصر المرئية اللي بتميز مشروعك عن غيره</p>
+      </div>
+      
+      <h3>العناصر الأساسية:</h3>
+      <ul>
+        <li><strong>الشعار (Logo):</strong> الرمز اللي يمثل مشروعك</li>
+        <li><strong>الألوان:</strong> 2-3 ألوان رسمية تستخدمها دايماً</li>
+        <li><strong>الخطوط (Fonts):</strong> نوع الخط في التصميمات</li>
+        <li><strong>أسلوب التصميم:</strong> مينيمال؟ براق؟ كلاسيكي؟</li>
+        <li><strong>اسم المشروع:</strong> سهل، مميز، لا يُنسى</li>
+      </ul>
+      
+      <div class="good-example">
+        <strong>أمثلة ناجحة:</strong>
+        <ul>
+          <li>🍔 ماكدونالدز → الأصفر والأحمر + حرف M</li>
+          <li>☕ ستاربكس → الأخضر + شعار البحّار</li>
+          <li>🍕 بيتزا هت → الأحمر + القبعة</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: CHOOSING NAME -->
+  <div class="slide">
+    <div class="slide-number">2</div>
+    <h2>اختيار اسم المشروع</h2>
+    
+    <div class="content">
+      <h3>✅ مواصفات الاسم المثالي:</h3>
+      <ul>
+        <li>قصير (3-10 أحرف فقط)</li>
+        <li>سهل النطق والكتابة</li>
+        <li>مش مُستخدم من قبل</li>
+        <li>له علاقة بمجالك</li>
+        <li>Domain متاح (.com أو .net)</li>
+      </ul>
+      
+      <div class="good-example">
+        <h3>✅ أمثلة جيدة:</h3>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li><strong>زاد</strong> (محل ورقيات)</li>
+          <li><strong>نوّر</strong> (إضاءة منازل)</li>
+          <li><strong>بيتك</strong> (عقارات)</li>
+        </ul>
+      </div>
+      
+      <div class="bad-example">
+        <h3>❌ أمثلة سيئة:</h3>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>شركة محمد أحمد للتجارة العامة (طويل وممل!)</li>
+          <li>XYZ123 (مفيش معنى!)</li>
+          <li>الأفضل في مصر (ادعاء مبالغ فيه)</li>
+        </ul>
+      </div>
+      
+      <div class="link-box">
+        🔍 <strong>تحقق من توفر الاسم:</strong><br>
+        <a href="https://namecheckr.com" target="_blank">namecheckr.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: COLOR PSYCHOLOGY -->
+  <div class="slide">
+    <div class="slide-number">3</div>
+    <h2>سيكولوجية الألوان</h2>
+    
+    <div class="content">
+      <h3>🎨 كل لون له معنى ومشاعر:</h3>
+      
+      <div class="tool-card" style="border-color: #f44336;">
+        <strong>🔴 الأحمر:</strong> طاقة، شغف، عجلة، جوع<br>
+        <em>الاستخدام:</em> مطاعم Fast Food، عروض، تخفيضات
+      </div>
+      
+      <div class="tool-card" style="border-color: #2196f3;">
+        <strong>🔵 الأزرق:</strong> ثقة، احترافية، أمان، هدوء<br>
+        <em>الاستخدام:</em> بنوك، تكنولوجيا، صحة، تأمين
+      </div>
+      
+      <div class="tool-card" style="border-color: #4caf50;">
+        <strong>🟢 الأخضر:</strong> طبيعة، صحة، نمو، نقاء<br>
+        <em>الاستخدام:</em> صيدليات، عضوي، بيئة، زراعة
+      </div>
+      
+      <div class="tool-card" style="border-color: #ffeb3b;">
+        <strong>🟡 الأصفر:</strong> سعادة، طفولة، تفاؤل، انتباه<br>
+        <em>الاستخدام:</em> منتجات أطفال، لعب، تعليم
+      </div>
+      
+      <div class="tool-card" style="border-color: #9c27b0;">
+        <strong>🟣 الأرجواني:</strong> فخامة، إبداع، رفاهية، غموض<br>
+        <em>الاستخدام:</em> تجميل، موضة، ساعات، عطور
+      </div>
+      
+      <div class="note-box">
+        <strong>💡 نصيحة:</strong> اختار لونين فقط (أساسي + ثانوي) + لون محايد (أسود/رمادي/أبيض)
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: GEMINI AI LOGO -->
+  <div class="slide">
+    <div class="slide-number">4</div>
+    <h2>تصميم الشعار بـ Google Gemini</h2>
+    
+    <div class="link-box">
+      🤖 <strong>رابط Gemini:</strong><br>
+      <a href="https://gemini.google.com" target="_blank">gemini.google.com</a>
+    </div>
+    
+    <div class="content">
+      <h3>🎨 Prompt احترافي للشعار:</h3>
+      
+      <div class="note-box" style="direction: ltr; text-align: left;">
+        <code style="display: block; background: #2d2d2d; color: #0f0; padding: 15px; border-radius: 5px; font-size: 1rem;">
+"Design a modern minimalist logo for [اسم المشروع], 
+a [نوع النشاط] business. 
+Use [اللون الأساسي] and [اللون الثانوي] colors. 
+Style: clean, professional, vector art. 
+White background, high quality, no text."
+        </code>
+      </div>
+      
+      <h3>مثال عملي:</h3>
+      <div class="good-example" style="direction: ltr; text-align: left;">
+        <code>"Design a modern minimalist logo for a coffee shop called 'Bean Haven'. 
+Use brown and cream colors. 
+Style: clean, professional, vector art. 
+Include a stylized coffee bean. 
+White background, high quality."</code>
+      </div>
+      
+      <h3>خطوات التنفيذ:</h3>
+      <ul class="steps">
+        <li>افتح <a href="https://gemini.google.com" target="_blank" style="color: #667eea;">gemini.google.com</a></li>
+        <li>الصق الـ Prompt بعد تعديله</li>
+        <li>اضغط Enter</li>
+        <li>جرّب Prompts مختلفة (5-10 محاولات)</li>
+        <li>اختار التصميم الأفضل</li>
+        <li>حمّله بجودة عالية (PNG)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: CANVA LOGO DESIGN -->
+  <div class="slide">
+    <div class="slide-number">5</div>
+    <h2>تصميم الشعار بـ Canva</h2>
+    
+    <div class="link-box">
+      🎨 <strong>رابط Canva:</strong><br>
+      <a href="https://www.canva.com" target="_blank">canva.com</a>
+    </div>
+    
+    <div class="content">
+      <h3>🚀 الطريقة السريعة:</h3>
+      
+      <ul class="steps">
+        <li>افتح <a href="https://www.canva.com" target="_blank" style="color: #667eea;">Canva</a> واعمل حساب مجاني</li>
+        <li>اكتب في البحث: <span class="highlight">"Logo"</span></li>
+        <li>اختار مقاس: <span class="highlight">500 × 500 بكسل</span> (مربع)</li>
+        <li>استخدم <strong>Text to Image AI</strong> (من القائمة الجانبية)</li>
+        <li>اكتب Prompt مشابه لـ Gemini</li>
+        <li>أو اختار قالب جاهز وعدّل عليه</li>
+        <li>غيّر الألوان لألوانك الرسمية</li>
+        <li>حمّل بصيغة <span class="highlight">PNG شفافة</span> (Transparent Background)</li>
+      </ul>
+      
+      <div class="good-example">
+        <h3>✅ مميزات Canva:</h3>
+        <ul>
+          <li>سهل جداً للمبتدئين</li>
+          <li>آلاف القوالب الجاهزة</li>
+          <li>أدوات AI مدمجة (Magic Design, Background Remover)</li>
+          <li>مجاني (مع نسخة Pro اختيارية)</li>
+        </ul>
+      </div>
+      
+      <div class="note-box">
+        <strong>💡 Canva Pro:</strong> جرّب النسخة المجانية 30 يوم (Background Remover + Magic Resize)
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: LOGO VARIATIONS -->
+  <div class="slide">
+    <div class="slide-number">6</div>
+    <h2>نسخ مختلفة من الشعار</h2>
+    
+    <div class="content">
+      <h3>🎨 احفظ 4 نسخ من الشعار:</h3>
+      
+      <div class="tool-card">
+        <strong>1️⃣ النسخة الملونة (Primary Logo):</strong><br>
+        بالألوان الرسمية - للاستخدام العام
+      </div>
+      
+      <div class="tool-card">
+        <strong>2️⃣ النسخة البيضاء (White Version):</strong><br>
+        للخلفيات الداكنة والفيديوهات
+      </div>
+      
+      <div class="tool-card">
+        <strong>3️⃣ النسخة السوداء (Black Version):</strong><br>
+        للطباعة والمستندات الرسمية
+      </div>
+      
+      <div class="tool-card">
+        <strong>4️⃣ Favicon (16×16):</strong><br>
+        نسخة صغيرة جداً للمواقع والتطبيقات
+      </div>
+      
+      <h3>📐 المقاسات المطلوبة:</h3>
+      <ul>
+        <li>شعار كبير: 1000 × 1000 بكسل (للطباعة)</li>
+        <li>شعار متوسط: 500 × 500 بكسل (للويب)</li>
+        <li>Facebook Profile: 180 × 180 بكسل</li>
+        <li>Instagram Profile: 320 × 320 بكسل</li>
+      </ul>
+      
+      <div class="note-box">
+        <strong>⚠️ ملحوظة:</strong> احفظ كل النسخ في مجلد واحد اسمه "Brand Assets"
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: BRAND KIT -->
+  <div class="slide">
+    <div class="slide-number">7</div>
+    <h2>Brand Kit - الحزمة الكاملة</h2>
+    
+    <div class="content">
+      <h3>📦 ملف الهوية البصرية الكامل:</h3>
+      
+      <div class="note-box">
+        <p>اعمل مجلد واحد فيه كل حاجة بخصوص الهوية البصرية</p>
+      </div>
+      
+      <h3>محتويات المجلد:</h3>
+      <ul>
+        <li><strong>📁 Logos/</strong>
+          <ul style="margin-right: 40px;">
+            <li>logo-color.png (شفاف)</li>
+            <li>logo-white.png (شفاف)</li>
+            <li>logo-black.png (شفاف)</li>
+            <li>favicon.png (16×16)</li>
+          </ul>
+        </li>
+        <li><strong>🎨 Colors.txt</strong>
+          <ul style="margin-right: 40px;">
+            <li>اللون الأساسي: #1877F2</li>
+            <li>اللون الثانوي: #42B72A</li>
+            <li>اللون المحايد: #F0F2F5</li>
+          </ul>
+        </li>
+        <li><strong>✍️ Fonts.txt</strong>
+          <ul style="margin-right: 40px;">
+            <li>خط العناوين: Cairo Bold</li>
+            <li>خط النصوص: Cairo Regular</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <div class="link-box">
+        🔗 <strong>خطوط عربية مجانية:</strong><br>
+        <a href="https://fonts.google.com/?subset=arabic" target="_blank">Google Fonts (Arabic)</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: TOOLS -->
+  <div class="slide">
+    <div class="slide-number">8</div>
+    <h2>🛠️ أدوات إضافية مفيدة</h2>
+    
+    <div class="content">
+      <div class="link-box">
+        🎨 <strong>Coolors - توليد لوحات ألوان:</strong><br>
+        <a href="https://coolors.co" target="_blank">coolors.co</a>
+      </div>
+      
+      <div class="link-box">
+        🔤 <strong>Font Pair - اختيار خطوط متناسقة:</strong><br>
+        <a href="https://fontpair.co" target="_blank">fontpair.co</a>
+      </div>
+      
+      <div class="link-box">
+        🖼️ <strong>Remove.bg - إزالة الخلفية:</strong><br>
+        <a href="https://remove.bg" target="_blank">remove.bg</a>
+      </div>
+      
+      <div class="link-box">
+        ✏️ <strong>Figma - تصميم احترافي (مجاني):</strong><br>
+        <a href="https://figma.com" target="_blank">figma.com</a>
+      </div>
+      
+      <div class="link-box">
+        🤖 <strong>Looka AI - توليد شعارات بالذكاء الاصطناعي:</strong><br>
+        <a href="https://looka.com" target="_blank">looka.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: HOMEWORK -->
+  <div class="slide">
+    <div class="slide-number">9</div>
+    <h2>📝 تكليف الحصة الثانية</h2>
+    
+    <div class="content">
+      <h3>المطلوب منك:</h3>
+      
+      <ul class="steps">
+        <li>اختر اسم لمشروعك (تأكد من توفره)</li>
+        <li>اختر لونين رسميين باستخدام Coolors</li>
+        <li>صمم شعار باستخدام:
+          <ul style="margin-right: 40px;">
+            <li>Gemini AI (جرّب 5 Prompts مختلفة) أو</li>
+            <li>Canva (استخدم AI أو قوالب جاهزة)</li>
+          </ul>
+        </li>
+        <li>احفظ 4 نسخ من الشعار (ملون، أبيض، أسود، favicon)</li>
+        <li>اصنع ملف Brand Kit كامل</li>
+        <li>ارفع الشعار على صفحة Facebook</li>
+      </ul>
+      
+      <div class="note-box">
+        <p><strong>⏰ الوقت المتوقع:</strong> 2-3 ساعات</p>
+        <p><strong>📤 التسليم:</strong> ملف Brand Kit مضغوط (ZIP) + screenshot</p>
+      </div>
+      
+      <div class="good-example">
+        <strong>💡 نصيحة:</strong> لا تتسرع! الهوية البصرية هتستخدمها سنين طويلة
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL SLIDE -->
+  <div class="slide cover-slide">
+    <h1>✅ انتهت الحصة الثانية</h1>
+    <div class="subtitle">الحصة القادمة:<br>كتابة البوستات الاحترافية<br>(Hook, Caption, CTA)</div>
+    <div class="meta" style="margin-top: 80px;">
+      <strong>أي أسئلة؟</strong><br>
+      تواصل معنا | المدرب: أكرم مصطفى<br>
+      📧 info@akrammostafa.com
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الحصة 3: كتابة البوستات الاحترافية - Hook, Caption, CTA</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Cairo', sans-serif;
+      line-height: 1.8;
+      color: #1a1a1a;
+      background: #ffffff;
+    }
+    
+    @media print {
+      .slide { page-break-after: always; }
+      .slide:last-child { page-break-after: auto; }
+    }
+    
+    .slide {
+      min-height: 100vh;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      border-bottom: 3px solid #f0f0f0;
+    }
+    
+    .slide-number {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background: linear-gradient(135deg, #ff0050, #00f2ea);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+    
+    .cover-slide {
+      background: linear-gradient(135deg, #ff0050, #00f2ea);
+      color: white;
+      text-align: center;
+      justify-content: center;
+    }
+    
+    .cover-slide h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+    
+    .cover-slide .subtitle {
+      font-size: 1.5rem;
+      opacity: 0.9;
+      margin-bottom: 40px;
+    }
+    
+    .cover-slide .meta {
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-top: 60px;
+    }
+    
+    .slide h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, #ff0050, #00f2ea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+    
+    .slide h3 {
+      font-size: 1.8rem;
+      margin: 25px 0 15px;
+      color: #ff0050;
+      font-weight: 700;
+    }
+    
+    .content {
+      font-size: 1.2rem;
+      line-height: 2;
+    }
+    
+    .content ul {
+      list-style: none;
+      margin: 20px 0;
+    }
+    
+    .content li {
+      margin: 15px 0;
+      padding-right: 30px;
+      position: relative;
+    }
+    
+    .content li:before {
+      content: '✓';
+      position: absolute;
+      right: 0;
+      color: #ff0050;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+    
+    .note-box {
+      background: #fff5f7;
+      border-right: 5px solid #ff0050;
+      padding: 25px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+    
+    .good-example {
+      background: #e8f5e9;
+      border-right: 5px solid #4caf50;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+    
+    .bad-example {
+      background: #ffebee;
+      border-right: 5px solid #f44336;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+    
+    .post-example {
+      background: #ffffff;
+      border: 2px solid #e0e0e0;
+      padding: 25px;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .real-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      border-radius: 15px;
+      margin: 30px 0;
+      border: 3px solid #e0e0e0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .steps {
+      counter-reset: step-counter;
+    }
+    
+    .steps li {
+      counter-increment: step-counter;
+    }
+    
+    .steps li:before {
+      content: counter(step-counter) "️⃣";
+      font-size: 1.2rem;
+    }
+    
+    .highlight {
+      background: #fff3cd;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    
+    .formula-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin: 25px 0;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER SLIDE -->
+  <div class="slide cover-slide">
+    <h1>✍️ الحصة الثالثة</h1>
+    <div class="subtitle">كتابة البوستات الاحترافية<br>Hook - Caption - Call-to-Action</div>
+    <img src="https://i.imgur.com/tiktok-creator.jpg" alt="Viral AI Creator" class="real-image" 
+         style="max-width: 400px; margin: 40px auto; border: none; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
+    <div class="meta">
+      <strong>كورس التسويق الاحترافي</strong><br>
+      الحصة 3 من 5 | المدرب: أكرم مصطفى
+    </div>
+  </div>
+
+  <!-- SLIDE 1: POST ANATOMY -->
+  <div class="slide">
+    <div class="slide-number">1</div>
+    <h2>تشريح البوست الناجح</h2>
+    
+    <div class="content">
+      <h3>📝 كل بوست فيه 5 عناصر أساسية:</h3>
+      
+      <div class="formula-box">
+        Hook + Problem + Solution + Proof + CTA = 🔥 بوست ناجح
+      </div>
+      
+      <ul class="steps">
+        <li><strong>Hook (الصنارة):</strong> أول سطر - الأهم! 🎣<br>
+          <em>يجذب الانتباه في ثانيتين</em>
+        </li>
+        <li><strong>Problem (المشكلة):</strong> تعاطف مع الجمهور 😔<br>
+          <em>اذكر المشكلة اللي بيعانوا منها</em>
+        </li>
+        <li><strong>Solution (الحل):</strong> منتجك/خدمتك 💡<br>
+          <em>قدم الحل بطريقة مشوقة</em>
+        </li>
+        <li><strong>Proof (الدليل):</strong> مصداقية 📊<br>
+          <em>أرقام، شهادات، نتائج حقيقية</em>
+        </li>
+        <li><strong>CTA (دعوة للفعل):</strong> الخطوة التالية ➡️<br>
+          <em>قولهم يعملوا إيه دلوقتي</em>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: HOOK MASTERY -->
+  <div class="slide">
+    <div class="slide-number">2</div>
+    <h2>Hook - الصنارة 🎣</h2>
+    
+    <div class="content">
+      <h3>ليه الـ Hook مهم جداً؟</h3>
+      <div class="note-box">
+        <p>⏱️ عندك <strong>2 ثانية فقط</strong> عشان تجذب انتباه المستخدم قبل ما يعمل Scroll!</p>
+      </div>
+      
+      <h3>✅ أنواع الـ Hook الناجحة:</h3>
+      
+      <div class="good-example">
+        <strong>1️⃣ السؤال الصادم:</strong>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>"عاوز تخس 10 كيلو في شهر بدون جيم؟"</li>
+          <li>"ليه 90% من المطاعم بتفشل في السنة الأولى؟"</li>
+          <li>"تعرف إنك بتخسر 50% من عملاءك بسبب كده؟"</li>
+        </ul>
+      </div>
+      
+      <div class="good-example">
+        <strong>2️⃣ الرقم المثير:</strong>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>"5000 جنيه في 3 أيام من فيديو واحد!"</li>
+          <li>"237 عميل جديد في أسبوع واحد 🚀"</li>
+          <li>"حققت 1000$ من Instagram في 30 يوم"</li>
+        </ul>
+      </div>
+      
+      <div class="good-example">
+        <strong>3️⃣ الاعتراف الجريء:</strong>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>"غلطة كلفتني 50,000 جنيه!"</li>
+          <li>"كنت بكسب 3000 جنيه شهرياً... دلوقتي 30,000"</li>
+          <li>"فشلت 7 مرات قبل ما أنجح"</li>
+        </ul>
+      </div>
+      
+      <div class="good-example">
+        <strong>4️⃣ الوعد السريع:</strong>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>"5 دقايق هتغير شغلك للأبد"</li>
+          <li>"الحيلة اللي هتوفرلك 10 ساعات أسبوعياً"</li>
+          <li>"الطريقة اللي البنوك مش عاوزاك تعرفها"</li>
+        </ul>
+      </div>
+      
+      <div class="bad-example">
+        <h3>❌ Hooks ضعيفة (تجنبها!):</h3>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>"مرحباً بكم في صفحتنا" (ممل!)</li>
+          <li>"منتج جديد وصل" (مين يهتم؟)</li>
+          <li>"نحن الأفضل في مصر" (ادعاء بدون دليل)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: CAPTION WRITING -->
+  <div class="slide">
+    <div class="slide-number">3</div>
+    <h2>Caption - جسم البوست ✍️</h2>
+    
+    <div class="content">
+      <h3>📝 قواعد الكابشن الاحترافي:</h3>
+      
+      <ul class="steps">
+        <li><strong>الطول المثالي:</strong> 50-150 كلمة
+          <ul style="margin-right: 40px;">
+            <li>قصير = سريع وواضح</li>
+            <li>طويل جداً = ملل ومحدش هيكمل</li>
+          </ul>
+        </li>
+        <li><strong>أسلوب المحادثة:</strong> اكتب زي ما بتتكلم
+          <ul style="margin-right: 40px;">
+            <li>✅ "عاوز تعرف السر؟"</li>
+            <li>❌ "إننا نود أن نعلمكم بأن..."</li>
+          </ul>
+        </li>
+        <li><strong>استخدم الإيموجي:</strong> لكن بذكاء! 😎<br>
+          <em>2-3 إيموجي كفاية - مش كل كلمة 🚫</em>
+        </li>
+        <li><strong>فقرات قصيرة:</strong> سطر أو سطرين
+          <ul style="margin-right: 40px;">
+            <li>الناس مش بتقرا كتل كبيرة من النص</li>
+            <li>اترك مسافات بين الفقرات</li>
+          </ul>
+        </li>
+        <li><strong>القصة تبيع:</strong> احكي قصة حقيقية
+          <ul style="margin-right: 40px;">
+            <li>قصة عميل نجح</li>
+            <li>تجربتك الشخصية</li>
+            <li>موقف طريف حصلك</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <div class="note-box">
+        <strong>💡 نصيحة ذهبية:</strong> اكتب Caption لشخص واحد، مش للجميع. استخدم "أنت" بدل "الجميع" أو "العملاء"
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: CTA MAGIC -->
+  <div class="slide">
+    <div class="slide-number">4</div>
+    <h2>Call-to-Action - دعوة للفعل 🎯</h2>
+    
+    <div class="content">
+      <h3>🚀 الـ CTA هو اللي بيحول القارئ لعميل!</h3>
+      
+      <div class="note-box">
+        <p>قاعدة: <strong>كل بوست لازم يكون فيه CTA واضح!</strong></p>
+      </div>
+      
+      <h3>✅ أنواع الـ CTA حسب الهدف:</h3>
+      
+      <div class="good-example">
+        <strong>🛒 للبيع المباشر:</strong>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>"اطلب دلوقتي → [رابط]"</li>
+          <li>"آخر 5 قطع متبقية - احجز النهاردة"</li>
+          <li>"اشتري الآن واحصل على خصم 20%"</li>
+        </ul>
+      </div>
+      
+      <div class="good-example">
+        <strong>💬 لزيادة التفاعل:</strong>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>"إيه رأيك؟ قولنا في التعليقات 👇"</li>
+          <li>"تاج صاحبك اللي محتاج يشوف ده! 🏷️"</li>
+          <li>"احفظ البوست عشان ترجعله تاني 🔖"</li>
+        </ul>
+      </div>
+      
+      <div class="good-example">
+        <strong>📞 للتواصل:</strong>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>"ابعتلنا رسالة دلوقتي للحجز"</li>
+          <li>"اتصل على: 01xxxxxxxxx"</li>
+          <li>"كلمنا واتساب: [رقم]"</li>
+        </ul>
+      </div>
+      
+      <div class="good-example">
+        <strong>🔗 لزيارة الموقع:</strong>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>"اعرف أكثر من هنا → [رابط]"</li>
+          <li>"الرابط في Bio ⬆️"</li>
+          <li>"زور موقعنا: www.example.com"</li>
+        </ul>
+      </div>
+      
+      <div class="bad-example">
+        <h3>❌ أخطاء في الـ CTA:</h3>
+        <ul style="list-style: disc; margin-right: 20px;">
+          <li>عدم وجود CTA نهائياً</li>
+          <li>"لمزيد من المعلومات..." (ممل!)</li>
+          <li>CTA ضعيف: "شكراً" (مش دعوة للفعل!)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: COMPLETE POST EXAMPLE -->
+  <div class="slide">
+    <div class="slide-number">5</div>
+    <h2>مثال عملي كامل 💼</h2>
+    
+    <div class="content">
+      <h3>🍕 بوست لمطعم بيتزا:</h3>
+      
+      <div class="post-example">
+        <p style="font-size: 1.3rem; font-weight: 700; color: #ff0050; margin-bottom: 15px;">
+          🍕 "عاوز بيتزا توصل سخنة في 20 دقيقة؟"
+        </p>
+        <p style="margin: 10px 0;">
+          كل ما تطلب بيتزا من أي مكان، بتوصلك بعد ساعة وبرّدت خلاص 😔
+        </p>
+        <p style="margin: 10px 0;">
+          لكن إحنا في بيتزا توب، عندنا وعد:<br>
+          <strong>لو متوصلتش في 20 دقيقة - البيتزا عليّنا مجاناً! 🎁</strong>
+        </p>
+        <p style="margin: 10px 0;">
+          أكثر من 5000 أوردر اتسلّم في الوقت المحدد الشهر اللي فات ⏱️
+        </p>
+        <p style="margin: 15px 0 0; font-weight: 700; color: #1877f2;">
+          👉 اطلب دلوقتي: 01xxxxxxxxx<br>
+          أو من التطبيق: [رابط]
+        </p>
+      </div>
+      
+      <h3>📊 التحليل:</h3>
+      <ul>
+        <li>✅ <strong>Hook:</strong> سؤال يمس الجمهور</li>
+        <li>✅ <strong>Problem:</strong> البيتزا بتوصل بايظة</li>
+        <li>✅ <strong>Solution:</strong> توصيل في 20 دقيقة</li>
+        <li>✅ <strong>Proof:</strong> 5000 أوردر ناجح</li>
+        <li>✅ <strong>CTA:</strong> واضح ومباشر (رقم + رابط)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: IMAGE/VIDEO CTA -->
+  <div class="slide">
+    <div class="slide-number">6</div>
+    <h2>CTA في الصورة/الفيديو 🖼️</h2>
+    
+    <div class="content">
+      <h3>📸 CTA في التصميم:</h3>
+      
+      <ul class="steps">
+        <li><strong>زرار واضح:</strong> 
+          <div style="background: #1877f2; color: white; display: inline-block; padding: 10px 30px; border-radius: 25px; margin: 10px 0; font-weight: 700;">
+            اطلب الآن →
+          </div>
+        </li>
+        <li><strong>نص بارز:</strong> "خصم 50% لآخر 24 ساعة"</li>
+        <li><strong>سهم يشير:</strong> ➡️ ⬅️ ⬇️ للفت الانتباه</li>
+        <li><strong>كود QR:</strong> للوصول السريع للموقع</li>
+        <li><strong>رقم التليفون:</strong> بخط كبير وواضح</li>
+      </ul>
+      
+      <h3>🎬 CTA في الفيديو:</h3>
+      <ul>
+        <li>اذكر الـ CTA في <span class="highlight">أول 3 ثواني</span></li>
+        <li>كرره في <span class="highlight">آخر 5 ثواني</span></li>
+        <li>اعرض الـ CTA على الشاشة (Text Overlay)</li>
+        <li>استخدم صوتك: "ابعتلنا رسالة دلوقتي!"</li>
+      </ul>
+      
+      <div class="note-box">
+        <strong>⚠️ ملحوظة:</strong> الناس بتشوف الصورة/الفيديو قبل ما تقرا الكابشن - حط CTA في الاتنين!
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: A/B TESTING -->
+  <div class="slide">
+    <div class="slide-number">7</div>
+    <h2>A/B Testing - اختبار ما يشتغل 🧪</h2>
+    
+    <div class="content">
+      <h3>🔬 المنهج العلمي لتحسين البوستات:</h3>
+      
+      <div class="note-box">
+        <p>مفيش حد يعرف بوست هيشتغل ولا لا قبل ما ينزل!</p>
+        <p>الحل: <strong>اختبر نسختين وشوف الأفضل</strong></p>
+      </div>
+      
+      <h3>📊 مثال عملي:</h3>
+      
+      <div class="post-example">
+        <strong>نسخة A:</strong><br>
+        "عاوز تخس 10 كيلو في شهر؟"<br><br>
+        
+        <strong>نسخة B:</strong><br>
+        "5000 شخص خسروا 10 كيلو في 30 يوم - إزاي؟"
+      </div>
+      
+      <h3>📈 المقاييس المهمة:</h3>
+      <ul>
+        <li><strong>Reach:</strong> كام واحد شاف البوست</li>
+        <li><strong>Engagement:</strong> تفاعل (لايك، كومنت، شير)</li>
+        <li><strong>Click-Through Rate:</strong> كام واحد ضغط على الرابط</li>
+        <li><strong>Conversions:</strong> كام واحد اشترى/سجل</li>
+      </ul>
+      
+      <div class="good-example">
+        <strong>💡 نصيحة:</strong> جرب 3-5 نسخ مختلفة، والنسخة الفائزة استخدمها في الإعلانات المدفوعة!
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: BEST PRACTICES -->
+  <div class="slide">
+    <div class="slide-number">8</div>
+    <h2>أفضل الممارسات 🏆</h2>
+    
+    <div class="content">
+      <h3>✅ Do's (افعل):</h3>
+      <ul>
+        <li>اكتب لشخص واحد، مش للجماهير</li>
+        <li>استخدم أسلوب المحادثة</li>
+        <li>قص قصة حقيقية</li>
+        <li>استخدم الأرقام (دليل ملموس)</li>
+        <li>اطلب التفاعل (سؤال، تاج، كومنت)</li>
+        <li>حط Hashtags ذات صلة (3-5 فقط)</li>
+        <li>انشر في الأوقات الذهبية (9 ص، 1 ظ، 8 م)</li>
+      </ul>
+      
+      <h3>❌ Don'ts (لا تفعل):</h3>
+      <ul>
+        <li>كتابة كتل نصية كبيرة</li>
+        <li>استخدام أسلوب رسمي ممل</li>
+        <li>الادعاءات الكاذبة</li>
+        <li>إيموجي كتير 🚫</li>
+        <li>نسخ بوستات الآخرين</li>
+        <li>نشر بوستات بيعية فقط (80% قيمة، 20% بيع)</li>
+      </ul>
+      
+      <div class="formula-box" style="font-size: 1.2rem;">
+        قاعدة 80/20:<br>
+        80% محتوى مفيد + 20% بيع = ❤️ جمهور مخلص
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: HOMEWORK -->
+  <div class="slide">
+    <div class="slide-number">9</div>
+    <h2>📝 تكليف الحصة الثالثة</h2>
+    
+    <div class="content">
+      <h3>المطلوب منك:</h3>
+      
+      <ul class="steps">
+        <li>اكتب 5 بوستات كاملة لمشروعك باستخدام صيغة:<br>
+          <strong>Hook + Problem + Solution + Proof + CTA</strong>
+        </li>
+        <li>جرّب 3 أنواع Hooks مختلفة:
+          <ul style="margin-right: 40px;">
+            <li>سؤال صادم</li>
+            <li>رقم مثير</li>
+            <li>اعتراف جريء</li>
+          </ul>
+        </li>
+        <li>صمم صورة لبوست واحد + حط CTA واضح عليها</li>
+        <li>انشر البوستات على صفحتك</li>
+        <li>قيس النتائج بعد 3 أيام:
+          <ul style="margin-right: 40px;">
+            <li>Reach</li>
+            <li>Engagement</li>
+            <li>Clicks (إذا كان فيه رابط)</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <div class="note-box">
+        <p><strong>⏰ الوقت المتوقع:</strong> 2-3 ساعات</p>
+        <p><strong>📤 التسليم:</strong> screenshot من البوستات + النتائج</p>
+      </div>
+      
+      <div class="good-example">
+        <strong>💡 نصيحة:</strong> استخدم ChatGPT أو Gemini لتوليد أفكار Hooks، لكن عدّل عليها عشان تناسب صوتك!
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL SLIDE -->
+  <div class="slide cover-slide">
+    <h1>✅ انتهت الحصة الثالثة</h1>
+    <div class="subtitle">الحصة القادمة:<br>إنشاء موقع إلكتروني بالذكاء الاصطناعي<br>(VS Code + AI Tools)</div>
+    <div class="meta" style="margin-top: 80px;">
+      <strong>أي أسئلة؟</strong><br>
+      تواصل معنا | المدرب: أكرم مصطفى<br>
+      📧 info@akrammostafa.com
+    </div>
+  </div>
+
+</body>
+</html>

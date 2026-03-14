@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الحصة 5: التسويق الاحترافي عبر Meta Business Manager</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Cairo', sans-serif;
+      line-height: 1.8;
+      color: #1a1a1a;
+      background: #ffffff;
+    }
+    
+    @media print {
+      .slide { page-break-after: always; }
+      .slide:last-child { page-break-after: auto; }
+    }
+    
+    .slide {
+      min-height: 100vh;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      border-bottom: 3px solid #f0f0f0;
+    }
+    
+    .slide-number {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background: linear-gradient(135deg, #1877f2, #0a52bf);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+    
+    .cover-slide {
+      background: linear-gradient(135deg, #1877f2, #0a52bf);
+      color: white;
+      text-align: center;
+      justify-content: center;
+    }
+    
+    .cover-slide h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+    
+    .cover-slide .subtitle {
+      font-size: 1.5rem;
+      opacity: 0.9;
+      margin-bottom: 40px;
+    }
+    
+    .cover-slide .meta {
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-top: 60px;
+    }
+    
+    .slide h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #1877f2;
+      font-weight: 800;
+    }
+    
+    .slide h3 {
+      font-size: 1.8rem;
+      margin: 25px 0 15px;
+      color: #0a52bf;
+      font-weight: 700;
+    }
+    
+    .content {
+      font-size: 1.2rem;
+      line-height: 2;
+    }
+    
+    .content ul {
+      list-style: none;
+      margin: 20px 0;
+    }
+    
+    .content li {
+      margin: 15px 0;
+      padding-right: 30px;
+      position: relative;
+    }
+    
+    .content li:before {
+      content: '✓';
+      position: absolute;
+      right: 0;
+      color: #1877f2;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+    
+    .note-box {
+      background: #f0f7ff;
+      border-right: 5px solid #1877f2;
+      padding: 25px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+    
+    .good-example {
+      background: #e8f5e9;
+      border-right: 5px solid #4caf50;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+    
+    .bad-example {
+      background: #ffebee;
+      border-right: 5px solid #f44336;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+    
+    .real-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      border-radius: 15px;
+      margin: 30px 0;
+      border: 3px solid #e0e0e0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .steps {
+      counter-reset: step-counter;
+    }
+    
+    .steps li {
+      counter-increment: step-counter;
+    }
+    
+    .steps li:before {
+      content: counter(step-counter) "️⃣";
+      font-size: 1.2rem;
+    }
+    
+    .highlight {
+      background: #fff3cd;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    
+    .link-box {
+      background: linear-gradient(135deg, #1877f2, #0a52bf);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    
+    .link-box a {
+      color: white;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+    
+    .metric-card {
+      background: #ffffff;
+      border: 2px solid #1877f2;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px 0;
+      text-align: center;
+    }
+    
+    .metric-number {
+      font-size: 2.5rem;
+      color: #1877f2;
+      font-weight: 800;
+      display: block;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER SLIDE -->
+  <div class="slide cover-slide">
+    <h1>📊 الحصة الخامسة (الأخيرة)</h1>
+    <div class="subtitle">التسويق الاحترافي عبر Meta Business Manager<br>+ إطلاق أول حملة إعلانية ناجحة</div>
+    <img src="https://i.imgur.com/facebook-pro.jpg" alt="أكرم مصطفى - Facebook Expert" class="real-image" 
+         style="max-width: 400px; margin: 40px auto; border: none; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
+    <div class="meta">
+      <strong>كورس التسويق الاحترافي</strong><br>
+      الحصة 5 من 5 | المدرب: أكرم مصطفى
+    </div>
+  </div>
+
+  <!-- SLIDE 1: META BUSINESS MANAGER -->
+  <div class="slide">
+    <div class="slide-number">1</div>
+    <h2>ما هو Meta Business Manager؟</h2>
+    
+    <div class="content">
+      <h3>💼 مركز التحكم الكامل!</h3>
+      
+      <div class="note-box">
+        <p><strong>Meta Business Manager</strong> = مكان واحد لإدارة كل النشاطات التسويقية على Facebook و Instagram</p>
+      </div>
+      
+      <h3>✅ ليه مهم؟</h3>
+      <ul>
+        <li>إدارة صفحات متعددة من مكان واحد</li>
+        <li>إنشاء وإدارة الحملات الإعلانية</li>
+        <li>إضافة فريق عمل (موظفين، مديرين)</li>
+        <li>Meta Pixel وتتبع التحويلات</li>
+        <li>Facebook Insights متقدم</li>
+        <li>ربط Instagram و WhatsApp Business</li>
+        <li>فصل بين الحساب الشخصي والعمل</li>
+      </ul>
+      
+      <div class="link-box">
+        🔗 <strong>إنشاء Business Manager:</strong><br>
+        <a href="https://business.facebook.com/create" target="_blank">business.facebook.com/create</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: SETUP -->
+  <div class="slide">
+    <div class="slide-number">2</div>
+    <h2>إعداد Business Manager</h2>
+    
+    <div class="content">
+      <h3>🛠️ الخطوات:</h3>
+      
+      <ul class="steps">
+        <li>افتح <a href="https://business.facebook.com/create" style="color: #1877f2;">business.facebook.com/create</a></li>
+        <li>سجل دخول بحساب Facebook الشخصي</li>
+        <li>أدخل:
+          <ul style="margin-right: 40px;">
+            <li>اسم البيزنس</li>
+            <li>اسمك</li>
+            <li>إيميل العمل</li>
+          </ul>
+        </li>
+        <li>اضغط <span class="highlight">Submit</span></li>
+        <li>أضف صفحة Facebook:
+          <ul style="margin-right: 40px;">
+            <li>Business Settings → Pages → Add</li>
+            <li>Add a Page → أدخل اسم الصفحة</li>
+          </ul>
+        </li>
+        <li>أنشئ حساب إعلاني (Ad Account):
+          <ul style="margin-right: 40px;">
+            <li>Business Settings → Ad Accounts → Add</li>
+            <li>Create a new ad account</li>
+            <li>اختر: Egypt, EGP (جنيه مصري)</li>
+          </ul>
+        </li>
+        <li>أضف طريقة دفع (Payment Method):
+          <ul style="margin-right: 40px;">
+            <li>Payment Settings → Add Payment Method</li>
+            <li>أدخل بيانات بطاقة Visa/Mastercard</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <div class="note-box">
+        <strong>💳 طريقة الدفع:</strong> تقدر تستخدم بطاقة بنكية عادية أو Prepaid Card (Meeza مثلاً)
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: CAMPAIGN OBJECTIVES -->
+  <div class="slide">
+    <div class="slide-number">3</div>
+    <h2>أهداف الحملة الإعلانية 🎯</h2>
+    
+    <div class="content">
+      <h3>📊 اختار الهدف الصح:</h3>
+      
+      <div class="metric-card">
+        <strong>🔵 Awareness (الوعي)</strong>
+        <span class="metric-number">وصول</span>
+        <p>وصول لأكبر عدد ممكن<br><em>الاستخدام: براندن جديدلزيادة المتابعين</em></p>
+      </div>
+      
+      <div class="metric-card">
+        <strong>🟢 Traffic (الزيارات)</strong>
+        <span class="metric-number">👥</span>
+        <p>جلب زوار للموقع/صفحة الهبوط<br><em>الاستخدام: عندك موقع أو Landing Page</em></p>
+      </div>
+      
+      <div class="metric-card">
+        <strong>🟡 Engagement (التفاعل)</strong>
+        <span class="metric-number">❤️ 💬</span>
+        <p>زيادة التفاعل (لايك، كومنت، شير)<br><em>الاستخدام: بوست مهم عايز ينتشر</em></p>
+      </div>
+      
+      <div class="metric-card">
+        <strong>🟠 Leads (العملاء المحتملين)</strong>
+        <span class="metric-number">📋</span>
+        <p>جمع بيانات (إيميل، رقم، اسم)<br><em>الاستخدام: تسجيل في خدمة/كورس</em></p>
+      </div>
+      
+      <div class="metric-card">
+        <strong>🔴 Sales (المبيعات)</strong>
+        <span class="metric-number">💰</span>
+        <p>مبيعات مباشرة عبر الموقع<br><em>الاستخدام: متجر إلكتروني</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: FIRST CAMPAIGN -->
+  <div class="slide">
+    <div class="slide-number">4</div>
+    <h2>إطلاق أول حملة 🚀</h2>
+    
+    <div class="link-box">
+      📱 <strong>رابط Ads Manager:</strong><br>
+      <a href="https://adsmanager.facebook.com" target="_blank">adsmanager.facebook.com</a>
+    </div>
+    
+    <div class="content">
+      <h3>📝 الخطوات الكاملة:</h3>
+      
+      <ul class="steps">
+        <li><strong>Campaign Level (مستوى الحملة):</strong>
+          <ul style="margin-right: 40px;">
+            <li>اضغط <span class="highlight">Create</span></li>
+            <li>اختار الهدف: <strong>Engagement</strong> (للمبتدئين)</li>
+            <li>اسم الحملة: "Test Campaign - [التاريخ]"</li>
+          </ul>
+        </li>
+        <li><strong>Ad Set Level (مستوى الاستهداف):</strong>
+          <ul style="margin-right: 40px;">
+            <li><strong>الجمهور:</strong>
+              <ul style="margin-right: 20px;">
+                <li>الموقع: Egypt، Cairo (أو محافظتك)</li>
+                <li>العمر: 20-45</li>
+                <li>الجنس: الكل (أو حسب منتجك)</li>
+                <li>الاهتمامات: ذات صلة بمنتجك</li>
+              </ul>
+            </li>
+            <li><strong>المواضع:</strong> Automatic Placements</li>
+            <li><strong>الميزانية:</strong>
+              <ul style="margin-right: 20px;">
+                <li>Daily Budget: 50 جنيه يومياً</li>
+                <li>المدة: 3-5 أيام</li>
+              </ul>
+            </li>
+            <li><strong>الجدولة:</strong> تشغيل مستمر (أو حدد أوقات)</li>
+          </ul>
+        </li>
+        <li><strong>Ad Level (الإعلان نفسه):</strong>
+          <ul style="margin-right: 40px;">
+            <li>اختار الصفحة وحساب Instagram</li>
+            <li>ارفع الصورة/الفيديو</li>
+            <li>اكتب:
+              <ul style="margin-right: 20px;">
+                <li><strong>Primary Text:</strong> 50-80 كلمة (Hook قوي!)</li>
+                <li><strong>Headline:</strong> 5-7 كلمات</li>
+                <li><strong>Description:</strong> سطرين</li>
+              </ul>
+            </li>
+            <li>اختار CTA: "Learn More" أو "Shop Now"</li>
+            <li>حط رابط الموقع (إذا كان الهدف Traffic)</li>
+          </ul>
+        </li>
+        <li>اضغط <span class="highlight">Publish</span> ✅</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: TARGETING -->
+  <div class="slide">
+    <div class="slide-number">5</div>
+    <h2>الاستهداف الذكي 🎯</h2>
+    
+    <div class="content">
+      <h3>🔍 كيف تحدد الجمهور المثالي؟</h3>
+      
+      <div class="good-example">
+        <h3>✅ مثال عملي - محل ملابس رياضية:</h3>
+        <ul>
+          <li><strong>الموقع:</strong> Cairo, Giza, Alexandria</li>
+          <li><strong>العمر:</strong> 18-35</li>
+          <li><strong>الجنس:</strong> الكل</li>
+          <li><strong>الاهتمامات:</strong>
+            <ul style="margin-right: 20px;">
+              <li>Fitness and wellness</li>
+              <li>Gym</li>
+              <li>Sports</li>
+              <li>Nike, Adidas (براندات منافسة!)</li>
+            </ul>
+          </li>
+          <li><strong>السلوكيات:</strong>
+            <ul style="margin-right: 20px;">
+              <li>Online shoppers</li>
+              <li>Engaged shoppers</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      
+      <h3>📊 حجم الجمهور المثالي:</h3>
+      <div class="note-box">
+        <ul>
+          <li>✅ <strong>500,000 - 2,000,000:</strong> مثالي للمبتدئين</li>
+          <li>⚠️ <strong>أقل من 100,000:</strong> محدود جداً</li>
+          <li>⚠️ <strong>أكثر من 5,000,000:</strong> واسع جداً</li>
+        </ul>
+      </div>
+      
+      <h3>🔥 نصيحة ذهبية:</h3>
+      <div class="good-example">
+        <p><strong>استبعد:</strong> الناس اللي اشتروا منك فعلاً عشان ما تصرفش عليهم تاني!</p>
+        <p>Exclude → Custom Audience → People who purchased</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: BUDGET & BIDDING -->
+  <div class="slide">
+    <div class="slide-number">6</div>
+    <h2>الميزانية والمزايدة 💰</h2>
+    
+    <div class="content">
+      <h3>💵 كام تصرف؟</h3>
+      
+      <div class="metric-card">
+        <strong>للمبتدئين:</strong>
+        <span class="metric-number">50-100 جنيه/يوم</span>
+        <p>لمدة 3-5 أيام اختبار</p>
+      </div>
+      
+      <div class="metric-card">
+        <strong>للمتوسطين:</strong>
+        <span class="metric-number">200-500 جنيه/يوم</span>
+        <p>بعد اختبار واستقرار النتائج</p>
+      </div>
+      
+      <div class="metric-card">
+        <strong>للمحترفين:</strong>
+        <span class="metric-number">1000+ جنيه/يوم</span>
+        <p>حملات سكيل بنتائج مثبتة</p>
+      </div>
+      
+      <h3>📊 استراتيجية المزايدة:</h3>
+      <ul>
+        <li><strong>Lowest Cost (القيمة الأقل):</strong> الأفضل للمبتدئين - Facebook بيدير كل حاجة</li>
+        <li><strong>Cost Cap:</strong> حدد أقصى تكلفة لكل نتيجة</li>
+        <li><strong>Bid Cap:</strong> للمحترفين فقط</li>
+      </ul>
+      
+      <div class="note-box">
+        <strong>💡 نصيحة:</strong> ابدأ بـ <span class="highlight">Lowest Cost</span> أول 7 أيام عشان Facebook يتعلم جمهورك
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: METRICS -->
+  <div class="slide">
+    <div class="slide-number">7</div>
+    <h2>قياس النتائج 📊</h2>
+    
+    <div class="content">
+      <h3>📈 المقاييس الأساسية:</h3>
+      
+      <div class="metric-card">
+        <strong>Reach (الوصول)</strong>
+        <span class="metric-number">👥 10,000</span>
+        <p>عدد الأشخاص اللي شافوا الإعلان</p>
+      </div>
+      
+      <div class="metric-card">
+        <strong>Impressions (مرات الظهور)</strong>
+        <span class="metric-number">👀 15,000</span>
+        <p>عدد مرات ظهور الإعلان (ممكن نفس الشخص يشوفه أكثر من مرة)</p>
+      </div>
+      
+      <div class="metric-card">
+        <strong>CTR - Click-Through Rate</strong>
+        <span class="metric-number">2.5%</span>
+        <p>نسبة الناس اللي ضغطت على الإعلان</p>
+        <ul style="text-align: right; margin-top: 10px;">
+          <li>✅ 2%+ = ممتاز</li>
+          <li>⚠️ أقل من 1% = ضعيف (غيّر التصميم/النص)</li>
+        </ul>
+      </div>
+      
+      <div class="metric-card">
+        <strong>CPC - Cost Per Click</strong>
+        <span class="metric-number">1.50 جنيه</span>
+        <p>تكلفة النقرة الواحدة</p>
+        <ul style="text-align: right; margin-top: 10px;">
+          <li>✅ 0.5-2 جنيه = كويس</li>
+          <li>⚠️ أكثر من 3 جنيه = مكلف</li>
+        </ul>
+      </div>
+      
+      <div class="metric-card">
+        <strong>ROAS - Return on Ad Spend</strong>
+        <span class="metric-number">3.5x</span>
+        <p>عائد الاستثمار (كل 1 جنيه → 3.5 جنيه مبيعات)</p>
+        <ul style="text-align: right; margin-top: 10px;">
+          <li>✅ 3x+ = ممتاز</li>
+          <li>⚠️ أقل من 2x = مش مربح</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: OPTIMIZATION -->
+  <div class="slide">
+    <div class="slide-number">8</div>
+    <h2>تحسين الحملات 🔧</h2>
+    
+    <div class="content">
+      <h3>📊 متى توقف الإعلان؟</h3>
+      
+      <div class="bad-example">
+        <h3>⛔ أوقف الإعلان إذا:</h3>
+        <ul>
+          <li>CTR أقل من 1% بعد 3 أيام</li>
+          <li>CPC أعلى من ميزانيتك المخططة</li>
+          <li>Frequency أكثر من 5 (الناس زهقت!)</li>
+          <li>ROAS أقل من 1x بعد 7 أيام</li>
+        </ul>
+      </div>
+      
+      <h3>✅ كيف تحسّن؟</h3>
+      <ul class="steps">
+        <li><strong>لو CTR واطي:</strong>
+          <ul style="margin-right: 40px;">
+            <li>غيّر الصورة/الفيديو</li>
+            <li>اكتب Hook أقوى</li>
+            <li>جرب CTA مختلف</li>
+          </ul>
+        </li>
+        <li><strong>لو CPC عالي:</strong>
+          <ul style="margin-right: 40px;">
+            <li>ضيّق الاستهداف (استبعد فئات غير مهتمة)</li>
+            <li>حسّن Relevance Score</li>
+            <li>زود الميزانية (قد يقلل CPC!)</li>
+          </ul>
+        </li>
+        <li><strong>لو Frequency عالي:</strong>
+          <ul style="margin-right: 40px;">
+            <li>وقّف الإعلان</li>
+            <li>اعمل إعلان جديد بتصميم مختلف</li>
+            <li>وسّع الجمهور</li>
+          </ul>
+        </li>
+        <li><strong>A/B Testing:</strong>
+          <ul style="margin-right: 40px;">
+            <li>جرب 2-3 إعلانات نفس الوقت</li>
+            <li>الفائز → زود ميزانيته</li>
+            <li>الخاسر → أوقفه</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: ADVANCED TIPS -->
+  <div class="slide">
+    <div class="slide-number">9</div>
+    <h2>نصائح احترافية 🏆</h2>
+    
+    <div class="content">
+      <h3>🔥 أسرار المحترفين:</h3>
+      
+      <div class="good-example">
+        <strong>1️⃣ الوقت الذهبي:</strong>
+        <p>انشر الإعلانات يوم الأحد-الخميس، 7-10 مساءً (أعلى تفاعل في مصر)</p>
+      </div>
+      
+      <div class="good-example">
+        <strong>2️⃣ الفيديو يفوز دايماً:</strong>
+        <p>إعلانات الفيديو بتحقق CTR أعلى بـ 3 أضعاف من الصور!</p>
+      </div>
+      
+      <div class="good-example">
+        <strong>3️⃣ قاعدة 80/20:</strong>
+        <p>80% محتوى مفيد + 20% إعلانات = جمهور مخلص</p>
+      </div>
+      
+      <div class="good-example">
+        <strong>4️⃣ Retargeting (إعادة الاستهداف):</strong>
+        <p>استهدف الناส اللي زاروا موقعك ومشتروش - معدل التحويل 10x أعلى!</p>
+      </div>
+      
+      <div class="good-example">
+        <strong>5️⃣ Lookalike Audiences:</strong>
+        <p>بعد ما تجمع 100 عميل → اعمل Lookalike 1% → جمهور ذهبي!</p>
+      </div>
+      
+      <div class="good-example">
+        <strong>6️⃣ Pixel Events:</strong>
+        <p>ركّب Pixel على موقعك وتتبع: PageView, AddToCart, Purchase</p>
+      </div>
+      
+      <div class="good-example">
+        <strong>7️⃣ التحلي بالصبر:</strong>
+        <p>أول 3 أيام = Learning Phase - Facebook بيتعلم جمهورك، ما تقلقش من النتائج!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: FINAL PROJECT -->
+  <div class="slide">
+    <div class="slide-number">10</div>
+    <h2>📝 المشروع النهائي</h2>
+    
+    <div class="content">
+      <h3>🎓 تكليف نهاية الكورس:</h3>
+      
+      <div class="note-box" style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white; border: none;">
+        <h3 style="color: white; margin-bottom: 15px;">✨ المطلوب منك:</h3>
+        <ul style="font-size: 1.1rem;">
+          <li>أنشئ Meta Business Manager</li>
+          <li>أضف صفحتك وحساب إعلاني</li>
+          <li>أطلق حملة إعلانية كاملة (ميزانية 150 جنيه على الأقل)</li>
+          <li>صمم إعلان احترافي (Hook+Caption+CTA)</li>
+          <li>استهدف جمهور دقيق (500K-2M)</li>
+          <li>شغّل الحملة 3 أيام</li>
+          <li>قيس النتائج وحللها</li>
+          <li>اكتب تقرير بسيط:
+            <ul style="margin-right: 40px;">
+              <li>هدف الحملة</li>
+              <li>الجمهور المستهدف</li>
+              <li>الميزانية</li>
+              <li>النتائج (Reach, CTR, CPC)</li>
+              <li>الدروس المستفادة</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="good-example">
+        <p><strong>⏰ الوقت المتوقع:</strong> 3-5 ساعات</p>
+        <p><strong>📤 التسليم:</strong> Screenshot من Ads Manager + التقرير</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: RESOURCES -->
+  <div class="slide">
+    <div class="slide-number">11</div>
+    <h2>🔗 الموارد المفيدة</h2>
+    
+    <div class="content">
+      <div class="link-box">
+        💼 <strong>Meta Business Manager:</strong><br>
+        <a href="https://business.facebook.com" target="_blank">business.facebook.com</a>
+      </div>
+      
+      <div class="link-box">
+        📱 <strong>Ads Manager:</strong><br>
+        <a href="https://adsmanager.facebook.com" target="_blank">adsmanager.facebook.com</a>
+      </div>
+      
+      <div class="link-box">
+        📚 <strong>Facebook Blueprint (دورات مجانية):</strong><br>
+        <a href="https://www.facebook.com/business/learn" target="_blank">facebook.com/business/learn</a>
+      </div>
+      
+      <div class="link-box">
+        📊 <strong>Meta Pixel Helper (امتداد Chrome):</strong><br>
+        <a href="https://chrome.google.com/webstore/detail/meta-pixel-helper" target="_blank">Meta Pixel Helper</a>
+      </div>
+      
+      <div class="link-box">
+        💡 <strong>Audience Insights:</strong><br>
+        <a href="https://business.facebook.com/ads/audience-insights" target="_blank">Audience Insights</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL SLIDE -->
+  <div class="slide cover-slide">
+    <h1>🎉 مبروك! أنهيت الكورس</h1>
+    <div class="subtitle">دلوقتي أنت جاهز لـ:<br><br>
+      ✅ إنشاء صفحات احترافية<br>
+      ✅ تصميم هوية بصرية مميزة<br>
+      ✅ كتابة بوستات تحقق مبيعات<br>
+      ✅ إنشاء مواقع بالذكاء الاصطناعي<br>
+      ✅ إطلاق حملات إعلانية ناجحة
+    </div>
+    <div class="meta" style="margin-top: 80px;">
+      <strong>ما تنساش تشاركنا نتائجك! 🚀</strong><br>
+      تواصل معنا | المدرب: أكرم مصطفى<br>
+      📧 info@akrammostafa.com<br>
+      📱 Facebook/Instagram: @AkramMostafa
+    </div>
+  </div>
+
+</body>
+</html>
