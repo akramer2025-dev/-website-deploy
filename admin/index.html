@@ -5899,8 +5899,8 @@ function selectLecCourse(key){
   initLecturesSection();
   // seed free course if empty
   if(key === 'free'){ try{ seedFreeLectures(); }catch(e){} }
-  // seed facebook ads course if empty
-  if(key === 'facebook-ads'){ try{ seedFacebookAdsLectures(); }catch(e){} }
+  // Facebook Ads lectures now added manually via "Add 5 Lectures" button
+  // Removed auto-seeding to prevent overwriting user changes
   renderLecList(key);
 }
 
