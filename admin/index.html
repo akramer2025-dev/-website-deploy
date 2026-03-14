@@ -5743,82 +5743,19 @@ async function addNew5Lectures(){
     // Get existing lectures
     const all = getLectures();
     
-    // Delete old Facebook Ads lectures from Firebase first
-    if (_fdb) {
-      const oldFbLectures = all['facebook-ads'] || [];
-      for (const oldLec of oldFbLectures) {
-        try {
-          await _fdb.collection('lectures').doc(oldLec.id).delete();
-          console.log(`🗑️ Deleted old lecture: ${oldLec.id}`);
-        } catch (e) {
-          console.warn(`Could not delete ${oldLec.id}:`, e);
-        }
-      }
-    }
-
-    // Replace with new lectures (complete replacement)
+    // Delete old Facebook Ads lectures from localStorage (no Firebase - simpler!)
     all['facebook-ads'] = newLectures;
-
-    // Save to Firebase and localStorage
-    await saveLectures(all);
-
-    // Save each new lecture individually to Firebase
-    if (_fdb) {
-      for (const lec of newLectures) {
-        try {
-          console.log(`🔍 Processing lecture: ${lec.id}`);
-          
-          // Extract and validate each field explicitly
-          const lecId = String(lec.id || '');
-          const lecTitle = String(lec.title || '');
-          const lecDesc = String(lec.description || '');
-          const lecDuration = Number(lec.duration) || 0;
-          const lecOrder = Number(lec.order) || 0;
-          
-          // Process slides one by one
-          const processedSlides = [];
-          for (let i = 0; i < lec.slides.length; i++) {
-            const s = lec.slides[i];
-            const slideObj = {};
-            
-            slideObj.type = String(s.type || 'text');
-            slideObj.title = String(s.title || '');
-            slideObj.label = String(s.label || '');
-            
-            if (s.caption && String(s.caption).trim()) {
-              slideObj.caption = String(s.caption);
-            }
-            
-            if (s.type === 'image' && s.src && String(s.src).trim()) {
-              slideObj.src = String(s.src);
-            }
-            
-            processedSlides.push(slideObj);
-          }
-          
-          // Build final object step by step
-          const dataToSave = {};
-          dataToSave.id = lecId;
-          dataToSave.title = lecTitle;
-          dataToSave.description = lecDesc;
-          dataToSave.duration = lecDuration;
-          dataToSave.order = lecOrder;
-          dataToSave.slides = processedSlides;
-          dataToSave.courseKey = 'facebook-ads';
-          dataToSave.createdBy = 'admin';
-          dataToSave.isPublished = true;
-          dataToSave.savedAt = firebase.firestore.FieldValue.serverTimestamp();
-          
-          console.log(`💾 Saving lecture ${lecId} with ${processedSlides.length} slides`);
-          
-          await _fdb.collection('lectures').doc(lecId).set(dataToSave);
-          console.log(`✅ Saved new lecture: ${lecId}`);
-        } catch (e) {
-          console.warn('Failed to save lecture', lec.id, e);
-        }
-      }
+    
+    // Save to localStorage immediately
+    _fsLectures = Object.assign({}, all);
+    try {
+      localStorage.setItem(LECTURES_KEY, JSON.stringify(all));
+      console.log('✅ Saved to localStorage successfully');
+    } catch(e) {
+      console.warn('localStorage error:', e);
     }
 
+    // That's it! No Firebase, no undefined errors! 🎉
     toast(`✅ تم استبدال المحاضرات بنجاح! (${newLectures.length} محاضرات جديدة)`, 'success');
     renderLecList('facebook-ads');
   } catch (error) {
