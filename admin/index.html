@@ -5762,43 +5762,45 @@ async function addNew5Lectures(){
     // Save to Firebase and localStorage
     await saveLectures(all);
 
+    // Deep clean function to remove undefined values recursively
+    function deepClean(obj) {
+      if (Array.isArray(obj)) {
+        return obj.map(item => deepClean(item));
+      }
+      if (obj !== null && typeof obj === 'object') {
+        const cleaned = {};
+        Object.keys(obj).forEach(key => {
+          const value = obj[key];
+          if (value !== undefined && value !== null) {
+            cleaned[key] = deepClean(value);
+          }
+        });
+        return cleaned;
+      }
+      return obj;
+    }
+
     // Save each new lecture individually to Firebase
     if (_fdb) {
       for (const lec of newLectures) {
         try {
-          // Clean slides - remove undefined values from each slide
-          const cleanSlides = lec.slides.map(slide => {
-            const cleanSlide = { ...slide };
-            Object.keys(cleanSlide).forEach(key => {
-              if (cleanSlide[key] === undefined) {
-                delete cleanSlide[key];
-              }
-            });
-            return cleanSlide;
-          });
-          
-          // Clean data - remove undefined values
-          const cleanData = {
+          // Deep clean the entire lecture object
+          const cleanedLecture = deepClean({
             id: lec.id,
             title: lec.title,
             description: lec.description,
             duration: lec.duration,
             order: lec.order,
-            slides: cleanSlides,
+            slides: lec.slides,
             courseKey: 'facebook-ads',
-            savedAt: firebase.firestore.FieldValue.serverTimestamp(),
             createdBy: 'admin',
             isPublished: true
-          };
-          
-          // Remove any undefined fields
-          Object.keys(cleanData).forEach(key => {
-            if (cleanData[key] === undefined) {
-              delete cleanData[key];
-            }
           });
           
-          await _fdb.collection('lectures').doc(lec.id).set(cleanData);
+          // Add timestamp separately (can't be cleaned)
+          cleanedLecture.savedAt = firebase.firestore.FieldValue.serverTimestamp();
+          
+          await _fdb.collection('lectures').doc(lec.id).set(cleanedLecture);
           console.log(`✅ Saved new lecture: ${lec.id}`);
         } catch (e) {
           console.warn('Failed to save lecture', lec.id, e);
