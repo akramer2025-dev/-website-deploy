@@ -40,3 +40,24 @@ temp/
 # Backup files
 *.bak
 backup/
+# Testing files
+*.test.js
+check-*.js
+analyze-*.js
+count-*.js
+compare-*.js
+find-*.js
+fix-*.js
+trace-*.js
+verify-*.js
+simple-*.js
+smart-*.js
+final-*.js
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp files
+temp-*
+.DS_Store
