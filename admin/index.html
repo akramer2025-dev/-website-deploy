@@ -5371,11 +5371,11 @@ function compressImg(src, maxW, quality){
 
 // ─── ADD 5 NEW LECTURES ────────────────────────────────────────
 async function addNew5Lectures(){
-  if(!confirm('هل تريد إضافة المحاضرات الـ 5 الجديدة لكورس Facebook Ads؟\n\nستتم إضافة:\n1. إنشاء صفحة Facebook\n2. تصميم الهوية البصرية\n3. كتابة البوستات\n4. إنشاء موقع بالذكاء\n5. Meta Business Manager')){
+  if(!confirm('🗑️ هل تريد استبدال جميع محاضرات Facebook Ads بالمحاضرات الجديدة؟\n\n⚠️ سيتم حذف المحاضرات القديمة واستبدالها بـ:\n1. إنشاء صفحة Facebook (صور + شرح كامل)\n2. تصميم الهوية البصرية (صور + أدوات AI)\n3. كتابة البوستات (صور + أمثلة واقعية)\n4. إنشاء موقع بالذكاء (صور + 3 طرق)\n5. Meta Business Manager (صور + حملة كاملة)\n\n✨ المحاضرات الجديدة تحتوي على:\n• 24 صورة احترافية من Unsplash\n• 12,300 كلمة شرح تفصيلي\n• أمثلة عملية وواجبات')){
     return;
   }
 
-  const loadingToast = toast('⏳ جاري إضافة المحاضرات...', 'loading', 30000);
+  const loadingToast = toast('⏳ جاري حذف القديم وإضافة الجديد...', 'loading', 30000);
 
   const newLectures = [
     {
@@ -5742,26 +5742,29 @@ async function addNew5Lectures(){
   try {
     // Get existing lectures
     const all = getLectures();
-    const fbLectures = all['facebook-ads'] || [];
-
-    // Check if lectures already exist
-    const existingIds = fbLectures.map(l => l.id);
-    const newOnly = newLectures.filter(l => !existingIds.includes(l.id));
-
-    if (newOnly.length === 0) {
-      toast('✅ المحاضرات موجودة بالفعل!', 'success');
-      return;
+    
+    // Delete old Facebook Ads lectures from Firebase first
+    if (_db) {
+      const oldFbLectures = all['facebook-ads'] || [];
+      for (const oldLec of oldFbLectures) {
+        try {
+          await _db.collection('lectures').doc(oldLec.id).delete();
+          console.log(`🗑️ Deleted old lecture: ${oldLec.id}`);
+        } catch (e) {
+          console.warn(`Could not delete ${oldLec.id}:`, e);
+        }
+      }
     }
 
-    // Add new lectures
-    all['facebook-ads'] = [...fbLectures, ...newOnly];
+    // Replace with new lectures (complete replacement)
+    all['facebook-ads'] = newLectures;
 
     // Save to Firebase and localStorage
     await saveLectures(all);
 
-    // Save each lecture individually to Firebase
+    // Save each new lecture individually to Firebase
     if (_db) {
-      for (const lec of newOnly) {
+      for (const lec of newLectures) {
         try {
           await _db.collection('lectures').doc(lec.id).set({
             ...lec,
@@ -5770,17 +5773,23 @@ async function addNew5Lectures(){
             createdBy: _user?.uid || 'admin',
             isPublished: true
           });
+          console.log(`✅ Saved new lecture: ${lec.id}`);
         } catch (e) {
           console.warn('Failed to save lecture', lec.id, e);
         }
       }
     }
 
-    toast(`✅ تم إضافة ${newOnly.length} محاضرات بنجاح!`, 'success');
+    toast(`✅ تم استبدال المحاضرات بنجاح! (${newLectures.length} محاضرات جديدة)`, 'success');
     renderLecList('facebook-ads');
   } catch (error) {
-    console.error('Error adding lectures:', error);
-    toast('❌ فشل إضافة المحاضرات: ' + error.message, 'error');
+    console.error('Error replacing lectures:', error);
+    toast('❌ فشل استبدال المحاضرات: ' + error.message, 'error');
+  } finally {
+    // Dismiss loading toast
+    if (loadingToast && loadingToast.dismiss) {
+      loadingToast.dismiss();
+    }
   }
 }
 
