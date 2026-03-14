@@ -5385,15 +5385,66 @@ async function addNew5Lectures(){
       duration: 45,
       order: 1,
       slides: [
-        { type: 'text', title: 'الغلاف', label: 'صفحة الغلاف' },
-        { type: 'text', title: 'أهداف الحصة', label: 'ما ستتعلمه اليوم' },
-        { type: 'text', title: 'لماذا الصفحات؟', label: 'أهمية صفحات البيزنس' },
-        { type: 'text', title: 'إنشاء صفحة Facebook', label: 'خطوة بخطوة' },
-        { type: 'text', title: 'ربط Instagram', label: 'تحويل لحساب بيزنس' },
-        { type: 'text', title: 'ربط WhatsApp Business', label: 'زر الاتصال السريع' },
-        { type: 'text', title: 'توثيق الصفحة', label: 'العلامة الزرقاء' },
-        { type: 'text', title: 'نصائح احترافية', label: 'أفضل الممارسات' },
-        { type: 'text', title: 'الواجب المنزلي', label: 'تطبيق عملي' }
+        { 
+          type: 'image', 
+          title: 'مرحباً بك في دورة التسويق الاحترافي', 
+          label: 'الحصة الأولى - إنشاء صفحة Facebook',
+          src: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=800&fit=crop',
+          caption: '🎓 في هذه الحصة ستتعلم:\n• إنشاء صفحة Facebook احترافية\n• ربط Instagram Business\n• ربط WhatsApp Business\n• توثيق الصفحة بالعلامة الزرقاء'
+        },
+        { 
+          type: 'text',
+          title: 'لماذا تحتاج صفحة Business على Facebook؟',
+          label: 'الأهمية والفوائد',
+          caption: '📊 الإحصائيات:\n• 3 مليار مستخدم نشط شهرياً\n• 200 مليون نشاط تجاري على Facebook\n• 83% من المستخدمين يكتشفون منتجات جديدة عبر Facebook\n\n✅ الفوائد:\n1. الوصول لملايين العملاء المحتملين\n2. إعلانات مدفوعة قوية وفعالة\n3. تحليلات تفصيلية (Facebook Insights)\n4. ربط مع Instagram وWhatsApp\n5. مجاني 100%!'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 1: اذهب إلى facebook.com/pages/create',
+          label: 'إنشاء الصفحة',
+          src: 'https://images.unsplash.com/photo-1633675254053-d96c7668c3b8?w=1200&h=800&fit=crop',
+          caption: '🔹 الخطوات:\n1. افتح facebook.com/pages/create\n2. اضغط "Get Started"\n3. اختر "Business or Brand"\n4. املأ البيانات:\n   • اسم الصفحة (مهم جداً!)\n   • الفئة (Category)\n   • الوصف (50-150 حرف)\n5. اضغط "Create Page"'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 2: تخصيص صورة Profile و Cover',
+          label: 'الصور الاحترافية',
+          src: 'https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=1200&h=800&fit=crop',
+          caption: '📐 المقاسات المثالية:\n\n🔸 Profile Picture:\n• 180x180 بكسل (ظهور كامل)\n• 360x360 بكسل (جودة عالية)\n• يُعرض دائري\n• استخدم اللوجو\n\n🔸 Cover Photo:\n• 820x312 بكسل (Desktop)\n• 640x360 بكسل (Mobile)\n• تجنب النصوص الكثيرة\n\n💡 نصيحة: استخدم Canva.com لتصميم احترافي'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 3: ربط Instagram Business',
+          label: 'دمج الحسابات',
+          src: 'https://images.unsplash.com/photo-1611262588024-d12430b98920?w=1200&h=800&fit=crop',
+          caption: '📱 كيفية الربط:\n\n1️⃣ حوّل حساب Instagram لـ Business:\n   • Instagram Settings\n   • Switch to Professional Account\n   • Choose Business\n\n2️⃣ اربط مع Facebook:\n   • Page Settings\n   • Instagram\n   • Connect Account\n   • أدخل username/password\n\n✅ الفوائد:\n• نشر متزامن\n• ردود تلقائية\n• إعلانات موحدة'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 4: ربط WhatsApp Business',
+          label: 'زر الاتصال المباشر',
+          src: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=1200&h=800&fit=crop',
+          caption: '💬 خطوات الربط:\n\n1️⃣ حمّل WhatsApp Business:\n   📲 من App Store/Google Play\n\n2️⃣ أنشئ حساب بيزنس:\n   • رقم هاتف جديد\n   • اسم النشاط\n   • الفئة\n   • الوصف\n\n3️⃣ اربط مع Facebook:\n   • Page Settings\n   • WhatsApp\n   • Add Button\n   • أدخل رقم WhatsApp\n\n✨ النتيجة: زر "Send Message" على الصفحة!'
+        },
+        { 
+          type: 'image',
+          title: 'خطوة 5: توثيق الصفحة (العلامة الزرقاء)',
+          label: 'Badge المصداقية',
+          src: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=800&fit=crop',
+          caption: '🔵 متى تطلب التوثيق؟\n\nبعد استيفاء الشروط:\n✅ 100+ متابع\n✅ نشاط منتظم\n✅ بيانات كاملة\n✅ رقم هاتف موثق\n\n📝 كيف تطلب:\n1. Settings → General\n2. Page Verification\n3. Verify this Page\n4. اختر طريقة:\n   • رقم هاتف\n   • مستند رسمي\n5. انتظر 2-7 أيام\n\n⚠️ التوثيق غير مضمون'
+        },
+        { 
+          type: 'text',
+          title: 'نصائح احترافية لنجاح صفحتك',
+          label: 'Best Practices',
+          caption: '🔥 10 نصائح ذهبية:\n\n1️⃣ انشر بانتظام (5-7 مرات أسبوعياً)\n2️⃣ رد على التعليقات خلال ساعة\n3️⃣ استخدم Hashtags ذكية (#marketing #egypt)\n4️⃣ شارك محتوى متنوع (صور، فيديو، stories)\n5️⃣ استخدم Facebook Insights\n6️⃣ قاعدة 80/20: 80% محتوى مفيد، 20% بيع\n7️⃣ شغّل Messenger Chatbot\n8️⃣ اعمل Contests & Giveaways\n9️⃣ استخدم Facebook Live\n🔟 اطلب Reviews من العملاء\n\n💡 المفتاح: الصبر والاستمرارية!'
+        },
+        { 
+          type: 'text',
+          title: '📝 الواجب المنزلي',
+          label: 'تطبيق عملي',
+          caption: '✅ المطلوب منك:\n\n1️⃣ أنشئ صفحة Facebook:\n   • اختر اسم احترافي\n   • حدد فئة مناسبة\n   • اكتب وصف جذاب\n\n2️⃣ صمم صور احترافية:\n   • Profile 360x360 بكسل\n   • Cover 820x312 بكسل\n   • استخدم Canva.com\n\n3️⃣ املأ كل المعلومات:\n   • رقم هاتف\n   • موقع جغرافي\n   • ساعات العمل\n   • الموقع الإلكتروني\n\n4️⃣ اربط Instagram (إن وُجد)\n\n5️⃣ اربط WhatsApp Business\n\n⏰ الوقت المتوقع: 1.5 ساعة\n📤 أرسل screenshot من صفحتك!'
+        }
       ]
     },
     {
