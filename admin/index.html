@@ -5150,25 +5150,25 @@ function getLectures(){ return _fsLectures!==null ? Object.assign({},_fsLectures
 /* ══ SEED: كورس التسويق الاحترافي — 8 محاضرات افتراضية ══ */
 function getDefaultFreeLectures(){
   const ts = Date.now();
-  const sl=(id,title,notes)=>({id,type:'image',src:'',title,notes});
+  const sl=(id,title,notes)=>({id,type: 'text',src:'',title,notes});
   return [
     { id:'lec_free_1', title:'رحلتي مع التسويق… بدأت من كيس تمر هندي', description:'قصة حقيقية من الطفولة تكشف كيف تبدأ رحلة التسويق من أبسط المواقف — وتنتهي بدروس لا تُنسى', createdAt:ts, updatedAt:ts, slides:[
       {id:'s1_0',type:'html',src:'/images/free-course-cover.html',title:'غلاف المحاضرة',notes:'🎬 البانر الرسمي للمحاضرة الأولى\n\n"رحلتي مع التسويق… بدأت من كيس تمر هندي"\n\nسنشوف في المحاضرة دي إزاي أي حدث بسيط في طفولتي علّمني 5 دروس تسويق ما اتعلمتهمش في أي جامعة.'},
-      {id:'s1_1',type:'image',src:'/images/slides/lec1-01.png',title:'البداية — رحلتي مع التسويق',notes:'🎬 Fade in بطيء + موسيقى خفيفة\n\n"قبل ما أكون مدرب تسويق… كنت طفل عادي جدًا… أو يمكن مش عادي قوي."'},
-      {id:'s1_2',type:'image',src:'/images/slides/lec1-02.png',title:'الرجوع للماضي — ولد عنده 9 سنين',notes:'🎬 Zoom خفيف على الطفل\n\n"خلّوني أرجع بيكم لولد عنده 9 سنين… بيقضي نص حياته في الشارع."'},
-      {id:'s1_3',type:'image',src:'/images/slides/lec1-03.png',title:'وقت الفسحة — الأكل أهم حاجة',notes:'🎬 حركة أطفال / ضحك\n\n"في الفسحة… كان أهم حدث في اليوم… الأكل!"'},
-      {id:'s1_4',type:'image',src:'/images/slides/lec1-04.png',title:'أبلة نبيلة — منتج بـ 10 قروش',notes:'🎬 Highlight على الكيس\n\n"كان فيه ست اسمها أبلة نبيلة… بتبيع تمر هندي متلج… بـ 10 قروش بس."'},
-      {id:'s1_5',type:'image',src:'/images/slides/lec1-05.png',title:'المشكلة — محدش شايفها',notes:'🎬 Blur على الباعة → Focus عليها\n\n"بس مشكلتها؟\nمكانها بعيد… محدش شايفها."'},
-      {id:'s1_6',type:'image',src:'/images/slides/lec1-06.png',title:'القرار المجنون — نطّ السور',notes:'🎬 Motion jump أو Freeze frame\n\n"وأنا… الطفل الشقي… قررت أنط السور."'},
-      {id:'s1_7',type:'image',src:'/images/slides/lec1-07.png',title:'حلاوة المغامرة — الزحمة والفرصة',notes:'🎬 Crowd movement\n\n"رجعت… وشفت الطلب… زحمة… ناس عاوزة تشتري."'},
-      {id:'s1_8',type:'image',src:'/images/slides/lec1-08.png',title:'الفكرة — مين عاوز؟',notes:'🎬 تكبير على الفم/الصوت\n\n"فقلت… مين عاوز تمر هندي من أبلة نبيلة؟"'},
-      {id:'s1_9',type:'image',src:'/images/slides/lec1-09.png',title:'أول عملاء — 3 جريوا عليه',notes:'🎬 Slide سريعة توحي بالحماس\n\n"فجأة… 3 جريوا عليا!"'},
-      {id:'s1_10',type:'image',src:'/images/slides/lec1-10.png',title:'أول تسعير — خدمة توصيل بقى!',notes:'🎬 الأرقام 10 → 15 تظهر Animated\n\n"الكيس بـ 15 قرش… خدمة توصيل بقى!"'},
-      {id:'s1_11',type:'image',src:'/images/slides/lec1-11.png',title:'فرحة الربح — 45 قرش!',notes:'🎬 Coins تتساقط\n\n"رجعت فرحان… فاكر نفسي كسبت 45 قرش!"'},
-      {id:'s1_12',type:'image',src:'/images/slides/lec1-12.png',title:'صدمة المصروفات — معايا 15 بس!',notes:'🎬 Error / X أحمر\n\n"بس الحقيقة؟ معايا 15 بس!"'},
-      {id:'s1_13',type:'image',src:'/images/slides/lec1-13.png',title:'احسب حساباتك — الحساب الصح',notes:'🎬 كتابة المعادلة خطوة خطوة\n\n"نسيت أحسب تكلفة المنتج."\n\n45 (المبيعات) – 30 (التكلفة) = 15 (الربح الفعلي)'},
-      {id:'s1_14',type:'image',src:'/images/slides/lec1-14.png',title:'أول صفقة مدروسة — البيع الذكي',notes:'🎬 Multiply effect\n\n"تاني يوم… اتفقت مع أبلة نبيلة… وبقيت أبيع 10 أكياس بصفقة مدروسة."'},
-      {id:'s1_15',type:'image',src:'/images/slides/lec1-15.png',title:'الحساب النهائي — 10 أكياس!',notes:'🎬 حساب تفصيلي\n\n"10 أكياس × 5 قروش ربح = 50 قرش صافي!"\n\nده الفرق بين اللي بيبيع بالحظ… واللي بيبيع بحساب.'},
+      {id:'s1_1',type: 'text',src:'/images/slides/lec1-01.png',title:'البداية — رحلتي مع التسويق',notes:'🎬 Fade in بطيء + موسيقى خفيفة\n\n"قبل ما أكون مدرب تسويق… كنت طفل عادي جدًا… أو يمكن مش عادي قوي."'},
+      {id:'s1_2',type: 'text',src:'/images/slides/lec1-02.png',title:'الرجوع للماضي — ولد عنده 9 سنين',notes:'🎬 Zoom خفيف على الطفل\n\n"خلّوني أرجع بيكم لولد عنده 9 سنين… بيقضي نص حياته في الشارع."'},
+      {id:'s1_3',type: 'text',src:'/images/slides/lec1-03.png',title:'وقت الفسحة — الأكل أهم حاجة',notes:'🎬 حركة أطفال / ضحك\n\n"في الفسحة… كان أهم حدث في اليوم… الأكل!"'},
+      {id:'s1_4',type: 'text',src:'/images/slides/lec1-04.png',title:'أبلة نبيلة — منتج بـ 10 قروش',notes:'🎬 Highlight على الكيس\n\n"كان فيه ست اسمها أبلة نبيلة… بتبيع تمر هندي متلج… بـ 10 قروش بس."'},
+      {id:'s1_5',type: 'text',src:'/images/slides/lec1-05.png',title:'المشكلة — محدش شايفها',notes:'🎬 Blur على الباعة → Focus عليها\n\n"بس مشكلتها؟\nمكانها بعيد… محدش شايفها."'},
+      {id:'s1_6',type: 'text',src:'/images/slides/lec1-06.png',title:'القرار المجنون — نطّ السور',notes:'🎬 Motion jump أو Freeze frame\n\n"وأنا… الطفل الشقي… قررت أنط السور."'},
+      {id:'s1_7',type: 'text',src:'/images/slides/lec1-07.png',title:'حلاوة المغامرة — الزحمة والفرصة',notes:'🎬 Crowd movement\n\n"رجعت… وشفت الطلب… زحمة… ناس عاوزة تشتري."'},
+      {id:'s1_8',type: 'text',src:'/images/slides/lec1-08.png',title:'الفكرة — مين عاوز؟',notes:'🎬 تكبير على الفم/الصوت\n\n"فقلت… مين عاوز تمر هندي من أبلة نبيلة؟"'},
+      {id:'s1_9',type: 'text',src:'/images/slides/lec1-09.png',title:'أول عملاء — 3 جريوا عليه',notes:'🎬 Slide سريعة توحي بالحماس\n\n"فجأة… 3 جريوا عليا!"'},
+      {id:'s1_10',type: 'text',src:'/images/slides/lec1-10.png',title:'أول تسعير — خدمة توصيل بقى!',notes:'🎬 الأرقام 10 → 15 تظهر Animated\n\n"الكيس بـ 15 قرش… خدمة توصيل بقى!"'},
+      {id:'s1_11',type: 'text',src:'/images/slides/lec1-11.png',title:'فرحة الربح — 45 قرش!',notes:'🎬 Coins تتساقط\n\n"رجعت فرحان… فاكر نفسي كسبت 45 قرش!"'},
+      {id:'s1_12',type: 'text',src:'/images/slides/lec1-12.png',title:'صدمة المصروفات — معايا 15 بس!',notes:'🎬 Error / X أحمر\n\n"بس الحقيقة؟ معايا 15 بس!"'},
+      {id:'s1_13',type: 'text',src:'/images/slides/lec1-13.png',title:'احسب حساباتك — الحساب الصح',notes:'🎬 كتابة المعادلة خطوة خطوة\n\n"نسيت أحسب تكلفة المنتج."\n\n45 (المبيعات) – 30 (التكلفة) = 15 (الربح الفعلي)'},
+      {id:'s1_14',type: 'text',src:'/images/slides/lec1-14.png',title:'أول صفقة مدروسة — البيع الذكي',notes:'🎬 Multiply effect\n\n"تاني يوم… اتفقت مع أبلة نبيلة… وبقيت أبيع 10 أكياس بصفقة مدروسة."'},
+      {id:'s1_15',type: 'text',src:'/images/slides/lec1-15.png',title:'الحساب النهائي — 10 أكياس!',notes:'🎬 حساب تفصيلي\n\n"10 أكياس × 5 قروش ربح = 50 قرش صافي!"\n\nده الفرق بين اللي بيبيع بالحظ… واللي بيبيع بحساب.'},
     ]},
     { id:'lec_free_2', title:'أدوات الذكاء الاصطناعي الأساسية', description:'ChatGPT + Canva AI + Leonardo AI وكيفية كتابة Prompts احترافية', createdAt:ts+1000, updatedAt:ts+1000, slides:[
       sl('s2_1','فن كتابة الـ Prompt','الصيغة الاحترافية = الدور + المهمة + التفاصيل + الشكل\nمثال ضعيف: "اكتبلي بوست"\nمثال قوي: "أنت خبير تسويق — اكتب بوست انستجرام لعيادة أسنان في القاهرة عن خصم 30% رمضان — جمهور أمهات 25-45 — 80 كلمة — ودود مع إيموجي وCTA"'),
@@ -5226,7 +5226,7 @@ function getDefaultFreeLectures(){
 function getDefaultFacebookAdsLectures(){
   const ts = Date.now();
   const flowLink = 'https://labs.google/fx/ar/tools/flow/project/5044bb80-cf60-45e9-b714-4e74a30bda6d';
-  const sl=(id,title,notes)=>({id,type:'image',src:'',title,notes});
+  const sl=(id,title,notes)=>({id,type: 'text',src:'',title,notes});
   return [
     { id:'lec_fb_1', title:'الحصة 1: إنشاء الهوية الاحترافية على Facebook و Instagram', description:'تعلم إنشاء صفحة فيسبوك وحساب انستجرام احترافيين من الصفر + ربطهم معاً', createdAt:ts, updatedAt:ts, slides:[
       {id:'fb1_0',type:'video',src:flowLink,title:'🎬 فيديو تعليمي: إنشاء الهوية البصرية',notes:'📹 شاهد الفيديو التعليمي الكامل على Google Flow\n\n🔗 الرابط: '+flowLink+'\n\nهتتعلم في الفيديو ده:\n✅ إنشاء صفحة فيسبوك احترافية\n✅ تحويل الحساب الشخصي لـ Business Account\n✅ ربط Instagram بـ Facebook بشكل صحيح\n✅ ضبط الإعدادات الأساسية للصفحة'},
@@ -5386,64 +5386,58 @@ async function addNew5Lectures(){
       order: 1,
       slides: [
         { 
-          type: 'image', 
+          type: 'text', 
           title: 'مرحباً بك في دورة التسويق الاحترافي', 
           label: 'الحصة الأولى - إنشاء صفحة Facebook',
-          src: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=800&fit=crop',
-          caption: '🎓 في هذه الحصة ستتعلم:\n• إنشاء صفحة Facebook احترافية\n• ربط Instagram Business\n• ربط WhatsApp Business\n• توثيق الصفحة بالعلامة الزرقاء'
+          caption: '━━━━━━━━━━━━━━━━━━━━\n🎓 مرحباً بك في الحصة الأولى!\n━━━━━━━━━━━━━━━━━━━━\n\n📚 في هذه الحصة ستتعلم:\n\n✅ إنشاء صفحة Facebook احترافية من الصفر\n✅ اختيار اسم قوي وجذاب لصفحتك\n✅ تصميم صور Profile و Cover بمقاسات احترافية\n✅ ربط Instagram Business مع صفحتك\n✅ ربط WhatsApp Business للتواصل المباشر\n✅ طلب توثيق الصفحة (العلامة الزرقاء)\n✅ نصائح عملية لنجاح صفحتك من اليوم الأول\n\n⏰ مدة الحصة: 45 دقيقة\n🎯 المستوى: مبتدئ\n💰 التكلفة: مجاني 100%\n\n💡 نصيحة قبل البدء:\nجهّز:\n• حساب Facebook شخصي\n• بريد إلكتروني نشط\n• رقم هاتف\n• فكرة عن اسم صفحتك\n\n🚀 هيا نبدأ!'
         },
         { 
           type: 'text',
           title: 'لماذا تحتاج صفحة Business على Facebook؟',
           label: 'الأهمية والفوائد',
-          caption: '📊 الإحصائيات:\n• 3 مليار مستخدم نشط شهرياً\n• 200 مليون نشاط تجاري على Facebook\n• 83% من المستخدمين يكتشفون منتجات جديدة عبر Facebook\n\n✅ الفوائد:\n1. الوصول لملايين العملاء المحتملين\n2. إعلانات مدفوعة قوية وفعالة\n3. تحليلات تفصيلية (Facebook Insights)\n4. ربط مع Instagram وWhatsApp\n5. مجاني 100%!'
+          caption: '━━━━━━━━━━━━━━━━━━━━\n📊 أرقام لا تُصدّق!\n━━━━━━━━━━━━━━━━━━━━\n\n🌍 إحصائيات Facebook العالمية:\n• 3 مليار مستخدم نشط شهرياً\n• 200 مليون نشاط تجاري على المنصة\n• 83% من المستخدمين يكتشفون منتجات جديدة\n• 78% من المستهلكين اكتشفوا منتجات عبر Facebook\n\n🇪🇬 في مصر تحديداً:\n• 44 مليون مستخدم نشط\n• 88% يتصفحون يومياً\n• معدل التفاعل الأعلى في الشرق الأوسط\n\n━━━━━━━━━━━━━━━━━━━━\n✨ الفوائد الحقيقية:\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ الوصول لملايين العملاء المحتملين:\n   • استهداف دقيق حسب الموقع، العمر، الاهتمامات\n   • ظهور في News Feed\n   • انتشار عبر المشاركات\n\n2️⃣ إعلانات مدفوعة قوية وفعالة:\n   • ابدأ من 30 جنيه يومياً\n   • استهداف ذكي\n   • نتائج قابلة للقياس\n\n3️⃣ تحليلات تفصيلية (Facebook Insights):\n   • من شاف صفحتك؟\n   • أي بوست الأفضل؟\n   • متى ينشط جمهورك؟\n\n4️⃣ ربط مع Instagram و WhatsApp:\n   • إدارة موحدة\n   • نشر متزامن\n   • ردود سريعة\n\n5️⃣ مجاني 100%:\n   • لا رسوم شهرية\n   • لا حدود للمنشورات\n   • أنت تدفع فقط للإعلانات (اختياري)\n\n💡 باختصار:\nصفحة Facebook = متجرك الافتراضي المفتوح 24/7'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 1: اذهب إلى facebook.com/pages/create',
           label: 'إنشاء الصفحة',
-          src: 'https://images.unsplash.com/photo-1633675254053-d96c7668c3b8?w=1200&h=800&fit=crop',
-          caption: '🔹 الخطوات:\n1. افتح facebook.com/pages/create\n2. اضغط "Get Started"\n3. اختر "Business or Brand"\n4. املأ البيانات:\n   • اسم الصفحة (مهم جداً!)\n   • الفئة (Category)\n   • الوصف (50-150 حرف)\n5. اضغط "Create Page"'
+          caption: '━━━━━━━━━━━━━━━━━━━━\n🚀 ابدأ الآن - خطوة بخطوة:\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ افتح المتصفح واذهب إلى:\n   🔗 facebook.com/pages/create\n   (أو من حسابك الشخصي: Create → Page)\n\n2️⃣ اضغط على "Get Started"\n\n3️⃣ اختر نوع الصفحة:\n   ✅ Business or Brand (الأعمال/العلامة التجارية)\n   ❌ Community or Public Figure (تخطاها)\n\n━━━━━━━━━━━━━━━━━━━━\n📝 املأ البيانات بعناية:\n━━━━━━━━━━━━━━━━━━━━\n\n🏷️ اسم الصفحة (Page Name):\n   • اختر اسم واضح ومعبّر\n   • تجنب الأسماء العامة جداً\n   • أمثلة جيدة:\n     ✅ "متجر الأزياء العصرية - القاهرة"\n     ✅ "مطعم البيتزا الإيطالية - المعادي"\n     ✅ "أكاديمية التسويق الرقمي"\n   • أمثلة سيئة:\n     ❌ "محل ملابس"\n     ❌ "مطعم"\n     ❌ "خدمات"\n\n🔖 الفئة (Category):\n   • ابحث واختر الأنسب:\n     • Shopping & Retail (تجارة)\n     • Restaurant (مطعم)\n     • Education (تعليم)\n     • Marketing Agency (وكالة تسويق)\n   • يمكنك إضافة 3 فئات\n\n📄 الوصف (Description):\n   • 50-150 حرف\n   • وضّح ماذا تقدم\n   • مثال:\n     "نقدم أحدث صيحات الموضة بأسعار مناسبة. توصيل لجميع أنحاء القاهرة. اطلب الآن!"\n\n5️⃣ اضغط "Create Page" ✅\n\n⏰ الوقت المطلوب: 3 دقائق\n\n💡 نصيحة ذهبية:\nاكتب الاسم بالعربية إذا كان جمهورك مصري،\nأو بالإنجليزية إذا كنت تستهدف جمهور دولي'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 2: تخصيص صورة Profile و Cover',
           label: 'الصور الاحترافية',
-          src: 'https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=1200&h=800&fit=crop',
-          caption: '📐 المقاسات المثالية:\n\n🔸 Profile Picture:\n• 180x180 بكسل (ظهور كامل)\n• 360x360 بكسل (جودة عالية)\n• يُعرض دائري\n• استخدم اللوجو\n\n🔸 Cover Photo:\n• 820x312 بكسل (Desktop)\n• 640x360 بكسل (Mobile)\n• تجنب النصوص الكثيرة\n\n💡 نصيحة: استخدم Canva.com لتصميم احترافي'
+          caption: '━━━━━━━━━━━━━━━━━━━━\n📐 المقاسات المثالية (مهم جداً!):\n━━━━━━━━━━━━━━━━━━━━\n\n🔸 صورة الملف الشخصي (Profile Picture):\n   • المقاس الموصى به: 360x360 بكسل\n   • الحد الأدنى: 180x180 بكسل\n   • الشكل: دائري (يُقتصّ تلقائياً)\n   • الاستخدام المثالي: ضع شعار شركتك (Logo)\n   • أو صورة واضحة للمنتج الرئيسي\n\n🔸 صورة الغلاف (Cover Photo):\n   • Desktop: 820x312 بكسل\n   • Mobile: 640x360 بكسل\n   • نسبة العرض/الارتفاع: 2.7:1 تقريباً\n   • تجنب النصوص الكثيرة (20% كحد أقصى)\n   • استخدمها لـ:\n     ✅ عروض موسمية\n     ✅ منتج جديد\n     ✅ رؤية الشركة\n\n━━━━━━━━━━━━━━━━━━━━\n🎨 أين تحصل على الصور؟\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ Canva.com (الأفضل والأسهل!):\n   • ابحث عن "Facebook Cover"\n   • اختر قالب جاهز\n   • عدّل النصوص والألوان\n   • حمّل مجاناً (PNG)\n\n2️⃣ Remove.bg:\n   • لإزالة خلفية الشعار\n   • ارفع صورتك\n   • حمّل بدون خلفية (شفاف)\n\n3️⃣ Unsplash / Pexels:\n   • صور احترافية مجانية\n   • ابحث عن كلمات مثل:\n     "business", "products", "modern"\n\n━━━━━━━━━━━━━━━━━━━━\n📤 كيف ترفع الصور؟\n━━━━━━━━━━━━━━━━━━━━\n\n1. اذهب لصفحتك الجديدة\n2. Profile: اضغط على الكاميرا → Upload Photo\n3. Cover: اضغط "Add Cover Photo" → Upload Photo\n4. اسحب لتحديد المنطقة المرئية\n5. Save\n\n💡 نصيحة احترافية:\nغيّر صورة الغلاف كل شهر أو شهرين\nلتعكس العروض الجديدة أو المواسم'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 3: ربط Instagram Business',
           label: 'دمج الحسابات',
-          src: 'https://images.unsplash.com/photo-1611262588024-d12430b98920?w=1200&h=800&fit=crop',
-          caption: '📱 كيفية الربط:\n\n1️⃣ حوّل حساب Instagram لـ Business:\n   • Instagram Settings\n   • Switch to Professional Account\n   • Choose Business\n\n2️⃣ اربط مع Facebook:\n   • Page Settings\n   • Instagram\n   • Connect Account\n   • أدخل username/password\n\n✅ الفوائد:\n• نشر متزامن\n• ردود تلقائية\n• إعلانات موحدة'
+          caption: '━━━━━━━━━━━━━━━━━━━━\n📱 ربط Instagram خطوة بخطوة:\n━━━━━━━━━━━━━━━━━━━━\n\n🔹 المرحلة الأولى: تحويل Instagram لـ Business\n\n1️⃣ افتح تطبيق Instagram على موبايلك\n\n2️⃣ اذهب إلى Settings (الإعدادات):\n   • Profile → Menu (3 خطوط)\n   • Settings → Account → Switch Account Type\n\n3️⃣ اختر "Switch to Professional Account"\n\n4️⃣ اختر "Business" (وليس Creator)\n\n5️⃣ اختر Category (نفس فئة Facebook)\n\n6️⃣ اضغط Done ✅\n\n━━━━━━━━━━━━━━━━━━━━\n🔗 المرحلة الثانية: الربط مع Facebook\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ من صفحة Facebook:\n   • Settings (الإعدادات)\n   • Instagram\n   • Connect Instagram Account\n\n2️⃣ سيفتح نافذة Instagram:\n   • أدخل Username\n   • أدخل Password\n   • Allow (السماح)\n\n3️⃣ تأكيد الربط:\n   • اضغط "Connect Instagram Profile"\n   • Done! 🎉\n\n━━━━━━━━━━━━━━━━━━━━\n✨ الفوائد الحقيقية:\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ نشر متزامن:\n   • اكتب بوست مرة واحدة\n   • ينشر على Facebook + Instagram معاً\n   • توفير وقت هائل!\n\n2️⃣ ردود موحدة:\n   • رسائل Instagram تظهر في Facebook Messenger\n   • رد من مكان واحد\n\n3️⃣ إعلانات موحدة:\n   • حملة إعلانية واحدة\n   • تظهر على المنصتين\n   • استهداف أوسع\n\n4️⃣ Insights مجمّعة:\n   • تحليلات شاملة\n   • قارن الأداء بين المنصتين\n\n💡 ملاحظة:\nيمكنك ربط حساب Instagram واحد فقط بكل صفحة Facebook'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 4: ربط WhatsApp Business',
           label: 'زر الاتصال المباشر',
-          src: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=1200&h=800&fit=crop',
-          caption: '💬 خطوات الربط:\n\n1️⃣ حمّل WhatsApp Business:\n   📲 من App Store/Google Play\n\n2️⃣ أنشئ حساب بيزنس:\n   • رقم هاتف جديد\n   • اسم النشاط\n   • الفئة\n   • الوصف\n\n3️⃣ اربط مع Facebook:\n   • Page Settings\n   • WhatsApp\n   • Add Button\n   • أدخل رقم WhatsApp\n\n✨ النتيجة: زر "Send Message" على الصفحة!'
+          caption: '━━━━━━━━━━━━━━━━━━━━\n💬 ربط WhatsApp Business:\n━━━━━━━━━━━━━━━━━━━━\n\n🔹 المرحلة 1: تحميل WhatsApp Business\n\n📲 من App Store (iPhone) أو Google Play (Android):\n   • ابحث عن "WhatsApp Business"\n   • حمّل التطبيق الأخضر (ليس الأبيض العادي!)\n\n━━━━━━━━━━━━━━━━━━━━\n🔹 المرحلة 2: إنشاء حساب Business\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ رقم الهاتف:\n   • ⚠️ يجب أن يكون رقم جديد (غير مستخدم في WhatsApp العادي)\n   • أو استخدم رقم ثاني\n   • خيارات:\n     ✅ شريحة جديدة\n     ✅ رقم أرضي\n     ✅ رقم افتراضي (من 2ndLine مثلاً)\n\n2️⃣ ملء البيانات:\n   • اسم النشاط التجاري\n   • الفئة (نفس Facebook)\n   • الوصف (50 كلمة)\n   • ساعات العمل\n   • الموقع الجغرافي\n   • الموقع الإلكتروني\n\n3️⃣ صورة الملف الشخصي:\n   • استخدم نفس Logo من Facebook\n   • للتناسق البصري\n\n━━━━━━━━━━━━━━━━━━━━\n🔹 المرحلة 3: الربط مع Facebook\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ من صفحة Facebook:\n   • Settings → Messaging\n   • WhatsApp\n   • Add Button\n\n2️⃣ أدخل رقم WhatsApp Business:\n   • مع كود الدولة (+20 لمصر)\n   • مثال: +201001234567\n\n3️⃣ اختر نوع الزر:\n   ✅ "Send Message" (إرسال رسالة)\n   أو\n   ✅ "WhatsApp" (واتساب)\n\n4️⃣ اضغط Add Button ✅\n\n━━━━━━━━━━━━━━━━━━━━\n✨ النتيجة النهائية:\n━━━━━━━━━━━━━━━━━━━━\n\n🎯 زر "Send Message" يظهر على صفحتك:\n   • أي زائر يضغط عليه\n   • يفتح WhatsApp مباشرة\n   • رسالة جاهزة: "مرحباً، أريد الاستفسار عن..."\n   • أنت ترد فوراً\n\n📊 الإحصائيات:\n• معدل التحويل يزيد 40% عند إضافة WhatsApp Button\n• 70% من العملاء يفضلون WhatsApp على الاتصال الهاتفي\n\n💡 نصيحة ذهبية:\nفعّل "Auto-Reply" للردود التلقائية:\n"شكراً لتواصلك! سنرد خلال 5 دقائق"'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 5: توثيق الصفحة (العلامة الزرقاء)',
           label: 'Badge المصداقية',
-          src: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=800&fit=crop',
-          caption: '🔵 متى تطلب التوثيق؟\n\nبعد استيفاء الشروط:\n✅ 100+ متابع\n✅ نشاط منتظم\n✅ بيانات كاملة\n✅ رقم هاتف موثق\n\n📝 كيف تطلب:\n1. Settings → General\n2. Page Verification\n3. Verify this Page\n4. اختر طريقة:\n   • رقم هاتف\n   • مستند رسمي\n5. انتظر 2-7 أيام\n\n⚠️ التوثيق غير مضمون'
+          caption: '━━━━━━━━━━━━━━━━━━━━\n🔵 ما هو التوثيق (Verification)؟\n━━━━━━━━━━━━━━━━━━━━\n\nالعلامة الزرقاء (✓) = شارة تؤكد أن:\n✅ صفحتك حقيقية وأصلية\n✅ Meta تحققت من هويتك\n✅ ليست صفحة مزيفة أو منتحلة\n\n━━━━━━━━━━━━━━━━━━━━\n📋 الشروط المطلوبة:\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ عدد المتابعين:\n   • على الأقل 100 متابع حقيقي\n   • يُفضل 500+ للفرصة الأكبر\n\n2️⃣ نشاط منتظم:\n   • نشر 3-5 بوستات أسبوعياً\n   • لمدة شهر على الأقل\n\n3️⃣ بيانات كاملة:\n   • Profile + Cover مكتملة\n   • About Section مليئة\n   • رقم هاتف موثق\n   • موقع إلكتروني (مُفضّل)\n\n4️⃣ رقم هاتف موثق:\n   • مسجل باسمك أو اسم الشركة\n\n5️⃣ عدم انتهاك السياسات:\n   • لا محتوى مخالف\n   • لا انتحال شخصية\n   • لا spam\n\n━━━━━━━━━━━━━━━━━━━━\n📝 كيف تطلب التوثيق:\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ من صفحتك:\n   • Settings → General\n   • Page Verification\n   • "Verify this Page"\n\n2️⃣ اختر طريقة التحقق:\n\n   🔸 الخيار A: رقم الهاتف\n     • أدخل رقم ثابت مسجل باسم الشركة\n     • سيتصلون بك أو يرسلون كود\n\n   🔸 الخيار B: مستند رسمي\n     • ارفع أحد هذه:\n       ✅ فاتورة مرافق (كهرباء، ماء، غاز)\n       ✅ بطاقة ضريبية\n       ✅ سجل تجاري\n       ✅ رخصة العمل\n     • يجب أن تكون:\n       • حديثة (آخر 3 أشهر)\n       • واضحة (PDF أو JPG)\n       • باسم الصفحة أو مالكها\n\n3️⃣ اضغط Submit (إرسال) ✅\n\n4️⃣ انتظر المراجعة:\n   • وقت الرد: 2-7 أيام عمل\n   • ستصلك رسالة بالقبول أو الرفض\n\n━━━━━━━━━━━━━━━━━━━━\n⚠️ ملاحظات مهمة جداً:\n━━━━━━━━━━━━━━━━━━━━\n\n❌ التوثيق غير مضمون:\n   • Meta قد ترفض دون سبب واضح\n   • يمكنك إعادة المحاولة بعد 30 يوم\n\n❌ لا تشتري التوثيق:\n   • أي شخص يعرض "بيع" التوثيق = نصاب\n   • Meta لا تبيع التوثيق أبداً\n   • قد يؤدي لإغلاق صفحتك\n\n✅ البديل: "Grey Verification":\n   • إذا رُفض التوثيق الأزرق\n   • يمكنك الحصول على علامة رمادية\n   • من خلال ربط الصفحة بـ Business Manager\n   • توفر بعض الحماية\n\n💡 نصيحة:\nلا تقلق إذا لم تحصل على التوثيق فوراً.\nالمهم: محتوى قوي + تفاعل حقيقي + مصداقية'
         },
         { 
           type: 'text',
           title: 'نصائح احترافية لنجاح صفحتك',
           label: 'Best Practices',
-          caption: '🔥 10 نصائح ذهبية:\n\n1️⃣ انشر بانتظام (5-7 مرات أسبوعياً)\n2️⃣ رد على التعليقات خلال ساعة\n3️⃣ استخدم Hashtags ذكية (#marketing #egypt)\n4️⃣ شارك محتوى متنوع (صور، فيديو، stories)\n5️⃣ استخدم Facebook Insights\n6️⃣ قاعدة 80/20: 80% محتوى مفيد، 20% بيع\n7️⃣ شغّل Messenger Chatbot\n8️⃣ اعمل Contests & Giveaways\n9️⃣ استخدم Facebook Live\n🔟 اطلب Reviews من العملاء\n\n💡 المفتاح: الصبر والاستمرارية!'
+          caption: '━━━━━━━━━━━━━━━━━━━━\n🔥 10 نصائح ذهبية للنجاح:\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ انشر بانتظام (Consistency):\n   • 5-7 مرات أسبوعياً (مثالي)\n   • نفس الأوقات يومياً\n   • الأوقات الأفضل في مصر:\n     ✅ 8-10 صباحاً\n     ✅ 1-3 ظهراً\n     ✅ 7-10 مساءً\n\n2️⃣ رد على التعليقات خلال ساعة:\n   • الرد السريع = ثقة العملاء\n   • فعّل الإشعارات\n   • خصص وقت صباحي ومسائي للردود\n\n3️⃣ استخدم Hashtags ذكية:\n   • 3-5 hashtags لكل بوست\n   • امزج بين:\n     #عامة (#marketing #egypt)\n     #متخصصة (#digital_marketing_cairo)\n     #علامتك_الخاصة (#اسم_صفحتك)\n\n4️⃣ شارك محتوى متنوع:\n   📸 صور (60%)\n   🎥 فيديو (30%)\n   📝 نصوص (10%)\n   📖 Stories يومية\n   🎬 Facebook Live أسبوعياً\n\n5️⃣ استخدم Facebook Insights:\n   • راجع الإحصائيات أسبوعياً\n   • ما البوست الأكثر تفاعلاً؟\n   • متى ينشط جمهورك؟\n   • من أين يأتي المتابعون؟\n\n6️⃣ قاعدة 80/20:\n   • 80% محتوى مفيد ومجاني:\n     ✅ نصائح\n     ✅ معلومات\n     ✅ ترفيه\n     ✅ إلهام\n   • 20% فقط بيع مباشر:\n     💰 منتجات\n     💰 عروض\n     💰 خصومات\n\n7️⃣ شغّل Messenger Chatbot:\n   • أدوات مثل ManyChat أو Chatfuel\n   • ردود تلقائية فورية\n   • جمع بيانات العملاء\n   • إرسال عروض تلقائية\n\n8️⃣ اعمل Contests & Giveaways:\n   • مسابقة شهرية:\n     "Like + Comment + Share للدخول في السحب"\n   • جائزة بسيطة (100-200 جنيه)\n   • تفاعل هائل + متابعين جدد\n\n9️⃣ استخدم Facebook Live:\n   • Session أسبوعية (15-30 دقيقة)\n   • أفكار:\n     🎤 Q&A (أسئلة وأجوبة)\n     🎤 Behind the scenes (خلف الكواليس)\n     🎤 Product demo (عرض المنتج)\n     🎤 توعية أو تعليم\n\n🔟 اطلب Reviews من العملاء:\n   • بعد كل عملية بيع:\n     "نسعد بتقييمك على صفحتنا 🌟"\n   • Reviews = مصداقية فورية\n   • احرص على 4.5+ نجوم\n\n━━━━━━━━━━━━━━━━━━━━\n💡 المفتاح السحري:\n━━━━━━━━━━━━━━━━━━━━\n\n🔑 الصبر + الاستمرارية + القيمة الحقيقية\n\n• لا تتوقع 10,000 متابع في أسبوع\n• النمو الطبيعي: 50-200 متابع شهرياً (بدون إعلانات)\n• النمو بالإعلانات: 500-2000 متابع شهرياً\n\n🚀 النجاح يأتي لمن يستمر!'
         },
         { 
           type: 'text',
           title: '📝 الواجب المنزلي',
           label: 'تطبيق عملي',
-          caption: '✅ المطلوب منك:\n\n1️⃣ أنشئ صفحة Facebook:\n   • اختر اسم احترافي\n   • حدد فئة مناسبة\n   • اكتب وصف جذاب\n\n2️⃣ صمم صور احترافية:\n   • Profile 360x360 بكسل\n   • Cover 820x312 بكسل\n   • استخدم Canva.com\n\n3️⃣ املأ كل المعلومات:\n   • رقم هاتف\n   • موقع جغرافي\n   • ساعات العمل\n   • الموقع الإلكتروني\n\n4️⃣ اربط Instagram (إن وُجد)\n\n5️⃣ اربط WhatsApp Business\n\n⏰ الوقت المتوقع: 1.5 ساعة\n📤 أرسل screenshot من صفحتك!'
+          caption: '━━━━━━━━━━━━━━━━━━━━\n✅ المطلوب منك - خطوة بخطوة:\n━━━━━━━━━━━━━━━━━━━━\n\n🔹 المرحلة 1: إنشاء الصفحة (10 دقائق)\n\n1️⃣ أنشئ صفحة Facebook:\n   • facebook.com/pages/create\n   • اختر اسم احترافي (فكر جيداً!)\n   • حدد فئة مناسبة\n   • اكتب وصف جذاب (50-150 حرف)\n\n━━━━━━━━━━━━━━━━━━━━\n🔹 المرحلة 2: التصميم (30-45 دقيقة)\n\n2️⃣ صمم صور احترافية:\n   • Profile Picture: 360x360 بكسل\n     (استخدم Canva.com → ابحث "Logo")\n   • Cover Photo: 820x312 بكسل\n     (Canva.com → "Facebook Cover")\n   • تأكد أن الألوان متناسقة\n   • حمّل PNG بجودة عالية\n\n━━━━━━━━━━━━━━━━━━━━\n🔹 المرحلة 3: ملء المعلومات (15 دقيقة)\n\n3️⃣ املأ كل التفاصيل:\n   ✅ About (نبذة مختصرة)\n   ✅ رقم هاتف (واضح ومفعّل)\n   ✅ الموقع الجغرافي (المدينة/الحي)\n   ✅ ساعات العمل\n   ✅ الموقع الإلكتروني (إن وُجد)\n   ✅ البريد الإلكتروني\n\n━━━━━━━━━━━━━━━━━━━━\n🔹 المرحلة 4 (اختيارية): الربط\n\n4️⃣ اربط Instagram (إن وُجد):\n   • حوّل Instagram لـ Business\n   • اربط من Settings\n   • تأكد من الصلاحيات\n\n5️⃣ اربط WhatsApp Business:\n   • حمّل التطبيق\n   • أنشئ حساب برقم جديد\n   • أضف زر WhatsApp على الصفحة\n\n━━━━━━━━━━━━━━━━━━━━\n🔹 المرحلة 5: البوست الأول! (10 دقائق)\n\n6️⃣ انشر بوست ترحيبي:\n   مثال:\n   ━━━━━━━━━━\n   "🎉 أهلاً بكم في صفحتنا الرسمية!\n   \n   نحن [اسم صفحتك] 🌟\n   \n   نقدم [ماذا تقدم؟] بجودة عالية وأسعار مناسبة.\n   \n   📍 الموقع: [مدينتك]\n   📞 للطلب: [رقمك]\n   \n   تابعونا لمعرفة أحدث العروض والمنتجات! 🔥\n   \n   #[اسم_صفحتك] #[مدينتك] #[مجالك]"\n   ━━━━━━━━━━\n\n━━━━━━━━━━━━━━━━━━━━\n📤 التسليم:\n━━━━━━━━━━━━━━━━━━━━\n\n📸 أرسل Screenshot من:\n   1. الصفحة كاملة (Profile + Cover)\n   2. قسم About (المعلومات)\n   3. البوست الأول\n\n⏰ الوقت المتوقع: 1-1.5 ساعة\n\n━━━━━━━━━━━━━━━━━━━━\n🎖️ Bonus Challenge (اختياري):\n━━━━━━━━━━━━━━━━━━━━\n\n🏆 إذا أكملت كل ما سبق:\n   • ادعُ 20 صديق للإعجاب بالصفحة\n   • انشر 3 بوستات إضافية\n   • ابدأ بالرد على أي تعليق خلال 10 دقائق\n\n💪 هيا، الآن دورك!\n\n🚀 انطلق وابدأ رحلة النجاح!'
         }
       ]
     },
@@ -5455,10 +5449,9 @@ async function addNew5Lectures(){
       order: 2,
       slides: [
         { 
-          type: 'image', 
+          type: 'text', 
           title: 'الحصة الثانية: تصميم الهوية البصرية بالذكاء الاصطناعي', 
           label: 'Gemini AI + Canva',
-          src: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&h=800&fit=crop',
           caption: '🎨 في هذه الحصة ستتعلم:\n• ما هي الهوية البصرية وأهميتها\n• اختيار اسم احترافي لعلامتك\n• سيكولوجية الألوان\n• تصميم شعار بـ Gemini AI\n• تحسين الشعار بـ Canva\n• إنشاء Brand Kit كامل'
         },
         { 
@@ -5468,38 +5461,33 @@ async function addNew5Lectures(){
           caption: '🎯 التعريف:\nالهوية البصرية = كل ما يُرى من علامتك التجارية\n\n📦 تتكون من:\n1️⃣ الشعار (Logo)\n2️⃣ الألوان الرئيسية\n3️⃣ الخطوط (Fonts)\n4️⃣ الأيقونات والرموز\n5️⃣ الأنماط البصرية (Patterns)\n6️⃣ أسلوب التصوير\n\n💡 لماذا مهمة؟\n✅ تميزك عن المنافسين\n✅ تسهّل التعرّف عليك\n✅ تبني الثقة والمصداقية\n✅ تزيد قيمة العلامة التجارية\n\n📊 إحصائية:\n80% من المستهلكين يتذكرون علامة تجارية من شعارها فقط!'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 1: اختيار اسم احترافي',
           label: 'Brand Naming',
-          src: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&h=800&fit=crop',
           caption: '✍️ معايير الاسم الناجح:\n\n✅ قصير (2-3 كلمات)\n✅ سهل النطق\n✅ سهل التذكر\n✅ له معنى\n✅ Domain متاح (.com)\n\n🔍 كيف تختار:\n1️⃣ اكتب 20 فكرة\n2️⃣ تحقق من التوافر:\n   • namecheckr.com\n   • namechk.com\n3️⃣ اختبر مع 5 أشخاص\n4️⃣ تحقق من Google Search\n5️⃣ احجز الدومين فوراً!\n\n⚠️ تجنب:\n❌ أسماء معقدة\n❌ أرقام وحروف مختلطة\n❌ كلمات سلبية\n❌ تقليد شركات كبرى'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 2: سيكولوجية الألوان',
           label: 'Color Psychology',
-          src: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&h=800&fit=crop',
           caption: '🎨 معاني الألوان:\n\n🔴 الأحمر:\n• طاقة، شغف، إثارة\n• مثال: Coca-Cola, Netflix\n• يجذب الانتباه سريعاً\n\n🔵 الأزرق:\n• ثقة، احترافية، أمان\n• مثال: Facebook, PayPal\n• الأكثر استخداماً (33%)\n\n🟢 الأخضر:\n• نمو، صحة، طبيعة\n• مثال: Starbucks, WhatsApp\n• مثالي للعضوي/Eco\n\n🟡 الأصفر:\n• تفاؤل، سعادة، طاقة\n• مثال: McDonald\'s, IKEA\n• يحفز النشاط\n\n🟣 البنفسجي:\n• فخامة، إبداع، روحانية\n• مثال: Hallmark, Cadbury\n\n⚫ الأسود:\n• فخامة، قوة، أناقة\n• مثال: Nike, Chanel\n\n💡 اختر لونين أساسيين فقط!'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 3: تصميم الشعار بـ Gemini AI',
           label: 'AI Logo Generation',
-          src: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=800&fit=crop',
           caption: '🤖 استخدام Gemini (مجاناً):\n\n1️⃣ افتح: gemini.google.com\n\n2️⃣ اكتب Prompt احترافي:\n━━━━━━━━━━━━━━━━━━\n"Create a modern, minimalist logo design concept for [اسم علامتك], a [مجال العمل] business. \n\nStyle: Clean, professional, memorable\nColors: [لونك الأساسي] and [اللون الثانوي]\nMood: [احترافي/إبداعي/عصري]\n\nThe logo should:\n- Work well in small sizes\n- Be versatile (color + black/white versions)\n- Include an icon that represents [فكرة رمزية]\n- Use modern sans-serif typography\n\nProvide 3 different concept directions with detailed descriptions."\n━━━━━━━━━━━━━━━━━━\n\n3️⃣ راجع الأفكار\n4️⃣ اطلب تعديلات\n5️⃣ احفظ الوصف النهائي'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 4: تنفيذ الشعار بـ Canva',
           label: 'Canva Design',
-          src: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&h=800&fit=crop',
           caption: '🎨 التنفيذ على Canva:\n\n1️⃣ افتح canva.com\n\n2️⃣ اختر:\n   • Logo (500x500 px)\n   • أو ابدأ من فارغ\n\n3️⃣ استخدم أدوات Canva:\n   📐 Elements → Shapes\n   🔤 Text → Modern Fonts\n   🎨 Colors → اختر palette\n   ✨ Effects → Shadow, Gradient\n\n4️⃣ صمم 4 نسخ:\n   🟦 ملون (Color)\n   ⚫ أسود (Black)\n   ⚪ أبيض (White)\n   🔲 Icon Only (أيقونة فقط)\n\n5️⃣ حمّل بجودة عالية:\n   • PNG (شفاف)\n   • SVG (متجه)\n   • PDF (طباعة)\n\n💡 نصيحة: استخدم Canva Pro (30 يوم مجاني) للأدوات المتقدمة'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 5: إنشاء Brand Kit كامل',
           label: 'Brand Guidelines',
-          src: 'https://images.unsplash.com/photo-1634942537034-2531766767d1?w=1200&h=800&fit=crop',
           caption: '📁 محتويات Brand Kit:\n\n1️⃣ اللوجو (4 نسخ):\n   • Logo-Color.png\n   • Logo-Black.png\n   • Logo-White.png\n   • Logo-Icon.png\n\n2️⃣ الألوان:\n   • الأساسي (HEX code)\n   • الثانوي\n   • الخلفية\n   • النص\n\n3️⃣ الخطوط:\n   • العنوان (Heading)\n   • المتن (Body)\n   • الرابط لتحميلها\n\n4️⃣ أمثلة الاستخدام:\n   • بطاقة عمل\n   • غلاف Facebook\n   • ستوري Instagram\n   • ورقة رسمية\n\n5️⃣ ما يُمنع:\n   ❌ تغيير الألوان\n   ❌ تشويه الشعار\n   ❌ إضافة ظلال غريبة\n\n💾 احفظ كل شيء في:\nGoogle Drive → Brand Kit Folder'
         },
         { 
@@ -5524,10 +5512,9 @@ async function addNew5Lectures(){
       order: 3,
       slides: [
         { 
-          type: 'image', 
+          type: 'text', 
           title: 'الحصة الثالثة: كتابة البوستات الاحترافية', 
           label: 'Hook + Caption + CTA',
-          src: 'https://images.unsplash.com/photo-1542435503-956c469947f6?w=1200&h=800&fit=crop',
           caption: '✍️ في هذه الحصة ستتعلم:\n• معادلة البوست الناجح\n• كتابة Hook يوقف السكرول\n• صياغة Caption احترافي\n• أنواع Call-to-Action\n• أمثلة حقيقية ناجحة\n• A/B Testing للمحتوى'
         },
         { 
@@ -5537,10 +5524,9 @@ async function addNew5Lectures(){
           caption: '🎯 المعادلة الذهبية:\n\n━━━━━━━━━━━━━━━━━━━━\nHook قوي\n     ⬇️\nProblem (المشكلة)\n     ⬇️\nSolution (الحل)\n     ⬇️\nProof (الدليل)\n     ⬇️\nCTA واضح\n━━━━━━━━━━━━━━━━━━━━\n\n📊 لماذا تنجح هذه المعادلة؟\n\n1️⃣ Hook: يوقف السكرول (3 ثواني)\n2️⃣ Problem: يخلق ارتباط عاطفي\n3️⃣ Solution: يقدم قيمة حقيقية\n4️⃣ Proof: يبني الثقة\n5️⃣ CTA: يدفع للعمل\n\n💡 كل عنصر مهم!\nحذف أي جزء = انخفاض ٥٠٪ في التفاعل'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 1: Hook الجذاب (السطر الأول)',
           label: 'Stop The Scroll',
-          src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=800&fit=crop',
           caption: '🎣 4 أنواع Hook قاتلة:\n\n1️⃣ السؤال الصادم:\n"هل تعرف أن 90% من المشاريع تفشل في السنة الأولى؟"\n\n2️⃣ الرقم المذهل:\n"3 ملايين جنيه... من صفحة فيسبوك فقط!"\n\n3️⃣ الاعتراف الجريء:\n"أضعت 50 ألف جنيه قبل أن أتعلم هذا..."\n\n4️⃣ الوعد السريع:\n"احصل على 1000 متابع حقيقي في 7 أيام"\n\n📏 طول Hook المثالي:\n✅ 8-12 كلمة\n✅ سطر واحد فقط\n✅ بدون Emoji في البداية\n\n⚠️ تجنب:\n❌ "مرحباً، أنا..."\n❌ "في هذا البوست سأ..."\n❌ "اليوم سوف نتحدث عن..."'
         },
         { 
@@ -5550,10 +5536,9 @@ async function addNew5Lectures(){
           caption: '📝 صياغة Caption ممتاز:\n\n🔹 الطول المثالي:\n• Facebook: 50-150 كلمة\n• Instagram: 125-150 كلمة\n• LinkedIn: 150-300 كلمة\n\n🔹 البنية:\n\n1️⃣ المشكلة (Problem):\n"كل يوم تخسر عملاء محتملين لأن صفحتك غير احترافية..."\n\n2️⃣ الحل (Solution):\n"لكن مع الخطوات الـ 3 البسيطة دي، هتغيّر كل شيء:"\n\n3️⃣ التفاصيل:\n• نقاط واضحة (Bullet Points)\n• خطوات مرقمة\n• أمثلة قصيرة\n\n4️⃣ الدليل (Proof):\n"استخدمت هذه الطريقة مع 50+ عميل، والنتيجة؟"\n"متوسط الزيادة: 300% في التفاعل!"\n\n💡 نصيحة:\nاكتب بلغة سهلة، وكأنك بتتكلم مع صاحبك'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'خطوة 3: Call-to-Action (CTA)',
           label: 'أنواع الـ CTA',
-          src: 'https://images.unsplash.com/photo-1557838923-2985c318be48?w=1200&h=800&fit=crop',
           caption: '🎯 6 أنواع CTA فعّالة:\n\n1️⃣ البيع المباشر:\n"اطلب الآن! العرض ينتهي بعد ساعتين ⏰"\n\n2️⃣ التفاعل:\n"علّق بكلمة YES إذا كنت موافق 👇"\n\n3️⃣ الحفظ:\n"احفظ هذا البوست عشان ترجعله بعدين 💾"\n\n4️⃣ المشاركة:\n"شارك مع صديق محتاج يعرف ده 🔄"\n\n5️⃣ التواصل:\n"ابعتلنا رسالة دلوقتي واحصل على استشارة مجانية 📩"\n\n6️⃣ زيارة الموقع:\n"اضغط الرابط في أول كومنت 🔗"\n\n📏 صياغة CTA مثالية:\n✅ فعل واضح (اطلب، علّق، احفظ)\n✅ حافز قوي (خصم، هدية، محدود)\n✅ سهل التنفيذ (خطوة واحدة)\n✅ emoji مناسب'
         },
         { 
@@ -5563,10 +5548,9 @@ async function addNew5Lectures(){
           caption: '🍕 البوست:\n\n━━━━━━━━━━━━━━━━━━━━\n[HOOK]\n"3 آلاف جنيه شهرياً... ضايعين بسبب غلطة واحدة!"\n\n[PROBLEM]\n"معظم المطاعم بتنشر صور الأكل وبس... وبعدين تستغرب: ليه مفيش طلبات؟ 🤔"\n\n[SOLUTION]\n"السر بسيط:\nالناس مش بتشتري بيتزا... بتشتري الشعور!\n\n✨ نحن في [اسم المطعم]:\n• عجينة طازجة يومياً\n• جبنة موتزاريلا إيطالية 100%\n• توصيل خلال 30 دقيقة أو البيتزا مجاناً!\n\n[PROOF]\n⭐⭐⭐⭐⭐ (تقييم 4.9 من 2,340 عميل)"\n\n[IMAGE: صورة بيتزا ساخنة شهية]\n\n[CTA]\n"اطلب الآن واحصل على خصم 25% 🎁\nالعرض لأول 50 طلب فقط!\n👉 اتصل: 0100-XXX-XXXX\n\n#بيتزا #القاهرة #توصيل"\n━━━━━━━━━━━━━━━━━━━━\n\n📊 لماذا نجح؟\n✅ Hook صادم\n✅ Problem واضح\n✅ Solution مقنع\n✅ Proof (تقييمات)\n✅ CTA عاجل'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'CTA في الصور والفيديو',
           label: 'Visual CTA',
-          src: 'https://images.unsplash.com/photo-1634128221889-82ed6efebfc3?w=1200&h=800&fit=crop',
           caption: '🖼️ تصميم CTA بصري:\n\n1️⃣ على الصور:\n━━━━━━━━━━━━━\n[صورة المنتج]\n\nفي الزاوية السفلى:\n🔥 خصم 50% اليوم فقط!\n👉 اطلب الآن: 0100-XXX-XXXX\n━━━━━━━━━━━━━\n\n2️⃣ على الفيديو:\n• CTA في أول 3 ثواني\n• CTA مكتوب في النص\n• CTA صوتي في الفيديو\n• CTA في آخر 5 ثواني\n\n3️⃣ أدوات التصميم:\n• Canva.com (قوالب جاهزة)\n• RemoveBG.com (إزالة الخلفية)\n• Unfold (للستوريز)\n\n📐 مقاسات الصور:\n• Facebook Post: 1200x630\n• Instagram Post: 1080x1080\n• Story: 1080x1920\n\n💡 قاعدة:\nالصورة تجذب، النص يبيع!'
         },
         { 
@@ -5591,10 +5575,9 @@ async function addNew5Lectures(){
       order: 4,
       slides: [
         { 
-          type: 'image', 
+          type: 'text', 
           title: 'الحصة الرابعة: إنشاء موقع بالذكاء الاصطناعي', 
           label: 'من الصفر في دقائق!',
-          src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop',
           caption: '💻 في هذه الحصة ستتعلم:\n• لماذا تحتاج موقع إلكتروني\n• 3 طرق مختلفة بالذكاء الاصطناعي\n• v0.dev (أسهل طريقة)\n• VS Code + Codeium (احترافي)\n• WordPress + AI (مرن)\n• استضافة ونشر الموقع مجاناً'
         },
         { 
@@ -5604,24 +5587,21 @@ async function addNew5Lectures(){
           caption: '🌐 5 أسباب قوية:\n\n1️⃣ الملكية الكاملة:\n• Facebook/Instagram يمكن يقفل حسابك\n• الموقع ملكك للأبد\n\n2️⃣ المصداقية:\n• 75% من العملاء يحكمون على مصداقيتك من موقعك\n• موقع احترافي = شركة احترافية\n\n3️⃣ SEO  (محركات البحث):\n• ظهور في جوجل مجاناً\n• عملاء يبحثون عنك بالاسم\n\n4️⃣ التحكم الكامل:\n• تصميم حسب رغبتك\n• لا قيود على المحتوى\n• analytics تفصيلية\n\n5️⃣ البيع المباشر:\n• متجر إلكتروني\n• دفع أونلاين\n• أتمتة كاملة\n\n💰 التكلفة؟\n✅ مجاني 100% (الحلول اللي هنشرحها)\n✅ أو 200-500 جنيه سنوياً (دومين + استضافة)'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'الطريقة 1: v0.dev (الأسهل على الإطلاق)',
           label: 'AI Website in 3 Minutes',
-          src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=800&fit=crop',
           caption: '⚡ v0.dev (من Vercel):\n\n🎯 المميزات:\n✅ ذكاء اصطناعي كامل\n✅ لا تحتاج برمجة نهائياً\n✅ تصميم احترافي فوري\n✅ responsive (متجاوب مع الموبايل)\n\n📝 الخطوات:\n\n1️⃣ افتح: v0.dev\n\n2️⃣ سجل دخول بـ Google/GitHub\n\n3️⃣ اكتب طلبك بالإنجليزية:\n"Create a modern landing page for [نوع نشاطك] with:\n- Hero section with call-to-action\n- Services/Products section (3 cards)\n- About us section\n- Contact form\n- Footer with social media links\nColors: [ألوانك]\nStyle: modern, clean, professional"\n\n4️⃣ اضغط Generate\n\n5️⃣ انتظر 30 ثانية\n\n6️⃣ عدّل لو محتاج ("Make it more...")\n\n7️⃣ اضغط "Copy Code" أو "Deploy"\n\n💡 مجاني: 10 مواقع شهرياً'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'الطريقة 2: VS Code + Codeium (للمحترفين)',
           label: 'AI Code Completion',
-          src: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=800&fit=crop',
           caption: '👨‍💻 VS Code مع AI:\n\n📥 التحضير:\n\n1️⃣ حمّل VS Code:\n   • code.visualstudio.com\n   • مجاني للأبد\n\n2️⃣ ثبّت Extension:\n   • Codeium (مجاني)\n   • أو GitHub Copilot (10$/شهر)\n\n3️⃣ سجل دخول في الـ Extension\n\n✨ كيف تستخدمه:\n\n1️⃣ أنشئ ملف index.html\n\n2️⃣ اكتب تعليق:\n<!-- Modern landing page for digital marketing agency -->\n\n3️⃣ Codeium يكتب الكود تلقائياً!\n\n4️⃣ اضغط Tab للقبول\n\n5️⃣ كمّل بالتعليقات:\n<!-- Add hero section -->\n<!-- Add services cards -->\n\n💡 يكتب:\n• HTML\n• CSS\n• JavaScript\n• كل شيء!'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'الطريقة 3: WordPress + AI Plugins',
           label: 'الأكثر مرونة',
-          src: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=1200&h=800&fit=crop',
           caption: '🎨 WordPress مع AI:\n\n🌟 المميزات:\n✅ أسهل في الإدارة\n✅ آلاف القوالب الجاهزة\n✅ Plugins قوية\n✅ مناسب للمدونات والمتاجر\n\n📝 الخطوات:\n\n1️⃣ أنشئ موقع WordPress:\n   • wordpress.com (مجاني)\n   • أو استضافة (Hostinger, Bluehost)\n\n2️⃣ ثبّت AI Plugins:\n   🤖 Elementor AI (بناء صفحات)\n   🤖 AI Engine (محتوى ذكي)\n   🤖 10Web AI Builder (موقع كامل)\n\n3️⃣ استخدم Elementor AI:\n   • اختر قالب\n   • اضغط "Generate with AI"\n   • اكتب وصف قصير\n   • عدّل النتيجة\n\n4️⃣ AI Engine للمحتوى:\n   • كتابة مقالات\n   • ترجمة\n   • SEO optimization\n\n💰 التكلفة:\nمجاني (محدود) أو 50-200 جنيه/شهر'
         },
         { 
@@ -5631,10 +5611,9 @@ async function addNew5Lectures(){
           caption: '🌍 رفع الموقع للإنترنت:\n\n1️⃣ استضافة مجانية:\n\n🆓 Vercel (الأفضل):\n• vercel.com\n• رفع مباشر من v0.dev\n• SSL مجاني\n• سريع جداً\n\n🆓 Netlify:\n• netlify.com\n• سهل\n• مناسب للمواقع الثابتة\n\n🆓 GitHub Pages:\n• pages.github.com\n• يحتاج حساب GitHub\n\n2️⃣ استضافة مدفوعة:\n\n💳 Hostinger (20 جنيه/شهر):\n• سريعة\n• دعم عربي\n• WordPress بضغطة\n\n💳 Bluehost (50 جنيه/شهر):\n• موصى بها من WordPress\n• دومين مجاني السنة الأولى\n\n3️⃣ شراء دومين:\n\n🌐 Namecheap.com (80-150 جنيه/سنة)\n🌐 Google Domains (100 جنيه/سنة)\n🌐 GoDaddy (120 جنيه/سنة)\n\n💡 نصيحة:\nابدأ مجاني (Vercel) ← بعد النجاح ← اشتري دومين!'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'نشر موقعك على Vercel',
           label: 'Deployment Steps',
-          src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop',
           caption: '🚀 خطوات النشر:\n\n1️⃣ سجل في Vercel:\n   • vercel.com\n   • Sign up بـ GitHub\n\n2️⃣ رفع الموقع:\n\nطريقة A (من v0.dev):\n   • اضغط "Deploy to Vercel"\n   • تم! 🎉\n\nطريقة B (من VS Code):\n   • ارفع الملفات على GitHub\n   • New Project في Vercel\n   • Import من GitHub\n   • Deploy\n\n3️⃣ ربط دومين (اختياري):\n   • Settings → Domains\n   • Add Domain\n   • غيّر DNS عند الشركة\n   • انتظر ساعة\n\n✅ موقعك الآن LIVE:\nyour-site.vercel.app\n\n💡 Vercel يدعم:\n• SSL مجاني (https://)\n• تحديثات تلقائية\n• سرعة عالية (CDN عالمي)'
         },
         { 
@@ -5659,10 +5638,9 @@ async function addNew5Lectures(){
       order: 5,
       slides: [
         { 
-          type: 'image', 
+          type: 'text', 
           title: 'الحصة الخامسة: Meta Business Manager', 
           label: 'إدارة احترافية شاملة',
-          src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop',
           caption: '🎯 في هذه الحصة النهائية:\n• ما هو Business Manager وأهميته\n• إنشاء حساب احترافي\n• إعداد Ad Account\n• فهم أهداف الحملات\n• إطلاق حملتك الأولى\n• الاستهداف الدقيق\n• إدارة الميزانيات\n• قياس النتائج\n• تحسين الأداء\n• أسرار المحترفين'
         },
         { 
@@ -5672,10 +5650,9 @@ async function addNew5Lectures(){
           caption: '🏢 Business Manager هو:\n\nلوحة تحكم مركزية لـ:\n✅ إدارة صفحات Facebook\n✅ إدارة حسابات Instagram\n✅ إدارة الإعلانات\n✅ إدارة البيكسل\n✅ إدارة الفريق والصلاحيات\n✅ إدارة طرق الدفع\n\n🎯 لماذا ضروري:\n\n1️⃣ الفصل التام:\n• حسابك الشخصي منفصل\n• لو اتقفل حسابك، البيزنس سليم\n\n2️⃣ الاحترافية:\n• عملاء وشركاء يشوفوك "بيزنس"\n• ثقة أكبر من Meta\n\n3️⃣ إدارة فريق:\n• إضافة موظفين\n• صلاحيات محددة (مدير، محرر، محلل)\n\n4️⃣ تقارير متقدمة:\n• رؤية شاملة\n• مقارنة الحملات\n• Excel exports\n\n5️⃣ أمان أعلى:\n• Two-factor authentication\n• Audit log (سجل كل التغييرات)\n\n💡 مجاني 100% ← لكن ضروري!'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'إنشاء Business Manager',
           label: 'Setup Steps',
-          src: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&h=800&fit=crop',
           caption: '📝 خطوات الإنشاء (10 دقائق):\n\n1️⃣ افتح: business.facebook.com\n\n2️⃣ اضغط "Create Account"\n\n3️⃣ املأ البيانات:\n   • اسم الشركة (رسمي، لا تغيير)\n   • اسمك\n   • بريدك الإلكتروني (مهم جداً)\n\n4️⃣ تأكيد البريد:\n   • افتح الإيميل\n   • اضغط Verify\n\n5️⃣ إضافة Business Details:\n   • العنوان (يفضل حقيقي)\n   • رقم الهاتف\n   • الموقع (لو موجود)\n\n6️⃣ إضافة صفحتك:\n   • Business Settings\n   • Pages → Add\n   • اختار صفحتك\n   • تأكيد الصلاحيات\n\n7️⃣ إضافة Instagram:\n   • Instagram Accounts → Add\n   • Log in\n\n⚠️ مهم جداً:\n• استخدم بريد إلكتروني حقيقي تصل له\n• احفظ بيانات الدخول\n• فعّل 2FA (Two-Factor Authentication)'
         },
         { 
@@ -5685,17 +5662,15 @@ async function addNew5Lectures(){
           caption: '💳 خطوات إنشاء Ad Account:\n\n1️⃣ من Business Settings:\n   • Ad Accounts\n   • Add → Create New\n\n2️⃣ املأ التفاصيل:\n   • اسم Ad Account (مثلاً: إعلانات 2024)\n   • Time Zone (Africa/Cairo)\n   • Currency (EGP - جنيه مصري)\n\n⚠️ تحذير:\n• العملة لا تتغير أبداً بعد الإنشاء!\n\n3️⃣ إضافة طريقة دفع:\n   • Payment Methods\n   • Add Payment Method\n\nطرق الدفع المتاحة:\n💳 بطاقة Visa/Mastercard\n💳 Fawry (فوري)\n💳 Vodafone Cash / Orange Money\n\n4️⃣ تعيين حد إنفاق:\n   • Account Spending Limit (اختياري)\n   • مثلاً: 5000 جنيه شهرياً\n\n5️⃣ Verification (التحقق):\n• Meta قد تطلب:\n  - صورة بطاقة الرقم القومي\n  - فاتورة مرافق\n  - سجل تجاري (للشركات)\n\n⏰ التحقق: فوري إلى 48 ساعة'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'أهداف الحملات (Campaign Objectives)',
           label: '6 أنواع رئيسية',
-          src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop',
           caption: '🎯 اختر الهدف الصح:\n\n1️⃣ Awareness (الوعي بالعلامة):\n📊 الهدف: أكبر عدد يشوف إعلانك\n💰 التكلفة: رخيصة (20-50 قرش/وصول)\n📈 المقياس: Reach (الوصول)\n✅ متى: إطلاق منتج جديد\n\n2️⃣ Traffic (زيارات للموقع):\n🔗 الهدف: ضغطات على الرابط\n💰 التكلفة: متوسطة (50 قرش-2 جنيه/ضغطة)\n📈 المقياس: Link Clicks\n✅ متى: عندك موقع أو مقال\n\n3️⃣ Engagement (تفاعل):\n❤️ الهدف: لايكات، تعليقات، مشاركات\n💰 التكلفة: رخيصة (10-30 قرش/تفاعل)\n📈 المقياس: Post Engagement\n✅ متى: بناء community\n\n4️⃣ Leads (عملاء محتملين):\n📝 الهدف: جمع بيانات (اسم، تليفون، إيميل)\n💰 التكلفة: عالية (5-20 جنيه/ليد)\n📈 المقياس: Lead Forms\n✅ متى: خدمات أو منتجات غالية\n\n5️⃣ App Promotion (تطبيقات):\n📱 الهدف: تحميلات\n💰 التكلفة: متوسطة (2-10 جنيه/تحميل)\n📈 المقياس: App Installs\n✅ متى: عندك تطبيق\n\n6️⃣ Sales (مبيعات):\n💵 الهدف: شراء من الموقع/المتجر\n💰 التكلفة: الأعلى (حسب المنتج)\n📈 المقياس: ROAS (العائد على الإنفاق)\n✅ متى: متجر إلكتروني جاهز\n\n💡 نصيحة للمبتدئين:\nابدأ بـ Engagement ← ثم Traffic ← ثم Sales'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'إطلاق حملتك الأولى',
           label: 'Campaign Structure',
-          src: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=800&fit=crop',
           caption: '🚀 الهيكل الإعلاني (3 مستويات):\n\n1️⃣ Campaign (الحملة):\n📌 تحدد: الهدف (Traffic, Engagement...)\n📌 مثال: "حملة صيف 2024"\n\n2️⃣ Ad Set (المجموعات):\n📌 تحدد:\n   • الجمهور المستهدف\n   • الميزانية\n   • المدة\n   • المواضع (Facebook, Instagram...)\n📌 مثال: "Ad Set - رجال 25-40"\n\n3️⃣ Ad (الإعلان نفسه):\n📌 تحدد:\n   • الصورة/الفيديو\n   • النص\n   • الـ CTA\n   • الرابط\n📌 مثال: "إعلان صورة رئيسي"\n\n✨ روتين الإطلاق (20 دقيقة):\n\n✅ Create Campaign → اختار Engagement\n✅ Campaign Name: "تفاعل - منتج X"\n✅ Next\n\n✅ Ad Set Settings:\n   • Daily Budget: 50 جنيه\n   • Location: Egypt → Cairo (أو مدينتك)\n   • Age: 20-45\n   • Gender: All\n   • Detailed Targeting: اهتمامات (مثلاً: Online Shopping)\n   • Placements: Automatic (دع Meta يختار)\n\n✅ Ad Creative:\n   • Upload Image/Video (1080x1080)\n   • Primary Text (النص الأساسي): 125 حرف\n   • Headline: عنوان قصير\n   • Call-to-Action: Learn More أو Shop Now\n\n✅ Review → Publish\n\n⏰ المراجعة: 30 دقيقة - 24 ساعة'
         },
         { 
@@ -5711,10 +5686,9 @@ async function addNew5Lectures(){
           caption: '💰 إدارة الميزانية:\n\n1️⃣ نوعين:\n\n📅 Daily Budget (يومية):\n• مثلاً: 50 جنيه/يوم\n• الإعلان يشتغل للأبد\n• توقف لما تريد\n✅ الأفضل للمبتدئين\n\n⏰ Lifetime Budget (إجمالية):\n• مثلاً: 1000 جنيه لمدة 10 أيام\n• توقف تلقائياً بعد المدة\n• Meta يوزع الميزانية بذكاء\n✅ للحملات الموسمية\n\n2️⃣ كم تبدأ؟\n\n🥉 مبتدئ: 30-50 جنيه/يوم\n🥈 متوسط: 100-200 جنيه/يوم\n🥇 محترف: 500+ جنيه/يوم\n\n💡 قاعدة ذهبية:\n"ميزانية 7 أيام على الأقل"\nلأن Meta يحتاج وقت للتعلم\n\n3️⃣ استراتيجيات المزايدة:\n\n🤖 Lowest Cost (الأرخص):\n• Meta يحصل أقصى نتائج بأقل سعر\n• تلقائي\n✅ الأفضل للمبتدئين\n\n🎯 Cost Cap (سقف التكلفة):\n• تحدد أقصى سعر للنتيجة\n• مثلاً: 2 جنيه/ضغطة كحد أقصى\n• Meta يحاول ما يتجاوزش\n✅ للميزانيات المحدودة\n\n💎 Bid Cap (سقف المزايدة):\n• أنت تحدد سعر المزايدة\n• للمحترفين فقط\n\n4️⃣ Campaign Budget Optimization (CBO):\n\n✨ Meta يوزع الميزانية تلقائياً:\n• على Ad Sets الأفضل أداءً\n• توفير وقت\n• نتائج أحسن\n✅ فعّله دائماً!'
         },
         { 
-          type: 'image',
+          type: 'text',
           title: 'قياس النتائج (Metrics)',
           label: 'ماذا تقيس؟',
-          src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop',
           caption: '📊 المقاييس الأساسية:\n\n1️⃣ Impressions (مرات الظهور):\n• كم مرة ظهر إعلانك\n• ارتفاعه = وصول واسع\n\n2️⃣ Reach (الوصول):\n• عدد الأشخاص الفريدين\n• أهم من Impressions\n\n3️⃣ CTR (Click-Through Rate):\n• نسبة الضغط = (Clicks ÷ Impressions) × 100\n• 1%+ = ممتاز\n• 0.5%-1% = جيد\n• أقل من 0.5% = ضعيف (غيّر الإعلان)\n\n4️⃣ CPC (Cost Per Click):\n• تكلفة الضغطة الواحدة\n• متوسط مصر: 50 قرش - 3 جنيه\n• كلما قل = أفضل\n\n5️⃣ CPM (Cost Per 1000 Impressions):\n• تكلفة 1000 ظهور\n• متوسط: 5-20 جنيه\n\n6️⃣ Frequency (التكرار):\n• كم مرة الشخص الواحد شاف الإعلان\n• 1-3 = مثالي\n• 5+ = الناس زهقت (غيّر الإعلان)\n\n7️⃣ ROAS (Return on Ad Spend):\n• العائد على الإنفاق الإعلاني\n• الصيغة: (Revenue ÷ Ad Spend) × 100%\n• 3x = ممتاز (كل 1 جنيه → 3 جنيه)\n• 2x = جيد\n• 1x = التعادل\n• أقل من 1x = خسارة!\n\n📈 تابع يومياً:\nAds Manager → Campaigns → Columns → Customize\n\n💡 أهم 3 أرقام:\nCTR, CPC, ROAS'
         },
         { 
@@ -5938,7 +5912,7 @@ function collectSlideValues(){
 
 function addSlideRow(){
   collectSlideValues();
-  slideRows.push({id:'s'+Date.now()+Math.random().toString(36).slice(2),type:'image',src:'',title:'',notes:''});
+  slideRows.push({id:'s'+Date.now()+Math.random().toString(36).slice(2),type: 'text',src:'',title:'',notes:''});
   renderSlideEditor();
   // scroll to bottom of editor
   const ed=document.getElementById('slidesEditor');
