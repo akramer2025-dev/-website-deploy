@@ -940,9 +940,10 @@ function buildSlideHTML(s, i){
     mediaHTML = `<div class="no-media-placeholder"><i class="fas fa-image"></i><span>لا توجد وسائط</span></div>`;
   }
 
-  // notes
-  const notesHTML = s.notes
-    ? s.notes.split('\n').map(line=>line.trim()?`<p>${line}</p>`:'').join('')
+  // notes - support both 'notes' and 'caption' fields
+  const notesText = s.notes || s.caption || '';
+  const notesHTML = notesText
+    ? notesText.split('\n').map(line=>line.trim()?`<p>${line}</p>`:'').join('')
     : '<span class="notes-empty">لا يوجد شرح نصي لهذه الشريحة</span>';
 
   return `
