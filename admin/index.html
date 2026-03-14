@@ -2249,7 +2249,10 @@ textarea:focus{
       <div class="lec-panel" id="lecPanel">
         <div class="lec-panel-head">
           <h3 id="lecPanelTitle">اختر كورساً</h3>
-          <button class="btn-add-user" onclick="openAddLecture()" id="btnAddLec" style="display:none"><i class="fas fa-plus"></i> محاضرة جديدة</button>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-add-user" onclick="forceReloadFacebookAds()" id="btnReloadFB" style="display:none;background:#1877f2;"><i class="fas fa-sync-alt"></i> إعادة تحميل</button>
+            <button class="btn-add-user" onclick="openAddLecture()" id="btnAddLec" style="display:none"><i class="fas fa-plus"></i> محاضرة جديدة</button>
+          </div>
         </div>
         <div class="lec-list" id="lecList"></div>
       </div>
@@ -5285,8 +5288,13 @@ async function seedFacebookAdsLectures(){
   try {
     const all = getLectures();
     const existing = all['facebook-ads']||[];
-    // seed if empty or less than 6 lectures
-    if(existing.length >= 6) return;
+    // Check if already has the correct Facebook Ads lectures (by ID)
+    if(existing.length >= 6 && existing[0]?.id === 'lec_fb_1') {
+      console.log('✅ Facebook Ads lectures already exist');
+      return;
+    }
+    // Seed or refresh the lectures
+    console.log('🔄 Adding Facebook Ads lectures...');
     all['facebook-ads'] = getDefaultFacebookAdsLectures();
     _fsLectures = Object.assign({}, all);
     try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(all)); }catch(e){}
@@ -5295,9 +5303,30 @@ async function seedFacebookAdsLectures(){
     updateBadges();
     try{ initLecturesSection(); }catch(e){}
     if(activeLecCourse === 'facebook-ads'){ try{ renderLecList('facebook-ads'); }catch(e){} }
-    console.log('✅ Facebook Ads lectures seeded successfully');
+    console.log('✅ Facebook Ads lectures seeded successfully - 6 lectures added');
   } catch(e){ console.warn('Seed FB failed:', e); }
 }
+
+// Force reload Facebook Ads lectures (for debugging/admin use)
+async function forceReloadFacebookAds(){
+  try {
+    console.log('🔄 Force reloading Facebook Ads lectures...');
+    const all = getLectures();
+    all['facebook-ads'] = getDefaultFacebookAdsLectures();
+    _fsLectures = Object.assign({}, all);
+    try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(all)); }catch(e){}
+    await _fdb.collection('admin_data').doc('lectures').set({data:all, updatedAt:Date.now()});
+    updateBadges();
+    try{ initLecturesSection(); }catch(e){}
+    if(activeLecCourse === 'facebook-ads'){ try{ renderLecList('facebook-ads'); }catch(e){} }
+    alert('✅ تم تحميل محاضرات الفيسبوك بنجاح!\n\n6 محاضرات تم إضافتها.');
+    console.log('✅ Facebook Ads lectures force reloaded - 6 lectures added');
+  } catch(e){ 
+    console.error('❌ Force reload failed:', e); 
+    alert('❌ حدث خطأ أثناء تحميل المحاضرات:\n' + e.message);
+  }
+}
+// To use: Open browser console and type: forceReloadFacebookAds()
 
 async function seedFreeLectures(){
   try {
@@ -5422,6 +5451,10 @@ function renderLecList(key){
   const meta = LEC_COURSES.find(c=>c.key===key);
   document.getElementById('lecPanelTitle').textContent = (meta?meta.name:key) + ' – المحاضرات';
   document.getElementById('btnAddLec').style.display = 'flex';
+  // Show reload button only for facebook-ads course
+  const reloadBtn = document.getElementById('btnReloadFB');
+  if(reloadBtn) reloadBtn.style.display = (key === 'facebook-ads') ? 'flex' : 'none';
+  
   const all = getLectures();
   const lecs = all[key]||[];
   const list = document.getElementById('lecList');
