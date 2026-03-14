@@ -5744,11 +5744,11 @@ async function addNew5Lectures(){
     const all = getLectures();
     
     // Delete old Facebook Ads lectures from Firebase first
-    if (_db) {
+    if (_fdb) {
       const oldFbLectures = all['facebook-ads'] || [];
       for (const oldLec of oldFbLectures) {
         try {
-          await _db.collection('lectures').doc(oldLec.id).delete();
+          await _fdb.collection('lectures').doc(oldLec.id).delete();
           console.log(`🗑️ Deleted old lecture: ${oldLec.id}`);
         } catch (e) {
           console.warn(`Could not delete ${oldLec.id}:`, e);
@@ -5763,10 +5763,10 @@ async function addNew5Lectures(){
     await saveLectures(all);
 
     // Save each new lecture individually to Firebase
-    if (_db) {
+    if (_fdb) {
       for (const lec of newLectures) {
         try {
-          await _db.collection('lectures').doc(lec.id).set({
+          await _fdb.collection('lectures').doc(lec.id).set({
             ...lec,
             courseKey: 'facebook-ads',
             savedAt: firebase.firestore.FieldValue.serverTimestamp(),
