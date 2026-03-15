@@ -409,24 +409,43 @@
         }
     })();
 
-    /* FIREBASE */
-    const _fb = firebase.initializeApp({
-        apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
-        authDomain: "akramplatform-2c6be.firebaseapp.com",
-        projectId: "akramplatform-2c6be",
-        storageBucket: "akramplatform-2c6be.firebasestorage.app",
-        messagingSenderId: "132959399686",
-        appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
-    }, 'login');
-    const _db = firebase.firestore(_fb);
-    
+    /* FIREBASE - protected against duplicate-app error */
+    let _fb, _db;
+    try {
+        _fb = firebase.initializeApp({
+            apiKey: "AIzaSyB9rVI5Fn96Mhm6x6aVcKrf8_epQ_c9H4s",
+            authDomain: "akramplatform-2c6be.firebaseapp.com",
+            projectId: "akramplatform-2c6be",
+            storageBucket: "akramplatform-2c6be.firebasestorage.app",
+            messagingSenderId: "132959399686",
+            appId: "1:132959399686:web:7f1db74b25bebe27a8f887"
+        }, 'login');
+    } catch(e) {
+        // App already initialized - get existing one
+        _fb = firebase.app('login');
+    }
+    try {
+        _db = firebase.firestore(_fb);
+    } catch(e) {
+        _db = null;
+        console.warn('Firestore init error:', e);
+    }
+
     // Initialize Supabase Client for Employee System
-    const { createClient } = supabase;
-    const _supabase = createClient(
-        SUPABASE_CONFIG.url,
-        SUPABASE_CONFIG.anonKey
-    );
-    console.log('✅ Supabase client initialized for login');
+    let _supabase = null;
+    try {
+        const _createClient = (typeof supabase !== 'undefined' && supabase.createClient)
+            ? supabase.createClient
+            : (typeof createClient !== 'undefined' ? createClient : null);
+        if (_createClient && typeof SUPABASE_CONFIG !== 'undefined') {
+            _supabase = _createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+            console.log('✅ Supabase client initialized for login');
+        } else {
+            console.warn('⚠️ Supabase not available, employee login disabled');
+        }
+    } catch(e) {
+        console.warn('Supabase init error:', e);
+    }
 
     const ADMINS = { "akram": "Aazxc" };
     let _pending = null;
@@ -466,7 +485,8 @@
         }
 
         // ✅ Check Employee System First (Supabase)
-        try {
+        if (_supabase) {
+          try {
             console.log('🔍 Checking employee in Supabase...');
             const { data: employee, error: empError } = await _supabase
                 .from('employees')
@@ -501,9 +521,10 @@
             if (empError && empError.code !== 'PGRST116') { // 116 = no rows returned
                 console.warn('Supabase employee check error:', empError);
             }
-        } catch(err) {
+          } catch(err) {
             console.warn('Employee check failed, continuing to student check:', err);
-        }
+          }
+        } // end if (_supabase)
 
         // Check cached users (Students) 
         let found = null;
@@ -517,6 +538,11 @@
 
         // Fetch from Firestore if not in cache (with 8s timeout)
         if (!found) {
+            if (!_db) {
+                setLoading(btn, false);
+                showError('اسم المستخدم أو كلمة المرور غير صحيحة');
+                shakeCard(); return;
+            }
             try {
                 const snap = await withTimeout(_db.collection('admin_data').doc('users').get(), 8000);
                 if (snap.exists) {
