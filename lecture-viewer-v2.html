@@ -684,16 +684,6 @@
             }
         });
 
-        // Get lecture ID from URL parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const lectureId = urlParams.get('id');
-
-        if (!lectureId) {
-            showError('لم يتم تحديد معرّف المحاضرة في الرابط.');
-        } else {
-            loadLecture(lectureId);
-        }
-
         // ===== بيانات المحاضرات الثابتة (لا تعتمد على localStorage) =====
         const HARDCODED_LECTURES = {
           'lec_fb_1': {
@@ -747,6 +737,15 @@
                 console.error('Error loading lecture:', error);
                 showError('حدث خطأ أثناء تحميل المحاضرة. يرجى المحاولة مرة أخرى.');
             }
+        }
+
+        // Get lecture ID from URL parameter and load
+        const urlParams = new URLSearchParams(window.location.search);
+        const lectureId = urlParams.get('id');
+        if (!lectureId) {
+            showError('لم يتم تحديد معرّف المحاضرة في الرابط.');
+        } else {
+            loadLecture(lectureId);
         }
 
         function displayLecture(lecture) {
