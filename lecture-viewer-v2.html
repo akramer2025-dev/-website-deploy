@@ -694,42 +694,54 @@
             loadLecture(lectureId);
         }
 
+        // ===== بيانات المحاضرات الثابتة (لا تعتمد على localStorage) =====
+        const HARDCODED_LECTURES = {
+          'lec_fb_1': {
+            id: 'lec_fb_1',
+            title: 'الحصة 1: إنشاء الهوية الاحترافية على Facebook و Instagram',
+            description: 'تعلم إنشاء صفحة فيسبوك وحساب انستجرام احترافيين من الصفر + ربطهم معاً',
+            slides: [
+              { id:'fb1_0', type:'image', image:'/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png', title:'🎉 أهلاً بكم في المحاضرة الأولى', notes:'أهلاً وسهلاً بكم جميعاً في أول محاضرة من الكورس!\n\nفي المحاضرة دي هتتعلموا:\n✅ إزاي تتعارفوا مع بعض كمجتمع كورس\n✅ إنشاء صفحة فيسبوك واكونت انستجرام احترافيين\n✅ ربطهم مع بعض عن طريق فيسبوك والواتساب\n✅ تصميم الهوية البصرية بـ Gemini وCanva\n✅ أساسيات الكوبي رايتنج: Hook، Caption، CTA' },
+              { id:'fb1_1', type:'image', image:'/images/slides/Gemini_Generated_Image_alcajsalcajsalca.png', title:'👋 تعارف — من أنت؟', notes:'أحنا عائلة واحدة في الكورس ده!\n\nكل واحد فيكم يعرّف نفسه:\n\n1️⃣ اسمك إيه؟\n2️⃣ عندك بيزنس أو مشروع؟ إيه هو؟\n3️⃣ ليه قررت تدخل الكورس ده؟\n\n💬 شاركنا في المجموعة أو في التعليقات — التعارف بيقوي المجتمع ويخلي التجربة أجمل للجميع!' },
+              { id:'fb1_2', type:'image', image:'/images/slides/Gemini_Generated_Image_p371d6p371d6p371.png', title:'📱 إنشاء صفحة فيسبوك + انستجرام وربطهم', notes:'📘 صفحة فيسبوك:\n1️⃣ اذهب إلى facebook.com/pages/create\n2️⃣ اختر "عمل أو علامة تجارية"\n3️⃣ أدخل الاسم، الفئة، الوصف\n4️⃣ أضف صورة البروفايل وصورة الكفر\n\n📸 انستجرام Business:\n1️⃣ الإعدادات → Account → Switch to Professional\n2️⃣ اختر Business وأضف بياناتك\n\n🔗 الربط عن طريق فيسبوك:\n- صفحة الفيسبوك → Settings → Instagram → Connect\n\n📲 ربط الواتساب:\n- Settings → WhatsApp → أدخل رقمك وتأكده' },
+              { id:'fb1_3', type:'image', image:'/images/slides/Gemini_Generated_Image_hw9pvxhw9pvxhw9p.png', title:'🎨 تصميم الهوية البصرية — Gemini و Canva', notes:'أدواتنا في التصميم:\n\n🤖 Google Gemini:\n🔗 gemini.google.com\nاكتبله: "صمم لي لوجو احترافي لـ [اسم بيزنسك] في مجال [المجال]"\n\n🎨 Canva:\n🔗 canva.com\n- ابدأ بـ Logo → Magic Design\n- أو Text to Image واكتب وصف الشعار\n- صدّر بـ PNG شفاف\n\n✅ المطلوب:\n- شعار ملون (PNG شفاف)\n- اختيار لونين أساسيين\n- خطين: عنوان + نص' },
+              { id:'fb1_4', type:'image', image:'/images/slides/Gemini_Generated_Image_kdc3u7kdc3u7kdc3.png', title:'✍️ أساسيات الكوبي رايتنج: Hook، Caption، CTA', notes:'3 مصطلحات لازم تحفظهم:\n\n🪝 الـ Hook (الجملة الأولى):\nهي أول جملة في الإعلان — مهمتها تجذب النظر وتوقف السحب\nمثال: "عاوز تضاعف مبيعاتك في 30 يوم؟"\n\n📝 الـ Caption (النص):\nالكلام اللي بيشرح فيك خدمتك أو منتجك بعد الـ Hook\nبيحكي المشكلة → الحل → الإثبات\n\n📣 الـ CTA — Call to Action (دعوة للفعل):\nالجملة الأخيرة اللي بتطلب من الناس يعملوا حاجة\nمثال: "اضغط الرابط دلوقتي ←" أو "تواصل معنا على الواتساب"' },
+              { id:'fb1_5', type:'image', image:'/images/slides/Gemini_Generated_Image_k2esn1k2esn1k2es.png', title:'❓ أسئلة وتقييم المحاضرة الأولى', notes:'المحاضرة الأولى خلصت — برافو عليكم! 🎉\n\n📝 أسئلة للمراجعة:\n1️⃣ ما الفرق بين الـ Hook والـ CTA؟\n2️⃣ إزاي تربط انستجرام بفيسبوك؟\n3️⃣ إيه الأداة اللي بتستخدمها لتصميم الشعار؟\n4️⃣ كام لون تختار للهوية البصرية بتاعتك؟\n\n💬 عندك سؤال؟\nاكتبه في التعليقات أو تواصل معنا على الواتساب وأنا هرد عليك في أقرب وقت!\n\n⏭️ المحاضرة الجاية: الهوية البصرية الكاملة وتصميم الشعار' },
+            ]
+          }
+        };
+        // ================================================================
+
         function loadLecture(lectureId) {
             try {
-                // Try all known localStorage keys used by admin panel
-                // Admin stores as: am_lectures = { 'facebook-ads': [...], 'instagram': [...] }
                 let lecture = null;
 
+                // 1. Try localStorage first (admin-seeded data)
                 const raw = localStorage.getItem('am_lectures');
                 if (raw) {
                     const obj = JSON.parse(raw);
-                    // obj is { courseKey: [lectureArray] }
                     for (const key of Object.keys(obj)) {
                         const arr = obj[key];
                         if (Array.isArray(arr)) {
                             const found = arr.find(lec => lec.id === lectureId);
-                            if (found) { lecture = found; break; }
+                            if (found && found.slides?.[0]?.type === 'image') {
+                                lecture = found;
+                                break;
+                            }
                         }
                     }
                 }
 
-                // Fallback: old 'lectures' key (flat array)
+                // 2. Fallback: use hardcoded data (works for all browsers/devices)
                 if (!lecture) {
-                    const alt = localStorage.getItem('lectures');
-                    if (alt) {
-                        const arr = JSON.parse(alt);
-                        if (Array.isArray(arr)) {
-                            lecture = arr.find(lec => lec.id === lectureId) || null;
-                        }
-                    }
+                    lecture = HARDCODED_LECTURES[lectureId] || null;
                 }
 
                 if (!lecture) {
-                    showError('المحاضرة المطلوبة غير موجودة. من فضلك افتح الصفحة من لوحة التحكم.');
+                    showError('المحاضرة المطلوبة غير موجودة.');
                     return;
                 }
 
-                // Display lecture
                 displayLecture(lecture);
             } catch (error) {
                 console.error('Error loading lecture:', error);
