@@ -219,148 +219,146 @@
         }
 
         .slide-card {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
             background: rgba(255, 255, 255, 0.03);
-            padding: 50px;
-            border-radius: 30px;
+            border-radius: 24px;
             border: 1px solid rgba(233, 78, 119, 0.2);
-            position: relative;
             overflow: hidden;
-            transition: all 0.5s ease;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .slide-card::before {
             content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(233, 78, 119, 0.1), transparent);
-            opacity: 0;
-            transition: 0.5s;
+            display: block;
+            height: 4px;
+            background: linear-gradient(90deg, #e94e77, #f7931e, #e94e77);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         .slide-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 60px rgba(233, 78, 119, 0.3);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 64px rgba(233, 78, 119, 0.25);
             border-color: rgba(233, 78, 119, 0.5);
         }
 
-        .slide-card:hover::before {
-            opacity: 1;
-        }
-
-        /* Alternate layout */
-        .slide-card:nth-child(even) .slide-content {
-            order: 2;
-        }
-
-        .slide-card:nth-child(even) .slide-image-container {
-            order: 1;
-        }
-
         .slide-number {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(45deg, #e94e77, #f7931e);
-            border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            border-radius: 50%;
+            font-size: 22px;
             font-weight: 900;
-            box-shadow: 0 10px 30px rgba(233, 78, 119, 0.5);
-            z-index: 2;
+            box-shadow: 0 4px 20px rgba(233, 78, 119, 0.5);
+            flex-shrink: 0;
+        }
+
+        .slide-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 28px 36px 0;
         }
 
         .slide-image-container {
-            position: relative;
-            border-radius: 20px;
+            width: 100%;
+            aspect-ratio: 16 / 9;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(10, 31, 68, 0.5);
+            background: rgba(10, 31, 68, 0.6);
+            margin: 24px 0 0;
         }
 
         .slide-image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border-radius: 20px;
+            object-fit: contain;
             transition: transform 0.5s;
+            background: #0a1f44;
         }
 
         .slide-card:hover .slide-image-container img {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .slide-placeholder {
-            text-align: center;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             color: var(--text-muted);
         }
 
         .slide-placeholder i {
-            font-size: 80px;
-            margin-bottom: 20px;
+            font-size: 60px;
+            margin-bottom: 16px;
             opacity: 0.3;
         }
 
+        .slide-content {
+            padding: 28px 36px 36px;
+        }
+
         .slide-content h3 {
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 900;
             margin-bottom: 20px;
             background: linear-gradient(45deg, #e94e77, #f7931e);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.5;
         }
 
         .slide-content p {
-            font-size: 18px;
-            line-height: 1.9;
+            font-size: 17px;
+            line-height: 2;
             color: var(--text-light);
-            margin-bottom: 20px;
-            white-space: pre-wrap;
+            margin-bottom: 14px;
         }
 
         .slide-content ul {
             list-style: none;
             padding: 0;
-            margin-top: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .slide-content ul li {
-            padding: 12px 0;
-            font-size: 17px;
             display: flex;
             align-items: flex-start;
             gap: 12px;
+            font-size: 16px;
+            line-height: 1.8;
             color: var(--text-light);
+            background: rgba(233, 78, 119, 0.06);
+            border-radius: 12px;
+            padding: 12px 16px;
+            border-right: 3px solid rgba(233, 78, 119, 0.4);
+            transition: background 0.3s;
         }
 
-        .slide-content ul li i {
-            color: var(--gradient-orange);
-            font-size: 18px;
-            margin-top: 4px;
-            flex-shrink: 0;
+        .slide-content ul li:hover {
+            background: rgba(233, 78, 119, 0.12);
         }
 
         .slide-content ul li::before {
-            content: '✓';
-            color: var(--gradient-orange);
-            font-weight: 900;
-            font-size: 20px;
-            margin-left: 10px;
+            content: '◆';
+            color: #e94e77;
+            font-size: 10px;
+            margin-top: 6px;
+            flex-shrink: 0;
         }
 
         /* Video/Media Container */
@@ -496,19 +494,17 @@
 
         /* Responsive */
         @media (max-width: 968px) {
-            .slide-card {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                padding: 30px;
+            .slide-header {
+                padding: 20px 20px 0;
+                gap: 12px;
             }
 
-            .slide-card:nth-child(even) .slide-content,
-            .slide-card:nth-child(even) .slide-image-container {
-                order: initial;
+            .slide-content {
+                padding: 20px;
             }
 
-            .slide-image-container {
-                height: 300px;
+            .slide-content h3 {
+                font-size: 20px;
             }
 
             .lecture-title {
@@ -519,12 +515,8 @@
                 font-size: 32px;
             }
 
-            .slide-content h3 {
-                font-size: 26px;
-            }
-
             .slide-number {
-                width: 50px;
+                width: 44px;
                 height: 50px;
                 font-size: 20px;
                 top: 20px;
@@ -782,11 +774,17 @@
             const card = document.createElement('div');
             card.className = 'slide-card';
 
-            // Slide number badge
+            // Header: slide number + title
+            const header = document.createElement('div');
+            header.className = 'slide-header';
             const numberBadge = document.createElement('div');
             numberBadge.className = 'slide-number';
             numberBadge.textContent = number;
-            card.appendChild(numberBadge);
+            const titleEl = document.createElement('h3');
+            titleEl.textContent = slide.title || 'عنوان القسم';
+            header.appendChild(numberBadge);
+            header.appendChild(titleEl);
+            card.appendChild(header);
 
             // Image container
             const imageContainer = document.createElement('div');
@@ -848,10 +846,6 @@
             const content = document.createElement('div');
             content.className = 'slide-content';
 
-            const title = document.createElement('h3');
-            title.textContent = slide.title || 'عنوان القسم';
-            content.appendChild(title);
-
             // Parse and format the text content
             const text = slide.notes || slide.caption || '';
             if (text) {
@@ -895,6 +889,7 @@
 
             return card;
         }
+
 
         function createPlaceholder(type) {
             const icons = {
