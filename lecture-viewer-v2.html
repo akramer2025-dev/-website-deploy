@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عارض المحاضرة | Akram Mostafa</title>
+    <link rel="icon" href="images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a1f44;
+            --primary-dark: #0d1b3e;
+            --gradient-pink: #e94e77;
+            --gradient-orange: #f7931e;
+            --white: #ffffff;
+            --text-light: rgba(255, 255, 255, 0.9);
+            --text-muted: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a1f44, #0d1b3e);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(10, 31, 68, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(233, 78, 119, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(233, 78, 119, 0.3);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .nav-back:hover {
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(233, 78, 119, 0.4);
+        }
+
+        /* Hero Section */
+        .lecture-hero {
+            padding: 80px 20px;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lecture-hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(233, 78, 119, 0.15), transparent);
+            border-radius: 50%;
+            top: -300px;
+            right: -300px;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .lecture-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .lecture-description {
+            font-size: 22px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            max-width: 800px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .lecture-stats {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .stat-item i {
+            color: var(--gradient-orange);
+            font-size: 20px;
+        }
+
+        /* Content Section */
+        .lecture-content {
+            padding: 60px 20px;
+            background: rgba(22, 33, 62, 0.5);
+        }
+
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+        }
+
+        /* Slide Cards - Journey Style */
+        .slides-journey {
+            display: grid;
+            gap: 80px;
+        }
+
+        .slide-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(233, 78, 119, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .slide-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(233, 78, 119, 0.1), transparent);
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .slide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(233, 78, 119, 0.3);
+            border-color: rgba(233, 78, 119, 0.5);
+        }
+
+        .slide-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Alternate layout */
+        .slide-card:nth-child(even) .slide-content {
+            order: 2;
+        }
+
+        .slide-card:nth-child(even) .slide-image-container {
+            order: 1;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 900;
+            box-shadow: 0 10px 30px rgba(233, 78, 119, 0.5);
+            z-index: 2;
+        }
+
+        .slide-image-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 31, 68, 0.5);
+        }
+
+        .slide-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: transform 0.5s;
+        }
+
+        .slide-card:hover .slide-image-container img {
+            transform: scale(1.05);
+        }
+
+        .slide-placeholder {
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .slide-placeholder i {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .slide-content h3 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slide-content p {
+            font-size: 18px;
+            line-height: 1.9;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+
+        .slide-content ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .slide-content ul li {
+            padding: 12px 0;
+            font-size: 17px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: var(--text-light);
+        }
+
+        .slide-content ul li i {
+            color: var(--gradient-orange);
+            font-size: 18px;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .slide-content ul li::before {
+            content: '✓';
+            color: var(--gradient-orange);
+            font-weight: 900;
+            font-size: 20px;
+            margin-left: 10px;
+        }
+
+        /* Video/Media Container */
+        .slide-media {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .slide-media video,
+        .slide-media iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 20px;
+        }
+
+        /* Footer CTA */
+        .lecture-footer {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #16213e 0%, #0a1f44 100%);
+        }
+
+        .footer-content h2 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .footer-content p {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 40px;
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #e94e77, #f7931e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(233, 78, 119, 0.4);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(233, 78, 119, 0.6);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Loading State */
+        #loadingState {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            gap: 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(233, 78, 119, 0.2);
+            border-top-color: #e94e77;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error State */
+        #errorState {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px;
+            text-align: center;
+        }
+
+        #errorState i {
+            font-size: 80px;
+            color: var(--gradient-pink);
+            margin-bottom: 20px;
+        }
+
+        #errorState h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        #errorState p {
+            color: var(--text-muted);
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .slide-card {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px;
+            }
+
+            .slide-card:nth-child(even) .slide-content,
+            .slide-card:nth-child(even) .slide-image-container {
+                order: initial;
+            }
+
+            .slide-image-container {
+                height: 300px;
+            }
+
+            .lecture-title {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .slide-content h3 {
+                font-size: 26px;
+            }
+
+            .slide-number {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                top: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .lecture-hero {
+                padding: 40px 20px;
+            }
+
+            .lecture-title {
+                font-size: 28px;
+            }
+
+            .lecture-description {
+                font-size: 18px;
+            }
+
+            .slide-card {
+                padding: 20px;
+            }
+
+            .slide-content h3 {
+                font-size: 22px;
+            }
+
+            .slide-content p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+
+    <!-- Loading State -->
+    <div id="loadingState">
+        <div class="spinner"></div>
+        <p style="color: var(--text-muted);">جاري تحميل المحاضرة...</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h2>عذراً، حدث خطأ</h2>
+        <p id="errorMessage">لم يتم العثور على المحاضرة المطلوبة.</p>
+        <a href="/admin" class="btn-primary">
+            <i class="fas fa-arrow-right"></i>
+            العودة للوحة التحكم
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="content-wrapper" style="display: none;">
+        <!-- Navigation -->
+        <nav>
+            <div class="nav-container">
+                <a href="/admin" class="logo">
+                    <img src="images/logo.png" alt="Akram Mostafa" onerror="this.style.display='none'">
+                    <span class="logo-text">Akram Mostafa</span>
+                </a>
+                <a href="/admin" class="nav-back">
+                    <span>العودة للوحة التحكم</span>
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="lecture-hero">
+            <div class="hero-container">
+                <div class="hero-badge">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>محاضرة تفاعلية</span>
+                </div>
+                <h1 class="lecture-title" id="lectureTitle">جاري التحميل...</h1>
+                <p class="lecture-description" id="lectureDescription">جاري تحميل محتوى المحاضرة...</p>
+                <div class="lecture-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-book-open"></i>
+                        <span id="slidesCount">— أقسام</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock"></i>
+                        <span>زمن القراءة: <span id="readingTime">—</span> دقيقة</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>مستوى متقدم</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="lecture-content">
+            <div class="content-container">
+                <div class="section-header">
+                    <h2 class="section-title">🚀 رحلتك التعليمية خطوة بخطوة</h2>
+                    <p class="section-subtitle">تابع الأقسام بالترتيب للحصول على أفضل نتيجة</p>
+                </div>
+
+                <div class="slides-journey" id="slidesContainer">
+                    <!-- Slides will be inserted here dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer CTA -->
+        <section class="lecture-footer">
+            <div class="footer-content">
+                <h2>🎯 خلصت المحاضرة؟</h2>
+                <p>ارجع للوحة التحكم عشان تكمل باقي المحاضرات</p>
+                <a href="/admin" class="btn-primary">
+                    <i class="fas fa-arrow-right"></i>
+                    العودة للوحة التحكم
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#e94e77' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#e94e77',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: true,
+                    out_mode: 'out'
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'grab' },
+                    onclick: { enable: true, mode: 'push' }
+                }
+            }
+        });
+
+        // Get lecture ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const lectureId = urlParams.get('id');
+
+        if (!lectureId) {
+            showError('لم يتم تحديد معرّف المحاضرة في الرابط.');
+        } else {
+            loadLecture(lectureId);
+        }
+
+        function loadLecture(lectureId) {
+            try {
+                // Try all known localStorage keys used by admin panel
+                // Admin stores as: am_lectures = { 'facebook-ads': [...], 'instagram': [...] }
+                let lecture = null;
+
+                const raw = localStorage.getItem('am_lectures');
+                if (raw) {
+                    const obj = JSON.parse(raw);
+                    // obj is { courseKey: [lectureArray] }
+                    for (const key of Object.keys(obj)) {
+                        const arr = obj[key];
+                        if (Array.isArray(arr)) {
+                            const found = arr.find(lec => lec.id === lectureId);
+                            if (found) { lecture = found; break; }
+                        }
+                    }
+                }
+
+                // Fallback: old 'lectures' key (flat array)
+                if (!lecture) {
+                    const alt = localStorage.getItem('lectures');
+                    if (alt) {
+                        const arr = JSON.parse(alt);
+                        if (Array.isArray(arr)) {
+                            lecture = arr.find(lec => lec.id === lectureId) || null;
+                        }
+                    }
+                }
+
+                if (!lecture) {
+                    showError('المحاضرة المطلوبة غير موجودة. من فضلك افتح الصفحة من لوحة التحكم.');
+                    return;
+                }
+
+                // Display lecture
+                displayLecture(lecture);
+            } catch (error) {
+                console.error('Error loading lecture:', error);
+                showError('حدث خطأ أثناء تحميل المحاضرة. يرجى المحاولة مرة أخرى.');
+            }
+        }
+
+        function displayLecture(lecture) {
+            // Update hero section
+            document.getElementById('lectureTitle').textContent = lecture.title;
+            document.getElementById('lectureDescription').textContent = lecture.description || '';
+            
+            const slidesCount = lecture.slides ? lecture.slides.length : 0;
+            document.getElementById('slidesCount').textContent = `${slidesCount} أقسام`;
+            
+            // Estimate reading time (2 minutes per slide)
+            const readingTime = slidesCount * 2;
+            document.getElementById('readingTime').textContent = readingTime;
+
+            // Display slides
+            const slidesContainer = document.getElementById('slidesContainer');
+            slidesContainer.innerHTML = '';
+
+            if (!lecture.slides || lecture.slides.length === 0) {
+                slidesContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted);">لا توجد شرائح في هذه المحاضرة</p>';
+            } else {
+                lecture.slides.forEach((slide, index) => {
+                    const slideCard = createSlideCard(slide, index + 1);
+                    slidesContainer.appendChild(slideCard);
+                });
+            }
+
+            // Show main content, hide loading
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        function createSlideCard(slide, number) {
+            const card = document.createElement('div');
+            card.className = 'slide-card';
+
+            // Slide number badge
+            const numberBadge = document.createElement('div');
+            numberBadge.className = 'slide-number';
+            numberBadge.textContent = number;
+            card.appendChild(numberBadge);
+
+            // Image container
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'slide-image-container';
+
+            if (slide.type === 'video' && slide.src) {
+                // Video slide
+                const videoWrapper = document.createElement('div');
+                videoWrapper.className = 'slide-media';
+                
+                if (slide.src.includes('youtube.com') || slide.src.includes('youtu.be')) {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = slide.src.replace('watch?v=', 'embed/');
+                    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                    iframe.allowFullscreen = true;
+                    videoWrapper.appendChild(iframe);
+                } else {
+                    const video = document.createElement('video');
+                    video.src = slide.src;
+                    video.controls = true;
+                    videoWrapper.appendChild(video);
+                }
+                
+                imageContainer.appendChild(videoWrapper);
+            } else if (slide.image) {
+                // Image slide
+                const img = document.createElement('img');
+                img.src = slide.image;
+                img.alt = slide.title || 'صورة توضيحية';
+                img.onerror = function() {
+                    this.parentElement.innerHTML = createPlaceholder('image');
+                };
+                imageContainer.appendChild(img);
+            } else {
+                // No media - show placeholder
+                imageContainer.innerHTML = createPlaceholder(slide.type || 'text');
+            }
+
+            // Content container
+            const content = document.createElement('div');
+            content.className = 'slide-content';
+
+            const title = document.createElement('h3');
+            title.textContent = slide.title || 'عنوان القسم';
+            content.appendChild(title);
+
+            // Parse and format the text content
+            const text = slide.notes || slide.caption || '';
+            if (text) {
+                const lines = text.split('\n');
+                let inList = false;
+                let currentP = null;
+
+                lines.forEach(line => {
+                    line = line.trim();
+                    
+                    // Check if line is a list item (starts with emoji+number, ✅, ✓, •, -, etc.)
+                    const isListItem = /^[•\-✓✅▪▸→⭐🔵🟢🔴⚫⚪1-9️⃣]/.test(line) || 
+                                      /^[0-9]+[️⃣.)]/.test(line) ||
+                                      line.startsWith('- ') ||
+                                      line.startsWith('• ');
+
+                    if (isListItem) {
+                        if (!inList) {
+                            inList = true;
+                            currentP = document.createElement('ul');
+                            content.appendChild(currentP);
+                        }
+                        const li = document.createElement('li');
+                        // Remove leading markers
+                        let cleanLine = line.replace(/^[•\-✓✅▪▸→⭐🔵🟢🔴⚫⚪1-9️⃣.)\s]+/, '');
+                        li.textContent = cleanLine;
+                        currentP.appendChild(li);
+                    } else if (line) {
+                        if (inList) {
+                            inList = false;
+                        }
+                        const p = document.createElement('p');
+                        p.textContent = line;
+                        content.appendChild(p);
+                    }
+                });
+            }
+
+            card.appendChild(imageContainer);
+            card.appendChild(content);
+
+            return card;
+        }
+
+        function createPlaceholder(type) {
+            const icons = {
+                'video': 'fa-play-circle',
+                'image': 'fa-image',
+                'pdf': 'fa-file-pdf',
+                'text': 'fa-book-open'
+            };
+
+            const icon = icons[type] || icons['text'];
+            
+            return `
+                <div class="slide-placeholder">
+                    <i class="fas ${icon}"></i>
+                    <p>${type === 'video' ? 'محتوى فيديو' : 'محتوى نصي'}</p>
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorState').style.display = 'flex';
+        }
+
+        // Smooth scroll for internal links
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' && e.target.getAttribute('href')?.startsWith('#')) {
+                e.preventDefault();
+                const targetId = e.target.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
