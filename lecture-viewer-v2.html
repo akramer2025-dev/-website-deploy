@@ -800,18 +800,37 @@
                 }
                 
                 imageContainer.appendChild(videoWrapper);
-            } else if (slide.image) {
-                // Image slide
+            } else {
+                // Image slide or auto-assigned image for text slides
+                const SLIDE_IMAGES = [
+                    '/images/slides/lec1-01.png', '/images/slides/lec1-02.png',
+                    '/images/slides/lec1-03.png', '/images/slides/lec1-04.png',
+                    '/images/slides/lec1-05.png', '/images/slides/lec1-06.png',
+                    '/images/slides/lec1-07.png', '/images/slides/lec1-08.png',
+                    '/images/slides/lec1-09.png', '/images/slides/lec1-10.png',
+                    '/images/slides/lec1-11.png', '/images/slides/lec1-12.png',
+                    '/images/slides/lec1-13.png', '/images/slides/lec1-14.png',
+                    '/images/slides/lec1-15.png'
+                ];
+                const FALLBACK_IMAGES = [
+                    '/images/slides/1772817045966.png',
+                    '/images/slides/1772816537303.png',
+                    '/images/slides/1772810760523.png'
+                ];
+                const imgSrc = slide.image || SLIDE_IMAGES[(number - 1) % SLIDE_IMAGES.length];
                 const img = document.createElement('img');
-                img.src = slide.image;
+                img.src = imgSrc;
                 img.alt = slide.title || 'صورة توضيحية';
                 img.onerror = function() {
-                    this.parentElement.innerHTML = createPlaceholder('image');
+                    // Try fallback images before showing placeholder
+                    const fallback = FALLBACK_IMAGES[(number - 1) % FALLBACK_IMAGES.length];
+                    if (this.src !== window.location.origin + fallback) {
+                        this.src = fallback;
+                    } else {
+                        this.parentElement.innerHTML = createPlaceholder('image');
+                    }
                 };
                 imageContainer.appendChild(img);
-            } else {
-                // No media - show placeholder
-                imageContainer.innerHTML = createPlaceholder(slide.type || 'text');
             }
 
             // Content container
