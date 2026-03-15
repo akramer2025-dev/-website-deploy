@@ -5288,9 +5288,13 @@ async function seedFacebookAdsLectures(){
   try {
     const all = getLectures();
     const existing = all['facebook-ads']||[];
-    // Check if already has the correct Facebook Ads lectures (by ID)
-    if(existing.length >= 6 && existing[0]?.id === 'lec_fb_1') {
-      console.log('✅ Facebook Ads lectures already exist');
+    // Check if already has the correct Facebook Ads lectures (by ID + version)
+    // v2: first slide must be type 'image' (not old 'video')
+    const isUpToDate = existing.length >= 6 
+      && existing[0]?.id === 'lec_fb_1'
+      && existing[0]?.slides?.[0]?.type === 'image';
+    if(isUpToDate) {
+      console.log('✅ Facebook Ads lectures already exist (v2)');
       return;
     }
     // Seed or refresh the lectures
