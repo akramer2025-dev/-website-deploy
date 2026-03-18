@@ -885,34 +885,44 @@ async function generateAndSavePlan() {
             error = result.error;
         } else {
             // Insert new plan
+            const insertData = {
+                id: planId,
+                company_name: planData.brand,
+                company_phone: planData.phone,
+                company_industry: planData.industry,
+                plan_data: {
+                    owner: planData.owner,
+                    location: planData.location,
+                    description: planData.description,
+                    audience: planData.audience,
+                    challenge: planData.challenge,
+                    contentStatus: planData.contentStatus,
+                    needsWebsite: planData.needsWebsite,
+                    googleBiz: planData.googleBiz,
+                    budget: planData.budget,
+                    duration: planData.duration,
+                    platforms: planData.links,
+                    goals: planData.goals
+                },
+                generated_html: planHTML,
+                status: 'pending',
+                view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`
+            };
+            
+            // Add lead_id only if it exists
+            if (leadId && leadId !== '') {
+                insertData.lead_id = parseInt(leadId);
+            }
+            
+            // Add company_email if exists in form
+            const emailField = document.getElementById('companyEmail');
+            if (emailField && emailField.value.trim() !== '') {
+                insertData.company_email = emailField.value.trim();
+            }
+            
             const result = await _supabase
                 .from('marketing_plans')
-                .insert([{
-                    id: planId,
-                    lead_id: leadId ? parseInt(leadId) : null,
-                    company_name: planData.brand,
-                    company_email: '',
-                    company_phone: planData.phone,
-                    company_industry: planData.industry,
-                    plan_data: {
-                        owner: planData.owner,
-                        location: planData.location,
-                        description: planData.description,
-                        audience: planData.audience,
-                        challenge: planData.challenge,
-                        contentStatus: planData.contentStatus,
-                        needsWebsite: planData.needsWebsite,
-                        googleBiz: planData.googleBiz,
-                        budget: planData.budget,
-                        duration: planData.duration,
-                        platforms: planData.links,
-                        goals: planData.goals
-                    },
-                    generated_html: planHTML,
-                    status: 'pending',
-                    view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`,
-                    created_at: new Date().toISOString()
-                }]);
+                .insert([insertData]);
             
             error = result.error;
         }
@@ -965,17 +975,36 @@ async function generateAndSavePlan() {
         
     } catch (err) {
         console.error('Error details:', err);
+        console.error('Error stack:', err.stack);
+        console.error('Full error object:', JSON.stringify(err, null, 2));
+        
         document.getElementById('loadingOverlay').classList.remove('show');
         
         // More detailed error message
         let errorMsg = 'حدث خطأ أثناء إنشاء الخطة:\n\n';
+        
         if (err.message) {
-            errorMsg += err.message;
-        } else if (err.error) {
-            errorMsg += err.error.message || JSON.stringify(err.error);
-        } else {
-            errorMsg += 'خطأ غير معروف';
+            errorMsg += `الرسالة: ${err.message}\n`;
         }
+        
+        if (err.details) {
+            errorMsg += `التفاصيل: ${err.details}\n`;
+        }
+        
+        if (err.hint) {
+            errorMsg += `اقتراح: ${err.hint}\n`;
+        }
+        
+        if (err.code) {
+            errorMsg += `الكود: ${err.code}\n`;
+        }
+        
+        // Supabase specific error
+        if (err.error) {
+            errorMsg += `خطأ Supabase: ${err.error.message || JSON.stringify(err.error)}\n`;
+        }
+        
+        console.error('Final error message:', errorMsg);
         
         alert(errorMsg + '\n\nيرجى المحاولة مرة أخرى أو التواصل مع الدعم الفني.');
     }
