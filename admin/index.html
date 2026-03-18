@@ -2838,6 +2838,16 @@ textarea:focus{
       <button class="modal-close" onclick="closePlanModal()"><i class="fas fa-times"></i></button>
     </div>
 
+    <!-- زر النموذج التفاعلي -->
+    <div style="background:linear-gradient(135deg,rgba(233,78,119,0.08),rgba(247,147,30,0.08));padding:16px;border-radius:12px;margin-bottom:20px;border:1px solid rgba(233,78,119,0.2);text-align:center;">
+      <button onclick="openAdvancedForm()" style="padding:12px 28px;background:var(--grad);color:#fff;border:none;border-radius:12px;font-size:.92rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:all .3s;">
+        <i class="fas fa-rocket"></i>
+        <span>استخدام النموذج التفاعلي المتقدم</span>
+        <i class="fas fa-external-link-alt" style="font-size:.8rem;"></i>
+      </button>
+      <p style="color:var(--muted);font-size:.78rem;margin-top:10px;">نموذج مُحسَّن مع خطوات تفاعلية وتحليل ذكي للبيانات</p>
+    </div>
+
     <div class="emp-contract-form" style="display:block;">
       <input type="hidden" id="planEditId" value="">
       <input type="hidden" id="planLeadId" value="">
@@ -8686,6 +8696,29 @@ async function loadPlanForEdit(planId){
 
 function closePlanModal(){
   document.getElementById('marketingPlanModal').classList.remove('open');
+}
+
+// Open advanced form in new tab
+function openAdvancedForm(){
+  const leadId = document.getElementById('planLeadId').value;
+  const companyName = document.getElementById('planCompanyName').value;
+  const companyEmail = document.getElementById('planCompanyEmail').value;
+  const companyPhone = document.getElementById('planCompanyPhone').value;
+  
+  // Build URL with parameters
+  let url = 'marketing-form-advanced.html?source=admin';
+  if(leadId) url += `&leadId=${encodeURIComponent(leadId)}`;
+  if(companyName) url += `&companyName=${encodeURIComponent(companyName)}`;
+  if(companyEmail) url += `&companyEmail=${encodeURIComponent(companyEmail)}`;
+  if(companyPhone) url += `&companyPhone=${encodeURIComponent(companyPhone)}`;
+  
+  // Open in new tab
+  window.open(url, '_blank');
+  
+  // Close current modal
+  closePlanModal();
+  
+  toast('تم فتح النموذج التفاعلي في تبويب جديد', 'info');
 }
 
 // Save plan

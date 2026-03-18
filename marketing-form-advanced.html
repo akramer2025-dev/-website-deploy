@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج خطة التسويق المتقدم | Marketing Plan Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C5CE7; --primary-dark: #5A4BD1; --primary-light: #A29BFE;
+            --accent: #FF6B6B; --accent2: #FFA502; --green: #00B894; --blue: #0984E3;
+            --dark: #0F0F23; --dark2: #1A1A3E; --dark3: #2D2D5E;
+            --text: #E8E8F0; --text-muted: #8B8BA7; --glass: rgba(255,255,255,0.06);
+            --glass-border: rgba(255,255,255,0.1); --glass-hover: rgba(255,255,255,0.1);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Cairo',sans-serif; background:var(--dark); color:var(--text); min-height:100vh; overflow-x:hidden; }
+
+        /* BG */
+        .bg-grid { position:fixed; inset:0; z-index:0; opacity:0.03;
+            background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 60px 60px; }
+        .bg-glow { position:fixed; width:600px; height:600px; border-radius:50%; filter:blur(150px); opacity:0.15; z-index:0; }
+        .bg-glow.g1 { top:-200px; right:-200px; background:var(--primary); }
+        .bg-glow.g2 { bottom:-200px; left:-200px; background:var(--accent); }
+
+        /* Header */
+        .header { position:relative; z-index:1; text-align:center; padding:50px 20px 30px; }
+        .header-logo { width:70px; height:70px; border-radius:20px; background:linear-gradient(135deg,var(--primary),var(--accent));
+            display:flex; align-items:center; justify-content:center; margin:0 auto 20px; font-size:30px; color:#fff;
+            box-shadow:0 10px 40px rgba(108,92,231,0.3); }
+        .header h1 { font-size:32px; font-weight:900; margin-bottom:8px; }
+        .header h1 span { background:linear-gradient(135deg,var(--primary-light),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .header p { color:var(--text-muted); font-size:15px; }
+        .back-btn { position:absolute; top:20px; right:20px; padding:10px 20px; background:var(--glass); border:1px solid var(--glass-border);
+            border-radius:10px; color:var(--text); font-size:14px; font-weight:600; text-decoration:none; transition:all .3s;
+            display:inline-flex; align-items:center; gap:8px; }
+        .back-btn:hover { background:var(--glass-hover); }
+
+        /* Progress */
+        .progress-bar { position:relative; z-index:1; max-width:700px; margin:0 auto 30px; padding:0 20px; }
+        .progress-track { height:6px; background:var(--glass); border-radius:3px; overflow:hidden; }
+        .progress-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--accent)); border-radius:3px; transition:width 0.5s ease; }
+        .progress-steps { display:flex; justify-content:space-between; margin-top:12px; }
+        .progress-step { display:flex; flex-direction:column; align-items:center; gap:6px; }
+        .progress-dot { width:32px; height:32px; border-radius:50%; background:var(--glass); border:2px solid var(--glass-border);
+            display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--text-muted); transition:all 0.3s; }
+        .progress-dot.active { background:var(--primary); border-color:var(--primary); color:#fff; box-shadow:0 0 20px rgba(108,92,231,0.4); }
+        .progress-dot.done { background:var(--green); border-color:var(--green); color:#fff; }
+        .progress-label { font-size:11px; color:var(--text-muted); font-weight:600; }
+
+        /* Container */
+        .container { position:relative; z-index:1; max-width:750px; margin:0 auto; padding:0 20px 50px; }
+
+        /* Form Step */
+        .form-step { display:none; animation:fadeUp 0.4s ease; }
+        .form-step.active { display:block; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+        /* Glass Card */
+        .glass-card { background:var(--glass); backdrop-filter:blur(20px); border:1px solid var(--glass-border);
+            border-radius:20px; padding:35px; margin-bottom:20px; }
+        .card-title { font-size:20px; font-weight:800; margin-bottom:5px; display:flex; align-items:center; gap:10px; }
+        .card-title i { color:var(--primary-light); }
+        .card-desc { font-size:13px; color:var(--text-muted); margin-bottom:25px; }
+
+        /* Inputs */
+        .form-group { margin-bottom:20px; }
+        .form-group label { display:block; font-size:14px; font-weight:700; margin-bottom:8px; color:var(--text); }
+        .form-group label .req { color:var(--accent); }
+        .form-input { width:100%; padding:14px 18px; background:rgba(255,255,255,0.05); border:1.5px solid var(--glass-border);
+            border-radius:12px; color:var(--text); font-family:'Cairo'; font-size:14px; transition:all 0.3s; outline:none; }
+        .form-input:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(108,92,231,0.15); }
+        .form-input::placeholder { color:var(--text-muted); }
+        textarea.form-input { resize:vertical; min-height:90px; }
+        select.form-input { cursor:pointer; appearance:none;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238B8BA7' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat:no-repeat; background-position:left 16px center; }
+        select.form-input option { background:var(--dark2); color:var(--text); }
+
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+        @media(max-width:600px) { .form-row { grid-template-columns:1fr; } }
+
+        /* Social Media Inputs */
+        .social-input { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+        .social-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+            font-size:20px; color:#fff; flex-shrink:0; }
+        .social-icon.ig { background:linear-gradient(135deg,#833AB4,#E1306C,#F77737); }
+        .social-icon.fb { background:#1877F2; }
+        .social-icon.tt { background:#000; border:1px solid #333; }
+        .social-icon.yt { background:#FF0000; }
+        .social-icon.tw { background:#000; border:1px solid #333; }
+        .social-icon.li { background:#0A66C2; }
+        .social-icon.wa { background:#25D366; }
+        .social-icon.web { background:linear-gradient(135deg,var(--primary),var(--blue)); }
+        .social-input .form-input { flex:1; }
+
+        /* Budget Slider */
+        .budget-section { text-align:center; margin:25px 0; }
+        .budget-display { font-size:48px; font-weight:900; margin:15px 0;
+            background:linear-gradient(135deg,var(--primary-light),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .budget-sub { font-size:14px; color:var(--text-muted); margin-bottom:20px; }
+        .budget-slider { width:100%; -webkit-appearance:none; height:8px; border-radius:4px;
+            background:linear-gradient(90deg,var(--green),var(--primary),var(--accent)); outline:none; margin:15px 0; cursor:pointer; }
+        .budget-slider::-webkit-slider-thumb { -webkit-appearance:none; width:28px; height:28px; border-radius:50%;
+            background:#fff; cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,0.3); }
+        .budget-slider::-moz-range-thumb { width:28px; height:28px; border-radius:50%; background:#fff; cursor:pointer; border:none; }
+
+        .budget-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; }
+        .budget-card { background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:15px; text-align:center; }
+        .budget-card .bc-label { font-size:11px; color:var(--text-muted); margin-bottom:4px; }
+        .budget-card .bc-value { font-size:18px; font-weight:800; color:var(--primary-light); }
+        .budget-card .bc-note { font-size:10px; color:var(--text-muted); margin-top:2px; }
+
+        /* Industry Select */
+        .industry-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+        .industry-option { padding:14px 10px; border-radius:14px; background:var(--glass); border:2px solid transparent;
+            text-align:center; cursor:pointer; transition:all 0.3s; font-size:13px; font-weight:600; }
+        .industry-option:hover { background:var(--glass-hover); }
+        .industry-option.selected { border-color:var(--primary); background:rgba(108,92,231,0.15); }
+        .industry-option i { font-size:24px; display:block; margin-bottom:8px; }
+        .industry-option input { display:none; }
+
+        /* Goal chips */
+        .chip-grid { display:flex; flex-wrap:wrap; gap:10px; }
+        .chip { padding:10px 18px; border-radius:50px; background:var(--glass); border:2px solid transparent;
+            cursor:pointer; font-size:13px; font-weight:600; display:flex; align-items:center; gap:6px; transition:all 0.3s; }
+        .chip:hover { background:var(--glass-hover); }
+        .chip.selected { border-color:var(--primary); background:rgba(108,92,231,0.15); color:var(--primary-light); }
+        .chip input { display:none; }
+
+        /* Buttons */
+        .btn-row { display:flex; justify-content:space-between; gap:15px; margin-top:30px; flex-wrap:wrap; }
+        .btn { padding:14px 35px; border-radius:14px; font-family:'Cairo'; font-size:15px; font-weight:700; cursor:pointer;
+            border:none; transition:all 0.3s; display:flex; align-items:center; gap:8px; }
+        .btn-next { background:linear-gradient(135deg,var(--primary),var(--primary-dark)); color:#fff;
+            box-shadow:0 5px 20px rgba(108,92,231,0.3); margin-right:auto; }
+        .btn-next:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(108,92,231,0.4); }
+        .btn-prev { background:var(--glass); color:var(--text-muted); border:1px solid var(--glass-border); }
+        .btn-prev:hover { background:var(--glass-hover); color:var(--text); }
+        .btn-generate { background:linear-gradient(135deg,var(--green),#00CEC9); color:#fff;
+            box-shadow:0 5px 20px rgba(0,184,148,0.3); font-size:16px; padding:16px 40px; flex:1; justify-content:center; }
+        .btn-generate:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,184,148,0.4); }
+        .btn-whatsapp { background:#25D366; color:#fff; font-size:15px; padding:14px 30px; }
+        .btn-whatsapp:hover { transform:translateY(-2px); box-shadow:0 5px 20px rgba(37,211,102,0.4); }
+
+        /* Summary */
+        .summary-section { margin-bottom:20px; }
+        .summary-header { font-size:16px; font-weight:800; margin-bottom:12px; display:flex; align-items:center; gap:8px; padding-bottom:8px; border-bottom:1px solid var(--glass-border); }
+        .summary-header i { color:var(--primary-light); }
+        .summary-row { display:flex; justify-content:space-between; padding:8px 0; font-size:13px; border-bottom:1px solid rgba(255,255,255,0.03); }
+        .summary-row .sr-label { color:var(--text-muted); }
+        .summary-row .sr-value { font-weight:700; word-break:break-word; }
+        .summary-link { color:var(--primary-light); word-break:break-all; font-size:12px; }
+
+        /* Result */
+        .result-banner { background:linear-gradient(135deg,var(--primary),var(--accent)); border-radius:20px; padding:30px; text-align:center; margin-bottom:25px; }
+        .result-banner h2 { font-size:24px; font-weight:900; margin-bottom:8px; }
+        .result-banner p { font-size:14px; opacity:0.9; }
+        .result-banner .big-check { font-size:50px; margin-bottom:15px; }
+
+        .download-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:20px; }
+        .dl-btn { padding:12px 25px; border-radius:12px; font-family:'Cairo'; font-size:14px; font-weight:700;
+            cursor:pointer; border:none; display:flex; align-items:center; gap:8px; transition:all 0.3s; }
+        .dl-btn.copy { background:var(--glass); color:var(--text); border:1px solid var(--glass-border); }
+        .dl-btn.print { background:var(--primary); color:#fff; }
+        .dl-btn:hover { transform:translateY(-2px); }
+
+        /* Loading */
+        .loading-overlay { display:none; position:fixed; inset:0; background:rgba(15,15,35,0.95); z-index:9999;
+            align-items:center; justify-content:center; flex-direction:column; gap:20px; }
+        .loading-overlay.show { display:flex; }
+        .spinner { width:60px; height:60px; border:4px solid var(--glass-border); border-top-color:var(--primary);
+            border-radius:50%; animation:spin 1s linear infinite; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .loading-text { font-size:18px; font-weight:700; color:var(--text); }
+        .loading-sub { font-size:14px; color:var(--text-muted); }
+
+        @media print { .header,.progress-bar,.btn-row,.download-btns,.bg-grid,.bg-glow,.back-btn { display:none!important; } 
+            body { background:#fff; color:#000; } .glass-card { background:#f8f8f8; border:1px solid #ddd; } 
+            .summary-row .sr-label { color:#666; } }
+        
+        @media(max-width:600px) {
+            .header h1 { font-size:24px; }
+            .budget-display { font-size:36px; }
+            .industry-grid { grid-template-columns:repeat(2,1fr); }
+            .budget-cards { grid-template-columns:1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow g1"></div>
+<div class="bg-glow g2"></div>
+
+<a href="admin/index.html" class="back-btn no-print"><i class="fas fa-arrow-right"></i> رجوع للوحة التحكم</a>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="loading-text">جاري إنشاء خطتك التسويقية...</div>
+    <div class="loading-sub">انتظر لحظات بينما نُجهّز خطة احترافية مخصصة لك</div>
+</div>
+
+<div class="header">
+    <div class="header-logo"><i class="fas fa-rocket"></i></div>
+    <h1>نموذج <span>خطة التسويق</span> المتقدم</h1>
+    <p>أكمل البيانات وسنُنشئ لك خطة تسويق احترافية تلقائياً 🚀</p>
+</div>
+
+<!-- Progress -->
+<div class="progress-bar">
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+    <div class="progress-steps">
+        <div class="progress-step"><div class="progress-dot active" id="dot1">1</div><div class="progress-label">البيانات</div></div>
+        <div class="progress-step"><div class="progress-dot" id="dot2">2</div><div class="progress-label">المنصات</div></div>
+        <div class="progress-step"><div class="progress-dot" id="dot3">3</div><div class="progress-label">الأهداف</div></div>
+        <div class="progress-step"><div class="progress-dot" id="dot4">4</div><div class="progress-label">الميزانية</div></div>
+        <div class="progress-step"><div class="progress-dot" id="dot5">5</div><div class="progress-label">الملخص</div></div>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- Hidden fields -->
+<input type="hidden" id="leadId" value="">
+
+<!-- ===== STEP 1: Basic Info ===== -->
+<div class="form-step active" id="step1">
+    <div class="glass-card">
+        <div class="card-title"><i class="fas fa-building"></i> معلومات المشروع</div>
+        <div class="card-desc">أخبرنا عن مشروعك — البيانات الأساسية اللي محتاجينها</div>
+        <div class="form-group">
+            <label>اسم المشروع / البراند <span class="req">*</span></label>
+            <input type="text" class="form-input" id="brandName" placeholder="مثال: مركز النجاح للتدريب">
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>صاحب المشروع <span class="req">*</span></label>
+                <input type="text" class="form-input" id="ownerName" placeholder="اسمك الكامل">
+            </div>
+            <div class="form-group">
+                <label>رقم الهاتف <span class="req">*</span></label>
+                <input type="tel" class="form-input" id="phone" placeholder="01XXXXXXXXX">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>الموقع / المحافظة</label>
+            <input type="text" class="form-input" id="location" placeholder="مثال: القاهرة — مصر الجديدة">
+        </div>
+        <div class="form-group">
+            <label>المجال <span class="req">*</span></label>
+            <div class="industry-grid">
+                <div class="industry-option" onclick="selectIndustry(this)">
+                    <i class="fas fa-heartbeat" style="color:#e74c3c"></i>
+                    <div>طبي / صحي</div>
+                    <input type="radio" name="industry" value="طبي / صحي">
+                </div>
+                <div class="industry-option" onclick="selectIndustry(this)">
+                    <i class="fas fa-shopping-cart" style="color:#3498db"></i>
+                    <div>تجارة / متجر</div>
+                    <input type="radio" name="industry" value="تجارة / متجر">
+                </div>
+                <div class="industry-option" onclick="selectIndustry(this)">
+                    <i class="fas fa-utensils" style="color:#f39c12"></i>
+                    <div>مطاعم / كافيهات</div>
+                    <input type="radio" name="industry" value="مطاعم / كافيهات">
+                </div>
+                <div class="industry-option" onclick="selectIndustry(this)">
+                    <i class="fas fa-graduation-cap" style="color:#9b59b6"></i>
+                    <div>تعليم / تدريب</div>
+                    <input type="radio" name="industry" value="تعليم / تدريب">
+                </div>
+                <div class="industry-option" onclick="selectIndustry(this)">
+                    <i class="fas fa-home" style="color:#1abc9c"></i>
+                    <div>عقارات</div>
+                    <input type="radio" name="industry" value="عقارات">
+                </div>
+                <div class="industry-option" onclick="selectIndustry(this)">
+                    <i class="fas fa-cogs" style="color:#34495e"></i>
+                    <div>خدمات أخرى</div>
+                    <input type="radio" name="industry" value="خدمات أخرى">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>وصف المشروع والخدمات</label>
+            <textarea class="form-input" id="description" placeholder="اكتب وصف مختصر عن خدماتك ومميزاتك..."></textarea>
+        </div>
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-next" onclick="goStep(2)">التالي <i class="fas fa-arrow-left"></i></button>
+    </div>
+</div>
+
+<!-- ===== STEP 2: Social Media ===== -->
+<div class="form-step" id="step2">
+    <div class="glass-card">
+        <div class="card-title"><i class="fas fa-share-alt"></i> روابط الحسابات</div>
+        <div class="card-desc">حط لينكات صفحاتك — لو مفيش، سيب فاضي</div>
+        
+        <div class="social-input">
+            <div class="social-icon ig"><i class="fab fa-instagram"></i></div>
+            <input type="url" class="form-input" id="linkIG" placeholder="https://instagram.com/yourpage">
+        </div>
+        <div class="social-input">
+            <div class="social-icon fb"><i class="fab fa-facebook"></i></div>
+            <input type="url" class="form-input" id="linkFB" placeholder="https://facebook.com/yourpage">
+        </div>
+        <div class="social-input">
+            <div class="social-icon tt"><i class="fab fa-tiktok"></i></div>
+            <input type="url" class="form-input" id="linkTT" placeholder="https://tiktok.com/@yourpage">
+        </div>
+        <div class="social-input">
+            <div class="social-icon yt"><i class="fab fa-youtube"></i></div>
+            <input type="url" class="form-input" id="linkYT" placeholder="https://youtube.com/@yourpage">
+        </div>
+        <div class="social-input">
+            <div class="social-icon tw"><i class="fab fa-x-twitter"></i></div>
+            <input type="url" class="form-input" id="linkTW" placeholder="https://x.com/yourpage">
+        </div>
+        <div class="social-input">
+            <div class="social-icon li"><i class="fab fa-linkedin"></i></div>
+            <input type="url" class="form-input" id="linkLI" placeholder="https://linkedin.com/company/yourpage">
+        </div>
+        <div class="social-input">
+            <div class="social-icon web"><i class="fas fa-globe"></i></div>
+            <input type="url" class="form-input" id="linkWeb" placeholder="https://yourwebsite.com">
+        </div>
+        
+        <div class="form-group" style="margin-top:20px">
+            <label>عندك Google Business Profile؟</label>
+            <select class="form-input" id="hasGoogle">
+                <option value="">اختر...</option>
+                <option value="نعم — موجود ومفعّل">نعم — موجود ومفعّل</option>
+                <option value="نعم — لكن مش مفعّل">نعم — لكن مش مفعّل</option>
+                <option value="لا — محتاج أعمله">لا — محتاج أعمله</option>
+            </select>
+        </div>
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-prev" onclick="goStep(1)"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <button class="btn btn-next" onclick="goStep(3)">التالي <i class="fas fa-arrow-left"></i></button>
+    </div>
+</div>
+
+<!-- ===== STEP 3: Goals ===== -->
+<div class="form-step" id="step3">
+    <div class="glass-card">
+        <div class="card-title"><i class="fas fa-bullseye"></i> الأهداف التسويقية</div>
+        <div class="card-desc">اختار الأهداف اللي عاوز تحققها (اختار كل اللي ينطبق)</div>
+        <div class="chip-grid">
+            <div class="chip" onclick="toggleChip(this)">
+                <i class="fas fa-chart-line"></i> زيادة المبيعات
+                <input type="checkbox" value="زيادة المبيعات">
+            </div>
+            <div class="chip" onclick="toggleChip(this)">
+                <i class="fas fa-users"></i> زيادة العملاء الجدد
+                <input type="checkbox" value="زيادة العملاء الجدد">
+            </div>
+            <div class="chip" onclick="toggleChip(this)">
+                <i class="fas fa-star"></i> بناء البراند
+                <input type="checkbox" value="بناء البراند">
+            </div>
+            <div class="chip" onclick="toggleChip(this)">
+                <i class="fas fa-rocket"></i> الانتشار السريع
+                <input type="checkbox" value="الانتشار السريع">
+            </div>
+            <div class="chip" onclick="toggleChip(this)">
+                <i class="fas fa-globe"></i> التواجد على كل المنصات
+                <input type="checkbox" value="التواجد على كل المنصات">
+            </div>
+            <div class="chip" onclick="toggleChip(this)">
+                <i class="fas fa-heart"></i> بناء الثقة مع الجمهور
+                <input type="checkbox" value="بناء الثقة مع الجمهور">
+            </div>
+        </div>
+        
+        <div class="form-group" style="margin-top:25px">
+            <label>الجمهور المستهدف</label>
+            <input type="text" class="form-input" id="targetAudience" placeholder="مثال: أمهات — أعمار 25-40 — مصر والخليج">
+        </div>
+        
+        <div class="form-group">
+            <label>أكبر تحدي بتواجهه حالياً</label>
+            <textarea class="form-input" id="challenge" placeholder="مثال: المنافسة عالية — التكلفة غالية — مفيش محتوى منتظم"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>المحتوى الموجود حالياً</label>
+            <select class="form-input" id="hasContent">
+                <option value="">اختر...</option>
+                <option value="محتوى كتير — جاهز للنشر">محتوى كتير — جاهز للنشر</option>
+                <option value="شوية محتوى — محتاج تطوير">شوية محتوى — محتاج تطوير</option>
+                <option value="من الصفر — محتاج كل حاجة">من الصفر — محتاج كل حاجة</option>
+            </select>
+        </div>
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-prev" onclick="goStep(2)"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <button class="btn btn-next" onclick="goStep(4)">التالي <i class="fas fa-arrow-left"></i></button>
+    </div>
+</div>
+
+<!-- ===== STEP 4: Budget ===== -->
+<div class="form-step" id="step4">
+    <div class="glass-card">
+        <div class="card-title"><i class="fas fa-wallet"></i> الميزانية والمدة</div>
+        <div class="card-desc">حدد الميزانية الشهرية اللي مستعد تخصصها للتسويق</div>
+        
+        <div class="budget-section">
+            <div class="budget-display" id="budgetDisplay">5,000 ج.م</div>
+            <div class="budget-sub">ميزانية شهرية للتسويق</div>
+            <input type="range" class="budget-slider" id="budgetSlider" min="1000" max="30000" step="500" value="5000" oninput="updateBudget(this.value)">
+            
+            <div class="budget-cards">
+                <div class="budget-card">
+                    <div class="bc-label">إعلانات (50%)</div>
+                    <div class="bc-value" id="bcAds">2,500 ج.م</div>
+                    <div class="bc-note" id="bcAdsDaily">~83 ج.م/يوم</div>
+                </div>
+                <div class="budget-card">
+                    <div class="bc-label">محتوى (30%)</div>
+                    <div class="bc-value" id="bcContent">1,500 ج.م</div>
+                    <div class="bc-note">تصميم + مونتاج</div>
+                </div>
+                <div class="budget-card">
+                    <div class="bc-label">مؤثرين (20%)</div>
+                    <div class="bc-value" id="bcOther">1,000 ج.م</div>
+                    <div class="bc-note">تعاونات + أدوات</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>مدة الخطة</label>
+            <select class="form-input" id="planDuration">
+                <option value="شهر واحد">شهر واحد — تجريبي</option>
+                <option value="3 أشهر" selected>3 أشهر — موصى به ⭐</option>
+                <option value="6 أشهر">6 أشهر — احترافي</option>
+                <option value="12 شهر">12 شهر — متقدم</option>
+            </select>
+        </div>
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-prev" onclick="goStep(3)"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <button class="btn btn-next" onclick="goStep(5)">التالي <i class="fas fa-arrow-left"></i></button>
+    </div>
+</div>
+
+<!-- ===== STEP 5: Summary ===== -->
+<div class="form-step" id="step5">
+    <div class="result-banner">
+        <div class="big-check"><i class="fas fa-check-circle"></i></div>
+        <h2>البيانات مكتملة! 🎉</h2>
+        <p>راجع بياناتك وجهّز خطتك الاحترافية</p>
+    </div>
+    <div class="glass-card" id="summaryCard">
+        <div class="summary-section">
+            <div class="summary-header"><i class="fas fa-building"></i> معلومات المشروع</div>
+            <div class="summary-row"><span class="sr-label">البراند</span><span class="sr-value" id="sumBrand">—</span></div>
+            <div class="summary-row"><span class="sr-label">المالك</span><span class="sr-value" id="sumOwner">—</span></div>
+            <div class="summary-row"><span class="sr-label">الهاتف</span><span class="sr-value" id="sumPhone">—</span></div>
+            <div class="summary-row"><span class="sr-label">الموقع</span><span class="sr-value" id="sumLocation">—</span></div>
+            <div class="summary-row"><span class="sr-label">المجال</span><span class="sr-value" id="sumIndustry">—</span></div>
+            <div class="summary-row"><span class="sr-label">الوصف</span><span class="sr-value" id="sumDesc">—</span></div>
+        </div>
+        
+        <div class="summary-section">
+            <div class="summary-header"><i class="fas fa-share-alt"></i> المنصات</div>
+            <div id="sumPlatforms"></div>
+        </div>
+        
+        <div class="summary-section">
+            <div class="summary-header"><i class="fas fa-bullseye"></i> الأهداف</div>
+            <div class="summary-row"><span class="sr-label">الأهداف</span><span class="sr-value" id="sumGoals">—</span></div>
+            <div class="summary-row"><span class="sr-label">الجمهور</span><span class="sr-value" id="sumAudience">—</span></div>
+            <div class="summary-row"><span class="sr-label">التحدي</span><span class="sr-value" id="sumChallenge">—</span></div>
+            <div class="summary-row"><span class="sr-label">المحتوى</span><span class="sr-value" id="sumContent">—</span></div>
+        </div>
+        
+        <div class="summary-section">
+            <div class="summary-header"><i class="fas fa-wallet"></i> الميزانية</div>
+            <div class="summary-row"><span class="sr-label">شهرياً</span><span class="sr-value" id="sumBudget">—</span></div>
+            <div class="summary-row"><span class="sr-label">المدة</span><span class="sr-value" id="sumDuration">—</span></div>
+            <div class="summary-row"><span class="sr-label">الإجمالي</span><span class="sr-value" style="color:var(--accent);font-size:18px" id="sumTotal">—</span></div>
+        </div>
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-prev" onclick="goStep(4)"><i class="fas fa-arrow-right"></i> تعديل</button>
+        <button class="btn btn-generate" onclick="generateAndSavePlan()">
+            <i class="fas fa-magic"></i> إنشاء الخطة الاحترافية
+        </button>
+    </div>
+    <div class="download-btns" style="margin-top:15px;">
+        <button class="dl-btn copy" onclick="copyToClipboard()"><i class="fas fa-copy"></i> نسخ الملخص</button>
+        <button class="btn btn-whatsapp" onclick="sendViaWhatsApp()">
+            <i class="fab fa-whatsapp"></i> إرسال عبر واتساب
+        </button>
+    </div>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script>
+// Initialize Supabase
+const { createClient } = supabase;
+const _supabase = createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+
+let currentStep = 1;
+
+// Check URL parameters for pre-filled data
+window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    
+    if (params.get('leadId')) document.getElementById('leadId').value = params.get('leadId');
+    if (params.get('companyName')) document.getElementById('brandName').value = decodeURIComponent(params.get('companyName'));
+    if (params.get('companyEmail')) ; // Could add email field if needed
+    if (params.get('companyPhone')) document.getElementById('phone').value = decodeURIComponent(params.get('companyPhone'));
+});
+
+function goStep(n) {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    document.getElementById('step' + n).classList.add('active');
+
+    for (let i = 1; i <= 5; i++) {
+        const dot = document.getElementById('dot' + i);
+        dot.classList.remove('active', 'done');
+        if (i < n) dot.classList.add('done');
+        else if (i === n) dot.classList.add('active');
+    }
+    document.getElementById('progressFill').style.width = (n * 20) + '%';
+    currentStep = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (n === 5) buildSummary();
+}
+
+function selectIndustry(el) {
+    document.querySelectorAll('.industry-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    el.querySelector('input').checked = true;
+}
+
+function toggleChip(el) {
+    el.classList.toggle('selected');
+    el.querySelector('input').checked = el.classList.contains('selected');
+}
+
+function updateBudget(val) {
+    val = parseInt(val);
+    document.getElementById('budgetDisplay').textContent = val.toLocaleString() + ' ج.م';
+
+    const ads = Math.round(val * 0.50);
+    const content = Math.round(val * 0.30);
+    const other = val - ads - content;
+    const adsDaily = Math.round(ads / 30);
+
+    document.getElementById('bcAds').textContent = ads.toLocaleString() + ' ج.م';
+    document.getElementById('bcAdsDaily').textContent = '~' + adsDaily.toLocaleString() + ' ج.م/يوم';
+    document.getElementById('bcContent').textContent = content.toLocaleString() + ' ج.م';
+    document.getElementById('bcOther').textContent = other.toLocaleString() + ' ج.م';
+}
+
+function buildSummary() {
+    document.getElementById('sumBrand').textContent = document.getElementById('brandName').value || '—';
+    document.getElementById('sumOwner').textContent = document.getElementById('ownerName').value || '—';
+    document.getElementById('sumPhone').textContent = document.getElementById('phone').value || '—';
+    document.getElementById('sumLocation').textContent = document.getElementById('location').value || '—';
+
+    const industry = document.querySelector('input[name="industry"]:checked');
+    document.getElementById('sumIndustry').textContent = industry ? industry.value : '—';
+    document.getElementById('sumDesc').textContent = document.getElementById('description').value || '—';
+
+    // Platforms
+    const platformsDiv = document.getElementById('sumPlatforms');
+    platformsDiv.innerHTML = '';
+    const platforms = [
+        { id: 'linkIG', name: 'إنستغرام', icon: 'fab fa-instagram' },
+        { id: 'linkFB', name: 'فيسبوك', icon: 'fab fa-facebook' },
+        { id: 'linkTT', name: 'تيكتوك', icon: 'fab fa-tiktok' },
+        { id: 'linkYT', name: 'يوتيوب', icon: 'fab fa-youtube' },
+        { id: 'linkTW', name: 'X', icon: 'fab fa-x-twitter' },
+        { id: 'linkLI', name: 'لينكدإن', icon: 'fab fa-linkedin' },
+        { id: 'linkWeb', name: 'الموقع', icon: 'fas fa-globe' }
+    ];
+    platforms.forEach(p => {
+        const val = document.getElementById(p.id).value;
+        const row = document.createElement('div');
+        row.className = 'summary-row';
+        row.innerHTML = `<span class="sr-label"><i class="${p.icon}" style="margin-left:6px;"></i> ${p.name}</span><span class="sr-value">${val ? '<a href="'+val+'" class="summary-link" target="_blank">'+val+'</a>' : '<span style="color:var(--accent)">غير موجود — سيتم إنشاؤه ✨</span>'}</span>`;
+        platformsDiv.appendChild(row);
+    });
+    const gRow = document.createElement('div');
+    gRow.className = 'summary-row';
+    gRow.innerHTML = `<span class="sr-label"><i class="fab fa-google" style="margin-left:6px;"></i> Google Business</span><span class="sr-value">${document.getElementById('hasGoogle').value || '—'}</span>`;
+    platformsDiv.appendChild(gRow);
+
+    // Goals
+    const goals = [];
+    document.querySelectorAll('.chip.selected input').forEach(c => goals.push(c.value));
+    document.getElementById('sumGoals').textContent = goals.length ? goals.join('، ') : '—';
+    document.getElementById('sumAudience').textContent = document.getElementById('targetAudience').value || '—';
+    document.getElementById('sumChallenge').textContent = document.getElementById('challenge').value || '—';
+    document.getElementById('sumContent').textContent = document.getElementById('hasContent').value || '—';
+
+    // Budget
+    const budget = parseInt(document.getElementById('budgetSlider').value);
+    const duration = document.getElementById('planDuration').value;
+    const months = duration.includes('12') ? 12 : duration.includes('6') ? 6 : duration.includes('3') ? 3 : 1;
+    document.getElementById('sumBudget').textContent = budget.toLocaleString() + ' ج.م/شهر';
+    document.getElementById('sumDuration').textContent = duration;
+    document.getElementById('sumTotal').textContent = (budget * months).toLocaleString() + ' ج.م';
+}
+
+async function generateAndSavePlan() {
+    // Validate required fields
+    const brand = document.getElementById('brandName').value.trim();
+    const owner = document.getElementById('ownerName').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const industry = document.querySelector('input[name="industry"]:checked');
+    
+    if (!brand || !owner || !phone || !industry) {
+        alert('⚠️ يرجى ملء كل الحقول المطلوبة (اسم المشروع، الاسم، الهاتف، المجال)');
+        return;
+    }
+    
+    // Show loading
+    document.getElementById('loadingOverlay').classList.add('show');
+    
+    try {
+        // Collect data
+        const planData = collectFormData();
+        
+        // Generate plan HTML using the generator
+        const planHTML = generatePlanHTML(planData);
+        
+        // Save to Supabase
+        const planId = 'plan_' + Date.now();
+        const leadId = document.getElementById('leadId').value;
+        
+        const { error } = await _supabase
+            .from('marketing_plans')
+            .insert([{
+                id: planId,
+                lead_id: leadId ? parseInt(leadId) : null,
+                company_name: planData.brand,
+                company_email: '', // Could add email field
+                company_phone: planData.phone,
+                company_industry: planData.industry,
+                plan_data: {
+                    owner: planData.owner,
+                    location: planData.location,
+                    description: planData.description,
+                    audience: planData.audience,
+                    challenge: planData.challenge,
+                    contentStatus: planData.contentStatus,
+                    googleBiz: planData.googleBiz,
+                    budget: planData.budget,
+                    duration: planData.duration,
+                    platforms: planData.links,
+                    goals: planData.goals
+                },
+                status: 'completed',
+                view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`,
+                created_at: new Date().toISOString()
+            }]);
+        
+        if (error) throw error;
+        
+        // Open generated plan in new window
+        const w = window.open('', '_blank');
+        w.document.write(planHTML);
+        w.document.close();
+        
+        // Hide loading
+        setTimeout(() => {
+            document.getElementById('loadingOverlay').classList.remove('show');
+            alert('✅ تم إنشاء وحفظ الخطة بنجاح!\n\nتم فتح الخطة في نافذة جديدة.');
+            
+            // Redirect back to admin after 3 seconds
+            setTimeout(() => {
+                if (confirm('هل تريد العودة لصفحة الإدارة؟')) {
+                    window.location.href = 'admin/index.html#sec-marketing-plans';
+                }
+            }, 1000);
+        }, 2000);
+        
+    } catch (err) {
+        console.error('Error:', err);
+        document.getElementById('loadingOverlay').classList.remove('show');
+        alert('حدث خطأ أثناء إنشاء الخطة: ' + err.message);
+    }
+}
+
+function collectFormData() {
+    const goals = [];
+    document.querySelectorAll('.chip.selected input').forEach(c => goals.push(c.value));
+    
+    return {
+        brand: document.getElementById('brandName').value || 'اسم المشروع',
+        owner: document.getElementById('ownerName').value || 'صاحب المشروع',
+        phone: document.getElementById('phone').value || '',
+        location: document.getElementById('location').value || 'غير محدد',
+        industry: (document.querySelector('input[name="industry"]:checked') || {}).value || 'خدمات',
+        description: document.getElementById('description').value || '',
+        audience: document.getElementById('targetAudience').value || 'جمهور عام',
+        challenge: document.getElementById('challenge').value || '',
+        contentStatus: document.getElementById('hasContent').value || '',
+        googleBiz: document.getElementById('hasGoogle').value || '',
+        budget: parseInt(document.getElementById('budgetSlider').value) || 5000,
+        duration: document.getElementById('planDuration').value || '3 أشهر',
+        links: {
+            ig: document.getElementById('linkIG').value,
+            fb: document.getElementById('linkFB').value,
+            tt: document.getElementById('linkTT').value,
+            yt: document.getElementById('linkYT').value,
+            tw: document.getElementById('linkTW').value,
+            li: document.getElementById('linkLI').value,
+            web: document.getElementById('linkWeb').value,
+        },
+        goals: goals
+    };
+}
+
+// Generate professional plan HTML (using the plan-generator logic)
+function generatePlanHTML(D) {
+    const months = D.duration.includes('12') ? 12 : D.duration.includes('6') ? 6 : D.duration.includes('3') ? 3 : 1;
+    const total = D.budget * months;
+    const ads = Math.round(D.budget * 0.50);
+    const content = Math.round(D.budget * 0.30);
+    const other = D.budget - ads - content;
+    const adsDaily = Math.round(ads / 30);
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long' });
+
+    // Platforms analysis
+    const existing = [];
+    const missing = [];
+    const pMap = [
+        { key: 'ig', name: 'إنستغرام', icon: 'fab fa-instagram', color: '#E4405F' },
+        { key: 'fb', name: 'فيسبوك', icon: 'fab fa-facebook', color: '#1877F2' },
+        { key: 'tt', name: 'تيكتوك', icon: 'fab fa-tiktok', color: '#000' },
+        { key: 'yt', name: 'يوتيوب', icon: 'fab fa-youtube', color: '#FF0000' },
+        { key: 'tw', name: 'X', icon: 'fab fa-x-twitter', color: '#000' },
+        { key: 'li', name: 'لينكدإن', icon: 'fab fa-linkedin', color: '#0A66C2' },
+        { key: 'web', name: 'موقع إلكتروني', icon: 'fas fa-globe', color: '#0984E3' },
+    ];
+    pMap.forEach(p => {
+        if (D.links[p.key]) existing.push(p);
+        else missing.push(p);
+    });
+
+    // SWOT based on data
+    const strengths = [];
+    const weaknesses = [];
+    if (existing.length >= 3) strengths.push('تواجد على ' + existing.length + ' منصات رقمية');
+    if (D.links.web) strengths.push('موقع إلكتروني موجود');
+    if (D.contentStatus && D.contentStatus.includes('كتير')) strengths.push('محتوى جاهز ومتوفر للنشر');
+    if (D.description) strengths.push('رؤية واضحة للمشروع والخدمات');
+    strengths.push('ميزانية مخصصة للتسويق (' + D.budget.toLocaleString() + ' ج.م/شهر)');
+    if (D.goals.length >= 3) strengths.push('أهداف متعددة وواضحة');
+
+    if (missing.length > 0) weaknesses.push('غياب عن ' + missing.length + ' منصات: ' + missing.map(m => m.name).join('، '));
+    if (D.contentStatus && D.contentStatus.includes('الصفر')) weaknesses.push('مفيش محتوى جاهز — محتاج بناء من الصفر');
+    if (D.contentStatus && D.contentStatus.includes('شوية')) weaknesses.push('المحتوى المتاح محدود ومحتاج تطوير');
+    if (!D.googleBiz || D.googleBiz.includes('لا')) weaknesses.push('غياب Google Business Profile');
+    if (D.challenge) weaknesses.push('تحدي حالي: ' + D.challenge.substring(0, 80));
+
+    // Content types per industry
+    const contentTypes = {
+        'طبي / صحي': ['فيديوهات قبل/بعد', 'نصائح طبية', 'شهادات مرضى', 'سؤال وجواب', 'يوم في العيادة', 'تمارين/نصائح منزلية'],
+        'تجارة / متجر': ['عروض وخصومات', 'استعراض منتجات', 'آراء العملاء', 'behind the scenes', 'مقارنات منتجات', 'unboxing'],
+        'مطاعم / كافيهات': ['تصوير الأطباق', 'وصفات حصرية', 'behind the kitchen', 'آراء الزوار', 'عروض اليوم', 'ترندات أكل'],
+        'تعليم / تدريب': ['مقتطفات من الدورات', 'نصائح تعليمية', 'قصص نجاح طلاب', 'بث مباشر', 'أسئلة واختبارات', 'معلومات مجانية'],
+        'عقارات': ['جولات عقارية', 'نصائح شراء/إيجار', 'مقارنات مناطق', 'آراء العملاء', 'تحليل سوق', 'عروض حصرية'],
+        'خدمات أخرى': ['عرض الخدمات', 'شهادات العملاء', 'نصائح مجانية', 'سؤال وجواب', 'behind the scenes', 'عروض خاصة']
+    };
+    const myContent = contentTypes[D.industry] || contentTypes['خدمات أخرى'];
+
+    // Platform strategy table rows
+    let platformRows = '';
+    const platformStrategy = [
+        { key: 'ig', name: 'إنستغرام', icon: 'fab fa-instagram', color: '#E4405F', goal: 'بناء الثقة + عرض النتائج', content: 'ريلز، ستوريز يومي، كاروسيل', freq: 'يومي (ستوري) + 4 بوسات/أسبوع' },
+        { key: 'fb', name: 'فيسبوك', icon: 'fab fa-facebook', color: '#1877F2', goal: 'إعلانات + مجتمع', content: 'فيديوهات، بوستات تفاعلية، بث مباشر', freq: '3-4 بوستات/أسبوع' },
+        { key: 'tt', name: 'تيكتوك', icon: 'fab fa-tiktok', color: '#000', goal: 'انتشار سريع + وعي', content: 'فيديوهات قصيرة 15-60 ثانية', freq: '5-7 فيديوهات/أسبوع' },
+        { key: 'yt', name: 'يوتيوب', icon: 'fab fa-youtube', color: '#FF0000', goal: 'محتوى عميق + SEO', content: 'فيديوهات طويلة + Shorts', freq: 'فيديو/أسبوع + شورتس يومي' },
+    ];
+    platformStrategy.forEach(p => {
+        platformRows += '<tr><td><strong><i class="' + p.icon + '" style="color:' + p.color + '"></i> ' + p.name + '</strong></td><td>' + p.goal + '</td><td>' + p.content + '</td><td>' + p.freq + '</td></tr>';
+    });
+
+    // Budget table
+    const fbAds = Math.round(ads * 0.60);
+    const googleAds = Math.round(ads * 0.20);
+    const ttAds = Math.round(ads * 0.20);
+
+    // Goals HTML
+    const goalsHtml = D.goals.map((g, i) => {
+        const icons = ['chart-line','users','star','rocket','globe','share-alt','heart','calendar-check'];
+        const colors = ['#FF6B6B','#6C5CE7','#FFA502','#0984E3','#00B894','#E4405F','#FF6B6B','#00B894'];
+        return '<div class="card'+(i%2?' orange':'')+'"><h4><i class="fas fa-'+(icons[i]||'check')+'" style="color:'+(colors[i]||'#1B6B93')+'"></i> '+g+'</h4><p>سيتم تحقيق هذا الهدف من خلال الاستراتيجية المقترحة في الخطة مع متابعة مؤشرات الأداء.</p></div>';
+    }).join('');
+
+    // Missing platforms actions
+    const missingActions = missing.map(m => '<li>إنشاء حساب '+ m.name + ' احترافي بنفس الهوية البصرية</li>').join('');
+
+    // Generate the complete plan HTML
+    return `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>خطة التسويق — ${D.brand}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+@page{size:A4;margin:0}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Cairo',sans-serif;color:#2d3436;background:#f0f2f5;line-height:1.8}
+.page{width:210mm;min-height:297mm;margin:20px auto;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.1);position:relative;overflow:hidden;padding:0;page-break-after:always}
+@media print{body{background:#fff}.page{box-shadow:none;margin:0;width:100%}.no-print{display:none!important}}
+.cover{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 50px}
+.cover-bg{position:absolute;inset:0;background:linear-gradient(160deg,#1B6B93 0%,#134d6b 40%,#1a1a2e 100%);z-index:0}
+.cover-pattern{position:absolute;inset:0;z-index:1;opacity:.05;background:radial-gradient(circle,#fff 1px,transparent 1px);background-size:25px 25px}
+.cover-content{position:relative;z-index:2;color:#fff}
+.cover-logo{width:100px;height:100px;border-radius:24px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 30px;font-size:42px;color:#fff;border:2px solid rgba(255,255,255,.2)}
+.cover h1{font-size:38px;font-weight:900;line-height:1.4;margin-bottom:10px}.cover h1 span{color:#FF8C42}
+.cover-sub{font-size:17px;color:rgba(255,255,255,.8);margin-bottom:30px}
+.cover-divider{width:80px;height:4px;background:#FF8C42;margin:0 auto 30px;border-radius:2px}
+.cover-info{display:flex;gap:35px;justify-content:center;flex-wrap:wrap}.cover-info-item{text-align:center}
+.cover-info-item .label{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:4px}.cover-info-item .value{font-size:15px;font-weight:700}
+.cover-badge{display:inline-block;background:rgba(255,140,66,.2);color:#FF8C42;padding:8px 24px;border-radius:50px;font-size:14px;font-weight:700;margin-bottom:25px}
+.inner-page{padding:45px}
+.page-header{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #1B6B93;padding-bottom:12px;margin-bottom:30px}
+.page-header h2{font-size:22px;font-weight:900;color:#1B6B93}.page-header .pn{width:38px;height:38px;border-radius:50%;background:#1B6B93;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+.stitle{font-size:18px;font-weight:800;color:#1a1a2e;margin:25px 0 12px;display:flex;align-items:center;gap:10px}
+.stitle i{color:#1B6B93}.stitle.orange i{color:#FF8C42}.stitle.green i{color:#2E8B57}
+p.desc{font-size:13.5px;color:#636e72;line-height:2;margin-bottom:12px}
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.card{background:#f8fafb;border-radius:14px;padding:18px;border-right:4px solid #1B6B93}
+.card.orange{border-right-color:#FF8C42}.card.green{border-right-color:#2E8B57}.card.purple{border-right-color:#6c5ce7}.card.pink{border-right-color:#e84393}
+.card h4{font-size:14px;font-weight:800;color:#1a1a2e;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.card p,.card li{font-size:12px;color:#636e72;line-height:1.8}
+.card ul{list-style:none;padding:0}.card ul li{padding:2px 0;display:flex;gap:5px}.card ul li::before{content:"✓";color:#2E8B57;font-weight:800;flex-shrink:0}
+.plan-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12.5px}
+.plan-table th{background:#1B6B93;color:#fff;padding:10px 12px;text-align:right;font-weight:700}
+.plan-table td{padding:8px 12px;border-bottom:1px solid #e8ecef}.plan-table tr:nth-child(even) td{background:#f8fafb}
+.plan-table .hl{background:rgba(255,140,66,.1);font-weight:700;color:#FF8C42}
+.highlight-box{background:linear-gradient(135deg,#1B6B93,#2E8B57);color:#fff;border-radius:14px;padding:22px;margin:18px 0;text-align:center}
+.highlight-box h3{font-size:16px;font-weight:800;margin-bottom:6px}.highlight-box p{font-size:12px;opacity:.9}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+.tag{display:inline-flex;align-items:center;gap:4px;background:#e8f4f8;color:#1B6B93;padding:4px 12px;border-radius:50px;font-size:11px;font-weight:700}
+.tag.orange{background:#fff3e8;color:#FF8C42}.tag.green{background:#e6f5ed;color:#2E8B57}
+.small-note{font-size:10px;color:#b2bec3;text-align:center;margin-top:15px;font-style:italic}
+.print-btn{position:fixed;bottom:25px;left:25px;z-index:999;background:linear-gradient(135deg,#1B6B93,#2E8B57);color:#fff;border:none;padding:14px 28px;border-radius:50px;font-family:'Cairo';font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 5px 20px rgba(27,107,147,.4);display:flex;align-items:center;gap:10px}
+.print-btn:hover{transform:translateY(-2px)}
+</style></head><body>
+
+<!-- COVER -->
+<div class="page"><div class="cover"><div class="cover-bg"></div><div class="cover-pattern"></div><div class="cover-content">
+<div class="cover-logo"><i class="fas fa-rocket"></i></div>
+<div class="cover-badge"><i class="fas fa-sparkles"></i> خطة تسويق احترافية</div>
+<h1>خطة <span>التسويق</span> الاحترافية<br>لـ <span>${D.brand}</span></h1>
+<div class="cover-divider"></div>
+<p class="cover-sub">${D.description || 'خطة شاملة للتواجد الاحترافي على جميع المنصات الرقمية وتحقيق النمو'}</p>
+<div class="cover-info">
+<div class="cover-info-item"><div class="label">إعداد</div><div class="value">فريق التسويق</div></div>
+<div class="cover-info-item"><div class="label">التاريخ</div><div class="value">${dateStr}</div></div>
+<div class="cover-info-item"><div class="label">الفترة</div><div class="value">${D.duration}</div></div>
+<div class="cover-info-item"><div class="label">الميزانية</div><div class="value" style="color:#FF8C42">${total.toLocaleString()} ج.م</div></div>
+</div>
+<div style="font-size:20px;font-weight:800;margin-top:25px">${D.owner} | ${D.industry}</div>
+</div></div></div>
+
+<!-- PAGE 2: SUMMARY + SWOT -->
+<div class="page"><div class="inner-page">
+<div class="page-header"><h2><i class="fas fa-file-alt"></i> الملخص التنفيذي وتحليل الوضع</h2><div class="pn">1</div></div>
+<p class="desc">خطة تسويقية شاملة لـ ${D.brand} تهدف لتعزيز التواجد الرقمي وزيادة المبيعات. الجمهور المستهدف: ${D.audience}. الموقع: ${D.location}.</p>
+<div class="stitle"><i class="fas fa-bullseye"></i> الأهداف الاستراتيجية</div>
+<div class="cards-grid">${goalsHtml || '<div class="card"><h4>زيادة المبيعات والانتشار</h4><p>تحقيق نمو شامل عبر المنصات الرقمية.</p></div>'}</div>
+
+<div class="stitle green"><i class="fas fa-fingerprint"></i> تحليل الوضع (SWOT)</div>
+<div class="cards-grid">
+<div class="card green"><h4>💪 نقاط القوة</h4><ul>${strengths.map(s=>'<li>'+s+'</li>').join('')}</ul></div>
+<div class="card orange"><h4>⚠️ نقاط الضعف</h4><ul>${weaknesses.map(w=>'<li>'+w+'</li>').join('')}</ul></div>
+<div class="card"><h4>🚀 الفرص</h4><ul><li>نمو سريع في التسويق الرقمي بالمنطقة</li><li>الجمهور المستهدف نشط على السوشيال ميديا</li><li>فرصة التميز عن المنافسين بمحتوى احترافي</li><li>إمكانية التوسع جغرافياً عبر الإعلانات</li></ul></div>
+<div class="card pink"><h4>🔴 التهديدات</h4><ul><li>منافسة متزايدة في المجال</li><li>تغيرات مستمرة في خوارزميات المنصات</li><li>ارتفاع تكلفة الإعلانات المدفوعة</li></ul></div>
+</div></div></div>
+
+<!-- PAGE 3: PLATFORMS -->
+<div class="page"><div class="inner-page">
+<div class="page-header"><h2><i class="fas fa-share-alt"></i> استراتيجية المنصات</h2><div class="pn">2</div></div>
+<p class="desc">خارطة طريق للتواجد الاحترافي على كل منصة مع تحديد نوع المحتوى والأهداف:</p>
+<table class="plan-table"><tr><th>المنصة</th><th>الهدف</th><th>نوع المحتوى</th><th>معدل النشر</th></tr>${platformRows}</table>
+
+${missing.length > 0 ? '<div class="stitle orange"><i class="fas fa-plus-circle"></i> منصات يجب إنشاؤها ('+missing.length+')</div><div class="card orange" style="margin:10px 0"><ul>'+missingActions+'</ul></div>' : ''}
+
+<div class="stitle"><i class="fas fa-video"></i> أنواع المحتوى المطلوب (${D.industry})</div>
+<div class="tags">${myContent.map((c,i)=>'<span class="tag'+(i%3===1?' orange':i%3===2?' green':'')+'"><i class="fas fa-check-circle"></i> '+c+'</span>').join('')}</div>
+
+<div class="highlight-box"><h3><i class="fas fa-lightbulb"></i> القاعدة الذهبية</h3>
+<p>80% محتوى تعليمي يبني الثقة — 20% محتوى ترويجي يدفع للشراء/الحجز</p></div>
+</div></div>
+
+<!-- PAGE 4: BUDGET -->
+<div class="page"><div class="inner-page">
+<div class="page-header"><h2><i class="fas fa-wallet"></i> الميزانية والإعلانات</h2><div class="pn">3</div></div>
+
+<div class="stitle green"><i class="fas fa-coins"></i> توزيع الميزانية — ${D.budget.toLocaleString()} ج.م/شهر</div>
+<table class="plan-table">
+<tr><th>البند</th><th>التفاصيل</th><th>شهرياً</th><th>${months} أشهر</th></tr>
+<tr><td><strong>🎯 إعلانات فيسبوك + إنستا</strong></td><td>إعلانات فيديو + رسائل واتساب — ${D.audience}</td><td class="hl">${fbAds.toLocaleString()} ج.م</td><td>${(fbAds*months).toLocaleString()} ج.م</td></tr>
+<tr><td><strong>🔍 إعلانات جوجل</strong></td><td>إعلان بحث للكلمات المفتاحية المتعلقة بـ ${D.industry}</td><td class="hl">${googleAds.toLocaleString()} ج.م</td><td>${(googleAds*months).toLocaleString()} ج.م</td></tr>
+<tr><td><strong>📱 ترويج تيكتوك</strong></td><td>ترويج أفضل الفيديوهات لمضاعفة الوصول</td><td class="hl">${ttAds.toLocaleString()} ج.م</td><td>${(ttAds*months).toLocaleString()} ج.م</td></tr>
+<tr><td><strong>🎬 إنتاج محتوى</strong></td><td>تصميم جرافيك + مونتاج فيديو</td><td class="hl">${content.toLocaleString()} ج.م</td><td>${(content*months).toLocaleString()} ج.م</td></tr>
+<tr><td><strong>👥 مؤثرين + أدوات</strong></td><td>تعاونات مع مؤثرين + اشتراكات أدوات</td><td class="hl">${other.toLocaleString()} ج.م</td><td>${(other*months).toLocaleString()} ج.م</td></tr>
+<tr style="background:#1B6B93"><td colspan="2" style="color:#fff;font-weight:900">💰 الإجمالي</td><td style="color:#FF8C42;font-weight:900;font-size:15px">${D.budget.toLocaleString()} ج.م</td><td style="color:#FF8C42;font-weight:900;font-size:15px">${total.toLocaleString()} ج.م</td></tr>
+</table>
+
+<div class="stitle green"><i class="fas fa-chart-bar"></i> مؤشرات الأداء (KPIs)</div>
+<table class="plan-table">
+<tr><th>المؤشر</th><th>الهدف بعد 3 أشهر</th><th>الهدف بعد 6 أشهر</th></tr>
+<tr><td>متابعين السوشيال ميديا</td><td class="hl">+50% نمو</td><td class="hl">+150% نمو</td></tr>
+<tr><td>التفاعل (Engagement)</td><td class="hl">+40%</td><td class="hl">+100%</td></tr>
+<tr><td>استفسارات واتساب</td><td class="hl">+50%</td><td class="hl">+100%</td></tr>
+<tr><td>المبيعات / الحجوزات</td><td class="hl">+30%</td><td class="hl">+70%</td></tr>
+</table>
+</div></div>
+
+<!-- PAGE 5: ACTION PLAN -->
+<div class="page"><div class="inner-page">
+<div class="page-header"><h2><i class="fas fa-tasks"></i> خطة التنفيذ</h2><div class="pn">4</div></div>
+
+<div class="stitle"><i class="fas fa-flag"></i> المرحلة الأولى: التأسيس (الشهر الأول)</div>
+<div class="cards-grid">
+<div class="card"><h4><i class="fas fa-cog" style="color:#1B6B93"></i> الأسبوع 1-2</h4><ul>
+${missingActions || '<li>مراجعة وتحسين الحسابات الحالية</li>'}
+<li>توحيد الهوية البصرية على كل المنصات</li>
+<li>إعداد قوالب تصميم موحدة (Canva)</li>
+<li>تصوير 10 فيديوهات/صور كمخزون محتوى</li>
+<li>${D.googleBiz && D.googleBiz.includes('لا') ? 'إنشاء وتفعيل Google Business Profile' : 'تحسين Google Business Profile'}</li>
+</ul></div>
+<div class="card orange"><h4><i class="fas fa-rocket" style="color:#FF8C42"></i> الأسبوع 3-4</h4><ul>
+<li>بدء النشر المنتظم على كل المنصات</li>
+<li>إطلاق أول حملة إعلانية (واتساب)</li>
+<li>بث مباشر أول على فيسبوك/إنستغرام</li>
+<li>بدء التواصل مع مؤثرين</li>
+<li>طلب تقييمات من العملاء الحاليين</li>
+</ul></div></div>
+
+<div class="stitle green"><i class="fas fa-chart-line"></i> المرحلة الثانية: النمو (الشهر 2-3)</div>
+<div class="card green" style="margin:10px 0"><h4><i class="fas fa-expand-arrows-alt" style="color:#2E8B57"></i> التوسع</h4><ul>
+<li>زيادة الإعلانات بناءً على نتائج الشهر الأول</li>
+<li>تنويع المحتوى وتحليل الأداء</li>
+<li>إطلاق حملات موسمية وعروض</li>
+<li>بناء مجتمع (جروب فيسبوك أو تيليجرام)</li>
+<li>التعاون مع صفحات كبيرة في المجال</li>
+</ul></div>
+
+<div class="highlight-box"><h3><i class="fas fa-hand-holding-heart"></i> رسالة ختامية</h3>
+<p>هذه الخطة مصممة خصيصاً لـ ${D.brand} بناءً على بياناتكم وأهدافكم. النجاح يتطلب التزام بالتنفيذ ومتابعة الأداء أسبوعياً.<br><strong>الخطوة التالية: لنبدأ التنفيذ! 🚀</strong></p></div>
+<p class="small-note">هذه الخطة قابلة للتعديل بناءً على نتائج الأداء الفعلية. يُنصح بمراجعة أسبوعية.</p>
+</div></div>
+
+<button class="print-btn no-print" onclick="window.print()"><i class="fas fa-file-pdf"></i> حفظ كـ PDF</button>
+</body></html>`;
+}
+
+function sendViaWhatsApp() {
+    const planData = collectFormData();
+    
+    let links = '';
+    const pIds = ['ig','fb','tt','yt','tw','li','web'];
+    const pNames = ['Instagram','Facebook','TikTok','YouTube','X','LinkedIn','Website'];
+    pIds.forEach((id, i) => {
+        const v = planData.links[id];
+        if (v) links += pNames[i] + ': ' + v + '\n';
+        else links += pNames[i] + ': غير موجود\n';
+    });
+
+    const msg = `🚀 *طلب خطة تسويق جديد*\n\n` +
+        `📋 *البراند:* ${planData.brand}\n` +
+        `👤 *الاسم:* ${planData.owner}\n` +
+        `📍 *الموقع:* ${planData.location}\n` +
+        `🏢 *المجال:* ${planData.industry}\n` +
+        `📝 *الوصف:* ${planData.description}\n\n` +
+        `🔗 *المنصات:*\n${links}\n` +
+        `🎯 *الأهداف:* ${planData.goals.join('، ') || 'غير محدد'}\n` +
+        `💰 *الميزانية:* ${planData.budget.toLocaleString()} ج.م/شهر\n` +
+        `📅 *المدة:* ${planData.duration}\n` +
+        `💎 *الإجمالي:* ${(planData.budget * (planData.duration.includes('12')?12:planData.duration.includes('6')?6:planData.duration.includes('3')?3:1)).toLocaleString()} ج.م`;
+
+    const encoded = encodeURIComponent(msg);
+    window.open('https://wa.me/?text=' + encoded, '_blank');
+}
+
+function copyToClipboard() {
+    const card = document.getElementById('summaryCard');
+    const text = card.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target.closest('.dl-btn');
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+        btn.style.background = 'var(--green)';
+        btn.style.color = '#fff';
+        setTimeout(() => { btn.innerHTML = original; btn.style.background = ''; btn.style.color = ''; }, 2000);
+    });
+}
+
+updateBudget(5000);
+</script>
+
+</body>
+</html>
