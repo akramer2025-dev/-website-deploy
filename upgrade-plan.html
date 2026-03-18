@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ترقية الخطة التسويقية - أكرم مصطفى</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+    
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .header h1 {
+      font-size: 28px;
+      color: #2C5364;
+      margin-bottom: 10px;
+    }
+    
+    .header p {
+      color: #7f8c8d;
+      font-size: 16px;
+    }
+    
+    .status {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .status i {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+    
+    .status h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    
+    .status p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: transform 0.2s;
+      font-family: 'Cairo', sans-serif;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .info-box {
+      background: #ecf0f1;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      border-right: 4px solid #3498db;
+    }
+    
+    .info-box h4 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    
+    .info-box ul {
+      list-style: none;
+      padding-right: 0;
+    }
+    
+    .info-box li {
+      padding: 5px 0;
+      color: #7f8c8d;
+      font-size: 14px;
+    }
+    
+    .info-box li i {
+      color: #27ae60;
+      margin-left: 5px;
+    }
+    
+    .error {
+      background: #e74c3c;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .success {
+      background: #27ae60;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .progress {
+      margin-top: 20px;
+    }
+    
+    .progress-bar {
+      background: #ecf0f1;
+      height: 8px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    
+    .progress-fill {
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s;
+    }
+    
+    .progress-text {
+      text-align: center;
+      color: #7f8c8d;
+      font-size: 14px;
+    }
+    
+    .plan-info {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .plan-info h3 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    
+    .plan-detail {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .plan-detail:last-child {
+      border-bottom: none;
+    }
+    
+    .plan-detail strong {
+      color: #34495e;
+    }
+    
+    .plan-detail span {
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="header">
+      <h1><i class="fas fa-sync-alt"></i> ترقية الخطة التسويقية</h1>
+      <p>تحديث الخطة القديمة إلى النسخة الاحترافية الجديدة</p>
+    </div>
+    
+    <div id="statusContainer">
+      <div class="status">
+        <i class="fas fa-spinner fa-spin"></i>
+        <h3>جاري تحميل بيانات الخطة...</h3>
+        <p>الرجاء الانتظار</p>
+      </div>
+    </div>
+    
+    <div id="planInfoContainer" style="display:none;"></div>
+    
+    <div id="actionContainer" style="display:none;">
+      <button class="btn" id="upgradeBtn">
+        <i class="fas fa-rocket"></i> ترقية الخطة الآن
+      </button>
+      
+      <div class="info-box">
+        <h4><i class="fas fa-star"></i> ما الجديد في النسخة الاحترافية؟</h4>
+        <ul>
+          <li><i class="fas fa-check"></i> جدول نشر أسبوعي مفصل (7 أيام × منصات)</li>
+          <li><i class="fas fa-check"></i> حملات تسويقية بأسماء وأهداف محددة</li>
+          <li><i class="fas fa-check"></i> KPIs بأرقام حقيقية (مش نسب مئوية)</li>
+          <li><i class="fas fa-check"></i> 3 مراحل تنفيذ مفصلة (التأسيس/النمو/الريادة)</li>
+          <li><i class="fas fa-check"></i> تصميم احترافي عالي الجودة</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="progressContainer" style="display:none;">
+      <div class="progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="progress-text" id="progressText">جاري الترقية...</p>
+      </div>
+    </div>
+    
+    <div id="resultContainer"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script>
+    const supabase = window.supabase.createClient(
+      window.SUPABASE_CONFIG.url,
+      window.SUPABASE_CONFIG.key
+    );
+
+    let planData = null;
+    let planId = null;
+
+    // Get plan ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    planId = urlParams.get('id');
+
+    if (!planId) {
+      document.getElementById('statusContainer').innerHTML = `
+        <div class="error">
+          <i class="fas fa-exclamation-triangle"></i>
+          <h3>خطأ: لم يتم تحديد رقم الخطة</h3>
+          <p>الرجاء الدخول من الرابط الصحيح</p>
+        </div>
+      `;
+    } else {
+      loadPlan();
+    }
+
+    async function loadPlan() {
+      try {
+        const { data, error } = await supabase
+          .from('marketing_plans')
+          .select('*')
+          .eq('id', planId)
+          .single();
+
+        if (error) throw error;
+        if (!data) throw new Error('الخطة غير موجودة');
+
+        planData = data;
+        
+        // Check if already upgraded
+        if (planData.generated_html && planData.generated_html.includes('جدول النشر الأسبوعي')) {
+          document.getElementById('statusContainer').innerHTML = `
+            <div class="success">
+              <i class="fas fa-check-circle"></i>
+              <h3>هذه الخطة محدّثة بالفعل</h3>
+              <p>الخطة بالنسخة الاحترافية الجديدة</p>
+            </div>
+          `;
+          setTimeout(() => {
+            window.location.href = 'marketing-plan-view.html?id=' + planId;
+          }, 2000);
+          return;
+        }
+
+        displayPlanInfo();
+        
+      } catch (err) {
+        console.error('Error loading plan:', err);
+        document.getElementById('statusContainer').innerHTML = `
+          <div class="error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>حدث خطأ أثناء تحميل الخطة</h3>
+            <p>${err.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    function displayPlanInfo() {
+      const data = typeof planData.plan_data === 'string' 
+        ? JSON.parse(planData.plan_data) 
+        : planData.plan_data;
+
+      document.getElementById('statusContainer').innerHTML = `
+        <div class="status" style="background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);">
+          <i class="fas fa-exclamation-circle"></i>
+          <h3>هذه الخطة تحتاج للترقية</h3>
+          <p>النسخة الحالية بسيطة - يمكن ترقيتها للنسخة الاحترافية</p>
+        </div>
+      `;
+
+      document.getElementById('planInfoContainer').style.display = 'block';
+      document.getElementById('planInfoContainer').innerHTML = `
+        <div class="plan-info">
+          <h3><i class="fas fa-info-circle"></i> معلومات الخطة</h3>
+          <div class="plan-detail">
+            <strong>اسم الشركة:</strong>
+            <span>${planData.company_name || '—'}</span>
+          </div>
+          <div class="plan-detail">
+            <strong>الصناعة:</strong>
+            <span>${data.industry || '—'}</span>
+          </div>
+          <div class="plan-detail">
+            <strong>الميزانية:</strong>
+            <span>${data.budget ? data.budget.toLocaleString('ar-EG') + ' جنيه' : '—'}</span>
+          </div>
+          <div class="plan-detail">
+            <strong>المدة:</strong>
+            <span>${data.duration ? data.duration + ' شهور' : '—'}</span>
+          </div>
+          <div class="plan-detail">
+            <strong>تاريخ الإنشاء:</strong>
+            <span>${new Date(planData.created_at).toLocaleDateString('ar-EG')}</span>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('actionContainer').style.display = 'block';
+      
+      document.getElementById('upgradeBtn').addEventListener('click', upgradePlan);
+    }
+
+    async function upgradePlan() {
+      document.getElementById('upgradeBtn').disabled = true;
+      document.getElementById('progressContainer').style.display = 'block';
+      
+      setProgress(10, 'جاري قراءة البيانات...');
+      
+      try {
+        const data = typeof planData.plan_data === 'string' 
+          ? JSON.parse(planData.plan_data) 
+          : planData.plan_data;
+
+        setProgress(30, 'جاري توليد الخطة الاحترافية...');
+        
+        // Generate the new professional plan HTML
+        const newPlanHTML = await generateProfessionalPlan(data);
+        
+        setProgress(70, 'جاري حفظ الخطة المحدثة...');
+        
+        // Update in database
+        const { error } = await supabase
+          .from('marketing_plans')
+          .update({ 
+            generated_html: newPlanHTML,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', planId);
+
+        if (error) throw error;
+
+        setProgress(100, 'تم الترقية بنجاح!');
+        
+        document.getElementById('resultContainer').innerHTML = `
+          <div class="success">
+            <i class="fas fa-check-circle"></i>
+            <h3>تمت الترقية بنجاح!</h3>
+            <p>جاري تحويلك للخطة المحدثة...</p>
+          </div>
+        `;
+        
+        setTimeout(() => {
+          window.location.href = 'marketing-plan-view.html?id=' + planId;
+        }, 2000);
+        
+      } catch (err) {
+        console.error('Error upgrading plan:', err);
+        document.getElementById('resultContainer').innerHTML = `
+          <div class="error">
+            <i class="fas fa-times-circle"></i>
+            <h3>حدث خطأ أثناء الترقية</h3>
+            <p>${err.message}</p>
+          </div>
+        `;
+        document.getElementById('upgradeBtn').disabled = false;
+      }
+    }
+
+    function setProgress(percent, text) {
+      document.getElementById('progressFill').style.width = percent + '%';
+      document.getElementById('progressText').textContent = text;
+    }
+
+    // Import the plan generator from marketing-form-advanced.html
+    async function generateProfessionalPlan(D) {
+      // This will be the same generator function but standalone
+      // For now, let's create a simplified version that calls the actual generator
+      
+      // We'll need to load the actual generator script
+      const response = await fetch('marketing-form-advanced.html');
+      const html = await response.text();
+      
+      // Extract the generatePlanHTML function
+      const scriptMatch = html.match(/function generatePlanHTML\(D\)[\s\S]*?(?=<\/script>)/);
+      if (!scriptMatch) throw new Error('Could not find generator function');
+      
+      // Execute it in a safe context
+      const func = new Function('D', scriptMatch[0] + '\nreturn generatePlanHTML(D);');
+      return func(D);
+    }
+  </script>
+</body>
+</html>

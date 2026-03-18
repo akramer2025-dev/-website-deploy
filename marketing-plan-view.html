@@ -967,13 +967,113 @@
       }
     }
 
+    function showUpgradeBanner(plan) {
+      const banner = document.createElement('div');
+      banner.id = 'upgradeBanner';
+      banner.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);
+        color: white;
+        padding: 15px 20px;
+        text-align: center;
+        z-index: 9999;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        font-family: 'Cairo', sans-serif;
+      `;
+      
+      const planData = typeof plan.plan_data === 'string' ? JSON.parse(plan.plan_data) : plan.plan_data;
+      
+      banner.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-exclamation-circle" style="font-size: 24px;"></i>
+            <div style="text-align: right;">
+              <strong style="display: block; font-size: 16px;">هذه خطة قديمة بتصميم بسيط</strong>
+              <span style="font-size: 13px; opacity: 0.9;">يمكن ترقيتها للنسخة الاحترافية الجديدة مجاناً!</span>
+            </div>
+          </div>
+          <button onclick="upgradePlan()" style="
+            background: white;
+            color: #e74c3c;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            font-family: 'Cairo';
+            transition: transform 0.2s;
+          " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+            <i class="fas fa-rocket"></i> ترقية الخطة الآن
+          </button>
+        </div>
+      `;
+      
+      document.body.insertBefore(banner, document.body.firstChild);
+      document.body.style.paddingTop = '80px';
+      
+      // Store plan data globally for upgrade function
+      window.currentPlanForUpgrade = plan;
+    }
+
+    async function upgradePlan() {
+      const banner = document.getElementById('upgradeBanner');
+      banner.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+          <i class="fas fa-spinner fa-spin" style="font-size: 24px;"></i>
+          <span style="font-size: 16px; font-weight: 700;">جاري ترقية الخطة...</span>
+        </div>
+      `;
+      
+      try {
+        const plan = window.currentPlanForUpgrade;
+        const planData = typeof plan.plan_data === 'string' ? JSON.parse(plan.plan_data) : plan.plan_data;
+        
+        // Redirect to form with pre-filled data
+        const params = new URLSearchParams({
+          upgrade: 'true',
+          id: plan.id,
+          brand: planData.brand || plan.company_name || '',
+          owner: planData.owner || '',
+          industry: planData.industry || '',
+          budget: planData.budget || '',
+          duration: planData.duration || '',
+          audience: planData.audience || '',
+          location: planData.location || '',
+          description: planData.description || ''
+        });
+        
+        // Redirect to form for regeneration
+        window.location.href = 'marketing-form-advanced.html?' + params.toString();
+        
+      } catch (err) {
+        console.error('Error upgrading:', err);
+        banner.innerHTML = `
+          <div style="color: white;">
+            <i class="fas fa-times-circle"></i>
+            <span>حدث خطأ: ${err.message}</span>
+          </div>
+        `;
+      }
+    }
+
     function renderPlan(plan) {
       // If we have the full generated HTML saved, use it directly
       if (plan.generated_html) {
         document.body.innerHTML = plan.generated_html;
         document.getElementById('loading').style.display = 'none';
-        return;
+        
+        // Check if it's the new professional version
+        if (plan.generated_html.includes('جدول النشر الأسبوعي')) {
+          return; // Already upgraded - show it
+        }
       }
+      
+      // If it's an old plan (no generated_html or old version), show upgrade banner
+      showUpgradeBanner(plan);
       
       // Otherwise, fall back to basic rendering (for old plans)
       const planData = typeof plan.plan_data === 'string' ? JSON.parse(plan.plan_data) : plan.plan_data;

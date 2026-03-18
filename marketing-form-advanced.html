@@ -568,6 +568,57 @@ let currentStep = 1;
 window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     
+    // Check if this is an upgrade
+    const isUpgrade = params.get('upgrade') === 'true';
+    const upgradeId = params.get('id');
+    
+    if (isUpgrade && upgradeId) {
+        // Store upgrade info
+        window.upgradeMode = {
+            enabled: true,
+            planId: upgradeId
+        };
+        
+        // Pre-fill form fields
+        if (params.get('brand')) document.getElementById('brandName').value = decodeURIComponent(params.get('brand'));
+        if (params.get('owner')) document.getElementById('ownerName').value = decodeURIComponent(params.get('owner'));
+        if (params.get('industry')) {
+            const industry = decodeURIComponent(params.get('industry'));
+            const industryInput = document.querySelector(`input[value="${industry}"]`);
+            if (industryInput) {
+                industryInput.checked = true;
+                industryInput.closest('.industry-option').classList.add('selected');
+            }
+        }
+        if (params.get('budget')) {
+            const budget = params.get('budget');
+            document.getElementById('budgetSlider').value = budget;
+            updateBudget(budget);
+        }
+        if (params.get('duration')) {
+            const duration = decodeURIComponent(params.get('duration'));
+            document.getElementById('planDuration').value = duration;
+        }
+        if (params.get('audience')) document.getElementById('targetAudience').value = decodeURIComponent(params.get('audience'));
+        if (params.get('location')) document.getElementById('location').value = decodeURIComponent(params.get('location'));
+        if (params.get('description')) document.getElementById('description').value = decodeURIComponent(params.get('description'));
+        
+        // Show upgrade message
+        const upgradeMsg = document.createElement('div');
+        upgradeMsg.style.cssText = `
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        `;
+        upgradeMsg.innerHTML = '<i class="fas fa-rocket"></i> وضع الترقية: سيتم تحديث الخطة القديمة بالنسخة الاحترافية';
+        document.querySelector('.form-container').insertBefore(upgradeMsg, document.querySelector('.form-container').firstChild);
+    }
+    
+    // Standard Admin parameters
     if (params.get('leadId')) document.getElementById('leadId').value = params.get('leadId');
     if (params.get('companyName')) document.getElementById('brandName').value = decodeURIComponent(params.get('companyName'));
     if (params.get('companyEmail')) ; // Could add email field if needed
@@ -697,38 +748,74 @@ async function generateAndSavePlan() {
         // Generate plan HTML using the generator
         const planHTML = generatePlanHTML(planData);
         
-        // Save to Supabase
-        const planId = 'plan_' + Date.now();
+        // Check if this is an upgrade or new plan
+        const isUpgrade = window.upgradeMode && window.upgradeMode.enabled;
+        const planId = isUpgrade ? window.upgradeMode.planId : ('plan_' + Date.now());
         const leadId = document.getElementById('leadId').value;
         
-        const { error } = await _supabase
-            .from('marketing_plans')
-            .insert([{
-                id: planId,
-                lead_id: leadId ? parseInt(leadId) : null,
-                company_name: planData.brand,
-                company_email: '', // Could add email field
-                company_phone: planData.phone,
-                company_industry: planData.industry,
-                plan_data: {
-                    owner: planData.owner,
-                    location: planData.location,
-                    description: planData.description,
-                    audience: planData.audience,
-                    challenge: planData.challenge,
-                    contentStatus: planData.contentStatus,
-                    needsWebsite: planData.needsWebsite,
-                    googleBiz: planData.googleBiz,
-                    budget: planData.budget,
-                    duration: planData.duration,
-                    platforms: planData.links,
-                    goals: planData.goals
-                },
-                generated_html: planHTML, // Save the full generated HTML
-                status: 'pending',
-                view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`,
-                created_at: new Date().toISOString()
-            }]);
+        let error;
+        
+        if (isUpgrade) {
+            // Update existing plan
+            const result = await _supabase
+                .from('marketing_plans')
+                .update({
+                    company_name: planData.brand,
+                    company_phone: planData.phone,
+                    company_industry: planData.industry,
+                    plan_data: {
+                        owner: planData.owner,
+                        location: planData.location,
+                        description: planData.description,
+                        audience: planData.audience,
+                        challenge: planData.challenge,
+                        contentStatus: planData.contentStatus,
+                        needsWebsite: planData.needsWebsite,
+                        googleBiz: planData.googleBiz,
+                        budget: planData.budget,
+                        duration: planData.duration,
+                        platforms: planData.links,
+                        goals: planData.goals
+                    },
+                    generated_html: planHTML,
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', planId);
+            
+            error = result.error;
+        } else {
+            // Insert new plan
+            const result = await _supabase
+                .from('marketing_plans')
+                .insert([{
+                    id: planId,
+                    lead_id: leadId ? parseInt(leadId) : null,
+                    company_name: planData.brand,
+                    company_email: '',
+                    company_phone: planData.phone,
+                    company_industry: planData.industry,
+                    plan_data: {
+                        owner: planData.owner,
+                        location: planData.location,
+                        description: planData.description,
+                        audience: planData.audience,
+                        challenge: planData.challenge,
+                        contentStatus: planData.contentStatus,
+                        needsWebsite: planData.needsWebsite,
+                        googleBiz: planData.googleBiz,
+                        budget: planData.budget,
+                        duration: planData.duration,
+                        platforms: planData.links,
+                        goals: planData.goals
+                    },
+                    generated_html: planHTML,
+                    status: 'pending',
+                    view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`,
+                    created_at: new Date().toISOString()
+                }]);
+            
+            error = result.error;
+        }
         
         if (error) throw error;
         
@@ -740,14 +827,24 @@ async function generateAndSavePlan() {
         // Hide loading
         setTimeout(() => {
             document.getElementById('loadingOverlay').classList.remove('show');
-            alert('✅ تم إنشاء وحفظ الخطة بنجاح!\n\nتم فتح الخطة في نافذة جديدة.');
             
-            // Redirect back to admin after 3 seconds
-            setTimeout(() => {
-                if (confirm('هل تريد العودة لصفحة الإدارة؟')) {
-                    window.location.href = 'admin/index.html#sec-marketing-plans';
-                }
-            }, 1000);
+            if (isUpgrade) {
+                alert('✅ تم ترقية الخطة بنجاح!\n\nتم تحديث الخطة بالنسخة الاحترافية الجديدة.');
+                
+                // Redirect to the upgraded plan
+                setTimeout(() => {
+                    window.location.href = `marketing-plan-view.html?id=${planId}`;
+                }, 1000);
+            } else {
+                alert('✅ تم إنشاء وحفظ الخطة بنجاح!\n\nتم فتح الخطة في نافذة جديدة.');
+                
+                // Redirect back to admin after 3 seconds
+                setTimeout(() => {
+                    if (confirm('هل تريد العودة لصفحة الإدارة؟')) {
+                        window.location.href = 'admin/index.html#sec-marketing-plans';
+                    }
+                }, 1000);
+            }
         }, 2000);
         
     } catch (err) {
