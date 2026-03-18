@@ -868,6 +868,9 @@ async function generateAndSavePlan() {
                 updated_at: new Date().toISOString()
             };
             
+            // Save the generated HTML so the plan view loads fully without upgrade prompt
+            updateData.generated_html = planHTML;
+            
             // Only update industry if it's not empty
             if (planData.industry && planData.industry.trim() !== '') {
                 updateData.company_industry = planData.industry;
@@ -904,6 +907,7 @@ async function generateAndSavePlan() {
                     goals: planData.goals
                 },
                 status: 'pending',
+                generated_html: planHTML,
                 view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`,
                 company_email: '' // Required field, set empty if not provided
             };

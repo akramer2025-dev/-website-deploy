@@ -1062,18 +1062,13 @@
     }
 
     function renderPlan(plan) {
-      // If we have the full generated HTML saved, use it directly
+      // If we have the full generated HTML saved, use it directly (no upgrade needed)
       if (plan.generated_html) {
         document.body.innerHTML = plan.generated_html;
-        document.getElementById('loading').style.display = 'none';
-        
-        // Check if it's the new professional version
-        if (plan.generated_html.includes('جدول النشر الأسبوعي')) {
-          return; // Already upgraded - show it
-        }
+        return;
       }
       
-      // If it's an old plan (no generated_html or old version), show upgrade banner
+      // If it's an old plan (no generated_html), show upgrade banner
       showUpgradeBanner(plan);
       
       // Otherwise, fall back to basic rendering (for old plans)
