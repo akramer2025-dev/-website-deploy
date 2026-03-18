@@ -904,7 +904,8 @@ async function generateAndSavePlan() {
                     goals: planData.goals
                 },
                 status: 'pending',
-                view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`
+                view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`,
+                company_email: '' // Required field, set empty if not provided
             };
             
             // Add lead_id only if it exists
@@ -912,7 +913,7 @@ async function generateAndSavePlan() {
                 insertData.lead_id = parseInt(leadId);
             }
             
-            // Add company_email if exists in form
+            // Update company_email if exists in form
             const emailField = document.getElementById('companyEmail');
             if (emailField && emailField.value.trim() !== '') {
                 insertData.company_email = emailField.value.trim();
