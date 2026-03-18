@@ -222,12 +222,12 @@ function seedData(){
 
     document.getElementById('successBox').style.display = 'block';
     document.getElementById('slidesGrid').style.display  = 'block';
-    document.getElementById('viewerLink').href = 'lecture-viewer.html?course=free&id=lec_free_001';
+    document.getElementById('viewerLink').href = 'lecture-viewer-v2.html?id=lec_free_001';
     document.getElementById('errBox').style.display = 'none';
 
     const list = document.getElementById('slidesList');
     list.innerHTML = LECTURE.slides.map((s,i)=>`
-      <a href="lecture-viewer.html?course=free&id=lec_free_001" class="slide-row" style="text-decoration:none;">
+      <a href="lecture-viewer-v2.html?id=lec_free_001" class="slide-row" style="text-decoration:none;">
         <div class="num">${i+1}</div>
         <img src="${s.src}" alt="" onerror="this.style.display='none'">
         <div class="info">

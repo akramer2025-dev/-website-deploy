@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 اختبار نظام التحليل الأوتوماتيكي</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .status {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .status.loading { background: #ffc107; color: #000; }
+        .status.success { background: #10b981; color: white; }
+        .status.error { background: #ef4444; color: white; }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            display: none;
+        }
+        .results.show { display: block; }
+        .results h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .result-item {
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .result-item .platform {
+            font-weight: bold;
+            color: #374151;
+        }
+        .result-item .value {
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .insights {
+            margin-top: 20px;
+        }
+        .insight-section {
+            margin-bottom: 15px;
+        }
+        .insight-section h4 {
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .insight-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .insight-section li {
+            padding: 8px 12px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+        
+        .logo {
+            text-align: center;
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🤖</div>
+        <h1>نظام التحليل الأوتوماتيكي للسوشيال ميديا</h1>
+        
+        <div id="status" class="status loading">
+            ⏳ جاري الاتصال بالـ API...
+        </div>
+        
+        <div id="form" style="display:none;">
+            <div class="input-group">
+                <label>🟣 Instagram</label>
+                <input type="url" id="instagram" placeholder="https://instagram.com/username">
+            </div>
+            
+            <div class="input-group">
+                <label>⚫ TikTok</label>
+                <input type="url" id="tiktok" placeholder="https://tiktok.com/@username">
+            </div>
+            
+            <div class="input-group">
+                <label>🔵 Facebook</label>
+                <input type="url" id="facebook" placeholder="https://facebook.com/page">
+            </div>
+            
+            <div class="input-group">
+                <label>🔴 YouTube</label>
+                <input type="url" id="youtube" placeholder="https://youtube.com/@channel">
+            </div>
+            
+            <button class="btn" onclick="analyzeAccounts()">
+                🚀 تحليل تلقائي
+            </button>
+        </div>
+        
+        <div id="results" class="results">
+            <h3>📊 نتائج التحليل:</h3>
+            <div id="resultsContent"></div>
+            
+            <div class="insights" id="insights" style="display:none;">
+                <div class="insight-section">
+                    <h4>✅ نقاط القوة:</h4>
+                    <ul id="strengths"></ul>
+                </div>
+                <div class="insight-section">
+                    <h4>⚠️ نقاط الضعف:</h4>
+                    <ul id="weaknesses"></ul>
+                </div>
+                <div class="insight-section">
+                    <h4>💡 التوصيات:</h4>
+                    <ul id="recommendations"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:3000';
+        
+        // Check API health on load
+        async function checkAPIHealth() {
+            try {
+                const response = await fetch(`${API_URL}/api/health`);
+                const data = await response.json();
+                
+                if (data.status === 'ok') {
+                    document.getElementById('status').className = 'status success';
+                    document.getElementById('status').innerHTML = '✅ الـ API جاهز للاستخدام!';
+                    document.getElementById('form').style.display = 'block';
+                } else {
+                    throw new Error('API not ready');
+                }
+            } catch (error) {
+                document.getElementById('status').className = 'status error';
+                document.getElementById('status').innerHTML = '❌ لا يمكن الاتصال بالـ API<br><small>تأكد من تشغيل الـ server: cd api && npm start</small>';
+            }
+        }
+        
+        async function analyzeAccounts() {
+            const instagram = document.getElementById('instagram').value.trim();
+            const tiktok = document.getElementById('tiktok').value.trim();
+            const facebook = document.getElementById('facebook').value.trim();
+            const youtube = document.getElementById('youtube').value.trim();
+            
+            const links = {};
+            if (instagram) links.instagram = instagram;
+            if (tiktok) links.tiktok = tiktok;
+            if (facebook) links.facebook = facebook;
+            if (youtube) links.youtube = youtube;
+            
+            if (Object.keys(links).length === 0) {
+                alert('⚠️ يرجى إدخال لينك واحد على الأقل');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('status').className = 'status loading';
+            document.getElementById('status').innerHTML = '⏳ جاري التحليل... قد يستغرق 30-60 ثانية';
+            document.getElementById('results').classList.remove('show');
+            document.querySelector('.btn').disabled = true;
+            
+            try {
+                const response = await fetch(`${API_URL}/api/analyze-social`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ links })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'فشل التحليل');
+                }
+                
+                const result = await response.json();
+                
+                // Show success
+                document.getElementById('status').className = 'status success';
+                document.getElementById('status').innerHTML = '✅ تم التحليل بنجاح!';
+                
+                // Display results
+                displayResults(result.data);
+                
+            } catch (error) {
+                document.getElementById('status').className = 'status error';
+                document.getElementById('status').innerHTML = `❌ خطأ: ${error.message}`;
+            } finally {
+                document.querySelector('.btn').disabled = false;
+            }
+        }
+        
+        function displayResults(data) {
+            const resultsContent = document.getElementById('resultsContent');
+            resultsContent.innerHTML = '';
+            
+            // Summary
+            if (data.summary && data.summary.totalFollowers !== undefined) {
+                const totalFollowers = data.summary.totalFollowers || 0;
+                resultsContent.innerHTML += `
+                    <div class="result-item" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <span class="platform">إجمالي المتابعين</span>
+                        <span class="value">${totalFollowers.toLocaleString()} متابع</span>
+                    </div>
+                `;
+            }
+            
+            // Platforms
+            const platforms = [
+                { key: 'instagram_followers', label: '🟣 Instagram', suffix: 'متابع' },
+                { key: 'tiktok_followers', label: '⚫ TikTok', suffix: 'متابع' },
+                { key: 'facebook_followers', label: '🔵 Facebook', suffix: 'متابع' },
+                { key: 'youtube_subscribers', label: '🔴 YouTube', suffix: 'مشترك' }
+            ];
+            
+            platforms.forEach(({ key, label, suffix }) => {
+                if (data[key] !== undefined && data[key] !== null) {
+                    const value = data[key] || 0;
+                    resultsContent.innerHTML += `
+                        <div class="result-item">
+                            <span class="platform">${label}</span>
+                            <span class="value">${value.toLocaleString()} ${suffix}</span>
+                        </div>
+                    `;
+                }
+            });
+            
+            // Insights
+            if (data.strengths || data.weaknesses || data.recommendations) {
+                document.getElementById('insights').style.display = 'block';
+                
+                const strengths = document.getElementById('strengths');
+                strengths.innerHTML = data.strengths.map(s => `<li>${s}</li>`).join('') || '<li>لا توجد</li>';
+                
+                const weaknesses = document.getElementById('weaknesses');
+                weaknesses.innerHTML = data.weaknesses.map(w => `<li>${w}</li>`).join('') || '<li>لا توجد</li>';
+                
+                const recommendations = document.getElementById('recommendations');
+                recommendations.innerHTML = data.recommendations.map(r => `<li>${r}</li>`).join('') || '<li>لا توجد</li>';
+            }
+            
+            document.getElementById('results').classList.add('show');
+        }
+        
+        // Check API on load
+        checkAPIHealth();
+    </script>
+</body>
+</html>

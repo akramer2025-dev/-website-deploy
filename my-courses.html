@@ -409,7 +409,7 @@ function renderCourses(courses, allLectures, recLectures){
     const lecsList = hasLecs ? `
       <div class="crs-lectures-list">
         ${lecs.map((l,i)=>`
-          <a href="lecture-viewer.html?course=${ck}&id=${l.id}" class="lec-item${i===0?' first':''}">
+          <a href="lecture-viewer-v2.html?id=${l.id}" class="lec-item${i===0?' first':''}">
             <span class="lnum">${i+1}</span>
             <span class="ltitle">${l.title||'محاضرة '+(i+1)}</span>
             <span class="lslides"><i class="fas fa-images"></i>${(l.slides||[]).length} شريحة</span>

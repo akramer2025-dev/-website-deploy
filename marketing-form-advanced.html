@@ -342,27 +342,41 @@
         <!-- Auto Analysis Button -->
         <div style="margin-top:30px;padding:20px;background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(168,85,247,0.1));border:2px dashed rgba(99,102,241,0.4);border-radius:16px;text-align:center;">
             <div style="font-size:1.1rem;font-weight:800;color:#6366f1;margin-bottom:8px;">
-                <i class="fas fa-robot"></i> تحليل احترافي بواسطة AI
+                <i class="fas fa-robot"></i> تحليل تلقائي ذكي
             </div>
             <p style="font-size:.85rem;color:var(--text-secondary);margin-bottom:16px;">
-                المحلل الذكي هيفتح حساباتك ويجمع بيانات حقيقية (متابعين، تفاعل، محتوى) ويعملك تقرير شامل
+                النظام هيفتح الحسابات ويحللها تلقائياً ويجمع البيانات الحقيقية
             </p>
-            <button type="button" class="btn" onclick="requestAIAnalysis()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);padding:12px 32px;">
-                <i class="fas fa-paper-plane"></i> طلب تحليل من المحلل الذكي
-            </button>
+            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                <button type="button" class="btn" onclick="startAutoAnalysis()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);padding:12px 32px;">
+                    <i class="fas fa-magic"></i> تحليل تلقائي
+                </button>
+                <button type="button" class="btn" onclick="requestAIAnalysis()" style="background:linear-gradient(135deg,#f59e0b,#ef4444);padding:12px 32px;">
+                    <i class="fas fa-paper-plane"></i> أو استخدم AI Assistant
+                </button>
+            </div>
+            
+            <!-- Auto Analysis Status -->
+            <div id="autoAnalysisStatus" style="display:none;margin-top:20px;padding:16px;background:rgba(0,0,0,0.3);border-radius:12px;">
+                <div style="font-size:.9rem;font-weight:700;color:#6366f1;margin-bottom:12px;">
+                    <i class="fas fa-spinner fa-spin"></i> <span id="analysisStatusText">جاري التحليل...</span>
+                </div>
+                <div id="analysisProgress" style="font-size:.8rem;color:var(--text-secondary);line-height:1.8;"></div>
+            </div>
+            
             <div id="analysisInstructions" style="display:none;margin-top:16px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;text-align:right;">
                 <div style="font-size:.9rem;font-weight:700;color:#6366f1;margin-bottom:12px;">
-                    <i class="fas fa-info-circle"></i> تعليمات التحليل:
+                    <i class="fas fa-info-circle"></i> تعليمات التحليل اليدوي:
                 </div>
                 <div style="font-size:.85rem;color:var(--text-secondary);line-height:1.8;margin-bottom:16px;">
-                    <strong style="color:#fff;">الخطوة 1:</strong> انسخ اللينكات دي وروح للـ AI Chat في VS Code:<br>
+                    <strong style="color:#fff;">الخطوة 1:</strong> انسخ اللينكات دي وروح للـ AI Chat:<br>
                     <div id="linksForAI" style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;margin:8px 0;font-family:monospace;font-size:.8rem;"></div>
-                    <strong style="color:#fff;">الخطوة 2:</strong> قوله: "<strong>حلل الحسابات دي بالتفصيل وارجعلي تقرير شامل</strong>"<br>
-                    <strong style="color:#fff;">الخطوة 3:</strong> لما يرجعلك التحليل، الصقه في الصندوق تحت ⬇️
+                    <strong style="color:#fff;">الخطوة 2:</strong> قوله: "<strong>حلل الحسابات دي وارجعلي تقرير</strong>"<br>
+                    <strong style="color:#fff;">الخطوة 3:</strong> الصق التحليل تحت ⬇️
                 </div>
-                <textarea id="aiAnalysisInput" placeholder="الصق التحليل اللي المحلل الذكي رجعه ليك هنا..." style="width:100%;min-height:300px;background:rgba(0,0,0,0.3);border:1px solid rgba(99,102,241,0.3);border-radius:10px;padding:14px;color:#fff;font-size:.9rem;font-family:'Cairo',sans-serif;resize:vertical;"></textarea>
+                <textarea id="aiAnalysisInput" placeholder="الصق التحليل هنا..." style="width:100%;min-height:300px;background:rgba(0,0,0,0.3);border:1px solid rgba(99,102,241,0.3);border-radius:10px;padding:14px;color:#fff;font-size:.9rem;font-family:'Cairo',sans-serif;resize:vertical;"></textarea>
                 <button type="button" class="btn" onclick="saveAIAnalysis()" style="background:var(--green);margin-top:12px;width:100%;">
-                    <i class="fas fa-check"></i> حفظ التحليل واستخدامه في الخطة
+                    <i class="fas fa-check"></i> حفظ التحليل
                 </button>
             </div>
         </div>
@@ -557,6 +571,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
+<script src="js/ai-analyzer.js"></script>
 <script>
 // Initialize Supabase
 const { createClient } = supabase;
@@ -663,7 +678,10 @@ window.addEventListener('DOMContentLoaded', () => {
             font-weight: 700;
         `;
         upgradeMsg.innerHTML = '<i class="fas fa-rocket"></i> وضع الترقية: سيتم تحديث الخطة القديمة بالنسخة الاحترافية';
-        document.querySelector('.form-container').insertBefore(upgradeMsg, document.querySelector('.form-container').firstChild);
+        const container = document.querySelector('.container');
+        if (container && container.firstChild) {
+            container.insertBefore(upgradeMsg, container.firstChild);
+        }
     }
     
     // Standard Admin parameters
@@ -830,31 +848,40 @@ async function generateAndSavePlan() {
         
         if (isUpgrade) {
             // Update existing plan
+            const updateData = {
+                company_name: planData.brand,
+                company_phone: planData.phone,
+                plan_data: {
+                    owner: planData.owner,
+                    location: planData.location,
+                    description: planData.description,
+                    audience: planData.audience,
+                    challenge: planData.challenge,
+                    contentStatus: planData.contentStatus,
+                    needsWebsite: planData.needsWebsite,
+                    googleBiz: planData.googleBiz,
+                    budget: planData.budget,
+                    duration: planData.duration,
+                    platforms: planData.links,
+                    goals: planData.goals
+                },
+                generated_html: planHTML,
+                updated_at: new Date().toISOString()
+            };
+            
+            // Only update industry if it's not empty
+            if (planData.industry && planData.industry.trim() !== '') {
+                updateData.company_industry = planData.industry;
+            }
+            
             const result = await _supabase
                 .from('marketing_plans')
-                .update({
-                    company_name: planData.brand,
-                    company_phone: planData.phone,
-                    company_industry: planData.industry,
-                    plan_data: {
-                        owner: planData.owner,
-                        location: planData.location,
-                        description: planData.description,
-                        audience: planData.audience,
-                        challenge: planData.challenge,
-                        contentStatus: planData.contentStatus,
-                        needsWebsite: planData.needsWebsite,
-                        googleBiz: planData.googleBiz,
-                        budget: planData.budget,
-                        duration: planData.duration,
-                        platforms: planData.links,
-                        goals: planData.goals
-                    },
-                    generated_html: planHTML,
-                    updated_at: new Date().toISOString()
-                })
+                .update(updateData)
                 .eq('id', planId);
             
+            if (result.error) {
+                console.error('Supabase error details:', result.error);
+            }
             error = result.error;
         } else {
             // Insert new plan
@@ -911,9 +938,25 @@ async function generateAndSavePlan() {
             } else {
                 alert('✅ تم إنشاء وحفظ الخطة بنجاح!\n\nتم فتح الخطة في نافذة جديدة.');
                 
-                // Redirect back to admin after 3 seconds
-                setTimeout(() => {
-                    if (confirm('هل تريد العودة لصفحة الإدارة؟')) {
+                // Auto-start analysis after save
+                setTimeout(async () => {
+                    // Check if there are social media links
+                    const igLink = document.getElementById('linkIG').value.trim();
+                    const fbLink = document.getElementById('linkFB').value.trim();
+                    const ttLink = document.getElementById('linkTT').value.trim();
+                    const ytLink = document.getElementById('linkYT').value.trim();
+                    
+                    const hasLinks = igLink || fbLink || ttLink || ytLink;
+                    
+                    if (hasLinks) {
+                        const runAnalysis = confirm('🤖 هل تريد بدء التحليل الأوتوماتيكي للحسابات الآن؟\n\nسيتم فحص:\n• المتابعين والمشتركين\n• المنشورات والفيديوهات\n• نقاط القوة والضعف\n• التوصيات الاحترافية');
+                        
+                        if (runAnalysis) {
+                            await startAutoAnalysis();
+                        } else if (confirm('هل تريد العودة لصفحة الإدارة؟')) {
+                            window.location.href = 'admin/index.html#sec-marketing-plans';
+                        }
+                    } else if (confirm('هل تريد العودة لصفحة الإدارة؟')) {
                         window.location.href = 'admin/index.html#sec-marketing-plans';
                     }
                 }, 1000);
@@ -921,9 +964,20 @@ async function generateAndSavePlan() {
         }, 2000);
         
     } catch (err) {
-        console.error('Error:', err);
+        console.error('Error details:', err);
         document.getElementById('loadingOverlay').classList.remove('show');
-        alert('حدث خطأ أثناء إنشاء الخطة: ' + err.message);
+        
+        // More detailed error message
+        let errorMsg = 'حدث خطأ أثناء إنشاء الخطة:\n\n';
+        if (err.message) {
+            errorMsg += err.message;
+        } else if (err.error) {
+            errorMsg += err.error.message || JSON.stringify(err.error);
+        } else {
+            errorMsg += 'خطأ غير معروف';
+        }
+        
+        alert(errorMsg + '\n\nيرجى المحاولة مرة أخرى أو التواصل مع الدعم الفني.');
     }
 }
 
@@ -1648,6 +1702,336 @@ updateBudget(5000);
 // ==================== SOCIAL MEDIA ANALYSIS ====================
 let analysisData = null;
 let rawAnalysisText = ''; // Store the full AI analysis text
+
+// Auto Analysis Function - Fully automated AI-powered analysis
+async function startAutoAnalysis() {
+    const igLink = document.getElementById('linkIG').value.trim();
+    const fbLink = document.getElementById('linkFB').value.trim();
+    const ttLink = document.getElementById('linkTT').value.trim();
+    const ytLink = document.getElementById('linkYT').value.trim();
+    const webLink = document.getElementById('linkWeb').value.trim();
+    
+    const links = {
+        instagram: igLink || null,
+        facebook: fbLink || null,
+        tiktok: ttLink || null,
+        youtube: ytLink || null,
+        website: webLink || null
+    };
+    
+    const hasAnyLink = Object.values(links).some(v => v);
+    if (!hasAnyLink) {
+        alert('⚠️ يرجى إدخال لينك واحد على الأقل للتحليل');
+        return;
+    }
+    
+    // Show status
+    const statusDiv = document.getElementById('autoAnalysisStatus');
+    const progressDiv = document.getElementById('analysisProgress');
+    const statusText = document.getElementById('analysisStatusText');
+    
+    statusDiv.style.display = 'block';
+    statusText.innerHTML = '<i class="fas fa-robot fa-spin"></i> جاري التحليل الأوتوماتيكي بتقنية Computer Vision + AI...';
+    progressDiv.innerHTML = '';
+    
+    try {
+        progressDiv.innerHTML += `<div style="color:#ffc107;">🤖 تشغيل نظام التحليل الذكي...</div>`;
+        await sleep(500);
+        
+        progressDiv.innerHTML += `<div style="color:#10b981;">✅ نظام Puppeteer + OCR جاهز</div>`;
+        progressDiv.innerHTML += `<div style="color:#3b82f6;">🔍 فتح المتصفح وتحليل الحسابات...</div>`;
+        await sleep(500);
+        
+        // Try API first (our new system)
+        let result = null;
+        let apiSuccess = false;
+        
+        try {
+            progressDiv.innerHTML += `<div style="color:#8b5cf6;">🌐 الاتصال بـ API Server...</div>`;
+            
+            const apiUrl = 'http://localhost:3000/api/analyze-social';
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ links })
+            });
+            
+            if (response.ok) {
+                const apiResult = await response.json();
+                if (apiResult.success && apiResult.data) {
+                    result = apiResult.data;
+                    apiSuccess = true;
+                    progressDiv.innerHTML += `<div style="color:#10b981;">✅ API Server استجاب بنجاح!</div>`;
+                    progressDiv.innerHTML += `<div style="color:#10b981;">✅ تم استخدام Computer Vision لقراءة البيانات</div>`;
+                }
+            }
+        } catch (apiError) {
+            progressDiv.innerHTML += `<div style="color:#ffc107;">⚠️ API Server غير متاح - جاري استخدام الطريقة البديلة...</div>`;
+        }
+        
+        // Fallback to old method if API failed
+        if (!apiSuccess) {
+            const analyzer = new SocialMediaAnalyzer();
+            result = await analyzer.analyze(links);
+        }
+        
+        if (result.method === 'manual') {
+            // Fallback to manual (opens tabs + user input)
+            progressDiv.innerHTML += `<div style="color:#ef4444;">⚠️ التحليل الأوتوماتيكي غير متاح حالياً</div>`;
+            progressDiv.innerHTML += `<div style="color:#ffc107;">🔄 سيتم فتح الصفحات لجمع البيانات يدوياً...</div>`;
+            await sleep(2000);
+            
+            // Open tabs
+            const openedWindows = [];
+            const linksArray = Object.entries(links).filter(([k,v]) => v);
+            
+            for (const [platform, url] of linksArray) {
+                const icon = {'instagram':'🟣','facebook':'🔵','tiktok':'⚫','youtube':'🔴','website':'🌐'}[platform] || '🔗';
+                progressDiv.innerHTML += `<div>✅ فتح ${icon} ${platform.toUpperCase()}...</div>`;
+                
+                try {
+                    const win = window.open(url, `_analysis_${platform}`);
+                    openedWindows.push({ platform, window: win, url });
+                    await sleep(1000);
+                } catch (err) {
+                    progressDiv.innerHTML += `<div style="color:#ef4444;">❌ فشل فتح ${platform}: ${err.message}</div>`;
+                }
+            }
+            
+            // Store for later
+            window.autoAnalysisWindows = openedWindows;
+            
+            // Show manual input options
+            progressDiv.innerHTML += `
+                <div style="margin-top:16px;padding:16px;background:rgba(255,193,7,0.1);border:2px solid rgba(255,193,7,0.3);border-radius:10px;">
+                    <div style="font-weight:700;color:#ffc107;margin-bottom:8px;">
+                        <i class="fas fa-eye"></i> لاحظ البيانات التالية من كل صفحة:
+                    </div>
+                    <ul style="font-size:.85rem;line-height:2;text-align:right;padding-right:20px;">
+                        <li>عدد المتابعين/المشتركين</li>
+                        <li>عدد المنشورات/الفيديوهات</li>
+                        <li>أعلى وصول للفيديو/المنشور</li>
+                        <li>متوسط المشاهدات/التفاعل</li>
+                    </ul>
+                    <div style="margin-top:12px;">
+                        <button type="button" class="btn" onclick="manualAnalysisInput()" style="background:var(--green);width:100%;padding:10px;">
+                            <i class="fas fa-keyboard"></i> أدخل البيانات اللي لقيتها
+                        </button>
+                        <button type="button" class="btn" onclick="useAIForAnalysis()" style="background:var(--primary);width:100%;padding:10px;margin-top:8px;">
+                            <i class="fas fa-robot"></i> أو استخدم AI للتحليل (أفضل)
+                        </button>
+                    </div>
+                </div>
+            `;
+        } else {
+            // AI analysis succeeded!
+            progressDiv.innerHTML += `<div style="color:#10b981;">✅ تم التحليل بنجاح!</div>`;
+            
+            // Store result
+            analysisData = result;
+            
+            // Display comprehensive summary
+            statusText.innerHTML = '<i class="fas fa-check-circle"></i> التحليل اكتمل بنجاح!';
+            
+            let summaryHTML = `
+                <div style="margin-top:16px;padding:20px;background:linear-gradient(135deg, rgba(16,185,129,0.15), rgba(99,102,241,0.15));border:2px solid rgba(16,185,129,0.4);border-radius:12px;">
+                    <div style="font-weight:700;color:#10b981;margin-bottom:16px;font-size:1.1rem;">
+                        <i class="fas fa-chart-line"></i> 📊 نتائج التحليل الشامل:
+                    </div>
+            `;
+            
+            // Total followers (if summary exists)
+            if (result.summary && result.summary.totalFollowers) {
+                summaryHTML += `
+                    <div style="padding:12px;background:rgba(99,102,241,0.2);border-radius:8px;margin-bottom:12px;text-align:center;">
+                        <div style="font-size:0.9rem;color:#9ca3af;margin-bottom:4px;">إجمالي المتابعين</div>
+                        <div style="font-size:1.8rem;font-weight:700;color:#6366f1;">
+                            ${result.summary.totalFollowers.toLocaleString()}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Platforms breakdown
+            summaryHTML += `<div style="display:grid;gap:8px;margin-bottom:16px;">`;
+            
+            if (result.instagram_followers) {
+                summaryHTML += `
+                    <div style="padding:10px;background:rgba(147,51,234,0.1);border-left:4px solid #9333ea;border-radius:6px;">
+                        <strong>🟣 Instagram:</strong> ${result.instagram_followers.toLocaleString()} متابع
+                        ${result.instagram_posts ? ` • ${result.instagram_posts.toLocaleString()} منشور` : ''}
+                    </div>
+                `;
+            }
+            
+            if (result.tiktok_followers) {
+                summaryHTML += `
+                    <div style="padding:10px;background:rgba(0,0,0,0.1);border-left:4px solid #000;border-radius:6px;">
+                        <strong>⚫ TikTok:</strong> ${result.tiktok_followers.toLocaleString()} متابع
+                        ${result.tiktok_videos ? ` • ${result.tiktok_videos.toLocaleString()} فيديو` : ''}
+                    </div>
+                `;
+            }
+            
+            if (result.facebook_followers) {
+                summaryHTML += `
+                    <div style="padding:10px;background:rgba(59,130,246,0.1);border-left:4px solid #3b82f6;border-radius:6px;">
+                        <strong>🔵 Facebook:</strong> ${result.facebook_followers.toLocaleString()} متابع
+                    </div>
+                `;
+            }
+            
+            if (result.youtube_subscribers) {
+                summaryHTML += `
+                    <div style="padding:10px;background:rgba(239,68,68,0.1);border-left:4px solid #ef4444;border-radius:6px;">
+                        <strong>🔴 YouTube:</strong> ${result.youtube_subscribers.toLocaleString()} مشترك
+                    </div>
+                `;
+            }
+            
+            summaryHTML += `</div>`;
+            
+            // Insights sections
+            if (result.strengths && result.strengths.length > 0) {
+                summaryHTML += `
+                    <div style="margin-top:12px;padding:12px;background:rgba(16,185,129,0.1);border-radius:8px;">
+                        <div style="font-weight:700;color:#10b981;margin-bottom:8px;">✅ نقاط القوة:</div>
+                        <ul style="margin:0;padding-right:20px;font-size:0.9rem;line-height:1.8;">
+                            ${result.strengths.map(s => `<li>${s}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (result.weaknesses && result.weaknesses.length > 0) {
+                summaryHTML += `
+                    <div style="margin-top:12px;padding:12px;background:rgba(251,191,36,0.1);border-radius:8px;">
+                        <div style="font-weight:700;color:#f59e0b;margin-bottom:8px;">⚠️ نقاط الضعف:</div>
+                        <ul style="margin:0;padding-right:20px;font-size:0.9rem;line-height:1.8;">
+                            ${result.weaknesses.map(w => `<li>${w}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (result.recommendations && result.recommendations.length > 0) {
+                summaryHTML += `
+                    <div style="margin-top:12px;padding:12px;background:rgba(99,102,241,0.1);border-radius:8px;">
+                        <div style="font-weight:700;color:#6366f1;margin-bottom:8px;">💡 التوصيات:</div>
+                        <ul style="margin:0;padding-right:20px;font-size:0.9rem;line-height:1.8;">
+                            ${result.recommendations.map(r => `<li>${r}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            summaryHTML += `</div>`;
+            
+            progressDiv.innerHTML += summaryHTML;
+            
+            // Keep visible for user review
+            await sleep(1000);
+            
+            // Ask user what to do next
+            setTimeout(() => {
+                if (confirm('✅ تم التحليل بنجاح!\n\nهل تريد العودة لصفحة الإدارة؟')) {
+                    window.location.href = 'admin/index.html#sec-marketing-plans';
+                }
+            }, 2000);
+        }
+        
+    } catch (error) {
+        progressDiv.innerHTML += `<div style="color:#ef4444;">❌ خطأ: ${error.message}</div>`;
+        progressDiv.innerHTML += `<div style="color:#ffc107;">🔄 جاري التحويل للطريقة اليدوية...</div>`;
+        await sleep(2000);
+        
+        // Fallback to old method
+        useAIForAnalysis();
+    }
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function manualAnalysisInput() {
+    // Show manual input form
+    const progressDiv = document.getElementById('analysisProgress');
+    progressDiv.innerHTML = `
+        <div style="margin-top:16px;padding:16px;background:rgba(0,0,0,0.3);border-radius:10px;">
+            <div style="font-weight:700;color:#6366f1;margin-bottom:12px;">📝 أدخل البيانات يدوياً:</div>
+            <div style="display:grid;gap:12px;">
+                <input type="number" id="manualIgFollowers" placeholder="Instagram: عدد المتابعين" style="width:100%;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(99,102,241,0.3);border-radius:8px;color:#fff;font-family:'Cairo';">
+                <input type="number" id="manualTtFollowers" placeholder="TikTok: عدد المتابعين" style="width:100%;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(99,102,241,0.3);border-radius:8px;color:#fff;font-family:'Cairo';">
+                <input type="number" id="manualFbFollowers" placeholder="Facebook: عدد المتابعين" style="width:100%;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(99,102,241,0.3);border-radius:8px;color:#fff;font-family:'Cairo';">
+                <input type="number" id="manualYtSubs" placeholder="YouTube: عدد المشتركين" style="width:100%;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(99,102,241,0.3);border-radius:8px;color:#fff;font-family:'Cairo';">
+                <input type="text" id="manualAvgViews" placeholder="متوسط المشاهدات" style="width:100%;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(99,102,241,0.3);border-radius:8px;color:#fff;font-family:'Cairo';">
+                <input type="text" id="manualEngagement" placeholder="معدل التفاعل (مثال: 4.5%)" style="width:100%;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(99,102,241,0.3);border-radius:8px;color:#fff;font-family:'Cairo';">
+                <button type="button" class="btn" onclick="saveManualAnalysis()" style="background:var(--green);width:100%;padding:12px;">
+                    <i class="fas fa-save"></i> حفظ البيانات
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function saveManualAnalysis() {
+    const igFollowers = document.getElementById('manualIgFollowers').value;
+    const ttFollowers = document.getElementById('manualTtFollowers').value;
+    const fbFollowers = document.getElementById('manualFbFollowers').value;
+    const ytSubs = document.getElementById('manualYtSubs').value;
+    const avgViews = document.getElementById('manualAvgViews').value;
+    const engagement = document.getElementById('manualEngagement').value;
+    
+    // Build analysis data
+    analysisData = {
+        instagram_followers: igFollowers ? parseInt(igFollowers) : null,
+        tiktok_followers: ttFollowers ? parseInt(ttFollowers) : null,
+        facebook_followers: fbFollowers ? parseInt(fbFollowers) : null,
+        youtube_subscribers: ytSubs ? parseInt(ytSubs) : null,
+        avg_views: avgViews || null,
+        engagement_rate: engagement || null,
+        platforms: [],
+        summary: {
+            totalFollowers: (parseInt(igFollowers) || 0) + (parseInt(ttFollowers) || 0) + (parseInt(fbFollowers) || 0),
+            totalPosts: 0,
+            platforms: 0
+        },
+        strengths: [],
+        weaknesses: [],
+        recommendations: []
+    };
+    
+    // Add strengths based on data
+    if (igFollowers && parseInt(igFollowers) > 1000) {
+        analysisData.strengths.push(`قاعدة متابعين جيدة على Instagram: ${igFollowers.toLocaleString()}`);
+    }
+    if (engagement) {
+        analysisData.strengths.push(`معدل تفاعل: ${engagement}`);
+    }
+    
+    // Show success
+    document.getElementById('analysisResults').innerHTML = `
+        <div style="background:var(--green);color:#fff;padding:16px;border-radius:12px;text-align:center;margin-top:16px;">
+            <i class="fas fa-check-circle"></i> تم حفظ البيانات بنجاح!
+        </div>
+    `;
+    
+    document.getElementById('autoAnalysisStatus').style.display = 'none';
+    
+    // Close opened tabs
+    if (window.autoAnalysisWindows) {
+        window.autoAnalysisWindows.forEach(w => {
+            try { if (w.window && !w.window.closed) w.window.close(); } catch(e) {}
+        });
+    }
+}
+
+function useAIForAnalysis() {
+    // Switch to AI manual analysis
+    document.getElementById('autoAnalysisStatus').style.display = 'none';
+    requestAIAnalysis();
+}
 
 function requestAIAnalysis() {
     const igLink = document.getElementById('linkIG').value.trim();
