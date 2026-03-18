@@ -865,7 +865,6 @@ async function generateAndSavePlan() {
                     platforms: planData.links,
                     goals: planData.goals
                 },
-                generated_html: planHTML,
                 updated_at: new Date().toISOString()
             };
             
@@ -904,7 +903,6 @@ async function generateAndSavePlan() {
                     platforms: planData.links,
                     goals: planData.goals
                 },
-                generated_html: planHTML,
                 status: 'pending',
                 view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`
             };
