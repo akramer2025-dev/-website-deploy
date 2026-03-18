@@ -664,7 +664,7 @@ async function generateAndSavePlan() {
                     platforms: planData.links,
                     goals: planData.goals
                 },
-                status: 'completed',
+                status: 'pending',
                 view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`,
                 created_at: new Date().toISOString()
             }]);
