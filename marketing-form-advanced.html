@@ -582,12 +582,60 @@ window.addEventListener('DOMContentLoaded', () => {
         // Pre-fill form fields
         if (params.get('brand')) document.getElementById('brandName').value = decodeURIComponent(params.get('brand'));
         if (params.get('owner')) document.getElementById('ownerName').value = decodeURIComponent(params.get('owner'));
+        if (params.get('phone')) document.getElementById('phone').value = decodeURIComponent(params.get('phone'));
+        
         if (params.get('industry')) {
             const industry = decodeURIComponent(params.get('industry'));
-            const industryInput = document.querySelector(`input[value="${industry}"]`);
+            
+            // Try exact match first
+            let industryInput = document.querySelector(`input[name="industry"][value="${industry}"]`);
+            
+            // If no exact match, try fuzzy matching
+            if (!industryInput) {
+                const industryLower = industry.toLowerCase();
+                
+                // Map common variations to actual radio values
+                const industryMap = {
+                    'طبي': 'طبي / صحي',
+                    'صحي': 'طبي / صحي',
+                    'medical': 'طبي / صحي',
+                    'health': 'طبي / صحي',
+                    'تجارة': 'تجارة / متجر',
+                    'متجر': 'تجارة / متجر',
+                    'ecommerce': 'تجارة / متجر',
+                    'مطعم': 'مطاعم / كافيهات',
+                    'كافيه': 'مطاعم / كافيهات',
+                    'restaurant': 'مطاعم / كافيهات',
+                    'تعليم': 'تعليم / تدريب',
+                    'تدريب': 'تعليم / تدريب',
+                    'education': 'تعليم / تدريب',
+                    'عقارات': 'عقارات',
+                    'realestate': 'عقارات'
+                };
+                
+                // Try to find match in map
+                for (const [key, value] of Object.entries(industryMap)) {
+                    if (industryLower.includes(key)) {
+                        industryInput = document.querySelector(`input[name="industry"][value="${value}"]`);
+                        break;
+                    }
+                }
+                
+                // If still no match, default to "خدمات أخرى"
+                if (!industryInput) {
+                    industryInput = document.querySelector(`input[name="industry"][value="خدمات أخرى"]`);
+                }
+            }
+            
             if (industryInput) {
                 industryInput.checked = true;
-                industryInput.closest('.industry-option').classList.add('selected');
+                const industryOption = industryInput.closest('.industry-option');
+                if (industryOption) {
+                    industryOption.classList.add('selected');
+                }
+                console.log('✅ Industry selected:', industryInput.value);
+            } else {
+                console.warn('⚠️ Could not find industry input for:', industry);
             }
         }
         if (params.get('budget')) {
@@ -733,8 +781,33 @@ async function generateAndSavePlan() {
     const phone = document.getElementById('phone').value.trim();
     const industry = document.querySelector('input[name="industry"]:checked');
     
-    if (!brand || !owner || !phone || !industry) {
-        alert('⚠️ يرجى ملء كل الحقول المطلوبة (اسم المشروع، الاسم، الهاتف، المجال)');
+    // Detailed validation with specific messages
+    if (!brand) {
+        alert('⚠️ يرجى إدخال اسم المشروع / البراند');
+        goStep(1);
+        document.getElementById('brandName').focus();
+        return;
+    }
+    
+    if (!owner) {
+        alert('⚠️ يرجى إدخال اسم صاحب المشروع');
+        goStep(1);
+        document.getElementById('ownerName').focus();
+        return;
+    }
+    
+    if (!phone) {
+        alert('⚠️ يرجى إدخال رقم الهاتف');
+        goStep(1);
+        document.getElementById('phone').focus();
+        return;
+    }
+    
+    if (!industry) {
+        alert('⚠️ يرجى اختيار المجال / الصناعة');
+        goStep(1);
+        // Scroll to industry section
+        document.querySelector('.industry-grid').scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
     }
     
