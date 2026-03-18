@@ -981,14 +981,32 @@
         other: 'أخرى'
       };
 
-      const platforms = planData.platforms || [];
-      const platformsHTML = platforms.map(p => {
+      // Handle platforms - can be array or object
+      let platformsData = planData.platforms || [];
+      
+      // If platforms is an object (new format: {ig: 'url', fb: 'url', ...}), convert to array
+      if (!Array.isArray(platformsData) && typeof platformsData === 'object') {
+        platformsData = [];
+        const links = planData.platforms;
+        if (links.ig) platformsData.push('instagram');
+        if (links.fb) platformsData.push('facebook');
+        if (links.tt) platformsData.push('tiktok');
+        if (links.yt) platformsData.push('youtube');
+        if (links.tw) platformsData.push('twitter');
+        if (links.li) platformsData.push('linkedin');
+        if (links.web) platformsData.push('website');
+      }
+      
+      const platformsHTML = platformsData.map(p => {
         const platformData = {
           facebook: { name: 'Facebook', icon: 'fab fa-facebook', class: 'facebook' },
           instagram: { name: 'Instagram', icon: 'fab fa-instagram', class: 'instagram' },
           tiktok: { name: 'TikTok', icon: 'fab fa-tiktok', class: 'tiktok' },
+          youtube: { name: 'YouTube', icon: 'fab fa-youtube', class: 'youtube' },
           snapchat: { name: 'Snapchat', icon: 'fab fa-snapchat', class: 'snapchat' },
-          twitter: { name: 'Twitter', icon: 'fab fa-twitter', class: 'twitter' },
+          twitter: { name: 'Twitter / X', icon: 'fab fa-x-twitter', class: 'twitter' },
+          linkedin: { name: 'LinkedIn', icon: 'fab fa-linkedin', class: 'linkedin' },
+          website: { name: 'Website', icon: 'fas fa-globe', class: 'website' },
           google: { name: 'Google Ads', icon: 'fab fa-google', class: 'google' }
         };
         const pd = platformData[p];
