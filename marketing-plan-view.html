@@ -968,6 +968,14 @@
     }
 
     function renderPlan(plan) {
+      // If we have the full generated HTML saved, use it directly
+      if (plan.generated_html) {
+        document.body.innerHTML = plan.generated_html;
+        document.getElementById('loading').style.display = 'none';
+        return;
+      }
+      
+      // Otherwise, fall back to basic rendering (for old plans)
       const planData = typeof plan.plan_data === 'string' ? JSON.parse(plan.plan_data) : plan.plan_data;
       const industries = {
         ecommerce: 'تجارة إلكترونية',

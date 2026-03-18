@@ -724,6 +724,7 @@ async function generateAndSavePlan() {
                     platforms: planData.links,
                     goals: planData.goals
                 },
+                generated_html: planHTML, // Save the full generated HTML
                 status: 'pending',
                 view_link: `${window.location.origin}/marketing-plan-view.html?id=${planId}`,
                 created_at: new Date().toISOString()
@@ -1104,6 +1105,100 @@ ${analysisData && analysisData.recommendations && analysisData.recommendations.l
 <div class="highlight-box"><h3><i class="fas fa-hand-holding-heart"></i> رسالة ختامية</h3>
 <p>هذه الخطة مصممة خصيصاً لـ ${D.brand} بناءً على ${analysisData ? 'بيانات حقيقية محللة من حساباتكم و' : ''}بياناتكم وأهدافكم. النجاح يتطلب التزام بالتنفيذ ومتابعة الأداء أسبوعياً.<br><strong>الخطوة التالية: لنبدأ التنفيذ! 🚀</strong></p></div>
 <p class="small-note">هذه الخطة قابلة للتعديل بناءً على نتائج الأداء الفعلية. يُنصح بمراجعة أسبوعية.</p>
+</div></div>
+
+<!-- PAGE 6: SCRIPTS GUIDE -->
+<div class="page"><div class="inner-page">
+<div class="page-header"><h2><i class="fas fa-scroll"></i> دليل السكربتات التفصيلي</h2><div class="pn">5</div></div>
+
+<p class="desc" style="margin-bottom:20px;">سكربتات جاهزة للنشر على كل المنصات — صممت خصيصاً لمجال ${D.industry}</p>
+
+<div class="stitle orange"><i class="fas fa-video"></i> سكربتات الفيديو</div>
+
+<div class="card orange" style="margin:10px 0;">
+<h4><i class="fas fa-exchange-alt"></i> سكربت 1: فيديو "قبل وبعد"</h4>
+<p style="margin-bottom:10px;"><strong>الأقوى تأثيراً — يجيب أعلى تفاعل ومشاهدات</strong></p>
+<ul style="list-style:none;padding:0;">
+<li style="padding:8px 0;border-bottom:1px dashed #e8ecef;"><strong style="color:#e74c3c;">🎣 الـ Hook (أول 3 ثوان):</strong><br>"شوف كيف تحول ${D.brand} من [الحالة قبل] إلى [الحالة بعد] 🔥"</li>
+<li style="padding:8px 0;border-bottom:1px dashed #e8ecef;"><strong style="color:#1B6B93;">📝 الجسم (15-30 ثانية):</strong><br>اعرض المشكلة → الحل → النتائج (بالفيديو أو صور قبل/بعد)</li>
+<li style="padding:8px 0;"><strong style="color:#2E8B57;">📢 الـ CTA (آخر 5 ثوان):</strong><br>"عاوز نفس النتيجة؟ ابعتلنا على الواتساب 👇"</li>
+</ul>
+</div>
+
+<div class="card" style="margin:10px 0;">
+<h4><i class="fas fa-graduation-cap"></i> سكربت 2: نصائح سريعة</h4>
+<p style="margin-bottom:8px;"><strong>محتوى تعليمي يبني ثقة — أعلى Save Rate</strong></p>
+<ul style="list-style:none;padding:0;">
+<li style="padding:6px 0;">🎯 "3 أخطاء تتجنبها في [المجال]..."</li>
+<li style="padding:6px 0;">💡 "5 نصائح لو عايز [الهدف]..."</li>
+<li style="padding:6px 0;">⚠️ "علامات تدل على إنك محتاج [الخدمة]..."</li>
+</ul>
+</div>
+
+<div class="card green" style="margin:10px 0;">
+<h4><i class="fas fa-comments"></i> سكربت 3: شهادة عميل</h4>
+<ul style="list-style:none;padding:0;">
+<li style="padding:6px 0;"><strong>السؤال 1:</strong> "كنت إزاي قبل ما تتعامل معانا؟"</li>
+<li style="padding:6px 0;"><strong>السؤال 2:</strong> "إيه اللي اتغير بعد التعامل؟"</li>
+<li style="padding:6px 0;"><strong>السؤال 3:</strong> "هتنصح أي حد محتاج [الخدمة]؟"</li>
+</ul>
+</div>
+
+<div class="stitle" style="color:#6366f1;"><i class="fab fa-instagram"></i> كابشنات جاهزة للنشر</div>
+
+<div class="card purple" style="border-right-color:#6366f1;margin:10px 0;">
+<h4>📝 كابشن لمنشور عن الخدمة</h4>
+<div style="background:rgba(0,0,0,0.03);padding:12px;border-radius:8px;font-size:12px;line-height:2;margin-top:8px;">
+${D.description || 'وصف الخدمة/المنتج'} 🎯<br><br>
+${D.goals && D.goals.length > 0 ? '✅ ' + D.goals.slice(0,3).join('<br>✅ ') + '<br><br>' : ''}
+📲 للحجز والاستفسار: الرابط في البايو<br>
+📍 ${D.location}<br><br>
+#${D.industry.replace(/\s/g,'_')} #${D.brand.replace(/\s/g,'_')}
+</div>
+</div>
+
+<div class="card" style="margin:10px 0;">
+<h4>🎉 كابشن لعرض خاص</h4>
+<div style="background:rgba(0,0,0,0.03);padding:12px;border-radius:8px;font-size:12px;line-height:2;margin-top:8px;">
+🔥 عرض خاص لأول ${D.audience ? D.audience.split(' ')[0] + ' ' + D.audience.split(' ')[1] : '50'} عميل!<br><br>
+احجز دلوقتي واحصل على:<br>
+✨ [ميزة 1]<br>
+✨ [ميزة 2]<br>
+✨ [ميزة 3]<br><br>
+⏰ العرض ساري لمدة أسبوع فقط<br>
+📲 احجز الآن: [رابط الواتساب]
+</div>
+</div>
+
+<div class="stitle green"><i class="fas fa-bullhorn"></i> إعدادات الإعلانات (Facebook & Instagram)</div>
+
+<div class="cards-grid">
+<div class="card orange">
+<h4><i class="fab fa-whatsapp"></i> إعلان واتساب</h4>
+<ul>
+<li><strong>الجمهور:</strong> ${D.audience || 'حسب الجمهور المستهدف'}</li>
+<li><strong>المنطقة:</strong> ${D.location}</li>
+<li><strong>الميزانية:</strong> ${Math.round(D.budget * 0.50)} ج.م/شهر</li>
+<li><strong>الهدف:</strong> رسائل مباشرة</li>
+</ul>
+</div>
+
+<div class="card">
+<h4><i class="fas fa-chart-line"></i> إعلان زيادة التفاعل</h4>
+<ul>
+<li><strong>استخدم:</strong> فيديو قبل/بعد</li>
+<li><strong>المدة:</strong> 30-60 ثانية</li>
+<li><strong>الجمهور:</strong> متابعين الصفحة + شبيه</li>
+<li><strong>الوضعيات:</strong> Stories + Feed</li>
+</ul>
+</div>
+</div>
+
+<div class="highlight-box" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);margin-top:20px;">
+<h3><i class="fas fa-rocket"></i> نصيحة ذهبية</h3>
+<p>اختبر 3 سكربتات مختلفة كل أسبوع — احتفظ بالأفضل أداءً وطوّر عليه. التجربة والتحسين المستمر هو سر النجاح في السوشيال ميديا!</p>
+</div>
+
 </div></div>
 
 <button class="print-btn no-print" onclick="window.print()"><i class="fas fa-file-pdf"></i> حفظ كـ PDF</button>
