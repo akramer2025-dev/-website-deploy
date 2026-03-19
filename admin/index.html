@@ -3955,8 +3955,7 @@ async function updateBadges(){
     const { data: employees, error } = await _supabase
       .from('employees')
       .select('id', { count: 'exact', head: true })
-      .eq('application_status', 'approved')
-      .eq('is_active', true);
+      .eq('application_status', 'approved');
     
     if (!error && employees !== null) {
       empsCount = employees.length || 0;
@@ -4981,7 +4980,6 @@ async function renderUsers(type){
         .from('employees')
         .select('*')
         .eq('application_status', 'approved')
-        .eq('is_active', true)
         .order('created_at', { ascending: false });
       
       if (error) {
@@ -9355,6 +9353,7 @@ async function approveEmployeeRequest(empId){
       .from('employees')
       .update({
         application_status: 'approved',
+        is_active: true,
         approved_at: new Date().toISOString()
       })
       .eq('id', empId);
