@@ -613,7 +613,9 @@ function uploadWithTimeout(storageRef, file, ms=25000){
       .then(url=>{ clearTimeout(timer); resolve(url); })
       .catch(err=>{ clearTimeout(timer); reject(err); });
   });
-}────
+}
+
+// ────────────────────────────────────────────────────────────────────
 function buildPaymentProofs(){
   const area = document.getElementById('paymentProofsArea');
   const paidCourses = COURSES.filter(c=>!c.free && selectedCourses.has(c.key));
