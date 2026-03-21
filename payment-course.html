@@ -394,13 +394,12 @@ async function submitPayment(){
   const reqId = genId();
   let imageUrl = '';
 
-  // Upload image
+  // Upload image with timeout
   try{
     const storageRef = _storage.ref(`course_payments/${reqId}/proof_${Date.now()}`);
-    const snap = await storageRef.put(imageFile);
-    imageUrl = await snap.ref.getDownloadURL();
+    imageUrl = await uploadWithTimeout(storageRef, imageFile, 25000);
   } catch(err){
-    console.error('Storage upload failed:', err);
+    console.error('Storage upload failed:', err.message);
     // fallback: use base64 preview
     imageUrl = document.getElementById('previewImg').src;
   }

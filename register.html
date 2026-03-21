@@ -604,7 +604,16 @@ function goStep4(){
   setStep(4);
 }
 
-// ─── PAYMENT PROOFS ─────────────────────────────────────────────
+// ─── UPLOAD WITH TIMEOUT ───────────────────────────────────────────
+function uploadWithTimeout(storageRef, file, ms=25000){
+  return new Promise((resolve, reject)=>{
+    const timer = setTimeout(()=>reject(new Error('upload_timeout')), ms);
+    storageRef.put(file)
+      .then(snap=>snap.ref.getDownloadURL())
+      .then(url=>{ clearTimeout(timer); resolve(url); })
+      .catch(err=>{ clearTimeout(timer); reject(err); });
+  });
+}────
 function buildPaymentProofs(){
   const area = document.getElementById('paymentProofsArea');
   const paidCourses = COURSES.filter(c=>!c.free && selectedCourses.has(c.key));
@@ -758,13 +767,12 @@ async function uploadPaymentImages(reqId){
     try{
       console.log('  - Uploading:', key);
       const storageRef = _storage.ref('payment_proofs/'+reqId+'/'+key+'_'+Date.now());
-      const snap = await storageRef.put(entry.file);
-      result[key] = await snap.ref.getDownloadURL();
+      result[key] = await uploadWithTimeout(storageRef, entry.file, 25000);
       console.log('  ✅ Uploaded successfully:', key, result[key]);
     } catch(err){
-      console.error('  ❌ Storage upload failed for', key, err);
+      console.error('  ❌ Storage upload failed for', key, err.message);
       result[key] = entry.previewUrl; // fallback to base64
-      console.log('  - Using preview URL as fallback');
+      console.log('  - Using base64 preview as fallback');
     }
   }
   console.log('✅ Total payment images processed:', Object.keys(result).length);
