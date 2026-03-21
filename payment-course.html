@@ -360,14 +360,35 @@ function dropImage(e){
 function loadFile(file){
   if(file.size > 5*1024*1024){ showToast('حجم الصورة أكبر من 5MB','err'); return; }
   imageFile = file;
-  const reader = new FileReader();
-  reader.onload = ev=>{
-    document.getElementById('previewImg').src = ev.target.result;
+  compressImage(file).then(compressed=>{
+    document.getElementById('previewImg').src = compressed;
     document.getElementById('previewWrap').style.display = 'block';
     document.getElementById('uploadZone').style.borderColor = 'rgba(34,197,94,0.5)';
-  };
-  reader.readAsDataURL(file);
-  updateSubmitBtn();
+    // store compressed so submit uses it directly
+    imageFile = { _compressed: compressed };
+    updateSubmitBtn();
+  });
+}
+function compressImage(file, maxDim=1200, quality=0.72){
+  return new Promise(resolve=>{
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const scale = Math.min(1, maxDim/Math.max(img.width,img.height));
+        const w = Math.round(img.width*scale);
+        const h = Math.round(img.height*scale);
+        const canvas = document.createElement('canvas');
+        canvas.width=w; canvas.height=h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = ()=>resolve(ev.target.result);
+      img.src = ev.target.result;
+    };
+    reader.onerror = ()=>resolve('');
+    reader.readAsDataURL(file);
+  });
 }
 function removeImage(){
   imageFile = null;
@@ -389,20 +410,11 @@ async function submitPayment(){
   if(!imageFile){ showToast('ارفع صورة الإيصال أولاً','err'); return; }
 
   btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري رفع الصورة...';
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التجهيز...';
 
   const reqId = genId();
-  let imageUrl = '';
-
-  // Upload image with timeout
-  try{
-    const storageRef = _storage.ref(`course_payments/${reqId}/proof_${Date.now()}`);
-    imageUrl = await uploadWithTimeout(storageRef, imageFile, 25000);
-  } catch(err){
-    console.error('Storage upload failed:', err.message);
-    // fallback: use base64 preview
-    imageUrl = document.getElementById('previewImg').src;
-  }
+  // استخدام base64 مباشرة بدون Firebase Storage (تجنب مشكلة CORS)
+  const imageUrl = document.getElementById('previewImg').src || '';
 
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
 
