@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>اختبار Meta Pixel</title>
+</head>
+<body style="font-family: Arial; padding: 40px; background: #f0f2f5;">
+    <div style="max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <h1 style="color: #1877f2;">🧪 اختبار Meta Pixel</h1>
+        <p>هذه الصفحة ترسل حدث تجريبي للبيكسل <code>1242154784695296</code></p>
+        
+        <button onclick="testPageView()" style="background: #1877f2; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin: 10px 0;">
+            📊 اختبار PageView
+        </button>
+        
+        <button onclick="testViewContent()" style="background: #42b72a; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin: 10px 0;">
+            👁️ اختبار ViewContent
+        </button>
+        
+        <button onclick="testAddToCart()" style="background: #f7931e; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin: 10px 0;">
+            🛒 اختبار AddToCart
+        </button>
+        
+        <div id="result" style="margin-top: 30px; padding: 20px; background: #f0f2f5; border-radius: 8px; display: none;">
+            <h3>النتيجة:</h3>
+            <pre id="resultText" style="white-space: pre-wrap; word-break: break-all;"></pre>
+        </div>
+    </div>
+
+    <!-- Meta Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s){
+            if(f.fbq)return;
+            n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
+        }(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+        fbq('init', '1242154784695296');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none" 
+             src="https://www.facebook.com/tr?id=1242154784695296&ev=PageView&noscript=1"/>
+    </noscript>
+
+    <script>
+        function showResult(message, isSuccess = true) {
+            const resultDiv = document.getElementById('result');
+            const resultText = document.getElementById('resultText');
+            resultDiv.style.display = 'block';
+            resultDiv.style.background = isSuccess ? '#d4edda' : '#f8d7da';
+            resultDiv.style.borderLeft = isSuccess ? '4px solid #28a745' : '4px solid #dc3545';
+            resultText.textContent = message;
+        }
+
+        function testPageView() {
+            try {
+                fbq('track', 'PageView');
+                showResult('✅ تم إرسال حدث PageView بنجاح!\n\nافتح Meta Pixel Helper وشوف الحدث.');
+            } catch (error) {
+                showResult('❌ خطأ: ' + error.message, false);
+            }
+        }
+
+        function testViewContent() {
+            try {
+                fbq('track', 'ViewContent', {
+                    content_name: 'كورس التسويق الإلكتروني',
+                    content_ids: ['course-digital-marketing'],
+                    content_type: 'product',
+                    value: 2000,
+                    currency: 'EGP'
+                });
+                showResult('✅ تم إرسال حدث ViewContent بنجاح!\n\nالمنتج: كورس التسويق الإلكتروني\nالسعر: 2000 جنيه');
+            } catch (error) {
+                showResult('❌ خطأ: ' + error.message, false);
+            }
+        }
+
+        function testAddToCart() {
+            try {
+                fbq('track', 'AddToCart', {
+                    content_name: 'كورس اعلانات فيسبوك',
+                    content_ids: ['course-facebook'],
+                    content_type: 'product',
+                    value: 497,
+                    currency: 'EGP'
+                });
+                showResult('✅ تم إرسال حدث AddToCart بنجاح!\n\nالمنتج: كورس اعلانات فيسبوك\nالسعر: 497 جنيه\n\nراجع Events Manager بعد 2-5 دقائق.');
+            } catch (error) {
+                showResult('❌ خطأ: ' + error.message, false);
+            }
+        }
+    </script>
+</body>
+</html>
