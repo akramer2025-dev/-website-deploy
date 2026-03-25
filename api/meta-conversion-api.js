@@ -2,7 +2,7 @@
  * =====================================================
  *  Meta Conversions API - Server-Side Event Tracking
  *  الموقع: akrammostafa.com
- *  Pixel ID: 4345157159075105
+ *  Pixel ID: 1242154784695296
  * =====================================================
  * 
  *  هذا الملف يرسل الأحداث من السيرفر مباشرة لـ Meta
@@ -16,8 +16,8 @@
  */
 
 // ⚠️ استبدل هذه القيم بالقيم الحقيقية
-const PIXEL_ID = '4345157159075105';
-const ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN_HERE'; // من Events Manager → Settings → Conversions API
+const PIXEL_ID = '1242154784695296';
+const ACCESS_TOKEN = 'EAAWc2Eqq7AoBREVpPNYByjX9YwN9yO2cyDQAtcYvPfdTPzAeuh0xPEfAiroa6HcbgAmwsQPeZCLMvpQ4aeqBF1hwiSZAkg3goChZBBOEcXir5jkD6pqaaShFL3QCOuqY1kL3lyAqijADJ9PnHRelE1b5pLeJKQoOZAE5iuPd2y2qCC4pwWyNqSKa0E57Y1JofCyPMUG4j3NxBJeF9lfBtqK6pwuF3LhQ6HTPqpjS70SdMHxRT5IZD'; // من Events Manager → Settings → Conversions API
 
 /**
  * Send event to Meta Conversions API

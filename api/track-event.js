@@ -19,7 +19,7 @@
 
 const crypto = require('crypto');
 
-const PIXEL_ID = '4345157159075105';
+const PIXEL_ID = '1242154784695296';
 const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN || 'YOUR_ACCESS_TOKEN_HERE';
 
 // SHA-256 hashing
