@@ -137,6 +137,29 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 </head>
 <body>
 
+<!-- ===== REDIRECT للنظام الجديد ===== -->
+<script>
+(function() {
+    // التحقق من جلسة النظام الجديد
+    const newAuth = localStorage.getItem('auth_session');
+    if (newAuth) {
+        try {
+            const session = JSON.parse(newAuth);
+            const now = new Date().getTime();
+            
+            // إذا كانت الجلسة صالحة، توجيه لصفحة المحاضرات الجديدة
+            if (session.expires && session.expires > now) {
+                console.log('✅ طالب من النظام الجديد - إعادة توجيه...');
+                window.location.href = '/lecture-viewer-v2.html';
+                return;
+            }
+        } catch (e) {
+            console.warn('خطأ في قراءة جلسة النظام الجديد', e);
+        }
+    }
+})();
+</script>
+
 <!-- HEADER -->
 <header class="header">
   <div class="header-inner">

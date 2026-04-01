@@ -902,6 +902,7 @@
         };
 
         function checkAuthentication() {
+            // 1️⃣ التحقق من النظام الجديد (auth_session)
             const authData = localStorage.getItem('auth_session');
             if (authData) {
                 try {
@@ -914,12 +915,50 @@
                     } else {
                         // الجلسة منتهية
                         localStorage.removeItem('auth_session');
-                        return null;
                     }
                 } catch (e) {
-                    return null;
+                    console.warn('Error parsing auth_session', e);
                 }
             }
+            
+            // 2️⃣ التحقق من النظام القديم (Firebase session)
+            const oldSessionId = sessionStorage.getItem('akram_student_id');
+            if (oldSessionId) {
+                // محاولة جلب بيانات المستخدم من localStorage
+                try {
+                    const usersData = localStorage.getItem('am_users');
+                    if (usersData) {
+                        const users = JSON.parse(usersData);
+                        const user = users.find(u => String(u.id) === String(oldSessionId));
+                        if (user) {
+                            // إنشاء session مؤقت من بيانات المستخدم القديم
+                            return {
+                                username: user.username || user.name,
+                                name: user.name || user.username,
+                                email: user.email || '',
+                                allowedLectures: ['lec_fb_1', 'lec_april_1'], // جميع المحاضرات متاحة للطلاب القدامى
+                                isAdmin: false,
+                                isOldSystem: true,
+                                expires: new Date().getTime() + (24 * 60 * 60 * 1000)
+                            };
+                        }
+                    }
+                    
+                    // إذا لم نجد بيانات، إنشاء session افتراضي
+                    return {
+                        username: 'student',
+                        name: 'طالب',
+                        email: '',
+                        allowedLectures: ['lec_fb_1', 'lec_april_1'],
+                        isAdmin: false,
+                        isOldSystem: true,
+                        expires: new Date().getTime() + (24 * 60 * 60 * 1000)
+                    };
+                } catch (e) {
+                    console.warn('Error loading old session data', e);
+                }
+            }
+            
             return null;
         }
 
@@ -939,7 +978,15 @@
         }
 
         function logout() {
+            // مسح جلسة النظام الجديد
             localStorage.removeItem('auth_session');
+            
+            // مسح جلسة النظام القديم
+            sessionStorage.removeItem('akram_student_id');
+            sessionStorage.removeItem('akram_session_uid');
+            localStorage.removeItem('akram_logged_in');
+            
+            // إعادة تحميل الصفحة
             window.location.reload();
         }
 
