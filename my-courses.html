@@ -259,6 +259,98 @@ const COURSES_META = {
 
 let currentUser = null;
 
+// ===== جلب المحاضرات من النظام الجديد =====
+function getNewSystemLectures() {
+  const LECTURES_CATALOG = {
+    'lec_fb_1': {
+      id: 'lec_fb_1',
+      title: 'الحصة 1: إنشاء الهوية الاحترافية على Facebook و Instagram',
+      description: 'تعلم إنشاء صفحة فيسبوك وحساب انستجرام احترافيين من الصفر',
+      thumbnail: '/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png',
+      duration: '12 دقيقة',
+      sections: 6,
+      courseKey: 'facebook-ads'
+    },
+    'lec_april_1': {
+      id: 'lec_april_1',
+      title: 'الحصة 1: الهوية البصرية ومكونات البوست والأدوات المستخدمة',
+      description: 'دليل شامل لعمل الهوية البصرية وتصميم المحتوى باستخدام أقوى الأدوات',
+      thumbnail: '/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png',
+      duration: '16 دقيقة',
+      sections: 8,
+      courseKey: 'ai-marketing'
+    }
+  };
+  
+  // Check for custom lectures added by admin
+  const customLectures = localStorage.getItem('custom_lectures');
+  if (customLectures) {
+    try {
+      const custom = JSON.parse(customLectures);
+      Object.assign(LECTURES_CATALOG, custom);
+    } catch (e) {
+      console.warn('Failed to load custom lectures', e);
+    }
+  }
+  
+  // Return all available lectures for old system users
+  return Object.values(LECTURES_CATALOG);
+}
+
+// ===== إظهار تنبيه بالمحاضرات الجديدة =====
+function showNewLecturesNotification(count) {
+  const notification = document.createElement('div');
+  notification.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: linear-gradient(135deg, #e94e77, #f7931e);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(233, 78, 119, 0.4);
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideIn 0.3s ease;
+    cursor: pointer;
+  `;
+  
+  notification.innerHTML = `
+    <i class="fas fa-gift" style="font-size: 20px;"></i>
+    <span>🎉 تم إضافة ${count} محاضرة جديدة! تحقق من كورس الذكاء الاصطناعي</span>
+    <i class="fas fa-times" style="margin-right: auto; opacity: 0.7;"></i>
+  `;
+  
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  document.body.appendChild(notification);
+  
+  notification.onclick = () => {
+    notification.style.animation = 'slideIn 0.3s ease reverse';
+    setTimeout(() => notification.remove(), 300);
+  };
+  
+  // Auto hide after 10 seconds
+  setTimeout(() => {
+    if (notification.parentElement) {
+      notification.style.animation = 'slideIn 0.3s ease reverse';
+      setTimeout(() => notification.remove(), 300);
+    }
+  }, 10000);
+}
+
 // ===== عرض المحاضرات من النظام الجديد =====
 function renderNewSystemCourses(session) {
   const LECTURES_CATALOG = {
@@ -409,7 +501,11 @@ async function init(){
   
   // النظام القديم (Firebase)
   const uid = sessionStorage.getItem('akram_student_id');
-  if(!uid){ logout(); return; }
+  if(!uid){ 
+    // لا يوجد session قديم أو جديد - توجيه للدخول
+    logout(); 
+    return; 
+  }
 
   let allUsers=[], allLectures={}, recLectures=[], liveSessions=[];
   // 1️⃣ localStorage first (fast render)
@@ -482,7 +578,48 @@ async function init(){
   document.getElementById('totalSlides').textContent = totalSlides;
   document.getElementById('crsCount').textContent    = enrolledCourses.length+' كورس';
 
-  renderCourses(enrolledCourses, allLectures, recLectures);
+  // ===== دمج المحاضرات من النظام الجديد =====
+  // إضافة محاضرات lecture-viewer-v2 للطلاب القدامى
+  const newSystemLectures = getNewSystemLectures();
+  const mergedLectures = { ...allLectures };
+  let hasNewLectures = false;
+  
+  // إضافة المحاضرات الجديدة تحت كورس "ai-marketing"
+  if (newSystemLectures.length > 0) {
+    hasNewLectures = true;
+    if (!mergedLectures['ai-marketing']) {
+      mergedLectures['ai-marketing'] = [];
+    }
+    if (!enrolledCourses.includes('ai-marketing')) {
+      enrolledCourses.push('ai-marketing');
+    }
+    // إضافة المحاضرات الجديدة
+    newSystemLectures.forEach(lec => {
+      mergedLectures['ai-marketing'].push({
+        id: lec.id,
+        title: lec.title,
+        description: lec.description,
+        slides: Array(lec.sections).fill(null).map((_, i) => ({ type: 'image' })),
+        courseKey: 'ai-marketing',
+        createdAt: Date.now(),
+        isNewSystem: true // علامة للتعرف عليها
+      });
+    });
+    
+    // تحديث العداد
+    totalLecs += newSystemLectures.length;
+    totalSlides += newSystemLectures.reduce((sum, lec) => sum + (lec.sections || 0), 0);
+    
+    document.getElementById('totalCourses').textContent = enrolledCourses.length;
+    document.getElementById('totalLecs').textContent = totalLecs;
+    document.getElementById('totalSlides').textContent = totalSlides;
+    document.getElementById('crsCount').textContent = enrolledCourses.length + ' كورس';
+    
+    // إظهار notification للطلاب القدامى
+    showNewLecturesNotification(newSystemLectures.length);
+  }
+
+  renderCourses(enrolledCourses, mergedLectures, recLectures);
   renderLiveSessions(enrolledCourses, liveSessions);
 }
 
@@ -555,14 +692,21 @@ function renderCourses(courses, allLectures, recLectures){
 
     const lecsList = hasLecs ? `
       <div class="crs-lectures-list">
-        ${lecs.map((l,i)=>`
-          <a href="lecture-viewer-v2.html?id=${l.id}" class="lec-item${i===0?' first':''}">
-            <span class="lnum">${i+1}</span>
-            <span class="ltitle">${l.title||'محاضرة '+(i+1)}</span>
-            <span class="lslides"><i class="fas fa-images"></i>${(l.slides||[]).length} شريحة</span>
-            <i class="fas fa-play-circle play-ico"></i>
-          </a>
-        `).join('')}
+        ${lecs.map((l,i)=>{
+          // التحقق إذا كانت المحاضرة من النظام الجديد
+          const lecUrl = l.isNewSystem 
+            ? `/lecture-viewer-v2.html?id=${l.id}` 
+            : `lecture-viewer-v2.html?id=${l.id}`;
+          
+          return `
+            <a href="${lecUrl}" class="lec-item${i===0?' first':''}">
+              <span class="lnum">${i+1}</span>
+              <span class="ltitle">${l.title||'محاضرة '+(i+1)}</span>
+              <span class="lslides"><i class="fas fa-images"></i>${(l.slides||[]).length} شريحة</span>
+              <i class="fas fa-play-circle play-ico"></i>
+            </a>
+          `;
+        }).join('')}
       </div>
     ` : `<div class="no-lecs"><i class="fas fa-clock" style="margin-left:4px;"></i>لم تُضف محاضرات بعد</div>`;
 
