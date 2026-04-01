@@ -608,6 +608,20 @@
         localStorage.removeItem('am_admin_auth');
         localStorage.removeItem('am_user_type'); // Clear employee type for students
         localStorage.removeItem('am_employee_id');
+        
+        // إنشاء auth_session عشان lecture-viewer-v2 يتعرف على الطالب
+        const authSession = {
+            username: found.username || found.id,
+            name: found.name || found.username || '',
+            email: found.email || '',
+            allowedLectures: found.courses || ['lec_fb_1', 'lec_april_1'],
+            isAdmin: false,
+            isOldSystem: true,
+            loginTime: new Date().toISOString(),
+            expires: new Date().getTime() + (24 * 60 * 60 * 1000)
+        };
+        localStorage.setItem('auth_session', JSON.stringify(authSession));
+        
         showSuccess('مرحباً ' + (found.name || '') + '! جاري الدخول...');
         if (btn) setLoading(btn, false);
         setTimeout(() => window.location.href = 'student-dashboard.html', 1100);
