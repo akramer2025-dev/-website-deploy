@@ -757,6 +757,57 @@
         };
         // ================================================================
 
+        // ===== نظام حفظ تقدم الطالب =====
+        function saveStudentProgress(lectureId) {
+            try {
+                // حفظ معرف المحاضرة الحالية
+                localStorage.setItem('current_lecture_id', lectureId);
+                
+                // حفظ وقت آخر زيارة
+                localStorage.setItem('last_visit_time', new Date().toISOString());
+                
+                // حفظ سجل المحاضرات المشاهدة
+                let viewedLectures = JSON.parse(localStorage.getItem('viewed_lectures') || '[]');
+                if (!viewedLectures.includes(lectureId)) {
+                    viewedLectures.push(lectureId);
+                    localStorage.setItem('viewed_lectures', JSON.stringify(viewedLectures));
+                }
+            } catch (error) {
+                console.log('Could not save progress:', error);
+            }
+        }
+
+        function getLastLectureId() {
+            try {
+                return localStorage.getItem('current_lecture_id');
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function saveStudentData(name, email) {
+            try {
+                const studentData = {
+                    name: name,
+                    email: email,
+                    registeredAt: new Date().toISOString()
+                };
+                localStorage.setItem('student_data', JSON.stringify(studentData));
+            } catch (error) {
+                console.log('Could not save student data:', error);
+            }
+        }
+
+        function getStudentData() {
+            try {
+                const data = localStorage.getItem('student_data');
+                return data ? JSON.parse(data) : null;
+            } catch (error) {
+                return null;
+            }
+        }
+        // =======================================
+
         function loadLecture(lectureId) {
             try {
                 let lecture = null;
@@ -787,6 +838,9 @@
                     return;
                 }
 
+                // حفظ تقدم الطالب
+                saveStudentProgress(lectureId);
+
                 displayLecture(lecture);
             } catch (error) {
                 console.error('Error loading lecture:', error);
@@ -794,11 +848,19 @@
             }
         }
 
-        // Get lecture ID from URL parameter and load
+        // Get lecture ID from URL parameter or last saved lecture
         const urlParams = new URLSearchParams(window.location.search);
-        const lectureId = urlParams.get('id');
+        let lectureId = urlParams.get('id');
+        
+        // إذا لم يكن هناك ID في الرابط، استخدم آخر محاضرة تم مشاهدتها
         if (!lectureId) {
-            showError('لم يتم تحديد معرّف المحاضرة في الرابط.');
+            const lastLectureId = getLastLectureId();
+            if (lastLectureId) {
+                // إعادة توجيه للمحاضرة الأخيرة
+                window.location.href = `?id=${lastLectureId}`;
+            } else {
+                showError('لم يتم تحديد معرّف المحاضرة في الرابط.');
+            }
         } else {
             loadLecture(lectureId);
         }
@@ -807,6 +869,25 @@
             // Update hero section
             document.getElementById('lectureTitle').textContent = lecture.title;
             document.getElementById('lectureDescription').textContent = lecture.description || '';
+            
+            // عرض ترحيب للطالب إذا كان مسجل
+            const studentData = getStudentData();
+            if (studentData && studentData.name) {
+                const badge = document.querySelector('.hero-badge span');
+                if (badge) {
+                    badge.textContent = `مرحباً ${studentData.name} 👋`;
+                }
+            }
+            
+            // عرض إحصائيات المحاضرات المشاهدة
+            try {
+                const viewedLectures = JSON.parse(localStorage.getItem('viewed_lectures') || '[]');
+                if (viewedLectures.length > 0) {
+                    console.log(`لقد شاهدت ${viewedLectures.length} محاضرة حتى الآن!`);
+                }
+            } catch (e) {
+                // تجاهل الأخطاء
+            }
             
             const slidesCount = lecture.slides ? lecture.slides.length : 0;
             document.getElementById('slidesCount').textContent = `${slidesCount} أقسام`;
@@ -991,6 +1072,72 @@
                 }
             }
         });
+
+        // ===== دوال عامة لتسجيل بيانات الطالب =====
+        // يمكن استدعاء هذه الدوال من Console أو من صفحات أخرى
+        
+        window.registerStudent = function(name, email) {
+            saveStudentData(name, email);
+            console.log('✅ تم تسجيل بيانات الطالب بنجاح!');
+            console.log('الاسم:', name);
+            console.log('البريد الإلكتروني:', email);
+            alert('تم حفظ بياناتك بنجاح! ✅');
+            
+            // تحديث الصفحة لعرض الترحيب
+            location.reload();
+        };
+
+        window.getStudentInfo = function() {
+            const data = getStudentData();
+            if (data) {
+                console.log('📊 بيانات الطالب المحفوظة:');
+                console.log('الاسم:', data.name);
+                console.log('البريد الإلكتروني:', data.email);
+                console.log('تاريخ التسجيل:', new Date(data.registeredAt).toLocaleString('ar-EG'));
+                return data;
+            } else {
+                console.log('❌ لا توجد بيانات محفوظة للطالب');
+                return null;
+            }
+        };
+
+        window.clearStudentData = function() {
+            localStorage.removeItem('student_data');
+            localStorage.removeItem('current_lecture_id');
+            localStorage.removeItem('viewed_lectures');
+            console.log('🗑️ تم مسح جميع البيانات المحفوظة');
+            alert('تم مسح بياناتك بنجاح!');
+        };
+
+        window.getProgress = function() {
+            const viewedLectures = JSON.parse(localStorage.getItem('viewed_lectures') || '[]');
+            const currentLecture = localStorage.getItem('current_lecture_id');
+            const lastVisit = localStorage.getItem('last_visit_time');
+            
+            console.log('📈 تقدمك في الكورس:');
+            console.log('عدد المحاضرات المشاهدة:', viewedLectures.length);
+            console.log('المحاضرة الحالية:', currentLecture || 'لا توجد');
+            console.log('آخر زيارة:', lastVisit ? new Date(lastVisit).toLocaleString('ar-EG') : 'لا توجد');
+            console.log('المحاضرات المشاهدة:', viewedLectures);
+            
+            return {
+                viewedCount: viewedLectures.length,
+                viewedLectures: viewedLectures,
+                currentLecture: currentLecture,
+                lastVisit: lastVisit
+            };
+        };
+
+        // عرض رسالة ترحيب في Console
+        console.log('%c🎓 مرحباً بك في منصة أكرم مصطفى التعليمية!', 'color: #e94e77; font-size: 16px; font-weight: bold;');
+        console.log('%cلتسجيل بياناتك، استخدم: registerStudent("اسمك", "بريدك الإلكتروني")', 'color: #f7931e; font-size: 12px;');
+        console.log('%cلعرض تقدمك، استخدم: getProgress()', 'color: #4CAF50; font-size: 12px;');
+        
+        // تحقق من وجود بيانات محفوظة وعرضها
+        const existingStudent = getStudentData();
+        if (existingStudent) {
+            console.log('%c✅ أهلاً ' + existingStudent.name + '! يسعدنا عودتك 🎉', 'color: #4CAF50; font-size: 14px; font-weight: bold;');
+        }
     </script>
 </body>
 </html>
