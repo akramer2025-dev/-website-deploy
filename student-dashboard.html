@@ -651,7 +651,6 @@ let allLectures = {};
 async function init(){
   // ===== التحقق من النظام الجديد أولاً =====
   const newAuthData = localStorage.getItem('auth_session');
-  let currentUser = null;
   let isNewSystem = false;
   
   if (newAuthData) {
@@ -671,9 +670,16 @@ async function init(){
         };
         
         // عرض بيانات الطالب
-        document.querySelector('.sidebar-user-name').textContent = session.name;
-        document.querySelector('.sidebar-avatar').textContent = session.name.charAt(0);
-        document.getElementById('welcomeName').textContent = session.name.split(' ')[0];
+        const firstName = session.name.split(' ')[0];
+        const initial = firstName.charAt(0).toUpperCase();
+        
+        const sidebarUserNameEl = document.getElementById('sidebarUserName');
+        const sidebarAvatarEl = document.getElementById('sidebarAvatar');
+        const welcomeNameEl = document.getElementById('welcomeName');
+        
+        if (sidebarUserNameEl) sidebarUserNameEl.textContent = session.name;
+        if (sidebarAvatarEl) sidebarAvatarEl.textContent = initial;
+        if (welcomeNameEl) welcomeNameEl.textContent = firstName;
         
         // جلب المحاضرات المسجلة من Firebase
         await loadRecordedLectures();
