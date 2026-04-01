@@ -437,6 +437,10 @@ a{text-decoration:none;color:inherit;}
           </div>
         </div>
       </div>
+
+      <!-- Recorded Lectures Section -->
+      <div class="section" id="recordedLecturesSection" style="display:none;">
+      </div>
     </div>
 
     <!-- ═══════════════════════════════════════════════════════ -->
@@ -675,7 +679,7 @@ async function init(){
         
         const sidebarUserNameEl = document.getElementById('sidebarUserName');
         const sidebarAvatarEl = document.getElementById('sidebarAvatar');
-        const welcomeNameEl = document.getElementById('welcomeName');
+        const welcomeNameEl = document.getElementById('dashboardUserName');
         
         if (sidebarUserNameEl) sidebarUserNameEl.textContent = session.name;
         if (sidebarAvatarEl) sidebarAvatarEl.textContent = initial;
@@ -692,7 +696,15 @@ async function init(){
   
   // ===== النظام القديم (Firebase) =====
   const uid = sessionStorage.getItem('akram_student_id');
-  if(!uid){ logout(); return; }
+  if(!uid){
+    // تحقق من localStorage كمان
+    const lsUid = localStorage.getItem('akram_student_id');
+    if(lsUid){
+      sessionStorage.setItem('akram_student_id', lsUid);
+    } else {
+      logout(); return;
+    }
+  }
 
   // Load from localStorage first (fast)
   try{ allUsers = JSON.parse(localStorage.getItem(USERS_KEY)||'[]'); }catch(e){}
@@ -735,6 +747,9 @@ async function init(){
 
   renderUserData();
   renderDashboard();
+  
+  // جلب المحاضرات المسجلة كمان للنظام القديم
+  await loadRecordedLectures();
 }
 
 /* ═══════════════════════════════════════════════════════════ */
@@ -1061,19 +1076,13 @@ async function loadRecordedLectures() {
 }
 
 function renderRecordedLectures(lectures) {
-  const container = document.getElementById('dashboardView');
+  const container = document.getElementById('recordedLecturesSection');
   if (!container) return;
   
+  container.style.display = 'block';
   container.innerHTML = `
-    <div style="max-width: 1000px; margin: 0 auto;">
-      <div style="margin-bottom: 24px;">
-        <h2 style="font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 8px;">
-          <i class="fas fa-video" style="color: var(--pink); margin-left: 10px;"></i>
-          محاضرات مسجلة
-        </h2>
-        <p style="color: var(--muted); font-size: 0.9rem;">
-          المحاضرات التي تم تسجيلها ورفعها ليتمكن الطلاب من مشاهدتها لاحقاً
-        </p>
+      <div class="section-header">
+        <h2><i class="fas fa-video" style="color: var(--pink);"></i> محاضرات مسجلة</h2>
       </div>
       
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
@@ -1125,25 +1134,13 @@ function renderRecordedLectures(lectures) {
           </a>
         `).join('')}
       </div>
-    </div>
   `;
 }
 
 function renderEmptyState() {
-  const container = document.getElementById('dashboardView');
-  if (!container) return;
-  
-  container.innerHTML = `
-    <div style="text-align: center; padding: 80px 20px; max-width: 500px; margin: 0 auto;">
-      <i class="fas fa-video-slash" style="font-size: 64px; color: var(--muted); opacity: 0.3; margin-bottom: 20px;"></i>
-      <h3 style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 10px;">
-        لم تُضف محاضرات مسجلة بعد
-      </h3>
-      <p style="color: var(--muted); line-height: 1.7;">
-        سيتم عرض المحاضرات المسجلة هنا عندما يقوم المدرس بإضافتها من لوحة التحكم
-      </p>
-    </div>
-  `;
+  // لو مفيش محاضرات مسجلة، منعرضش القسم أصلاً
+  const container = document.getElementById('recordedLecturesSection');
+  if (container) container.style.display = 'none';
 }
 
 function getCourseNameArabic(courseKey) {
@@ -1175,7 +1172,7 @@ function logout(){
   localStorage.removeItem('auth_session');
   
   // توجيه لصفحة الدخول
-  window.location.href = '/lecture-viewer-v2.html';
+  window.location.href = '/login.html';
 }
 
 /* ═══════════════════════════════════════════════════════════ */
