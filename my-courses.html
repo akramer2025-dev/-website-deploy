@@ -259,8 +259,155 @@ const COURSES_META = {
 
 let currentUser = null;
 
+// ===== عرض المحاضرات من النظام الجديد =====
+function renderNewSystemCourses(session) {
+  const LECTURES_CATALOG = {
+    'lec_fb_1': {
+      id: 'lec_fb_1',
+      title: 'الحصة 1: إنشاء الهوية الاحترافية على Facebook و Instagram',
+      description: 'تعلم إنشاء صفحة فيسبوك وحساب انستجرام احترافيين من الصفر',
+      thumbnail: '/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png',
+      duration: '12 دقيقة',
+      sections: 6,
+      courseKey: 'facebook-ads'
+    },
+    'lec_april_1': {
+      id: 'lec_april_1',
+      title: 'الحصة 1: الهوية البصرية ومكونات البوست والأدوات المستخدمة',
+      description: 'دليل شامل لعمل الهوية البصرية وتصميم المحتوى باستخدام أقوى الأدوات',
+      thumbnail: '/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png',
+      duration: '16 دقيقة',
+      sections: 8,
+      courseKey: 'ai-marketing'
+    }
+  };
+  
+  // Check for custom lectures added by admin
+  const customLectures = localStorage.getItem('custom_lectures');
+  if (customLectures) {
+    try {
+      const custom = JSON.parse(customLectures);
+      Object.assign(LECTURES_CATALOG, custom);
+    } catch (e) {
+      console.warn('Failed to load custom lectures', e);
+    }
+  }
+  
+  // Update user info
+  document.getElementById('userName').textContent = session.name || 'طالب';
+  document.getElementById('heroName').textContent = (session.name || 'طالب').split(' ')[0];
+  
+  // Filter lectures based on user's allowed lectures
+  const allowedLectures = session.allowedLectures || [];
+  const availableLectures = allowedLectures
+    .map(id => LECTURES_CATALOG[id])
+    .filter(Boolean);
+  
+  // Update stats
+  document.getElementById('totalCourses').textContent = availableLectures.length;
+  document.getElementById('totalLecs').textContent = availableLectures.length;
+  document.getElementById('totalSlides').textContent = availableLectures.reduce((sum, lec) => sum + (lec.sections || 0), 0);
+  document.getElementById('crsCount').textContent = availableLectures.length + ' محاضرة';
+  
+  // Group lectures by course
+  const courseGroups = {};
+  availableLectures.forEach(lec => {
+    const courseKey = lec.courseKey || 'ai-marketing';
+    if (!courseGroups[courseKey]) {
+      courseGroups[courseKey] = [];
+    }
+    courseGroups[courseKey].push(lec);
+  });
+  
+  // Render courses
+  const coursesContainer = document.getElementById('coursesContainer');
+  if (!coursesContainer) return;
+  
+  if (Object.keys(courseGroups).length === 0) {
+    coursesContainer.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+        <i class="fas fa-book-open" style="font-size: 64px; color: var(--muted); opacity: 0.3; margin-bottom: 20px;"></i>
+        <h3 style="color: var(--text); margin-bottom: 10px;">لم تسجل في أي محاضرة بعد</h3>
+        <p style="color: var(--muted);">سجّل في كورس من صفحة الكورسات</p>
+      </div>
+    `;
+    return;
+  }
+  
+  coursesContainer.innerHTML = '';
+  
+  Object.entries(courseGroups).forEach(([courseKey, lectures]) => {
+    const courseMeta = COURSES_META[courseKey] || { 
+      name: 'كورس جديد', 
+      icon: 'fa-book', 
+      color: '#e94e77',
+      paid: true 
+    };
+    
+    const card = document.createElement('div');
+    card.className = 'crs-card';
+    card.innerHTML = `
+      <div class="crs-banner" style="background: linear-gradient(135deg, ${courseMeta.color}22, ${courseMeta.color}44);">
+        <i class="fas ${courseMeta.icon} crs-banner-ico" style="color: ${courseMeta.color}88;"></i>
+        <div class="crs-banner-badge ${courseMeta.paid ? 'badge-paid' : 'badge-free'}">
+          ${courseMeta.paid ? '💎 مدفوع' : '🎁 مجاني'}
+        </div>
+      </div>
+      <div class="crs-body">
+        <div class="crs-name">${courseMeta.name}</div>
+        <div class="crs-meta">
+          <div class="lec-cnt">
+            <i class="fas fa-book-open"></i>
+            <span>${lectures.length} محاضرة</span>
+          </div>
+        </div>
+        <div class="crs-lectures-list">
+          ${lectures.map((lec, idx) => `
+            <a href="/lecture-viewer-v2.html?id=${lec.id}" class="lec-item ${idx === 0 ? 'first' : ''}">
+              <div class="lnum">${idx + 1}</div>
+              <div class="ltitle">${lec.title}</div>
+              <div class="lslides">${lec.sections || 0} أقسام</div>
+              <i class="fas fa-play play-ico"></i>
+            </a>
+          `).join('')}
+        </div>
+        <button class="crs-lectures-btn" onclick="window.location.href='/lecture-viewer-v2.html?id=${lectures[0].id}'">
+          <i class="fas fa-play"></i>
+          <span>ابدأ الكورس</span>
+        </button>
+      </div>
+    `;
+    coursesContainer.appendChild(card);
+  });
+  
+  // Hide live sessions section for new system
+  const liveSection = document.querySelector('.live-section');
+  if (liveSection) {
+    liveSection.style.display = 'none';
+  }
+}
+
 // ─── INIT ───────────────────────────────────────────────────────
 async function init(){
+  // ===== التحقق من النظام الجديد أولاً =====
+  const newAuthSession = localStorage.getItem('auth_session');
+  if (newAuthSession) {
+    try {
+      const session = JSON.parse(newAuthSession);
+      const now = new Date().getTime();
+      
+      // التحقق من صلاحية الجلسة
+      if (session.expires && session.expires > now) {
+        // جلسة نشطة من النظام الجديد - عرض المحاضرات من lecture-viewer-v2
+        renderNewSystemCourses(session);
+        return;
+      }
+    } catch (e) {
+      console.warn('Failed to parse new auth session', e);
+    }
+  }
+  
+  // النظام القديم (Firebase)
   const uid = sessionStorage.getItem('akram_student_id');
   if(!uid){ logout(); return; }
 

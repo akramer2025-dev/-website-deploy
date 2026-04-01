@@ -839,8 +839,8 @@
     <script>
         // ===== نظام المصادقة والدخول =====
         
-        // قاعدة بيانات الطلاب (في الإنتاج، استخدم قاعدة بيانات حقيقية)
-        const STUDENTS_DB = {
+        // قاعدة بيانات الطلاب الأساسية (للاختبار والمدير)
+        const DEFAULT_STUDENTS_DB = {
             'student1': {
                 password: 'pass123',
                 name: 'محمد أحمد',
@@ -867,6 +867,19 @@
                 isAdmin: true
             }
         };
+
+        // دالة للحصول على جميع الطلاب (المحددين مسبقاً + المضافين من الموقع)
+        function getAllStudentsDB() {
+            // Get custom students from localStorage
+            const customStudents = localStorage.getItem('custom_students');
+            const customStudentsObj = customStudents ? JSON.parse(customStudents) : {};
+            
+            // Merge: custom students override default ones
+            return { ...DEFAULT_STUDENTS_DB, ...customStudentsObj };
+        }
+
+        // قاعدة البيانات النهائية (تُحدّث تلقائياً)
+        let STUDENTS_DB = getAllStudentsDB();
 
         // كتالوج المحاضرات المتاحة
         const LECTURES_CATALOG = {
@@ -950,6 +963,9 @@
                     const username = document.getElementById('username').value.trim();
                     const password = document.getElementById('password').value;
                     const errorDiv = document.getElementById('loginError');
+                    
+                    // تحديث قاعدة البيانات من localStorage قبل التحقق
+                    STUDENTS_DB = getAllStudentsDB();
                     
                     // التحقق من بيانات الدخول
                     if (STUDENTS_DB[username] && STUDENTS_DB[username].password === password) {
