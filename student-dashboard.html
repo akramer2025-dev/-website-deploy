@@ -4,6 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لوحة تحكم الطالب | Akram Mostafa</title>
+
+<!-- ===== توجيه تلقائي للنظام الجديد ===== -->
+<script>
+// التحقق من النظام الجديد أولاً
+const newAuth = localStorage.getItem('auth_session');
+if (newAuth) {
+    try {
+        const session = JSON.parse(newAuth);
+        const now = new Date().getTime();
+        
+        if (session.expires && session.expires > now) {
+            // توجيه لصفحة المحاضرات الجديدة
+            window.location.href = '/lecture-viewer-v2.html';
+        }
+    } catch (e) {
+        console.warn('Error parsing auth session', e);
+    }
+}
+
+// التحقق من النظام القديم
+const oldSession = sessionStorage.getItem('akram_student_id');
+if (oldSession) {
+    // توجيه لصفحة my-courses القديمة
+    window.location.href = '/my-courses.html';
+}
+
+// لو مفيش جلسة، توجيه لصفحة الدخول
+if (!newAuth && !oldSession) {
+    window.location.href = '/lecture-viewer-v2.html';
+}
+</script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
