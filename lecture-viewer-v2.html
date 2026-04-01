@@ -934,14 +934,16 @@
                         const li = document.createElement('li');
                         // Remove leading markers
                         let cleanLine = line.replace(/^[•\-✓✅▪▸→⭐🔵🟢🔴⚫⚪1-9️⃣.)\s]+/, '');
-                        li.textContent = cleanLine;
+                        // Use innerHTML to support links
+                        li.innerHTML = cleanLine;
                         currentP.appendChild(li);
                     } else if (line) {
                         if (inList) {
                             inList = false;
                         }
                         const p = document.createElement('p');
-                        p.textContent = line;
+                        // Use innerHTML to support links
+                        p.innerHTML = line;
                         content.appendChild(p);
                     }
                 });
