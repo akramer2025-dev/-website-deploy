@@ -4,38 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لوحة تحكم الطالب | Akram Mostafa</title>
-
-<!-- ===== توجيه تلقائي للنظام الجديد ===== -->
-<script>
-// التحقق من النظام الجديد أولاً
-const newAuth = localStorage.getItem('auth_session');
-if (newAuth) {
-    try {
-        const session = JSON.parse(newAuth);
-        const now = new Date().getTime();
-        
-        if (session.expires && session.expires > now) {
-            // توجيه لصفحة المحاضرات الجديدة
-            window.location.href = '/lecture-viewer-v2.html';
-        }
-    } catch (e) {
-        console.warn('Error parsing auth session', e);
-    }
-}
-
-// التحقق من النظام القديم
-const oldSession = sessionStorage.getItem('akram_student_id');
-if (oldSession) {
-    // توجيه لصفحة my-courses القديمة
-    window.location.href = '/my-courses.html';
-}
-
-// لو مفيش جلسة، توجيه لصفحة الدخول
-if (!newAuth && !oldSession) {
-    window.location.href = '/lecture-viewer-v2.html';
-}
-</script>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -681,6 +649,42 @@ let allLectures = {};
 /* ═══ INIT ═══ */
 /* ═══════════════════════════════════════════════════════════ */
 async function init(){
+  // ===== التحقق من النظام الجديد أولاً =====
+  const newAuthData = localStorage.getItem('auth_session');
+  let currentUser = null;
+  let isNewSystem = false;
+  
+  if (newAuthData) {
+    try {
+      const session = JSON.parse(newAuthData);
+      const now = new Date().getTime();
+      
+      if (session.expires && session.expires > now) {
+        // طالب من النظام الجديد
+        isNewSystem = true;
+        currentUser = {
+          id: session.username,
+          username: session.username,
+          name: session.name,
+          email: session.email,
+          courses: [] // سنملأها من allowedLectures
+        };
+        
+        // عرض بيانات الطالب
+        document.querySelector('.sidebar-user-name').textContent = session.name;
+        document.querySelector('.sidebar-avatar').textContent = session.name.charAt(0);
+        document.getElementById('welcomeName').textContent = session.name.split(' ')[0];
+        
+        // جلب المحاضرات المسجلة من Firebase
+        await loadRecordedLectures();
+        return;
+      }
+    } catch (e) {
+      console.warn('Error parsing new auth session', e);
+    }
+  }
+  
+  // ===== النظام القديم (Firebase) =====
   const uid = sessionStorage.getItem('akram_student_id');
   if(!uid){ logout(); return; }
 
@@ -1021,14 +1025,151 @@ function toggleSidebar(){
 }
 
 /* ═══════════════════════════════════════════════════════════ */
+/* ═══ LOAD RECORDED LECTURES للنظام الجديد ═══ */
+/* ═══════════════════════════════════════════════════════════ */
+async function loadRecordedLectures() {
+  try {
+    // جلب المحاضرات المسجلة من Firebase
+    const recDoc = await _db.collection('admin_data').doc('recorded_lectures').get();
+    
+    if (!recDoc.exists) {
+      console.log('لا توجد محاضرات مسجلة في Firebase');
+      renderEmptyState();
+      return;
+    }
+    
+    const recLectures = recDoc.data().data || [];
+    
+    if (recLectures.length === 0) {
+      renderEmptyState();
+      return;
+    }
+    
+    // عرض المحاضرات المسجلة
+    renderRecordedLectures(recLectures);
+    
+  } catch (error) {
+    console.error('Error loading recorded lectures:', error);
+    renderEmptyState();
+  }
+}
+
+function renderRecordedLectures(lectures) {
+  const container = document.getElementById('dashboardView');
+  if (!container) return;
+  
+  container.innerHTML = `
+    <div style="max-width: 1000px; margin: 0 auto;">
+      <div style="margin-bottom: 24px;">
+        <h2 style="font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 8px;">
+          <i class="fas fa-video" style="color: var(--pink); margin-left: 10px;"></i>
+          محاضرات مسجلة
+        </h2>
+        <p style="color: var(--muted); font-size: 0.9rem;">
+          المحاضرات التي تم تسجيلها ورفعها ليتمكن الطلاب من مشاهدتها لاحقاً
+        </p>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+        ${lectures.map(lec => `
+          <a href="${lec.videoUrl || lec.url || '#'}" 
+             target="_blank"
+             style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; 
+                    padding: 20px; display: block; transition: all 0.3s ease; text-decoration: none;
+                    cursor: pointer;">
+            <div style="display: flex; align-items: start; gap: 16px; margin-bottom: 16px;">
+              <div style="width: 56px; height: 56px; min-width: 56px; border-radius: 14px; 
+                          background: linear-gradient(135deg, rgba(167, 139, 250, 0.2), rgba(167, 139, 250, 0.1));
+                          display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                <i class="fas fa-play-circle" style="color: var(--purple);"></i>
+              </div>
+              <div style="flex: 1; min-width: 0;">
+                <h3 style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 6px; 
+                           line-height: 1.4;">
+                  ${lec.title || 'محاضرة مسجلة'}
+                </h3>
+                ${lec.description ? `
+                  <p style="font-size: 0.85rem; color: var(--muted); line-height: 1.5; 
+                            overflow: hidden; text-overflow: ellipsis; display: -webkit-box; 
+                            -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                    ${lec.description}
+                  </p>
+                ` : ''}
+              </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 16px; padding-top: 16px; 
+                        border-top: 1px solid var(--border);">
+              ${lec.duration ? `
+                <span style="font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 6px;">
+                  <i class="fas fa-clock"></i>
+                  ${lec.duration}
+                </span>
+              ` : ''}
+              ${lec.courseKey ? `
+                <span style="font-size: 0.75rem; padding: 4px 10px; border-radius: 12px; 
+                             background: rgba(167, 139, 250, 0.1); color: var(--purple); font-weight: 700;">
+                  ${getCourseNameArabic(lec.courseKey)}
+                </span>
+              ` : ''}
+              <span style="margin-right: auto; font-size: 0.85rem; color: var(--pink); font-weight: 700;">
+                مشاهدة <i class="fas fa-arrow-left" style="font-size: 0.75rem; margin-right: 6px;"></i>
+              </span>
+            </div>
+          </a>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderEmptyState() {
+  const container = document.getElementById('dashboardView');
+  if (!container) return;
+  
+  container.innerHTML = `
+    <div style="text-align: center; padding: 80px 20px; max-width: 500px; margin: 0 auto;">
+      <i class="fas fa-video-slash" style="font-size: 64px; color: var(--muted); opacity: 0.3; margin-bottom: 20px;"></i>
+      <h3 style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 10px;">
+        لم تُضف محاضرات مسجلة بعد
+      </h3>
+      <p style="color: var(--muted); line-height: 1.7;">
+        سيتم عرض المحاضرات المسجلة هنا عندما يقوم المدرس بإضافتها من لوحة التحكم
+      </p>
+    </div>
+  `;
+}
+
+function getCourseNameArabic(courseKey) {
+  const courseNames = {
+    'free': 'كورس مجاني',
+    'facebook-ads': 'إعلانات فيسبوك',
+    'instagram': 'إنستجرام',
+    'tiktok': 'تيك توك',
+    'snapchat': 'سناب شات',
+    'twitter': 'تويتر',
+    'ai-marketing': 'الذكاء الاصطناعي',
+    'integrated-strategy': 'الاستراتيجية المتكاملة',
+    'programming': 'البرمجة'
+  };
+  return courseNames[courseKey] || courseKey;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
 /* ═══ LOGOUT ═══ */
 /* ═══════════════════════════════════════════════════════════ */
 function logout(){
+  // مسح جلسة النظام القديم
   sessionStorage.clear();
   localStorage.removeItem('akram_logged_in');
   localStorage.removeItem('akram_user_id');
   localStorage.removeItem('akram_student_id');
-  window.location.href = 'login.html';
+  
+  // مسح جلسة النظام الجديد
+  localStorage.removeItem('auth_session');
+  
+  // توجيه لصفحة الدخول
+  window.location.href = '/lecture-viewer-v2.html';
 }
 
 /* ═══════════════════════════════════════════════════════════ */
