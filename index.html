@@ -349,14 +349,18 @@
         .hero-v2-stat-num{font-size:1.8rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .hero-v2-stat-label{font-size:.78rem;color:var(--text-muted);font-weight:600;margin-top:4px}
         .hero-v2-image{position:relative;display:flex;justify-content:center}
-        .hero-v2-img-wrap{position:relative;width:380px;height:380px;border-radius:50%;overflow:hidden;border:3px solid rgba(233,78,119,0.2);box-shadow:0 0 80px rgba(233,78,119,0.15)}
-        .hero-v2-img-wrap img{width:100%;height:100%;object-fit:cover}
-        .hero-v2-float{position:absolute;padding:12px 20px;background:rgba(10,17,40,0.85);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:14px;font-size:.82rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,0.4);animation:floatBadge 3s ease-in-out infinite}
-        .hero-v2-float i{font-size:1.1rem}
-        .hero-v2-float.f1{top:40px;right:-30px;animation-delay:0s}
-        .hero-v2-float.f2{bottom:60px;right:-20px;animation-delay:1s}
-        .hero-v2-float.f3{bottom:40px;left:-30px;animation-delay:2s}
-        @keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+        .hero-v2-img-wrap{position:relative;width:380px;height:380px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+        .hero-v2-img-wrap img{width:340px;height:340px;border-radius:50%;object-fit:cover;position:relative;z-index:2;border:4px solid rgba(233,78,119,0.15)}
+        .hero-img-glow{position:absolute;inset:-20px;border-radius:50%;background:conic-gradient(from 0deg,#e94e77,#f7931e,#a855f7,#3b82f6,#22c55e,#e94e77);animation:rotateGlow 4s linear infinite;filter:blur(25px);opacity:.45;z-index:0}
+        .hero-img-ring{position:absolute;inset:-8px;border-radius:50%;border:2px dashed rgba(233,78,119,0.3);animation:rotateRing 12s linear infinite;z-index:1}
+        @keyframes rotateGlow{to{transform:rotate(360deg)}}
+        @keyframes rotateRing{to{transform:rotate(-360deg)}}
+        
+        /* === Typewriter === */
+        .typewriter-line{display:inline-flex;align-items:center;gap:4px;padding:8px 22px;background:rgba(233,78,119,0.06);border:1px solid rgba(233,78,119,0.18);border-radius:12px;font-size:1.1rem;font-weight:800;min-height:48px}
+        #typewriter-text{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .typewriter-cursor{color:var(--pink);font-weight:300;font-size:1.3rem;animation:blink .7s step-end infinite}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
         
         /* === Counter Bar === */
         .counter-bar{padding:50px 0;background:var(--bg-secondary);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -433,9 +437,7 @@
             .hero-v2-stats{justify-content:center}
             .hero-v2-image{order:-1;margin-bottom:20px}
             .hero-v2-img-wrap{width:280px;height:280px}
-            .hero-v2-float.f1{top:20px;right:10px}
-            .hero-v2-float.f2{bottom:30px;right:10px}
-            .hero-v2-float.f3{bottom:20px;left:10px}
+            .hero-v2-img-wrap img{width:240px;height:240px}
             .fc-grid{grid-template-columns:1fr}
             .testimonial-grid{grid-template-columns:1fr}
             .footer-v2-grid{grid-template-columns:1fr 1fr}
@@ -454,6 +456,7 @@
         @media(max-width:480px){
             .hero-v2{padding:120px 0 60px}
             .hero-v2-img-wrap{width:220px;height:220px}
+            .hero-v2-img-wrap img{width:190px;height:190px}
             .hero-v2-stats{gap:20px}
             .services-grid-v2{grid-template-columns:1fr!important}
             .fc-details-grid{grid-template-columns:1fr}
@@ -507,10 +510,8 @@
                         <span style="display:block;color:var(--text-secondary);font-size:clamp(1rem,2vw,1.3rem);font-weight:600;margin-bottom:8px;">أهلاً بيك، أنا</span>
                         <span class="gradient-text">أكرم مصطفى</span>
                     </h1>
-                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
-                        <span style="padding:6px 16px;background:rgba(233,78,119,0.08);border:1px solid rgba(233,78,119,0.2);border-radius:10px;font-size:.82rem;font-weight:700;color:#f0a0b8;"><i class="fas fa-chart-line" style="margin-left:6px;color:var(--pink);"></i>خبير تسويق رقمي</span>
-                        <span style="padding:6px 16px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:10px;font-size:.82rem;font-weight:700;color:#93b8f0;"><i class="fas fa-graduation-cap" style="margin-left:6px;color:var(--blue);"></i>مدرب معتمد</span>
-                        <span style="padding:6px 16px;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:10px;font-size:.82rem;font-weight:700;color:#c4a0f0;"><i class="fas fa-bullhorn" style="margin-left:6px;color:var(--purple);"></i>إعلانات ممولة</span>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;align-items:center;">
+                        <span class="typewriter-line"><span id="typewriter-text"></span><span class="typewriter-cursor">|</span></span>
                     </div>
                     <p>أساعد الشركات والأفراد في النجاح أونلاين من خلال كورسات تدريبية واستراتيجيات تسويق مبتكرة</p>
                     <div class="hero-v2-btns">
@@ -534,11 +535,10 @@
                 </div>
                 <div class="hero-v2-image" data-aos="fade-right" data-aos-duration="1000">
                     <div class="hero-v2-img-wrap">
+                        <div class="hero-img-glow"></div>
+                        <div class="hero-img-ring"></div>
                         <img src="images/Screenshot_1.png" alt="أكرم مصطفى" loading="eager">
                     </div>
-                    <div class="hero-v2-float f1"><i class="fas fa-star" style="color:#f7931e;"></i> خبرة +5 سنوات</div>
-                    <div class="hero-v2-float f2"><i class="fas fa-users" style="color:#3b82f6;"></i> +500 طالب</div>
-                    <div class="hero-v2-float f3"><i class="fas fa-graduation-cap" style="color:#22c55e;"></i> +11 كورس</div>
                 </div>
             </div>
         </div>
@@ -755,7 +755,7 @@
                 </div>
                 <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"المواقع اللي عملها أكرم لشركتي كانت احترافية جداً. الدعم الفني ممتاز والنتائج فاقت التوقعات بمراحل"</p>
+                    <p class="testimonial-text">"كورس الإعلانات الممولة عند أكرم كان نقلة نوعية. وفرت فلوس كتير وبقيت بدير حملاتي بنفسي والنتائج فاقت التوقعات بمراحل"</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar" style="background:linear-gradient(135deg,#e94e77,#f7931e);">س</div>
                         <div><div class="testimonial-name">سارة أحمد</div><div class="testimonial-role">صاحبة متجر إلكتروني</div></div>
@@ -909,21 +909,37 @@
             });
         }
 
-        // ── Mobile Nav Toggle ──
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
-        if(navToggle && navMenu){
-            navToggle.addEventListener('click', function(){
-                navMenu.classList.toggle('active');
-                navToggle.classList.toggle('active');
-            });
-            navMenu.querySelectorAll('.nav-link').forEach(function(link){
-                link.addEventListener('click', function(){
-                    navMenu.classList.remove('active');
-                    navToggle.classList.remove('active');
-                });
-            });
-        }
+        // ── Mobile Nav Toggle handled by js/script.js ──
+
+        // ── Typewriter Effect ──
+        (function(){
+            var phrases = ['خبير تسويق رقمي','مدرب معتمد','متخصص إعلانات ممولة','صانع محتوى تعليمي'];
+            var el = document.getElementById('typewriter-text');
+            if(!el) return;
+            var phraseIdx = 0, charIdx = 0, deleting = false;
+            function type(){
+                var current = phrases[phraseIdx];
+                if(!deleting){
+                    el.textContent = current.substring(0, charIdx + 1);
+                    charIdx++;
+                    if(charIdx === current.length){
+                        deleting = true;
+                        setTimeout(type, 1800);
+                        return;
+                    }
+                    setTimeout(type, 80);
+                } else {
+                    el.textContent = current.substring(0, charIdx - 1);
+                    charIdx--;
+                    if(charIdx === 0){
+                        deleting = false;
+                        phraseIdx = (phraseIdx + 1) % phrases.length;
+                    }
+                    setTimeout(type, 40);
+                }
+            }
+            type();
+        })();
     });
     </script>
 </body>
