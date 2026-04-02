@@ -307,14 +307,157 @@
     </style>
     <script src="/js/meta-pixel.js" defer></script>
     
-    <!-- ⚡ Critical CSS لتسريع التحميل الأول -->
+    <!-- ⚡ Critical CSS + تصميم احترافي جديد -->
     <style>
-        /* تحميل فوري للعناصر الحرجة */
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Cairo',sans-serif;background:#0a1f44;color:#fff;overflow-x:hidden}
+        body{font-family:'Cairo',sans-serif;background:#050a18;color:#fff;overflow-x:hidden}
         img{max-width:100%;height:auto}
-        .page-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a1f44;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
+        .page-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#050a18;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
         .page-loader.hidden{opacity:0;pointer-events:none}
+        
+        /* === Design System === */
+        :root{--bg-primary:#050a18;--bg-secondary:#0a1128;--bg-card:rgba(15,25,50,0.7);--border:rgba(255,255,255,0.06);--border-hover:rgba(233,78,119,0.3);--text-primary:#fff;--text-secondary:#8b9cc7;--text-muted:#5a6b8a;--pink:#e94e77;--orange:#f7931e;--purple:#a855f7;--blue:#3b82f6;--green:#22c55e;--gradient:linear-gradient(135deg,#e94e77,#f7931e);--glass:rgba(15,25,50,0.6);--glass-border:rgba(255,255,255,0.08);--radius:16px;--radius-lg:24px;--shadow:0 20px 60px rgba(0,0,0,0.3)}
+        .container{max-width:1200px;margin:0 auto;padding:0 24px}
+        .gradient-text{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .glass-card{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:var(--radius)}
+        .section-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:rgba(233,78,119,0.08);border:1px solid rgba(233,78,119,0.2);border-radius:50px;font-size:.82rem;font-weight:700;color:var(--pink);margin-bottom:20px}
+        .section-title-new{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:#fff;margin-bottom:16px;line-height:1.3}
+        .section-desc{color:var(--text-secondary);font-size:1rem;line-height:1.8;max-width:600px}
+        .section-center{text-align:center}.section-center .section-desc{margin:0 auto}
+        .btn-main{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:var(--gradient);color:#fff;border:none;border-radius:12px;font-size:.95rem;font-weight:800;font-family:'Cairo',sans-serif;text-decoration:none;cursor:pointer;transition:all .3s;box-shadow:0 8px 30px rgba(233,78,119,0.3)}
+        .btn-main:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(233,78,119,0.4)}
+        .btn-outline-new{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.15);border-radius:12px;font-size:.95rem;font-weight:700;text-decoration:none;transition:all .3s}
+        .btn-outline-new:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.3);transform:translateY(-2px)}
+        .section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(233,78,119,0.2),transparent)}
+        
+        /* === Navbar Enhancement === */
+        .navbar{background:rgba(5,10,24,0.8)!important;backdrop-filter:blur(20px)!important;border-bottom:1px solid rgba(255,255,255,0.05)}
+        .navbar.scrolled{background:rgba(5,10,24,0.95)!important;box-shadow:0 4px 30px rgba(0,0,0,0.3)!important}
+        .nav-login-btn{padding:10px 24px!important;background:var(--gradient)!important;border-radius:10px!important;font-weight:700!important;font-size:.85rem!important;transition:all .3s!important}
+        .nav-login-btn:hover{transform:translateY(-2px)!important;box-shadow:0 8px 25px rgba(233,78,119,0.3)!important}
+        
+        /* === Hero V2 === */
+        .hero-v2{position:relative;min-height:100vh;display:flex;align-items:center;padding:140px 0 80px;overflow:hidden}
+        .hero-v2::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(233,78,119,0.12),transparent 70%);pointer-events:none}
+        .hero-v2::after{content:'';position:absolute;bottom:-200px;left:-200px;width:500px;height:500px;background:radial-gradient(circle,rgba(59,130,246,0.08),transparent 70%);pointer-events:none}
+        .hero-v2-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:2}
+        .hero-v2-text h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.25;margin-bottom:24px}
+        .hero-v2-text p{color:var(--text-secondary);font-size:1.05rem;line-height:1.9;margin-bottom:32px;max-width:500px}
+        .hero-v2-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+        .hero-v2-stats{display:flex;gap:32px}
+        .hero-v2-stat{text-align:center}
+        .hero-v2-stat-num{font-size:1.8rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .hero-v2-stat-label{font-size:.78rem;color:var(--text-muted);font-weight:600;margin-top:4px}
+        .hero-v2-image{position:relative;display:flex;justify-content:center}
+        .hero-v2-img-wrap{position:relative;width:380px;height:380px;border-radius:50%;overflow:hidden;border:3px solid rgba(233,78,119,0.2);box-shadow:0 0 80px rgba(233,78,119,0.15)}
+        .hero-v2-img-wrap img{width:100%;height:100%;object-fit:cover}
+        .hero-v2-float{position:absolute;padding:12px 20px;background:rgba(10,17,40,0.85);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:14px;font-size:.82rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,0.4);animation:floatBadge 3s ease-in-out infinite}
+        .hero-v2-float i{font-size:1.1rem}
+        .hero-v2-float.f1{top:40px;right:-30px;animation-delay:0s}
+        .hero-v2-float.f2{bottom:60px;right:-20px;animation-delay:1s}
+        .hero-v2-float.f3{bottom:40px;left:-30px;animation-delay:2s}
+        @keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+        
+        /* === Counter Bar === */
+        .counter-bar{padding:50px 0;background:var(--bg-secondary);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+        .counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;text-align:center}
+        .counter-item .counter-num{font-size:2.2rem;font-weight:900}
+        .counter-item .counter-label{font-size:.85rem;color:var(--text-muted);font-weight:600;margin-top:6px}
+        
+        /* === Course Card V2 === */
+        .course-card-v2{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-border);border-radius:var(--radius-lg);overflow:hidden;transition:all .4s;position:relative}
+        .course-card-v2:hover{border-color:var(--border-hover);transform:translateY(-8px);box-shadow:0 25px 60px rgba(0,0,0,0.3)}
+        .course-card-v2 .cc-icon{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;margin-bottom:18px}
+        .course-card-v2 .cc-body{padding:28px}
+        .course-card-v2 h3{font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:12px}
+        .course-card-v2 p{font-size:.88rem;color:var(--text-secondary);line-height:1.7;margin-bottom:18px}
+        .course-card-v2 .cc-features{list-style:none;margin-bottom:22px}
+        .course-card-v2 .cc-features li{padding:5px 0;font-size:.84rem;color:var(--text-secondary);display:flex;align-items:center;gap:8px}
+        .course-card-v2 .cc-features li i{color:var(--green);font-size:.75rem}
+        .course-card-v2 .cc-btn{display:block;text-align:center;padding:12px;background:rgba(255,255,255,0.04);border-top:1px solid var(--border);color:var(--pink);font-weight:700;font-size:.9rem;text-decoration:none;transition:all .3s}
+        .course-card-v2 .cc-btn:hover{background:rgba(233,78,119,0.08)}
+        
+        /* === Service Card V2 === */
+        .service-card-v2{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-border);border-radius:var(--radius);padding:32px 24px;text-align:center;transition:all .4s;text-decoration:none;display:block}
+        .service-card-v2:hover{border-color:var(--border-hover);transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.25)}
+        .service-card-v2 .sv-icon{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;margin:0 auto 20px}
+        .service-card-v2 h3{font-size:1.05rem;font-weight:800;color:#fff;margin-bottom:10px}
+        .service-card-v2 p{font-size:.85rem;color:var(--text-secondary);line-height:1.7}
+        
+        /* === Testimonials === */
+        .testimonials{padding:80px 0;background:var(--bg-primary)}
+        .testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px}
+        .testimonial-card{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-border);border-radius:var(--radius);padding:32px;transition:all .3s}
+        .testimonial-card:hover{border-color:var(--border-hover);transform:translateY(-4px)}
+        .testimonial-stars{color:#f7931e;font-size:.9rem;margin-bottom:16px;letter-spacing:2px}
+        .testimonial-text{font-size:.92rem;color:var(--text-secondary);line-height:1.8;margin-bottom:20px;font-style:italic}
+        .testimonial-author{display:flex;align-items:center;gap:14px;padding-top:18px;border-top:1px solid var(--border)}
+        .testimonial-avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;color:#fff}
+        .testimonial-name{font-weight:800;font-size:.9rem;color:#fff}
+        .testimonial-role{font-size:.78rem;color:var(--text-muted);margin-top:2px}
+        
+        /* === Featured Course V2 === */
+        .featured-course{padding:80px 0;position:relative;overflow:hidden}
+        .fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;margin-top:50px}
+        .fc-image{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
+        .fc-image img{width:100%;border-radius:var(--radius-lg)}
+        .fc-price-badge{position:absolute;top:20px;left:20px;background:var(--gradient);padding:14px 24px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+        .fc-price-badge .fc-price-label{font-size:.72rem;opacity:.9;margin-bottom:2px}
+        .fc-price-badge .fc-price-value{font-size:1.6rem;font-weight:900}
+        .fc-details-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+        .fc-detail-item{background:rgba(255,255,255,0.03);padding:16px;border-radius:14px;border:1px solid var(--border)}
+        .fc-detail-item i{color:var(--orange);font-size:1.2rem;margin-bottom:8px;display:block}
+        .fc-detail-item span{font-weight:700;font-size:.88rem}
+        
+        /* === Footer V2 === */
+        .footer-v2{background:var(--bg-secondary);border-top:1px solid var(--border);padding:60px 0 0}
+        .footer-v2-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+        .footer-v2-brand{max-width:320px}
+        .footer-v2-brand img{height:50px;margin-bottom:16px}
+        .footer-v2-brand p{font-size:.88rem;color:var(--text-secondary);line-height:1.8}
+        .footer-v2-title{font-size:1rem;font-weight:800;color:#fff;margin-bottom:18px}
+        .footer-v2 ul{list-style:none}
+        .footer-v2 ul li{margin-bottom:10px}
+        .footer-v2 ul a{color:var(--text-secondary);text-decoration:none;font-size:.88rem;transition:color .3s;display:flex;align-items:center;gap:8px}
+        .footer-v2 ul a:hover{color:var(--pink)}
+        .footer-v2-bottom{padding:20px 0;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:.82rem}
+        .footer-v2-social{display:flex;gap:10px;margin-top:20px}
+        .footer-v2-social a{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-secondary);text-decoration:none;transition:all .3s;font-size:.9rem}
+        .footer-v2-social a:hover{background:rgba(233,78,119,0.1);border-color:var(--border-hover);color:var(--pink)}
+        
+        /* === Responsive === */
+        @media(max-width:968px){
+            .hero-v2-grid{grid-template-columns:1fr;text-align:center}
+            .hero-v2-text p{margin:0 auto 32px}
+            .hero-v2-btns{justify-content:center}
+            .hero-v2-stats{justify-content:center}
+            .hero-v2-image{order:-1;margin-bottom:20px}
+            .hero-v2-img-wrap{width:280px;height:280px}
+            .hero-v2-float.f1{top:20px;right:10px}
+            .hero-v2-float.f2{bottom:30px;right:10px}
+            .hero-v2-float.f3{bottom:20px;left:10px}
+            .fc-grid{grid-template-columns:1fr}
+            .testimonial-grid{grid-template-columns:1fr}
+            .footer-v2-grid{grid-template-columns:1fr 1fr}
+            [style*="grid-template-columns:1fr 1fr"][style*="gap:50px"]{grid-template-columns:1fr!important}
+            [style*="grid-template-columns:1fr 380px"]{grid-template-columns:1fr!important}
+            #free-course-promo [style*="min-height:480px"]{min-height:350px!important}
+        }
+        @media(max-width:768px){
+            .counter-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+            .courses-grid-v2{grid-template-columns:1fr!important}
+            .services-grid-v2{grid-template-columns:repeat(2,1fr)!important}
+            .footer-v2-grid{grid-template-columns:1fr}
+            .nav-logo{height:70px!important;max-width:230px!important}
+            .navbar.scrolled .nav-logo{height:55px!important}
+        }
+        @media(max-width:480px){
+            .hero-v2{padding:120px 0 60px}
+            .hero-v2-img-wrap{width:220px;height:220px}
+            .hero-v2-stats{gap:20px}
+            .services-grid-v2{grid-template-columns:1fr!important}
+            .fc-details-grid{grid-template-columns:1fr}
+        }
     </style>
 </head>
 <body>
@@ -322,14 +465,11 @@
     <div class="page-loader">
         <div style="width:50px;height:50px;border:3px solid rgba(233,78,119,0.2);border-top-color:#e94e77;border-radius:50%;animation:spin 1s linear infinite;"></div>
     </div>
-    <style>
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    </style>
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
     
     <div id="particles-js"></div>
     
+    <!-- ═══ NAVBAR ═══ -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <div class="nav-brand">
@@ -342,11 +482,7 @@
                 <i class="fas fa-user-circle"></i>
                 <span>تسجيل الدخول</span>
             </a>
-            <button class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html" class="nav-link active">الرئيسية</a></li>
                 <li><a href="about.html" class="nav-link">من أنا</a></li>
@@ -360,468 +496,422 @@
         </div>
     </nav>
 
-    <section class="hero" id="home">
-        <div class="hero-stars-bg">
-            <div class="star star-1"></div>
-            <div class="star star-2"></div>
-            <div class="star star-3"></div>
-        </div>
+    <!-- ═══ HERO V2 ═══ -->
+    <section class="hero-v2" id="home">
         <div class="container">
-            <div class="hero-wrapper">
-                <div class="hero-image-section" data-aos="fade-right" data-aos-duration="1200">
-                    <div class="hero-image-container">
-                        <div class="hero-image-frame">
-                            <div class="hero-image-frame-inner">
-                                <img src="images/Screenshot_1.png" alt="أكرم مصطفى" class="hero-profile-image" loading="eager">
-                            </div>
-                            <div class="hero-image-glow"></div>
+            <div class="hero-v2-grid">
+                <div class="hero-v2-text" data-aos="fade-left" data-aos-duration="1000">
+                    <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 18px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:50px;font-size:.82rem;font-weight:700;color:#4ade80;margin-bottom:24px;">
+                        <span style="width:8px;height:8px;background:#4ade80;border-radius:50%;animation:pulse-green 1.5s infinite;"></span>
+                        متاح للعمل حالياً
+                    </div>
+                    <h1>
+                        <span style="display:block;color:var(--text-secondary);font-size:clamp(1rem,2vw,1.3rem);font-weight:600;margin-bottom:8px;">أهلاً بيك، أنا</span>
+                        <span class="gradient-text">أكرم مصطفى</span>
+                    </h1>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+                        <span style="padding:6px 16px;background:rgba(233,78,119,0.08);border:1px solid rgba(233,78,119,0.2);border-radius:10px;font-size:.82rem;font-weight:700;color:#f0a0b8;"><i class="fas fa-chart-line" style="margin-left:6px;color:var(--pink);"></i>خبير تسويق رقمي</span>
+                        <span style="padding:6px 16px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:10px;font-size:.82rem;font-weight:700;color:#93b8f0;"><i class="fas fa-laptop-code" style="margin-left:6px;color:var(--blue);"></i>مطور مواقع</span>
+                        <span style="padding:6px 16px;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:10px;font-size:.82rem;font-weight:700;color:#c4a0f0;"><i class="fas fa-mobile-alt" style="margin-left:6px;color:var(--purple);"></i>مطور تطبيقات</span>
+                    </div>
+                    <p>أساعد الشركات والأفراد في النجاح أونلاين من خلال استراتيجيات تسويق مبتكرة وحلول تقنية متطورة</p>
+                    <div class="hero-v2-btns">
+                        <a href="courses.html" class="btn-main"><i class="fas fa-graduation-cap"></i> شوف الكورسات</a>
+                        <a href="contact.html" class="btn-outline-new"><i class="fas fa-phone"></i> تواصل معايا</a>
+                    </div>
+                    <div class="hero-v2-stats">
+                        <div class="hero-v2-stat">
+                            <div class="hero-v2-stat-num" data-count="500">0</div>
+                            <div class="hero-v2-stat-label">متدرب ناجح</div>
                         </div>
-                        <div class="hero-badges-row" data-aos="fade-up" data-aos-delay="800">
-                            <div class="floating-badge">
-                                <i class="fas fa-star"></i>
-                                <span>خبرة عملية</span>
-                            </div>
-                            <div class="floating-badge">
-                                <i class="fas fa-users"></i>
-                                <span>500+ طالب</span>
-                            </div>
-                            <div class="floating-badge">
-                                <i class="fas fa-trophy"></i>
-                                <span>10+ مشاريع</span>
-                            </div>
+                        <div class="hero-v2-stat">
+                            <div class="hero-v2-stat-num" data-count="50">0</div>
+                            <div class="hero-v2-stat-label">مشروع ناجح</div>
+                        </div>
+                        <div class="hero-v2-stat">
+                            <div class="hero-v2-stat-num" data-count="11">0</div>
+                            <div class="hero-v2-stat-label">كورس شامل</div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="hero-text-section" data-aos="fade-left" data-aos-duration="1200">
-                    <div class="hero-content">
-                        <div class="hero-label" data-aos="fade-up" data-aos-delay="200">
-                            <span class="pulse-dot"></span>
-                            متاح للعمل حالياً
-                        </div>
-                        <h1 class="hero-title" data-aos="fade-up" data-aos-delay="400">
-                            <span class="hero-greeting">أهلاً بيك</span>
-                            <span class="gradient-text">أكرم مصطفى</span>
-                            <span class="gradient-text-secondary">AKRAM MOSTAFA</span>
-                        </h1>
-                        <div class="hero-roles" data-aos="fade-up" data-aos-delay="600">
-                            <span class="hero-role-badge">
-                                <i class="fas fa-chart-line"></i> خبير تسويق رقمي
-                            </span>
-                            <span class="hero-role-badge">
-                                <i class="fas fa-laptop-code"></i> مطور مواقع
-                            </span>
-                            <span class="hero-role-badge">
-                                <i class="fas fa-mobile-alt"></i> مطور تطبيقات
-                            </span>
-                        </div>
-                        <p class="hero-description" data-aos="fade-up" data-aos-delay="800">
-                            أساعد الشركات والأفراد في النجاح أونلاين من خلال استراتيجيات تسويق مبتكرة وحلول تقنية متطورة
-                        </p>
-                        
-                        <div class="hero-stats" data-aos="fade-up" data-aos-delay="1000">
-                            <div class="hero-stat-item">
-                                <div class="stat-number-hero">500+</div>
-                                <div class="stat-label-hero">متدرب ناجح</div>
-                            </div>
-                            <div class="hero-stat-item">
-                                <div class="stat-number-hero">50+</div>
-                                <div class="stat-label-hero">مشروع ناجح</div>
-                            </div>
-                            <div class="hero-stat-item">
-                                <div class="stat-number-hero">11+</div>
-                                <div class="stat-label-hero">كورس شامل</div>
-                            </div>
-                        </div>                        
-                        <div class="hero-buttons" data-aos="fade-up" data-aos-delay="1200">
-                            <a href="courses.html" class="btn btn-primary">
-                                <i class="fas fa-graduation-cap"></i>
-                                شوف الكورسات
-                                <span class="btn-shine"></span>
-                            </a>
-                            <a href="contact.html" class="btn btn-secondary">
-                                <i class="fas fa-phone"></i>
-                                تواصل معايا
-                                <span class="btn-shine"></span>
-                            </a>
-                        </div>
-                        
-                        <div class="social-links" data-aos="fade-up" data-aos-delay="1400">
-                            <div class="social-label">تابعني على:</div>
-                            <a href="https://www.facebook.com/share/17x8kYFSQq/" class="social-link facebook" target="_blank">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" class="social-link tiktok" target="_blank">
-                                <i class="fab fa-tiktok"></i>
-                            </a>
-                            <a href="#" class="social-link instagram" target="_blank">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="social-link snapchat" target="_blank">
-                                <i class="fab fa-snapchat-ghost"></i>
-                            </a>
-                            <a href="#" class="social-link twitter" target="_blank">
-                                <i class="fab fa-x-twitter"></i>
-                            </a>
-                        </div>
+                <div class="hero-v2-image" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="hero-v2-img-wrap">
+                        <img src="images/Screenshot_1.png" alt="أكرم مصطفى" loading="eager">
                     </div>
+                    <div class="hero-v2-float f1"><i class="fas fa-star" style="color:#f7931e;"></i> خبرة +5 سنوات</div>
+                    <div class="hero-v2-float f2"><i class="fas fa-users" style="color:#3b82f6;"></i> +500 طالب</div>
+                    <div class="hero-v2-float f3"><i class="fas fa-trophy" style="color:#22c55e;"></i> +10 مشاريع</div>
                 </div>
             </div>
-        </div>
-        <div class="hero-shape"></div>
-        <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="2000">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-            <p>Scroll Down</p>
         </div>
     </section>
 
-    <!-- FEATURED COURSE SECTION -->
-    <section style="padding:80px 0;background:linear-gradient(135deg,#0a1f44 0%,#16213e 100%);position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(233,78,119,0.15),transparent);border-radius:50%;"></div>
-        <div style="position:absolute;bottom:-150px;left:-150px;width:400px;height:400px;background:radial-gradient(circle,rgba(247,147,30,0.1),transparent);border-radius:50%;"></div>
-        <div class="container" style="position:relative;z-index:2;">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">كورس <span style="background:linear-gradient(135deg,#e94e77,#f7931e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">التسويق الإلكتروني الشامل</span></h2>
-                <div class="title-underline"></div>
-                <p class="section-description">برنامج تدريبي متكامل يأهلك للاحتراف في التسويق الرقمي خلال 3 أسابيع</p>
+    <!-- ═══ COUNTER BAR ═══ -->
+    <div class="counter-bar">
+        <div class="container">
+            <div class="counter-grid">
+                <div class="counter-item" data-aos="fade-up" data-aos-delay="0">
+                    <div class="counter-num gradient-text" data-count="500">0+</div>
+                    <div class="counter-label">عميل سعيد</div>
+                </div>
+                <div class="counter-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="counter-num gradient-text" data-count="11">0</div>
+                    <div class="counter-label">كورس تدريبي</div>
+                </div>
+                <div class="counter-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="counter-num gradient-text" data-count="5">0+</div>
+                    <div class="counter-label">سنوات خبرة</div>
+                </div>
+                <div class="counter-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="counter-num gradient-text" data-count="98">0%</div>
+                    <div class="counter-label">رضا العملاء</div>
+                </div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:50px;max-width:1200px;margin:50px auto 0;align-items:center;" data-aos="fade-up" data-aos-delay="200">
-                <div style="position:relative;">
-                    <img src="/images/slides/1772817045966.png" alt="كورس التسويق الإلكتروني" style="width:100%;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.4);" loading="lazy">
-                    <div style="position:absolute;top:20px;left:20px;background:linear-gradient(45deg,#e94e77,#f7931e);padding:15px 25px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
-                        <div style="font-size:12px;opacity:0.9;margin-bottom:3px;">سعر الكورس</div>
-                        <div style="font-size:28px;font-weight:900;">2000 جنيه</div>
+        </div>
+    </div>
+
+    <!-- ═══ FEATURED COURSE ═══ -->
+    <section class="featured-course" style="background:var(--bg-primary);">
+        <div class="container">
+            <div class="section-center" data-aos="fade-up">
+                <span class="section-badge"><i class="fas fa-fire"></i> الأكثر مبيعاً</span>
+                <h2 class="section-title-new">كورس <span class="gradient-text">التسويق الإلكتروني الشامل</span></h2>
+                <p class="section-desc">برنامج تدريبي متكامل يأهلك للاحتراف في التسويق الرقمي خلال 3 أسابيع</p>
+            </div>
+            <div class="fc-grid" data-aos="fade-up" data-aos-delay="200">
+                <div class="fc-image">
+                    <img src="/images/slides/1772817045966.png" alt="كورس التسويق الإلكتروني" loading="lazy">
+                    <div class="fc-price-badge">
+                        <div class="fc-price-label">سعر الكورس</div>
+                        <div class="fc-price-value">2000 جنيه</div>
                     </div>
                 </div>
-                <div style="color:white;">
-                    <h3 style="font-size:32px;font-weight:900;margin-bottom:20px;line-height:1.3;">احترف التسويق الرقمي من صفر لـ 100</h3>
-                    <p style="font-size:18px;line-height:1.8;opacity:0.9;margin-bottom:30px;">في 3 أسابيع بس هتتعلم كل اللي محتاجه عشان تشتغل مسوّق إلكتروني محترف - من بناء الهوية التجارية لإدارة الحملات الإعلانية على كل المنصات</p>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:30px;">
-                        <div style="background:rgba(255,255,255,0.05);padding:15px;border-radius:12px;border:1px solid rgba(233,78,119,0.2);">
-                            <i class="fas fa-calendar-alt" style="color:#f7931e;font-size:24px;margin-bottom:8px;"></i>
-                            <div style="font-weight:700;font-size:14px;">المدة: 3 أسابيع</div>
-                        </div>
-                        <div style="background:rgba(255,255,255,0.05);padding:15px;border-radius:12px;border:1px solid rgba(233,78,119,0.2);">
-                            <i class="fas fa-video" style="color:#f7931e;font-size:24px;margin-bottom:8px;"></i>
-                            <div style="font-weight:700;font-size:14px;">6 جلسات Live</div>
-                        </div>
-                        <div style="background:rgba(255,255,255,0.05);padding:15px;border-radius:12px;border:1px solid rgba(233,78,119,0.2);">
-                            <i class="fas fa-certificate" style="color:#f7931e;font-size:24px;margin-bottom:8px;"></i>
-                            <div style="font-weight:700;font-size:14px;">شهادة معتمدة</div>
-                        </div>
-                        <div style="background:rgba(255,255,255,0.05);padding:15px;border-radius:12px;border:1px solid rgba(233,78,119,0.2);">
-                            <i class="fas fa-users" style="color:#f7931e;font-size:24px;margin-bottom:8px;"></i>
-                            <div style="font-weight:700;font-size:14px;">دعم مستمر</div>
-                        </div>
+                <div>
+                    <h3 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:900;color:#fff;margin-bottom:18px;line-height:1.4;">احترف التسويق الرقمي من صفر لـ 100</h3>
+                    <p style="color:var(--text-secondary);line-height:1.9;margin-bottom:28px;">في 3 أسابيع بس هتتعلم كل اللي محتاجه عشان تشتغل مسوّق إلكتروني محترف - من بناء الهوية التجارية لإدارة الحملات الإعلانية على كل المنصات</p>
+                    <div class="fc-details-grid">
+                        <div class="fc-detail-item"><i class="fas fa-calendar-alt"></i><span>المدة: 3 أسابيع</span></div>
+                        <div class="fc-detail-item"><i class="fas fa-video"></i><span>6 جلسات Live</span></div>
+                        <div class="fc-detail-item"><i class="fas fa-certificate"></i><span>شهادة معتمدة</span></div>
+                        <div class="fc-detail-item"><i class="fas fa-users"></i><span>دعم مستمر</span></div>
                     </div>
-                    <div style="display:flex;gap:15px;flex-wrap:wrap;">
-                        <a href="digital-marketing-course.html" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(45deg,#e94e77,#f7931e);color:white;padding:18px 35px;border-radius:50px;text-decoration:none;font-weight:700;font-size:18px;box-shadow:0 10px 30px rgba(233,78,119,0.4);transition:transform 0.3s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-                            <i class="fas fa-info-circle"></i>
-                            تفاصيل الكورس
-                        </a>
-                        <a href="https://wa.me/201555512778?text=عايز%20أسجل%20في%20كورس%20التسويق%20الإلكتروني%20الشامل" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.1);color:white;border:2px solid white;padding:16px 35px;border-radius:50px;text-decoration:none;font-weight:700;font-size:18px;transition:all 0.3s;" onmouseover="this.style.background='white';this.style.color='#0a1f44'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.color='white'" onclick="fbLead({content_name:'كورس التسويق الرقمي - Homepage', value:2000, currency:'EGP'})">
-                            <i class="fab fa-whatsapp"></i>
-                            سجل دلوقتي
-                        </a>
+                    <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                        <a href="digital-marketing-course.html" class="btn-main"><i class="fas fa-info-circle"></i> تفاصيل الكورس</a>
+                        <a href="https://wa.me/201555512778?text=عايز%20أسجل%20في%20كورس%20التسويق%20الإلكتروني%20الشامل" target="_blank" class="btn-outline-new"><i class="fab fa-whatsapp"></i> سجل دلوقتي</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <div class="section-divider"></div>
 
-    <!-- APPS SECTION - البرامج -->
-    <section id="apps-home" style="padding:80px 0 60px;background:#09162b;">
-      <div class="container">
-        <div class="section-header" data-aos="fade-up">
-          <h2 class="section-title">تطبيقاتي <span style="background:linear-gradient(135deg,#e94e77,#f7931e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">ومشاريعي</span></h2>
-          <div class="title-underline"></div>
-          <p class="section-description">أنظمة ومواقع ومتاجر إلكترونية بنيتها من الصفر — اطلب مشابخاً دلوقتي</p>
+    <!-- ═══ APPS SECTION ═══ -->
+    <section id="apps-home" style="padding:80px 0;background:var(--bg-secondary);">
+        <div class="container">
+            <div class="section-center" data-aos="fade-up">
+                <span class="section-badge"><i class="fas fa-code"></i> أعمالي</span>
+                <h2 class="section-title-new">تطبيقاتي <span class="gradient-text">ومشاريعي</span></h2>
+                <p class="section-desc">أنظمة ومواقع ومتاجر إلكترونية بنيتها من الصفر — اطلب مشابه دلوقتي</p>
+            </div>
+            <div id="appsHomeGrid" class="apps-pro-grid"></div>
+            <div style="text-align:center;margin-top:50px;" data-aos="fade-up">
+                <a href="store.html" class="btn-main"><i class="fas fa-store"></i> شوف كل التطبيقات</a>
+            </div>
         </div>
-        <div id="appsHomeGrid" class="apps-pro-grid"></div>
-        <div style="text-align:center;margin-top:50px;" data-aos="fade-up">
-          <a href="store.html" class="btn btn-primary" style="padding:15px 40px;">
-            <i class="fas fa-store"></i> شوف كل التطبيقات
-          </a>
-        </div>
-      </div>
     </section>
 
     <!-- APPS LIGHTBOX -->
     <div id="appsLightbox" class="apps-lb" onclick="if(event.target===this)closeLb()">
-      <button class="apps-lb-close" onclick="closeLb()"><i class="fas fa-times"></i></button>
-      <button class="apps-lb-arrow apps-lb-prev" onclick="lbNav(-1)"><i class="fas fa-chevron-right"></i></button>
-      <button class="apps-lb-arrow apps-lb-next" onclick="lbNav(1)"><i class="fas fa-chevron-left"></i></button>
-      <div class="apps-lb-inner">
-        <div class="apps-lb-app-name" id="lbAppName"></div>
-        <img id="lbMainImg" src="" alt="" class="apps-lb-img">
-        <div class="apps-lb-counter" id="lbCounter"></div>
-        <div class="apps-lb-thumbs" id="lbThumbs"></div>
-      </div>
+        <button class="apps-lb-close" onclick="closeLb()"><i class="fas fa-times"></i></button>
+        <button class="apps-lb-arrow apps-lb-prev" onclick="lbNav(-1)"><i class="fas fa-chevron-right"></i></button>
+        <button class="apps-lb-arrow apps-lb-next" onclick="lbNav(1)"><i class="fas fa-chevron-left"></i></button>
+        <div class="apps-lb-inner">
+            <div class="apps-lb-app-name" id="lbAppName"></div>
+            <img id="lbMainImg" src="" alt="" class="apps-lb-img">
+            <div class="apps-lb-counter" id="lbCounter"></div>
+            <div class="apps-lb-thumbs" id="lbThumbs"></div>
+        </div>
     </div>
 
-    <!-- ======= صورتي / من أنا ======= -->
-    <section class="about-preview" id="about-preview" style="padding:80px 0;background:#050d1b;">
+    <div class="section-divider"></div>
+
+    <!-- ═══ ABOUT SECTION ═══ -->
+    <section style="padding:80px 0;background:var(--bg-primary);">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">من أنا</h2>
-                <div class="title-underline"></div>
-                <p class="section-description">خبير تسويق إلكتروني ومطور تطبيقات - بجمع بين الاتنين في شخص واحد</p>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:50px;align-items:center;" data-aos="fade-up">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;" data-aos="fade-up">
                 <div>
-                    <h3 style="font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:20px;">مرحباً، أنا <span style="background:linear-gradient(135deg,#e94e77,#f7931e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">أكرم مصطفى</span></h3>
-                    <p style="color:#6b82a8;line-height:2;margin-bottom:20px;">متخصص في التسويق الرقمي والسوشيال ميديا مع خبرة تتعدى 5 سنين في إدارة الحملات الإعلانية وتطوير استراتيجيات تسويقية ناجحة.</p>
-                    <p style="color:#6b82a8;line-height:2;margin-bottom:30px;">بالإضافة لكده، أنا مطور تطبيقات ويب، أقدر أصمم وأطور أنظمة متكاملة تساعد في إدارة الأعمال بكفاءة.</p>
-                    <a href="about.html" class="btn btn-primary">
-                        <i class="fas fa-user"></i> اعرف أكتر
-                        <span class="btn-shine"></span>
-                    </a>
+                    <span class="section-badge"><i class="fas fa-user"></i> من أنا</span>
+                    <h2 class="section-title-new">مرحباً، أنا <span class="gradient-text">أكرم مصطفى</span></h2>
+                    <p style="color:var(--text-secondary);line-height:2;margin-bottom:20px;">متخصص في التسويق الرقمي والسوشيال ميديا مع خبرة تتعدى 5 سنين في إدارة الحملات الإعلانية وتطوير استراتيجيات تسويقية ناجحة.</p>
+                    <p style="color:var(--text-secondary);line-height:2;margin-bottom:28px;">بالإضافة لكده، أنا مطور تطبيقات ويب، أقدر أصمم وأطور أنظمة متكاملة تساعد في إدارة الأعمال بكفاءة.</p>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;">
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--text-secondary);"><i class="fas fa-check-circle" style="color:var(--green);"></i>حلول مخصصة حسب احتياجاتك</div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--text-secondary);"><i class="fas fa-check-circle" style="color:var(--green);"></i>دعم فني متواصل</div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--text-secondary);"><i class="fas fa-check-circle" style="color:var(--green);"></i>نتائج مضمونة</div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--text-secondary);"><i class="fas fa-check-circle" style="color:var(--green);"></i>أسعار تنافسية</div>
+                    </div>
+                    <a href="about.html" class="btn-main"><i class="fas fa-user"></i> اعرف أكتر</a>
                 </div>
                 <div style="position:relative;">
-                    <img src="images/Screenshot_1.png" alt="أكرم مصطفى" style="width:100%;border-radius:20px;border:1px solid rgba(255,255,255,0.1);" loading="lazy">
+                    <img src="images/Screenshot_1.png" alt="أكرم مصطفى" style="width:100%;border-radius:var(--radius-lg);border:1px solid var(--glass-border);" loading="lazy">
+                    <div style="position:absolute;top:0;left:0;right:0;bottom:0;border-radius:var(--radius-lg);background:linear-gradient(to top,var(--bg-primary) 0%,transparent 40%);pointer-events:none;"></div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- ======= نهاية صورتي ======= -->
 
-    <!-- FREE COURSE PROMO SECTION -->
-    <section id="free-course-promo" style="background:linear-gradient(135deg,#07122a 0%,#0b1a35 60%,#07122a 100%);border-top:1px solid rgba(233,78,119,0.18);border-bottom:1px solid rgba(233,78,119,0.18);overflow:hidden;position:relative;">
+    <div class="section-divider"></div>
 
-      <!-- BG GLOWS -->
-      <div style="position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(233,78,119,0.1) 0%,transparent 65%);pointer-events:none;"></div>
-      <div style="position:absolute;bottom:-80px;left:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,0.08) 0%,transparent 65%);pointer-events:none;"></div>
-
-      <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 380px;align-items:stretch;min-height:560px;">
-
-        <!-- ======= TEXT SIDE ======= -->
-        <div style="padding:64px 48px 64px 0;display:flex;flex-direction:column;justify-content:center;" data-aos="fade-right">
-
-          <!-- BADGES -->
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:26px;flex-wrap:wrap;">
-            <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:50px;font-size:.8rem;font-weight:900;color:#fff;">
-              <i class="fas fa-gift"></i> عرض حصري | مجاناً 100%
-            </span>
-            <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.4);border-radius:50px;font-size:.78rem;font-weight:800;color:#4ade80;">
-              <span style="width:7px;height:7px;background:#4ade80;border-radius:50%;animation:pulse-green 1.5s infinite;flex-shrink:0;display:inline-block;"></span> مفتوح الآن
-            </span>
-          </div>
-
-          <!-- HEADLINE -->
-          <h2 style="font-size:clamp(2rem,3.8vw,3rem);font-weight:900;color:#fff;line-height:1.3;margin:0 0 16px;">
-            اتعلم تسوق
-            <span style="display:block;background:linear-gradient(135deg,#e94e77,#f7931e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">لشغلك بنفسك</span>
-          </h2>
-
-          <!-- SUBTITLE -->
-          <p style="color:#8fa5c4;font-size:.98rem;line-height:1.9;margin:0 0 26px;max-width:480px;">
-            دورة مجانية أونلاين كاملة — تسويق إلكتروني، ذكاء اصطناعي، فريلانسينج وتجارة إلكترونية.<br>ابدأ من الصفر وأطلع بمهارات حقيقية.
-          </p>
-
-          <!-- PLATFORMS -->
-          <div style="margin-bottom:26px;">
-            <p style="color:#4b6280;font-size:.76rem;font-weight:700;margin:0 0 12px;letter-spacing:1px;text-transform:uppercase;">المنصات اللي هتتعلمها</p>
-            <div class="fcp-platforms" style="display:flex;gap:10px;flex-wrap:wrap;">
-              <span style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(24,119,242,0.1);border:1px solid rgba(24,119,242,0.3);border-radius:10px;font-size:.85rem;font-weight:700;color:#93b8f0;"><i class="fab fa-facebook-f" style="color:#4A90E2;"></i>فيسبوك</span>
-              <span style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(225,48,108,0.1);border:1px solid rgba(225,48,108,0.3);border-radius:10px;font-size:.85rem;font-weight:700;color:#f0a0b8;"><i class="fab fa-instagram" style="color:#E1306C;"></i>انستجرام</span>
-              <span style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;font-size:.85rem;font-weight:700;color:#d1d5db;"><i class="fab fa-tiktok"></i>تيك توك</span>
-              <span style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:rgba(255,252,0,0.07);border:1px solid rgba(255,252,0,0.22);border-radius:10px;font-size:.85rem;font-weight:700;color:#fdfcaa;"><i class="fab fa-snapchat-ghost" style="color:#FFFC00;"></i>سناب شات</span>
+    <!-- ═══ FREE COURSE PROMO ═══ -->
+    <section id="free-course-promo" style="padding:80px 0;background:var(--bg-secondary);position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(233,78,119,0.08),transparent 65%);pointer-events:none;"></div>
+        <div class="container" style="position:relative;z-index:2;">
+            <div style="display:grid;grid-template-columns:1fr 380px;gap:50px;align-items:center;">
+                <div data-aos="fade-left">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:22px;flex-wrap:wrap;">
+                        <span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--gradient);border-radius:50px;font-size:.82rem;font-weight:900;color:#fff;"><i class="fas fa-gift"></i> مجاناً 100%</span>
+                        <span style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.3);border-radius:50px;font-size:.8rem;font-weight:800;color:#4ade80;"><span style="width:7px;height:7px;background:#4ade80;border-radius:50%;animation:pulse-green 1.5s infinite;display:inline-block;"></span> مفتوح الآن</span>
+                    </div>
+                    <h2 class="section-title-new">اتعلم تسوق <span class="gradient-text" style="display:block;">لشغلك بنفسك</span></h2>
+                    <p style="color:var(--text-secondary);line-height:1.9;margin-bottom:26px;max-width:480px;">دورة مجانية أونلاين كاملة — تسويق إلكتروني، ذكاء اصطناعي، فريلانسينج وتجارة إلكترونية. ابدأ من الصفر وأطلع بمهارات حقيقية.</p>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px;">
+                        <span class="glass-card" style="padding:8px 16px;font-size:.85rem;font-weight:700;color:#93b8f0;display:inline-flex;align-items:center;gap:7px;"><i class="fab fa-facebook-f" style="color:#4A90E2;"></i>فيسبوك</span>
+                        <span class="glass-card" style="padding:8px 16px;font-size:.85rem;font-weight:700;color:#f0a0b8;display:inline-flex;align-items:center;gap:7px;"><i class="fab fa-instagram" style="color:#E1306C;"></i>انستجرام</span>
+                        <span class="glass-card" style="padding:8px 16px;font-size:.85rem;font-weight:700;color:#d1d5db;display:inline-flex;align-items:center;gap:7px;"><i class="fab fa-tiktok"></i>تيك توك</span>
+                        <span class="glass-card" style="padding:8px 16px;font-size:.85rem;font-weight:700;color:#fdfcaa;display:inline-flex;align-items:center;gap:7px;"><i class="fab fa-snapchat-ghost" style="color:#FFFC00;"></i>سناب شات</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:30px;">
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.86rem;color:#94a3b8;"><i class="fas fa-circle-check" style="color:#4ade80;"></i>تسويق + إعلانات Meta</div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.86rem;color:#94a3b8;"><i class="fas fa-circle-check" style="color:#4ade80;"></i>ريلز + هوك + كابشن</div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.86rem;color:#94a3b8;"><i class="fas fa-circle-check" style="color:#4ade80;"></i>ذكاء اصطناعي وأدوات AI</div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.86rem;color:#94a3b8;"><i class="fas fa-circle-check" style="color:#4ade80;"></i>فريلانسينج وتجارة إلكترونية</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                        <a href="free-course.html" class="btn-main"><i class="fas fa-rocket"></i> احجز مكانك — مجاناً</a>
+                        <span style="display:flex;align-items:center;gap:5px;color:var(--text-muted);font-size:.82rem;font-weight:700;"><i class="fas fa-users" style="color:var(--orange);"></i> +500 طالب سبقوك</span>
+                    </div>
+                </div>
+                <div style="position:relative;min-height:480px;" data-aos="fade-right" data-aos-delay="150">
+                    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center bottom,rgba(233,78,119,0.12),transparent 65%);pointer-events:none;border-radius:var(--radius-lg);"></div>
+                    <img src="images/Screenshot_5.png" alt="أكرم مصطفى" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%;max-height:480px;width:auto;object-fit:contain;object-position:bottom;z-index:1;filter:drop-shadow(-10px 0 30px rgba(233,78,119,0.15));" loading="lazy">
+                    <div style="position:absolute;top:24px;right:12px;z-index:2;background:rgba(7,18,42,0.88);backdrop-filter:blur(14px);border:1px solid rgba(233,78,119,0.25);border-radius:14px;padding:12px 18px;box-shadow:0 8px 30px rgba(0,0,0,0.4);">
+                        <div style="font-size:.65rem;color:var(--text-muted);font-weight:700;margin-bottom:3px;">المدرب</div>
+                        <div style="font-size:.92rem;font-weight:900;color:#fff;">أكرم مصطفى</div>
+                        <div style="font-size:.72rem;color:var(--orange);font-weight:700;">خبير تسويق رقمي</div>
+                    </div>
+                    <div style="position:absolute;top:24px;left:12px;z-index:2;width:60px;height:60px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(34,197,94,0.4);border:2px solid rgba(255,255,255,0.15);">
+                        <span style="font-size:.55rem;font-weight:800;color:#fff;">مجاناً</span>
+                        <span style="font-size:.85rem;font-weight:900;color:#fff;">100%</span>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <!-- CHECKLIST -->
-          <div class="fcp-checklist" style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:34px;">
-            <div style="display:flex;align-items:center;gap:8px;font-size:.86rem;color:#94a3b8;"><i class="fas fa-circle-check" style="color:#4ade80;flex-shrink:0;"></i>تسويق + إعلانات Meta</div>
-            <div style="display:flex;align-items:center;gap:8px;font-size:.86rem;color:#94a3b8;"><i class="fas fa-circle-check" style="color:#4ade80;flex-shrink:0;"></i>ريلز + هوك + كابشن</div>
-            <div style="display:flex;align-items:center;gap:8px;font-size:.86rem;color:#94a3b8;"><i class="fas fa-circle-check" style="color:#4ade80;flex-shrink:0;"></i>ذكاء اصطناعي وأدوات AI</div>
-            <div style="display:flex;align-items:center;gap:8px;font-size:.86rem;color:#94a3b8;"><i class="fas fa-circle-check" style="color:#4ade80;flex-shrink:0;"></i>فريلانسينج وتجارة إلكترونية</div>
-          </div>
-
-          <!-- CTA -->
-          <div class="fcp-cta" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-            <a href="free-course.html" style="display:inline-flex;align-items:center;gap:9px;padding:15px 32px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:12px;color:#fff;font-size:.98rem;font-weight:900;text-decoration:none;box-shadow:0 8px 28px rgba(233,78,119,0.38);transition:all .3s;"
-               onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 14px 38px rgba(233,78,119,0.55)'"
-               onmouseout="this.style.transform='';this.style.boxShadow='0 8px 28px rgba(233,78,119,0.38)'">
-              <i class="fas fa-rocket"></i> احجز مكانك — مجاناً
-            </a>
-            <span style="display:flex;align-items:center;gap:5px;color:#4b6280;font-size:.8rem;font-weight:700;">
-              <i class="fas fa-users" style="color:#f7931e;"></i> +500 طالب سبقوك
-            </span>
-          </div>
         </div>
-
-        <!-- ======= IMAGE SIDE ======= -->
-        <div style="position:relative;overflow:hidden;" data-aos="fade-left" data-aos-delay="150">
-
-          <!-- GLOW -->
-          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center bottom,rgba(233,78,119,0.15) 0%,transparent 65%);pointer-events:none;z-index:0;"></div>
-
-          <!-- PHOTO -->
-          <img src="images/Screenshot_5.png" alt="أكرم مصطفى"
-               style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%;max-height:560px;width:auto;max-width:100%;object-fit:contain;object-position:bottom center;z-index:1;filter:drop-shadow(-10px 0 30px rgba(233,78,119,0.2));" loading="lazy">
-
-          <!-- INFO CARD -->
-          <div style="position:absolute;top:32px;right:16px;z-index:2;background:rgba(7,18,42,0.88);backdrop-filter:blur(14px);border:1px solid rgba(233,78,119,0.3);border-radius:14px;padding:12px 18px;min-width:155px;box-shadow:0 8px 32px rgba(0,0,0,0.5);">
-            <div style="font-size:.65rem;color:#5a7298;font-weight:700;margin-bottom:4px;letter-spacing:1px;">المدرب</div>
-            <div style="font-size:.92rem;font-weight:900;color:#fff;margin-bottom:2px;">أكرم مصطفى</div>
-            <div style="font-size:.72rem;color:#f7931e;font-weight:700;">خبير تسويق رقمي</div>
-          </div>
-
-          <!-- FREE BADGE -->
-          <div style="position:absolute;top:32px;left:16px;z-index:2;width:64px;height:64px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(34,197,94,0.5);border:2px solid rgba(255,255,255,0.18);">
-            <span style="font-size:.58rem;font-weight:800;color:#fff;line-height:1.2;">مجاناً</span>
-            <span style="font-size:.9rem;font-weight:900;color:#fff;line-height:1.2;">100%</span>
-          </div>
-        </div>
-
-      </div>
     </section>
-    <!-- END FREE COURSE PROMO SECTION -->
 
+    <div class="section-divider"></div>
 
-    <section class="courses" id="courses" style="padding:80px 0;background:#0a0a0a;">
+    <!-- ═══ COURSES ═══ -->
+    <section style="padding:80px 0;background:var(--bg-primary);">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">الكورسات التسويقية</h2>
-                <div class="title-underline"></div>
-                <p class="section-description">كورسات عملية واقعية في التسويق الإلكتروني</p>
+            <div class="section-center" data-aos="fade-up">
+                <span class="section-badge"><i class="fas fa-graduation-cap"></i> التعليم</span>
+                <h2 class="section-title-new">الكورسات <span class="gradient-text">التسويقية</span></h2>
+                <p class="section-desc">كورسات عملية واقعية في التسويق الإلكتروني — ابدأ من أي مستوى</p>
             </div>
-            <div class="courses-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:50px;">
-                
-                <div class="course-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="course-icon facebook">
-                        <i class="fab fa-facebook-f"></i>
+            <div class="courses-grid-v2" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;">
+                <div class="course-card-v2" data-aos="fade-up" data-aos-delay="100">
+                    <div class="cc-body">
+                        <div class="cc-icon" style="background:linear-gradient(135deg,#1877f2,#0d5fc7);"><i class="fab fa-facebook-f"></i></div>
+                        <h3>إعلانات الفيسبوك الاحترافية</h3>
+                        <p>كورس متكامل لتعلم انشاء وادارة الحملات الاعلانية على الفيسبوك بطريقة احترافية</p>
+                        <ul class="cc-features">
+                            <li><i class="fas fa-check"></i> إنشاء الحملات الناجحة</li>
+                            <li><i class="fas fa-check"></i> استهداف الجمهور المناسب</li>
+                            <li><i class="fas fa-check"></i> تحليل النتائج</li>
+                        </ul>
                     </div>
-                    <h3>إعلانات الفيسبوك الاحترافية</h3>
-                    <p>كورس متكامل لتعلم انشاء وادارة الحملات الاعلانية على الفيسبوك بطريقة احترافية</p>
-                    <ul class="course-features">
-                        <li><i class="fas fa-check"></i> إنشاء الحملات الناجحة</li>
-                        <li><i class="fas fa-check"></i> استهداف الجمهور المناسب</li>
-                        <li><i class="fas fa-check"></i> تحليل النتائج</li>
-                    </ul>
-                    <a href="courses/facebook-ads.html" class="btn btn-outline">التفاصيل الكاملة</a>
+                    <a href="courses/facebook-ads.html" class="cc-btn">التفاصيل الكاملة <i class="fas fa-arrow-left" style="font-size:.75rem;margin-right:6px;"></i></a>
                 </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="course-icon instagram">
-                        <i class="fab fa-instagram"></i>
+                <div class="course-card-v2" data-aos="fade-up" data-aos-delay="200">
+                    <div class="cc-body">
+                        <div class="cc-icon" style="background:linear-gradient(135deg,#E1306C,#c13584);"><i class="fab fa-instagram"></i></div>
+                        <h3>التسويق عبر الانستجرام</h3>
+                        <p>اتقن فن التسويق وبناء علامتك التجارية على الانستجرام</p>
+                        <ul class="cc-features">
+                            <li><i class="fas fa-check"></i> الكونتنت الجذاب</li>
+                            <li><i class="fas fa-check"></i> Reels و Stories</li>
+                            <li><i class="fas fa-check"></i> زيادة المتابعين الحقيقيين</li>
+                        </ul>
                     </div>
-                    <h3>التسويق عبر الانستجرام</h3>
-                    <p>اتقن فن التسويق وبناء علامتك التجارية على الانستجرام</p>
-                    <ul class="course-features">
-                        <li><i class="fas fa-check"></i> الكونتنت الجذاب</li>
-                        <li><i class="fas fa-check"></i> Reels و Stories</li>
-                        <li><i class="fas fa-check"></i> زيادة المتابعين الحقيقيين</li>
-                    </ul>
-                    <a href="courses/instagram.html" class="btn btn-outline">التفاصيل الكاملة</a>
+                    <a href="courses/instagram.html" class="cc-btn">التفاصيل الكاملة <i class="fas fa-arrow-left" style="font-size:.75rem;margin-right:6px;"></i></a>
                 </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="course-icon tiktok">
-                        <i class="fab fa-tiktok"></i>
+                <div class="course-card-v2" data-aos="fade-up" data-aos-delay="300">
+                    <div class="cc-body">
+                        <div class="cc-icon" style="background:linear-gradient(135deg,#333,#111);"><i class="fab fa-tiktok"></i></div>
+                        <h3>التسويق بتيك توك</h3>
+                        <p>استغل قوة تيك توك في الوصول لملايين المشاهدات وخليك ترند</p>
+                        <ul class="cc-features">
+                            <li><i class="fas fa-check"></i> صناعة محتوى فيرال</li>
+                            <li><i class="fas fa-check"></i> خوارزميات التيك توك</li>
+                            <li><i class="fas fa-check"></i> تحقيق الأرباح</li>
+                        </ul>
                     </div>
-                    <h3>التسويق بتيك توك</h3>
-                    <p>استغل قوة تيك توك في الوصول لملايين المشاهدات وخليك ترند</p>
-                    <ul class="course-features">
-                        <li><i class="fas fa-check"></i> صناعة محتوى فيرال</li>
-                        <li><i class="fas fa-check"></i> خوارزميات التيك توك</li>
-                        <li><i class="fas fa-check"></i> تحقيق الأرباح</li>
-                    </ul>
-                    <a href="courses/tiktok.html" class="btn btn-outline">التفاصيل الكاملة</a>
+                    <a href="courses/tiktok.html" class="cc-btn">التفاصيل الكاملة <i class="fas fa-arrow-left" style="font-size:.75rem;margin-right:6px;"></i></a>
                 </div>
             </div>
-            <div style="text-align:center;margin-top:50px;" data-aos="fade-up">
-                <a href="courses.html" class="btn btn-primary" style="padding:15px 40px;">
-                    <i class="fas fa-graduation-cap"></i> شوف كل الكورسات
-                </a>
+            <div style="text-align:center;margin-top:44px;" data-aos="fade-up">
+                <a href="courses.html" class="btn-main"><i class="fas fa-graduation-cap"></i> شوف كل الكورسات</a>
             </div>
         </div>
     </section>
 
-    <section class="services" id="services" style="padding:80px 0;background:#050d1b;">
+    <div class="section-divider"></div>
+
+    <!-- ═══ SERVICES ═══ -->
+    <section style="padding:80px 0;background:var(--bg-secondary);">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">الخدمات</h2>
-                <div class="title-underline"></div>
-                <p class="section-description">خدمات تسويقية، تطوير ويب وتطبيقات متقدمة</p>
+            <div class="section-center" data-aos="fade-up">
+                <span class="section-badge"><i class="fas fa-briefcase"></i> خدماتي</span>
+                <h2 class="section-title-new">ما <span class="gradient-text">يميزني</span></h2>
+                <p class="section-desc">خدمات تسويقية وتقنية متقدمة تساعدك تحقق أهدافك</p>
             </div>
-            <div class="services-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:25px;margin-top:50px;">
-                <a class="service-card" href="services/ad-management.html" data-aos="flip-left" data-aos-delay="100">
-                    <div class="service-icon">
-                        <i class="fas fa-bullhorn"></i>
-                    </div>
+            <div class="services-grid-v2" style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:50px;">
+                <a href="services/ad-management.html" class="service-card-v2" data-aos="fade-up" data-aos-delay="100">
+                    <div class="sv-icon" style="background:linear-gradient(135deg,#e94e77,#f7931e);"><i class="fas fa-bullhorn"></i></div>
                     <h3>إدارة الحملات الإعلانية</h3>
                     <p>إدارة احترافية للحملات الإعلانية على كل المنصات</p>
                 </a>
-                <a class="service-card" href="services/content-creation.html" data-aos="flip-left" data-aos-delay="200">
-                    <div class="service-icon">
-                        <i class="fas fa-pen-fancy"></i>
-                    </div>
+                <a href="services/content-creation.html" class="service-card-v2" data-aos="fade-up" data-aos-delay="200">
+                    <div class="sv-icon" style="background:linear-gradient(135deg,#a855f7,#6d28d9);"><i class="fas fa-pen-fancy"></i></div>
                     <h3>صناعة المحتوى</h3>
                     <p>محتوى جذاب ومؤثر يجذب عملاءك ويحقق أهدافك</p>
                 </a>
-                <a class="service-card" href="services/analytics.html" data-aos="flip-left" data-aos-delay="300">
-                    <div class="service-icon">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
+                <a href="services/analytics.html" class="service-card-v2" data-aos="fade-up" data-aos-delay="300">
+                    <div class="sv-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);"><i class="fas fa-chart-pie"></i></div>
                     <h3>التحليل والإحصائيات</h3>
                     <p>تحليل دقيق للبيانات وتقارير شاملة لقياس الأداء</p>
                 </a>
-                <a class="service-card" href="services/web-design.html" data-aos="flip-left" data-aos-delay="400">
-                    <div class="service-icon" style="background:linear-gradient(135deg,#667eea,#764ba2);">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
+                <a href="services/web-design.html" class="service-card-v2" data-aos="fade-up" data-aos-delay="400">
+                    <div class="sv-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fas fa-laptop-code"></i></div>
                     <h3>تطوير المواقع</h3>
                     <p>مواقع ويب حديثة وسريعة مصممة لنجاح عملك</p>
                 </a>
             </div>
-            <div style="text-align:center;margin-top:50px;" data-aos="fade-up">
-                <a href="services.html" class="btn btn-secondary" style="padding:15px 40px;">
-                    <i class="fas fa-briefcase"></i> شوف كل الخدمات
-                </a>
+            <div style="text-align:center;margin-top:44px;" data-aos="fade-up">
+                <a href="services.html" class="btn-outline-new"><i class="fas fa-briefcase"></i> شوف كل الخدمات</a>
             </div>
         </div>
     </section>
 
-    <section class="cta-section" style="padding:80px 0;background:#0a0a0a;">
+    <div class="section-divider"></div>
+
+    <!-- ═══ TESTIMONIALS ═══ -->
+    <section class="testimonials">
         <div class="container">
-            <div style="background:linear-gradient(135deg,rgba(233,78,119,0.1),rgba(247,147,30,0.05));border:1px solid rgba(233,78,119,0.2);border-radius:24px;padding:60px 40px;text-align:center;" data-aos="zoom-in">
-                <h2 style="font-size:2.5rem;font-weight:900;color:#fff;margin-bottom:20px;">جاهز تبدأ معايا؟</h2>
-                <p style="color:#6b82a8;font-size:1.1rem;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto;">كلمني دلوقتي ونشوف مع بعض إزاي أقدر أساعدك تحقق أهدافك</p>
-                <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
-                    <a href="https://wa.me/201555512778?text=أهلاً أكرم، عايز أتكلم معاك" target="_blank" class="btn btn-primary" style="padding:15px 35px;font-size:1.1rem;">
-                        <i class="fab fa-whatsapp"></i> ابدأ دلوقتي
-                    </a>
-                    <a href="contact.html" class="btn btn-secondary" style="padding:15px 35px;font-size:1.1rem;">
-                        <i class="fas fa-envelope"></i> كلمني
-                    </a>
+            <div class="section-center" data-aos="fade-up">
+                <span class="section-badge"><i class="fas fa-quote-right"></i> آراء العملاء</span>
+                <h2 class="section-title-new">ماذا يقول <span class="gradient-text">عملاؤنا</span></h2>
+                <p class="section-desc">آراء حقيقية من عملاء وطلاب استفادوا من خدماتنا وكورساتنا</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"أكرم ساعدني أفهم التسويق الرقمي بطريقة عملية. الكورس كان مليان معلومات وتطبيقات حقيقية قدرت أستخدمها في شغلي فوراً"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);">أ</div>
+                        <div><div class="testimonial-name">أحمد محمد</div><div class="testimonial-role">مدير تسويق</div></div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"المواقع اللي عملها أكرم لشركتي كانت احترافية جداً. الدعم الفني ممتاز والنتائج فاقت التوقعات بمراحل"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background:linear-gradient(135deg,#e94e77,#f7931e);">س</div>
+                        <div><div class="testimonial-name">سارة أحمد</div><div class="testimonial-role">صاحبة متجر إلكتروني</div></div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"كورس التسويق الشامل غيّر مفهومي عن الإعلانات الممولة. دلوقتي بدير حملاتي بنفسي وبحقق نتائج ممتازة"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background:linear-gradient(135deg,#22c55e,#15803d);">م</div>
+                        <div><div class="testimonial-name">محمد علي</div><div class="testimonial-role">رائد أعمال</div></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="page-footer" style="background:#050d1b;border-top:1px solid rgba(255,255,255,0.08);padding:40px 0 20px;">
+    <div class="section-divider"></div>
+
+    <!-- ═══ CTA ═══ -->
+    <section style="padding:80px 0;background:var(--bg-secondary);">
         <div class="container">
-            <div class="page-footer-brand" style="display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:25px;">
-                <img src="images/1772173627537.png" alt="Logo" style="width:auto;height:45px;max-width:160px;object-fit:contain;" loading="lazy">
-                <span style="font-size:1.15rem;font-weight:900;background:linear-gradient(135deg,#e94e77,#f7931e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AKRAM MOSTAFA</span>
+            <div class="glass-card" style="padding:60px 40px;text-align:center;border-color:rgba(233,78,119,0.15);position:relative;overflow:hidden;" data-aos="zoom-in">
+                <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(233,78,119,0.1),transparent);pointer-events:none;"></div>
+                <div style="position:absolute;bottom:-50px;left:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(247,147,30,0.08),transparent);pointer-events:none;"></div>
+                <h2 style="font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:900;color:#fff;margin-bottom:18px;position:relative;">جاهز تبدأ معايا؟</h2>
+                <p style="color:var(--text-secondary);font-size:1.05rem;margin-bottom:36px;max-width:550px;margin-left:auto;margin-right:auto;position:relative;">كلمني دلوقتي ونشوف مع بعض إزاي أقدر أساعدك تحقق أهدافك</p>
+                <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;">
+                    <a href="https://wa.me/201555512778?text=أهلاً أكرم، عايز أتكلم معاك" target="_blank" class="btn-main" style="padding:16px 36px;font-size:1.05rem;"><i class="fab fa-whatsapp"></i> ابدأ دلوقتي</a>
+                    <a href="contact.html" class="btn-outline-new" style="padding:16px 36px;font-size:1.05rem;"><i class="fas fa-envelope"></i> كلمني</a>
+                </div>
             </div>
-            <div class="page-footer-links" style="display:flex;gap:25px;justify-content:center;flex-wrap:wrap;margin-bottom:25px;">
-                <a href="index.html" style="color:#6b82a8;text-decoration:none;font-size:.9rem;transition:.3s;">الرئيسية</a>
-                <a href="about.html" style="color:#6b82a8;text-decoration:none;font-size:.9rem;transition:.3s;">من أنا</a>
-                <a href="courses.html" style="color:#6b82a8;text-decoration:none;font-size:.9rem;transition:.3s;">الكورسات</a>
-                <a href="services.html" style="color:#6b82a8;text-decoration:none;font-size:.9rem;transition:.3s;">الخدمات</a>
-                <a href="store.html" style="color:#6b82a8;text-decoration:none;font-size:.9rem;transition:.3s;">المتجر</a>
-                <a href="contact.html" style="color:#6b82a8;text-decoration:none;font-size:.9rem;transition:.3s;">تواصل معي</a>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER V2 ═══ -->
+    <footer class="footer-v2">
+        <div class="container">
+            <div class="footer-v2-grid">
+                <div class="footer-v2-brand">
+                    <img src="images/1772173627537.png" alt="Akram Mostafa" loading="lazy">
+                    <p>خبير تسويق رقمي ومطوّر تطبيقات — بساعد الشركات والأفراد يحققوا أهدافهم أونلاين من خلال حلول تقنية وتسويقية مبتكرة.</p>
+                    <div class="footer-v2-social">
+                        <a href="https://www.facebook.com/share/17x8kYFSQq/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://wa.me/201555512778" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-v2-title">روابط سريعة</h4>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="about.html">من أنا</a></li>
+                        <li><a href="courses.html">الكورسات</a></li>
+                        <li><a href="services.html">الخدمات</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-v2-title">خدماتي</h4>
+                    <ul>
+                        <li><a href="store.html">المتجر</a></li>
+                        <li><a href="ready-websites.html">مواقع جاهزة</a></li>
+                        <li><a href="free-course.html">كورس مجاني</a></li>
+                        <li><a href="login.html">دخول الطلاب</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-v2-title">تواصل معي</h4>
+                    <ul>
+                        <li><a href="mailto:akram.er2025@gmail.com"><i class="fas fa-envelope" style="width:16px;"></i> akram.er2025@gmail.com</a></li>
+                        <li><a href="tel:+201555512778"><i class="fas fa-phone" style="width:16px;"></i> 01555512778</a></li>
+                        <li><a href="https://wa.me/201555512778" target="_blank"><i class="fab fa-whatsapp" style="width:16px;"></i> واتساب</a></li>
+                        <li><a href="contact.html"><i class="fas fa-paper-plane" style="width:16px;"></i> صفحة التواصل</a></li>
+                    </ul>
+                </div>
             </div>
-            <p style="text-align:center;color:#6b82a8;font-size:.85rem;margin:0;">© 2026 Akram Mostafa — جميع الحقوق محفوظة</p>
+            <div class="footer-v2-bottom">
+                © 2026 Akram Mostafa — جميع الحقوق محفوظة
+            </div>
         </div>
     </footer>
 
-    <a href="https://wa.me/201555512778" target="_blank" class="wa-float" style="position:fixed;bottom:28px;left:28px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;box-shadow:0 6px 24px rgba(37,211,102,0.4);text-decoration:none;transition:.3s;">
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/201555512778" target="_blank" style="position:fixed;bottom:28px;left:28px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;box-shadow:0 6px 24px rgba(37,211,102,0.4);text-decoration:none;transition:all .3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
         <i class="fab fa-whatsapp"></i>
     </a>
     <button id="scrollTop" title="العودة للأعلى"><i class="fas fa-chevron-up"></i></button>
@@ -1063,6 +1153,70 @@
           }catch(e){}
         })();
         // ===== END APPS SECTION =====
+    </script>
+
+    <!-- Counter Animation + New Interactions -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        // ── Animated Counters ──
+        const counters = document.querySelectorAll('[data-count]');
+        const counterObserver = new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(!entry.isIntersecting) return;
+                const el = entry.target;
+                if(el.dataset.counted) return;
+                el.dataset.counted = '1';
+                const target = parseInt(el.dataset.count);
+                const suffix = el.textContent.replace(/[0-9]/g,'').trim();
+                const duration = 2000;
+                const start = performance.now();
+                function tick(now){
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = Math.floor(target * eased) + suffix;
+                    if(progress < 1) requestAnimationFrame(tick);
+                    else el.textContent = target + suffix;
+                }
+                requestAnimationFrame(tick);
+            });
+        }, {threshold: 0.3});
+        counters.forEach(function(c){ counterObserver.observe(c); });
+
+        // ── Scroll Top Button ──
+        const scrollBtn = document.getElementById('scrollTop');
+        if(scrollBtn){
+            window.addEventListener('scroll', function(){
+                scrollBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+            });
+            scrollBtn.addEventListener('click', function(){
+                window.scrollTo({top:0, behavior:'smooth'});
+            });
+        }
+
+        // ── Navbar Background on Scroll ──
+        const navbar = document.getElementById('navbar');
+        if(navbar){
+            window.addEventListener('scroll', function(){
+                navbar.classList.toggle('scrolled', window.scrollY > 80);
+            });
+        }
+
+        // ── Mobile Nav Toggle ──
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        if(navToggle && navMenu){
+            navToggle.addEventListener('click', function(){
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+            });
+            navMenu.querySelectorAll('.nav-link').forEach(function(link){
+                link.addEventListener('click', function(){
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                });
+            });
+        }
+    });
     </script>
 </body>
 </html>
