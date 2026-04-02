@@ -349,12 +349,11 @@
         .hero-v2-stat-num{font-size:1.8rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .hero-v2-stat-label{font-size:.78rem;color:var(--text-muted);font-weight:600;margin-top:4px}
         .hero-v2-image{position:relative;display:flex;justify-content:center}
-        .hero-v2-img-wrap{position:relative;width:380px;height:380px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-        .hero-v2-img-wrap img{width:340px;height:340px;border-radius:50%;object-fit:cover;position:relative;z-index:2;border:4px solid rgba(233,78,119,0.15)}
-        .hero-img-glow{position:absolute;inset:-20px;border-radius:50%;background:conic-gradient(from 0deg,#e94e77,#f7931e,#a855f7,#3b82f6,#22c55e,#e94e77);animation:rotateGlow 4s linear infinite;filter:blur(25px);opacity:.45;z-index:0}
-        .hero-img-ring{position:absolute;inset:-8px;border-radius:50%;border:2px dashed rgba(233,78,119,0.3);animation:rotateRing 12s linear infinite;z-index:1}
-        @keyframes rotateGlow{to{transform:rotate(360deg)}}
-        @keyframes rotateRing{to{transform:rotate(-360deg)}}
+        .hero-v2-img-wrap{position:relative;width:360px;max-width:100%;border-radius:24px;padding:4px;background:linear-gradient(135deg,#e94e77,#f7931e,#a855f7,#3b82f6);box-shadow:0 20px 60px rgba(233,78,119,0.2),0 0 80px rgba(233,78,119,0.08)}
+        .hero-v2-img-wrap img{width:100%;display:block;border-radius:20px;object-fit:cover;position:relative;z-index:2}
+        .hero-img-glow{position:absolute;inset:-15px;border-radius:30px;background:linear-gradient(135deg,rgba(233,78,119,0.25),rgba(247,147,30,0.15),rgba(168,85,247,0.2));filter:blur(30px);opacity:.6;z-index:0;animation:pulseGlow 3s ease-in-out infinite}
+        .hero-img-ring{display:none}
+        @keyframes pulseGlow{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.7;transform:scale(1.03)}}
         
         /* === Typewriter === */
         .typewriter-line{display:inline-flex;align-items:center;gap:4px;padding:8px 22px;background:rgba(233,78,119,0.06);border:1px solid rgba(233,78,119,0.18);border-radius:12px;font-size:1.1rem;font-weight:800;min-height:48px}
@@ -436,8 +435,9 @@
             .hero-v2-btns{justify-content:center}
             .hero-v2-stats{justify-content:center}
             .hero-v2-image{order:-1;margin-bottom:20px}
-            .hero-v2-img-wrap{width:280px;height:280px}
-            .hero-v2-img-wrap img{width:240px;height:240px}
+            .hero-v2-img-wrap{width:260px}
+            .hero-v2-text p{font-size:.95rem;padding:0 8px}
+            .typewriter-line{font-size:.95rem;padding:6px 16px}
             .fc-grid{grid-template-columns:1fr}
             .testimonial-grid{grid-template-columns:1fr}
             .footer-v2-grid{grid-template-columns:1fr 1fr}
@@ -454,10 +454,14 @@
             .navbar.scrolled .nav-logo{height:55px!important}
         }
         @media(max-width:480px){
-            .hero-v2{padding:120px 0 60px}
-            .hero-v2-img-wrap{width:220px;height:220px}
-            .hero-v2-img-wrap img{width:190px;height:190px}
-            .hero-v2-stats{gap:20px}
+            .hero-v2{padding:110px 0 50px}
+            .hero-v2-img-wrap{width:200px}
+            .hero-v2-text h1{font-size:1.8rem}
+            .hero-v2-stats{gap:16px}
+            .hero-v2-stat-num{font-size:1.4rem}
+            .hero-v2-btns{gap:10px}
+            .hero-v2-btns .btn-main,.hero-v2-btns .btn-outline-new{padding:12px 20px;font-size:.85rem;width:100%;justify-content:center}
+            .typewriter-line{font-size:.88rem;padding:6px 14px;min-height:40px}
             .services-grid-v2{grid-template-columns:1fr!important}
             .fc-details-grid{grid-template-columns:1fr}
         }
@@ -536,7 +540,6 @@
                 <div class="hero-v2-image" data-aos="fade-right" data-aos-duration="1000">
                     <div class="hero-v2-img-wrap">
                         <div class="hero-img-glow"></div>
-                        <div class="hero-img-ring"></div>
                         <img src="images/Screenshot_1.png" alt="أكرم مصطفى" loading="eager">
                     </div>
                 </div>
