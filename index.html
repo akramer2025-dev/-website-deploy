@@ -349,8 +349,8 @@
         .hero-v2-stat-num{font-size:1.8rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .hero-v2-stat-label{font-size:.78rem;color:var(--text-muted);font-weight:600;margin-top:4px}
         .hero-v2-image{position:relative;display:flex;justify-content:center}
-        .hero-v2-img-wrap{position:relative;width:360px;max-width:100%;border-radius:24px;padding:4px;background:linear-gradient(135deg,#e94e77,#f7931e,#a855f7,#3b82f6);box-shadow:0 20px 60px rgba(233,78,119,0.2),0 0 80px rgba(233,78,119,0.08)}
-        .hero-v2-img-wrap img{width:100%;display:block;border-radius:20px;object-fit:cover;position:relative;z-index:2}
+        .hero-v2-img-wrap{position:relative;width:360px;max-width:100%;border-radius:0;padding:0;background:none;box-shadow:none}
+        .hero-v2-img-wrap img{width:100%;display:block;border-radius:0;object-fit:contain;position:relative;z-index:2}
         .hero-img-glow{position:absolute;inset:-15px;border-radius:30px;background:linear-gradient(135deg,rgba(233,78,119,0.25),rgba(247,147,30,0.15),rgba(168,85,247,0.2));filter:blur(30px);opacity:.6;z-index:0;animation:pulseGlow 3s ease-in-out infinite}
         .hero-img-ring{display:none}
         @keyframes pulseGlow{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.7;transform:scale(1.03)}}
@@ -404,9 +404,9 @@
         .fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;margin-top:50px}
         .fc-image{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
         .fc-image img{width:100%;border-radius:var(--radius-lg)}
-        .fc-price-badge{position:absolute;top:20px;left:20px;background:var(--gradient);padding:14px 24px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
-        .fc-price-badge .fc-price-label{font-size:.72rem;opacity:.9;margin-bottom:2px}
-        .fc-price-badge .fc-price-value{font-size:1.6rem;font-weight:900}
+        .fc-price-badge{position:absolute;top:12px;left:12px;background:var(--gradient);padding:8px 14px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.3)}
+        .fc-price-badge .fc-price-label{font-size:.6rem;opacity:.9;margin-bottom:1px}
+        .fc-price-badge .fc-price-value{font-size:1.05rem;font-weight:900}
         .fc-details-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
         .fc-detail-item{background:rgba(255,255,255,0.03);padding:16px;border-radius:14px;border:1px solid var(--border)}
         .fc-detail-item i{color:var(--orange);font-size:1.2rem;margin-bottom:8px;display:block}
@@ -591,7 +591,7 @@
                 <div class="hero-v2-image" data-aos="fade-right" data-aos-duration="1000">
                     <div class="hero-v2-img-wrap">
                         <div class="hero-img-glow"></div>
-                        <img src="images/Screenshot_1.png" alt="أكرم مصطفى" loading="eager">
+                        <img src="images/og-preview.jpg" alt="أكرم مصطفى" loading="eager">
                     </div>
                 </div>
             </div>
