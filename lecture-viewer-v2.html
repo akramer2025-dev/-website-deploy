@@ -845,25 +845,25 @@
                 password: 'pass123',
                 name: 'محمد أحمد',
                 email: 'mohamed@example.com',
-                allowedLectures: ['lec_fb_1', 'lec_april_1']
+                allowedLectures: ['lec_fb_1', 'lec_april_1', 'lec_april_2']
             },
             'student2': {
                 password: 'pass456',
                 name: 'فاطمة علي',
                 email: 'fatma@example.com',
-                allowedLectures: ['lec_april_1']
+                allowedLectures: ['lec_april_1', 'lec_april_2']
             },
             'test': {
                 password: 'Aa123456',
                 name: 'أكرم مصطفى',
                 email: 'test@example.com',
-                allowedLectures: ['lec_fb_1', 'lec_april_1']
+                allowedLectures: ['lec_fb_1', 'lec_april_1', 'lec_april_2']
             },
             'admin': {
                 password: 'admin123',
                 name: 'أكرم مصطفى',
                 email: 'akram@akrammostafa.com',
-                allowedLectures: ['lec_fb_1', 'lec_april_1'],
+                allowedLectures: ['lec_fb_1', 'lec_april_1', 'lec_april_2'],
                 isAdmin: true
             }
         };
@@ -896,6 +896,14 @@
                 title: 'الحصة 1: الهوية البصرية ومكونات البوست والأدوات المستخدمة',
                 description: 'دليل شامل لعمل الهوية البصرية وتصميم المحتوى باستخدام أقوى الأدوات',
                 thumbnail: '/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png',
+                duration: '16 دقيقة',
+                sections: 8
+            },
+            'lec_april_2': {
+                id: 'lec_april_2',
+                title: 'الحصة 2: استراتيجية المحتوى وخطة النشر الشهرية',
+                description: 'تعلم بناء خطة محتوى شهرية احترافية وأسرار الإعلانات الناجحة وتحليل الأداء',
+                thumbnail: '/images/slides/lec2-01.html',
                 duration: '16 دقيقة',
                 sections: 8
             }
@@ -934,7 +942,7 @@
                                 username: user.username || user.name,
                                 name: user.name || user.username,
                                 email: user.email || '',
-                                allowedLectures: ['lec_fb_1', 'lec_april_1'],
+                                allowedLectures: ['lec_fb_1', 'lec_april_1', 'lec_april_2'],
                                 isAdmin: false,
                                 isOldSystem: true,
                                 expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -949,7 +957,7 @@
                         username: 'student',
                         name: sessionStorage.getItem('akram_client_name') || 'طالب',
                         email: '',
-                        allowedLectures: ['lec_fb_1', 'lec_april_1'],
+                        allowedLectures: ['lec_fb_1', 'lec_april_1', 'lec_april_2'],
                         isAdmin: false,
                         isOldSystem: true,
                         expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -974,7 +982,7 @@
                                 username: user.username || user.name || lsStudentId,
                                 name: user.name || clientName || user.username,
                                 email: user.email || '',
-                                allowedLectures: ['lec_fb_1', 'lec_april_1'],
+                                allowedLectures: ['lec_fb_1', 'lec_april_1', 'lec_april_2'],
                                 isAdmin: false,
                                 isOldSystem: true,
                                 expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -990,7 +998,7 @@
                     username: lsStudentId,
                     name: clientName || 'طالب',
                     email: '',
-                    allowedLectures: ['lec_fb_1', 'lec_april_1'],
+                    allowedLectures: ['lec_fb_1', 'lec_april_1', 'lec_april_2'],
                     isAdmin: false,
                     isOldSystem: true,
                     expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -1075,7 +1083,7 @@
                             const userData = {
                                 name: found.name || found.username || username,
                                 email: found.email || '',
-                                allowedLectures: ['lec_fb_1', 'lec_april_1'],
+                                allowedLectures: ['lec_fb_1', 'lec_april_1', 'lec_april_2'],
                                 isAdmin: false
                             };
                             const session = createSession(found.username || found.id || username, userData);
@@ -1319,6 +1327,21 @@
                 notes:'🎉 مبروك! خلصت أول محاضرة من كورس التسويق الاحترافي! 🎯\n\n📚 ملخص سريع للمحاضرة:\n\n1️⃣ الهوية البصرية (Brand Identity):\n• شعار + ألوان + خطوط + نمط موحد\n• الاتساق هو السر لعلامة تجارية لا تُنسى\n\n2️⃣ Meta Business Suite:\n• إدارة شاملة لفيسبوك + انستجرام + واتساب\n• جدولة منشورات + إحصائيات + إعلانات\n• <a href="https://business.facebook.com" target="_blank" style="color: #00B8D4;">👉 business.facebook.com</a>\n\n3️⃣ Canva:\n• تصميم احترافي بدون خبرة\n• 250,000+ قالب جاهز\n• <a href="https://www.canva.com" target="_blank" style="color: #00B8D4;">👉 canva.com</a>\n\n4️⃣ Google Gemini:\n• ذكاء اصطناعي للأفكار + الكتابة + التصميم\n• مجاني 100% بإمكانيات هائلة\n• <a href="https://gemini.google.com" target="_blank" style="color: #00B8D4;">👉 gemini.google.com</a>\n\n5️⃣ أدوات التنظيم:\n• Trello / Notion / Asana / Monday\n• لتنظيم المهام والمحتوى\n• <a href="https://trello.com" target="_blank" style="color: #00B8D4;">👉 trello.com</a>\n\n6️⃣ مكونات البوست الناجح:\n• صورة جذابة + Hook قوي + Caption مفيد\n• CTA واضح + Hashtags ذكية\n• التكامل بين العناصر = نجاح مضمون\n\n\n🎯 الواجب العملي (مهم جداً للتطبيق!):\n\n✅ المهمة 1: تحميل وإعداد الأدوات\n• حمّل <a href="https://business.facebook.com" target="_blank" style="color: #00B8D4;">Meta Business Suite</a> علو هاتفك\n• سجل حساب في <a href="https://canva.com" target="_blank" style="color: #00B8D4;">Canva</a> (مجاني)\n• افتح <a href="https://gemini.google.com" target="_blank" style="color: #00B8D4;">Google Gemini</a> وجرب طلب أي فكرة\n• سجل في <a href="https://trello.com" target="_blank" style="color: #00B8D4;">Trello</a> أو Notion\n\n✅ المهمة 2: تحديد هويتك البصرية\n• اختر 2-3 ألوان أساسية لعلامتك\n• اختر خطين (عنوان + نص)\n• استخدم Gemini لتوليد أفكار لوجو\n• صمم شعارك في Canva\n\n✅ المهمة 3: تصميم بوست تجريبي\n• افتح Canva واختر Instagram Post\n• صمم بوست بهويتك البصرية\n• اكتب Caption يحتوي على: Hook + محتوى + CTA\n• أضف 5-10 Hashtags مناسبة\n\n✅ المهمة 4: التخطيط الشهري\n• أنشئ Board في Trello لشهر أبريل\n• خطط 5 أفكار منشورات على الأقل\n• حدد تواريخ النشر\n\n✅ المهمة 5: المشاركة والتفاعل\n• شارك تصميمك في مجموعة الكورس\n• اطلب مراجعة من الزملاء\n• علّق على تصميمات الآخرين\n\n\n🔗 الروابط المهمة (احفظهم في المفضلة):\n\n📱 Meta Business Suite:\n• للكمبيوتر: <a href="https://business.facebook.com" target="_blank" style="color: #00B8D4; font-weight: bold;">👉 business.facebook.com</a>\n• Android: <a href="https://play.google.com/store/apps/details?id=com.facebook.pages.app" target="_blank" style="color: #00B8D4;">👉 تحميل من Google Play</a>\n• iOS: <a href="https://apps.apple.com/app/meta-business-suite/id514643583" target="_blank" style="color: #00B8D4;">👉 تحميل من App Store</a>\n\n🎨 Canva:\n• <a href="https://www.canva.com" target="_blank" style="color: #00B8D4; font-weight: bold;">👉 canva.com</a>\n• دروس مجانية: <a href="https://www.canva.com/designschool" target="_blank" style="color: #00B8D4;">👉 Canva Design School</a>\n\n🤖 Google Gemini:\n• <a href="https://gemini.google.com" target="_blank" style="color: #00B8D4; font-weight: bold;">👉 gemini.google.com</a>\n\n📋 أدوات التنظيم:\n• Trello: <a href="https://trello.com" target="_blank" style="color: #00B8D4; font-weight: bold;">👉 trello.com</a>\n• Notion: <a href="https://www.notion.so" target="_blank" style="color: #00B8D4; font-weight: bold;">👉 notion.so</a>\n• Asana: <a href="https://asana.com" target="_blank" style="color: #00B8D4; font-weight: bold;">👉 asana.com</a>\n• Monday: <a href="https://monday.com" target="_blank" style="color: #00B8D4; font-weight: bold;">👉 monday.com</a>\n\n\n💬 عندك سؤال؟\n\nلا تتردد في طرح أي استفسار:\n• اكتب في تعليقات المحاضرة\n• تواصل معنا على الواتساب\n• شارك في مجموعة الكورس\n\nأنا هرد عليك في أقرب وقت! 🚀\n\n\n⏩ المحاضرة القادمة:\n\n🌟 "استراتيجية المحتوى وخطة النشر الشهرية"\n\nسنتعلم فيها:\n• إزاي تحط خطة محتوى شهرية احترافية\n• أفضل أوقات النشر على كل منصة\n• أنواع المحتوى الأكثر تفاعلاً\n• إزاي تقيس النتائج وتحسّن الأداء\n• أسرار الإعلانات الناجحة\n\n\n🎉 تهانينا على إتمام المحاضرة الأولى!\n\n👏 انت الآن مجهز بأقوى الأدوات:\n✅ ميتا بيزنس للإدارة الشاملة\n✅ كانفا للتصميم الاحترافي\n✅ جيميناي للذكاء الاصطناعي\n✅ أدوات التنظيم للإنتاجية القصوى\n✅ معرفة عميقة بمكونات البوست الناجح\n\n🚀 الآن وقت العمل والتطبيق!\n\nانتقل للخطوة التالية، نفذ الواجبات، وابدأ رحلتك للنجاح في عالم التسويق الرقمي!\n\n👊 بالتوفيق ونراك في المحاضرة القادمة! 🔥' 
               }
             ]
+          },
+          'lec_april_2': {
+            id: 'lec_april_2',
+            title: 'الحصة 2: استراتيجية المحتوى وخطة النشر الشهرية',
+            description: 'تعلم بناء خطة محتوى شهرية احترافية وأسرار الإعلانات الناجحة وتحليل الأداء',
+            slides: [
+              { id:'s2a_0', type:'image', image:'/images/slides/lec2-01.html', title:'🚀 مرحباً بك في الحصة الثانية', notes:'🎉 أهلاً وسهلاً بكم في الحصة الثانية من كورس التسويق الاحترافي!\n\n📚 في المحاضرة السابقة تعلمنا:\n✅ الهوية البصرية ومكوناتها\n✅ أدوات التصميم (Canva + Gemini)\n✅ مكونات البوست الاحترافي\n✅ أدوات تنظيم المشاريع\n\n🎯 في هذه المحاضرة سنتعلم:\n1️⃣ بناء استراتيجية محتوى شاملة\n2️⃣ أنواع المحتوى الأكثر تفاعلاً\n3️⃣ إنشاء تقويم محتوى شهري (Content Calendar)\n4️⃣ أفضل أوقات النشر على كل منصة\n5️⃣ قاعدة 80/20 في المحتوى\n6️⃣ أساسيات الإعلانات المدفوعة\n7️⃣ قراءة وتحليل الإحصائيات (Insights)\n8️⃣ خطة عمل عملية جاهزة للتنفيذ' },
+              { id:'s2a_1', type:'image', image:'/images/slides/lec2-02.html', title:'📊 استراتيجية المحتوى - الأساس لكل نجاح', notes:'🌟 استراتيجية المحتوى (Content Strategy) هي الخطة الشاملة التي تحدد: ماذا تنشر، لمن تنشر، متى تنشر، وأين تنشر.\n\n📌 الأركان الخمسة:\n\n1️⃣ تحديد الجمهور المستهدف:\n• مين العميل المثالي؟ (العمر، الجنس، الموقع)\n• إيه المشاكل اللي بيعاني منها؟\n• فين بيقضي وقته أونلاين؟\n💡 اطلب من Gemini: "ساعدني أعمل Buyer Persona لعميل مثالي في مجال [مجالك]"\n\n2️⃣ تحديد أهداف SMART:\n• S - محددة | M - قابلة للقياس | A - قابلة للتحقيق | R - مرتبطة | T - محددة بوقت\n\n3️⃣ اختيار المنصات المناسبة:\n• فيسبوك: كل الأعمار | انستجرام: بصري 18-35 | تيك توك: Gen Z\n💡 ابدأ بمنصة أو اثنتين وأتقنهم\n\n4️⃣ أعمدة المحتوى (Content Pillars):\nالمواضيع الرئيسية اللي هتدور حواليها محتواك\n\n5️⃣ نبرة الصوت (Tone of Voice):\nاختر نبرة واحدة والتزم بها' },
+              { id:'s2a_2', type:'image', image:'/images/slides/lec2-03.html', title:'📝 أنواع المحتوى الأكثر تفاعلاً', notes:'🔥 ترتيب أنواع المحتوى حسب التفاعل:\n\n1️⃣ الفيديو القصير (Reels / TikTok) 🎬\n• أعلى وصول 3-5x من الصور\n• أفكار: كواليس، نصائح سريعة، قبل وبعد، شرح خطوة بخطوة\n• الطول المثالي: 15-60 ثانية\n\n2️⃣ الكاروسيل (Carousel) 📱\n• يشجع على التمرير = تفاعل أكثر\n• أفكار: نصائح مرقمة، خطوات، مقارنات\n• صممه في Canva: 5-10 slides\n\n3️⃣ المحتوى التفاعلي 🎯\n• يزيد التفاعل 50-100%!\n• استطلاعات، أسئلة، تحديات، اختبارات\n\n4️⃣ القصص الشخصية (Storytelling) 📖\n• أقوى أداة لبناء الثقة\n• قصة بدايتك، تحدي واجهته، قصة نجاح عميل\n\n5️⃣ المحتوى التعليمي 📚\n• يبني سلطة ومصداقية\n• إنفوجرافيك، نصائح عملية، أخطاء شائعة\n\n6️⃣ محتوى العملاء (UGC) 👥\n• يزيد الثقة 85%!\n• تقييمات، صور عملاء، شهادات\n\n🔑 التنويع هو السر!' },
+              { id:'s2a_3', type:'image', image:'/images/slides/lec2-04.html', title:'📅 تقويم المحتوى الشهري - Content Calendar', notes:'📅 Content Calendar = خريطة طريق تنظم محتواك لشهر كامل\n\n📊 خطوات الإنشاء:\n\n🔵 حدد عدد المنشورات:\n• فيسبوك: 3-5/أسبوع | انستجرام: 3-4/أسبوع | Stories: يومياً | Reels: 3-5/أسبوع\n💡 الجودة أهم من الكمية!\n\n🟢 وزّع أعمدة المحتوى:\nالسبت: تعليمي | الأحد: تفاعلي | الإثنين: Reel | الثلاثاء: قصة | الأربعاء: كاروسيل | الخميس: عرض + CTA | الجمعة: ترفيهي\n\n🟡 حدد المناسبات والأحداث:\n• مناسبات شهر أبريل، إطلاقات، عروض خاصة\n\n🔴 أنشئ التقويم:\n• Trello / Google Sheets / Notion\n\n🟣 Batch Creation:\n📅 جمعة: تخطيط | 🎨 سبت: تصميم | 📅 أحد: جدولة\n\n✨ النتيجة: باقي الأسبوع تتفرغ للتفاعل مع الجمهور!' },
+              { id:'s2a_4', type:'image', image:'/images/slides/lec2-05.html', title:'⏰ أفضل أوقات النشر وقاعدة 80/20', notes:'⏰ أفضل أوقات النشر (بتوقيت مصر/السعودية):\n\n📘 فيسبوك:\n• صباحاً: 8-10 | ظهراً: 12-2 | مساءً: 7-9 ⭐\n• أفضل الأيام: الخميس، الجمعة، السبت\n\n📸 انستجرام:\n• صباحاً: 7-9 ⭐ | ظهراً: 11-1 | مساءً: 5-7 ⭐\n• Reels: 9 صباحاً و 12 ظهراً\n\n🎵 تيك توك:\n• ظهراً: 12-3 ⭐ | ليلاً: 7-11 ⭐⭐\n💡 1-3 فيديوهات يومياً\n\n⚠️ هذه أوقات عامة — راجع Insights لمعرفة أوقاتك!\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 قاعدة 80/20 (The Golden Rule):\n\n🟢 80% = قيمة مجانية (نصائح، تعليم، ترفيه، قصص)\n🔴 20% = بيع وترويج مباشر\n\n❌ الغلطة: 100% بيع = الناس بتزهق\n✅ الصح: قدّم قيمة → ابني ثقة → بعدين بيع' },
+              { id:'s2a_5', type:'image', image:'/images/slides/lec2-06.html', title:'💰 أساسيات الإعلانات المدفوعة', notes:'💰 الإعلانات المدفوعة = المحرك الأقوى لنمو البيزنس\n\n📊 هيكل الحملة:\n🏢 Campaign (الهدف) → 📂 Ad Set (الجمهور + الميزانية) → 📄 Ad (الصورة + النص)\n\n🎯 أهداف الحملات:\n• الوعي: 5-10$/يوم — لما تكون في البداية\n• الزيارات: 5-15$/يوم — لو عندك موقع\n• التفاعل: 3-8$/يوم — لبناء مجتمع\n• الرسائل: 5-10$/يوم ⭐ — الأفضل للبيزنس الصغير!\n• المبيعات: 10-30$/يوم — لو عندك متجر + Pixel\n\n👥 الاستهداف:\n📍 جغرافي: الدولة، المدينة | 👤 ديموغرافي: العمر، الجنس\n🎯 اهتمامات: اختر 5-15 اهتمام\n📊 متقدم: Custom + Lookalike Audiences\n\n💡 نصائح:\n✅ ابدأ بـ 5-10$/يوم وزود تدريجياً\n✅ اختبر A/B — صور ونصوص مختلفة\n✅ أوقف اللي مبيجيبش نتيجة بعد 3-5 أيام\n✅ استخدم فيديوهات قصيرة (أداء أفضل 30%)' },
+              { id:'s2a_6', type:'image', image:'/images/slides/lec2-07.html', title:'📈 تحليل الأداء وقراءة الإحصائيات', notes:'📈 بدون أرقام، انت بتشتغل أعمى!\n\n📊 المقاييس الأساسية (KPIs):\n\n👁️ الوصول (Reach): +5-10% أسبوعياً\n❤️ التفاعل: 3-6% فيسبوك | 1-3% انستجرام\n📈 نمو المتابعين: 1-5% شهرياً\n🖱️ النقرات: CTA واضح\n💰 تكلفة النتيجة: 3-10 ج/رسالة\n🎯 معدل التحويل: 2-5% متاجر | 10-20% رسائل\n\n📊 خطوات التحليل:\n🔵 المراجعة الأسبوعية: افتح Insights كل أحد\n🟢 حدد الأفضل والأسوأ: ليه نجح؟ ليه فشل؟\n🟡 استخرج الأنماط: فيديو > صور؟ وقت معين أحسن?\n🔴 التعديل والتحسين: كرر اللي نجح\n🟣 التوثيق: سجل في Trello أو Notion\n\n📱 أدوات التحليل:\n• Meta Business Suite Insights (مجاني)\n• Instagram Professional Dashboard\n• Google Analytics (للموقع)' },
+              { id:'s2a_7', type:'image', image:'/images/slides/lec2-08.html', title:'🎓 ملخص الحصة الثانية وخطة العمل', notes:'🎉 مبروك! خلصت الحصة الثانية!\n\n📚 ملخص:\n✅ استراتيجية محتوى واضحة\n✅ تقويم محتوى شهري منظم\n✅ أفضل أوقات وأنواع المحتوى\n✅ قاعدة 80/20 الذهبية\n✅ أساسيات الإعلانات المدفوعة\n✅ مهارة تحليل الأداء\n\n🎯 الواجب العملي:\n1️⃣ حدد Buyer Persona + هدف SMART + 3-5 أعمدة محتوى\n2️⃣ أنشئ Content Calendar لأسبوعين (10-14 منشور)\n3️⃣ صمم 3 منشورات في Canva بالقواعد\n4️⃣ جدول 3 منشورات في Meta Business Suite\n5️⃣ سجل أرقامك الحالية كنقطة بداية\n\n⏩ المحاضرة القادمة:\n🌟 إعلانات فيسبوك وانستجرام من الصفر للاحتراف\n• إنشاء حملة إعلانية كاملة خطوة بخطوة\n• Facebook Pixel وكيف تستخدمه\n• أسرار الإعلانات الناجحة\n\n👊 بالتوفيق ونراك في الحصة القادمة! 🔥' },
+            ]
           }
         };
         // ================================================================
@@ -1386,7 +1409,7 @@
                         const arr = obj[key];
                         if (Array.isArray(arr)) {
                             const found = arr.find(lec => lec.id === lectureId);
-                            if (found && found.slides?.[0]?.type === 'image') {
+                            if (found && found.slides?.length) {
                                 lecture = found;
                                 break;
                             }
@@ -1556,6 +1579,16 @@
                 }
                 
                 imageContainer.appendChild(videoWrapper);
+            } else if ((slide.image && slide.image.endsWith('.html')) || (slide.src && slide.src.endsWith('.html'))) {
+                // HTML slide cover
+                const htmlWrapper = document.createElement('div');
+                htmlWrapper.className = 'slide-media';
+                const iframe = document.createElement('iframe');
+                iframe.src = slide.image || slide.src;
+                iframe.style.cssText = 'width:100%;height:400px;border:none;border-radius:12px;';
+                iframe.loading = 'lazy';
+                htmlWrapper.appendChild(iframe);
+                imageContainer.appendChild(htmlWrapper);
             } else {
                 // Image slide or auto-assigned image for text slides
                 const SLIDE_IMAGES = [

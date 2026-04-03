@@ -789,6 +789,7 @@ button{cursor:pointer;}
             <label>الكورس *</label>
             <select id="rlCourse">
               <option value="free">كورس التسويق المجاني</option>
+              <option value="april-2026">كورس التسويق – أبريل</option>
               <option value="programming">برمجة المواقع</option>
               <option value="facebook-ads">إعلانات فيسبوك</option>
               <option value="instagram">إنستاجرام</option>
@@ -1143,6 +1144,7 @@ async function _loadAdminData(){
     try{ renderLiveSessions(); }catch(e){}
     // seed default lectures if free course is empty
     try{ seedFreeLectures(); }catch(e){}
+    try{ seedAprilLectures(); }catch(e){}
   } catch(err){ console.warn('Firebase _loadAdminData failed:', err); }
 }
 
@@ -2202,6 +2204,7 @@ function toast(msg,type='success'){
 const LECTURES_KEY = 'am_lectures';
 const LEC_COURSES = [
   {key:'free',        name:'كورس التسويق الاحترافي',          icon:'fa-graduation-cap'},
+  {key:'april-2026',  name:'كورس التسويق – أبريل',    icon:'fa-calendar-alt'},
   {key:'facebook-ads',name:'إعلانات فيسبوك',           icon:'fa-facebook'},
   {key:'instagram',   name:'إنستجرام',                 icon:'fa-instagram'},
   {key:'tiktok',      name:'تيك توك',                  icon:'fa-music'},
@@ -2314,6 +2317,41 @@ async function seedFreeLectures(){
   } catch(e){ console.warn('Seed failed:', e); }
 }
 
+/* ══ SEED: كورس أبريل 2026 — المحاضرة الثانية ══ */
+function getDefaultAprilLectures(){
+  const ts = Date.now();
+  const sl=(id,type,src,title,notes)=>({id,type,src,title,notes});
+  return [
+    { id:'lec_april_2', title:'الحصة 2: استراتيجية المحتوى وخطة النشر الشهرية', description:'تعلم بناء خطة محتوى شهرية احترافية وأسرار الإعلانات الناجحة وتحليل الأداء', createdAt:ts, updatedAt:ts, slides:[
+      sl('s2a_0','html','/images/slides/lec2-01.html','🚀 مرحباً بك في الحصة الثانية','🎉 أهلاً وسهلاً بكم في الحصة الثانية من كورس التسويق الاحترافي!\n\n📚 في المحاضرة السابقة تعلمنا:\n✅ الهوية البصرية ومكوناتها\n✅ أدوات التصميم (Canva + Gemini)\n✅ مكونات البوست الاحترافي\n✅ أدوات تنظيم المشاريع\n\n🎯 في هذه المحاضرة سنتعلم:\n1️⃣ بناء استراتيجية محتوى شاملة\n2️⃣ أنواع المحتوى الأكثر تفاعلاً\n3️⃣ إنشاء تقويم محتوى شهري (Content Calendar)\n4️⃣ أفضل أوقات النشر على كل منصة\n5️⃣ قاعدة 80/20 في المحتوى\n6️⃣ أساسيات الإعلانات المدفوعة\n7️⃣ قراءة وتحليل الإحصائيات (Insights)\n8️⃣ خطة عمل عملية جاهزة للتنفيذ'),
+      sl('s2a_1','html','/images/slides/lec2-02.html','📊 استراتيجية المحتوى - الأساس لكل نجاح','🌟 استراتيجية المحتوى (Content Strategy) هي الخطة الشاملة التي تحدد: ماذا تنشر، لمن تنشر، متى تنشر، وأين تنشر.\n\n📌 الأركان الخمسة:\n\n1️⃣ تحديد الجمهور المستهدف:\n• مين العميل المثالي؟ (العمر، الجنس، الموقع)\n• إيه المشاكل اللي بيعاني منها؟\n• فين بيقضي وقته أونلاين؟\n💡 اطلب من Gemini: "ساعدني أعمل Buyer Persona لعميل مثالي في مجال [مجالك]"\n\n2️⃣ تحديد أهداف SMART:\n• S - محددة | M - قابلة للقياس | A - قابلة للتحقيق | R - مرتبطة | T - محددة بوقت\n\n3️⃣ اختيار المنصات المناسبة:\n• فيسبوك: كل الأعمار | انستجرام: بصري 18-35 | تيك توك: Gen Z\n💡 ابدأ بمنصة أو اثنتين وأتقنهم\n\n4️⃣ أعمدة المحتوى (Content Pillars):\nالمواضيع الرئيسية اللي هتدور حواليها محتواك\n\n5️⃣ نبرة الصوت (Tone of Voice):\nاختر نبرة واحدة والتزم بها'),
+      sl('s2a_2','html','/images/slides/lec2-03.html','📝 أنواع المحتوى الأكثر تفاعلاً','🔥 ترتيب أنواع المحتوى حسب التفاعل:\n\n1️⃣ الفيديو القصير (Reels / TikTok) 🎬\n• أعلى وصول 3-5x من الصور\n• أفكار: كواليس، نصائح سريعة، قبل وبعد، شرح خطوة بخطوة\n• الطول المثالي: 15-60 ثانية\n\n2️⃣ الكاروسيل (Carousel) 📱\n• يشجع على التمرير = تفاعل أكثر\n• أفكار: نصائح مرقمة، خطوات، مقارنات\n• صممه في Canva: 5-10 slides\n\n3️⃣ المحتوى التفاعلي 🎯\n• يزيد التفاعل 50-100%!\n• استطلاعات، أسئلة، تحديات، اختبارات\n\n4️⃣ القصص الشخصية (Storytelling) 📖\n• أقوى أداة لبناء الثقة\n• قصة بدايتك، تحدي واجهته، قصة نجاح عميل\n\n5️⃣ المحتوى التعليمي 📚\n• يبني سلطة ومصداقية\n• إنفوجرافيك، نصائح عملية، أخطاء شائعة\n\n6️⃣ محتوى العملاء (UGC) 👥\n• يزيد الثقة 85%!\n• تقييمات، صور عملاء، شهادات\n\n🔑 التنويع هو السر!'),
+      sl('s2a_3','html','/images/slides/lec2-04.html','📅 تقويم المحتوى الشهري - Content Calendar','📅 Content Calendar = خريطة طريق تنظم محتواك لشهر كامل\n\n📊 خطوات الإنشاء:\n\n🔵 حدد عدد المنشورات:\n• فيسبوك: 3-5/أسبوع | انستجرام: 3-4/أسبوع | Stories: يومياً | Reels: 3-5/أسبوع\n💡 الجودة أهم من الكمية!\n\n🟢 وزّع أعمدة المحتوى:\nالسبت: تعليمي | الأحد: تفاعلي | الإثنين: Reel | الثلاثاء: قصة | الأربعاء: كاروسيل | الخميس: عرض + CTA | الجمعة: ترفيهي\n\n🟡 حدد المناسبات والأحداث:\n• مناسبات شهر أبريل، إطلاقات، عروض خاصة\n\n🔴 أنشئ التقويم:\n• Trello / Google Sheets / Notion\n\n🟣 Batch Creation:\n📅 جمعة: تخطيط | 🎨 سبت: تصميم | 📅 أحد: جدولة\n\n✨ النتيجة: باقي الأسبوع تتفرغ للتفاعل مع الجمهور!'),
+      sl('s2a_4','html','/images/slides/lec2-05.html','⏰ أفضل أوقات النشر وقاعدة 80/20','⏰ أفضل أوقات النشر (بتوقيت مصر/السعودية):\n\n📘 فيسبوك:\n• صباحاً: 8-10 | ظهراً: 12-2 | مساءً: 7-9 ⭐\n• أفضل الأيام: الخميس، الجمعة، السبت\n\n📸 انستجرام:\n• صباحاً: 7-9 ⭐ | ظهراً: 11-1 | مساءً: 5-7 ⭐\n• Reels: 9 صباحاً و 12 ظهراً\n\n🎵 تيك توك:\n• ظهراً: 12-3 ⭐ | ليلاً: 7-11 ⭐⭐\n💡 1-3 فيديوهات يومياً\n\n⚠️ هذه أوقات عامة — راجع Insights لمعرفة أوقاتك!\n\n━━━━━━━━━━━━━━━━━━━━━━━\n\n📊 قاعدة 80/20 (The Golden Rule):\n\n🟢 80% = قيمة مجانية (نصائح، تعليم، ترفيه، قصص)\n🔴 20% = بيع وترويج مباشر\n\n❌ الغلطة: 100% بيع = الناس بتزهق\n✅ الصح: قدّم قيمة → ابني ثقة → بعدين بيع'),
+      sl('s2a_5','html','/images/slides/lec2-06.html','💰 أساسيات الإعلانات المدفوعة','💰 الإعلانات المدفوعة = المحرك الأقوى لنمو البيزنس\n\n📊 هيكل الحملة:\n🏢 Campaign (الهدف) → 📂 Ad Set (الجمهور + الميزانية) → 📄 Ad (الصورة + النص)\n\n🎯 أهداف الحملات:\n• الوعي: 5-10$/يوم — لما تكون في البداية\n• الزيارات: 5-15$/يوم — لو عندك موقع\n• التفاعل: 3-8$/يوم — لبناء مجتمع\n• الرسائل: 5-10$/يوم ⭐ — الأفضل للبيزنس الصغير!\n• المبيعات: 10-30$/يوم — لو عندك متجر + Pixel\n\n👥 الاستهداف:\n📍 جغرافي: الدولة، المدينة | 👤 ديموغرافي: العمر، الجنس\n🎯 اهتمامات: اختر 5-15 اهتمام\n📊 متقدم: Custom + Lookalike Audiences\n\n💡 نصائح:\n✅ ابدأ بـ 5-10$/يوم وزود تدريجياً\n✅ اختبر A/B — صور ونصوص مختلفة\n✅ أوقف اللي مبيجيبش نتيجة بعد 3-5 أيام\n✅ استخدم فيديوهات قصيرة (أداء أفضل 30%)'),
+      sl('s2a_6','html','/images/slides/lec2-07.html','📈 تحليل الأداء وقراءة الإحصائيات','📈 بدون أرقام، انت بتشتغل أعمى!\n\n📊 المقاييس الأساسية (KPIs):\n\n👁️ الوصول (Reach): +5-10% أسبوعياً\n❤️ التفاعل: 3-6% فيسبوك | 1-3% انستجرام\n📈 نمو المتابعين: 1-5% شهرياً\n🖱️ النقرات: CTA واضح\n💰 تكلفة النتيجة: 3-10 ج/رسالة\n🎯 معدل التحويل: 2-5% متاجر | 10-20% رسائل\n\n📊 خطوات التحليل:\n🔵 المراجعة الأسبوعية: افتح Insights كل أحد\n🟢 حدد الأفضل والأسوأ: ليه نجح؟ ليه فشل؟\n🟡 استخرج الأنماط: فيديو > صور؟ وقت معين أحسن?\n🔴 التعديل والتحسين: كرر اللي نجح\n🟣 التوثيق: سجل في Trello أو Notion\n\n📱 أدوات التحليل:\n• Meta Business Suite Insights (مجاني)\n• Instagram Professional Dashboard\n• Google Analytics (للموقع)'),
+      sl('s2a_7','html','/images/slides/lec2-08.html','🎓 ملخص الحصة الثانية وخطة العمل','🎉 مبروك! خلصت الحصة الثانية!\n\n📚 ملخص:\n✅ استراتيجية محتوى واضحة\n✅ تقويم محتوى شهري منظم\n✅ أفضل أوقات وأنواع المحتوى\n✅ قاعدة 80/20 الذهبية\n✅ أساسيات الإعلانات المدفوعة\n✅ مهارة تحليل الأداء\n\n🎯 الواجب العملي:\n1️⃣ حدد Buyer Persona + هدف SMART + 3-5 أعمدة محتوى\n2️⃣ أنشئ Content Calendar لأسبوعين (10-14 منشور)\n3️⃣ صمم 3 منشورات في Canva بالقواعد\n4️⃣ جدول 3 منشورات في Meta Business Suite\n5️⃣ سجل أرقامك الحالية كنقطة بداية\n\n⏩ المحاضرة القادمة:\n🌟 إعلانات فيسبوك وانستجرام من الصفر للاحتراف\n• إنشاء حملة إعلانية كاملة خطوة بخطوة\n• Facebook Pixel وكيف تستخدمه\n• أسرار الإعلانات الناجحة\n\n👊 بالتوفيق ونراك في الحصة القادمة! 🔥'),
+    ]},
+  ];
+}
+
+async function seedAprilLectures(){
+  try {
+    const all = getLectures();
+    const existing = all['april-2026']||[];
+    if(existing.length >= 1) return;
+    all['april-2026'] = getDefaultAprilLectures();
+    _fsLectures = Object.assign({}, all);
+    try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(all)); }catch(e){}
+    _fdb.collection('admin_data').doc('lectures').set({data:all, updatedAt:Date.now()})
+      .catch(e=>console.warn('FS seed april lectures:', e));
+    updateBadges();
+    try{ initLecturesSection(); }catch(e){}
+    if(activeLecCourse === 'april-2026'){ try{ renderLecList('april-2026'); }catch(e){} }
+    console.log('✅ April 2026 course lectures seeded successfully');
+  } catch(e){ console.warn('April seed failed:', e); }
+}
+
 // Compress a base64 image to max maxW px wide at given quality (0-1)
 function compressImg(src, maxW, quality){
   return new Promise(resolve=>{
@@ -2407,6 +2445,7 @@ function selectLecCourse(key){
   initLecturesSection();
   // seed free course if empty
   if(key === 'free'){ try{ seedFreeLectures(); }catch(e){} }
+  if(key === 'april-2026'){ try{ seedAprilLectures(); }catch(e){} }
   renderLecList(key);
 }
 
