@@ -5200,15 +5200,6 @@ function compressImg(src, maxW, quality){
     img.onload = ()=>{
       const scale = Math.min(1, maxW / img.width);
       const w = Math.round(img.width * scale);
-
-// Compress a base64 image to max maxW px wide at given quality (0-1)
-function compressImg(src, maxW, quality){
-  return new Promise(resolve=>{
-    if(!src || !src.startsWith('data:image')){ resolve(src); return; }
-    const img = new Image();
-    img.onload = ()=>{
-      const scale = Math.min(1, maxW / img.width);
-      const w = Math.round(img.width * scale);
       const h = Math.round(img.height * scale);
       const c = document.createElement('canvas');
       c.width = w; c.height = h;
