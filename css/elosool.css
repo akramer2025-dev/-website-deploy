@@ -151,8 +151,8 @@ textarea {
 }
 
 .header-logo-img {
-  width: 52px;
-  height: 52px;
+  width: 72px;
+  height: 72px;
   object-fit: contain;
   mix-blend-mode: lighten;
   filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.3));
@@ -206,22 +206,33 @@ body.ltr .nav-link::after {
 }
 
 .header-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-card);
-  color: var(--text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Cairo', sans-serif;
   transition: var(--transition);
   position: relative;
-  font-size: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.header-btn i {
+  font-size: 16px;
 }
 
 .header-btn:hover {
-  background: var(--accent-subtle);
-  color: var(--accent);
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-accent);
 }
 
 .cart-count {
@@ -3970,7 +3981,8 @@ body.ltr .back-to-top {
   }
 
   .header-logo-img {
-    display: none;
+    width: 44px;
+    height: 44px;
   }
 
   .nav {
@@ -4017,10 +4029,12 @@ body.ltr .back-to-top {
   }
 
   .header-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-    background: transparent;
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+
+  .header-btn i {
+    font-size: 14px;
   }
 
   .cta-header {
