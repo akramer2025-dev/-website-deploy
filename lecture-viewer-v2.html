@@ -714,12 +714,12 @@
             
             <form class="login-form" id="loginForm">
                 <div class="form-group">
-                    <label for="username">اسم المستخدم</label>
+                    <label for="username">اسم المستخدم أو الاسم</label>
                     <input 
                         type="text" 
                         id="username" 
                         name="username" 
-                        placeholder="أدخل اسم المستخدم"
+                        placeholder="أدخل اسم المستخدم أو اسمك"
                         required
                         autocomplete="username"
                     >
@@ -921,33 +921,33 @@
                 }
             }
             
-            // 2️⃣ التحقق من النظام القديم (Firebase session)
+            // 2️⃣ التحقق من النظام القديم (Firebase session) — sessionStorage
             const oldSessionId = sessionStorage.getItem('akram_student_id');
             if (oldSessionId) {
-                // محاولة جلب بيانات المستخدم من localStorage
                 try {
                     const usersData = localStorage.getItem('am_users');
                     if (usersData) {
                         const users = JSON.parse(usersData);
                         const user = users.find(u => String(u.id) === String(oldSessionId));
                         if (user) {
-                            // إنشاء session مؤقت من بيانات المستخدم القديم
-                            return {
+                            const session = {
                                 username: user.username || user.name,
                                 name: user.name || user.username,
                                 email: user.email || '',
-                                allowedLectures: ['lec_fb_1', 'lec_april_1'], // جميع المحاضرات متاحة للطلاب القدامى
+                                allowedLectures: ['lec_fb_1', 'lec_april_1'],
                                 isAdmin: false,
                                 isOldSystem: true,
                                 expires: new Date().getTime() + (24 * 60 * 60 * 1000)
                             };
+                            // حفظ auth_session عشان المرة الجاية يدخل على طول
+                            localStorage.setItem('auth_session', JSON.stringify(session));
+                            return session;
                         }
                     }
                     
-                    // إذا لم نجد بيانات، إنشاء session افتراضي
                     return {
                         username: 'student',
-                        name: 'طالب',
+                        name: sessionStorage.getItem('akram_client_name') || 'طالب',
                         email: '',
                         allowedLectures: ['lec_fb_1', 'lec_april_1'],
                         isAdmin: false,
@@ -957,6 +957,46 @@
                 } catch (e) {
                     console.warn('Error loading old session data', e);
                 }
+            }
+            
+            // 3️⃣ التحقق من localStorage فقط (لو الطالب سجل من login.html)
+            const lsLoggedIn = localStorage.getItem('akram_logged_in');
+            const lsStudentId = localStorage.getItem('akram_student_id') || localStorage.getItem('akram_user_id');
+            if (lsLoggedIn === 'true' && lsStudentId) {
+                const clientName = localStorage.getItem('akram_client_name') || '';
+                try {
+                    const usersData = localStorage.getItem('am_users');
+                    if (usersData) {
+                        const users = JSON.parse(usersData);
+                        const user = users.find(u => String(u.id) === String(lsStudentId));
+                        if (user) {
+                            const session = {
+                                username: user.username || user.name || lsStudentId,
+                                name: user.name || clientName || user.username,
+                                email: user.email || '',
+                                allowedLectures: ['lec_fb_1', 'lec_april_1'],
+                                isAdmin: false,
+                                isOldSystem: true,
+                                expires: new Date().getTime() + (24 * 60 * 60 * 1000)
+                            };
+                            localStorage.setItem('auth_session', JSON.stringify(session));
+                            return session;
+                        }
+                    }
+                } catch(_) {}
+                
+                // حتى لو مش موجود في am_users، الطالب مسجل دخول
+                const session = {
+                    username: lsStudentId,
+                    name: clientName || 'طالب',
+                    email: '',
+                    allowedLectures: ['lec_fb_1', 'lec_april_1'],
+                    isAdmin: false,
+                    isOldSystem: true,
+                    expires: new Date().getTime() + (24 * 60 * 60 * 1000)
+                };
+                localStorage.setItem('auth_session', JSON.stringify(session));
+                return session;
             }
             
             return null;
@@ -1014,44 +1054,67 @@
                     // تحديث قاعدة البيانات من localStorage قبل التحقق
                     STUDENTS_DB = getAllStudentsDB();
                     
-                    // التحقق من بيانات الدخول
+                    // 1️⃣ التحقق من custom_students + DEFAULT
                     if (STUDENTS_DB[username] && STUDENTS_DB[username].password === password) {
-                        // تسجيل دخول ناجح
                         const session = createSession(username, STUDENTS_DB[username]);
-                        
-                        // حفظ بيانات الطالب
                         saveStudentData(session.name, session.email);
-                        
-                        // إخفاء شاشة الدخول
                         hideLoginScreen();
-                        
-                        // التحقق من صلاحية الوصول للمحاضرة
-                        const lectureId = new URLSearchParams(window.location.search).get('id');
-                        
-                        if (lectureId) {
-                            // يريد الوصول لمحاضرة محددة
-                            if (session.allowedLectures.includes(lectureId) || session.isAdmin) {
-                                loadLecture(lectureId);
-                            } else {
-                                showError('عذراً، ليس لديك صلاحية للوصول إلى هذه المحاضرة.');
-                            }
-                        } else {
-                            // إعادة توجيه لصفحة المحاضرات
-                            showLecturesLibrary(session);
-                        }
-                    } else {
-                        // بيانات خاطئة
-                        errorDiv.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
-                        errorDiv.style.display = 'block';
-                        
-                        // إخفاء الرسالة بعد 3 ثواني
-                        setTimeout(() => {
-                            errorDiv.style.display = 'none';
-                        }, 3000);
+                        handlePostLogin(session);
+                        return;
                     }
+                    
+                    // 2️⃣ التحقق من am_users (Firebase cache) — نفس قاعدة بيانات login.html
+                    try {
+                        const cached = JSON.parse(localStorage.getItem('am_users') || '[]');
+                        const found = cached.find(u =>
+                            (u.username === username || u.id === username || u.id === username.toUpperCase() || 
+                             (u.name && u.name === username)) &&
+                            u.password === password
+                        );
+                        if (found) {
+                            const userData = {
+                                name: found.name || found.username || username,
+                                email: found.email || '',
+                                allowedLectures: ['lec_fb_1', 'lec_april_1'],
+                                isAdmin: false
+                            };
+                            const session = createSession(found.username || found.id || username, userData);
+                            // حفظ في النظام القديم كمان عشان يشتغل في كل مكان
+                            localStorage.setItem('akram_logged_in', 'true');
+                            localStorage.setItem('akram_user_id', found.id || username);
+                            localStorage.setItem('akram_student_id', found.id || username);
+                            localStorage.setItem('akram_client_name', found.name || found.username || '');
+                            sessionStorage.setItem('akram_logged_in', 'true');
+                            sessionStorage.setItem('akram_student_id', found.id || username);
+                            sessionStorage.setItem('akram_client_name', found.name || found.username || '');
+                            saveStudentData(session.name, session.email);
+                            hideLoginScreen();
+                            handlePostLogin(session);
+                            return;
+                        }
+                    } catch(_) {}
+                    
+                    // 3️⃣ بيانات خاطئة
+                    errorDiv.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
+                    errorDiv.style.display = 'block';
+                    setTimeout(() => { errorDiv.style.display = 'none'; }, 3000);
                 });
             }
         });
+
+        // دالة موحدة بعد تسجيل الدخول الناجح
+        function handlePostLogin(session) {
+            const lectureId = new URLSearchParams(window.location.search).get('id');
+            if (lectureId) {
+                if (session.allowedLectures.includes(lectureId) || session.isAdmin) {
+                    loadLecture(lectureId);
+                } else {
+                    showError('عذراً، ليس لديك صلاحية للوصول إلى هذه المحاضرة.');
+                }
+            } else {
+                showLecturesLibrary(session);
+            }
+        }
 
         function showLecturesLibrary(session) {
             // إخفاء حالة التحميل

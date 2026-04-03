@@ -293,9 +293,9 @@
 
                 <form id="loginForm" onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label>اسم المستخدم</label>
+                        <label>اسم المستخدم أو الاسم</label>
                         <div class="input-wrap">
-                            <input type="text" id="loginUser" placeholder="أدخل اسم المستخدم" autocomplete="username" required>
+                            <input type="text" id="loginUser" placeholder="أدخل اسم المستخدم أو اسمك" autocomplete="username" required>
                             <i class="fas fa-user ico"></i>
                         </div>
                     </div>
@@ -592,12 +592,29 @@
           }
         } // end if (_supabase)
 
+        // ✅ Check custom_students (admin-added students from admin-students.html)
+        try {
+            const customStudents = JSON.parse(localStorage.getItem('custom_students') || '{}');
+            if (customStudents[user] && customStudents[user].password === pass) {
+                const cs = customStudents[user];
+                completeStudentLogin({
+                    id: user,
+                    username: user,
+                    name: cs.name || user,
+                    email: cs.email || '',
+                    password: pass
+                }, btn);
+                return;
+            }
+        } catch(_) {}
+
         // Check cached users (Students) 
         let found = null;
         try {
             const cached = JSON.parse(localStorage.getItem('am_users') || '[]');
             found = cached.find(u =>
-                (u.username === user || u.id === user || u.id === user.toUpperCase()) &&
+                (u.username === user || u.id === user || u.id === user.toUpperCase() ||
+                 (u.name && u.name === user)) &&
                 u.password === pass
             );
         } catch(_) {}
