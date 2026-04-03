@@ -84,7 +84,10 @@
     .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
 
     /* AI Chat Widget */
-    .ai-fab{position:fixed;bottom:28px;right:28px;width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#00F5FF);color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;box-shadow:0 0 20px rgba(0,229,255,0.4),0 0 40px rgba(0,229,255,0.15);transition:all .3s;border:3px solid rgba(0,229,255,0.3);overflow:hidden;padding:0;animation:fabPulse 2.5s ease-in-out infinite}
+    .ai-fab-wrap{position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;flex-direction:column;align-items:center;gap:6px}
+    .ai-fab-label{background:var(--bg-card);color:var(--accent);font-size:11px;font-weight:800;font-family:'Cairo',sans-serif;padding:4px 12px;border-radius:20px;border:1px solid rgba(0,229,255,0.25);white-space:nowrap;box-shadow:0 4px 15px rgba(0,0,0,0.3);animation:labelFade 2.5s ease-in-out infinite}
+    @keyframes labelFade{0%,100%{opacity:1}50%{opacity:.7}}
+    .ai-fab{position:relative;width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#00F5FF);color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 20px rgba(0,229,255,0.4),0 0 40px rgba(0,229,255,0.15);transition:all .3s;border:3px solid rgba(0,229,255,0.3);overflow:hidden;padding:0;animation:fabPulse 2.5s ease-in-out infinite}
     .ai-fab img{width:100%;height:100%;object-fit:cover;border-radius:50%;transition:all .3s;animation:fabBounce 3s ease-in-out infinite}
     .ai-fab .ai-fab-close{display:none;font-size:28px}
     .ai-fab:hover{transform:scale(1.12);box-shadow:0 0 30px rgba(0,229,255,0.6),0 0 60px rgba(0,229,255,0.25);animation:none}
@@ -92,6 +95,7 @@
     .ai-fab.open{background:#ef4444;box-shadow:0 8px 30px rgba(239,68,68,0.4);animation:none;border-color:rgba(239,68,68,0.4)}
     .ai-fab.open img{display:none}
     .ai-fab.open .ai-fab-close{display:block}
+    .ai-fab-wrap.open .ai-fab-label{display:none}
     @keyframes fabPulse{0%,100%{box-shadow:0 0 20px rgba(0,229,255,0.4),0 0 40px rgba(0,229,255,0.12)}50%{box-shadow:0 0 30px rgba(0,229,255,0.6),0 0 60px rgba(0,229,255,0.2)}}
     @keyframes fabBounce{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
     .ai-chat{position:fixed;bottom:105px;right:28px;width:370px;max-height:500px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.5);z-index:9998;display:none;flex-direction:column;overflow:hidden}
@@ -129,7 +133,9 @@
       .courses-grid{grid-template-columns:1fr}
       .course-card:hover{transform:none;box-shadow:none}
       .ai-chat{right:16px;left:16px;width:auto;bottom:95px}
-      .ai-fab{bottom:20px;right:20px;width:68px;height:68px;font-size:22px}
+      .ai-fab-wrap{bottom:20px;right:20px}
+      .ai-fab{width:68px;height:68px;font-size:22px}
+      .ai-fab-label{font-size:10px;padding:3px 10px}
       .whatsapp-float{bottom:20px;left:20px;width:48px;height:48px;font-size:24px}
     }
 
@@ -561,7 +567,10 @@
   <a href="https://wa.me/201555512778" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
 
   <!-- AI Chat Widget -->
-  <button class="ai-fab" id="aiFab"><img src="images/ai-assistant.png" alt="مساعد أكرم"><i class="fas fa-times ai-fab-close"></i></button>
+  <div class="ai-fab-wrap" id="aiFabWrap">
+    <span class="ai-fab-label">خدمة العملاء</span>
+    <button class="ai-fab" id="aiFab"><img src="images/ai-assistant.png" alt="مساعد أكرم"><i class="fas fa-times ai-fab-close"></i></button>
+  </div>
   <div class="ai-chat" id="aiChat">
     <div class="ai-chat-head"><img src="images/ai-assistant.png" alt="مساعد أكرم"> مساعد أكرم الذكي</div>
     <div class="ai-chat-body" id="aiChatBody">
@@ -734,6 +743,8 @@
       fab.addEventListener('click', function(){
         var isOpen = chat.classList.toggle('open');
         fab.classList.toggle('open', isOpen);
+        var wrap = document.getElementById('aiFabWrap');
+        if(wrap) wrap.classList.toggle('open', isOpen);
         if(isOpen) setTimeout(function(){ inp.focus(); }, 300);
       });
 
