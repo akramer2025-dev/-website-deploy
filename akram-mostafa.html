@@ -117,17 +117,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
 <style>
-body{background:#050d1b;color:#c0cee0;font-family:'Cairo',sans-serif;}
+body{background:#0a0e17;color:#c0cee0;font-family:'Cairo',sans-serif;}
 .wiki-page{max-width:1080px;margin:0 auto;padding:30px 20px 80px;}
 .wiki-header{border-bottom:2px solid rgba(255,255,255,0.08);padding-bottom:18px;margin-bottom:28px;}
 .wiki-title{font-size:2rem;font-weight:900;color:#fff;margin:0 0 6px;}
 .wiki-subtitle{font-size:.92rem;color:#6b82a8;font-style:italic;}
 .wiki-body{display:grid;grid-template-columns:1fr 290px;gap:32px;align-items:start;}
 /* Infobox (like Wikipedia) */
-.wiki-infobox{background:#0d1e38;border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden;font-size:.85rem;position:sticky;top:90px;}
-.wiki-infobox-title{background:linear-gradient(135deg,#e94e77,#f7931e);color:#fff;font-weight:900;font-size:.92rem;padding:12px 16px;text-align:center;}
+.wiki-infobox{background:#161b22;border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden;font-size:.85rem;position:sticky;top:90px;}
+.wiki-infobox-title{background:linear-gradient(135deg,#00E5FF,#00B8D4);color:#fff;font-weight:900;font-size:.92rem;padding:12px 16px;text-align:center;}
 .wiki-infobox-img{width:100%;height:200px;object-fit:cover;object-position:top;display:block;}
-.wiki-infobox-img-placeholder{width:100%;height:200px;background:linear-gradient(135deg,#1a3a6a,#0d1e38);display:flex;align-items:center;justify-content:center;font-size:4rem;color:rgba(255,255,255,0.15);}
+.wiki-infobox-img-placeholder{width:100%;height:200px;background:linear-gradient(135deg,#1a3a6a,#161b22);display:flex;align-items:center;justify-content:center;font-size:4rem;color:rgba(255,255,255,0.15);}
 .wiki-infobox table{width:100%;border-collapse:collapse;}
 .wiki-infobox td{padding:8px 14px;border-bottom:1px solid rgba(255,255,255,0.05);vertical-align:top;line-height:1.6;}
 .wiki-infobox td:first-child{color:#8fa5c4;font-weight:700;white-space:nowrap;width:38%;}
@@ -136,37 +136,37 @@ body{background:#050d1b;color:#c0cee0;font-family:'Cairo',sans-serif;}
 .wiki-social-btn{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;font-size:.72rem;font-weight:700;text-decoration:none;transition:.2s;border:1px solid;}
 .wiki-social-btn:hover{transform:translateY(-1px);}
 /* Content */
-.wiki-content h2{font-size:1.25rem;font-weight:900;color:#fff;border-bottom:1.5px solid rgba(233,78,119,0.35);padding-bottom:8px;margin:28px 0 14px;}
+.wiki-content h2{font-size:1.25rem;font-weight:900;color:#fff;border-bottom:1.5px solid rgba(0,229,255,0.35);padding-bottom:8px;margin:28px 0 14px;}
 .wiki-content h3{font-size:1rem;font-weight:800;color:#e2eaf5;margin:18px 0 8px;}
 .wiki-content p{line-height:1.85;color:#8fa5c4;margin-bottom:14px;font-size:.9rem;}
 .wiki-content ul{padding-right:22px;margin-bottom:14px;}
 .wiki-content ul li{color:#8fa5c4;margin-bottom:6px;font-size:.9rem;line-height:1.7;}
-.wiki-toc{background:#0d1e38;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px 20px;margin-bottom:22px;font-size:.85rem;}
+.wiki-toc{background:#161b22;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px 20px;margin-bottom:22px;font-size:.85rem;}
 .wiki-toc-title{font-weight:900;color:#fff;margin-bottom:10px;}
 .wiki-toc ol{padding-right:18px;margin:0;}
 .wiki-toc li{margin-bottom:5px;}
-.wiki-toc a{color:#e94e77;text-decoration:none;}
+.wiki-toc a{color:#00E5FF;text-decoration:none;}
 .wiki-toc a:hover{text-decoration:underline;}
 /* Apps grid */
 .wiki-apps{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
-.wiki-app-card{background:#0d1e38;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:flex-start;}
+.wiki-app-card{background:#161b22;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:flex-start;}
 .wiki-app-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff;flex-shrink:0;}
 .wiki-app-name{font-size:.88rem;font-weight:800;color:#fff;margin-bottom:3px;}
 .wiki-app-desc{font-size:.75rem;color:#6b82a8;line-height:1.5;}
 /* Courses */
 .wiki-courses{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
-.wiki-course{background:#0d1e38;border-right:3px solid #e94e77;border-radius:8px;padding:10px 14px;font-size:.85rem;color:#c0cee0;font-weight:700;}
+.wiki-course{background:#161b22;border-right:3px solid #00E5FF;border-radius:8px;padding:10px 14px;font-size:.85rem;color:#c0cee0;font-weight:700;}
 /* Timeline */
 .wiki-timeline{position:relative;padding-right:22px;}
-.wiki-timeline::before{content:'';position:absolute;right:6px;top:4px;bottom:4px;width:2px;background:rgba(233,78,119,0.25);}
+.wiki-timeline::before{content:'';position:absolute;right:6px;top:4px;bottom:4px;width:2px;background:rgba(0,229,255,0.25);}
 .wiki-tl-item{position:relative;margin-bottom:20px;}
-.wiki-tl-dot{position:absolute;right:-22px;top:4px;width:12px;height:12px;border-radius:50%;background:#e94e77;border:2px solid #050d1b;}
-.wiki-tl-year{font-size:.75rem;font-weight:900;color:#e94e77;margin-bottom:3px;}
+.wiki-tl-dot{position:absolute;right:-22px;top:4px;width:12px;height:12px;border-radius:50%;background:#00E5FF;border:2px solid #0a0e17;}
+.wiki-tl-year{font-size:.75rem;font-weight:900;color:#00E5FF;margin-bottom:3px;}
 .wiki-tl-text{font-size:.88rem;color:#8fa5c4;line-height:1.6;}
 .wiki-tl-title{font-weight:800;color:#c0cee0;}
 /* References */
 .wiki-ref{font-size:.78rem;color:#4b6280;border-top:1px solid rgba(255,255,255,0.05);margin-top:32px;padding-top:14px;}
-.wiki-ref a{color:#e94e77;}
+.wiki-ref a{color:#00E5FF;}
 @media(max-width:768px){
   .wiki-body{grid-template-columns:1fr;}
   .wiki-infobox{position:static;}
@@ -228,7 +228,7 @@ body{background:#050d1b;color:#c0cee0;font-family:'Cairo',sans-serif;}
         وطوّر عدداً من الأنظمة البرمجية المتخصصة لقطاعات الضيافة والتجارة الإلكترونية والرعاية الصحية.
       </p>
       <p>
-        يُدير موقعه الرسمي <a href="https://www.akrammostafa.com" style="color:#e94e77;">akrammostafa.com</a>
+        يُدير موقعه الرسمي <a href="https://www.akrammostafa.com" style="color:#00E5FF;">akrammostafa.com</a>
         الذي يضم منصة تعليمية لكورسات التسويق الرقمي ومتجراً للتطبيقات البرمجية.
       </p>
 
@@ -344,13 +344,13 @@ body{background:#050d1b;color:#c0cee0;font-family:'Cairo',sans-serif;}
       <p>يقدم أكرم مصطفى عبر منصته التعليمية مجموعة من الدورات المتخصصة في التسويق الرقمي:</p>
       <div class="wiki-courses">
         <a href="/courses/facebook-ads.html" class="wiki-course" style="text-decoration:none;"><i class="fab fa-facebook" style="color:#3b82f6;margin-left:6px;"></i>كورس إعلانات فيسبوك</a>
-        <a href="/courses/instagram.html" class="wiki-course" style="text-decoration:none;"><i class="fab fa-instagram" style="color:#e94e77;margin-left:6px;"></i>كورس إعلانات انستجرام</a>
+        <a href="/courses/instagram.html" class="wiki-course" style="text-decoration:none;"><i class="fab fa-instagram" style="color:#00E5FF;margin-left:6px;"></i>كورس إعلانات انستجرام</a>
         <a href="/courses/tiktok.html" class="wiki-course" style="text-decoration:none;"><i class="fab fa-tiktok" style="color:#c0cee0;margin-left:6px;"></i>كورس تيك توك</a>
-        <a href="/courses/snapchat.html" class="wiki-course" style="text-decoration:none;"><i class="fab fa-snapchat-ghost" style="color:#f7931e;margin-left:6px;"></i>كورس سناب شات</a>
+        <a href="/courses/snapchat.html" class="wiki-course" style="text-decoration:none;"><i class="fab fa-snapchat-ghost" style="color:#00B8D4;margin-left:6px;"></i>كورس سناب شات</a>
         <a href="/courses/twitter.html" class="wiki-course" style="text-decoration:none;"><i class="fab fa-twitter" style="color:#1d9bf0;margin-left:6px;"></i>كورس تويتر / X</a>
         <a href="/courses/integrated-strategy.html" class="wiki-course" style="text-decoration:none;"><i class="fas fa-chart-line" style="color:#10b981;margin-left:6px;"></i>الاستراتيجية المتكاملة</a>
         <a href="/courses/ai-marketing.html" class="wiki-course" style="text-decoration:none;"><i class="fas fa-robot" style="color:#a855f7;margin-left:6px;"></i>التسويق بالذكاء الاصطناعي</a>
-        <a href="/free-course.html" class="wiki-course" style="text-decoration:none;border-color:#f7931e;"><i class="fas fa-gift" style="color:#f7931e;margin-left:6px;"></i>محاضرة مجانية</a>
+        <a href="/free-course.html" class="wiki-course" style="text-decoration:none;border-color:#00B8D4;"><i class="fas fa-gift" style="color:#00B8D4;margin-left:6px;"></i>محاضرة مجانية</a>
       </div>
 
       <!-- الخدمات -->
@@ -368,11 +368,11 @@ body{background:#050d1b;color:#c0cee0;font-family:'Cairo',sans-serif;}
       <!-- External Links -->
       <h2 id="links">روابط خارجية</h2>
       <ul>
-        <li><a href="https://www.akrammostafa.com" style="color:#e94e77;">الموقع الرسمي — akrammostafa.com</a></li>
-        <li><a href="https://linkcall.akrammostafa.com" style="color:#e94e77;">منصة Link Call</a></li>
-        <li><a href="https://almodif.net" style="color:#e94e77;">تطبيق المضيف سمارت</a></li>
-        <li><a href="https://www.remostore.net" style="color:#e94e77;">ريمو ستور</a></li>
-        <li><a href="https://dentasmart-app.web.app" style="color:#e94e77;">Denta Smart</a></li>
+        <li><a href="https://www.akrammostafa.com" style="color:#00E5FF;">الموقع الرسمي — akrammostafa.com</a></li>
+        <li><a href="https://linkcall.akrammostafa.com" style="color:#00E5FF;">منصة Link Call</a></li>
+        <li><a href="https://almodif.net" style="color:#00E5FF;">تطبيق المضيف سمارت</a></li>
+        <li><a href="https://www.remostore.net" style="color:#00E5FF;">ريمو ستور</a></li>
+        <li><a href="https://dentasmart-app.web.app" style="color:#00E5FF;">Denta Smart</a></li>
       </ul>
 
       <div class="wiki-ref">
@@ -418,7 +418,7 @@ body{background:#050d1b;color:#c0cee0;font-family:'Cairo',sans-serif;}
         </tr>
         <tr>
           <td>الموقع</td>
-          <td><a href="https://www.akrammostafa.com" style="color:#e94e77;">akrammostafa.com</a></td>
+          <td><a href="https://www.akrammostafa.com" style="color:#00E5FF;">akrammostafa.com</a></td>
         </tr>
         <tr>
           <td>التطبيقات</td>
@@ -437,7 +437,7 @@ body{background:#050d1b;color:#c0cee0;font-family:'Cairo',sans-serif;}
         <a href="https://www.facebook.com/akrammostafa" target="_blank" class="wiki-social-btn" style="color:#3b82f6;border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.08);">
           <i class="fab fa-facebook"></i> فيسبوك
         </a>
-        <a href="https://www.instagram.com/akrammostafa" target="_blank" class="wiki-social-btn" style="color:#e94e77;border-color:rgba(233,78,119,0.3);background:rgba(233,78,119,0.08);">
+        <a href="https://www.instagram.com/akrammostafa" target="_blank" class="wiki-social-btn" style="color:#00E5FF;border-color:rgba(0,229,255,0.3);background:rgba(0,229,255,0.08);">
           <i class="fab fa-instagram"></i> انستجرام
         </a>
         <a href="https://www.linkedin.com/in/akrammostafa" target="_blank" class="wiki-social-btn" style="color:#0ea5e9;border-color:rgba(14,165,233,0.3);background:rgba(14,165,233,0.08);">

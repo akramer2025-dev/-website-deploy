@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" class="am-logo-svg">
   <defs>
     <linearGradient id="lGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#e94e77"/>
-      <stop offset="100%" stop-color="#f7931e"/>
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#00B8D4"/>
     </linearGradient>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#050d1b"/>
-      <stop offset="100%" stop-color="#0d2040"/>
+      <stop offset="0%" stop-color="#0a0e17"/>
+      <stop offset="100%" stop-color="#0d1117"/>
     </linearGradient>
     <filter id="glow">
       <feGaussianBlur stdDeviation="2" result="blur"/>
@@ -31,7 +31,7 @@
   <polygon points="54,42 67,51 54,60" fill="white" opacity="0.92"/>
 
   <!-- Corner dots -->
-  <circle cx="24" cy="48" r="2.2" fill="#e94e77" opacity="0.6"/>
-  <circle cx="96" cy="72" r="2.2" fill="#f7931e" opacity="0.6"/>
-  <circle cx="60" cy="10" r="1.8" fill="#e94e77" opacity="0.5"/>
+  <circle cx="24" cy="48" r="2.2" fill="#00E5FF" opacity="0.6"/>
+  <circle cx="96" cy="72" r="2.2" fill="#00B8D4" opacity="0.6"/>
+  <circle cx="60" cy="10" r="1.8" fill="#00E5FF" opacity="0.5"/>
 </svg>

@@ -1,4 +1,4 @@
-/* =========================================================
+﻿/* =========================================================
    READY WEBSITES - مواقع ووردبريس جاهزة
    نظام إدارة وعرض القوالب الجاهزة للشراء والتخصيص
    ========================================================= */
@@ -336,7 +336,7 @@ function viewTemplate(templateId) {
                 <!-- المحتوى -->
                 <div style="padding:40px;overflow-y:auto;max-height:90vh;">
                     <div style="margin-bottom:24px;">
-                        ${template.discount > 0 ? `<span style="display:inline-block;background:linear-gradient(135deg,#e94e77,#f7931e);color:#fff;padding:6px 16px;border-radius:20px;font-size:.85rem;font-weight:800;margin-bottom:12px;">خصم ${template.discount}%</span>` : ''}
+                        ${template.discount > 0 ? `<span style="display:inline-block;background:linear-gradient(135deg,#00E5FF,#00B8D4);color:#fff;padding:6px 16px;border-radius:20px;font-size:.85rem;font-weight:800;margin-bottom:12px;">خصم ${template.discount}%</span>` : ''}
                         <h2 style="font-size:2rem;font-weight:900;color:#fff;margin-bottom:8px;">${template.name}</h2>
                         <p style="color:var(--store-muted);font-size:.9rem;">${template.nameEn} - الإصدار ${template.version}</p>
                     </div>
@@ -397,7 +397,7 @@ function viewTemplate(templateId) {
                         </div>
                     </div>
                     
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;padding:20px;background:rgba(233,78,119,0.05);border-radius:12px;border:1px solid rgba(233,78,119,0.2);">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;padding:20px;background:rgba(0,229,255,0.05);border-radius:12px;border:1px solid rgba(0,229,255,0.2);">
                         <div>
                             <span style="display:block;color:var(--store-muted);font-size:.8rem;margin-bottom:4px;">آخر تحديث</span>
                             <span style="color:#fff;font-weight:700;font-size:.9rem;">${template.lastUpdate}</span>
@@ -416,12 +416,12 @@ function viewTemplate(templateId) {
                         </div>
                     </div>
                     
-                    <div style="background:linear-gradient(135deg,#e94e77,#f7931e);padding:24px;border-radius:16px;text-align:center;margin-bottom:24px;">
+                    <div style="background:linear-gradient(135deg,#00E5FF,#00B8D4);padding:24px;border-radius:16px;text-align:center;margin-bottom:24px;">
                         <div style="margin-bottom:12px;">
                             ${template.discount > 0 ? `<span style="display:block;color:rgba(255,255,255,0.8);font-size:.9rem;text-decoration:line-through;margin-bottom:4px;">${template.originalPrice} جنيه</span>` : ''}
                             <span style="display:block;color:#fff;font-size:2.2rem;font-weight:900;">${template.price} جنيه</span>
                         </div>
-                        <button onclick="orderTemplate('${template.id}')" style="background:#fff;color:#e94e77;padding:14px 32px;border-radius:12px;border:none;font-weight:800;font-size:1rem;cursor:pointer;width:100%;transition:.2s;font-family:'Cairo',sans-serif;">
+                        <button onclick="orderTemplate('${template.id}')" style="background:#fff;color:#00E5FF;padding:14px 32px;border-radius:12px;border:none;font-weight:800;font-size:1rem;cursor:pointer;width:100%;transition:.2s;font-family:'Cairo',sans-serif;">
                             <i class="fab fa-whatsapp"></i> اطلب الآن عبر واتساب
                         </button>
                     </div>

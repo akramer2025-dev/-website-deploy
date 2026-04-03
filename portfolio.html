@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/store.css">
 <style>
-body { background: #050d1b; }
+body { background: #0a0e17; }
 
 /* reuse portfolio preview styles from style.css */
 .app-card-preview { padding:0; overflow:hidden; position:relative; height:210px; cursor:pointer; }
@@ -27,7 +27,7 @@ body { background: #050d1b; }
 /* hotel preview */
 .preview-sidebar{width:28px;display:flex;flex-direction:column;gap:4px;align-items:center;padding:4px 0;}
 .preview-menu-item{width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,0.4);}
-.preview-menu-item.active{background:rgba(233,78,119,0.3);color:#e94e77;}
+.preview-menu-item.active{background:rgba(0,229,255,0.3);color:#00E5FF;}
 .preview-main{flex:1;min-width:0;}
 .preview-stats-row{display:flex;gap:4px;margin-bottom:6px;}
 .preview-stat-box{flex:1;border-radius:6px;padding:5px 4px;text-align:center;}
@@ -35,7 +35,7 @@ body { background: #050d1b; }
 .preview-stat-lbl{font-size:7px;color:rgba(255,255,255,0.5);}
 .preview-rooms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
 .preview-room{border-radius:5px;padding:5px 3px;text-align:center;font-size:8px;font-weight:700;}
-.preview-room.occupied{background:rgba(233,78,119,0.35);color:#f87171;}
+.preview-room.occupied{background:rgba(0,229,255,0.35);color:#f87171;}
 .preview-room.avail{background:rgba(16,185,129,0.2);color:#6ee7b7;}
 /* store preview */
 .preview-store-nav{display:flex;align-items:center;justify-content:space-between;padding:5px 0;margin-bottom:5px;}
@@ -46,7 +46,7 @@ body { background: #050d1b; }
 .preview-hero-badge{padding:3px 7px;border-radius:4px;font-size:7px;font-weight:700;}
 .preview-cats-row{display:flex;gap:4px;flex-wrap:wrap;}
 .preview-cat-pill{padding:3px 7px;background:rgba(255,255,255,0.07);border-radius:10px;font-size:7px;color:rgba(255,255,255,0.5);}
-.preview-cat-pill.active{color:#e94e77;}
+.preview-cat-pill.active{color:#00E5FF;}
 /* CRM */
 .preview-crm-header{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;border-radius:6px;margin-bottom:6px;}
 .preview-filter-pills{display:flex;gap:4px;}
@@ -56,7 +56,7 @@ body { background: #050d1b; }
 .preview-crm-room{border-radius:5px;padding:5px 3px;text-align:center;}
 .preview-crm-room span{display:block;font-size:9px;font-weight:700;color:#fff;}
 .preview-crm-room small{font-size:7px;}
-.preview-crm-room.occupied{background:rgba(233,78,119,0.25);}
+.preview-crm-room.occupied{background:rgba(0,229,255,0.25);}
 .preview-crm-room.occupied small{color:#f87171;}
 .preview-crm-room.avail{background:rgba(16,185,129,0.15);}
 .preview-crm-room.avail small{color:#6ee7b7;}
@@ -91,9 +91,9 @@ body { background: #050d1b; }
   border-radius: 20px;
   font-size: .7rem;
   font-weight: 700;
-  background: linear-gradient(135deg,#e94e77,#f7931e);
+  background: linear-gradient(135deg,#00E5FF,#00B8D4);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(233,78,119,0.4);
+  box-shadow: 0 4px 12px rgba(0,229,255,0.4);
 }
 
 /* GALLERY MODAL same as index */
@@ -232,7 +232,7 @@ body { background: #050d1b; }
       <!-- App 1: AlModif -->
       <div class="app-shop-card" data-category="management" data-aos="fade-up" data-aos-delay="100">
         <div class="app-card-preview" onclick="openGallery('almodif')" title="انقر لعرض الصور"
-             style="background:linear-gradient(135deg,#0d1b3e 0%,#1e2d5e 40%,#2d1f6e 100%);">
+             style="background:linear-gradient(135deg,#0d1117 0%,#1e2d5e 40%,#2d1f6e 100%);">
           <span class="order-tag"><i class="fas fa-images"></i> معرض الصور</span>
           <div class="preview-browser-bar">
             <span class="preview-dot r"></span><span class="preview-dot y"></span><span class="preview-dot g"></span>
@@ -249,7 +249,7 @@ body { background: #050d1b; }
               <div class="preview-stats-row">
                 <div class="preview-stat-box" style="background:rgba(102,126,234,0.25)"><span class="preview-stat-num">35</span><span class="preview-stat-lbl">وحدة</span></div>
                 <div class="preview-stat-box" style="background:rgba(16,185,129,0.25)"><span class="preview-stat-num">34</span><span class="preview-stat-lbl">متاحة</span></div>
-                <div class="preview-stat-box" style="background:rgba(233,78,119,0.25)"><span class="preview-stat-num">1</span><span class="preview-stat-lbl">مشغولة</span></div>
+                <div class="preview-stat-box" style="background:rgba(0,229,255,0.25)"><span class="preview-stat-num">1</span><span class="preview-stat-lbl">مشغولة</span></div>
               </div>
               <div class="preview-rooms-grid">
                 <div class="preview-room occupied">203<br><small>VIP</small></div>
@@ -761,7 +761,7 @@ function renderGallery(){
   img.style.display='';empty.style.display='none';
   img.src=_gImgs[_gIdx];
   counter.textContent=(_gIdx+1)+' / '+_gImgs.length;
-  dots.innerHTML=_gImgs.map((_,i)=>`<span onclick="gotoSlide(${i})" style="width:${i===_gIdx?'20':'8'}px;height:8px;border-radius:4px;background:${i===_gIdx?'linear-gradient(135deg,#e94e77,#f7931e)':'rgba(255,255,255,0.2)'};cursor:pointer;transition:.3s;"></span>`).join('');
+  dots.innerHTML=_gImgs.map((_,i)=>`<span onclick="gotoSlide(${i})" style="width:${i===_gIdx?'20':'8'}px;height:8px;border-radius:4px;background:${i===_gIdx?'linear-gradient(135deg,#00E5FF,#00B8D4)':'rgba(255,255,255,0.2)'};cursor:pointer;transition:.3s;"></span>`).join('');
 }
 function galleryNext(){_gIdx=(_gIdx+1)%_gImgs.length;renderGallery();}
 function galleryPrev(){_gIdx=(_gIdx-1+_gImgs.length)%_gImgs.length;renderGallery();}

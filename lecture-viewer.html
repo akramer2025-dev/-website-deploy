@@ -9,9 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#050d1b; --bg2:#09162b; --card:#0d1e38; --card2:#112446;
-  --border:rgba(255,255,255,0.07); --pink:#e94e77; --orange:#f7931e;
-  --grad:linear-gradient(135deg,#e94e77,#f7931e); --green:#22c55e;
+  --bg:#0a0e17; --bg2:#09162b; --card:#161b22; --card2:#112446;
+  --border:rgba(255,255,255,0.07); --pink:#00E5FF; --orange:#00B8D4;
+  --grad:linear-gradient(135deg,#00E5FF,#00B8D4); --green:#22c55e;
   --blue:#3b82f6; --text:#e2eaf6; --muted:#6b82a8;
   --sidebar:260px; --topbar:58px; --bottom:80px;
 }
@@ -55,8 +55,8 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .slides-list{flex:1;overflow-y:auto;padding:8px;}
 .slides-list::-webkit-scrollbar{width:4px;} .slides-list::-webkit-scrollbar-track{background:transparent;} .slides-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 .slide-thumb-item{border-radius:12px;overflow:hidden;margin-bottom:6px;border:2px solid transparent;cursor:pointer;transition:.2s;background:var(--bg2);display:flex;gap:0;flex-direction:column;}
-.slide-thumb-item:hover{border-color:rgba(233,78,119,.3);}
-.slide-thumb-item.active{border-color:var(--pink);box-shadow:0 0 0 2px rgba(233,78,119,.2);}
+.slide-thumb-item:hover{border-color:rgba(0,229,255,.3);}
+.slide-thumb-item.active{border-color:var(--pink);box-shadow:0 0 0 2px rgba(0,229,255,.2);}
 .slide-thumb-media{width:100%;aspect-ratio:16/9;background:var(--card2);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;}
 .slide-thumb-media img{width:100%;height:100%;object-fit:cover;}
 .slide-thumb-media .type-ico{font-size:1.2rem;color:var(--muted);}
@@ -133,7 +133,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   overflow-y:auto;
 }
 .slide-notes-col::-webkit-scrollbar{width:3px;} .slide-notes-col::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
-.notes-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(233,78,119,.12);border:1px solid rgba(233,78,119,.25);border-radius:20px;padding:5px 12px;font-size:.72rem;font-weight:800;color:var(--pink);}
+.notes-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.25);border-radius:20px;padding:5px 12px;font-size:.72rem;font-weight:800;color:var(--pink);}
 .notes-slide-title{font-size:1.25rem;font-weight:900;color:#fff;line-height:1.4;animation:fadeUp .5s .1s both;}
 .notes-divider{height:2px;background:var(--grad);border-radius:2px;width:48px;}
 .notes-text{font-size:.9rem;color:var(--text);line-height:1.95;font-weight:500;animation:fadeUp .5s .25s both;}
@@ -154,7 +154,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .nav-btn:hover:not(:disabled){color:var(--text);background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);}
 .nav-btn:disabled{opacity:.25;cursor:not-allowed;}
 .nav-btn-main{background:var(--grad) !important;border-color:transparent !important;color:#fff !important;width:52px;height:52px;font-size:1.15rem;border-radius:14px;}
-.nav-btn-main:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(233,78,119,.4);}
+.nav-btn-main:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(0,229,255,.4);}
 .slide-counter{font-size:.88rem;font-weight:800;color:#fff;white-space:nowrap;}
 .slide-counter span{color:var(--muted);}
 .dots-wrap{display:flex;align-items:center;gap:5px;flex:1;justify-content:center;overflow:hidden;max-width:380px;}
@@ -216,7 +216,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   transition:.18s;position:relative;
 }
 .anno-tool-btn:hover{color:var(--text);background:rgba(255,255,255,.07);}
-.anno-tool-btn.active{color:#fff;background:rgba(233,78,119,.25);border-color:rgba(233,78,119,.5);}
+.anno-tool-btn.active{color:#fff;background:rgba(0,229,255,.25);border-color:rgba(0,229,255,.5);}
 .anno-tool-btn.hl-active{color:#fff;background:rgba(247,211,30,.2);border-color:rgba(247,211,30,.5);}
 .anno-sep{width:26px;height:1px;background:var(--border);margin:3px 0;flex-shrink:0;}
 .anno-color-swatch{
@@ -302,7 +302,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   cursor:pointer;transition:.2s;
 }
 .caption-close:hover{
-  color:#fff;background:rgba(233,78,119,.2);border-color:var(--pink);
+  color:#fff;background:rgba(0,229,255,.2);border-color:var(--pink);
 }
 .caption-content{
   flex:1;overflow-y:auto;padding:12px 0;
@@ -364,7 +364,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   border:1px solid rgba(255,255,255,.15);color:#fff;font-size:1.1rem;
   display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;
 }
-#lbClose:hover{background:rgba(233,78,119,.4);}
+#lbClose:hover{background:rgba(0,229,255,.4);}
 
 /* ══════════ SEARCH IN SIDEBAR ══════════ */
 .sidebar-search{
@@ -375,7 +375,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   border-radius:9px;padding:7px 12px;color:var(--text);font-family:'Cairo',sans-serif;
   font-size:.8rem;outline:none;transition:.2s;
 }
-.sidebar-search input:focus{border-color:rgba(233,78,119,.5);background:rgba(233,78,119,.04);}
+.sidebar-search input:focus{border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.04);}
 .sidebar-search input::placeholder{color:var(--muted);}
 
 /* ══════════ NOTES FONT CONTROLS ══════════ */
@@ -495,7 +495,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 }
 .calc-head span{font-size:.75rem;font-weight:800;color:var(--muted);}
 .calc-close{background:none;border:none;color:var(--muted);font-size:.85rem;cursor:pointer;padding:2px 6px;border-radius:6px;}
-.calc-close:hover{color:#fff;background:rgba(233,78,119,.3);}
+.calc-close:hover{color:#fff;background:rgba(0,229,255,.3);}
 .calc-screen{
   padding:10px 14px 6px;
   background:rgba(0,0,0,.35);
@@ -517,12 +517,12 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .calc-btn:active{transform:scale(.93);}
 .cb-num{background:var(--card2);color:var(--text);}
 .cb-num:hover{background:rgba(255,255,255,.12);}
-.cb-op{background:rgba(247,147,30,.18);color:#f7931e;}
-.cb-op:hover{background:rgba(247,147,30,.32);}
+.cb-op{background:rgba(0,184,212,.18);color:#00B8D4;}
+.cb-op:hover{background:rgba(0,184,212,.32);}
 .cb-eq{background:var(--grad);color:#fff;grid-column:span 1;}
 .cb-eq:hover{filter:brightness(1.1);}
-.cb-ac{background:rgba(233,78,119,.2);color:#e94e77;}
-.cb-ac:hover{background:rgba(233,78,119,.35);}
+.cb-ac{background:rgba(0,229,255,.2);color:#00E5FF;}
+.cb-ac:hover{background:rgba(0,229,255,.35);}
 .cb-zero{grid-column:span 2;}
 </style>
 <!-- Firebase -->
@@ -674,7 +674,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   <button class="anno-tool-btn" data-tip="مسح الكل" onclick="annoClear()"><i class="fas fa-trash-can"></i></button>
   <div class="anno-sep"></div>
   <!-- colors -->
-  <div class="anno-color-swatch" id="ac1" style="background:#e94e77" onclick="setColor('#e94e77')" title="وردي"></div>
+  <div class="anno-color-swatch" id="ac1" style="background:#00E5FF" onclick="setColor('#00E5FF')" title="وردي"></div>
   <div class="anno-color-swatch" id="ac2" style="background:#3b82f6" onclick="setColor('#3b82f6')" title="أزرق"></div>
   <div class="anno-color-swatch" id="ac3" style="background:#22c55e" onclick="setColor('#22c55e')" title="أخضر"></div>
   <div class="anno-color-swatch" id="ac4" style="background:#f7d31e" onclick="setColor('#f7d31e')" title="أصفر"></div>
@@ -988,7 +988,7 @@ function toggleCaptionOnScreen(){
   if(captionOnScreen){
     ico.className = 'fas fa-image';
     btn.title = 'عرض المحتوى (N)';
-    btn.style.background = 'rgba(233,78,119,.25)';
+    btn.style.background = 'rgba(0,229,255,.25)';
     btn.style.borderColor = 'var(--pink)';
     btn.style.color = '#fff';
     showToast('عرض الشرح على الشاشة', 'success');
@@ -1118,7 +1118,7 @@ function getThumbMedia(s){
   if(s.type==='image'&&isRealSrc) return `<img src="${s.src}" alt="">`;  
   if(s.type==='video') return `<i class="type-ico fas fa-play-circle"></i>`;
   if(s.type==='pdf')   return `<i class="type-ico fas fa-file-pdf"></i>`;
-  if(s.type==='html')  return `<i class="type-ico fas fa-chalkboard-teacher" style="color:#e94e77;"></i>`;
+  if(s.type==='html')  return `<i class="type-ico fas fa-chalkboard-teacher" style="color:#00E5FF;"></i>`;
   return `<i class="type-ico fas fa-image"></i>`;
 }
 function getTypeLabel(t){
@@ -1389,7 +1389,7 @@ const ctx     = canvas.getContext('2d', {willReadFrequently: true});
 const txtInput= document.getElementById('annoTextInput');
 
 let annoTool   = 'pointer';  // pointer|pen|hl|rect|circle|arrow|text|eraser
-let annoColor  = '#e94e77';
+let annoColor  = '#00E5FF';
 let isDrawing  = false;
 let startX=0, startY=0;
 let history    = [];   // array of ImageData snapshots

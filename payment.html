@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Cairo',sans-serif;background:#050d1b;color:#fff;direction:rtl;min-height:100vh;display:flex;flex-direction:column;}
+    body{font-family:'Cairo',sans-serif;background:#0a0e17;color:#fff;direction:rtl;min-height:100vh;display:flex;flex-direction:column;}
     a{text-decoration:none;}
 
     /* NAVBAR */
@@ -23,13 +23,13 @@
 
     /* PAGE */
     .page{flex:1;display:flex;align-items:center;justify-content:center;padding:100px 24px 60px;}
-    .card{background:#0d1e38;border:1px solid rgba(255,255,255,0.08);border-radius:24px;max-width:540px;width:100%;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
+    .card{background:#161b22;border:1px solid rgba(255,255,255,0.08);border-radius:24px;max-width:540px;width:100%;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
 
     /* CARD HEADER */
-    .card-head{background:linear-gradient(135deg,#07122a,#0d1e38);border-bottom:1px solid rgba(255,255,255,0.07);padding:32px 32px 28px;text-align:center;}
-    .head-icon{width:64px;height:64px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;color:#fff;margin:0 auto 16px;box-shadow:0 8px 24px rgba(233,78,119,0.35);}
+    .card-head{background:linear-gradient(135deg,#07122a,#161b22);border-bottom:1px solid rgba(255,255,255,0.07);padding:32px 32px 28px;text-align:center;}
+    .head-icon{width:64px;height:64px;background:linear-gradient(135deg,#00E5FF,#00B8D4);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;color:#fff;margin:0 auto 16px;box-shadow:0 8px 24px rgba(0,229,255,0.35);}
     .card-head h1{font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:6px;}
-    .app-name-badge{display:inline-block;padding:5px 16px;background:rgba(233,78,119,0.12);border:1px solid rgba(233,78,119,0.3);border-radius:20px;font-size:.82rem;font-weight:700;color:#e94e77;margin-top:4px;}
+    .app-name-badge{display:inline-block;padding:5px 16px;background:rgba(0,229,255,0.12);border:1px solid rgba(0,229,255,0.3);border-radius:20px;font-size:.82rem;font-weight:700;color:#00E5FF;margin-top:4px;}
 
     /* CARD BODY */
     .card-body{padding:32px;}
@@ -47,18 +47,18 @@
     /* METHOD SELECTOR */
     .method-selector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
     .method-tab{display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px 10px;background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:.25s;position:relative;}
-    .method-tab:hover{border-color:rgba(233,78,119,0.35);background:rgba(233,78,119,0.05);}
-    .method-tab.active{border-color:#e94e77;background:rgba(233,78,119,0.1);}
-    .method-tab.active::after{content:'✓';position:absolute;top:8px;left:10px;width:18px;height:18px;background:#e94e77;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:900;color:#fff;line-height:18px;text-align:center;}
+    .method-tab:hover{border-color:rgba(0,229,255,0.35);background:rgba(0,229,255,0.05);}
+    .method-tab.active{border-color:#00E5FF;background:rgba(0,229,255,0.1);}
+    .method-tab.active::after{content:'✓';position:absolute;top:8px;left:10px;width:18px;height:18px;background:#00E5FF;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:900;color:#fff;line-height:18px;text-align:center;}
     .method-tab-icon{font-size:1.5rem;}
     .method-tab-label{font-size:.78rem;font-weight:800;color:#c0cee0;text-align:center;line-height:1.4;}
     .method-tab-sub{font-size:.67rem;color:#4b6280;text-align:center;}
 
     /* EWALLET BOX */
-    .ewallet-box{background:linear-gradient(135deg,rgba(233,78,119,0.08),rgba(247,147,30,0.06));border:1.5px solid rgba(233,78,119,0.3);border-radius:16px;padding:20px 22px;margin-bottom:22px;}
+    .ewallet-box{background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(0,184,212,0.06));border:1.5px solid rgba(0,229,255,0.3);border-radius:16px;padding:20px 22px;margin-bottom:22px;}
     .ewallet-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
     .ewallet-title{display:flex;align-items:center;gap:8px;font-size:.92rem;font-weight:800;color:#fff;}
-    .ewallet-dot{width:11px;height:11px;background:#e94e77;border-radius:50%;}
+    .ewallet-dot{width:11px;height:11px;background:#00E5FF;border-radius:50%;}
     .ewallet-logos{display:flex;align-items:center;gap:6px;}
     .ewallet-logo-badge{padding:3px 9px;border-radius:6px;font-size:.68rem;font-weight:900;color:#fff;letter-spacing:.3px;}
     .ewallet-logo-badge.orange{background:#FF6600;}
@@ -74,20 +74,20 @@
     /* STEPS */
     .steps{display:flex;flex-direction:column;gap:12px;margin-bottom:26px;}
     .step{display:flex;align-items:flex-start;gap:12px;}
-    .step-num{width:28px;height:28px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#fff;flex-shrink:0;margin-top:1px;}
+    .step-num{width:28px;height:28px;background:linear-gradient(135deg,#00E5FF,#00B8D4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#fff;flex-shrink:0;margin-top:1px;}
     .step-txt{font-size:.88rem;color:#8fa5c4;line-height:1.6;}
     .step-txt strong{color:#fff;font-weight:700;}
 
     /* UPLOAD */
     .upload-label{display:block;font-size:.88rem;font-weight:700;color:#c0cee0;margin-bottom:10px;}
-    .upload-zone{border:2px dashed rgba(233,78,119,0.3);border-radius:14px;padding:28px;text-align:center;cursor:pointer;transition:.3s;background:rgba(233,78,119,0.03);position:relative;}
-    .upload-zone:hover{border-color:rgba(233,78,119,0.6);background:rgba(233,78,119,0.07);}
+    .upload-zone{border:2px dashed rgba(0,229,255,0.3);border-radius:14px;padding:28px;text-align:center;cursor:pointer;transition:.3s;background:rgba(0,229,255,0.03);position:relative;}
+    .upload-zone:hover{border-color:rgba(0,229,255,0.6);background:rgba(0,229,255,0.07);}
     .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-    .upload-icon{font-size:2rem;color:rgba(233,78,119,0.5);margin-bottom:10px;}
+    .upload-icon{font-size:2rem;color:rgba(0,229,255,0.5);margin-bottom:10px;}
     .upload-zone p{font-size:.84rem;color:#6b82a8;}
-    .upload-zone p span{color:#e94e77;font-weight:700;}
+    .upload-zone p span{color:#00E5FF;font-weight:700;}
     .preview-wrap{display:none;margin-top:14px;position:relative;}
-    .preview-wrap img{width:100%;border-radius:10px;border:1px solid rgba(233,78,119,0.25);max-height:220px;object-fit:cover;}
+    .preview-wrap img{width:100%;border-radius:10px;border:1px solid rgba(0,229,255,0.25);max-height:220px;object-fit:cover;}
     .remove-img{position:absolute;top:8px;left:8px;width:28px;height:28px;background:rgba(239,68,68,0.85);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.75rem;color:#fff;border:none;transition:.2s;}
     .remove-img:hover{background:#ef4444;}
 
@@ -187,18 +187,18 @@
 
       <!-- FAWRY BOX -->
       <div id="box-fawry" style="display:none;">
-        <div class="ewallet-box" style="background:linear-gradient(135deg,rgba(247,147,30,0.08),rgba(255,200,0,0.05));border-color:rgba(247,147,30,0.35);">
+        <div class="ewallet-box" style="background:linear-gradient(135deg,rgba(0,184,212,0.08),rgba(255,200,0,0.05));border-color:rgba(0,184,212,0.35);">
           <div class="ewallet-header">
-            <div class="ewallet-title" style="color:#f7931e;">
-              <span style="width:11px;height:11px;background:#f7931e;border-radius:50%;display:inline-block;margin-left:6px;"></span>
+            <div class="ewallet-title" style="color:#00B8D4;">
+              <span style="width:11px;height:11px;background:#00B8D4;border-radius:50%;display:inline-block;margin-left:6px;"></span>
               Fawry Pay
             </div>
-            <div style="font-size:.72rem;color:#f7931e;font-weight:700;background:rgba(247,147,30,0.12);padding:3px 10px;border-radius:20px;border:1px solid rgba(247,147,30,0.3);">OTP على محفظتك</div>
+            <div style="font-size:.72rem;color:#00B8D4;font-weight:700;background:rgba(0,184,212,0.12);padding:3px 10px;border-radius:20px;border:1px solid rgba(0,184,212,0.3);">OTP على محفظتك</div>
           </div>
           <!-- Not configured yet -->
           <div id="fawry-pending" style="text-align:center;padding:20px 0;">
             <div style="font-size:2.2rem;margin-bottom:10px;">⏳</div>
-            <p style="color:#f7931e;font-weight:800;font-size:.92rem;margin-bottom:6px;">سيتم التفعيل قريباً</p>
+            <p style="color:#00B8D4;font-weight:800;font-size:.92rem;margin-bottom:6px;">سيتم التفعيل قريباً</p>
             <p style="color:#6b82a8;font-size:.78rem;line-height:1.65;">جاري استكمال تسجيل حساب Fawry التاجر.<br>في الوقت ده استخدم إحدى طرق الدفع الأخرى.</p>
           </div>
           <!-- Form (activated after credentials set) -->
@@ -215,7 +215,7 @@
               <label style="font-size:.78rem;color:#8fa5c4;font-weight:700;display:block;margin-bottom:5px;">المبلغ (ج.م)</label>
               <input id="fawry-amount" type="number" placeholder="مثال: 5000" min="1" style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.88rem;box-sizing:border-box;">
             </div>
-            <button onclick="submitFawryPay()" style="width:100%;padding:13px;background:linear-gradient(135deg,#f7931e,#f5a623);border:none;border-radius:12px;color:#fff;font-size:.95rem;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif;">
+            <button onclick="submitFawryPay()" style="width:100%;padding:13px;background:linear-gradient(135deg,#00B8D4,#f5a623);border:none;border-radius:12px;color:#fff;font-size:.95rem;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif;">
               <i class="fas fa-bolt"></i> ادفع دلوقتي
             </button>
             <p id="fawry-msg" style="margin-top:10px;text-align:center;font-size:.8rem;color:#8fa5c4;min-height:20px;"></p>
@@ -268,7 +268,7 @@
         </div>
       </div>
       <div id="mainForm">
-        <label class="upload-label"><i class="fas fa-image" style="color:#e94e77;margin-left:5px;"></i> ارفع صورة إيصال التحويل</label>
+        <label class="upload-label"><i class="fas fa-image" style="color:#00E5FF;margin-left:5px;"></i> ارفع صورة إيصال التحويل</label>
         <div class="upload-zone" id="uploadZone">
           <input type="file" id="imgInput" accept="image/*" onchange="previewImage(this)">
           <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
@@ -290,7 +290,7 @@
         <div class="success-icon"><i class="fas fa-check"></i></div>
         <h2>تم إرسال الإيصال!</h2>
         <p>شكراً ليك! هتواصل معاك في أقرب وقت لتأكيد الطلب وبدء التسليم</p>
-        <a href="store.html" style="display:inline-flex;align-items:center;gap:7px;margin-top:22px;padding:12px 28px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:12px;color:#fff;font-size:.9rem;font-weight:800;">
+        <a href="store.html" style="display:inline-flex;align-items:center;gap:7px;margin-top:22px;padding:12px 28px;background:linear-gradient(135deg,#00E5FF,#00B8D4);border-radius:12px;color:#fff;font-size:.9rem;font-weight:800;">
           <i class="fas fa-store"></i> رجوع للمتجر
         </a>
       </div>
@@ -395,7 +395,7 @@
     document.getElementById('imgInput').value = '';
     document.getElementById('previewImg').src = '';
     document.getElementById('previewWrap').style.display = 'none';
-    document.getElementById('uploadZone').style.borderColor = 'rgba(233,78,119,0.3)';
+    document.getElementById('uploadZone').style.borderColor = 'rgba(0,229,255,0.3)';
     document.getElementById('sendBtn').disabled = true;
   }
 

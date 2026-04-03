@@ -15,9 +15,9 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 <style>
 :root{
-  --bg:#050d1b;--bg2:#09162b;--card:#0d1e38;--card2:#112446;
-  --border:rgba(255,255,255,0.07);--pink:#e94e77;--orange:#f7931e;
-  --grad:linear-gradient(135deg,#e94e77,#f7931e);--green:#22c55e;
+  --bg:#0a0e17;--bg2:#09162b;--card:#161b22;--card2:#112446;
+  --border:rgba(255,255,255,0.07);--pink:#00E5FF;--orange:#00B8D4;
+  --grad:linear-gradient(135deg,#00E5FF,#00B8D4);--green:#22c55e;
   --blue:#3b82f6;--text:#e2eaf6;--muted:#6b82a8;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -36,8 +36,8 @@ button{cursor:pointer;}
 .nav-back:hover{color:var(--text);background:rgba(255,255,255,0.08);}
 
 /* ── HERO ── */
-.reg-hero{padding:82px 16px 0;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(233,78,119,.13) 0%,transparent 60%),var(--bg);}
-.reg-hero-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;background:rgba(233,78,119,.12);border:1px solid rgba(233,78,119,.3);border-radius:30px;font-size:.78rem;font-weight:800;color:var(--pink);margin-bottom:16px;}
+.reg-hero{padding:82px 16px 0;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(0,229,255,.13) 0%,transparent 60%),var(--bg);}
+.reg-hero-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.3);border-radius:30px;font-size:.78rem;font-weight:800;color:var(--pink);margin-bottom:16px;}
 .reg-hero h1{font-size:clamp(1.45rem,5vw,2.4rem);font-weight:900;color:#fff;line-height:1.35;margin-bottom:10px;}
 .reg-hero h1 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .reg-hero p{font-size:.92rem;color:var(--muted);max-width:480px;margin:0 auto 24px;line-height:1.85;}
@@ -52,7 +52,7 @@ button{cursor:pointer;}
 .steps{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:28px;overflow:hidden;}
 .step-item{display:flex;align-items:center;gap:6px;}
 .step-circle{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;border:2px solid var(--border);color:var(--muted);transition:.3s;background:var(--bg2);flex-shrink:0;}
-.step-circle.active{border-color:var(--pink);background:linear-gradient(135deg,rgba(233,78,119,.25),rgba(247,147,30,.15));color:#fff;}
+.step-circle.active{border-color:var(--pink);background:linear-gradient(135deg,rgba(0,229,255,.25),rgba(0,184,212,.15));color:#fff;}
 .step-circle.done{border-color:var(--green);background:rgba(34,197,94,.15);color:var(--green);}
 .step-label{font-size:.72rem;font-weight:700;color:var(--muted);transition:.3s;display:none;}
 @media(min-width:480px){.step-label{display:block;}}
@@ -79,7 +79,7 @@ button{cursor:pointer;}
 .inp-wrap i.ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.9rem;pointer-events:none;}
 .inp-wrap input,.inp-wrap select,.inp-wrap textarea{width:100%;padding:12px 40px 12px 14px;background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-size:.93rem;outline:none;transition:.25s;appearance:none;}
 .inp-wrap textarea{padding:12px 14px;resize:vertical;min-height:90px;}
-.inp-wrap input:focus,.inp-wrap select:focus,.inp-wrap textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(233,78,119,.13);}
+.inp-wrap input:focus,.inp-wrap select:focus,.inp-wrap textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(0,229,255,.13);}
 .inp-wrap input.error,.inp-wrap select.error{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.1);}
 .field-err{font-size:.75rem;color:#f87171;margin-top:5px;display:none;}
 .field-err.show{display:block;}
@@ -92,8 +92,8 @@ button{cursor:pointer;}
 .courses-sel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
 @media(max-width:560px){.courses-sel-grid{grid-template-columns:1fr;}}
 .course-sel-card{position:relative;border:2px solid var(--border);border-radius:14px;padding:14px 14px 14px 16px;cursor:pointer;transition:.25s;background:var(--bg2);user-select:none;display:flex;align-items:flex-start;gap:12px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
-.course-sel-card:hover{border-color:rgba(233,78,119,.4);background:rgba(233,78,119,.04);}
-.course-sel-card.selected{border-color:var(--pink);background:linear-gradient(135deg,rgba(233,78,119,.1),rgba(247,147,30,.06));}
+.course-sel-card:hover{border-color:rgba(0,229,255,.4);background:rgba(0,229,255,.04);}
+.course-sel-card.selected{border-color:var(--pink);background:linear-gradient(135deg,rgba(0,229,255,.1),rgba(0,184,212,.06));}
 .course-sel-card input[type=checkbox]{display:none;}
 .csc-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
 .csc-body{flex:1;}
@@ -111,7 +111,7 @@ button{cursor:pointer;}
 .proof-item-title{font-size:.88rem;font-weight:800;color:#fff;}
 .proof-item-price{font-size:.78rem;color:var(--orange);font-weight:700;margin-top:2px;}
 .proof-upload-zone{border:2px dashed var(--border);border-radius:12px;padding:18px;text-align:center;cursor:pointer;transition:.3s;background:var(--bg);position:relative;}
-.proof-upload-zone:hover,.proof-upload-zone.dragover{border-color:var(--pink);background:rgba(233,78,119,.05);}
+.proof-upload-zone:hover,.proof-upload-zone.dragover{border-color:var(--pink);background:rgba(0,229,255,.05);}
 .proof-upload-zone .puz-icon{font-size:1.8rem;color:var(--muted);margin-bottom:6px;}
 .proof-upload-zone .puz-text{font-size:.82rem;color:var(--muted);}
 .proof-upload-zone .puz-hint{font-size:.72rem;color:var(--muted);opacity:.7;margin-top:4px;}
@@ -127,18 +127,18 @@ button{cursor:pointer;}
 .summary-lbl{font-size:.8rem;color:var(--muted);font-weight:700;min-width:100px;max-width:110px;flex-shrink:0;}
 .summary-val{font-size:.85rem;color:var(--text);font-weight:600;flex:1;line-height:1.6;word-break:break-word;overflow-wrap:anywhere;min-width:0;}
 @media(max-width:400px){.summary-lbl{min-width:80px;max-width:90px;font-size:.75rem;}.summary-val{font-size:.8rem;}}
-.summary-course-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(233,78,119,.12);border:1px solid rgba(233,78,119,.25);border-radius:20px;padding:3px 10px;font-size:.75rem;font-weight:700;color:var(--pink);margin:2px;}
+.summary-course-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.25);border-radius:20px;padding:3px 10px;font-size:.75rem;font-weight:700;color:var(--pink);margin:2px;}
 
 /* STEP NAV BTNS */
 .step-actions{display:flex;gap:10px;margin-top:22px;justify-content:flex-start;flex-wrap:wrap;}
 .btn-next{padding:13px 24px;background:var(--grad);border:none;border-radius:12px;color:#fff;font-size:.92rem;font-weight:800;transition:.3s;display:flex;align-items:center;gap:8px;flex:1;justify-content:center;min-width:140px;}
 @media(min-width:480px){.btn-next{flex:0 0 auto;}}
-.btn-next:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(233,78,119,.4);}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,229,255,.4);}
 .btn-prev{padding:13px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;color:var(--muted);font-size:.92rem;font-weight:700;transition:.25s;display:flex;align-items:center;gap:7px;}
 .btn-prev:hover{color:var(--text);border-color:rgba(255,255,255,.15);}
-.btn-submit{padding:14px 28px;background:var(--grad);border:none;border-radius:13px;color:#fff;font-size:.95rem;font-weight:900;transition:.3s;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(233,78,119,.3);flex:1;justify-content:center;}
+.btn-submit{padding:14px 28px;background:var(--grad);border:none;border-radius:13px;color:#fff;font-size:.95rem;font-weight:900;transition:.3s;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,229,255,.3);flex:1;justify-content:center;}
 @media(min-width:480px){.btn-submit{flex:0 0 auto;}}
-.btn-submit:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(233,78,119,.45);}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,229,255,.45);}
 .btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none !important;}
 
 /* SUCCESS STATE */
@@ -175,7 +175,7 @@ button{cursor:pointer;}
 .proof-amount-wrap{position:relative;margin-bottom:6px;}
 .proof-amount-wrap i.ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.9rem;pointer-events:none;}
 .proof-amount-wrap input{width:100%;padding:12px 40px 12px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-size:1rem;font-weight:700;outline:none;transition:.25s;font-family:'Cairo',sans-serif;}
-.proof-amount-wrap input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(233,78,119,.13);}
+.proof-amount-wrap input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(0,229,255,.13);}
 .proof-amount-wrap input.valid{border-color:#22c55e;}
 .proof-amount-wrap input.err-border{border-color:#ef4444;}
 .amount-calc-row{display:flex;gap:10px;margin:10px 0 14px;}
@@ -382,8 +382,8 @@ const COURSES = [
     name:'كورس التسويق الرقمي الشامل',
     price:750, free:false,
     icon:'fas fa-graduation-cap',
-    color:'#e94e77',
-    bg:'rgba(233,78,119,.15)',
+    color:'#00E5FF',
+    bg:'rgba(0,229,255,.15)',
     link:'digital-marketing-course.html'
   },
   {
@@ -652,7 +652,7 @@ function buildPaymentProofs(){
           <div class="ac-lbl"><i class="fas fa-check-circle"></i> تم الدفع</div>
           <div class="ac-val" id="pcalc-paid-${c.key}" style="color:#4ade80">0 ج</div>
         </div>
-        <div class="amount-calc-box" style="background:rgba(247,147,30,.1);border:1px solid rgba(247,147,30,.25)">
+        <div class="amount-calc-box" style="background:rgba(0,184,212,.1);border:1px solid rgba(0,184,212,.25)">
           <div class="ac-lbl"><i class="fas fa-clock"></i> المتبقي</div>
           <div class="ac-val" id="pcalc-rem-${c.key}" style="color:var(--orange)">0 ج</div>
         </div>
@@ -722,8 +722,8 @@ function calcAmount(key, coursePrice){
       remEl.style.borderColor = 'rgba(34,197,94,.3)';
       document.getElementById('pcalc-rem-'+key).style.color = '#4ade80';
     } else {
-      remEl.style.background = 'rgba(247,147,30,.1)';
-      remEl.style.borderColor = 'rgba(247,147,30,.25)';
+      remEl.style.background = 'rgba(0,184,212,.1)';
+      remEl.style.borderColor = 'rgba(0,184,212,.25)';
       document.getElementById('pcalc-rem-'+key).style.color = 'var(--orange)';
     }
   } else {

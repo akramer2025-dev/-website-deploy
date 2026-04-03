@@ -9,9 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#050d1b; --bg2:#09162b; --card:#0d1e38; --card2:#112446;
-  --border:rgba(255,255,255,0.07); --pink:#e94e77; --orange:#f7931e;
-  --grad:linear-gradient(135deg,#e94e77,#f7931e); --green:#22c55e;
+  --bg:#0a0e17; --bg2:#09162b; --card:#161b22; --card2:#112446;
+  --border:rgba(255,255,255,0.07); --pink:#00E5FF; --orange:#00B8D4;
+  --grad:linear-gradient(135deg,#00E5FF,#00B8D4); --green:#22c55e;
   --blue:#3b82f6; --red:#ef4444; --text:#e2eaf6; --muted:#6b82a8;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -47,14 +47,14 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 
 /* ══ AUTH ══ */
 #authScreen{align-items:center;justify-content:center;padding:20px;
-  background:radial-gradient(ellipse at 50% 30%,rgba(233,78,119,.1) 0%,transparent 60%),var(--bg);}
+  background:radial-gradient(ellipse at 50% 30%,rgba(0,229,255,.1) 0%,transparent 60%),var(--bg);}
 .auth-card{width:100%;max-width:460px;background:var(--card);border:1px solid var(--border);
   border-radius:24px;padding:38px 34px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,.5);}
 .auth-course-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;margin-bottom:18px;
-  background:rgba(233,78,119,.1);border:1px solid rgba(233,78,119,.25);border-radius:20px;font-size:.75rem;font-weight:800;color:var(--pink);}
+  background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);border-radius:20px;font-size:.75rem;font-weight:800;color:var(--pink);}
 .auth-icon{width:76px;height:76px;margin:0 auto 18px;border-radius:22px;
-  background:linear-gradient(135deg,rgba(233,78,119,.2),rgba(247,147,30,.15));
-  border:2px solid rgba(233,78,119,.25);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--pink);}
+  background:linear-gradient(135deg,rgba(0,229,255,.2),rgba(0,184,212,.15));
+  border:2px solid rgba(0,229,255,.25);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--pink);}
 .auth-title{font-size:1.35rem;font-weight:900;color:#fff;margin-bottom:7px;}
 .auth-sub{font-size:.86rem;color:var(--muted);line-height:1.8;margin-bottom:22px;}
 .auth-meta{display:flex;justify-content:center;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
@@ -66,7 +66,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .auth-input-wrap i.ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);}
 .auth-input{width:100%;padding:13px 42px 13px 14px;background:var(--bg2);border:1.5px solid var(--border);
   border-radius:13px;color:var(--text);font-size:.95rem;outline:none;transition:.25s;font-family:'Cairo',sans-serif;}
-.auth-input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(233,78,119,.15);}
+.auth-input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(0,229,255,.15);}
 .auth-err{display:none;align-items:center;gap:8px;padding:10px 14px;margin-bottom:12px;
   background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:10px;font-size:.82rem;color:#f87171;text-align:right;}
 .auth-err.show{display:flex;}
@@ -82,8 +82,8 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   border-radius:9px;color:var(--muted);font-size:.78rem;font-weight:700;}
 .btn-enter{width:100%;padding:14px;background:var(--grad);border:none;border-radius:13px;color:#fff;
   font-size:1rem;font-weight:900;transition:.3s;display:flex;align-items:center;justify-content:center;gap:9px;
-  box-shadow:0 8px 28px rgba(233,78,119,.3);}
-.btn-enter:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(233,78,119,.45);}
+  box-shadow:0 8px 28px rgba(0,229,255,.3);}
+.btn-enter:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(0,229,255,.45);}
 .btn-enter:disabled{opacity:.5;pointer-events:none;}
 .auth-note{margin-top:14px;font-size:.75rem;color:var(--muted);line-height:1.7;}
 
@@ -98,11 +98,11 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   color:var(--muted);font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;transition:.2s;cursor:pointer;}
 .role-tab.active-student{background:linear-gradient(135deg,rgba(59,130,246,.25),rgba(59,130,246,.15));
   color:#93c5fd;border:1px solid rgba(59,130,246,.3);}
-.role-tab.active-teacher{background:linear-gradient(135deg,rgba(233,78,119,.25),rgba(247,147,30,.2));
-  color:var(--orange);border:1px solid rgba(247,147,30,.35);}
+.role-tab.active-teacher{background:linear-gradient(135deg,rgba(0,229,255,.25),rgba(0,184,212,.2));
+  color:var(--orange);border:1px solid rgba(0,184,212,.35);}
 .teacher-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;margin-bottom:14px;
-  background:linear-gradient(135deg,rgba(247,147,30,.12),rgba(233,78,119,.1));
-  border:1px solid rgba(247,147,30,.3);border-radius:12px;font-size:.8rem;font-weight:800;color:var(--orange);}
+  background:linear-gradient(135deg,rgba(0,184,212,.12),rgba(0,229,255,.1));
+  border:1px solid rgba(0,184,212,.3);border-radius:12px;font-size:.8rem;font-weight:800;color:var(--orange);}
 
 /* ══ WAITING ══ */
 #waitScreen{align-items:center;justify-content:center;padding:20px;flex-direction:column;text-align:center;}
@@ -168,7 +168,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .mob-sub{color:var(--muted);font-size:.88rem;max-width:340px;line-height:1.8;}
 .mob-btn{display:inline-flex;align-items:center;gap:9px;padding:15px 30px;background:var(--grad);
   border-radius:14px;color:#fff;font-size:1rem;font-weight:900;text-decoration:none;
-  box-shadow:0 8px 28px rgba(233,78,119,.3);margin-top:6px;}
+  box-shadow:0 8px 28px rgba(0,229,255,.3);margin-top:6px;}
 .mob-note{font-size:.78rem;color:var(--muted);max-width:320px;line-height:1.7;}
 .mob-note strong{color:#fbbf24;}
 
@@ -233,7 +233,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   cursor:pointer;transition:all .18s;flex-shrink:0;position:relative;
 }
 .at-btn:hover{background:rgba(255,255,255,.16);color:#fff;}
-.at-btn.active{background:rgba(233,78,119,.25);border:1.5px solid rgba(233,78,119,.6);color:#f87171;}
+.at-btn.active{background:rgba(0,229,255,.25);border:1.5px solid rgba(0,229,255,.6);color:#f87171;}
 .at-btn[title]:hover::after{
   content:attr(title);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
   background:rgba(7,17,35,.97);color:#fff;font-size:10px;font-family:'Cairo',sans-serif;
@@ -251,7 +251,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   border-radius:50%;background:rgba(255,255,255,.07);
   border:1.5px solid rgba(255,255,255,.15);cursor:pointer;flex-shrink:0;transition:all .15s;
 }
-.at-size:hover,.at-size.active{background:rgba(233,78,119,.2);border-color:rgba(233,78,119,.5);}
+.at-size:hover,.at-size.active{background:rgba(0,229,255,.2);border-color:rgba(0,229,255,.5);}
 .at-sz-s{width:22px;height:22px;}
 .at-sz-m{width:28px;height:28px;}
 .at-sz-l{width:34px;height:34px;}
@@ -273,7 +273,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
   font-weight:700;
   transition:.2s;
 }
-#btnAnnoToggle.active{background:rgba(233,78,119,.2);border-color:rgba(233,78,119,.45);color:#f87171;}
+#btnAnnoToggle.active{background:rgba(0,229,255,.2);border-color:rgba(0,229,255,.45);color:#f87171;}
 #btnAnnoToggle:hover{background:rgba(255,255,255,.14);color:#fff;}
 
 /* laser pointer dot */
@@ -384,9 +384,9 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
         </div>
       </div>
       <div class="auth-features" style="margin-bottom:14px">
-        <span class="feat-chip" style="background:rgba(247,147,30,.08);border-color:rgba(247,147,30,.25);color:var(--orange);"><i class="fas fa-desktop"></i> Screen Share</span>
-        <span class="feat-chip" style="background:rgba(247,147,30,.08);border-color:rgba(247,147,30,.25);color:var(--orange);"><i class="fas fa-microphone"></i> ميك مفتوح</span>
-        <span class="feat-chip" style="background:rgba(247,147,30,.08);border-color:rgba(247,147,30,.25);color:var(--orange);"><i class="fas fa-video"></i> كاميرا شغالة</span>
+        <span class="feat-chip" style="background:rgba(0,184,212,.08);border-color:rgba(0,184,212,.25);color:var(--orange);"><i class="fas fa-desktop"></i> Screen Share</span>
+        <span class="feat-chip" style="background:rgba(0,184,212,.08);border-color:rgba(0,184,212,.25);color:var(--orange);"><i class="fas fa-microphone"></i> ميك مفتوح</span>
+        <span class="feat-chip" style="background:rgba(0,184,212,.08);border-color:rgba(0,184,212,.25);color:var(--orange);"><i class="fas fa-video"></i> كاميرا شغالة</span>
       </div>
     </div>
 
@@ -550,7 +550,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
     <span style="color:#fbbf24;">⭐ للمحاضر: لما تدخل اضغط Security وأوقف الـ Lobby</span>
   </p>
   <a id="fallbackLink" href="#" target="_blank"
-    style="display:inline-flex;align-items:center;gap:9px;padding:14px 28px;background:var(--grad);border-radius:13px;color:#fff;font-size:1rem;font-weight:900;box-shadow:0 8px 28px rgba(233,78,119,.3);text-decoration:none;margin-bottom:14px;">
+    style="display:inline-flex;align-items:center;gap:9px;padding:14px 28px;background:var(--grad);border-radius:13px;color:#fff;font-size:1rem;font-weight:900;box-shadow:0 8px 28px rgba(0,229,255,.3);text-decoration:none;margin-bottom:14px;">
     <i class="fas fa-external-link-alt"></i> افتح المحاضرة مباشرة
   </a>
   <div style="margin-top:10px;">
@@ -1322,8 +1322,8 @@ function toggleAnno(){
     canvas.style.display  = 'block';
     toolbar.classList.add('show');
     if(btn){
-      btn.style.background='rgba(233,78,119,.2)';
-      btn.style.borderColor='rgba(233,78,119,.45)';
+      btn.style.background='rgba(0,229,255,.2)';
+      btn.style.borderColor='rgba(0,229,255,.45)';
       btn.style.color='#f87171';
     }
     /* make sure recPanel stays above canvas */

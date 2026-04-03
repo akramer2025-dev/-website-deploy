@@ -12,9 +12,9 @@
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <style>
 :root{
-  --bg:#050d1b;--bg2:#09162b;--card:#0d1e38;--card2:#112446;
-  --border:rgba(255,255,255,0.07);--pink:#e94e77;--orange:#f7931e;
-  --grad:linear-gradient(135deg,#e94e77,#f7931e);--green:#22c55e;
+  --bg:#0a0e17;--bg2:#09162b;--card:#161b22;--card2:#112446;
+  --border:rgba(255,255,255,0.07);--pink:#00E5FF;--orange:#00B8D4;
+  --grad:linear-gradient(135deg,#00E5FF,#00B8D4);--green:#22c55e;
   --blue:#3b82f6;--text:#e2eaf6;--muted:#6b82a8;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -29,11 +29,11 @@ a{text-decoration:none;color:inherit;}
 .nav-brand img{width:38px;height:38px;}
 .nav-brand span{font-size:.92rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;}
 .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:var(--grad);border-radius:12px;color:#fff;font-size:.88rem;font-weight:800;transition:.3s;}
-.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(233,78,119,0.35);}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,229,255,0.35);}
 
 /* HERO */
-.hero-lp{padding:120px 0 0;background:linear-gradient(180deg,#050d1b 0%,#07122a 100%);position:relative;overflow:hidden;}
-.hero-lp::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(233,78,119,0.1) 0%,transparent 65%);pointer-events:none;}
+.hero-lp{padding:120px 0 0;background:linear-gradient(180deg,#0a0e17 0%,#07122a 100%);position:relative;overflow:hidden;}
+.hero-lp::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,255,0.1) 0%,transparent 65%);pointer-events:none;}
 .hero-lp::after{content:'';position:absolute;bottom:0;left:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(59,130,246,0.07) 0%,transparent 65%);pointer-events:none;}
 .hero-inner{display:grid;grid-template-columns:1fr 400px;gap:40px;align-items:flex-end;position:relative;z-index:2;}
 
@@ -56,16 +56,16 @@ a{text-decoration:none;color:inherit;}
 .plat-tt{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:#e2e8f0;}
 .plat-sc{background:rgba(255,252,0,0.08);border:1px solid rgba(255,252,0,0.25);color:#fef9c3;}
 .cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-.btn-main{display:inline-flex;align-items:center;gap:10px;padding:17px 36px;background:var(--grad);border-radius:14px;color:#fff;font-size:1rem;font-weight:900;box-shadow:0 10px 30px rgba(233,78,119,0.4);transition:.3s;letter-spacing:.3px;}
-.btn-main:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(233,78,119,0.5);}
+.btn-main{display:inline-flex;align-items:center;gap:10px;padding:17px 36px;background:var(--grad);border-radius:14px;color:#fff;font-size:1rem;font-weight:900;box-shadow:0 10px 30px rgba(0,229,255,0.4);transition:.3s;letter-spacing:.3px;}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,229,255,0.5);}
 .btn-main i{font-size:1.15rem;}
 .social-proof{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.83rem;font-weight:700;}
 .social-proof i{color:var(--orange);}
 
 /* HERO IMAGE */
 .hero-lp-img{position:relative;display:flex;flex-direction:column;align-items:center;}
-.hero-lp-img img{width:100%;display:block;filter:drop-shadow(0 20px 50px rgba(233,78,119,0.2));border-radius:24px 24px 0 0;object-fit:cover;object-position:top center;}
-.hero-card{background:rgba(9,22,43,0.97);backdrop-filter:blur(14px);border:1px solid rgba(233,78,119,0.22);border-radius:0 0 20px 20px;padding:16px 22px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 12px 32px rgba(0,0,0,0.5);}
+.hero-lp-img img{width:100%;display:block;filter:drop-shadow(0 20px 50px rgba(0,229,255,0.2));border-radius:24px 24px 0 0;object-fit:cover;object-position:top center;}
+.hero-card{background:rgba(9,22,43,0.97);backdrop-filter:blur(14px);border:1px solid rgba(0,229,255,0.22);border-radius:0 0 20px 20px;padding:16px 22px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 12px 32px rgba(0,0,0,0.5);}
 .hero-card-top .lbl{font-size:.65rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
 .hero-card-top .name{font-size:1rem;font-weight:900;color:#fff;}
 .hero-card-top .role{font-size:.76rem;color:var(--orange);font-weight:700;}
@@ -84,7 +84,7 @@ a{text-decoration:none;color:inherit;}
 /* SECTION SHARED */
 .section{padding:80px 0;}
 .sec-header{text-align:center;margin-bottom:54px;}
-.sec-badge{display:inline-block;padding:6px 18px;background:rgba(233,78,119,0.1);border:1px solid rgba(233,78,119,0.25);border-radius:30px;font-size:.78rem;font-weight:800;color:var(--pink);letter-spacing:.8px;text-transform:uppercase;margin-bottom:14px;}
+.sec-badge{display:inline-block;padding:6px 18px;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.25);border-radius:30px;font-size:.78rem;font-weight:800;color:var(--pink);letter-spacing:.8px;text-transform:uppercase;margin-bottom:14px;}
 .sec-title{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;color:#fff;margin-bottom:12px;line-height:1.3;}
 .sec-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .sec-sub{color:var(--muted);font-size:.97rem;line-height:1.75;max-width:580px;margin:0 auto;}
@@ -92,7 +92,7 @@ a{text-decoration:none;color:inherit;}
 /* WHO IS IT FOR */
 .for-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;}
 .for-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 22px;text-align:center;transition:.3s;}
-.for-card:hover{transform:translateY(-4px);border-color:rgba(233,78,119,0.3);}
+.for-card:hover{transform:translateY(-4px);border-color:rgba(0,229,255,0.3);}
 .for-icon{width:56px;height:56px;border-radius:16px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;margin:0 auto 14px;}
 .for-card h4{font-size:.95rem;font-weight:800;color:#fff;margin-bottom:7px;}
 .for-card p{font-size:.82rem;color:var(--muted);line-height:1.65;}
@@ -101,7 +101,7 @@ a{text-decoration:none;color:inherit;}
 .curriculum{background:var(--bg2);}
 .modules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
 .module-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.3s;}
-.module-card:hover{border-color:rgba(233,78,119,0.25);transform:translateY(-3px);}
+.module-card:hover{border-color:rgba(0,229,255,0.25);transform:translateY(-3px);}
 .module-header{padding:18px 22px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);}
 .module-icon{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#fff;flex-shrink:0;}
 .module-header h3{font-size:1rem;font-weight:800;color:#fff;margin:0;}
@@ -123,7 +123,7 @@ a{text-decoration:none;color:inherit;}
 /* INSTRUCTOR */
 .instructor-section{background:var(--card);border-radius:28px;padding:50px 40px;display:grid;grid-template-columns:280px 1fr;gap:50px;align-items:center;border:1px solid var(--border);}
 .instructor-img-wrap{position:relative;text-align:center;}
-.instructor-img-wrap img{width:220px;height:260px;object-fit:cover;object-position:top;border-radius:24px;border:2px solid rgba(233,78,119,0.3);filter:drop-shadow(0 10px 30px rgba(233,78,119,0.2));}
+.instructor-img-wrap img{width:220px;height:260px;object-fit:cover;object-position:top;border-radius:24px;border:2px solid rgba(0,229,255,0.3);filter:drop-shadow(0 10px 30px rgba(0,229,255,0.2));}
 .instructor-badge{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:var(--grad);border-radius:20px;padding:7px 20px;font-size:.8rem;font-weight:800;color:#fff;white-space:nowrap;}
 .instructor-content h3{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:6px;}
 .instructor-content .role{font-size:.9rem;color:var(--orange);font-weight:700;margin-bottom:18px;}
@@ -135,7 +135,7 @@ a{text-decoration:none;color:inherit;}
 /* TESTIMONIALS */
 .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
 .testimonial-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;transition:.3s;}
-.testimonial-card:hover{border-color:rgba(233,78,119,0.2);}
+.testimonial-card:hover{border-color:rgba(0,229,255,0.2);}
 .testi-stars{color:#f59e0b;font-size:.9rem;margin-bottom:12px;}
 .testi-text{font-size:.88rem;color:var(--muted);line-height:1.75;margin-bottom:16px;}
 .testi-author{display:flex;align-items:center;gap:10px;}
@@ -146,15 +146,15 @@ a{text-decoration:none;color:inherit;}
 /* FAQ */
 .faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
 .faq-item{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:.3s;}
-.faq-item:hover{border-color:rgba(233,78,119,0.2);}
+.faq-item:hover{border-color:rgba(0,229,255,0.2);}
 .faq-q{padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;font-size:.92rem;font-weight:700;color:#fff;}
-.faq-icon{width:28px;height:28px;border-radius:50%;background:rgba(233,78,119,0.12);border:1px solid rgba(233,78,119,0.25);display:flex;align-items:center;justify-content:center;color:var(--pink);font-size:.8rem;flex-shrink:0;transition:.3s;}
+.faq-icon{width:28px;height:28px;border-radius:50%;background:rgba(0,229,255,0.12);border:1px solid rgba(0,229,255,0.25);display:flex;align-items:center;justify-content:center;color:var(--pink);font-size:.8rem;flex-shrink:0;transition:.3s;}
 .faq-item.open .faq-icon{transform:rotate(45deg);background:var(--grad);border-color:transparent;color:#fff;}
 .faq-a{display:none;padding:0 22px 18px;font-size:.86rem;color:var(--muted);line-height:1.8;}
 .faq-item.open .faq-a{display:block;}
 
 /* FINAL CTA */
-.final-cta{background:linear-gradient(135deg,rgba(233,78,119,0.1),rgba(247,147,30,0.06));border:1px solid rgba(233,78,119,0.2);border-radius:28px;padding:70px 40px;text-align:center;}
+.final-cta{background:linear-gradient(135deg,rgba(0,229,255,0.1),rgba(0,184,212,0.06));border:1px solid rgba(0,229,255,0.2);border-radius:28px;padding:70px 40px;text-align:center;}
 .final-cta h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;color:#fff;margin-bottom:14px;}
 .final-cta p{color:var(--muted);font-size:1rem;margin-bottom:36px;line-height:1.75;}
 .final-cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
@@ -336,19 +336,19 @@ a{text-decoration:none;color:inherit;}
   <div class="container">
     <div style="max-width:780px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px 44px;" data-aos="fade-up">
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px;">
-        <img src="images/akram.png" onerror="this.src='images/Screenshot_5.png'" alt="أكرم مصطفى" style="width:60px;height:60px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid rgba(233,78,119,0.4);">
+        <img src="images/akram.png" onerror="this.src='images/Screenshot_5.png'" alt="أكرم مصطفى" style="width:60px;height:60px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid rgba(0,229,255,0.4);">
         <div>
           <div style="font-size:1rem;font-weight:800;color:#fff;">أكرم مصطفى</div>
           <div style="font-size:.8rem;color:var(--muted);">خبير تسويق رقمي</div>
         </div>
-        <div style="margin-right:auto;display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(233,78,119,0.1);border:1px solid rgba(233,78,119,0.25);border-radius:20px;font-size:.76rem;font-weight:800;color:var(--pink);">
+        <div style="margin-right:auto;display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.25);border-radius:20px;font-size:.76rem;font-weight:800;color:var(--pink);">
           <i class="fab fa-facebook"></i> بوست أصلي
         </div>
       </div>
       <p style="color:var(--text);font-size:1rem;line-height:2.1;margin-bottom:16px;">
         بدل ما نضيع الشهر في الفاضي، قررت أعمل دورة مجانية أونلاين طوال شهر رمضان لمساعدة الشباب وأي حد من بلدي أو من أصدقائي على الفيسبوك إنه يبدأ طريقه صح في مجالات مطلوبة جداً في سوق العمل 
       </p>
-      <div style="background:rgba(233,78,119,0.07);border:1px solid rgba(233,78,119,0.18);border-radius:14px;padding:16px 20px;margin-bottom:16px;">
+      <div style="background:rgba(0,229,255,0.07);border:1px solid rgba(0,229,255,0.18);border-radius:14px;padding:16px 20px;margin-bottom:16px;">
         <p style="color:var(--text);font-size:.93rem;line-height:1.95;"><span style="color:var(--pink);font-weight:800;"> الدورة مناسبة لأي شاب</span> من أول سن الكلية أو أي حد حابب يبدأ من الصفر حتى لو معندوش أي خبرة في أي مجال.</p>
       </div>
       <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:14px;padding:16px 20px;margin-bottom:16px;">
@@ -413,7 +413,7 @@ a{text-decoration:none;color:inherit;}
 
       <div class="module-card" data-aos="fade-up" data-aos-delay="0">
         <div class="module-header">
-          <div class="module-icon" style="background:linear-gradient(135deg,#e94e77,#f7931e);"><i class="fas fa-bullhorn"></i></div>
+          <div class="module-icon" style="background:linear-gradient(135deg,#00E5FF,#00B8D4);"><i class="fas fa-bullhorn"></i></div>
           <div><h3>التسويق الإلكتروني</h3><small>الأساسيات + التطبيق</small></div>
         </div>
         <div class="module-body">
@@ -551,7 +551,7 @@ a{text-decoration:none;color:inherit;}
         <div class="testi-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
         <p class="testi-text">"الكورس غير حياتي بالجد  بدأت شغل فريلانسينج بعد ما خلصت وعملت أول 3000 جنيه في الأسبوع الأول!"</p>
         <div class="testi-author">
-          <div class="testi-avatar" style="background:linear-gradient(135deg,#e94e77,#f7931e);">م</div>
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#00E5FF,#00B8D4);">م</div>
           <div><div class="testi-name">محمد أحمد</div><div class="testi-sub">فريلانسر | القاهرة</div></div>
         </div>
       </div>

@@ -1,18 +1,18 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Check Student in Firebase</title>
 <style>
-body{font-family:Arial;padding:20px;background:#0a1f44;color:#fff;}
+body{font-family:Arial;padding:20px;background:#0a0e17;color:#fff;}
 .student{background:#1a2f54;padding:15px;margin:10px 0;border-radius:8px;border-left:4px solid #22c55e;}
 .student h3{margin:0 0 10px;color:#22c55e;}
 .student p{margin:5px 0;font-size:14px;}
 .not-found{background:#ef4444;padding:20px;border-radius:8px;text-align:center;}
 #loading{text-align:center;padding:40px;font-size:18px;}
 .search-box{background:#1a2f54;padding:20px;border-radius:8px;margin-bottom:20px;}
-.search-box input{width:100%;padding:10px;font-size:16px;border-radius:8px;border:2px solid #3b82f6;background:#0a1f44;color:#fff;}
+.search-box input{width:100%;padding:10px;font-size:16px;border-radius:8px;border:2px solid #3b82f6;background:#0a0e17;color:#fff;}
 </style>
 </head>
 <body>
@@ -91,7 +91,7 @@ function displayStudents(students) {
       <h3>🆔 ${s.id || '—'}</h3>
       <p><strong>الاسم:</strong> ${s.name || '—'}</p>
       <p><strong>Username:</strong> ${s.username || '—'}</p>
-      <p><strong>Password:</strong> <code style="background:#0a1f44;padding:2px 8px;border-radius:4px;">${s.password || '—'}</code></p>
+      <p><strong>Password:</strong> <code style="background:#0a0e17;padding:2px 8px;border-radius:4px;">${s.password || '—'}</code></p>
       <p><strong>البريد:</strong> ${s.email || '—'}</p>
       <p><strong>الهاتف:</strong> ${s.phone || '—'}</p>
       <p><strong>المجال:</strong> ${s.field || '—'}</p>

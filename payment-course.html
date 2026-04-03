@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -14,7 +14,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Cairo',sans-serif;background:#050d1b;color:#fff;direction:rtl;min-height:100vh;display:flex;flex-direction:column;}
+    body{font-family:'Cairo',sans-serif;background:#0a0e17;color:#fff;direction:rtl;min-height:100vh;display:flex;flex-direction:column;}
     a{text-decoration:none;color:inherit;}
 
     /* NAVBAR */
@@ -22,25 +22,25 @@
     .nav-inner{max-width:900px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
     .nav-brand{display:flex;align-items:center;gap:8px;}
     .nav-brand img{width:36px;height:36px;}
-    .nav-brand span{font-size:.85rem;font-weight:900;background:linear-gradient(135deg,#e94e77,#f7931e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;}
+    .nav-brand span{font-size:.85rem;font-weight:900;background:linear-gradient(135deg,#00E5FF,#00B8D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;}
     .nav-back{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#94a3b8;font-size:.85rem;font-weight:700;transition:.2s;}
     .nav-back:hover{background:rgba(255,255,255,0.1);color:#fff;}
 
     /* PAGE */
     .page{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:90px 16px 60px;}
-    .card{background:#0d1e38;border:1px solid rgba(255,255,255,0.08);border-radius:24px;max-width:580px;width:100%;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
+    .card{background:#161b22;border:1px solid rgba(255,255,255,0.08);border-radius:24px;max-width:580px;width:100%;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
 
     /* CARD HEADER */
-    .card-head{background:linear-gradient(135deg,#07122a,#0d1e38);border-bottom:1px solid rgba(255,255,255,0.07);padding:28px 28px 24px;text-align:center;}
-    .head-icon{width:60px;height:60px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#fff;margin:0 auto 14px;box-shadow:0 8px 24px rgba(233,78,119,0.35);}
+    .card-head{background:linear-gradient(135deg,#07122a,#161b22);border-bottom:1px solid rgba(255,255,255,0.07);padding:28px 28px 24px;text-align:center;}
+    .head-icon{width:60px;height:60px;background:linear-gradient(135deg,#00E5FF,#00B8D4);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#fff;margin:0 auto 14px;box-shadow:0 8px 24px rgba(0,229,255,0.35);}
     .card-head h1{font-size:1.35rem;font-weight:900;color:#fff;margin-bottom:6px;}
 
     /* PRICE BANNER */
-    .price-banner{background:rgba(233,78,119,0.07);border:1px solid rgba(233,78,119,0.2);border-radius:16px;padding:18px 20px;margin:20px 20px 0;text-align:center;}
+    .price-banner{background:rgba(0,229,255,0.07);border:1px solid rgba(0,229,255,0.2);border-radius:16px;padding:18px 20px;margin:20px 20px 0;text-align:center;}
     .price-banner-title{font-size:.8rem;color:#8fa5c4;margin-bottom:8px;}
     .price-orig{font-size:1.1rem;color:rgba(255,255,255,0.35);text-decoration:line-through;font-weight:700;}
-    .price-new{font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#e94e77,#f7931e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;margin:4px 0;}
-    .price-badge-offer{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:20px;font-size:.77rem;font-weight:800;color:#fff;margin-top:6px;}
+    .price-new{font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#00E5FF,#00B8D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;margin:4px 0;}
+    .price-badge-offer{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:linear-gradient(135deg,#00E5FF,#00B8D4);border-radius:20px;font-size:.77rem;font-weight:800;color:#fff;margin-top:6px;}
 
     /* CARD BODY */
     .card-body{padding:24px 20px;}
@@ -50,9 +50,9 @@
     .method-label{font-size:.85rem;font-weight:800;color:#c0cee0;margin-bottom:12px;display:flex;align-items:center;gap:7px;}
     .method-selector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
     .method-tab{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:.25s;position:relative;}
-    .method-tab:hover{border-color:rgba(233,78,119,0.35);background:rgba(233,78,119,0.05);}
-    .method-tab.active{border-color:#e94e77;background:rgba(233,78,119,0.1);}
-    .method-tab.active::after{content:'✓';position:absolute;top:8px;left:10px;width:18px;height:18px;background:#e94e77;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:900;color:#fff;line-height:18px;text-align:center;}
+    .method-tab:hover{border-color:rgba(0,229,255,0.35);background:rgba(0,229,255,0.05);}
+    .method-tab.active{border-color:#00E5FF;background:rgba(0,229,255,0.1);}
+    .method-tab.active::after{content:'✓';position:absolute;top:8px;left:10px;width:18px;height:18px;background:#00E5FF;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:900;color:#fff;line-height:18px;text-align:center;}
     .method-tab-icon{font-size:1.5rem;}
     .method-tab-label{font-size:.78rem;font-weight:800;color:#c0cee0;text-align:center;line-height:1.4;}
     .method-tab-sub{font-size:.67rem;color:#4b6280;text-align:center;}
@@ -60,7 +60,7 @@
     /* PAYMENT NUMBER BOX */
     .pay-number-box{border-radius:14px;padding:16px 18px;margin-bottom:18px;}
     .pnb-wepay{background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(139,92,246,0.08));border:1px solid rgba(99,102,241,0.25);}
-    .pnb-ewallet{background:linear-gradient(135deg,rgba(233,78,119,0.08),rgba(247,147,30,0.06));border:1.5px solid rgba(233,78,119,0.3);}
+    .pnb-ewallet{background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(0,184,212,0.06));border:1.5px solid rgba(0,229,255,0.3);}
     .pnb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
     .pnb-title{font-size:.9rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;}
     .pnb-num-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:11px;padding:11px 14px;}
@@ -75,17 +75,17 @@
     /* STEPS */
     .steps{display:flex;flex-direction:column;gap:10px;margin-bottom:22px;}
     .step{display:flex;align-items:flex-start;gap:10px;}
-    .step-num{width:26px;height:26px;background:linear-gradient(135deg,#e94e77,#f7931e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;color:#fff;flex-shrink:0;margin-top:2px;}
+    .step-num{width:26px;height:26px;background:linear-gradient(135deg,#00E5FF,#00B8D4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;color:#fff;flex-shrink:0;margin-top:2px;}
     .step-txt{font-size:.85rem;color:#8fa5c4;line-height:1.6;}
     .step-txt strong{color:#fff;}
 
     /* AMOUNT INPUT */
     .field-label{font-size:.85rem;font-weight:800;color:#c0cee0;margin-bottom:8px;display:flex;align-items:center;gap:7px;}
-    .field-label span{font-size:.75rem;color:#e94e77;font-weight:600;}
+    .field-label span{font-size:.75rem;color:#00E5FF;font-weight:600;}
     .amount-wrap{position:relative;margin-bottom:6px;}
     .amount-wrap i{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#6b82a8;font-size:.9rem;}
     .amount-wrap input{width:100%;padding:13px 42px 13px 14px;background:#09162b;border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:1.1rem;font-weight:700;font-family:'Cairo',sans-serif;outline:none;transition:.25s;}
-    .amount-wrap input:focus{border-color:#e94e77;box-shadow:0 0 0 3px rgba(233,78,119,.13);}
+    .amount-wrap input:focus{border-color:#00E5FF;box-shadow:0 0 0 3px rgba(0,229,255,.13);}
     .amount-wrap input.valid{border-color:#22c55e;}
     .amount-wrap input.invalid{border-color:#ef4444;}
     .amount-calc{display:flex;gap:10px;margin:10px 0 16px;}
@@ -97,19 +97,19 @@
 
     /* UPLOAD */
     .upload-label{display:flex;align-items:center;gap:7px;font-size:.85rem;font-weight:800;color:#c0cee0;margin-bottom:10px;}
-    .upload-zone{border:2px dashed rgba(233,78,119,0.3);border-radius:14px;padding:26px;text-align:center;cursor:pointer;transition:.3s;background:rgba(233,78,119,0.03);position:relative;}
-    .upload-zone:hover,.upload-zone.drag{border-color:rgba(233,78,119,0.6);background:rgba(233,78,119,0.07);}
+    .upload-zone{border:2px dashed rgba(0,229,255,0.3);border-radius:14px;padding:26px;text-align:center;cursor:pointer;transition:.3s;background:rgba(0,229,255,0.03);position:relative;}
+    .upload-zone:hover,.upload-zone.drag{border-color:rgba(0,229,255,0.6);background:rgba(0,229,255,0.07);}
     .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-    .upload-icon{font-size:1.9rem;color:rgba(233,78,119,0.45);margin-bottom:8px;}
+    .upload-icon{font-size:1.9rem;color:rgba(0,229,255,0.45);margin-bottom:8px;}
     .upload-zone p{font-size:.82rem;color:#6b82a8;}
-    .upload-zone p span{color:#e94e77;font-weight:700;}
+    .upload-zone p span{color:#00E5FF;font-weight:700;}
     .preview-wrap{display:none;margin-top:12px;position:relative;}
-    .preview-wrap img{width:100%;border-radius:10px;border:1px solid rgba(233,78,119,0.25);max-height:220px;object-fit:cover;}
+    .preview-wrap img{width:100%;border-radius:10px;border:1px solid rgba(0,229,255,0.25);max-height:220px;object-fit:cover;}
     .remove-preview{position:absolute;top:8px;left:8px;width:28px;height:28px;background:rgba(239,68,68,0.85);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.75rem;color:#fff;border:none;}
 
     /* SUBMIT */
-    .btn-submit{width:100%;margin-top:20px;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;background:linear-gradient(135deg,#e94e77,#f7931e);border:none;border-radius:14px;color:#fff;font-size:1rem;font-weight:900;cursor:pointer;font-family:'Cairo',sans-serif;box-shadow:0 8px 28px rgba(233,78,119,0.3);transition:.3s;}
-    .btn-submit:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(233,78,119,0.45);}
+    .btn-submit{width:100%;margin-top:20px;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;background:linear-gradient(135deg,#00E5FF,#00B8D4);border:none;border-radius:14px;color:#fff;font-size:1rem;font-weight:900;cursor:pointer;font-family:'Cairo',sans-serif;box-shadow:0 8px 28px rgba(0,229,255,0.3);transition:.3s;}
+    .btn-submit:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(0,229,255,0.45);}
     .btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none !important;}
 
     /* SUCCESS */
@@ -118,12 +118,12 @@
     .success-title{font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:10px;}
     .success-sub{color:#8fa5c4;font-size:.92rem;line-height:1.8;max-width:380px;margin:0 auto 20px;}
     .success-id{display:inline-flex;align-items:center;gap:8px;background:#09162b;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px 20px;font-size:.85rem;font-weight:700;color:#fff;margin-bottom:18px;}
-    .success-id span{color:#f7931e;}
+    .success-id span{color:#00B8D4;}
     .redirect-bar{max-width:320px;margin:0 auto;background:rgba(255,255,255,0.05);border-radius:8px;height:6px;overflow:hidden;}
-    .redirect-fill{height:100%;background:linear-gradient(90deg,#e94e77,#f7931e);width:0;transition:width linear;}
+    .redirect-fill{height:100%;background:linear-gradient(90deg,#00E5FF,#00B8D4);width:0;transition:width linear;}
 
     /* TOAST */
-    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);z-index:9999;padding:12px 24px;background:#0d1e38;border:1px solid rgba(255,255,255,0.08);border-radius:14px;font-size:.88rem;font-weight:700;color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.5);opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);z-index:9999;padding:12px 24px;background:#161b22;border:1px solid rgba(255,255,255,0.08);border-radius:14px;font-size:.88rem;font-weight:700;color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.5);opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;}
     .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
     .toast.err{border-color:rgba(239,68,68,.4);color:#f87171;}
     .toast.ok{border-color:rgba(34,197,94,.4);color:#4ade80;}
@@ -166,7 +166,7 @@
 
       <div id="mainForm">
         <!-- PAYMENT METHOD -->
-        <div class="method-label"><i class="fas fa-wallet" style="color:#e94e77"></i> اختر طريقة الدفع</div>
+        <div class="method-label"><i class="fas fa-wallet" style="color:#00E5FF"></i> اختر طريقة الدفع</div>
         <div class="method-selector">
           <div class="method-tab active" id="tab-wepay" onclick="switchMethod('wepay')">
             <div class="method-tab-icon">💜</div>
@@ -216,7 +216,7 @@
         </div>
 
         <!-- AMOUNT FIELD -->
-        <div class="field-label"><i class="fas fa-money-bill-wave" style="color:#f7931e"></i> المبلغ اللي دفعته <span>(أدنى 250 ج) *</span></div>
+        <div class="field-label"><i class="fas fa-money-bill-wave" style="color:#00B8D4"></i> المبلغ اللي دفعته <span>(أدنى 250 ج) *</span></div>
         <div class="amount-wrap">
           <i class="fas fa-pound-sign"></i>
           <input type="number" id="amountInput" min="250" max="750" placeholder="مثال: 250 أو 500 أو 750..." oninput="calcAmount()">
@@ -227,15 +227,15 @@
             <div class="calc-lbl"><i class="fas fa-check-circle"></i> دفعت</div>
             <div class="calc-val" id="calcPaid" style="color:#4ade80">0 ج</div>
           </div>
-          <div class="calc-box" style="background:rgba(247,147,30,.1);border:1px solid rgba(247,147,30,.25)">
+          <div class="calc-box" style="background:rgba(0,184,212,.1);border:1px solid rgba(0,184,212,.25)">
             <div class="calc-lbl"><i class="fas fa-clock"></i> المتبقي</div>
-            <div class="calc-val" id="calcRem" style="color:#f7931e">0 ج</div>
+            <div class="calc-val" id="calcRem" style="color:#00B8D4">0 ج</div>
           </div>
         </div>
         <p class="amount-hint">🔹 تقدر تحجز مكانك بدفع جزء من المبلغ — والمتبقي يتدفع قبل بداية الكورس</p>
 
         <!-- UPLOAD PROOF -->
-        <div class="upload-label"><i class="fas fa-image" style="color:#e94e77"></i> صورة إيصال التحويل *</div>
+        <div class="upload-label"><i class="fas fa-image" style="color:#00E5FF"></i> صورة إيصال التحويل *</div>
         <div class="upload-zone" id="uploadZone"
              ondragover="event.preventDefault();this.classList.add('drag')"
              ondragleave="this.classList.remove('drag')"
@@ -322,7 +322,7 @@ function calcAmount(){
     if(rem === 0){
       remBox.style.background = 'rgba(34,197,94,.1)'; remBox.style.borderColor = 'rgba(34,197,94,.3)'; remEl.style.color = '#4ade80';
     } else {
-      remBox.style.background = 'rgba(247,147,30,.1)'; remBox.style.borderColor = 'rgba(247,147,30,.25)'; remEl.style.color = '#f7931e';
+      remBox.style.background = 'rgba(0,184,212,.1)'; remBox.style.borderColor = 'rgba(0,184,212,.25)'; remEl.style.color = '#00B8D4';
     }
   } else { calcRow.style.display = 'none'; }
 
@@ -395,7 +395,7 @@ function removeImage(){
   document.getElementById('imgInput').value = '';
   document.getElementById('previewImg').src = '';
   document.getElementById('previewWrap').style.display = 'none';
-  document.getElementById('uploadZone').style.borderColor = 'rgba(233,78,119,0.3)';
+  document.getElementById('uploadZone').style.borderColor = 'rgba(0,229,255,0.3)';
   updateSubmitBtn();
 }
 

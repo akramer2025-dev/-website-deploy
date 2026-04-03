@@ -30,7 +30,7 @@ if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js'
                 }
             },
             color: {
-                value: ['#e94e77', '#f7931e', '#c471ed']
+                value: ['#00E5FF', '#00B8D4', '#c471ed']
             },
         shape: {
             type: isLowEnd ? 'circle' : ['circle', 'edge'],
@@ -62,7 +62,7 @@ if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js'
         line_linked: {
             enable: !isLowEnd,
             distance: 150,
-            color: '#e94e77',
+            color: '#00E5FF',
             opacity: 0.3,
             width: 1
         },
@@ -408,7 +408,7 @@ const createCursorFollower = () => {
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #e94e77, #f7931e);
+        background: linear-gradient(135deg, #00E5FF, #00B8D4);
         pointer-events: none;
         z-index: 9999;
         opacity: 0.5;
@@ -540,8 +540,8 @@ window.addEventListener('load', () => {
 // ==========================================
 // Console Welcome Message
 // ==========================================
-console.log('%c🚀 Akram Mostafa - Digital Marketing Expert', 'color: #e94e77; font-size: 24px; font-weight: bold;');
-console.log('%c📱 Follow me on social media!', 'color: #f7931e; font-size: 16px;');
+console.log('%c🚀 Akram Mostafa - Digital Marketing Expert', 'color: #00E5FF; font-size: 24px; font-weight: bold;');
+console.log('%c📱 Follow me on social media!', 'color: #00B8D4; font-size: 16px;');
 console.log('%c🌐 www.akrammostafa.net', 'color: #c471ed; font-size: 14px;');
 
 // ==========================================
@@ -707,7 +707,7 @@ if (hero && window.innerWidth > 991) {
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #e94e77, #f7931e);
+        background: linear-gradient(135deg, #00E5FF, #00B8D4);
         pointer-events: none;
         z-index: 9999;
         opacity: 0;
@@ -861,7 +861,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealOnScroll();
     makeTablesResponsive();
     
-    console.log('%c🎉 الموقع جاهز!', 'color: #e94e77; font-size: 20px; font-weight: bold;');
-    console.log('%c✨ تصميم احترافي مع صورتك في الصفحة الرئيسية!', 'color: #f7931e; font-size: 14px;');
+    console.log('%c🎉 الموقع جاهز!', 'color: #00E5FF; font-size: 20px; font-weight: bold;');
+    console.log('%c✨ تصميم احترافي مع صورتك في الصفحة الرئيسية!', 'color: #00B8D4; font-size: 14px;');
     console.log('%c🚀 Akram Mostafa - Digital Marketing Expert', 'color: #c471ed; font-size: 12px;');
 });

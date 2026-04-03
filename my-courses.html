@@ -10,9 +10,9 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <style>
 :root{
-  --bg:#050d1b; --bg2:#09162b; --card:#0d1e38; --card2:#112446;
-  --border:rgba(255,255,255,0.07); --pink:#e94e77; --orange:#f7931e;
-  --grad:linear-gradient(135deg,#e94e77,#f7931e); --green:#22c55e;
+  --bg:#0a0e17; --bg2:#09162b; --card:#161b22; --card2:#112446;
+  --border:rgba(255,255,255,0.07); --pink:#00E5FF; --orange:#00B8D4;
+  --grad:linear-gradient(135deg,#00E5FF,#00B8D4); --green:#22c55e;
   --blue:#3b82f6; --text:#e2eaf6; --muted:#6b82a8;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -31,15 +31,15 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .user-badge{display:flex;align-items:center;gap:8px;padding:7px 14px;background:var(--card2);border:1px solid var(--border);border-radius:12px;}
 .user-badge .uname{font-size:.82rem;font-weight:800;color:#fff;}
 .user-badge .urole{font-size:.7rem;color:var(--muted);}
-.logout-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(233,78,119,.08);border:1px solid rgba(233,78,119,.2);color:var(--pink);border-radius:10px;font-size:.8rem;font-weight:700;transition:.2s;}
-.logout-btn:hover{background:rgba(233,78,119,.15);}
+.logout-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--pink);border-radius:10px;font-size:.8rem;font-weight:700;transition:.2s;}
+.logout-btn:hover{background:rgba(0,229,255,.15);}
 
 /* ─── MAIN ─── */
 .main{max-width:1100px;margin:0 auto;padding:36px 24px;}
 
 /* hero */
 .hero{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;margin-bottom:36px;display:flex;align-items:center;gap:24px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;top:-60px;left:40px;width:220px;height:220px;background:radial-gradient(circle,rgba(233,78,119,.12) 0%,transparent 70%);pointer-events:none;}
+.hero::before{content:'';position:absolute;top:-60px;left:40px;width:220px;height:220px;background:radial-gradient(circle,rgba(0,229,255,.12) 0%,transparent 70%);pointer-events:none;}
 .hero-avatar{width:72px;height:72px;background:var(--grad);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;flex-shrink:0;}
 .hero-text h1{font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:5px;}
 .hero-text p{font-size:.88rem;color:var(--muted);}
@@ -57,26 +57,26 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 /* course cards grid */
 .courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
 .crs-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.25s;position:relative;}
-.crs-card:hover{transform:translateY(-3px);border-color:rgba(233,78,119,.25);box-shadow:0 12px 36px rgba(0,0,0,.4);}
+.crs-card:hover{transform:translateY(-3px);border-color:rgba(0,229,255,.25);box-shadow:0 12px 36px rgba(0,0,0,.4);}
 .crs-banner{height:120px;background:linear-gradient(135deg,var(--bg2),var(--card2));position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
 .crs-banner-ico{font-size:2.8rem;opacity:.25;}
 .crs-banner-badge{position:absolute;top:10px;right:10px;padding:4px 10px;border-radius:20px;font-size:.68rem;font-weight:800;}
 .badge-free{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);}
-.badge-paid{background:rgba(247,147,30,.12);color:var(--orange);border:1px solid rgba(247,147,30,.25);}
+.badge-paid{background:rgba(0,184,212,.12);color:var(--orange);border:1px solid rgba(0,184,212,.25);}
 .crs-body{padding:18px;}
 .crs-name{font-size:1rem;font-weight:900;color:#fff;margin-bottom:8px;}
 .crs-meta{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
 .crs-meta .lec-cnt{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:5px;}
 .crs-meta .lec-cnt i{color:var(--pink);}
 .crs-lectures-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;background:var(--grad);border:none;border-radius:12px;color:#fff;font-size:.88rem;font-weight:800;width:100%;transition:.2s;}
-.crs-lectures-btn:hover{transform:scale(1.02);box-shadow:0 6px 18px rgba(233,78,119,.35);}
+.crs-lectures-btn:hover{transform:scale(1.02);box-shadow:0 6px 18px rgba(0,229,255,.35);}
 .crs-lectures-btn:disabled{background:var(--card2);color:var(--muted);cursor:default;transform:none;box-shadow:none;}
 
 /* lecture list mini */
 .crs-lectures-list{margin-top:14px;display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto;}
 .crs-lectures-list::-webkit-scrollbar{width:3px;} .crs-lectures-list::-webkit-scrollbar-thumb{background:var(--border);}
 .lec-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border-radius:10px;cursor:pointer;transition:.2s;text-decoration:none;}
-.lec-item:hover{background:rgba(233,78,119,.08);border-color:rgba(233,78,119,.2);}
+.lec-item:hover{background:rgba(0,229,255,.08);border-color:rgba(0,229,255,.2);}
 .lec-item .lnum{width:28px;height:28px;min-width:28px;background:var(--card2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:var(--muted);}
 .lec-item.first .lnum{background:var(--grad);color:#fff;}
 .lec-item .ltitle{font-size:.82rem;font-weight:700;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -107,7 +107,7 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 .live-status-pill.scheduled{background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.25);}
 .btn-join-live{display:flex;align-items:center;gap:7px;padding:10px 20px;background:var(--grad);border:none;
   border-radius:11px;color:#fff;font-size:.85rem;font-weight:800;white-space:nowrap;transition:.25s;}
-.btn-join-live:hover{transform:scale(1.04);box-shadow:0 8px 24px rgba(233,78,119,.4);}
+.btn-join-live:hover{transform:scale(1.04);box-shadow:0 8px 24px rgba(0,229,255,.4);}
 .btn-join-soon{display:flex;align-items:center;gap:7px;padding:10px 18px;background:var(--card2);
   border:1px solid var(--border);border-radius:11px;color:var(--muted);font-size:.82rem;font-weight:700;white-space:nowrap;}
 .no-live{font-size:.82rem;color:var(--muted);padding:16px;text-align:center;background:var(--card2);border-radius:12px;}
@@ -244,11 +244,11 @@ button{cursor:pointer;font-family:'Cairo',sans-serif;}
 
 <!-- KICKED MODAL -->
 <div id="kickedModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(5,13,27,.92);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px;">
-  <div style="background:#0d1e38;border:1px solid rgba(239,68,68,.3);border-radius:20px;padding:32px;max-width:380px;width:100%;text-align:center;">
+  <div style="background:#161b22;border:1px solid rgba(239,68,68,.3);border-radius:20px;padding:32px;max-width:380px;width:100%;text-align:center;">
     <div style="font-size:2.8rem;margin-bottom:12px;">🚫</div>
     <div style="font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:8px;">تم تسجيل دخول من جهاز آخر</div>
     <div style="font-size:.85rem;color:#6b82a8;line-height:1.8;margin-bottom:22px;">جهاز آخر سجّل دخول على حسابك — تم إنهاء جلستك الحالية لحماية أمان حسابك.</div>
-    <button onclick="forceLogout()" style="width:100%;padding:13px;background:linear-gradient(135deg,#e94e77,#f7931e);border:none;border-radius:12px;color:#fff;font-size:.95rem;font-weight:900;cursor:pointer;font-family:'Cairo',sans-serif;"><i class="fas fa-sign-in-alt"></i> سجّل دخول مرة أخرى</button>
+    <button onclick="forceLogout()" style="width:100%;padding:13px;background:linear-gradient(135deg,#00E5FF,#00B8D4);border:none;border-radius:12px;color:#fff;font-size:.95rem;font-weight:900;cursor:pointer;font-family:'Cairo',sans-serif;"><i class="fas fa-sign-in-alt"></i> سجّل دخول مرة أخرى</button>
   </div>
 </div>
 
@@ -328,11 +328,11 @@ function showNewLecturesNotification(count) {
     bottom: 20px;
     right: 20px;
     z-index: 1000;
-    background: linear-gradient(135deg, #e94e77, #f7931e);
+    background: linear-gradient(135deg, #00E5FF, #00B8D4);
     color: white;
     padding: 16px 24px;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(233, 78, 119, 0.4);
+    box-shadow: 0 8px 24px rgba(0,229,255, 0.4);
     font-family: 'Cairo', sans-serif;
     font-weight: 700;
     font-size: 14px;
@@ -455,7 +455,7 @@ function renderNewSystemCourses(session) {
     const courseMeta = COURSES_META[courseKey] || { 
       name: 'كورس جديد', 
       icon: 'fa-book', 
-      color: '#e94e77',
+      color: '#00E5FF',
       paid: true 
     };
     
