@@ -285,15 +285,6 @@ let currentUser = null;
 // ===== جلب المحاضرات من النظام الجديد =====
 function getNewSystemLectures() {
   const LECTURES_CATALOG = {
-    'lec_fb_1': {
-      id: 'lec_fb_1',
-      title: 'الحصة 1: إنشاء الهوية الاحترافية على Facebook و Instagram',
-      description: 'تعلم إنشاء صفحة فيسبوك وحساب انستجرام احترافيين من الصفر',
-      thumbnail: '/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png',
-      duration: '12 دقيقة',
-      sections: 6,
-      courseKey: 'facebook-ads'
-    },
     'lec_april_1': {
       id: 'lec_april_1',
       title: 'الحصة 1: الهوية البصرية ومكونات البوست والأدوات المستخدمة',
@@ -301,7 +292,16 @@ function getNewSystemLectures() {
       thumbnail: '/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png',
       duration: '16 دقيقة',
       sections: 8,
-      courseKey: 'ai-marketing'
+      courseKey: 'april-2026'
+    },
+    'lec_april_2': {
+      id: 'lec_april_2',
+      title: 'الحصة 2: استراتيجية المحتوى وخطة النشر الشهرية',
+      description: 'تعلم بناء خطة محتوى شهرية احترافية وأسرار الإعلانات الناجحة',
+      thumbnail: '/images/slides/lec2-01.html',
+      duration: '16 دقيقة',
+      sections: 8,
+      courseKey: 'april-2026'
     }
   };
   
@@ -377,15 +377,6 @@ function showNewLecturesNotification(count) {
 // ===== عرض المحاضرات من النظام الجديد =====
 function renderNewSystemCourses(session) {
   const LECTURES_CATALOG = {
-    'lec_fb_1': {
-      id: 'lec_fb_1',
-      title: 'الحصة 1: إنشاء الهوية الاحترافية على Facebook و Instagram',
-      description: 'تعلم إنشاء صفحة فيسبوك وحساب انستجرام احترافيين من الصفر',
-      thumbnail: '/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png',
-      duration: '12 دقيقة',
-      sections: 6,
-      courseKey: 'facebook-ads'
-    },
     'lec_april_1': {
       id: 'lec_april_1',
       title: 'الحصة 1: الهوية البصرية ومكونات البوست والأدوات المستخدمة',
@@ -393,7 +384,16 @@ function renderNewSystemCourses(session) {
       thumbnail: '/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png',
       duration: '16 دقيقة',
       sections: 8,
-      courseKey: 'ai-marketing'
+      courseKey: 'april-2026'
+    },
+    'lec_april_2': {
+      id: 'lec_april_2',
+      title: 'الحصة 2: استراتيجية المحتوى وخطة النشر الشهرية',
+      description: 'تعلم بناء خطة محتوى شهرية احترافية وأسرار الإعلانات الناجحة',
+      thumbnail: '/images/slides/lec2-01.html',
+      duration: '16 دقيقة',
+      sections: 8,
+      courseKey: 'april-2026'
     }
   };
   
