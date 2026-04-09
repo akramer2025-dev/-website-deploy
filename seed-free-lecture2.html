@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحميل محاضرة تصميم الويب والاستضافة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Cairo',sans-serif;background:#0a0e17;color:#e2eaf6;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .box{background:#161b22;border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:48px 40px;max-width:660px;width:100%;text-align:center;}
+  .tag{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:20px;color:#4ade80;font-size:.78rem;font-weight:800;margin-bottom:18px;}
+  h1{font-size:1.45rem;font-weight:900;color:#fff;margin-bottom:10px;line-height:1.5;}
+  .subtitle{color:#6b82a8;font-size:.88rem;line-height:1.8;margin-bottom:28px;}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:linear-gradient(135deg,#00E5FF,#00B8D4);border:none;border-radius:14px;color:#fff;font-size:1rem;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif;transition:.2s;}
+  .btn:hover{transform:scale(1.04);box-shadow:0 8px 24px rgba(0,229,255,.4);}
+  .success{display:none;margin-top:24px;padding:16px 20px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:14px;color:#4ade80;font-size:.88rem;font-weight:700;}
+  .slides-grid{margin-top:28px;display:none;text-align:right;}
+  .slides-grid h3{font-size:.82rem;font-weight:700;color:#6b82a8;margin-bottom:12px;text-align:center;text-transform:uppercase;letter-spacing:1px;}
+  .slide-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#09162b;border-radius:12px;margin-bottom:7px;border:1px solid rgba(255,255,255,.05);}
+  .slide-row img{width:70px;height:46px;border-radius:8px;object-fit:cover;flex-shrink:0;}
+  .slide-row .num{width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#00E5FF,#00B8D4);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;color:#fff;}
+  .slide-row .info .t{font-size:.85rem;font-weight:800;color:#e2eaf6;}
+  .slide-row .info .s{font-size:.7rem;color:#6b82a8;margin-top:2px;}
+  .links{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
+  .link-btn{padding:11px 20px;border-radius:11px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#e2eaf6;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:.2s;}
+  .link-btn:hover{background:rgba(255,255,255,.09);}
+  .link-btn.primary{background:linear-gradient(135deg,#00E5FF,#00B8D4);border-color:transparent;}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="tag"><i class="fas fa-gift"></i> الكورس المجاني</div>
+  <h1>المحاضرة التانية<br>مكونات صفحة الويب والرفع الاحترافي</h1>
+  <p class="subtitle">
+    دليلك الكامل لفهم مكونات الويب وطرق الرفع المجانية<br>
+    اضغط الزر وستظهر المحاضرة فوراً في العارض
+  </p>
+
+  <button class="btn" onclick="seedData()">
+    <i class="fas fa-rocket"></i> تحميل المحاضرة الآن
+  </button>
+  <div id="errBox" style="display:none;margin-top:16px;padding:14px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:12px;color:#f87171;font-size:.85rem;"></div>
+
+  <div class="success" id="successBox">
+    <i class="fas fa-check-circle" style="font-size:1.2rem;margin-left:6px;"></i>
+    تم تحميل المحاضرة بنجاح! جاهزة للعرض ✓
+  </div>
+
+  <div class="slides-grid" id="slidesGrid">
+    <h3>الشرائح المحملة</h3>
+    <div id="slidesList"></div>
+    <div class="links">
+      <a class="link-btn primary" id="viewerLink" href="#"><i class="fas fa-play-circle"></i> فتح العارض</a>
+      <a class="link-btn" href="admin/index.html"><i class="fas fa-cog"></i> لوحة التحكم</a>
+      <a class="link-btn" href="my-courses.html"><i class="fas fa-graduation-cap"></i> بوابة الطالب</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const LECTURE = {
+  id: 'lec_free_002',
+  title: 'المحاضرة التانية – مكونات صفحة الويب والاستضافة',
+  description: 'في المحاضرة دي هنتعرف على الأقسام الرئيسية لصفحات الويب وإزاي نرفع موقعنا بشكل احترافي ومجاني.',
+  createdAt: Date.now(),
+  updatedAt: Date.now(),
+  slides: [
+    {
+      id: 'fs02_1',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=1280&q=85',
+      title: 'إيه هي مكونات صفحة الويب؟ 🌐',
+      notes: `أهلاً بيكم في المحاضرة التانية!
+      
+قبل ما نعمل أي موقع، لازم نفهم هو بيتكون من إيه بالظبط؟
+صفحة الويب زي أي مبنى ليه هيكل أساسي متكون من:
+
+• Header (الهيدر): ده الجزء العلوي اللي دايماً بيكون فيه اللوجو والقوائم، وده أول حاجة الزاير بيشوفها.
+• Hero Section (بطل الصفحة): ده المكان اللي تحط فيه العرض الأقوى بتاعك (الـ Hook) والجمل التسويقية.
+• Content/Body (المحتوى): وهنا بنشرح الخدمات والمميزات وتفاصيل العرض.
+• Footer (الفوتر): الجزء السفلي اللي بيكون فيه روابط التواصل الحقوق والروابط الإضافية.
+
+لو فهمنا الهيكل ده، هنقدر نبني ونسوق أي خدمة بسهولة على الويب.`
+    },
+    {
+      id: 'fs02_2',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1280&q=85',
+      title: 'ليه لازم صفحة الويب تكون احترافية؟ 🚀',
+      notes: `دايماً بنقول الانطباع الأول لا يدوم.. بس في الويب الانطباع الأول بيدوم وبيزود المبيعات!
+
+لما العميل يدخل موقعك ويكون:
+✅ متجاوب (Responsive): شكله حلو على الموبايل والكمبيوتر.
+✅ سريع: بيفتح في ثواني قليلة.
+✅ منظم: عين العميل بتروح للـ Call to Action فوراً.
+
+انت كده بتأكد للعميل إنك شخص "محترف" وتستاهل كل مليم هيدفعهولك.
+شكل الموقع هو واجهتك الرقمية.`
+    },
+    {
+      id: 'fs02_3',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=1280&q=85',
+      title: 'إعداد ملفاتك للرفع 📂',
+      notes: `الموقع مش بس كود!
+قبل ما نفكر في الرفع او الاستضافة لازم ملفاتك تكون جاهزة ومترتبة صح:
+
+1. الـ index.html: دي الصفحة الرئيسية اللي السيرفر هيدور عليها أول حاجة.
+2. فولدر assets أو images: عشان كل الصور تكون مجمعة.
+3. ملفات الـ css و js: تكون معمولة بشكل مرتب.
+
+لو ضغطت كل ملفاتك دي جوه فولدر بطريقة منظمة، عملية الرفع على أي منصة هتكون أسرع وأسهل بكتير وهتتفادى أي أخطاء في الروابط.`
+    },
+    {
+      id: 'fs02_4',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1280&q=85',
+      title: 'المنصات المجانية للاستضافة ☁️',
+      notes: `أحلى حاجة في شغلنا كمسوقين أو مطورين مبتدئين، إنك مش محتاج تدفع فلوس في استضافات بآلاف الجنيهات!
+عندك منصات قوية جداً بتوفر استضافات مجانية مخصصة للواجهات مثل:
+
+• Netlify (نيتليفاي): من أقوى المنصات وأسرعها لرفع مواقع الـ HTML العادية بمجرد الـ Drag and Drop.
+• Vercel (فيرسيل): مشهورة لمشاريع المطورين لكنها الأفضل للرفع المجاني كمان.
+• GitHub Pages: لو إنت بتستخدم GitHub ، دي طريقة قوية عشان تحتفظ بكودك وتنشر موقعك في نفس الوقت.
+• Firebase Hosting: منصة قوية جداً من Google وسريعة للمواقع المتطورة.
+
+تقدر تعتبر المنصات دي "بيت مؤقت أو دائم" لموقعك ببلاش.`
+    },
+    {
+      id: 'fs02_5',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1432888622747-4eb9a8f2c1d9?w=1280&q=85',
+      title: 'خطوات رفع موقعك خطوة بخطوة 🛠️',
+      notes: `تعالوا نطبق على Netlify كمثال:
+
+1. افتح موقع Netlify.com واعمل حساب مجاني.
+2. روح على الجزء الخاص بـ "Add new site".
+3. اختار "Deploy manually".
+4. اسحب فولدر الموقع بتاعك اللى مجهزه ووقعه في المربع ده.
+5. استنى ثواني... ومبروك! موقعك حالياً متاح على الإنترنت برابط مجاني.
+
+الخطوات دي بتضمنلك إن شغلك يكون لايف وتقدر تبعته لأي عميل بكل سهولة وفي دقيقتين بس.`
+    },
+    {
+      id: 'fs02_6',
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=1280&q=85',
+      title: 'الاحترافية: الدومين المخصص 🎯',
+      notes: `موقعك إترفع وبقى مجاني.. بس الرابط فيه اسم الموقع زى my-site.netlify.app.
+عشان شغلك يكون احترافي فعلاً، لازم تشتري "دومين مخصص" (Custom Domain) زي www.yoursite.com.
+
+• الدومين سعره بسيط حوالين 10 لـ 15 دولار سنوياً.
+• بعد ما تشتري الدومين من مواقع زي Namecheap أو GoDaddy أو Hostinger.
+• بتدخل إعدادات Domain Management في Netlify مثلاً، وتقوم بربطهم ببعض بخطوات بسيطة (DNS Settings).
+
+كده إنت دمجت الاستضافة المجانية السريعة مع الدومين الاحترافي المدفوع، وطلعت بموقع ينافس أي شركة، بأقل التكاليف!
+دلوقتي دورك في التطبيق العملي للرفع 🚀`
+    }
+  ]
+};
+
+function seedData(){
+  try {
+    const all = JSON.parse(localStorage.getItem('am_lectures')||'{}');
+    if(!all['free']) all['free'] = [];
+    all['free'] = all['free'].filter(l=>l.id!=='lec_free_002');
+    all['free'].push(LECTURE);
+    localStorage.setItem('am_lectures', JSON.stringify(all));
+
+    // verify it saved correctly
+    const verify = JSON.parse(localStorage.getItem('am_lectures'));
+    if(!verify || !verify['free'] || !verify['free'].find(l=>l.id==='lec_free_002')){
+      throw new Error('تم الحفظ لكن التحقق فشل');
+    }
+
+    document.getElementById('successBox').style.display = 'block';
+    document.getElementById('slidesGrid').style.display  = 'block';
+    document.getElementById('viewerLink').href = 'lecture-viewer-v2.html?id=lec_free_002';
+    document.getElementById('errBox').style.display = 'none';
+
+    const list = document.getElementById('slidesList');
+    list.innerHTML = LECTURE.slides.map((s,i)=>`
+      <a href="lecture-viewer-v2.html?id=lec_free_002" class="slide-row" style="text-decoration:none;">
+        <div class="num">${i+1}</div>
+        <img src="${s.src}" alt="" onerror="this.style.display='none'">
+        <div class="info">
+          <div class="t">${s.title}</div>
+          <div class="s">${s.notes.split('\n')[0].substring(0,60)}...</div>
+        </div>
+      </a>
+    `).join('');
+  } catch(err) {
+    document.getElementById('errBox').style.display = 'block';
+    document.getElementById('errBox').textContent = 'خطأ: ' + err.message + ' – تأكد أن المتصفح لا يعمل في وضع Incognito أو أن localStorage غير ممنوع.';
+  }
+}
+</script>
+</body>
+</html>
