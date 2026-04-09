@@ -89,15 +89,76 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.1);
             border: 1px solid rgba(0,229,255, 0.3);
             border-radius: 50px;
             color: white;
             text-decoration: none;
             font-weight: 700;
+            font-size: 14px;
             transition: all 0.3s;
         }
+        .nav-back:hover {
+            background: rgba(0, 229, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0,229,255,0.2);
+        }
+
+        /* Enhanced Navigation */
+        .glass-nav {
+            background: rgba(10,14,23, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,229,255, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .student-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 16px 6px 6px;
+            border-radius: 50px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .student-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00E5FF, #00B8D4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .student-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            text-align: right;
+        }
+
+        .student-info .greeting {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .student-info .name {
+            font-size: 14px;
+            font-weight: 800;
+            color: #fff;
+        }
+
 
         .nav-back:hover {
             background: linear-gradient(45deg, #00E5FF, #00B8D4);
@@ -498,6 +559,22 @@
                 padding: 20px 20px 0;
                 gap: 12px;
             }
+            .nav-container {
+                flex-wrap: wrap;
+                justify-content: space-between;
+                padding: 10px 15px;
+            }
+            .student-profile {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 12px;
+                background: rgba(255,255,255,0.05);
+            }
+            .nav-back span { display: none; }
+            .nav-back { padding: 8px 14px; border-radius: 12px; }
+            .logo img { height: 35px; }
+            .logo-text { font-size: 16px; }
 
             .slide-content {
                 padding: 20px;
@@ -768,14 +845,24 @@
     <!-- Main Content -->
     <div id="mainContent" class="content-wrapper" style="display: none;">
         <!-- Navigation -->
-        <nav>
+        <!-- Navigation -->
+        <nav class="glass-nav">
             <div class="nav-container">
-                <a href="/admin" class="logo">
-                    <img src="images/logo.png" alt="Akram Mostafa" onerror="this.style.display='none'">
+                <a href="student-dashboard.html" class="logo">
+                    <img src="images/logo.png" alt="Akram Mostafa" onerror="this.src='https://i.ibb.co/h9ZJ8pT/Akram-Logo.png'">
                     <span class="logo-text">Akram Mostafa</span>
                 </a>
-                <a href="/admin" class="nav-back">
-                    <span>العودة للوحة التحكم</span>
+
+                <div class="student-profile" id="navProfileBadge" style="display:none;">
+                    <div class="student-avatar" id="navAvatar">أ</div>
+                    <div class="student-info">
+                        <span class="greeting">مرحباً بك،</span>
+                        <strong class="name" id="navName">الطالب</strong>
+                    </div>
+                </div>
+
+                <a href="student-dashboard.html" class="nav-back">
+                    <span>لوحة تحكم الطالب</span>
                     <i class="fas fa-arrow-left"></i>
                 </a>
             </div>
@@ -1104,6 +1191,17 @@
 
         // دالة موحدة بعد تسجيل الدخول الناجح
         function handlePostLogin(session) {
+            // Update UI with student info
+            const navBadge = document.getElementById('navProfileBadge');
+            const navName = document.getElementById('navName');
+            const navAvatar = document.getElementById('navAvatar');
+            if (navBadge) {
+                navBadge.style.display = 'flex';
+                const sName = session.name || session.username || 'طالب';
+                navName.textContent = sName;
+                navAvatar.textContent = sName.charAt(0);
+            }
+
             const lectureId = new URLSearchParams(window.location.search).get('id');
             if (lectureId) {
                 if (lectureId.startsWith('lec_free_') || session.allowedLectures.includes(lectureId) || session.isAdmin) {
