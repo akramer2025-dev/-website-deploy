@@ -70,7 +70,7 @@ const LECTURE = {
     {
       id: 'fs02_1',
       type: 'image',
-      src: '/images/slides/slide2_1.png',
+      image: '/images/slides/slide2_1.png',
       title: 'إيه هي مكونات صفحة الويب؟ 🌐',
       notes: `أهلاً بيكم في المحاضرة التانية!
       
@@ -87,7 +87,7 @@ const LECTURE = {
     {
       id: 'fs02_2',
       type: 'image',
-      src: '/images/slides/slide2_2.png',
+      image: '/images/slides/slide2_2.png',
       title: 'ليه لازم صفحة الويب تكون احترافية؟ 🚀',
       notes: `دايماً بنقول الانطباع الأول لا يدوم.. بس في الويب الانطباع الأول بيدوم وبيزود المبيعات!
 
@@ -102,7 +102,7 @@ const LECTURE = {
     {
       id: 'fs02_3',
       type: 'image',
-      src: '/images/slides/slide2_3.png',
+      image: '/images/slides/slide2_3.png',
       title: 'إعداد ملفاتك للرفع 📂',
       notes: `الموقع مش بس كود!
 قبل ما نفكر في الرفع او الاستضافة لازم ملفاتك تكون جاهزة ومترتبة صح:
@@ -116,7 +116,7 @@ const LECTURE = {
     {
       id: 'fs02_4',
       type: 'image',
-      src: '/images/slides/slide2_4.png',
+      image: '/images/slides/slide2_4.png',
       title: 'المنصات المجانية للاستضافة ☁️',
       notes: `أحلى حاجة في شغلنا كمسوقين أو مطورين مبتدئين، إنك مش محتاج تدفع فلوس في استضافات بآلاف الجنيهات!
 عندك منصات قوية جداً بتوفر استضافات مجانية مخصصة للواجهات مثل:
@@ -131,7 +131,7 @@ const LECTURE = {
     {
       id: 'fs02_5',
       type: 'image',
-      src: '/images/slides/slide2_5.png',
+      image: '/images/slides/slide2_5.png',
       title: 'خطوات رفع موقعك خطوة بخطوة 🛠️',
       notes: `تعالوا نطبق على Netlify كمثال:
 
@@ -146,7 +146,7 @@ const LECTURE = {
     {
       id: 'fs02_6',
       type: 'image',
-      src: '/images/slides/slide2_6.png',
+      image: '/images/slides/slide2_6.png',
       title: 'الاحترافية: الدومين المخصص 🎯',
       notes: `موقعك إترفع وبقى مجاني.. بس الرابط فيه اسم الموقع زى my-site.netlify.app.
 عشان شغلك يكون احترافي فعلاً، لازم تشتري "دومين مخصص" (Custom Domain) زي www.yoursite.com.
@@ -198,7 +198,7 @@ function seedData(){
     list.innerHTML = LECTURE.slides.map((s,i)=>`
       <a href="lecture-viewer-v2.html?id=lec_free_002" class="slide-row" style="text-decoration:none;">
         <div class="num">${i+1}</div>
-        <img src="${s.src}" alt="" onerror="this.style.display='none'">
+        <img src="${s.image}" alt="" onerror="this.style.display='none'">
         <div class="info">
           <div class="t">${s.title}</div>
           <div class="s">${s.notes.split('\n')[0].substring(0,60)}...</div>
