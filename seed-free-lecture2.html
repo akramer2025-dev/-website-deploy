@@ -169,6 +169,20 @@ function seedData(){
     all['free'].push(LECTURE);
     localStorage.setItem('am_lectures', JSON.stringify(all));
 
+    // Also add to recorded lectures so it appears in the admin panel and student dashboard
+    const recLecs = JSON.parse(localStorage.getItem('am_recorded_lectures')||'[]');
+    if(!recLecs.find(r => r.id === 'rl_free_002')) {
+      recLecs.push({
+        id: 'rl_free_002',
+        title: LECTURE.title,
+        accessLink: '/lecture-viewer-v2.html?id=lec_free_002',
+        duration: '15 دقيقة',
+        date: new Date().toISOString().split('T')[0],
+        desc: LECTURE.description
+      });
+      localStorage.setItem('am_recorded_lectures', JSON.stringify(recLecs));
+    }
+
     // verify it saved correctly
     const verify = JSON.parse(localStorage.getItem('am_lectures'));
     if(!verify || !verify['free'] || !verify['free'].find(l=>l.id==='lec_free_002')){

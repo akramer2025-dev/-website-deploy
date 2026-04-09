@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -213,6 +213,20 @@ function seedData(){
     all['free'] = all['free'].filter(l=>l.id!=='lec_free_001');
     all['free'].unshift(LECTURE);
     localStorage.setItem('am_lectures', JSON.stringify(all));
+
+    // Also add to recorded lectures so it appears in the admin panel and student dashboard
+    const recLecs = JSON.parse(localStorage.getItem('am_recorded_lectures')||'[]');
+    if(!recLecs.find(r => r.id === 'rl_free_001')) {
+      recLecs.unshift({
+        id: 'rl_free_001',
+        title: LECTURE.title,
+        accessLink: '/lecture-viewer-v2.html?id=lec_free_001',
+        duration: '15 دقيقة',
+        date: new Date().toISOString().split('T')[0],
+        desc: LECTURE.description
+      });
+      localStorage.setItem('am_recorded_lectures', JSON.stringify(recLecs));
+    }
 
     // verify it saved correctly
     const verify = JSON.parse(localStorage.getItem('am_lectures'));

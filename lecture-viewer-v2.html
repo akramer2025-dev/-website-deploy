@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -1106,7 +1106,7 @@
         function handlePostLogin(session) {
             const lectureId = new URLSearchParams(window.location.search).get('id');
             if (lectureId) {
-                if (session.allowedLectures.includes(lectureId) || session.isAdmin) {
+                if (lectureId.startsWith('lec_free_') || session.allowedLectures.includes(lectureId) || session.isAdmin) {
                     loadLecture(lectureId);
                 } else {
                     showError('عذراً، ليس لديك صلاحية للوصول إلى هذه المحاضرة.');
@@ -1468,7 +1468,7 @@
                 showLecturesLibrary(session);
             } else {
                 // التحقق من صلاحية الوصول للمحاضرة
-                if (session.allowedLectures.includes(lectureId) || session.isAdmin) {
+                if (lectureId.startsWith('lec_free_') || session.allowedLectures.includes(lectureId) || session.isAdmin) {
                     loadLecture(lectureId);
                 } else {
                     showError('عذراً، ليس لديك صلاحية للوصول إلى هذه المحاضرة.');
