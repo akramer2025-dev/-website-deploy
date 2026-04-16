@@ -932,25 +932,25 @@
                 password: 'pass123',
                 name: 'محمد أحمد',
                 email: 'mohamed@example.com',
-                allowedLectures: ['lec_april_1', 'lec_april_2']
+                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5']
             },
             'student2': {
                 password: 'pass456',
                 name: 'فاطمة علي',
                 email: 'fatma@example.com',
-                allowedLectures: ['lec_april_1', 'lec_april_2']
+                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5']
             },
             'test': {
                 password: 'Aa123456',
                 name: 'أكرم مصطفى',
                 email: 'test@example.com',
-                allowedLectures: ['lec_april_1', 'lec_april_2']
+                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5']
             },
             'admin': {
                 password: 'admin123',
                 name: 'أكرم مصطفى',
                 email: 'akram@akrammostafa.com',
-                allowedLectures: ['lec_april_1', 'lec_april_2'],
+                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
                 isAdmin: true
             }
         };
@@ -983,6 +983,14 @@
                 title: 'الحصة 2: استراتيجية المحتوى وخطة النشر الشهرية',
                 description: 'تعلم بناء خطة محتوى شهرية احترافية وأسرار الإعلانات الناجحة وتحليل الأداء',
                 thumbnail: '/images/slides/lec2-01.html',
+                duration: '16 دقيقة',
+                sections: 8
+            },
+            'lec_april_5': {
+                id: 'lec_april_5',
+                title: 'الحصة 5: إنشاء حساب جوجل وتسجيل نشاطك على خرائط جوجل',
+                description: 'تعلم إنشاء حساب جوجل احترافي وتسجيل نشاطك التجاري على Google Maps خطوة بخطوة',
+                thumbnail: '/images/slides/lec5-01.html',
                 duration: '16 دقيقة',
                 sections: 8
             }
@@ -1021,7 +1029,7 @@
                                 username: user.username || user.name,
                                 name: user.name || user.username,
                                 email: user.email || '',
-                                allowedLectures: ['lec_april_1', 'lec_april_2'],
+                                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
                                 isAdmin: false,
                                 isOldSystem: true,
                                 expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -1036,7 +1044,7 @@
                         username: 'student',
                         name: sessionStorage.getItem('akram_client_name') || 'طالب',
                         email: '',
-                        allowedLectures: ['lec_april_1', 'lec_april_2'],
+                        allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
                         isAdmin: false,
                         isOldSystem: true,
                         expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -1061,7 +1069,7 @@
                                 username: user.username || user.name || lsStudentId,
                                 name: user.name || clientName || user.username,
                                 email: user.email || '',
-                                allowedLectures: ['lec_april_1', 'lec_april_2'],
+                                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
                                 isAdmin: false,
                                 isOldSystem: true,
                                 expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -1077,7 +1085,7 @@
                     username: lsStudentId,
                     name: clientName || 'طالب',
                     email: '',
-                    allowedLectures: ['lec_april_1', 'lec_april_2'],
+                    allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
                     isAdmin: false,
                     isOldSystem: true,
                     expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -1162,7 +1170,7 @@
                             const userData = {
                                 name: found.name || found.username || username,
                                 email: found.email || '',
-                                allowedLectures: ['lec_april_1', 'lec_april_2'],
+                                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
                                 isAdmin: false
                             };
                             const session = createSession(found.username || found.id || username, userData);
@@ -1418,6 +1426,21 @@
               { id:'s2a_5', type:'image', image:'/images/slides/lec2-06.html', title:'💰 أساسيات الإعلانات المدفوعة', notes:'💰 الإعلانات المدفوعة = المحرك الأقوى لنمو البيزنس\n\n📊 هيكل الحملة:\n🏢 Campaign (الهدف) → 📂 Ad Set (الجمهور + الميزانية) → 📄 Ad (الصورة + النص)\n\n🎯 أهداف الحملات:\n• الوعي: 5-10$/يوم — لما تكون في البداية\n• الزيارات: 5-15$/يوم — لو عندك موقع\n• التفاعل: 3-8$/يوم — لبناء مجتمع\n• الرسائل: 5-10$/يوم ⭐ — الأفضل للبيزنس الصغير!\n• المبيعات: 10-30$/يوم — لو عندك متجر + Pixel\n\n👥 الاستهداف:\n📍 جغرافي: الدولة، المدينة | 👤 ديموغرافي: العمر، الجنس\n🎯 اهتمامات: اختر 5-15 اهتمام\n📊 متقدم: Custom + Lookalike Audiences\n\n💡 نصائح:\n✅ ابدأ بـ 5-10$/يوم وزود تدريجياً\n✅ اختبر A/B — صور ونصوص مختلفة\n✅ أوقف اللي مبيجيبش نتيجة بعد 3-5 أيام\n✅ استخدم فيديوهات قصيرة (أداء أفضل 30%)' },
               { id:'s2a_6', type:'image', image:'/images/slides/lec2-07.html', title:'📈 تحليل الأداء وقراءة الإحصائيات', notes:'📈 بدون أرقام، انت بتشتغل أعمى!\n\n📊 المقاييس الأساسية (KPIs):\n\n👁️ الوصول (Reach): +5-10% أسبوعياً\n❤️ التفاعل: 3-6% فيسبوك | 1-3% انستجرام\n📈 نمو المتابعين: 1-5% شهرياً\n🖱️ النقرات: CTA واضح\n💰 تكلفة النتيجة: 3-10 ج/رسالة\n🎯 معدل التحويل: 2-5% متاجر | 10-20% رسائل\n\n📊 خطوات التحليل:\n🔵 المراجعة الأسبوعية: افتح Insights كل أحد\n🟢 حدد الأفضل والأسوأ: ليه نجح؟ ليه فشل؟\n🟡 استخرج الأنماط: فيديو > صور؟ وقت معين أحسن?\n🔴 التعديل والتحسين: كرر اللي نجح\n🟣 التوثيق: سجل في Trello أو Notion\n\n📱 أدوات التحليل:\n• Meta Business Suite Insights (مجاني)\n• Instagram Professional Dashboard\n• Google Analytics (للموقع)' },
               { id:'s2a_7', type:'image', image:'/images/slides/lec2-08.html', title:'🎓 ملخص الحصة الثانية وخطة العمل', notes:'🎉 مبروك! خلصت الحصة الثانية!\n\n📚 ملخص:\n✅ استراتيجية محتوى واضحة\n✅ تقويم محتوى شهري منظم\n✅ أفضل أوقات وأنواع المحتوى\n✅ قاعدة 80/20 الذهبية\n✅ أساسيات الإعلانات المدفوعة\n✅ مهارة تحليل الأداء\n\n🎯 الواجب العملي:\n1️⃣ حدد Buyer Persona + هدف SMART + 3-5 أعمدة محتوى\n2️⃣ أنشئ Content Calendar لأسبوعين (10-14 منشور)\n3️⃣ صمم 3 منشورات في Canva بالقواعد\n4️⃣ جدول 3 منشورات في Meta Business Suite\n5️⃣ سجل أرقامك الحالية كنقطة بداية\n\n⏩ المحاضرة القادمة:\n🌟 إعلانات فيسبوك وانستجرام من الصفر للاحتراف\n• إنشاء حملة إعلانية كاملة خطوة بخطوة\n• Facebook Pixel وكيف تستخدمه\n• أسرار الإعلانات الناجحة\n\n👊 بالتوفيق ونراك في الحصة القادمة! 🔥' },
+            ]
+          },
+          'lec_april_5': {
+            id: 'lec_april_5',
+            title: 'الحصة 5: إنشاء حساب جوجل وتسجيل نشاطك على خرائط جوجل',
+            description: 'تعلم إنشاء حساب جوجل احترافي وتسجيل نشاطك التجاري على Google Maps خطوة بخطوة',
+            slides: [
+              { id:'s5a_0', type:'image', image:'/images/slides/lec5-01.html', title:'📍 مرحباً بك في الحصة الخامسة', notes:'🎉 أهلاً وسهلاً بكم في الحصة الخامسة من كورس التسويق الاحترافي!\n\n🎯 في هذه المحاضرة سنتعلم:\n1️⃣ لماذا تحتاج حساب جوجل لنشاطك التجاري\n2️⃣ خطوات إنشاء حساب جوجل جديد\n3️⃣ تأمين الحساب وإعداداته\n4️⃣ ما هو Google Business Profile\n5️⃣ تسجيل نشاطك على خرائط جوجل\n6️⃣ تحسين ملفك التجاري على الخرائط\n7️⃣ خطوات عملية جاهزة للتنفيذ' },
+              { id:'s5a_1', type:'image', image:'/images/slides/lec5-02.html', title:'🔑 ليه تحتاج حساب جوجل لنشاطك التجاري؟', notes:'🌟 حساب جوجل هو بوابتك لكل خدمات جوجل المجانية:\n\n📍 خرائط جوجل — ظهور نشاطك للعملاء القريبين\n📧 Gmail — بريد إلكتروني احترافي\n📊 Google Analytics — تحليل زوار موقعك\n📢 Google Ads — إعلانات مدفوعة على محرك البحث\n🔍 SEO — تحسين ظهورك في نتائج البحث\n📹 YouTube — قناة فيديو لنشاطك\n\n💡 حساب واحد = كل الأدوات دي مجاناً!\n\n🎯 أهم فائدة: لما عميل يدور على خدمتك في جوجل، نشاطك يظهرله في الخرائط مع التقييمات والعنوان ورقم التليفون' },
+              { id:'s5a_2', type:'image', image:'/images/slides/lec5-03.html', title:'📧 خطوات إنشاء حساب جوجل جديد', notes:'📝 الخطوات:\n\n1️⃣ افتح accounts.google.com واختر "إنشاء حساب"\n2️⃣ اختر "للاستخدام التجاري" أو "لنفسي"\n3️⃣ أدخل الاسم الأول واسم العائلة (يفضل اسم النشاط)\n4️⃣ اختر اسم مستخدم احترافي (البريد الإلكتروني)\n5️⃣ أنشئ كلمة مرور قوية وأكد رقم الهاتف\n\n💡 نصائح مهمة:\n• اختر اسم بريد احترافي مثل: yourname.business@gmail.com\n• استخدم كلمة مرور قوية (حروف + أرقام + رموز)\n• سجل رقم هاتف حقيقي للتحقق\n• احفظ بيانات الدخول في مكان آمن' },
+              { id:'s5a_3', type:'image', image:'/images/slides/lec5-04.html', title:'🔒 تأمين حسابك وإعداداته', notes:'🔐 خطوات مهمة بعد إنشاء الحساب:\n\n1️⃣ تفعيل التحقق بخطوتين (2-Step Verification):\n• ادخل على myaccount.google.com/security\n• فعّل التحقق بخطوتين\n• اختر طريقة التحقق (رسالة SMS أو تطبيق Authenticator)\n\n2️⃣ إضافة بريد استرداد ورقم هاتف احتياطي\n3️⃣ إضافة صورة احترافية للحساب\n4️⃣ ضبط إعدادات الخصوصية\n5️⃣ حفظ أكواد الاسترداد الاحتياطية\n\n⚠️ مهم جداً: لو فقدت الوصول للحساب بدون التحقق بخطوتين، ممكن تخسر كل بياناتك!' },
+              { id:'s5a_4', type:'image', image:'/images/slides/lec5-05.html', title:'🗺️ ما هو الملف التجاري على جوجل؟', notes:'📍 Google Business Profile = واجهتك المجانية على جوجل\n\n🎯 إيه اللي بيوفرهولك:\n• الظهور في خرائط جوجل لما حد يدور على خدمتك\n• الظهور في نتائج البحث المحلية\n• عرض تقييمات العملاء وردودك عليها\n• عرض صور النشاط والمنتجات\n• معلومات التواصل (تليفون + واتساب + موقع)\n• مواعيد العمل والعطلات\n• نشر منشورات وعروض خاصة\n• الرد على استفسارات العملاء\n\n📊 إحصائيات مهمة:\n• 46% من عمليات البحث على جوجل بتكون محلية\n• 88% من اللي بيدوروا على نشاط محلي بيزوروه خلال 24 ساعة\n• نشاطك يظهر مجاناً بدون إعلانات!' },
+              { id:'s5a_5', type:'image', image:'/images/slides/lec5-06.html', title:'📌 خطوات تسجيل نشاطك على خرائط جوجل', notes:'📝 الخطوات بالتفصيل:\n\n1️⃣ ادخل على business.google.com وسجل دخول بحسابك\n2️⃣ اضغط "إدارة الآن" وأدخل اسم النشاط التجاري\n3️⃣ اختر نوع النشاط (مطعم، محل، خدمات، عيادة...)\n4️⃣ أدخل العنوان بالتفصيل وحدد الموقع على الخريطة بدقة\n5️⃣ أضف رقم الهاتف والموقع الإلكتروني (لو عندك)\n6️⃣ اختر طريقة التحقق:\n   • بطاقة بريدية (تيجي خلال 5-14 يوم)\n   • هاتف (لو متاح — الأسرع)\n   • بريد إلكتروني\n\n💡 نصيحة: حدد الموقع على الخريطة بدقة عشان العملاء يوصلولك بسهولة' },
+              { id:'s5a_6', type:'image', image:'/images/slides/lec5-07.html', title:'⭐ تحسين ملفك التجاري على الخرائط', notes:'🚀 كل ما تضيف معلومات أكتر، ملفك يظهر أعلى في البحث:\n\n📸 أضف صور احترافية للمكان والمنتجات (5-10 صور على الأقل)\n🕐 حدّث مواعيد العمل والعطلات الرسمية\n📝 انشر عروض ومنشورات بشكل منتظم (أسبوعياً)\n💬 رد على كل التقييمات — الإيجابية والسلبية\n❓ أجب على أسئلة العملاء المتكررة\n🏷️ أضف الخدمات والمنتجات بالتفصيل والأسعار\n\n⭐ التقييمات مهمة جداً:\n• اطلب من عملائك السعداء يعملوا تقييم\n• رد على التقييمات السلبية باحترافية\n• كل ما التقييمات زادت، ظهورك بيزيد' },
+              { id:'s5a_7', type:'image', image:'/images/slides/lec5-08.html', title:'🎓 ملخص الحصة والخطوات العملية', notes:'🎉 مبروك! خلصت الحصة الخامسة!\n\n📚 ملخص:\n✅ أنشأنا حساب جوجل احترافي\n✅ أمّنا الحساب بالتحقق بخطوتين\n✅ تعرفنا على Google Business Profile\n✅ سجلنا النشاط على خرائط جوجل\n✅ تعلمنا تحسين الملف التجاري\n\n🎯 الواجب العملي:\n1️⃣ أنشئ حساب جوجل باسم نشاطك التجاري\n2️⃣ فعّل التحقق بخطوتين لتأمين حسابك\n3️⃣ سجل نشاطك على business.google.com\n4️⃣ أكمل كل بيانات الملف التجاري\n5️⃣ أضف صور احترافية ومواعيد العمل\n6️⃣ اطلب من عملائك تقييمات على الخرائط\n\n👊 بالتوفيق ونراك في الحصة القادمة! 🔥' },
             ]
           },
           'lec_free_002': {

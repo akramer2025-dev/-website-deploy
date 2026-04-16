@@ -558,6 +558,10 @@
                                 <input type="checkbox" name="lectures" value="lec_april_2" checked>
                                 <span>الحصة 2: استراتيجية المحتوى - أبريل</span>
                             </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="lectures" value="lec_april_5" checked>
+                                <span>الحصة 5: حساب جوجل وخرائط جوجل - أبريل</span>
+                            </label>
                         </div>
                     </div>
 
@@ -689,7 +693,8 @@
                 const lectures = student.allowedLectures || [];
                 const lectureNames = {
                     'lec_april_1': 'حصة 1 - أبريل',
-                    'lec_april_2': 'حصة 2 - أبريل'
+                    'lec_april_2': 'حصة 2 - أبريل',
+                    'lec_april_5': 'حصة 5 - أبريل'
                 };
                 
                 const lecturesBadges = lectures.map(l => 
