@@ -932,25 +932,25 @@
                 password: 'pass123',
                 name: 'محمد أحمد',
                 email: 'mohamed@example.com',
-                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5']
+                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5', 'lec_pro_1', 'lec_pro_2', 'lec_pro_3', 'lec_pro_4', 'lec_pro_5', 'lec_pro_6']
             },
             'student2': {
                 password: 'pass456',
                 name: 'فاطمة علي',
                 email: 'fatma@example.com',
-                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5']
+                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5', 'lec_pro_1', 'lec_pro_2', 'lec_pro_3', 'lec_pro_4', 'lec_pro_5', 'lec_pro_6']
             },
             'test': {
                 password: 'Aa123456',
                 name: 'أكرم مصطفى',
                 email: 'test@example.com',
-                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5']
+                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5', 'lec_pro_1', 'lec_pro_2', 'lec_pro_3', 'lec_pro_4', 'lec_pro_5', 'lec_pro_6']
             },
             'admin': {
                 password: 'admin123',
                 name: 'أكرم مصطفى',
                 email: 'akram@akrammostafa.com',
-                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
+                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5', 'lec_pro_1', 'lec_pro_2', 'lec_pro_3', 'lec_pro_4', 'lec_pro_5', 'lec_pro_6'],
                 isAdmin: true
             }
         };
@@ -993,6 +993,54 @@
                 thumbnail: '/images/slides/lec5-01.html',
                 duration: '16 دقيقة',
                 sections: 8
+            },
+            'lec_pro_1': {
+                id: 'lec_pro_1',
+                title: 'الوحدة 1: الهوية البصرية الاحترافية',
+                description: 'من اللوجو والألوان لحد ما تملك Brand كامل يميزك عن المنافسين',
+                thumbnail: '/images/slides/lecpro1-01.html',
+                duration: '20 دقيقة',
+                sections: 4
+            },
+            'lec_pro_2': {
+                id: 'lec_pro_2',
+                title: 'الوحدة 2: إنشاء المنصات وتفعيلها',
+                description: 'فيسبوك · إنستجرام · تيك توك · واتساب بيزنس — كيف تنشئهم باحتراف',
+                thumbnail: '/images/slides/lecpro2-01.html',
+                duration: '20 دقيقة',
+                sections: 4
+            },
+            'lec_pro_3': {
+                id: 'lec_pro_3',
+                title: 'الوحدة 3: ربط المنصات ببعضها',
+                description: 'نظام واحد يتحكم في كل حساباتك — قوة التكامل الرقمي',
+                thumbnail: '/images/slides/lecpro3-01.html',
+                duration: '20 دقيقة',
+                sections: 4
+            },
+            'lec_pro_4': {
+                id: 'lec_pro_4',
+                title: 'الوحدة 4: التسويق الاحترافي',
+                description: 'محتوى يبيع · إعلانات مضبوطة · تحليل النتائج · Scale Up',
+                thumbnail: '/images/slides/lecpro4-01.html',
+                duration: '20 دقيقة',
+                sections: 4
+            },
+            'lec_pro_5': {
+                id: 'lec_pro_5',
+                title: 'الوحدة 5: موقعك بالذكاء الاصطناعي',
+                description: 'بدون برمجة · بدون مصمم · موقع احترافي جاهز في ساعات',
+                thumbnail: '/images/slides/lecpro5-01.html',
+                duration: '20 دقيقة',
+                sections: 4
+            },
+            'lec_pro_6': {
+                id: 'lec_pro_6',
+                title: 'الوحدة 6: التسويق متعدد المنصات',
+                description: 'كل المنصات تشتغل معاً بنظام واحد — أقصى وصول وأعلى مبيعات',
+                thumbnail: '/images/slides/lecpro6-01.html',
+                duration: '20 دقيقة',
+                sections: 4
             }
         };
 
@@ -1029,7 +1077,7 @@
                                 username: user.username || user.name,
                                 name: user.name || user.username,
                                 email: user.email || '',
-                                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
+                                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5', 'lec_pro_1', 'lec_pro_2', 'lec_pro_3', 'lec_pro_4', 'lec_pro_5', 'lec_pro_6'],
                                 isAdmin: false,
                                 isOldSystem: true,
                                 expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -1044,7 +1092,7 @@
                         username: 'student',
                         name: sessionStorage.getItem('akram_client_name') || 'طالب',
                         email: '',
-                        allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
+                        allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5', 'lec_pro_1', 'lec_pro_2', 'lec_pro_3', 'lec_pro_4', 'lec_pro_5', 'lec_pro_6'],
                         isAdmin: false,
                         isOldSystem: true,
                         expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -1069,7 +1117,7 @@
                                 username: user.username || user.name || lsStudentId,
                                 name: user.name || clientName || user.username,
                                 email: user.email || '',
-                                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
+                                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5', 'lec_pro_1', 'lec_pro_2', 'lec_pro_3', 'lec_pro_4', 'lec_pro_5', 'lec_pro_6'],
                                 isAdmin: false,
                                 isOldSystem: true,
                                 expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -1085,7 +1133,7 @@
                     username: lsStudentId,
                     name: clientName || 'طالب',
                     email: '',
-                    allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
+                    allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5', 'lec_pro_1', 'lec_pro_2', 'lec_pro_3', 'lec_pro_4', 'lec_pro_5', 'lec_pro_6'],
                     isAdmin: false,
                     isOldSystem: true,
                     expires: new Date().getTime() + (24 * 60 * 60 * 1000)
@@ -1170,7 +1218,7 @@
                             const userData = {
                                 name: found.name || found.username || username,
                                 email: found.email || '',
-                                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5'],
+                                allowedLectures: ['lec_april_1', 'lec_april_2', 'lec_april_5', 'lec_pro_1', 'lec_pro_2', 'lec_pro_3', 'lec_pro_4', 'lec_pro_5', 'lec_pro_6'],
                                 isAdmin: false
                             };
                             const session = createSession(found.username || found.id || username, userData);
@@ -1441,6 +1489,71 @@
               { id:'s5a_5', type:'image', image:'/images/slides/lec5-06.html', title:'📌 خطوات تسجيل نشاطك على خرائط جوجل', notes:'📝 الخطوات بالتفصيل:\n\n1️⃣ ادخل على business.google.com وسجل دخول بحسابك\n2️⃣ اضغط "إدارة الآن" وأدخل اسم النشاط التجاري\n3️⃣ اختر نوع النشاط (مطعم، محل، خدمات، عيادة...)\n4️⃣ أدخل العنوان بالتفصيل وحدد الموقع على الخريطة بدقة\n5️⃣ أضف رقم الهاتف والموقع الإلكتروني (لو عندك)\n6️⃣ اختر طريقة التحقق:\n   • بطاقة بريدية (تيجي خلال 5-14 يوم)\n   • هاتف (لو متاح — الأسرع)\n   • بريد إلكتروني\n\n💡 نصيحة: حدد الموقع على الخريطة بدقة عشان العملاء يوصلولك بسهولة' },
               { id:'s5a_6', type:'image', image:'/images/slides/lec5-07.html', title:'⭐ تحسين ملفك التجاري على الخرائط', notes:'🚀 كل ما تضيف معلومات أكتر، ملفك يظهر أعلى في البحث:\n\n📸 أضف صور احترافية للمكان والمنتجات (5-10 صور على الأقل)\n🕐 حدّث مواعيد العمل والعطلات الرسمية\n📝 انشر عروض ومنشورات بشكل منتظم (أسبوعياً)\n💬 رد على كل التقييمات — الإيجابية والسلبية\n❓ أجب على أسئلة العملاء المتكررة\n🏷️ أضف الخدمات والمنتجات بالتفصيل والأسعار\n\n⭐ التقييمات مهمة جداً:\n• اطلب من عملائك السعداء يعملوا تقييم\n• رد على التقييمات السلبية باحترافية\n• كل ما التقييمات زادت، ظهورك بيزيد' },
               { id:'s5a_7', type:'image', image:'/images/slides/lec5-08.html', title:'🎓 ملخص الحصة والخطوات العملية', notes:'🎉 مبروك! خلصت الحصة الخامسة!\n\n📚 ملخص:\n✅ أنشأنا حساب جوجل احترافي\n✅ أمّنا الحساب بالتحقق بخطوتين\n✅ تعرفنا على Google Business Profile\n✅ سجلنا النشاط على خرائط جوجل\n✅ تعلمنا تحسين الملف التجاري\n\n🎯 الواجب العملي:\n1️⃣ أنشئ حساب جوجل باسم نشاطك التجاري\n2️⃣ فعّل التحقق بخطوتين لتأمين حسابك\n3️⃣ سجل نشاطك على business.google.com\n4️⃣ أكمل كل بيانات الملف التجاري\n5️⃣ أضف صور احترافية ومواعيد العمل\n6️⃣ اطلب من عملائك تقييمات على الخرائط\n\n👊 بالتوفيق ونراك في الحصة القادمة! 🔥' },
+            ]
+          },
+          'lec_pro_1': {
+            id: 'lec_pro_1',
+            title: 'الوحدة 1: الهوية البصرية الاحترافية',
+            description: 'من اللوجو والألوان لحد ما تملك Brand كامل يميزك عن المنافسين',
+            slides: [
+              { id:'pro1_0', type:'image', image:'/images/slides/lecpro1-01.html', title:'🎨 الهوية البصرية الاحترافية', notes:'🎉 أهلاً بكم في الوحدة الأولى من كورس التسويق الاحترافي!\n\n🎯 في هذه الوحدة سنتعلم:\n1️⃣ ما هي الهوية البصرية ولماذا هي أساس أي بيزنس ناجح\n2️⃣ كيف تختار اللوجو والألوان المناسبة\n3️⃣ اختيار الخطوط وتحديد صوت علامتك التجارية\n4️⃣ أدوات إنشاء الهوية البصرية مجاناً\n\n💡 بنهاية هذه الوحدة ستملك هوية بصرية احترافية كاملة تميزك في السوق!' },
+              { id:'pro1_1', type:'image', image:'/images/slides/Gemini_Generated_Image_alcajsalcajsalca.png', title:'🌟 ما هي الهوية البصرية؟', notes:'🌟 الهوية البصرية (Brand Identity) هي لغتك البصرية الفريدة!\n\n📌 مكوناتها الأساسية:\n\n🎨 اللوجو: يكون بسيط، مميز، يعمل بكل الأحجام\n🎨 الألوان: 2-3 ألوان رئيسية تعبر عن شخصيتك\n• أزرق = ثقة ومصداقية\n• أحمر = طاقة وحماس\n• أخضر = نمو وطبيعة\n• بنفسجي = إبداع ورقي\n\n✍️ الخطوط: خط للعناوين + خط للنصوص\n\n🗣️ صوت العلامة: كيف تتكلم مع جمهورك؟\n• رسمي أم غير رسمي؟\n• جاد أم ظريف؟\n• خبير أم صاحب بال؟\n\n💎 القاعدة الذهبية: الاتساق في كل مكان = علامة لا تُنسى' },
+              { id:'pro1_2', type:'image', image:'/images/slides/Gemini_Generated_Image_kdc3u7kdc3u7kdc3.png', title:'🛠️ أدوات إنشاء الهوية البصرية', notes:'🤖 أدوات مجانية لإنشاء هويتك البصرية:\n\n🎨 Canva (الأشهر والأسهل):\n• آلاف القوالب الجاهزة\n• صانع اللوجو\n• Brand Kit لحفظ هويتك\n• canva.com\n\n🤖 Looka (بالذكاء الاصطناعي):\n• يصمم لوجو احترافي بثوان\n• تدخل اسم نشاطك + مجالك\n• يقترح عليك 100 لوجو\n• looka.com\n\n✨ Google Gemini:\n• يساعدك تختار الألوان\n• يكتب Brand Voice\n• يقترح أسماء للعلامة التجارية\n\n🎯 تمرين عملي:\nاستخدم Gemini وقل له:\n"أنا صاحب [مجالك]، ساعدني أختار 3 ألوان مناسبة لعلامتي التجارية وفسر ليا معنى كل لون"' },
+              { id:'pro1_3', type:'image', image:'/images/slides/Gemini_Generated_Image_k2esn1k2esn1k2es.png', title:'🎓 ملخص الوحدة الأولى', notes:'🎉 مبروك على إتمام الوحدة الأولى!\n\n📚 ملخص ما تعلمناه:\n✅ الهوية البصرية = لوجو + ألوان + خطوط + صوت\n✅ الاتساق هو السر\n✅ أدوات: Canva + Looka + Gemini\n\n🎯 واجبك العملي:\n1️⃣ افتح Canva وصمم لوجو مبدئي لنشاطك\n2️⃣ اختر 3 ألوان رئيسية لعلامتك\n3️⃣ اختر خطين: للعناوين والنصوص\n4️⃣ اكتب جملة واحدة تصف صوت علامتك\n\n⏩ الوحدة القادمة:\n📱 إنشاء المنصات وتفعيلها\nفيسبوك · إنستجرام · تيك توك · واتساب بيزنس' }
+            ]
+          },
+          'lec_pro_2': {
+            id: 'lec_pro_2',
+            title: 'الوحدة 2: إنشاء المنصات وتفعيلها',
+            description: 'فيسبوك · إنستجرام · تيك توك · واتساب بيزنس — كيف تنشئهم باحتراف',
+            slides: [
+              { id:'pro2_0', type:'image', image:'/images/slides/lecpro2-01.html', title:'📱 إنشاء المنصات وتفعيلها', notes:'🎯 في هذه الوحدة سنتعلم:\n1️⃣ إنشاء صفحة بيزنس احترافية على فيسبوك\n2️⃣ إعداد حساب بيزنس على إنستجرام وربطه\n3️⃣ إنشاء حساب تيك توك بيزنس\n4️⃣ تفعيل واتساب بيزنس بكل مميزاته\n\n💡 كل منصة ليها دور محدد في استراتيجيتك!' },
+              { id:'pro2_1', type:'image', image:'/images/slides/Gemini_Generated_Image_p371d6p371d6p371.png', title:'📘 فيسبوك وإنستجرام — الأساس', notes:'📘 فيسبوك Business Page:\n• ادخل facebook.com/pages/create\n• اختر "Business or Brand"\n• أضف: اسم النشاط + الفئة + الوصف\n• ارفع الصورة الشخصية (لوجوك) والغلاف\n• أضف رقم التليفون والموقع وساعات العمل\n• فعّل زر واتساب في CTA\n\n📸 إنستجرام Professional:\n• الإعدادات → Switch to Professional Account\n• اختر Creator أو Business\n• ربطه بصفحة فيسبوك = إدارة موحدة!\n\n💡 نصيحة:\nاستخدم Meta Business Suite لإدارة الاثنين معاً من مكان واحد\nbusiness.facebook.com' },
+              { id:'pro2_2', type:'image', image:'/images/slides/Gemini_Generated_Image_hw9pvxhw9pvxhw9p.png', title:'🎵 تيك توك وواتساب بيزنس', notes:'🎵 تيك توك Business Account:\n• ادخل TikTok → الملف الشخصي → إدارة الحساب\n• اختر "Business Account"\n• أضف لينك موقعك وبريدك التجاري\n• فعّل TikTok Business Center لتتبع الأداء\n\n💬 واتساب بيزنس (الأقوى للمبيعات):\nمميزات مجانية:\n✅ اسم النشاط التجاري والوصف\n✅ ساعات العمل والموقع\n✅ كتالوج المنتجات والخدمات\n✅ رسائل ترحيب ورسائل غياب تلقائية\n✅ الردود السريعة المحفوظة\n✅ Labels لتصنيف العملاء\n\n🎯 نصيحة ذهبية:\nواتساب البيزنس = نسبة تحويل أعلى من أي منصة أخرى!' },
+              { id:'pro2_3', type:'image', image:'/images/slides/Gemini_Generated_Image_k2esn1k2esn1k2es.png', title:'🎓 ملخص الوحدة الثانية', notes:'🎉 مبروك على إتمام الوحدة الثانية!\n\n📚 ملخص:\n✅ صفحة فيسبوك بيزنس احترافية\n✅ حساب إنستجرام بروفيشنال مربوط\n✅ تيك توك بيزنس مفعّل\n✅ واتساب بيزنس مع الكتالوج\n\n🎯 واجبك العملي:\n1️⃣ أنشئ أو حوّل صفحتك على كل منصة لـ Business\n2️⃣ أضف هويتك البصرية على كل حساب\n3️⃣ أكمل كل البيانات المطلوبة\n4️⃣ ارفع كتالوج خدماتك على واتساب\n\n⏩ الوحدة القادمة:\n🔗 ربط المنصات ببعضها — نظام واحد متكامل' }
+            ]
+          },
+          'lec_pro_3': {
+            id: 'lec_pro_3',
+            title: 'الوحدة 3: ربط المنصات ببعضها',
+            description: 'نظام واحد يتحكم في كل حساباتك — قوة التكامل الرقمي',
+            slides: [
+              { id:'pro3_0', type:'image', image:'/images/slides/lecpro3-01.html', title:'🔗 ربط المنصات ببعضها', notes:'🎯 في هذه الوحدة سنتعلم:\n1️⃣ ربط فيسبوك بإنستجرام\n2️⃣ إضافة واتساب لصفحة فيسبوك\n3️⃣ ربط تيك توك بالمنصات الأخرى\n4️⃣ Meta Business Suite للإدارة الموحدة\n5️⃣ Facebook Pixel لتتبع الزوار\n\n💡 المنصات المترابطة = قوة تسويقية مضاعفة!' },
+              { id:'pro3_1', type:'image', image:'/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png', title:'⚙️ كيف تربط المنصات؟', notes:'🔗 خطوات الربط:\n\n📘 فيسبوك + إنستجرام:\n• Facebook Page Settings → Instagram → Connect Account\n• النتيجة: نشر في مكان يظهر في الاثنين\n\n💬 واتساب + فيسبوك:\n• Page Settings → WhatsApp → أضف رقمك\n• يظهر زر WhatsApp على صفحتك مباشرة\n\n📊 Facebook Pixel:\n• Meta Business Suite → Events Manager → Create Pixel\n• أضف الكود في موقعك\n• تتبع: من زار · من اشترى · من ترك السلة\n• استخدمه في إعلانات Retargeting\n\n🎯 Meta Business Suite:\nbusiness.facebook.com\n• إدارة كل المنصات من لوحة واحدة\n• جدولة منشورات لكل المنصات معاً\n• صندوق وارد موحد\n• تحليلات شاملة' },
+              { id:'pro3_2', type:'image', image:'/images/slides/Gemini_Generated_Image_k2esn1k2esn1k2es.png', title:'🎓 ملخص الوحدة الثالثة', notes:'🎉 مبروك على إتمام الوحدة الثالثة!\n\n📚 ملخص:\n✅ فيسبوك وإنستجرام مربوطين\n✅ واتساب مضاف لصفحة فيسبوك\n✅ Facebook Pixel مفعّل\n✅ Meta Business Suite للإدارة الموحدة\n\n🎯 واجبك العملي:\n1️⃣ اربط إنستجرامك بصفحة فيسبوك\n2️⃣ فعّل واتساب في صفحتك\n3️⃣ أنشئ Facebook Pixel وضعه في موقعك\n4️⃣ جدول منشور واحد لكل المنصات من Meta Business Suite\n\n⏩ الوحدة القادمة:\n📣 التسويق الاحترافي — محتوى يبيع وإعلانات مضبوطة' }
+            ]
+          },
+          'lec_pro_4': {
+            id: 'lec_pro_4',
+            title: 'الوحدة 4: التسويق الاحترافي',
+            description: 'محتوى يبيع · إعلانات مضبوطة · تحليل النتائج · Scale Up',
+            slides: [
+              { id:'pro4_0', type:'image', image:'/images/slides/lecpro4-01.html', title:'📣 التسويق الاحترافي', notes:'🎯 في هذه الوحدة سنتعلم:\n1️⃣ إنشاء محتوى يبيع (Copywriting)\n2️⃣ Content Calendar شهري منظم\n3️⃣ قاعدة 80/20 في المحتوى\n4️⃣ الإعلانات المدفوعة واستهداف الجمهور\n5️⃣ تحليل الأداء والتحسين المستمر\n\n💡 الهدف: نظام تسويقي يجلب عملاء حقيقيين!' },
+              { id:'pro4_1', type:'image', image:'/images/slides/Gemini_Generated_Image_kdc3u7kdc3u7kdc3.png', title:'📝 محتوى يبيع + قاعدة 80/20', notes:'🔥 معادلة المحتوى الناجح:\n\n🟢 80% = قيمة مجانية:\n• نصائح مفيدة لجمهورك\n• تعليم ومعرفة مجانية\n• كواليس نشاطك\n• قصص نجاح عملائك\n• محتوى ترفيهي ذو صلة\n\n🔴 20% = بيع وعروض:\n• عرض خدماتك ومنتجاتك\n• أسعار وعروض خاصة\n• شهادات العملاء\n• CTAs مباشرة للشراء\n\n📅 Content Calendar:\n• السبت: تعليمي | الأحد: تفاعلي\n• الإثنين: Reel | الثلاثاء: قصة\n• الأربعاء: كاروسيل | الخميس: عرض\n• الجمعة: ترفيهي\n\n💡 خدعة الاحترافيين:\nأنشئ المحتوى لأسبوع كامل في يوم واحد (Batch Creation)' },
+              { id:'pro4_2', type:'image', image:'/images/slides/Gemini_Generated_Image_hw9pvxhw9pvxhw9p.png', title:'🎯 الإعلانات المدفوعة', notes:'💰 استراتيجية الإعلانات:\n\n🎯 الأهداف حسب مرحلتك:\n• بداية البيزنس: Awareness (5-10$/يوم)\n• بناء المجتمع: Engagement (3-8$/يوم)\n• جلب عملاء: Messages (5-10$/يوم) ⭐\n• مبيعات مباشرة: Conversions (10-30$/يوم)\n\n👥 الاستهداف الذكي:\n1️⃣ Core Audience: اختر اهتمامات + عمر + موقع\n2️⃣ Custom Audience: من زاروا موقعك (Pixel)\n3️⃣ Lookalike Audience: مشابهين لعملائك الحاليين\n\n✅ نصائح ذهبية:\n• ابدأ بميزانية صغيرة واختبر\n• A/B Testing: صورتان ونص مختلف\n• أوقف الإعلان الخاسر بعد 3-5 أيام\n• Scale Up للإعلان الرابح تدريجياً' },
+              { id:'pro4_3', type:'image', image:'/images/slides/Gemini_Generated_Image_k2esn1k2esn1k2es.png', title:'🎓 ملخص الوحدة الرابعة', notes:'🎉 مبروك على إتمام الوحدة الرابعة!\n\n📚 ملخص:\n✅ معادلة المحتوى 80/20\n✅ Content Calendar شهري\n✅ Copywriting يبيع\n✅ إعلانات مدفوعة مضبوطة\n✅ تحليل الأداء والتحسين\n\n🎯 واجبك العملي:\n1️⃣ أنشئ Content Calendar لأسبوعين قادمين\n2️⃣ صمم 3 منشورات احترافية\n3️⃣ أطلق إعلان تجريبي بـ 50 جنيه\n4️⃣ حلل النتائج بعد 5 أيام\n\n⏩ الوحدة القادمة:\n🌐 موقعك بالذكاء الاصطناعي — بدون برمجة' }
+            ]
+          },
+          'lec_pro_5': {
+            id: 'lec_pro_5',
+            title: 'الوحدة 5: موقعك بالذكاء الاصطناعي',
+            description: 'بدون برمجة · بدون مصمم · موقع احترافي جاهز في ساعات',
+            slides: [
+              { id:'pro5_0', type:'image', image:'/images/slides/lecpro5-01.html', title:'🌐 موقعك بالذكاء الاصطناعي', notes:'🎯 في هذه الوحدة سنتعلم:\n1️⃣ اختيار الأداة المناسبة لإنشاء موقعك\n2️⃣ كتابة محتوى الموقع بالـ AI\n3️⃣ تصميم الصور والبانرات\n4️⃣ SEO لتظهر في جوجل مجاناً\n5️⃣ ربط الموقع بكل منصاتك\n\n💡 بنهاية هذه الوحدة ستملك موقع إلكتروني احترافي!' },
+              { id:'pro5_1', type:'image', image:'/images/slides/Gemini_Generated_Image_kdc3u7kdc3u7kdc3.png', title:'🛠️ أدوات إنشاء المواقع بالـ AI', notes:'🤖 أفضل الأدوات:\n\n🎨 Framer AI (الأفضل حالياً):\n• اكتب وصف موقعك بالعربي أو الإنجليزي\n• AI يصمم الموقع كاملاً في ثوان\n• تعديل بسيط بالـ Drag & Drop\n• framer.com\n\n🌐 Wix AI:\n• أجب على أسئلة بسيطة\n• Wix يبني الموقع تلقائياً\n• سهل جداً للمبتدئين\n• wix.com\n\n⚡ Webflow:\n• للمتقدمين — تحكم كامل\n• احترافي جداً\n• webflow.com\n\n📝 محتوى الموقع بالـ AI:\n• ChatGPT يكتب كل صفحات الموقع\n• Gemini يقترح هيكل الموقع\n• DALL-E / Midjourney للصور\n\n🎯 الخطوات:\n1️⃣ اكتب prompt لـ AI: "اكتب محتوى لموقع [مجالك]"\n2️⃣ افتح Framer وأدخل المحتوى\n3️⃣ عدّل الألوان لتناسب هويتك\n4️⃣ ارفع الموقع' },
+              { id:'pro5_2', type:'image', image:'/images/slides/1772817045966.png', title:'🔍 SEO وربط الموقع بالمنصات', notes:'🔍 SEO — اظهر في جوجل مجاناً:\n\n📌 الأساسيات:\n• عنوان الصفحة (Title): يحتوي كلمتك المفتاحية\n• وصف الصفحة (Description): 150 حرف جذاب\n• الصور: اسمها بالعربي/الإنجليزي وصفي\n• النصوص: تحتوي كلمات يبحث عنها جمهورك\n\n🔗 اربط موقعك بالمنصات:\n• Facebook Pixel: تتبع الزوار للإعلانات\n• WhatsApp Button: زر تواصل مباشر\n• Instagram Feed: عرض منشوراتك\n• Google Analytics: تحليل الزوار\n• Google Search Console: متابعة ظهورك في جوجل\n\n📊 نصيحة:\nسجّل في Google Search Console فوراً بعد رفع موقعك — هيساعد جوجل يكتشفك أسرع!' },
+              { id:'pro5_3', type:'image', image:'/images/slides/Gemini_Generated_Image_k2esn1k2esn1k2es.png', title:'🎓 ملخص الوحدة الخامسة', notes:'🎉 مبروك على إتمام الوحدة الخامسة!\n\n📚 ملخص:\n✅ أدوات إنشاء مواقع بالـ AI (Framer, Wix)\n✅ كتابة المحتوى بـ ChatGPT\n✅ أساسيات SEO\n✅ ربط الموقع بكل المنصات\n\n🎯 واجبك العملي:\n1️⃣ افتح Framer أو Wix وأنشئ موقعك\n2️⃣ اكتب محتوى الصفحة الرئيسية بـ AI\n3️⃣ أضف SEO للصفحة\n4️⃣ أضف Facebook Pixel وزر واتساب\n5️⃣ ارفع الموقع واشاركه مع الزملاء\n\n⏩ الوحدة الأخيرة:\n🚀 التسويق متعدد المنصات — النظام الكامل' }
+            ]
+          },
+          'lec_pro_6': {
+            id: 'lec_pro_6',
+            title: 'الوحدة 6: التسويق متعدد المنصات',
+            description: 'كل المنصات تشتغل معاً بنظام واحد — أقصى وصول وأعلى مبيعات',
+            slides: [
+              { id:'pro6_0', type:'image', image:'/images/slides/lecpro6-01.html', title:'🚀 التسويق متعدد المنصات', notes:'🎯 في هذه الوحدة سنتعلم:\n1️⃣ بناء خطة تسويق متكاملة لكل المنصات\n2️⃣ توزيع المحتوى الذكي على المنصات\n3️⃣ أتمتة التسويق\n4️⃣ قياس الأداء الإجمالي\n5️⃣ Scale Up ومضاعفة النتائج\n\n💡 هذه الوحدة هي تاج كل ما تعلمته!' },
+              { id:'pro6_1', type:'image', image:'/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png', title:'🗺️ خطة التسويق المتكاملة', notes:'🚀 كيف تشتغل كل المنصات معاً:\n\n🌐 الموقع الإلكتروني (المركز الرئيسي):\n• كل المنصات تؤدي إليه\n• يحوّل الزوار لعملاء\n\n📘 فيسبوك:\n• الوصول الأوسع\n• الإعلانات المدفوعة\n• مجموعات وفعاليات\n\n📸 إنستجرام:\n• المحتوى البصري والـ Reels\n• Stories يومية\n• جمهور 18-35\n\n🎵 تيك توك:\n• Viral Content\n• جمهور شاب\n• فيديوهات سريعة\n\n💬 واتساب:\n• الإغلاق النهائي للبيع\n• خدمة عملاء مباشرة\n• Broadcast للعروض\n\n🔄 دورة المحتوى:\nمقال طويل → منشور فيسبوك → Reel إنستجرام → فيديو تيك توك → Story → واتساب Broadcast' },
+              { id:'pro6_2', type:'image', image:'/images/slides/Gemini_Generated_Image_alcajsalcajsalca.png', title:'⚡ الأتمتة وتكبير النتائج', notes:'⚡ أتمتة التسويق:\n\n📅 جدولة المحتوى:\n• Meta Business Suite: فيسبوك + إنستجرام\n• Buffer/Hootsuite: كل المنصات معاً\n• TikTok Scheduler: تيك توك\n\n🤖 الردود التلقائية:\n• واتساب: رسالة ترحيب + رد على الاستفسارات\n• فيسبوك Messenger Chatbot\n• Instagram Auto-Reply\n\n📊 قياس الأداء الإجمالي:\n• Meta Business Suite Insights\n• Google Analytics\n• TikTok Analytics\n\n🚀 Scale Up:\n1️⃣ حدد المنصة الأنجح\n2️⃣ ضاعف ميزانيتها\n3️⃣ حدد المحتوى الأنجح\n4️⃣ أنشئ محتوى مشابه\n5️⃣ فتّش دائماً عن فرص جديدة' },
+              { id:'pro6_3', type:'image', image:'/images/slides/Gemini_Generated_Image_k2esn1k2esn1k2es.png', title:'🏆 ملخص الكورس الكامل', notes:'🎉 مبروك على إتمام كورس التسويق الاحترافي الكامل!\n\n📚 ما أنجزته:\n✅ الوحدة 1: هوية بصرية احترافية\n✅ الوحدة 2: كل المنصات منشأة ومفعّلة\n✅ الوحدة 3: المنصات مربوطة ببعض\n✅ الوحدة 4: تسويق احترافي بخطة منظمة\n✅ الوحدة 5: موقع إلكتروني بالـ AI\n✅ الوحدة 6: نظام تسويق متكامل\n\n🚀 الخطوة التالية:\nطبّق كل ما تعلمته خلال 30 يوم وستلاحظ فرقاً حقيقياً!\n\n💬 تواصل معنا:\nأي سؤال أو استفسار، أكرم مصطفى معك دايماً 🔥\n\n👊 أنت الآن تملك نظاماً تسويقياً متكاملاً!\nاشتغل بيه وحقق نتائجك! 🏆' }
             ]
           },
           'lec_free_002': {
