@@ -18,7 +18,7 @@
   --grad: linear-gradient(135deg,#00E5FF,#00B8D4); --blue: #3b82f6;
   --green: #22c55e; --yellow: #f59e0b; --text: #e2eaf6; --muted: #6b82a8;
   --sidebar-w: 240px; --header-h: 64px;
-  
+
   /* CRM Professional Colors */
   --crm-primary: #00E5FF; --crm-primary-light: rgba(0,229,255,0.15);
   --crm-secondary: #00B8D4; --crm-secondary-light: rgba(0,184,212,0.15);
@@ -817,7 +817,7 @@ button{cursor:pointer;}
     transform:translateX(0);
     box-shadow:12px 0 48px rgba(0,0,0,0.6);
   }
-  
+
   /* Sidebar Navigation - Better Touch Targets */
   .adm-nav-item{
     padding:14px 18px;
@@ -857,14 +857,14 @@ button{cursor:pointer;}
   .adm-table-wrap{margin:0 -4px;overflow-x:auto;}
   .adm-table{min-width:600px;}
   .adm-table th,.adm-table td{font-size:.8rem;padding:10px 8px;white-space:nowrap;}
-  
+
   /* Action Buttons in Tables - Better Touch */
   .btn-sm{padding:9px 12px;font-size:.8rem;min-height:40px;}
 
   /* Requests grid */
   .req-cards{grid-template-columns:1fr;}
   .req-filter-btn{padding:11px 16px;font-size:.85rem;min-height:44px;}
-  
+
   /* Employee Request Cards */
   .employee-requests-grid{grid-template-columns:1fr;gap:16px;}
   .emp-req-card{border-radius:16px;}
@@ -911,49 +911,49 @@ button{cursor:pointer;}
 
 @media(max-width:480px){
   /* Extra Small Screens - Optimized for One-Handed Use */
-  
+
   /* Header */
   .adm-header{padding:0 10px;height:56px;gap:8px;}
   .adm-header-brand img{height:32px;}
   .adm-header-brand span{font-size:.8rem;}
   .adm-menu-toggle{width:44px;height:44px;font-size:1.1rem;}
-  
+
   /* Sidebar */
   .adm-sidebar{width:85vw;max-width:300px;}
-  
+
   /* Main Content */
   .adm-main{padding-top:56px;}
   .adm-section{padding:12px 10px;}
   .adm-section-title{font-size:1.1rem;}
   .adm-breadcrumb{font-size:.75rem;}
-  
+
   /* Stats - Single Column on Very Small Screens */
   .stats-grid{grid-template-columns:1fr;gap:10px;}
   .stat-card{padding:16px 14px;}
   .stat-card-icon{width:40px;height:40px;font-size:1.1rem;}
   .stat-num{font-size:1.6rem;}
   .stat-lbl{font-size:.78rem;}
-  
+
   /* Cards */
   .adm-card{padding:14px 12px;}
   .adm-card h3{font-size:.95rem;}
-  
+
   /* Quick Actions */
   .qa-btn{padding:13px 14px;min-height:52px;}
   .qa-btn-icon{width:38px;height:38px;}
-  
+
   /* Forms */
   .form-field input,
   .form-field select,
   .form-field textarea{padding:11px 12px;font-size:.88rem;}
-  
+
   /* Buttons */
   .btn-primary,
   .btn-save{font-size:.88rem;padding:12px 20px;min-height:46px;}
-  
+
   /* Projects Grid */
   .projects-grid{gap:14px;}
-  
+
   /* Employee Request Cards */
   .emp-req-card{border-radius:14px;}
   .emp-req-header{padding:16px 14px;flex-direction:column;text-align:center;}
@@ -961,19 +961,19 @@ button{cursor:pointer;}
   .emp-req-body{padding:14px;}
   .emp-req-row{padding:10px 12px;font-size:.82rem;}
   .emp-req-row i{width:30px;height:30px;font-size:.85rem;}
-  
+
   /* Request Detail Modal */
   .rd-actions{flex-direction:column;gap:8px;}
   .rd-btn{min-height:44px;font-size:.85rem;}
-  
+
   /* Modal */
   .modal-box{padding:20px 14px;max-width:96vw;}
   .modal-header{padding:0 0 16px;}
   .modal-header h3{font-size:1rem;}
-  
+
   /* Table */
   .adm-table th,.adm-table td{font-size:.75rem;padding:8px 6px;}
-  
+
   /* Login Screen */
   .login-box{padding:32px 24px;}
   .login-logo img{height:60px;}
@@ -984,24 +984,24 @@ button{cursor:pointer;}
 @media(min-width:481px) and (max-width:768px){
   /* Header */
   .adm-header{gap:14px;}
-  
+
   /* Stats - Keep 2 columns for tablets */
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
   .stat-card{padding:20px;}
-  
+
   /* Sidebar wider for tablets */
   .adm-sidebar{width:300px;}
-  
+
   /* Cards with better spacing */
   .adm-card{padding:20px;}
-  
+
   /* Forms with 2 columns when appropriate */
   .form-row{grid-template-columns:repeat(2,1fr);gap:16px;}
   .form-row.single{grid-template-columns:1fr;}
-  
+
   /* Employee cards in 2 columns on tablet */
   .employee-requests-grid{grid-template-columns:repeat(2,1fr);gap:18px;}
-  
+
   /* Projects can show 2 per row */
   .projects-grid{grid-template-columns:repeat(2,1fr);}
 }
@@ -1709,7 +1709,7 @@ textarea:focus{
   <div class="crm-context-divider"></div>
   <div class="crm-context-item" onclick="crmContextAction('call')">
     <i class="fas fa-phone"></i>
-    <span>اتصال</span>  
+    <span>اتصال</span>
   </div>
   <div class="crm-context-item" onclick="crmContextAction('whatsapp')">
     <i class="fab fa-whatsapp"></i>
@@ -1795,12 +1795,12 @@ textarea:focus{
     </div>
     <div class="adm-sidebar-footer"><p>Akram Mostafa &copy; 2026</p></div>
   </aside>
-  
+
   <!-- Mobile Quick Access FAB -->
   <button class="mobile-quick-fab" onclick="toggleAdminSidebar()" title="القائمة السريعة" aria-label="فتح القائمة">
     <i class="fas fa-th-large"></i>
   </button>
-  
+
   <main class="adm-main">
 
     <!-- DASHBOARD -->
@@ -1889,7 +1889,7 @@ textarea:focus{
         </div>
         <button class="btn-add-user" onclick="openPlanModal()" style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(16,185,129,0.15));color:var(--green);border:1px solid rgba(34,197,94,0.3);"><i class="fas fa-plus"></i> خطة تسويقية جديدة</button>
       </div>
-      
+
       <!-- Tabs for filtering -->
       <div style="display:flex;gap:12px;margin:20px 0;border-bottom:2px solid rgba(255,255,255,0.05);">
         <button class="plan-tab active" data-status="pending" onclick="filterPlansByStatus('pending')" style="padding:12px 24px;background:none;border:none;color:var(--text-secondary);font-weight:700;font-size:.95rem;cursor:pointer;border-bottom:3px solid transparent;transition:all .3s;position:relative;">
@@ -1901,7 +1901,7 @@ textarea:focus{
           <span class="plan-tab-badge" id="completedCount" style="position:absolute;top:4px;right:-8px;background:var(--green);color:#fff;font-size:10px;padding:2px 6px;border-radius:50px;min-width:18px;text-align:center;">0</span>
         </button>
       </div>
-      
+
       <div class="marketing-plans-grid" id="marketingPlansGrid">
         <!-- Plans will be rendered here -->
       </div>
@@ -1919,7 +1919,7 @@ textarea:focus{
           <button class="btn-add-user" onclick="openAddLeadModal()"><i class="fas fa-plus"></i> عميل جديد</button>
         </div>
       </div>
-      
+
       <!-- CRM Stats -->
       <div class="crm-stats-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px">
         <div class="crm-stat-card" style="background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(37,99,235,0.05));border:1px solid rgba(59,130,246,0.2);border-radius:16px;padding:20px">
@@ -2220,6 +2220,8 @@ textarea:focus{
             <label>الكورس *</label>
             <select id="rlCourse">
               <option value="april-2026">كورس التسويق – أبريل</option>
+              <option value="free">كورس التسويق الاحترافي</option>
+              <option value="pro-marketing">كورس التسويق الاحترافي المتقدم</option>
             </select>
           </div>
           <div class="form-field">
@@ -2509,7 +2511,7 @@ textarea:focus{
           </button>
         </label>
         <div style="max-height:250px;overflow-y:auto;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;">
-          
+
           <!-- لوحة التحكم -->
           <div class="permission-group">
             <label class="permission-item main-permission">
@@ -2715,12 +2717,12 @@ textarea:focus{
           <i class="fas fa-check-circle" style="color:#22c55e;"></i>
           <h4>تم إنشاء الحساب بنجاح!</h4>
         </div>
-        
+
         <!-- Contract Summary -->
         <div id="empContractSummary" style="margin-bottom:20px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
           <!-- Will be filled by JS -->
         </div>
-        
+
         <div class="emp-link-display">
           <label style="font-size:.85rem;color:var(--muted);margin-bottom:8px;display:block;">رابط إكمال التسجيل:</label>
           <div style="display:flex;gap:8px;align-items:center;">
@@ -2860,13 +2862,13 @@ textarea:focus{
     <div class="emp-contract-form" style="display:block;">
       <input type="hidden" id="planEditId" value="">
       <input type="hidden" id="planLeadId" value="">
-      
+
       <!-- معلومات الشركة -->
       <div style="background:rgba(34,197,94,0.08);padding:16px;border-radius:12px;margin-bottom:20px;border:1px solid rgba(34,197,94,0.2);">
         <h4 style="color:var(--green);font-size:.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
           <i class="fas fa-building"></i> معلومات الشركة
         </h4>
-        
+
         <div class="form-field">
           <label><i class="fas fa-building"></i> اسم الشركة *</label>
           <input type="text" id="planCompanyName" placeholder="مثال: شركة النجاح للتجارة">
@@ -2992,7 +2994,7 @@ textarea:focus{
     <div class="modal-body" style="max-height:calc(90vh - 180px);overflow-y:auto;padding:28px;">
       <div class="emp-contract-form" style="display:block;">
         <input type="hidden" id="leadEditId" value="">
-        
+
         <div class="form-row">
           <div class="form-field">
             <label><i class="fas fa-user"></i> الاسم *</label>
@@ -3089,7 +3091,7 @@ textarea:focus{
       <h3><i class="fas fa-user" style="color:var(--blue);margin-left:8px;"></i> <span id="viewLeadName">تفاصيل العميل</span></h3>
       <button class="modal-close" onclick="closeViewLeadModal()"><i class="fas fa-times"></i></button>
     </div>
-    
+
     <div style="padding:20px;">
       <!-- معلومات العميل -->
       <div style="background:rgba(59,130,246,0.08);padding:16px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(59,130,246,0.2);">
@@ -3121,7 +3123,7 @@ textarea:focus{
           <i class="fas fa-sticky-note"></i> الملاحظات (<span id="viewLeadNotesCount">0</span>)
         </h4>
         <div id="viewLeadNotes" style="max-height:200px;overflow-y:auto;"></div>
-        
+
         <!-- إضافة ملاحظة -->
         <div style="margin-top:12px;">
           <textarea id="newLeadNote" placeholder="إضافة ملاحظة جديدة..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-family:inherit;min-height:60px;"></textarea>
@@ -3159,7 +3161,7 @@ textarea:focus{
       <h3><i class="fas fa-file-excel" style="color:var(--green);margin-left:8px;"></i> استيراد عملاء من Excel</h3>
       <button class="modal-close" onclick="closeImportModal()"><i class="fas fa-times"></i></button>
     </div>
-    
+
     <div style="padding:20px;">
       <div style="background:rgba(59,130,246,0.08);padding:16px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(59,130,246,0.2);">
         <h4 style="color:var(--blue);font-size:.9rem;margin-bottom:8px;">
@@ -3209,7 +3211,7 @@ textarea:focus{
       <h3><i class="fas fa-random" style="color:var(--purple);margin-left:8px;"></i> التوزيع التلقائي</h3>
       <button class="modal-close" onclick="closeAutoDistributeModal()"><i class="fas fa-times"></i></button>
     </div>
-    
+
     <div style="padding:20px;">
       <div style="background:rgba(168,85,247,0.08);padding:16px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(168,85,247,0.2);">
         <h4 style="color:var(--purple);font-size:.9rem;margin-bottom:12px;">
@@ -3263,7 +3265,7 @@ textarea:focus{
       <h3><i class="fas fa-user-check" style="color:var(--blue);margin-left:8px;"></i> توزيع العملاء المحددين</h3>
       <button class="modal-close" onclick="closeBulkAssignModal()"><i class="fas fa-times"></i></button>
     </div>
-    
+
     <div style="padding:20px;">
       <p style="margin-bottom:16px;color:var(--text-muted);font-size:.9rem;">
         عدد العملاء المحددين: <strong id="bulkAssignCount">0</strong>
@@ -3293,7 +3295,7 @@ textarea:focus{
       <h3><i class="fas fa-exchange-alt" style="color:var(--orange);margin-left:8px;"></i> تغيير حالة العملاء</h3>
       <button class="modal-close" onclick="closeBulkStatusModal()"><i class="fas fa-times"></i></button>
     </div>
-    
+
     <div style="padding:20px;">
       <p style="margin-bottom:16px;color:var(--text-muted);font-size:.9rem;">
         عدد العملاء المحددين: <strong id="bulkStatusCount">0</strong>
@@ -3396,17 +3398,17 @@ function savePortfolio(p){
   p = cleaned;
   _fsPortfolio = Object.assign({}, p);
   _fsPortfolioSavedAt = Date.now();
-  
+
   // فحص حجم البيانات
   const jsonStr = JSON.stringify(p);
   const sizeInMB = (jsonStr.length / (1024 * 1024)).toFixed(2);
   console.log('Portfolio size:', sizeInMB, 'MB');
-  
+
   // تحذير إذا اقترب من الحد (4MB limit لـ localStorage)
   if(jsonStr.length > 3.5 * 1024 * 1024){
     toast('⚠️ حجم البيانات كبير (' + sizeInMB + 'MB). يُنصح بحذف بعض الصور القديمة.', 'warning', 5000);
   }
-  
+
   // Don't save to localStorage if data is too large (> 4MB)
   try {
     if (jsonStr.length < 4 * 1024 * 1024) {
@@ -3419,7 +3421,7 @@ function savePortfolio(p){
     console.warn('localStorage quota exceeded:', e);
     toast('⚠️ مساحة التخزين المحلية ممتلئة - يرجى حذف بعض الصور', 'warning');
   }
-  
+
   // ملاحظة: تم تعطيل Firestore save لتجنب خطأ 1MB limit
   // البيانات محفوظة في localStorage فقط (حد التخزين 4MB+)
   // يمكن إضافة Supabase Storage مستقبلاً إذا لزم الأمر
@@ -3536,33 +3538,33 @@ function initFirestore(){
   _loadAdminData();
   const jrEl = document.getElementById('joinRequestsList');
   if(jrEl) jrEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem"></i><br><br>جاري تحميل البيانات...</div>';
-  
+
   console.log('📡 Setting up Firebase snapshot listener for join_requests...');
-  
+
   _fsUnsubscribe = _fdb.collection('join_requests')
     .onSnapshot(snapshot=>{
       console.log('📬 Firebase snapshot received!');
       console.log('  - Total documents:', snapshot.size);
       console.log('  - Empty:', snapshot.empty);
-      
+
       const _prevPending = _fsReqs.filter(r=>r.status==='pending').length;
       const _isFirstLoad = (_fsReqs.length === 0);
       _fsReqs = [];
-      
-      snapshot.forEach(doc=>{ 
+
+      snapshot.forEach(doc=>{
         const data = doc.data();
         console.log('  - Document:', doc.id, data);
-        _fsReqs.push(data); 
+        _fsReqs.push(data);
       });
-      
+
       console.log('✅ Total requests loaded:', _fsReqs.length);
-      
+
       // ترتيب client-side بدل orderBy (لا يحتاج index)
       _fsReqs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
       const _newPending = _fsReqs.filter(r=>r.status==='pending').length;
-      
+
       console.log('📊 Pending requests:', _newPending);
-      
+
       if (!_isFirstLoad && _newPending > _prevPending) {
         toast('🔔 طلب انضمام جديد! تحقق من قسم طلبات الانضمام', 'info');
       }
@@ -3592,9 +3594,9 @@ async function doAdminLogin(){
   const u=document.getElementById('loginUser').value.trim();
   const p=document.getElementById('loginPass').value;
   const err=document.getElementById('loginErr');
-  
+
   console.log('🔐 Login attempt - Username:', u, '| Password length:', p.length);
-  
+
   // Check if it's the main admin
   if(u.toLowerCase()===ADMIN_USER.toLowerCase() && p===ADMIN_PASS){
     console.log('✅ Admin login successful');
@@ -3606,9 +3608,9 @@ async function doAdminLogin(){
     try { initApp(); } catch(e) { console.error('initApp error:', e); }
     return;
   }
-  
+
   console.log('❌ Not admin, checking employee database...');
-  
+
   // Check if it's an employee
   try {
     // First, let's check if employee exists by username only
@@ -3617,27 +3619,27 @@ async function doAdminLogin(){
       .select('*')
       .eq('username', u)
       .maybeSingle();
-    
+
     console.log('🔍 Employee check result:', empCheck);
-    
+
     if(checkError){
       console.error('❌ Database error:', checkError);
       alert('خطأ في الاتصال بقاعدة البيانات: ' + checkError.message);
       throw checkError;
     }
-    
+
     if(!empCheck){
       console.log('❌ Username not found in database');
       err.textContent = 'اسم المستخدم غير موجود';
       err.classList.add('show');
       return;
     }
-    
+
     console.log('✅ Username found! Checking password...');
     console.log('Stored password:', empCheck.password);
     console.log('Entered password:', p);
     console.log('Passwords match?', empCheck.password === p);
-    
+
     // Check if password matches
     if(empCheck.password !== p){
       console.log('❌ Password mismatch');
@@ -3645,10 +3647,10 @@ async function doAdminLogin(){
       err.classList.add('show');
       return;
     }
-    
+
     console.log('✅ Password correct! Checking account status...');
     const employee = empCheck;
-    
+
     if(employee){
       // Check if employee is active and approved
       if(!employee.is_active){
@@ -3656,13 +3658,13 @@ async function doAdminLogin(){
         err.classList.add('show');
         return;
       }
-      
+
       if(employee.application_status !== 'approved'){
         err.textContent = 'لم يتم اعتماد حسابك بعد';
         err.classList.add('show');
         return;
       }
-      
+
       // Employee login successful
       console.log('═══════════════════════════════════════════════');
       console.log('✅ EMPLOYEE LOGIN SUCCESSFUL');
@@ -3671,33 +3673,33 @@ async function doAdminLogin(){
       console.log('🔑 Permissions from database:');
       console.table(employee.permissions);
       console.log('🔑 Permissions JSON:', JSON.stringify(employee.permissions, null, 2));
-      
+
       localStorage.setItem('am_employee_auth','1');  // ⚠️ Changed: Different auth key for employees
       localStorage.setItem('am_user_type','employee');
       localStorage.setItem('am_employee_id', employee.id);
       localStorage.setItem('am_username', employee.username);
       localStorage.setItem('am_employee_type', employee.employee_type);
       localStorage.setItem('am_permissions', JSON.stringify(employee.permissions || {}));
-      
+
       console.log('💾 SAVED TO LOCALSTORAGE:');
       console.log('  am_employee_auth:', localStorage.getItem('am_employee_auth'));
       console.log('  am_user_type:', localStorage.getItem('am_user_type'));
       console.log('  am_permissions:', localStorage.getItem('am_permissions'));
-      
+
       document.getElementById('loginScreen').style.display='none';
       document.getElementById('adminApp').style.display='block';
-      
+
       // Show welcome message
       toast(`مرحباً ${employee.full_name || employee.username}! 👋`, 'success');
-      
-      try { 
+
+      try {
         initApp();
         // Apply permission restrictions after init
         setTimeout(() => applyEmployeePermissions(), 100);
       } catch(e) { console.error('initApp error:', e); }
       return;
     }
-    
+
     // If we reach here, credentials are wrong
     console.log('❌ No matching employee found in database');
     console.log('📝 Username tried:', u);
@@ -3707,7 +3709,7 @@ async function doAdminLogin(){
     const box=document.querySelector('.login-box');
     box.style.transition='transform .08s';
     [8,-6,4,0].forEach((x,i)=>setTimeout(()=>box.style.transform=`translateX(${x}px)`,i*80));
-    
+
   } catch(error){
     console.error('❌ Login error:', error);
     err.textContent = 'حدث خطأ أثناء تسجيل الدخول';
@@ -3720,25 +3722,25 @@ function doLogout(){
   localStorage.removeItem('akram_logged_in');
   localStorage.removeItem('akram_client_name');
   localStorage.removeItem('akram_username');
-  
+
   // Clear employee auth
   localStorage.removeItem('am_employee_auth');
   localStorage.removeItem('am_user_type');
   localStorage.removeItem('am_employee_id');
   localStorage.removeItem('am_username');
   localStorage.removeItem('am_permissions');
-  
+
   sessionStorage.clear();
   document.getElementById('adminApp').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
 }
 document.addEventListener('DOMContentLoaded',()=>{
   ['loginUser','loginPass'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')doAdminLogin();}));
-  
+
   // Check if user is already logged in (admin or employee)
   const isAdmin = localStorage.getItem('am_admin_auth')==='1';
   const isEmployee = localStorage.getItem('am_employee_auth')==='1';
-  
+
   console.log('═══════════════════════════════════════════════');
   console.log('🔍 DOM LOADED - Checking Auth State');
   console.log('═══════════════════════════════════════════════');
@@ -3752,11 +3754,11 @@ document.addEventListener('DOMContentLoaded',()=>{
   console.log('🎯 LOGIN STATE:');
   console.log('  isAdmin:', isAdmin);
   console.log('  isEmployee:', isEmployee);
-  
+
   if(isAdmin || isEmployee){
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminApp').style.display='block';
-    try { 
+    try {
       initApp();
       // If employee, apply permissions
       if(isEmployee) {
@@ -3864,16 +3866,16 @@ async function showAllEmployees() {
       .from('employees')
       .select('*')
       .order('created_at', { ascending: false });
-    
+
     if(error){
       console.error('❌ Error:', error);
       alert('خطأ في جلب البيانات: ' + error.message);
       return;
     }
-    
+
     console.log('👥 Total Employees:', employees.length);
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━');
-    
+
     employees.forEach((emp, i) => {
       console.log(`\n📋 Employee #${i+1}:`);
       console.log('   Username:', emp.username);
@@ -3885,7 +3887,7 @@ async function showAllEmployees() {
       console.log('   Is Active:', emp.is_active);
       console.log('   Status:', emp.application_status);
     });
-    
+
     // Create a table view
     console.table(employees.map(e => ({
       'Username': e.username,
@@ -3894,7 +3896,7 @@ async function showAllEmployees() {
       'Status': e.application_status,
       'Type': e.employee_type
     })));
-    
+
     alert(`تم العثور على ${employees.length} موظف. شاهد Console للتفاصيل.`);
   } catch(error) {
     console.error('❌ Error:', error);
@@ -3902,19 +3904,19 @@ async function showAllEmployees() {
   }
 }
 
-function initApp(){ 
-  updateBadges(); 
-  renderDashboard(); 
-  renderPortfolio(); 
-  renderWebPrices(); 
-  renderMobilePrices(); 
-  renderUsers('employee'); 
-  renderUsers('student'); 
-  renderJoinRequests('all'); 
-  renderRecordedLectures(); 
-  renderEmployeeRequests(); 
-  initFirestore(); 
-  
+function initApp(){
+  updateBadges();
+  renderDashboard();
+  renderPortfolio();
+  renderWebPrices();
+  renderMobilePrices();
+  renderUsers('employee');
+  renderUsers('student');
+  renderJoinRequests('all');
+  renderRecordedLectures();
+  renderEmployeeRequests();
+  initFirestore();
+
   // Attach mobile sidebar handlers after elements are rendered
   if (typeof attachMobileSidebarHandlers === 'function') {
     attachMobileSidebarHandlers();
@@ -3949,18 +3951,18 @@ async function updateBadges(){
       .from('employees')
       .select('id', { count: 'exact', head: true })
       .eq('application_status', 'approved');
-    
+
     if (!error && employees !== null) {
       empsCount = employees.length || 0;
     }
   } catch(e) {
     console.error('Error counting employees:', e);
   }
-  
+
   // Students from localStorage (old system)
-  const users=getUsers(); 
+  const users=getUsers();
   const stus=users.filter(u=>u.type==='student');
-  
+
   const portfolio=getPortfolio(); const totalImgs=Object.values(portfolio).reduce((s,imgs)=>s+(imgs||[]).length,0);
   const reqs=getJoinRequests(); const pending=reqs.filter(r=>r.status==='pending');
   document.getElementById('empCount').textContent=empsCount;
@@ -3971,7 +3973,7 @@ async function updateBadges(){
   document.getElementById('dash-emp').textContent=empsCount;
   document.getElementById('dash-stu').textContent=stus.length;
   document.getElementById('dash-imgs').textContent=totalImgs;
-  
+
   // Update header notification bell
   const headerBadge = document.getElementById('headerPendingBadge');
   if(headerBadge){
@@ -3982,7 +3984,7 @@ async function updateBadges(){
       headerBadge.style.display = 'none';
     }
   }
-  
+
   // update filter counts
   const rfAll=document.getElementById('rfAllCount'), rfP=document.getElementById('rfPendingCount'), rfA=document.getElementById('rfApprovedCount'), rfR=document.getElementById('rfRejectedCount');
   if(rfAll) rfAll.textContent=`(${reqs.length})`;
@@ -4005,29 +4007,29 @@ async function updateBadges(){
 // 🔒 Apply employee permission restrictions
 function applyEmployeePermissions() {
   const userType = localStorage.getItem('am_user_type');
-  
+
   console.log('═══════════════════════════════════════════════');
   console.log('🔒 applyEmployeePermissions() called!');
   console.log('═══════════════════════════════════════════════');
   console.log('User Type:', userType);
   console.log('Raw permissions string:', localStorage.getItem('am_permissions'));
-  
+
   // If admin, show everything
   if(userType === 'admin') {
     console.log('✅ Admin user - showing all sections');
     return;
   }
-  
+
   // If employee, check permissions
   if(userType === 'employee') {
     try {
       const permissions = JSON.parse(localStorage.getItem('am_permissions') || '{}');
-      
+
       console.log('📋 PERMISSIONS OBJECT:');
       console.table(permissions);
       console.log('Permission keys:', Object.keys(permissions));
       console.log('Total permissions:', Object.keys(permissions).length);
-      
+
       // Check each permission individually
       console.log('\n🔍 CHECKING EACH PERMISSION:');
       console.log('  crm:', permissions.crm);
@@ -4038,12 +4040,12 @@ function applyEmployeePermissions() {
       console.log('  projects:', permissions.projects);
       console.log('  portfolio:', permissions.portfolio);
       console.log('  dashboard:', permissions.dashboard);
-      
+
       // WARNING if no permissions
       if(Object.keys(permissions).length === 0) {
         console.error('⚠️⚠️⚠️ WARNING: Employee has NO permissions! ⚠️⚠️⚠️');
       }
-      
+
       // ==================== HIDE RESTRICTED ITEMS ====================
       // 1. Hide Meta Pixel link (always hidden for employees)
       const pixelLink = document.querySelector('a[href="pixel-settings.html"]');
@@ -4051,7 +4053,7 @@ function applyEmployeePermissions() {
         pixelLink.style.display = 'none';
         console.log('🔒 Hidden: Meta Pixel settings (always hidden for employees)');
       }
-      
+
       // 2. Hide settings and students sections (always hidden for employees)
       const settingsItem = document.querySelector('.adm-nav-item[onclick*="showSection(\'settings\')"]');
       const studentsItem = document.querySelector('.adm-nav-item[onclick*="showSection(\'students\')"]');
@@ -4063,15 +4065,15 @@ function applyEmployeePermissions() {
         studentsItem.style.display = 'none';
         console.log('🔒 Hidden: Students section (always hidden for employees)');
       }
-      
+
       // ==================== APPLY PERMISSION-BASED VISIBILITY ====================
       // Hide ALL navigation items first, then show only allowed ones
       const allNavItems = document.querySelectorAll('.adm-nav-item[onclick*="showSection"]');
-      
+
       allNavItems.forEach(item => {
         const onclickAttr = item.getAttribute('onclick');
         let shouldShow = false;
-        
+
         // Check each permission
         if(permissions.dashboard && onclickAttr.includes("'dashboard'")) {
           shouldShow = true;
@@ -4095,29 +4097,29 @@ function applyEmployeePermissions() {
         else if(permissions.courses && (onclickAttr.includes("'lectures'") || onclickAttr.includes("'live'") || onclickAttr.includes("'recorded'"))) {
           shouldShow = true;
         }
-        
+
         // Always hide students and settings for employees
         if(onclickAttr.includes("'students'") || onclickAttr.includes("'settings'")) {
           shouldShow = false;
         }
-        
+
         // Apply visibility
         item.style.display = shouldShow ? '' : 'none';
         if(!shouldShow) {
           console.log('🔒 Hidden:', onclickAttr);
         }
       });
-      
+
       // ==================== HIDE QUICK ACTIONS BUTTONS ====================
       console.log('\n🎯 Filtering Quick Actions buttons...');
       const qaButtons = document.querySelectorAll('.qa-btn');
-      
+
       qaButtons.forEach(btn => {
         const isAdminOnly = btn.getAttribute('data-admin-only') === 'true';
         const requiredPermission = btn.getAttribute('data-permission');
-        
+
         let shouldShow = true;
-        
+
         // If admin-only, hide for employees
         if (isAdminOnly) {
           shouldShow = false;
@@ -4132,10 +4134,10 @@ function applyEmployeePermissions() {
             console.log(`✅ Showing Quick Action (has ${requiredPermission} permission):`, btn.textContent.trim());
           }
         }
-        
+
         btn.style.display = shouldShow ? '' : 'none';
       });
-      
+
       // ==================== SHOW FIRST ALLOWED SECTION ====================
       // Show first allowed section
       const firstVisible = document.querySelector('.adm-nav-item[onclick*="showSection"]:not([style*="display: none"])');
@@ -4158,14 +4160,14 @@ function applyEmployeePermissions() {
             </button>
           </div>`;
       }
-      
+
       // ==================== RE-ATTACH MOBILE HANDLERS ====================
       // Re-attach handlers after hiding/showing elements
       if (typeof attachMobileSidebarHandlers === 'function') {
         attachMobileSidebarHandlers();
         console.log('✅ Mobile sidebar handlers re-attached');
       }
-      
+
     } catch(e) {
       console.error('❌ Error applying permissions:', e);
     }
@@ -4175,7 +4177,7 @@ function applyEmployeePermissions() {
 // 🚪 Logout function
 function logoutUser() {
   if(!confirm('هل تريد تسجيل الخروج؟')) return;
-  
+
   // Clear all auth data
   localStorage.removeItem('am_admin_auth');
   localStorage.removeItem('am_employee_auth');
@@ -4184,7 +4186,7 @@ function logoutUser() {
   localStorage.removeItem('am_username');
   localStorage.removeItem('am_employee_type');
   localStorage.removeItem('am_permissions');
-  
+
   // Reload page to show login screen
   window.location.reload();
 }
@@ -4193,27 +4195,31 @@ function showSection(name){
   console.log('🔄 showSection() called with:', name);
   document.querySelectorAll('.adm-section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.adm-nav-item').forEach(n=>n.classList.remove('active'));
-  
+
   const targetSection = document.getElementById('sec-'+name);
   if (!targetSection) {
     console.error('❌ Section not found: sec-' + name);
     return;
   }
-  
+
   targetSection.classList.add('active');
   console.log('✅ Section activated:', 'sec-' + name);
-  
+
   document.querySelectorAll('.adm-nav-item').forEach(item=>{
     if(item.getAttribute('onclick')&&item.getAttribute('onclick').includes("'"+name+"'")) item.classList.add('active');
   });
-  
+
   // Close sidebar on mobile after selection
   if(window.innerWidth <= 768){
     setTimeout(()=>{ closeAdminSidebar(); }, 150);
   }
-  
+
   // Scroll to top of main content
   document.querySelector('.adm-main').scrollTop = 0;
+
+  if(name === 'lectures'){
+    try{ initLecturesSection(); }catch(e){}
+  }
 }
 
 function renderDashboard(){
@@ -4284,7 +4290,7 @@ function renderMobilePrices(){
 function renderProductCard(key, p, price, mainImg, allImgs, type){
   const hasPrice = price && Number(price) > 0;
   const hasImg = mainImg && mainImg.length > 0;
-  
+
   return `<div class="project-card" data-key="${key}" data-type="${type}">
     <div class="project-card-header">
       <div class="project-icon" style="background:${p.color}"><i class="${p.icon}"></i></div>
@@ -4297,7 +4303,7 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
       <!-- منطقة رفع صورة الغلاف -->
       <input type="file" id="fileInput-${key}" accept="image/*" style="display:none" onchange="handleFileSelect(event,'${key}','${type}')">
       <div class="product-img-zone ${hasImg?'has-img':''}" id="imgZone-${key}"
-           ondragover="handleDragOver(event,'${key}')" 
+           ondragover="handleDragOver(event,'${key}')"
            ondragleave="handleDragLeave(event,'${key}')"
            ondrop="handleDrop(event,'${key}')">
         ${hasImg ? `
@@ -4314,7 +4320,7 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
           </label>
         `}
       </div>
-      
+
       <!-- معرض الصور الإضافية -->
       ${allImgs.length > 0 ? `
       <div class="gallery-section">
@@ -4337,7 +4343,7 @@ function renderProductCard(key, p, price, mainImg, allImgs, type){
         </div>
       </div>
       `}
-      
+
       <!-- خانة السعر -->
       <div class="price-row">
         <div class="price-input-wrap">
@@ -4375,7 +4381,7 @@ function handleDrop(e, key){
   e.preventDefault(); e.stopPropagation();
   const zone = document.getElementById('imgZone-'+key);
   zone.classList.remove('dragover');
-  
+
   const files = e.dataTransfer.files;
   if(files.length > 0 && files[0].type.startsWith('image/')){
     processImageFile(files[0], key);
@@ -4399,18 +4405,18 @@ function compressImage(file, maxWidth = 800, quality = 0.7){
         const canvas = document.createElement('canvas');
         let width = img.width;
         let height = img.height;
-        
+
         // تصغير الأبعاد مع الحفاظ على النسبة
         if(width > maxWidth){
           height = (height * maxWidth) / width;
           width = maxWidth;
         }
-        
+
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
-        
+
         // تحويل لـ base64 مع ضغط الجودة
         const compressed = canvas.toDataURL('image/jpeg', quality);
         resolve(compressed);
@@ -4428,9 +4434,9 @@ function processImageFile(file, key){
     toast('⚠️ حجم الصورة كبير جداً (أقصى 5MB)', 'error');
     return;
   }
-  
+
   toast('جاري ضغط وحفظ الصورة...', 'info');
-  
+
   // ضغط الصورة أولاً
   compressImage(file, 800, 0.7).then(compressedBase64 => {
     // تحديث الـ preview محلياً فوراً
@@ -4438,7 +4444,7 @@ function processImageFile(file, key){
     if(previewEl){ previewEl.src = compressedBase64; previewEl.style.display=''; }
     const zone = document.getElementById('imgZone-'+key);
     if(zone) zone.classList.add('has-img');
-    
+
     // حفظ الصورة المضغوطة في Firestore
     saveProductImage(key, compressedBase64);
     toast('تم حفظ الصورة ✓', 'success');
@@ -4451,13 +4457,13 @@ function processImageFile(file, key){
 async function uploadAvatarFile(input){
   const file = input.files[0];
   if(!file) return;
-  if(file.size > 5*1024*1024){ 
-    toast('حجم الصورة أكبر من 5MB','error'); 
-    return; 
+  if(file.size > 5*1024*1024){
+    toast('حجم الصورة أكبر من 5MB','error');
+    return;
   }
-  
+
   toast('جاري ضغط الصورة...', 'info');
-  
+
   // ضغط صورة الـ avatar
   compressImage(file, 400, 0.8).then(compressedBase64 => {
     document.getElementById('f-avatar').value = compressedBase64;
@@ -4473,11 +4479,11 @@ async function uploadAvatarFile(input){
 function saveProductImage(key, imageData){
   const portfolio = getPortfolio();
   if(!portfolio[key]) portfolio[key] = [];
-  
+
 // إضافة الصورة في المقدمة (صورة الغلاف)
   portfolio[key].unshift(imageData);
   savePortfolio(portfolio);
-  
+
   // تحديث العرض
   const card = document.querySelector(`[data-key="${key}"]`);
   if(card){
@@ -4485,39 +4491,39 @@ function saveProductImage(key, imageData){
     if(type === 'web') renderWebPrices();
     else renderMobilePrices();
   }
-  
+
   updateBadges();
   toast('تم رفع صورة الغلاف بنجاح ✓', 'success');
 }
 
 function deleteMainImage(key, type){
 if(!confirm('هل تريد حذف هذه الصورة؟')) return;
-  
+
   const portfolio = getPortfolio();
   if(portfolio[key] && portfolio[key].length > 0){
     portfolio[key].shift(); // حذف صورة الغلاف
     savePortfolio(portfolio);
   }
-  
+
   if(type === 'web') renderWebPrices();
   else renderMobilePrices();
-  
+
   updateBadges();
   toast('تم الحذف بنجاح', 'success');
 }
 
 function removeGalleryImage(key, index, type){
   if(!confirm('هل تريد حذف هذه الصورة؟')) return;
-  
+
   const portfolio = getPortfolio();
   if(portfolio[key]){
     portfolio[key].splice(index, 1);
     savePortfolio(portfolio);
   }
-  
+
   if(type === 'web') renderWebPrices();
   else renderMobilePrices();
-  
+
   updateBadges();
   toast('تم الحذف بنجاح', 'success');
 }
@@ -4566,7 +4572,7 @@ function renderJoinRequests(filter){
   console.log('  - Total requests from getJoinRequests():', reqs.length);
   const filtered = filter==='all' ? reqs : reqs.filter(r=>r.status===filter);
   console.log('  - Filtered requests:', filtered.length);
-  const grid = document.getElementById('reqCardsGrid'); 
+  const grid = document.getElementById('reqCardsGrid');
   if(!grid) {
     console.warn('⚠️ reqCardsGrid element not found!');
     return;
@@ -4632,49 +4638,49 @@ function approveReq(id){
     return;
   }
   console.log('📋 Request data:', r);
-  
+
   // create student user
   const users = getUsers();
   console.log('👥 Current users count:', users.length);
-  
+
   const exists = users.find(u=>u.username===r.username||u.email===r.email);
-  if(exists && r.status!=='approved'){ 
+  if(exists && r.status!=='approved'){
     console.warn('⚠️ User already exists:', exists);
-    toast('يوجد مستخدم بنفس البيانات مسبقاً','error'); 
-    return; 
+    toast('يوجد مستخدم بنفس البيانات مسبقاً','error');
+    return;
   }
-  
+
   if(r.status!=='approved'){
     const newId = genStudentId();
     console.log('🆔 Generated new student ID:', newId);
-    
-    const newStudent = { 
-      id:newId, 
-      name:r.name, 
-      username:r.username, 
-      password:r.password, 
-      email:r.email, 
-      phone:r.phone, 
-      type:'student', 
-      level:'مبتدئ', 
-      courses:(r.courses||[]), 
-      field:r.field||'', 
-      createdAt:r.createdAt 
+
+    const newStudent = {
+      id:newId,
+      name:r.name,
+      username:r.username,
+      password:r.password,
+      email:r.email,
+      phone:r.phone,
+      type:'student',
+      level:'مبتدئ',
+      courses:(r.courses||[]),
+      field:r.field||'',
+      createdAt:r.createdAt
     };
-    
+
     console.log('👤 New student object:', newStudent);
     users.push(newStudent);
-    
+
     console.log('💾 Calling saveUsers...');
     saveUsers(users);
-    
+
     r.approvedId = newId;
     setTimeout(()=>{
       alert('✅ تمت الموافقة على الطالب\n\n👤 الاسم: '+r.name+'\n🆔 الرقم التعريفي: '+newId+'\n👤 اسم المستخدم: '+(r.username||'—')+'\n🔒 كلمة المرور: '+(r.password||'—')+'\n\n📲 ابعت للطالب:\nالرقم التعريفي: '+newId+'\nاسم المستخدم: '+(r.username||'—')+'\nكلمة المرور: '+(r.password||'—')+'\n\n✔️ يدخل بـ اسم المستخدم أو الرقم التعريفي + كلمة المرور');
     },300);
   }
-  
-  r.status='approved'; 
+
+  r.status='approved';
   r.reviewedAt=Date.now();
   console.log('💾 Calling saveJoinRequests...');
   saveJoinRequests(reqs);
@@ -4860,13 +4866,13 @@ function submitGalleryImages(){
     if(!_galFiles.length){ toast('اختر صورة أولاً', 'error'); return; }
     const portfolio = getPortfolio();
     if(!portfolio[key]) portfolio[key] = [];
-    
+
     // Warn if portfolio is getting large
     const currentSize = JSON.stringify(portfolio).length;
     if (currentSize > 3 * 1024 * 1024) {
       toast('⚠️ البيانات كبيرة جداً! استخدم روابط URL بدلاً من رفع ملفات', 'warning');
     }
-    
+
     let loaded = 0, added = 0;
     const total = _galFiles.length;
 
@@ -4938,19 +4944,19 @@ function finishGalSave(portfolio, key, type, count){
 function saveProductData(key, type){
   const val = document.getElementById('price-'+key).value.trim();
   const prices = getAppPrices();
-  
+
   if(val === '' || isNaN(val) || Number(val) < 0){
     delete prices[key];
   } else {
     prices[key] = Number(val);
   }
-  
+
   const apps = type === 'web' ? WEB_APPS : MOBILE_APPS;
   saveAppPrices(prices);
-  
+
   if(type === 'web') renderWebPrices();
   else renderMobilePrices();
-  
+
 toast('تم حفظ بيانات ' + apps[key].name + ' بنجاح ✓', 'success');
 }
 
@@ -4967,39 +4973,39 @@ async function renderUsers(type){
   if(type === 'employee'){
     // For employees: Load from Supabase (approved employees only)
     const grid = document.getElementById('employeesGrid');
-    
+
     try {
       const { data: employees, error } = await _supabase
         .from('employees')
         .select('*')
         .eq('application_status', 'approved')
         .order('created_at', { ascending: false });
-      
+
       if (error) {
         console.error('Supabase error:', error);
         throw error;
       }
-      
+
       const users = employees || [];
-      
+
       if(!users.length){
         grid.innerHTML=`<div class="no-users-msg" style="grid-column:1/-1"><div><i class="fas fa-user-tie"></i></div><p>لا يوجد موظف بعد</p><button class="btn-add-user" onclick="addEmployeeWithOnboarding()" style="margin-top:14px;display:inline-flex;"><i class="fas fa-plus"></i> إضافة موظف</button></div>`;
         return;
       }
-      
+
       grid.innerHTML=users.map(u=>{
         const avatarBg='linear-gradient(135deg,#3b82f6,#6366f1)';
         const initial=(u.full_name || u.username || '?').charAt(0);
-        const avatarHtml = u.selfie_url ? 
+        const avatarHtml = u.selfie_url ?
           `<img class="user-avatar" src="${u.selfie_url}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="user-avatar-placeholder" style="background:${avatarBg};display:none">${initial}</div>` :
           `<div class="user-avatar-placeholder" style="background:${avatarBg}">${initial}</div>`;
-        
-        const empTypeBadge = u.employee_type === 'permanent' ? 
-          '<span style="background:#22c55e;color:#fff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;margin-right:6px;"><i class="fas fa-user-check"></i> دائم</span>' : 
+
+        const empTypeBadge = u.employee_type === 'permanent' ?
+          '<span style="background:#22c55e;color:#fff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;margin-right:6px;"><i class="fas fa-user-check"></i> دائم</span>' :
           '<span style="background:#3b82f6;color:#fff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;margin-right:6px;"><i class="fas fa-file-signature"></i> تعاقد</span>';
-        
+
         const sub = (u.job_title || 'موظف') + ' ' + empTypeBadge;
-        
+
         return `<div class="user-card"><div class="user-card-header">${avatarHtml}<div><div class="user-card-name">${u.full_name || u.username}</div><div class="user-card-sub">${sub}</div></div></div>
           <div class="user-card-body"><div class="user-card-info">
             <div class="user-info-row"><i class="fas fa-user"></i><span>اسم الدخول: ${u.username}</span></div>
@@ -5013,15 +5019,15 @@ async function renderUsers(type){
             <button class="btn-sm btn-sm-danger" onclick="deleteEmployeeRequest('${u.id}')"><i class="fas fa-trash"></i></button>
           </div></div></div>`;
       }).join('');
-      
+
     } catch(error){
       console.error('Error loading employees:', error);
       grid.innerHTML = `<div class="no-users-msg" style="grid-column:1/-1"><div><i class="fas fa-exclamation-triangle"></i></div><p>حدث خطأ في تحميل الموظفين</p></div>`;
     }
-    
+
     return;
   }
-  
+
   // For students: Keep using localStorage (old system)
   const users=getUsers().filter(u=>u.type===type);
   const grid=document.getElementById('studentsGrid');
@@ -5148,6 +5154,8 @@ function toast(msg,type='success'){
 const LECTURES_KEY = 'am_lectures';
 const LEC_COURSES = [
   {key:'april-2026',  name:'كورس التسويق – أبريل',    icon:'fa-calendar-alt'},
+  {key:'free',        name:'كورس التسويق الاحترافي',  icon:'fa-graduation-cap'},
+  {key:'pro-marketing', name:'كورس التسويق الاحترافي المتقدم', icon:'fa-rocket'},
 ];
 
 let activeLecCourse = null;
@@ -5162,6 +5170,9 @@ function getDefaultAprilLectures(){
   const ts = Date.now();
   const sl=(id,type,src,title,notes)=>({id,type,src,title,notes});
   return [
+    { id:'lec_april_1', title:'الحصة 1: الهوية البصرية ومكونات البوست والأدوات المستخدمة', description:'دليل شامل لعمل الهوية البصرية وتصميم المحتوى باستخدام أقوى الأدوات الاحترافية', createdAt:ts, updatedAt:ts, slides:[
+      sl('apr1_0','html','/images/slides/Gemini_Generated_Image_qsb5twqsb5twqsb5.png','🎯 مرحباً بك في كورس التسويق الاحترافي - أبريل 2026','🎉 أهلاً وسهلاً بكم في أول محاضرة من كورس التسويق الاحترافي لشهر أبريل 2026!')
+    ]},
     { id:'lec_april_2', title:'الحصة 2: استراتيجية المحتوى وخطة النشر الشهرية', description:'تعلم بناء خطة محتوى شهرية احترافية وأسرار الإعلانات الناجحة وتحليل الأداء', createdAt:ts, updatedAt:ts, slides:[
       sl('s2a_0','html','/images/slides/lec2-01.html','🚀 مرحباً بك في الحصة الثانية','🎉 أهلاً وسهلاً بكم في الحصة الثانية من كورس التسويق الاحترافي!\n\n📚 في المحاضرة السابقة تعلمنا:\n✅ الهوية البصرية ومكوناتها\n✅ أدوات التصميم (Canva + Gemini)\n✅ مكونات البوست الاحترافي\n✅ أدوات تنظيم المشاريع\n\n🎯 في هذه المحاضرة سنتعلم:\n1️⃣ بناء استراتيجية محتوى شاملة\n2️⃣ أنواع المحتوى الأكثر تفاعلاً\n3️⃣ إنشاء تقويم محتوى شهري (Content Calendar)\n4️⃣ أفضل أوقات النشر على كل منصة\n5️⃣ قاعدة 80/20 في المحتوى\n6️⃣ أساسيات الإعلانات المدفوعة\n7️⃣ قراءة وتحليل الإحصائيات (Insights)\n8️⃣ خطة عمل عملية جاهزة للتنفيذ'),
       sl('s2a_1','html','/images/slides/lec2-02.html','📊 استراتيجية المحتوى - الأساس لكل نجاح','🌟 استراتيجية المحتوى (Content Strategy) هي الخطة الشاملة التي تحدد: ماذا تنشر، لمن تنشر، متى تنشر، وأين تنشر.\n\n📌 الأركان الخمسة:\n\n1️⃣ تحديد الجمهور المستهدف:\n• مين العميل المثالي؟ (العمر، الجنس، الموقع)\n• إيه المشاكل اللي بيعاني منها؟\n• فين بيقضي وقته أونلاين؟\n💡 اطلب من Gemini: "ساعدني أعمل Buyer Persona لعميل مثالي في مجال [مجالك]"\n\n2️⃣ تحديد أهداف SMART:\n• S - محددة | M - قابلة للقياس | A - قابلة للتحقيق | R - مرتبطة | T - محددة بوقت\n\n3️⃣ اختيار المنصات المناسبة:\n• فيسبوك: كل الأعمار | انستجرام: بصري 18-35 | تيك توك: Gen Z\n💡 ابدأ بمنصة أو اثنتين وأتقنهم\n\n4️⃣ أعمدة المحتوى (Content Pillars):\nالمواضيع الرئيسية اللي هتدور حواليها محتواك\n\n5️⃣ نبرة الصوت (Tone of Voice):\nاختر نبرة واحدة والتزم بها'),
@@ -5187,18 +5198,13 @@ function getDefaultAprilLectures(){
 
 async function seedAprilLectures(){
   try {
-    const all = getLectures();
-    const existing = all['april-2026']||[];
-    if(existing.length >= 1) return;
-    all['april-2026'] = getDefaultAprilLectures();
-    _fsLectures = Object.assign({}, all);
-    try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(all)); }catch(e){}
-    _fdb.collection('admin_data').doc('lectures').set({data:all, updatedAt:Date.now()})
-      .catch(e=>console.warn('FS seed april lectures:', e));
+    await seedLectureCourse('april-2026', getDefaultAprilLectures);
+    await seedLectureCourse('free', getDefaultFreeLectures);
+    await seedLectureCourse('pro-marketing', getDefaultProLectures);
     updateBadges();
     try{ initLecturesSection(); }catch(e){}
-    if(activeLecCourse === 'april-2026'){ try{ renderLecList('april-2026'); }catch(e){} }
-    console.log('✅ April 2026 course lectures seeded successfully');
+    if(activeLecCourse){ try{ renderLecList(activeLecCourse); }catch(e){} }
+    console.log('✅ Default lecture courses seeded successfully');
   } catch(e){ console.warn('April seed failed:', e); }
 }
 
@@ -5221,6 +5227,53 @@ function compressImg(src, maxW, quality){
   });
 }
 
+function getDefaultFreeLectures(){
+  const ts = Date.now();
+  const sl=(id,type,src,title,notes)=>({id,type,src,title,notes});
+  return [
+    { id:'lec_free_002', title:'المحاضرة 2: مكونات صفحة الويب والاستضافة', description:'شرح مبسط لمكونات صفحة الويب وكيفية رفع الموقع بشكل احترافي ومجاني', createdAt:ts, updatedAt:ts, slides:[
+      sl('fs02_1','html','/images/free-course-cover.html','🌐 مكونات صفحة الويب والاستضافة','شرح مبسط لمكونات صفحة الويب وكيفية رفع الموقع بشكل احترافي ومجاني')
+    ]}
+  ];
+}
+
+function getDefaultProLectures(){
+  const ts = Date.now();
+  const sl=(id,type,src,title,notes)=>({id,type,src,title,notes});
+  return [
+    { id:'lec_pro_1', title:'الوحدة 1: الهوية البصرية الاحترافية', description:'من اللوجو والألوان لحد ما تملك Brand كامل يميزك عن المنافسين', createdAt:ts, updatedAt:ts, slides:[
+      sl('pro1_0','html','/images/slides/lecpro1-01.html','🎨 الهوية البصرية الاحترافية','من اللوجو والألوان لحد ما تملك Brand كامل يميزك عن المنافسين')
+    ]},
+    { id:'lec_pro_2', title:'الوحدة 2: إنشاء المنصات وتفعيلها', description:'فيسبوك · إنستجرام · تيك توك · واتساب بيزنس — كيف تُنشئهم باحتراف؟', createdAt:ts, updatedAt:ts, slides:[
+      sl('pro2_0','html','/images/slides/lecpro2-01.html','📱 إنشاء المنصات وتفعيلها','فيسبوك · إنستجرام · تيك توك · واتساب بيزنس — كيف تُنشئهم باحتراف؟')
+    ]},
+    { id:'lec_pro_3', title:'الوحدة 3: ربط المنصات ببعضها', description:'نظام واحد يتحكم في كل حساباتك — قوة التكامل الرقمي', createdAt:ts, updatedAt:ts, slides:[
+      sl('pro3_0','html','/images/slides/lecpro3-01.html','🔗 ربط المنصات ببعضها','نظام واحد يتحكم في كل حساباتك — قوة التكامل الرقمي')
+    ]},
+    { id:'lec_pro_4', title:'الوحدة 4: التسويق الاحترافي', description:'محتوى يبيع · إعلانات مضبوطة · تحليل النتائج · Scale Up', createdAt:ts, updatedAt:ts, slides:[
+      sl('pro4_0','html','/images/slides/lecpro4-01.html','📣 التسويق الاحترافي','محتوى يبيع · إعلانات مضبوطة · تحليل النتائج · Scale Up')
+    ]},
+    { id:'lec_pro_5', title:'الوحدة 5: موقعك بالذكاء الاصطناعي', description:'بدون برمجة · بدون مصمم · موقع احترافي جاهز في ساعات', createdAt:ts, updatedAt:ts, slides:[
+      sl('pro5_0','html','/images/slides/lecpro5-01.html','🌐 موقعك بالذكاء الاصطناعي','بدون برمجة · بدون مصمم · موقع احترافي جاهز في ساعات')
+    ]},
+    { id:'lec_pro_6', title:'الوحدة 6: التسويق متعدد المنصات', description:'كل المنصات تشتغل معاً بنظام واحد — أقصى وصول وأعلى مبيعات', createdAt:ts, updatedAt:ts, slides:[
+      sl('pro6_0','html','/images/slides/lecpro6-01.html','🚀 التسويق متعدد المنصات','كل المنصات تشتغل معاً بنظام واحد — أقصى وصول وأعلى مبيعات')
+    ]}
+  ];
+}
+
+async function seedLectureCourse(courseKey, getDefaultFn){
+  try {
+    const all = getLectures();
+    if((all[courseKey]||[]).length) return;
+    all[courseKey] = getDefaultFn();
+    _fsLectures = Object.assign({}, all);
+    try{ localStorage.setItem(LECTURES_KEY, JSON.stringify(all)); }catch(e){}
+    _fdb.collection('admin_data').doc('lectures').set({data:all, updatedAt:Date.now()})
+      .catch(e=>console.warn('FS seed lectures:', e));
+  } catch(e){ console.warn('Seed lecture course failed:', e); }
+}
+
 // ─── ADD 5 NEW LECTURES ────────────────────────────────────────
 async function addNew5Lectures(){
   if(!confirm('🗑️ هل تريد استبدال جميع محاضرات Facebook Ads بالمحاضرات الجديدة؟\n\n⚠️ سيتم حذف المحاضرات القديمة واستبدالها بـ:\n1. إنشاء صفحة Facebook (صور + شرح كامل)\n2. تصميم الهوية البصرية (صور + أدوات AI)\n3. كتابة البوستات (صور + أمثلة واقعية)\n4. إنشاء موقع بالذكاء (صور + 3 طرق)\n5. Meta Business Manager (صور + حملة كاملة)\n\n✨ المحاضرات الجديدة تحتوي على:\n• 24 صورة احترافية من Unsplash\n• 12,300 كلمة شرح تفصيلي\n• أمثلة عملية وواجبات')){
@@ -5237,9 +5290,9 @@ async function addNew5Lectures(){
       duration: 90,
       order: 1,
       slides: [
-        { 
-          type: 'text', 
-          title: '🎓 مرحباً بك في دورة التسويق الاحترافي', 
+        {
+          type: 'text',
+          title: '🎓 مرحباً بك في دورة التسويق الاحترافي',
           label: 'المقدمة والأهداف',
           caption: `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🌟 مرحباً بك في الحصة الأولى - البداية الحقيقية!
@@ -5315,7 +5368,7 @@ async function addNew5Lectures(){
 
 🚀 خلينا نبدأ الرحلة!`
         },
-        { 
+        {
           type: 'text',
           title: '🤔 الفرق بين الحساب الشخصي وصفحة الأعمال',
           label: 'مقارنة تفصيلية',
@@ -5426,9 +5479,9 @@ async function addNew5Lectures(){
 
 2️⃣ اكتب في شريط العنوان:
    🔗 facebook.com/pages/create
-   
+
    أو
-   
+
    • اذهب لصفحتك الشخصية
    • اضغط "Create" (في القائمة العلوية)
    • اختر "Page"
@@ -5668,7 +5721,7 @@ Facebook سيسألك عن نوع نشاطك. هذا مهم جداً للظهو�
 📏 المقاس المثالي:
    • Desktop: 820 × 312 بكسل
    • Mobile: 640 × 360 بكسل
-   
+
 📏 النسبة: 2.7:1 تقريباً
 📏 الحجم الأقصى: 10 ميجابايت
 📏 الصيغة: PNG أو JPG
@@ -5985,7 +6038,7 @@ Cover: صورة فيلا فخمة + أرقام التواصل
       • ماء
       • غاز
       • تليفون أرضي
-   
+
    ⚠️ الوثيقة يجب أن:
    • حديثة (آخر 3 أشهر للفواتير)
    • واضحة تماماً (Scan بجودة عالية أو PDF)
@@ -5997,7 +6050,7 @@ Cover: صورة فيلا فخمة + أرقام التواصل
    ✅ تغطية إخبارية (News Coverage)
    ✅ مقابلة في موقع إخباري معروف
    ✅ ذكر في Wikipedia
-   
+
    ⚠️ المقال يجب أن:
    • من مصدر موثوق (جريدة معروفة، موقع إخباري)
    • ليس إعلان مدفوع
@@ -6401,25 +6454,25 @@ Cover: صورة فيلا فخمة + أرقام التواصل
           label: 'ربط المنصات',
           caption: '━━━━━━━━━━━━━━━━━━━━\n📱 ربط Instagram خطوة بخطوة:\n━━━━━━━━━━━━━━━━━━━━\n\n🔹 المرحلة الأولى: تحويل Instagram لـ Business\n\n1️⃣ افتح تطبيق Instagram على موبايلك\n\n2️⃣ اذهب إلى Settings (الإعدادات):\n   • Profile → Menu (3 خطوط)\n   • Settings → Account → Switch Account Type\n\n3️⃣ اختر "Switch to Professional Account"\n\n4️⃣ اختر "Business" (وليس Creator)\n\n5️⃣ اختر Category (نفس فئة Facebook)\n\n6️⃣ اضغط Done ✅\n\n━━━━━━━━━━━━━━━━━━━━\n🔗 المرحلة الثانية: الربط مع Facebook\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ من صفحة Facebook:\n   • Settings (الإعدادات)\n   • Instagram\n   • Connect Instagram Account\n\n2️⃣ سيفتح نافذة Instagram:\n   • أدخل Username\n   • أدخل Password\n   • Allow (السماح)\n\n3️⃣ تأكيد الربط:\n   • اضغط "Connect Instagram Profile"\n   • Done! 🎉\n\n━━━━━━━━━━━━━━━━━━━━\n✨ الفوائد الحقيقية:\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ نشر متزامن:\n   • اكتب بوست مرة واحدة\n   • ينشر على Facebook + Instagram معاً\n   • توفير وقت هائل!\n\n2️⃣ ردود موحدة:\n   • رسائل Instagram تظهر في Facebook Messenger\n   • رد من مكان واحد\n\n3️⃣ إعلانات موحدة:\n   • حملة إعلانية واحدة\n   • تظهر على المنصتين\n   • استهداف أوسع\n\n4️⃣ Insights مجمّعة:\n   • تحليلات شاملة\n   • قارن الأداء بين المنصتين\n\n💡 ملاحظة:\nيمكنك ربط حساب Instagram واحد فقط بكل صفحة Facebook'
         },
-        { 
+        {
           type: 'text',
           title: 'خطوة 4: ربط WhatsApp Business',
           label: 'زر الاتصال المباشر',
           caption: '━━━━━━━━━━━━━━━━━━━━\n💬 ربط WhatsApp Business:\n━━━━━━━━━━━━━━━━━━━━\n\n🔹 المرحلة 1: تحميل WhatsApp Business\n\n📲 من App Store (iPhone) أو Google Play (Android):\n   • ابحث عن "WhatsApp Business"\n   • حمّل التطبيق الأخضر (ليس الأبيض العادي!)\n\n━━━━━━━━━━━━━━━━━━━━\n🔹 المرحلة 2: إنشاء حساب Business\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ رقم الهاتف:\n   • ⚠️ يجب أن يكون رقم جديد (غير مستخدم في WhatsApp العادي)\n   • أو استخدم رقم ثاني\n   • خيارات:\n     ✅ شريحة جديدة\n     ✅ رقم أرضي\n     ✅ رقم افتراضي (من 2ndLine مثلاً)\n\n2️⃣ ملء البيانات:\n   • اسم النشاط التجاري\n   • الفئة (نفس Facebook)\n   • الوصف (50 كلمة)\n   • ساعات العمل\n   • الموقع الجغرافي\n   • الموقع الإلكتروني\n\n3️⃣ صورة الملف الشخصي:\n   • استخدم نفس Logo من Facebook\n   • للتناسق البصري\n\n━━━━━━━━━━━━━━━━━━━━\n🔹 المرحلة 3: الربط مع Facebook\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ من صفحة Facebook:\n   • Settings → Messaging\n   • WhatsApp\n   • Add Button\n\n2️⃣ أدخل رقم WhatsApp Business:\n   • مع كود الدولة (+20 لمصر)\n   • مثال: +201001234567\n\n3️⃣ اختر نوع الزر:\n   ✅ "Send Message" (إرسال رسالة)\n   أو\n   ✅ "WhatsApp" (واتساب)\n\n4️⃣ اضغط Add Button ✅\n\n━━━━━━━━━━━━━━━━━━━━\n✨ النتيجة النهائية:\n━━━━━━━━━━━━━━━━━━━━\n\n🎯 زر "Send Message" يظهر على صفحتك:\n   • أي زائر يضغط عليه\n   • يفتح WhatsApp مباشرة\n   • رسالة جاهزة: "مرحباً، أريد الاستفسار عن..."\n   • أنت ترد فوراً\n\n📊 الإحصائيات:\n• معدل التحويل يزيد 40% عند إضافة WhatsApp Button\n• 70% من العملاء يفضلون WhatsApp على الاتصال الهاتفي\n\n💡 نصيحة ذهبية:\nفعّل "Auto-Reply" للردود التلقائية:\n"شكراً لتواصلك! سنرد خلال 5 دقائق"'
         },
-        { 
+        {
           type: 'text',
           title: 'خطوة 5: توثيق الصفحة (العلامة الزرقاء)',
           label: 'Badge المصداقية',
           caption: '━━━━━━━━━━━━━━━━━━━━\n🔵 ما هو التوثيق (Verification)؟\n━━━━━━━━━━━━━━━━━━━━\n\nالعلامة الزرقاء (✓) = شارة تؤكد أن:\n✅ صفحتك حقيقية وأصلية\n✅ Meta تحققت من هويتك\n✅ ليست صفحة مزيفة أو منتحلة\n\n━━━━━━━━━━━━━━━━━━━━\n📋 الشروط المطلوبة:\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ عدد المتابعين:\n   • على الأقل 100 متابع حقيقي\n   • يُفضل 500+ للفرصة الأكبر\n\n2️⃣ نشاط منتظم:\n   • نشر 3-5 بوستات أسبوعياً\n   • لمدة شهر على الأقل\n\n3️⃣ بيانات كاملة:\n   • Profile + Cover مكتملة\n   • About Section مليئة\n   • رقم هاتف موثق\n   • موقع إلكتروني (مُفضّل)\n\n4️⃣ رقم هاتف موثق:\n   • مسجل باسمك أو اسم الشركة\n\n5️⃣ عدم انتهاك السياسات:\n   • لا محتوى مخالف\n   • لا انتحال شخصية\n   • لا spam\n\n━━━━━━━━━━━━━━━━━━━━\n📝 كيف تطلب التوثيق:\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ من صفحتك:\n   • Settings → General\n   • Page Verification\n   • "Verify this Page"\n\n2️⃣ اختر طريقة التحقق:\n\n   🔸 الخيار A: رقم الهاتف\n     • أدخل رقم ثابت مسجل باسم الشركة\n     • سيتصلون بك أو يرسلون كود\n\n   🔸 الخيار B: مستند رسمي\n     • ارفع أحد هذه:\n       ✅ فاتورة مرافق (كهرباء، ماء، غاز)\n       ✅ بطاقة ضريبية\n       ✅ سجل تجاري\n       ✅ رخصة العمل\n     • يجب أن تكون:\n       • حديثة (آخر 3 أشهر)\n       • واضحة (PDF أو JPG)\n       • باسم الصفحة أو مالكها\n\n3️⃣ اضغط Submit (إرسال) ✅\n\n4️⃣ انتظر المراجعة:\n   • وقت الرد: 2-7 أيام عمل\n   • ستصلك رسالة بالقبول أو الرفض\n\n━━━━━━━━━━━━━━━━━━━━\n⚠️ ملاحظات مهمة جداً:\n━━━━━━━━━━━━━━━━━━━━\n\n❌ التوثيق غير مضمون:\n   • Meta قد ترفض دون سبب واضح\n   • يمكنك إعادة المحاولة بعد 30 يوم\n\n❌ لا تشتري التوثيق:\n   • أي شخص يعرض "بيع" التوثيق = نصاب\n   • Meta لا تبيع التوثيق أبداً\n   • قد يؤدي لإغلاق صفحتك\n\n✅ البديل: "Grey Verification":\n   • إذا رُفض التوثيق الأزرق\n   • يمكنك الحصول على علامة رمادية\n   • من خلال ربط الصفحة بـ Business Manager\n   • توفر بعض الحماية\n\n💡 نصيحة:\nلا تقلق إذا لم تحصل على التوثيق فوراً.\nالمهم: محتوى قوي + تفاعل حقيقي + مصداقية'
         },
-        { 
+        {
           type: 'text',
           title: 'نصائح احترافية لنجاح صفحتك',
           label: 'Best Practices',
           caption: '━━━━━━━━━━━━━━━━━━━━\n🔥 10 نصائح ذهبية للنجاح:\n━━━━━━━━━━━━━━━━━━━━\n\n1️⃣ انشر بانتظام (Consistency):\n   • 5-7 مرات أسبوعياً (مثالي)\n   • نفس الأوقات يومياً\n   • الأوقات الأفضل في مصر:\n     ✅ 8-10 صباحاً\n     ✅ 1-3 ظهراً\n     ✅ 7-10 مساءً\n\n2️⃣ رد على التعليقات خلال ساعة:\n   • الرد السريع = ثقة العملاء\n   • فعّل الإشعارات\n   • خصص وقت صباحي ومسائي للردود\n\n3️⃣ استخدم Hashtags ذكية:\n   • 3-5 hashtags لكل بوست\n   • امزج بين:\n     #عامة (#marketing #egypt)\n     #متخصصة (#digital_marketing_cairo)\n     #علامتك_الخاصة (#اسم_صفحتك)\n\n4️⃣ شارك محتوى متنوع:\n   📸 صور (60%)\n   🎥 فيديو (30%)\n   📝 نصوص (10%)\n   📖 Stories يومية\n   🎬 Facebook Live أسبوعياً\n\n5️⃣ استخدم Facebook Insights:\n   • راجع الإحصائيات أسبوعياً\n   • ما البوست الأكثر تفاعلاً؟\n   • متى ينشط جمهورك؟\n   • من أين يأتي المتابعون؟\n\n6️⃣ قاعدة 80/20:\n   • 80% محتوى مفيد ومجاني:\n     ✅ نصائح\n     ✅ معلومات\n     ✅ ترفيه\n     ✅ إلهام\n   • 20% فقط بيع مباشر:\n     💰 منتجات\n     💰 عروض\n     💰 خصومات\n\n7️⃣ شغّل Messenger Chatbot:\n   • أدوات مثل ManyChat أو Chatfuel\n   • ردود تلقائية فورية\n   • جمع بيانات العملاء\n   • إرسال عروض تلقائية\n\n8️⃣ اعمل Contests & Giveaways:\n   • مسابقة شهرية:\n     "Like + Comment + Share للدخول في السحب"\n   • جائزة بسيطة (100-200 جنيه)\n   • تفاعل هائل + متابعين جدد\n\n9️⃣ استخدم Facebook Live:\n   • Session أسبوعية (15-30 دقيقة)\n   • أفكار:\n     🎤 Q&A (أسئلة وأجوبة)\n     🎤 Behind the scenes (خلف الكواليس)\n     🎤 Product demo (عرض المنتج)\n     🎤 توعية أو تعليم\n\n🔟 اطلب Reviews من العملاء:\n   • بعد كل عملية بيع:\n     "نسعد بتقييمك على صفحتنا 🌟"\n   • Reviews = مصداقية فورية\n   • احرص على 4.5+ نجوم\n\n━━━━━━━━━━━━━━━━━━━━\n💡 المفتاح السحري:\n━━━━━━━━━━━━━━━━━━━━\n\n🔑 الصبر + الاستمرارية + القيمة الحقيقية\n\n• لا تتوقع 10,000 متابع في أسبوع\n• النمو الطبيعي: 50-200 متابع شهرياً (بدون إعلانات)\n• النمو بالإعلانات: 500-2000 متابع شهرياً\n\n🚀 النجاح يأتي لمن يستمر!'
         },
-        { 
+        {
           type: 'text',
           title: '📝 الواجب المنزلي',
           label: 'تطبيق عملي',
@@ -6434,55 +6487,55 @@ Cover: صورة فيلا فخمة + أرقام التواصل
       duration: 50,
       order: 2,
       slides: [
-        { 
-          type: 'text', 
-          title: 'الحصة الثانية: تصميم الهوية البصرية بالذكاء الاصطناعي', 
+        {
+          type: 'text',
+          title: 'الحصة الثانية: تصميم الهوية البصرية بالذكاء الاصطناعي',
           label: 'Gemini AI + Canva',
           caption: '🎨 في هذه الحصة ستتعلم:\n• ما هي الهوية البصرية وأهميتها\n• اختيار اسم احترافي لعلامتك\n• سيكولوجية الألوان\n• تصميم شعار بـ Gemini AI\n• تحسين الشعار بـ Canva\n• إنشاء Brand Kit كامل'
         },
-        { 
+        {
           type: 'text',
           title: 'ما هي الهوية البصرية؟',
           label: 'المفهوم والأهمية',
           caption: '🎯 التعريف:\nالهوية البصرية = كل ما يُرى من علامتك التجارية\n\n📦 تتكون من:\n1️⃣ الشعار (Logo)\n2️⃣ الألوان الرئيسية\n3️⃣ الخطوط (Fonts)\n4️⃣ الأيقونات والرموز\n5️⃣ الأنماط البصرية (Patterns)\n6️⃣ أسلوب التصوير\n\n💡 لماذا مهمة؟\n✅ تميزك عن المنافسين\n✅ تسهّل التعرّف عليك\n✅ تبني الثقة والمصداقية\n✅ تزيد قيمة العلامة التجارية\n\n📊 إحصائية:\n80% من المستهلكين يتذكرون علامة تجارية من شعارها فقط!'
         },
-        { 
+        {
           type: 'text',
           title: 'خطوة 1: اختيار اسم احترافي',
           label: 'Brand Naming',
           caption: '✍️ معايير الاسم الناجح:\n\n✅ قصير (2-3 كلمات)\n✅ سهل النطق\n✅ سهل التذكر\n✅ له معنى\n✅ Domain متاح (.com)\n\n🔍 كيف تختار:\n1️⃣ اكتب 20 فكرة\n2️⃣ تحقق من التوافر:\n   • namecheckr.com\n   • namechk.com\n3️⃣ اختبر مع 5 أشخاص\n4️⃣ تحقق من Google Search\n5️⃣ احجز الدومين فوراً!\n\n⚠️ تجنب:\n❌ أسماء معقدة\n❌ أرقام وحروف مختلطة\n❌ كلمات سلبية\n❌ تقليد شركات كبرى'
         },
-        { 
+        {
           type: 'text',
           title: 'خطوة 2: سيكولوجية الألوان',
           label: 'Color Psychology',
           caption: '🎨 معاني الألوان:\n\n🔴 الأحمر:\n• طاقة، شغف، إثارة\n• مثال: Coca-Cola, Netflix\n• يجذب الانتباه سريعاً\n\n🔵 الأزرق:\n• ثقة، احترافية، أمان\n• مثال: Facebook, PayPal\n• الأكثر استخداماً (33%)\n\n🟢 الأخضر:\n• نمو، صحة، طبيعة\n• مثال: Starbucks, WhatsApp\n• مثالي للعضوي/Eco\n\n🟡 الأصفر:\n• تفاؤل، سعادة، طاقة\n• مثال: McDonald\'s, IKEA\n• يحفز النشاط\n\n🟣 البنفسجي:\n• فخامة، إبداع، روحانية\n• مثال: Hallmark, Cadbury\n\n⚫ الأسود:\n• فخامة، قوة، أناقة\n• مثال: Nike, Chanel\n\n💡 اختر لونين أساسيين فقط!'
         },
-        { 
+        {
           type: 'text',
           title: 'خطوة 3: تصميم الشعار بـ Gemini AI',
           label: 'AI Logo Generation',
           caption: '🤖 استخدام Gemini (مجاناً):\n\n1️⃣ افتح: gemini.google.com\n\n2️⃣ اكتب Prompt احترافي:\n━━━━━━━━━━━━━━━━━━\n"Create a modern, minimalist logo design concept for [اسم علامتك], a [مجال العمل] business. \n\nStyle: Clean, professional, memorable\nColors: [لونك الأساسي] and [اللون الثانوي]\nMood: [احترافي/إبداعي/عصري]\n\nThe logo should:\n- Work well in small sizes\n- Be versatile (color + black/white versions)\n- Include an icon that represents [فكرة رمزية]\n- Use modern sans-serif typography\n\nProvide 3 different concept directions with detailed descriptions."\n━━━━━━━━━━━━━━━━━━\n\n3️⃣ راجع الأفكار\n4️⃣ اطلب تعديلات\n5️⃣ احفظ الوصف النهائي'
         },
-        { 
+        {
           type: 'text',
           title: 'خطوة 4: تنفيذ الشعار بـ Canva',
           label: 'Canva Design',
           caption: '🎨 التنفيذ على Canva:\n\n1️⃣ افتح canva.com\n\n2️⃣ اختر:\n   • Logo (500x500 px)\n   • أو ابدأ من فارغ\n\n3️⃣ استخدم أدوات Canva:\n   📐 Elements → Shapes\n   🔤 Text → Modern Fonts\n   🎨 Colors → اختر palette\n   ✨ Effects → Shadow, Gradient\n\n4️⃣ صمم 4 نسخ:\n   🟦 ملون (Color)\n   ⚫ أسود (Black)\n   ⚪ أبيض (White)\n   🔲 Icon Only (أيقونة فقط)\n\n5️⃣ حمّل بجودة عالية:\n   • PNG (شفاف)\n   • SVG (متجه)\n   • PDF (طباعة)\n\n💡 نصيحة: استخدم Canva Pro (30 يوم مجاني) للأدوات المتقدمة'
         },
-        { 
+        {
           type: 'text',
           title: 'خطوة 5: إنشاء Brand Kit كامل',
           label: 'Brand Guidelines',
           caption: '📁 محتويات Brand Kit:\n\n1️⃣ اللوجو (4 نسخ):\n   • Logo-Color.png\n   • Logo-Black.png\n   • Logo-White.png\n   • Logo-Icon.png\n\n2️⃣ الألوان:\n   • الأساسي (HEX code)\n   • الثانوي\n   • الخلفية\n   • النص\n\n3️⃣ الخطوط:\n   • العنوان (Heading)\n   • المتن (Body)\n   • الرابط لتحميلها\n\n4️⃣ أمثلة الاستخدام:\n   • بطاقة عمل\n   • غلاف Facebook\n   • ستوري Instagram\n   • ورقة رسمية\n\n5️⃣ ما يُمنع:\n   ❌ تغيير الألوان\n   ❌ تشويه الشعار\n   ❌ إضافة ظلال غريبة\n\n💾 احفظ كل شيء في:\nGoogle Drive → Brand Kit Folder'
         },
-        { 
+        {
           type: 'text',
           title: 'أدوات مساعدة مجانية',
           label: 'Free Tools',
           caption: '🛠️ أدوات تصميم مجانية:\n\n🎨 تصميم الشعار:\n• Canva.com (الأسهل)\n• Figma.com (احترافي)\n• Looka.com (AI)\n• LogoMakr.com (بسيط)\n\n🎨 الألوان:\n• Coolors.co (Color Palettes)\n• Adobe Color (Harmony)\n• Paletton.com (Color Schemes)\n\n✂️ إزالة الخلفية:\n• Remove.bg (ممتاز!)\n• Canva Background Remover\n\n🔤 الخطوط:\n• Google Fonts (مجاني)\n• DaFont.com\n• Font Squirrel\n\n📐 أيقونات:\n• FlatIcon.com\n• Icons8.com\n• Noun Project\n\n🖼️ صور مجانية:\n• Unsplash.com\n• Pexels.com\n• Pixabay.com'
         },
-        { 
+        {
           type: 'text',
           title: '📝 الواجب المنزلي',
           label: 'تطبيق عملي',
@@ -6497,55 +6550,55 @@ Cover: صورة فيلا فخمة + أرقام التواصل
       duration: 55,
       order: 3,
       slides: [
-        { 
-          type: 'text', 
-          title: 'الحصة الثالثة: كتابة البوستات الاحترافية', 
+        {
+          type: 'text',
+          title: 'الحصة الثالثة: كتابة البوستات الاحترافية',
           label: 'Hook + Caption + CTA',
           caption: '✍️ في هذه الحصة ستتعلم:\n• معادلة البوست الناجح\n• كتابة Hook يوقف السكرول\n• صياغة Caption احترافي\n• أنواع Call-to-Action\n• أمثلة حقيقية ناجحة\n• A/B Testing للمحتوى'
         },
-        { 
+        {
           type: 'text',
           title: 'معادلة البوست الناجح',
           label: 'The Winning Formula',
           caption: '🎯 المعادلة الذهبية:\n\n━━━━━━━━━━━━━━━━━━━━\nHook قوي\n     ⬇️\nProblem (المشكلة)\n     ⬇️\nSolution (الحل)\n     ⬇️\nProof (الدليل)\n     ⬇️\nCTA واضح\n━━━━━━━━━━━━━━━━━━━━\n\n📊 لماذا تنجح هذه المعادلة؟\n\n1️⃣ Hook: يوقف السكرول (3 ثواني)\n2️⃣ Problem: يخلق ارتباط عاطفي\n3️⃣ Solution: يقدم قيمة حقيقية\n4️⃣ Proof: يبني الثقة\n5️⃣ CTA: يدفع للعمل\n\n💡 كل عنصر مهم!\nحذف أي جزء = انخفاض ٥٠٪ في التفاعل'
         },
-        { 
+        {
           type: 'text',
           title: 'خطوة 1: Hook الجذاب (السطر الأول)',
           label: 'Stop The Scroll',
           caption: '🎣 4 أنواع Hook قاتلة:\n\n1️⃣ السؤال الصادم:\n"هل تعرف أن 90% من المشاريع تفشل في السنة الأولى؟"\n\n2️⃣ الرقم المذهل:\n"3 ملايين جنيه... من صفحة فيسبوك فقط!"\n\n3️⃣ الاعتراف الجريء:\n"أضعت 50 ألف جنيه قبل أن أتعلم هذا..."\n\n4️⃣ الوعد السريع:\n"احصل على 1000 متابع حقيقي في 7 أيام"\n\n📏 طول Hook المثالي:\n✅ 8-12 كلمة\n✅ سطر واحد فقط\n✅ بدون Emoji في البداية\n\n⚠️ تجنب:\n❌ "مرحباً، أنا..."\n❌ "في هذا البوست سأ..."\n❌ "اليوم سوف نتحدث عن..."'
         },
-        { 
+        {
           type: 'text',
           title: 'خطوة 2: Caption الاحترافي (المتن)',
           label: 'The Body Copy',
           caption: '📝 صياغة Caption ممتاز:\n\n🔹 الطول المثالي:\n• Facebook: 50-150 كلمة\n• Instagram: 125-150 كلمة\n• LinkedIn: 150-300 كلمة\n\n🔹 البنية:\n\n1️⃣ المشكلة (Problem):\n"كل يوم تخسر عملاء محتملين لأن صفحتك غير احترافية..."\n\n2️⃣ الحل (Solution):\n"لكن مع الخطوات الـ 3 البسيطة دي، هتغيّر كل شيء:"\n\n3️⃣ التفاصيل:\n• نقاط واضحة (Bullet Points)\n• خطوات مرقمة\n• أمثلة قصيرة\n\n4️⃣ الدليل (Proof):\n"استخدمت هذه الطريقة مع 50+ عميل، والنتيجة؟"\n"متوسط الزيادة: 300% في التفاعل!"\n\n💡 نصيحة:\nاكتب بلغة سهلة، وكأنك بتتكلم مع صاحبك'
         },
-        { 
+        {
           type: 'text',
           title: 'خطوة 3: Call-to-Action (CTA)',
           label: 'أنواع الـ CTA',
           caption: '🎯 6 أنواع CTA فعّالة:\n\n1️⃣ البيع المباشر:\n"اطلب الآن! العرض ينتهي بعد ساعتين ⏰"\n\n2️⃣ التفاعل:\n"علّق بكلمة YES إذا كنت موافق 👇"\n\n3️⃣ الحفظ:\n"احفظ هذا البوست عشان ترجعله بعدين 💾"\n\n4️⃣ المشاركة:\n"شارك مع صديق محتاج يعرف ده 🔄"\n\n5️⃣ التواصل:\n"ابعتلنا رسالة دلوقتي واحصل على استشارة مجانية 📩"\n\n6️⃣ زيارة الموقع:\n"اضغط الرابط في أول كومنت 🔗"\n\n📏 صياغة CTA مثالية:\n✅ فعل واضح (اطلب، علّق، احفظ)\n✅ حافز قوي (خصم، هدية، محدود)\n✅ سهل التنفيذ (خطوة واحدة)\n✅ emoji مناسب'
         },
-        { 
+        {
           type: 'text',
           title: 'مثال حقيقي كامل: بوست مطعم بيتزا',
           label: 'Real Example',
           caption: '🍕 البوست:\n\n━━━━━━━━━━━━━━━━━━━━\n[HOOK]\n"3 آلاف جنيه شهرياً... ضايعين بسبب غلطة واحدة!"\n\n[PROBLEM]\n"معظم المطاعم بتنشر صور الأكل وبس... وبعدين تستغرب: ليه مفيش طلبات؟ 🤔"\n\n[SOLUTION]\n"السر بسيط:\nالناس مش بتشتري بيتزا... بتشتري الشعور!\n\n✨ نحن في [اسم المطعم]:\n• عجينة طازجة يومياً\n• جبنة موتزاريلا إيطالية 100%\n• توصيل خلال 30 دقيقة أو البيتزا مجاناً!\n\n[PROOF]\n⭐⭐⭐⭐⭐ (تقييم 4.9 من 2,340 عميل)"\n\n[IMAGE: صورة بيتزا ساخنة شهية]\n\n[CTA]\n"اطلب الآن واحصل على خصم 25% 🎁\nالعرض لأول 50 طلب فقط!\n👉 اتصل: 0100-XXX-XXXX\n\n#بيتزا #القاهرة #توصيل"\n━━━━━━━━━━━━━━━━━━━━\n\n📊 لماذا نجح؟\n✅ Hook صادم\n✅ Problem واضح\n✅ Solution مقنع\n✅ Proof (تقييمات)\n✅ CTA عاجل'
         },
-        { 
+        {
           type: 'text',
           title: 'CTA في الصور والفيديو',
           label: 'Visual CTA',
           caption: '🖼️ تصميم CTA بصري:\n\n1️⃣ على الصور:\n━━━━━━━━━━━━━\n[صورة المنتج]\n\nفي الزاوية السفلى:\n🔥 خصم 50% اليوم فقط!\n👉 اطلب الآن: 0100-XXX-XXXX\n━━━━━━━━━━━━━\n\n2️⃣ على الفيديو:\n• CTA في أول 3 ثواني\n• CTA مكتوب في النص\n• CTA صوتي في الفيديو\n• CTA في آخر 5 ثواني\n\n3️⃣ أدوات التصميم:\n• Canva.com (قوالب جاهزة)\n• RemoveBG.com (إزالة الخلفية)\n• Unfold (للستوريز)\n\n📐 مقاسات الصور:\n• Facebook Post: 1200x630\n• Instagram Post: 1080x1080\n• Story: 1080x1920\n\n💡 قاعدة:\nالصورة تجذب، النص يبيع!'
         },
-        { 
+        {
           type: 'text',
           title: 'A/B Testing: اختبر وحسّن',
           label: 'Testing Strategy',
           caption: '🧪 كيف تختبر بوستاتك:\n\n📊 المنهجية:\n\n1️⃣ اكتب نسختين مختلفتين:\n\nVersion A:\nHook: "هل جربت هذه الطريقة من قبل؟"\nCTA: "علّق بكلمة نعم"\n\nVersion B:\nHook: "3 أسرار لن يخبرك بها أحد!"\nCTA: "احفظ البوست الآن"\n\n2️⃣ انشرهم في أوقات مختلفة:\n• A: الأحد 7 مساءً\n• B: الثلاثاء 7 مساءً\n\n3️⃣ قيس النتائج بعد 24 ساعة:\n📈 Reach (الوصول)\n❤️ Engagement (التفاعل)\n💬 Comments (التعليقات)\n🔄 Shares (المشاركات)\n🔗 Clicks (النقرات)\n\n4️⃣ الفائز = النموذج الأساسي\n\n💡 اختبر:\n• Hook مختلف\n• طول Caption\n• نوع CTA\n• وقت النشر\n• نوع الصورة'
         },
-        { 
+        {
           type: 'text',
           title: '📝 الواجب المنزلي',
           label: 'تطبيق عملي',
@@ -6560,55 +6613,55 @@ Cover: صورة فيلا فخمة + أرقام التواصل
       duration: 60,
       order: 4,
       slides: [
-        { 
-          type: 'text', 
-          title: 'الحصة الرابعة: إنشاء موقع بالذكاء الاصطناعي', 
+        {
+          type: 'text',
+          title: 'الحصة الرابعة: إنشاء موقع بالذكاء الاصطناعي',
           label: 'من الصفر في دقائق!',
           caption: '💻 في هذه الحصة ستتعلم:\n• لماذا تحتاج موقع إلكتروني\n• 3 طرق مختلفة بالذكاء الاصطناعي\n• v0.dev (أسهل طريقة)\n• VS Code + Codeium (احترافي)\n• WordPress + AI (مرن)\n• استضافة ونشر الموقع مجاناً'
         },
-        { 
+        {
           type: 'text',
           title: 'لماذا تحتاج موقع إلكتروني؟',
           label: 'الضرورة والفوائد',
           caption: '🌐 5 أسباب قوية:\n\n1️⃣ الملكية الكاملة:\n• Facebook/Instagram يمكن يقفل حسابك\n• الموقع ملكك للأبد\n\n2️⃣ المصداقية:\n• 75% من العملاء يحكمون على مصداقيتك من موقعك\n• موقع احترافي = شركة احترافية\n\n3️⃣ SEO  (محركات البحث):\n• ظهور في جوجل مجاناً\n• عملاء يبحثون عنك بالاسم\n\n4️⃣ التحكم الكامل:\n• تصميم حسب رغبتك\n• لا قيود على المحتوى\n• analytics تفصيلية\n\n5️⃣ البيع المباشر:\n• متجر إلكتروني\n• دفع أونلاين\n• أتمتة كاملة\n\n💰 التكلفة؟\n✅ مجاني 100% (الحلول اللي هنشرحها)\n✅ أو 200-500 جنيه سنوياً (دومين + استضافة)'
         },
-        { 
+        {
           type: 'text',
           title: 'الطريقة 1: v0.dev (الأسهل على الإطلاق)',
           label: 'AI Website in 3 Minutes',
           caption: '⚡ v0.dev (من Vercel):\n\n🎯 المميزات:\n✅ ذكاء اصطناعي كامل\n✅ لا تحتاج برمجة نهائياً\n✅ تصميم احترافي فوري\n✅ responsive (متجاوب مع الموبايل)\n\n📝 الخطوات:\n\n1️⃣ افتح: v0.dev\n\n2️⃣ سجل دخول بـ Google/GitHub\n\n3️⃣ اكتب طلبك بالإنجليزية:\n"Create a modern landing page for [نوع نشاطك] with:\n- Hero section with call-to-action\n- Services/Products section (3 cards)\n- About us section\n- Contact form\n- Footer with social media links\nColors: [ألوانك]\nStyle: modern, clean, professional"\n\n4️⃣ اضغط Generate\n\n5️⃣ انتظر 30 ثانية\n\n6️⃣ عدّل لو محتاج ("Make it more...")\n\n7️⃣ اضغط "Copy Code" أو "Deploy"\n\n💡 مجاني: 10 مواقع شهرياً'
         },
-        { 
+        {
           type: 'text',
           title: 'الطريقة 2: VS Code + Codeium (للمحترفين)',
           label: 'AI Code Completion',
           caption: '👨‍💻 VS Code مع AI:\n\n📥 التحضير:\n\n1️⃣ حمّل VS Code:\n   • code.visualstudio.com\n   • مجاني للأبد\n\n2️⃣ ثبّت Extension:\n   • Codeium (مجاني)\n   • أو GitHub Copilot (10$/شهر)\n\n3️⃣ سجل دخول في الـ Extension\n\n✨ كيف تستخدمه:\n\n1️⃣ أنشئ ملف index.html\n\n2️⃣ اكتب تعليق:\n<!-- Modern landing page for digital marketing agency -->\n\n3️⃣ Codeium يكتب الكود تلقائياً!\n\n4️⃣ اضغط Tab للقبول\n\n5️⃣ كمّل بالتعليقات:\n<!-- Add hero section -->\n<!-- Add services cards -->\n\n💡 يكتب:\n• HTML\n• CSS\n• JavaScript\n• كل شيء!'
         },
-        { 
+        {
           type: 'text',
           title: 'الطريقة 3: WordPress + AI Plugins',
           label: 'الأكثر مرونة',
           caption: '🎨 WordPress مع AI:\n\n🌟 المميزات:\n✅ أسهل في الإدارة\n✅ آلاف القوالب الجاهزة\n✅ Plugins قوية\n✅ مناسب للمدونات والمتاجر\n\n📝 الخطوات:\n\n1️⃣ أنشئ موقع WordPress:\n   • wordpress.com (مجاني)\n   • أو استضافة (Hostinger, Bluehost)\n\n2️⃣ ثبّت AI Plugins:\n   🤖 Elementor AI (بناء صفحات)\n   🤖 AI Engine (محتوى ذكي)\n   🤖 10Web AI Builder (موقع كامل)\n\n3️⃣ استخدم Elementor AI:\n   • اختر قالب\n   • اضغط "Generate with AI"\n   • اكتب وصف قصير\n   • عدّل النتيجة\n\n4️⃣ AI Engine للمحتوى:\n   • كتابة مقالات\n   • ترجمة\n   • SEO optimization\n\n💰 التكلفة:\nمجاني (محدود) أو 50-200 جنيه/شهر'
         },
-        { 
+        {
           type: 'text',
           title: 'الاستضافة والدومين',
           label: 'Hosting & Domain',
           caption: '🌍 رفع الموقع للإنترنت:\n\n1️⃣ استضافة مجانية:\n\n🆓 Vercel (الأفضل):\n• vercel.com\n• رفع مباشر من v0.dev\n• SSL مجاني\n• سريع جداً\n\n🆓 Netlify:\n• netlify.com\n• سهل\n• مناسب للمواقع الثابتة\n\n🆓 GitHub Pages:\n• pages.github.com\n• يحتاج حساب GitHub\n\n2️⃣ استضافة مدفوعة:\n\n💳 Hostinger (20 جنيه/شهر):\n• سريعة\n• دعم عربي\n• WordPress بضغطة\n\n💳 Bluehost (50 جنيه/شهر):\n• موصى بها من WordPress\n• دومين مجاني السنة الأولى\n\n3️⃣ شراء دومين:\n\n🌐 Namecheap.com (80-150 جنيه/سنة)\n🌐 Google Domains (100 جنيه/سنة)\n🌐 GoDaddy (120 جنيه/سنة)\n\n💡 نصيحة:\nابدأ مجاني (Vercel) ← بعد النجاح ← اشتري دومين!'
         },
-        { 
+        {
           type: 'text',
           title: 'نشر موقعك على Vercel',
           label: 'Deployment Steps',
           caption: '🚀 خطوات النشر:\n\n1️⃣ سجل في Vercel:\n   • vercel.com\n   • Sign up بـ GitHub\n\n2️⃣ رفع الموقع:\n\nطريقة A (من v0.dev):\n   • اضغط "Deploy to Vercel"\n   • تم! 🎉\n\nطريقة B (من VS Code):\n   • ارفع الملفات على GitHub\n   • New Project في Vercel\n   • Import من GitHub\n   • Deploy\n\n3️⃣ ربط دومين (اختياري):\n   • Settings → Domains\n   • Add Domain\n   • غيّر DNS عند الشركة\n   • انتظر ساعة\n\n✅ موقعك الآن LIVE:\nyour-site.vercel.app\n\n💡 Vercel يدعم:\n• SSL مجاني (https://)\n• تحديثات تلقائية\n• سرعة عالية (CDN عالمي)'
         },
-        { 
+        {
           type: 'text',
           title: 'SEO الأساسي (تحسين محركات البحث)',
           label: 'Google Ranking',
           caption: '📈 كيف تظهر في جوجل:\n\n1️⃣ Meta Tags (في <head>):\n\n<title>اسم موقعك - وصف قصير</title>\n<meta name="description" content="وصف 150-160 حرف عن خدماتك">\n<meta name="keywords" content="كلمات مفتاحية، تسويق، القاهرة">\n\n2️⃣ Heading Structure:\n\nH1 → عنوان واحد فقط (الأهم)\nH2 → عناوين الأقسام\nH3 → عناوين فرعية\n\n3️⃣ Image Alt Text:\n\n<img src="logo.png" alt="شعار شركة التسويق">\n\n4️⃣ URL البسيطة:\n\n✅ موقعك.com/خدماتنا\n❌ موقعك.com/page?id=123\n\n5️⃣ سرعة الموقع:\n\n• ضغط الصور (TinyPNG.com)\n• استخدام CDN (Vercel)\n• تقليل الـ JavaScript\n\n📊 قيس السرعة:\nPageSpeed Insights (Google)\n\n💡 الهدف: 90+ نقطة'
         },
-        { 
+        {
           type: 'text',
           title: '📝 الواجب المنزلي',
           label: 'تطبيق عملي',
@@ -6623,73 +6676,73 @@ Cover: صورة فيلا فخمة + أرقام التواصل
       duration: 90,
       order: 5,
       slides: [
-        { 
-          type: 'text', 
-          title: 'الحصة الخامسة: Meta Business Manager', 
+        {
+          type: 'text',
+          title: 'الحصة الخامسة: Meta Business Manager',
           label: 'إدارة احترافية شاملة',
           caption: '🎯 في هذه الحصة النهائية:\n• ما هو Business Manager وأهميته\n• إنشاء حساب احترافي\n• إعداد Ad Account\n• فهم أهداف الحملات\n• إطلاق حملتك الأولى\n• الاستهداف الدقيق\n• إدارة الميزانيات\n• قياس النتائج\n• تحسين الأداء\n• أسرار المحترفين'
         },
-        { 
+        {
           type: 'text',
           title: 'ما هو Meta Business Manager؟',
           label: 'التعريف والأهمية',
           caption: '🏢 Business Manager هو:\n\nلوحة تحكم مركزية لـ:\n✅ إدارة صفحات Facebook\n✅ إدارة حسابات Instagram\n✅ إدارة الإعلانات\n✅ إدارة البيكسل\n✅ إدارة الفريق والصلاحيات\n✅ إدارة طرق الدفع\n\n🎯 لماذا ضروري:\n\n1️⃣ الفصل التام:\n• حسابك الشخصي منفصل\n• لو اتقفل حسابك، البيزنس سليم\n\n2️⃣ الاحترافية:\n• عملاء وشركاء يشوفوك "بيزنس"\n• ثقة أكبر من Meta\n\n3️⃣ إدارة فريق:\n• إضافة موظفين\n• صلاحيات محددة (مدير، محرر، محلل)\n\n4️⃣ تقارير متقدمة:\n• رؤية شاملة\n• مقارنة الحملات\n• Excel exports\n\n5️⃣ أمان أعلى:\n• Two-factor authentication\n• Audit log (سجل كل التغييرات)\n\n💡 مجاني 100% ← لكن ضروري!'
         },
-        { 
+        {
           type: 'text',
           title: 'إنشاء Business Manager',
           label: 'Setup Steps',
           caption: '📝 خطوات الإنشاء (10 دقائق):\n\n1️⃣ افتح: business.facebook.com\n\n2️⃣ اضغط "Create Account"\n\n3️⃣ املأ البيانات:\n   • اسم الشركة (رسمي، لا تغيير)\n   • اسمك\n   • بريدك الإلكتروني (مهم جداً)\n\n4️⃣ تأكيد البريد:\n   • افتح الإيميل\n   • اضغط Verify\n\n5️⃣ إضافة Business Details:\n   • العنوان (يفضل حقيقي)\n   • رقم الهاتف\n   • الموقع (لو موجود)\n\n6️⃣ إضافة صفحتك:\n   • Business Settings\n   • Pages → Add\n   • اختار صفحتك\n   • تأكيد الصلاحيات\n\n7️⃣ إضافة Instagram:\n   • Instagram Accounts → Add\n   • Log in\n\n⚠️ مهم جداً:\n• استخدم بريد إلكتروني حقيقي تصل له\n• احفظ بيانات الدخول\n• فعّل 2FA (Two-Factor Authentication)'
         },
-        { 
+        {
           type: 'text',
           title: 'إنشاء Ad Account (حساب إعلانات)',
           label: 'Ad Account Setup',
           caption: '💳 خطوات إنشاء Ad Account:\n\n1️⃣ من Business Settings:\n   • Ad Accounts\n   • Add → Create New\n\n2️⃣ املأ التفاصيل:\n   • اسم Ad Account (مثلاً: إعلانات 2024)\n   • Time Zone (Africa/Cairo)\n   • Currency (EGP - جنيه مصري)\n\n⚠️ تحذير:\n• العملة لا تتغير أبداً بعد الإنشاء!\n\n3️⃣ إضافة طريقة دفع:\n   • Payment Methods\n   • Add Payment Method\n\nطرق الدفع المتاحة:\n💳 بطاقة Visa/Mastercard\n💳 Fawry (فوري)\n💳 Vodafone Cash / Orange Money\n\n4️⃣ تعيين حد إنفاق:\n   • Account Spending Limit (اختياري)\n   • مثلاً: 5000 جنيه شهرياً\n\n5️⃣ Verification (التحقق):\n• Meta قد تطلب:\n  - صورة بطاقة الرقم القومي\n  - فاتورة مرافق\n  - سجل تجاري (للشركات)\n\n⏰ التحقق: فوري إلى 48 ساعة'
         },
-        { 
+        {
           type: 'text',
           title: 'أهداف الحملات (Campaign Objectives)',
           label: '6 أنواع رئيسية',
           caption: '🎯 اختر الهدف الصح:\n\n1️⃣ Awareness (الوعي بالعلامة):\n📊 الهدف: أكبر عدد يشوف إعلانك\n💰 التكلفة: رخيصة (20-50 قرش/وصول)\n📈 المقياس: Reach (الوصول)\n✅ متى: إطلاق منتج جديد\n\n2️⃣ Traffic (زيارات للموقع):\n🔗 الهدف: ضغطات على الرابط\n💰 التكلفة: متوسطة (50 قرش-2 جنيه/ضغطة)\n📈 المقياس: Link Clicks\n✅ متى: عندك موقع أو مقال\n\n3️⃣ Engagement (تفاعل):\n❤️ الهدف: لايكات، تعليقات، مشاركات\n💰 التكلفة: رخيصة (10-30 قرش/تفاعل)\n📈 المقياس: Post Engagement\n✅ متى: بناء community\n\n4️⃣ Leads (عملاء محتملين):\n📝 الهدف: جمع بيانات (اسم، تليفون، إيميل)\n💰 التكلفة: عالية (5-20 جنيه/ليد)\n📈 المقياس: Lead Forms\n✅ متى: خدمات أو منتجات غالية\n\n5️⃣ App Promotion (تطبيقات):\n📱 الهدف: تحميلات\n💰 التكلفة: متوسطة (2-10 جنيه/تحميل)\n📈 المقياس: App Installs\n✅ متى: عندك تطبيق\n\n6️⃣ Sales (مبيعات):\n💵 الهدف: شراء من الموقع/المتجر\n💰 التكلفة: الأعلى (حسب المنتج)\n📈 المقياس: ROAS (العائد على الإنفاق)\n✅ متى: متجر إلكتروني جاهز\n\n💡 نصيحة للمبتدئين:\nابدأ بـ Engagement ← ثم Traffic ← ثم Sales'
         },
-        { 
+        {
           type: 'text',
           title: 'إطلاق حملتك الأولى',
           label: 'Campaign Structure',
           caption: '🚀 الهيكل الإعلاني (3 مستويات):\n\n1️⃣ Campaign (الحملة):\n📌 تحدد: الهدف (Traffic, Engagement...)\n📌 مثال: "حملة صيف 2024"\n\n2️⃣ Ad Set (المجموعات):\n📌 تحدد:\n   • الجمهور المستهدف\n   • الميزانية\n   • المدة\n   • المواضع (Facebook, Instagram...)\n📌 مثال: "Ad Set - رجال 25-40"\n\n3️⃣ Ad (الإعلان نفسه):\n📌 تحدد:\n   • الصورة/الفيديو\n   • النص\n   • الـ CTA\n   • الرابط\n📌 مثال: "إعلان صورة رئيسي"\n\n✨ روتين الإطلاق (20 دقيقة):\n\n✅ Create Campaign → اختار Engagement\n✅ Campaign Name: "تفاعل - منتج X"\n✅ Next\n\n✅ Ad Set Settings:\n   • Daily Budget: 50 جنيه\n   • Location: Egypt → Cairo (أو مدينتك)\n   • Age: 20-45\n   • Gender: All\n   • Detailed Targeting: اهتمامات (مثلاً: Online Shopping)\n   • Placements: Automatic (دع Meta يختار)\n\n✅ Ad Creative:\n   • Upload Image/Video (1080x1080)\n   • Primary Text (النص الأساسي): 125 حرف\n   • Headline: عنوان قصير\n   • Call-to-Action: Learn More أو Shop Now\n\n✅ Review → Publish\n\n⏰ المراجعة: 30 دقيقة - 24 ساعة'
         },
-        { 
+        {
           type: 'text',
           title: 'الاستهداف الدقيق (Targeting)',
           label: 'الوصول للجمهور الصح',
           caption: '🎯 3 أنواع استهداف:\n\n1️⃣ Core Audiences (الأساسي):\n\n📍 Location:\n• استهدف مدن محددة (القاهرة، الإسكندرية)\n• أو People living here (الساكنين)\n• Radius (دائرة 10-50 كم)\n\n👤 Demographics:\n• العمر: 18-65+\n• الجنس: All / Men / Women\n• Relationship: Single / Married\n• Education: College / High School\n• Job Title: مثلاً "Marketing Manager"\n\n❤️ Interests (الاهتمامات):\n• Shopping & Fashion\n• Technology\n• Sports\n• Food & Dining\n• Travel\n💡 اكتب في البحث واختار المناسب\n\n📱 Behaviors:\n• Online shoppers\n• Mobile device users\n• Engaged shoppers\n\n2️⃣ Custom Audiences (جماهير مخصصة):\n\n📧 Customer List:\n• ارفع قائمة إيميلات/أرقام\n• Meta يطابقها مع حسابات\n\n🌐 Website Traffic:\n• كل من زار موقعك (آخر 30 يوم)\n• يحتاج Meta Pixel\n\n📱 App Activity:\n• من حمّل تطبيقك\n• من اشترى\n\n❤️ Engagement:\n• من تفاعل مع صفحتك\n• من شاف فيديوهاتك\n\n3️⃣ Lookalike Audiences (الجماهير الشبيهة):\n\n🔍 Meta يلاقي ناس شبه عملائك:\n• من Custom Audience\n• اختار Similarity (1%-10%)\n• 1% = الأقرب (الأفضل)\n• 10% = أوسع\n\n💡 الأقوى:\nCustom Audience (عملاء فعليين) ← ثم Lookalike'
         },
-        { 
+        {
           type: 'text',
           title: 'إدارة الميزانية والمزايدة',
           label: 'Budget & Bidding',
           caption: '💰 إدارة الميزانية:\n\n1️⃣ نوعين:\n\n📅 Daily Budget (يومية):\n• مثلاً: 50 جنيه/يوم\n• الإعلان يشتغل للأبد\n• توقف لما تريد\n✅ الأفضل للمبتدئين\n\n⏰ Lifetime Budget (إجمالية):\n• مثلاً: 1000 جنيه لمدة 10 أيام\n• توقف تلقائياً بعد المدة\n• Meta يوزع الميزانية بذكاء\n✅ للحملات الموسمية\n\n2️⃣ كم تبدأ؟\n\n🥉 مبتدئ: 30-50 جنيه/يوم\n🥈 متوسط: 100-200 جنيه/يوم\n🥇 محترف: 500+ جنيه/يوم\n\n💡 قاعدة ذهبية:\n"ميزانية 7 أيام على الأقل"\nلأن Meta يحتاج وقت للتعلم\n\n3️⃣ استراتيجيات المزايدة:\n\n🤖 Lowest Cost (الأرخص):\n• Meta يحصل أقصى نتائج بأقل سعر\n• تلقائي\n✅ الأفضل للمبتدئين\n\n🎯 Cost Cap (سقف التكلفة):\n• تحدد أقصى سعر للنتيجة\n• مثلاً: 2 جنيه/ضغطة كحد أقصى\n• Meta يحاول ما يتجاوزش\n✅ للميزانيات المحدودة\n\n💎 Bid Cap (سقف المزايدة):\n• أنت تحدد سعر المزايدة\n• للمحترفين فقط\n\n4️⃣ Campaign Budget Optimization (CBO):\n\n✨ Meta يوزع الميزانية تلقائياً:\n• على Ad Sets الأفضل أداءً\n• توفير وقت\n• نتائج أحسن\n✅ فعّله دائماً!'
         },
-        { 
+        {
           type: 'text',
           title: 'قياس النتائج (Metrics)',
           label: 'ماذا تقيس؟',
           caption: '📊 المقاييس الأساسية:\n\n1️⃣ Impressions (مرات الظهور):\n• كم مرة ظهر إعلانك\n• ارتفاعه = وصول واسع\n\n2️⃣ Reach (الوصول):\n• عدد الأشخاص الفريدين\n• أهم من Impressions\n\n3️⃣ CTR (Click-Through Rate):\n• نسبة الضغط = (Clicks ÷ Impressions) × 100\n• 1%+ = ممتاز\n• 0.5%-1% = جيد\n• أقل من 0.5% = ضعيف (غيّر الإعلان)\n\n4️⃣ CPC (Cost Per Click):\n• تكلفة الضغطة الواحدة\n• متوسط مصر: 50 قرش - 3 جنيه\n• كلما قل = أفضل\n\n5️⃣ CPM (Cost Per 1000 Impressions):\n• تكلفة 1000 ظهور\n• متوسط: 5-20 جنيه\n\n6️⃣ Frequency (التكرار):\n• كم مرة الشخص الواحد شاف الإعلان\n• 1-3 = مثالي\n• 5+ = الناس زهقت (غيّر الإعلان)\n\n7️⃣ ROAS (Return on Ad Spend):\n• العائد على الإنفاق الإعلاني\n• الصيغة: (Revenue ÷ Ad Spend) × 100%\n• 3x = ممتاز (كل 1 جنيه → 3 جنيه)\n• 2x = جيد\n• 1x = التعادل\n• أقل من 1x = خسارة!\n\n📈 تابع يومياً:\nAds Manager → Campaigns → Columns → Customize\n\n💡 أهم 3 أرقام:\nCTR, CPC, ROAS'
         },
-        { 
+        {
           type: 'text',
           title: 'تحسين الحملات (Optimization)',
           label: 'متى توقف؟ متى تحسّن؟',
           caption: '🔧 قواعد التحسين:\n\n1️⃣ متى توقف الإعلان:\n\n❌ أوقف فوراً إذا:\n• CTR أقل من 0.3% بعد 3 أيام\n• CPC أعلى من 5 جنيه\n• Frequency أكثر من 7\n• لا مبيعات بعد 500 جنيه إنفاق\n\n2️⃣ متى تزيد الميزانية:\n\n✅ زوّد 20%-30% إذا:\n• CTR أعلى من 1.5%\n• ROAS أعلى من 2x\n• Conversions مستقرة\n\n⚠️ لا تزوّد أكثر من 30% مرة واحدة!\n(Meta يحتاج إعادة تعلم)\n\n3️⃣ A/B Testing:\n\n🧪 اختبر:\n• نصين مختلفين\n• صورتين مختلفتين\n• CTA مختلف\n• جمهورين مختلفين\n\n📊 بعد 3 أيام:\n• الأفضل أداءً ← زود ميزانيته\n• الأضعف ← أوقفه\n\n4️⃣ Creative Fatigue (الملل):\n\n😴 العلامات:\n• CTR ينزل تدريجياً\n• Frequency فوق 5\n• Cost يزيد\n\n✨ الحل:\n• جدد الصورة/الفيديو كل 7-10 أيام\n• أو وقف 3 أيام ← أعد تشغيل\n\n5️⃣ Ad Scheduling:\n\n⏰ وقّت إعلاناتك:\n• Business hours (9 صباحاً - 6 مساءً)\n• أو حسب Analytics بتاعك\n• وقف الإعلانات 2-6 صباحاً (توفير)\n\n6️⃣ Retargeting (إعادة الاستهداف):\n\n🔄 استهدف:\n• من زار موقعك ولم يشتري\n• من أضاف للسلة ولم يكمل\n• من شاف المنتج 3 مرات\n\n💰 الأرخص والأقوى!'
         },
-        { 
+        {
           type: 'text',
           title: '💎 أسرار المحترفين',
           label: 'Pro Tips',
           caption: '🔥 10 أسرار للنجاح:\n\n1️⃣ Golden Hour:\n📱 انشر الإعلانات 8-10 صباحاً أو 7-9 مساءً\n(الناس بتتصفح أكتر)\n\n2️⃣ Video > Image:\n🎥 الفيديو يحقق CTR أعلى بـ 30%-50%\n• حتى لو 15 ثانية\n• Reels format (9:16)\n\n3️⃣ Lookalike 1%:\n🎯 أقوى استهداف:\n• من قائمة 1000+ عميل حقيقي\n• Similarity 1%\n• Location: مصر\n= نتائج خرافية\n\n4️⃣ Dynamic Ads:\n🤖 إعلانات تلقائية:\n• Meta يختار المنتج الأنسب لكل شخص\n• من Product Catalog\n• Retargeting ذكي\n\n5️⃣ Exclusions (الاستثناءات):\n🚫 استبعد:\n• من اشترى فعلاً\n• موظيفك\n• المنافسين\n= توفير ميزانية\n\n6️⃣ Advantage+ Campaigns:\n✨ الجديد من Meta (2023):\n• AI يدير كل شيء\n• تحسين تلقائي\n• نتائج أفضل بـ 20%\n\n7️⃣ Comment Automation:\n💬 رد تلقائي على التعليقات:\n• ManyChat\n• Chatfuel\n= تحويل التعليقات لعملاء\n\n8️⃣ Whitelisting:\n👥 استخدم حسابات أشخاص (Influencers):\n• ينشر من حسابهم الشخصي\n• أكثر مصداقية\n• CTR أعلى بـ 40%\n\n9️⃣ Breakdowns:\n📊 حلل النتائج حسب:\n• Age\n• Gender\n• Device (أغلب الشراء من موبايل!)\n• Hour of Day\n= تكتشف أفضل جمهور\n\n🔟 Pixel Everything:\n🎯 ركب Meta Pixel على:\n• الموقع\n• صفحة الشكر\n• صفحة الدفع\n= تتبع دقيق للمبيعات'
         },
-        { 
+        {
           type: 'text',
           title: '📝 المشروع النهائي',
           label: 'أطلق حملتك الاحترافية',
@@ -6702,10 +6755,10 @@ Cover: صورة فيلا فخمة + أرقام التواصل
   try {
     // Get existing lectures
     const all = getLectures();
-    
+
     // Delete old Facebook Ads lectures from localStorage (no Firebase - simpler!)
     all['facebook-ads'] = newLectures;
-    
+
     // Save to localStorage immediately
     _fsLectures = Object.assign({}, all);
     try {
@@ -6788,6 +6841,10 @@ function initLecturesSection(){
   Object.values(all).forEach(v=>{ total += v.length; });
   document.getElementById('lecsCount').textContent = total;
 
+  if(!activeLecCourse && LEC_COURSES.length){
+    activeLecCourse = LEC_COURSES[0].key;
+  }
+
   tabs.innerHTML = LEC_COURSES.map(c=>`
     <button class="lec-tab${activeLecCourse===c.key?' active':''}" onclick="selectLecCourse('${c.key}')">
       <i class="fab ${c.icon}" style="margin-left:6px;"></i>${c.name}
@@ -6801,10 +6858,9 @@ function initLecturesSection(){
 function selectLecCourse(key){
   activeLecCourse = key;
   initLecturesSection();
-  // seed april course if empty
-  if(key === 'april-2026'){ try{ seedAprilLectures(); }catch(e){} }
+  // Seed the default lecture groups on demand
+  if(key === 'april-2026' || key === 'free' || key === 'pro-marketing'){ try{ seedAprilLectures(); }catch(e){} }
   // Facebook Ads lectures now added manually via "Add 5 Lectures" button
-  // Removed auto-seeding to prevent overwriting user changes
   renderLecList(key);
 }
 
@@ -6818,7 +6874,7 @@ function renderLecList(key){
   // Show "Add 5 Lectures" button only for facebook-ads course
   const add5Btn = document.getElementById('btnAdd5Lecs');
   if(add5Btn) add5Btn.style.display = (key === 'facebook-ads') ? 'flex' : 'none';
-  
+
   const all = getLectures();
   const lecs = all[key]||[];
   const list = document.getElementById('lecList');
@@ -7614,7 +7670,7 @@ function handleNavItemClick() {
 function toggleEmployeeTypeFields(){
   const empType = document.querySelector('input[name="empType"]:checked')?.value;
   const permissionsSection = document.getElementById('empPermissionsSection');
-  
+
   if(empType === 'permanent'){
     permissionsSection.style.display = 'block';
   } else {
@@ -7625,7 +7681,7 @@ function toggleEmployeeTypeFields(){
 function toggleGroupPermissions(groupName){
   const mainCheckbox = document.querySelector(`.main-checkbox[data-group="${groupName}"]`);
   const isChecked = mainCheckbox.checked;
-  
+
   // Toggle all sub-checkboxes for this group
   const subCheckboxes = document.querySelectorAll(`.sub-checkbox[data-parent="${groupName}"]`);
   subCheckboxes.forEach(sub => {
@@ -7636,7 +7692,7 @@ function toggleGroupPermissions(groupName){
 function toggleAllPermissions(){
   const allCheckboxes = document.querySelectorAll('.perm-checkbox');
   const hasUnchecked = Array.from(allCheckboxes).some(cb => !cb.checked);
-  
+
   // If any unchecked, check all. If all checked, uncheck all
   allCheckboxes.forEach(cb => {
     cb.checked = hasUnchecked;
@@ -7650,26 +7706,26 @@ let employeeEditMode = null;
 async function addEmployeeWithOnboarding(){
   // Set to ADD mode
   employeeEditMode = null;
-  
+
   // Open the modal
   document.getElementById('employeeContractModal').classList.add('open');
-  
+
   // Update modal title
   document.querySelector('#employeeContractModal .modal-header h3').innerHTML = '<i class="fas fa-user-plus" style="color:var(--pink);margin-left:8px"></i> إنشاء حساب موظف جديد';
-  
+
   // Reset form
   document.getElementById('empUsername').value = '';
   document.getElementById('empPassword').value = '';
   document.getElementById('empPhone').value = '';
   document.getElementById('empJobTitle').value = '';
-  
+
   // Reset employee type to contract (default)
   document.querySelector('input[name="empType"][value="contract"]').checked = true;
   toggleEmployeeTypeFields();
-  
+
   // Uncheck all permissions
   document.querySelectorAll('.perm-checkbox').forEach(cb => cb.checked = false);
-  
+
   // Hide send section, show form section
   document.getElementById('empFormSection').style.display = 'block';
   document.getElementById('empSendSection').style.display = 'none';
@@ -7685,46 +7741,46 @@ async function editEmployee(empId){
       .select('*')
       .eq('id', empId)
       .single();
-    
+
     if (error || !employee) {
       toast('فشل تحميل بيانات الموظف', 'error');
       console.error('Error loading employee:', error);
       return;
     }
-    
+
     // Set EDIT mode
     employeeEditMode = { id: empId, data: employee };
-    
+
     // Open modal
     document.getElementById('employeeContractModal').classList.add('open');
-    
+
     // Update modal title
     document.querySelector('#employeeContractModal .modal-header h3').innerHTML = '<i class="fas fa-user-edit" style="color:var(--blue);margin-left:8px"></i> تعديل بيانات الموظف';
-    
+
     // Fill form with employee data
     document.getElementById('empUsername').value = employee.username || '';
     document.getElementById('empPassword').value = employee.password || '';
     document.getElementById('empPhone').value = employee.phone || '';
     document.getElementById('empJobTitle').value = employee.job_title || '';
-    
+
     // Set employee type
     const empType = employee.employee_type || 'contract';
     document.querySelector(`input[name="empType"][value="${empType}"]`).checked = true;
     toggleEmployeeTypeFields();
-    
+
     // Load permissions
     const permissions = employee.permissions || {};
-    
+
     // Reset all checkboxes first
     document.querySelectorAll('.perm-checkbox').forEach(cb => cb.checked = false);
-    
+
     // Check permissions according to stored data
     Object.keys(permissions).forEach(group => {
       const mainCheckbox = document.querySelector(`.main-checkbox[data-group="${group}"]`);
-      
+
       if (mainCheckbox) {
         mainCheckbox.checked = true;
-        
+
         // If permissions[group] is an object with sub-permissions
         if (typeof permissions[group] === 'object' && permissions[group] !== null && !Array.isArray(permissions[group])) {
           Object.keys(permissions[group]).forEach(action => {
@@ -7736,12 +7792,12 @@ async function editEmployee(empId){
         }
       }
     });
-    
+
     // Show form section
     document.getElementById('empFormSection').style.display = 'block';
     document.getElementById('empSendSection').style.display = 'none';
     document.getElementById('empBtnCreate').style.display = 'flex';
-    
+
   } catch (err) {
     console.error('Error in editEmployee:', err);
     toast('حدث خطأ أثناء تحميل بيانات الموظف', 'error');
@@ -7757,7 +7813,7 @@ const JOB_CONTRACT_TERMS = {
 • دوام من 9 صباحاً حتى 5 مساءً
 • إجازة أسبوعية يوم الجمعة
 • فترة تجربة: شهر واحد`,
-  
+
   'موظف مبيعات': `• التواصل مع العملاء المحتملين وعرض المنتجات والخدمات
 • تحقيق الأهداف البيعية الشهرية المحددة
 • متابعة العملاء الحاليين وضمان رضاهم
@@ -7766,7 +7822,7 @@ const JOB_CONTRACT_TERMS = {
 • إجازة أسبوعية يوم الجمعة
 • عمولة على المبيعات حسب الأداء
 • فترة تجربة: شهر واحد`,
-  
+
   'محاسب': `• إدارة الحسابات المالية وإعداد القوائم المالية
 • مراجعة الفواتير والمصروفات
 • إعداد التقارير المالية الشهرية والسنوية
@@ -7774,7 +7830,7 @@ const JOB_CONTRACT_TERMS = {
 • دوام من 9 صباحاً حتى 5 مساءً
 • إجازة أسبوعية يوم الجمعة
 • فترة تجربة: شهر واحد`,
-  
+
   'مصمم جرافيك': `• تصميم المواد التسويقية والإعلانية
 • إنشاء تصاميم للسوشيال ميديا والمواقع الإلكترونية
 • تطوير الهوية البصرية للعلامة التجارية
@@ -7782,7 +7838,7 @@ const JOB_CONTRACT_TERMS = {
 • دوام من 9 صباحاً حتى 5 مساءً (مع إمكانية العمل عن بعد)
 • إجازة أسبوعية يوم الجمعة
 • فترة تجربة: شهر واحد`,
-  
+
   'مدير عام': `• الإشراف على جميع أقسام الشركة
 • وضع الخطط الاستراتيجية وتحقيق الأهداف
 • اتخاذ القرارات الإدارية والمالية الهامة
@@ -7796,7 +7852,7 @@ const JOB_CONTRACT_TERMS = {
 function updateContractTerms(){
   const jobTitle = document.getElementById('empJobTitle').value;
   const termsField = document.getElementById('empContractTerms');
-  
+
   if(jobTitle && JOB_CONTRACT_TERMS[jobTitle]){
     termsField.value = JOB_CONTRACT_TERMS[jobTitle];
   } else {
@@ -7808,18 +7864,18 @@ let currentEmployeeData = {};
 
 function closeEmployeeModal(){
   document.getElementById('employeeContractModal').classList.remove('open');
-  
+
   // Reset edit mode
   employeeEditMode = null;
-  
+
   // Reset form sections visibility
   document.getElementById('empFormSection').style.display = 'block';
   document.getElementById('empSendSection').style.display = 'none';
   document.getElementById('empBtnCreate').style.display = 'block';
-  
+
   // Reload employees list to show any changes
   renderUsers('employee');
-  
+
   // Reset filter to 'all' to show any newly added employees
   filterEmpReqs('all');
 }
@@ -7830,44 +7886,44 @@ async function createEmployeeAccount(){
   const phone = document.getElementById('empPhone').value.trim();
   const jobTitle = document.getElementById('empJobTitle').value;
   const empType = document.querySelector('input[name="empType"]:checked')?.value || 'contract';
-  
+
   // Validation
   if(!username){
     toast('يرجى إدخال اسم المستخدم', 'error');
     return;
   }
-  
+
   if(!/^[a-zA-Z0-9_]+$/.test(username)){
     toast('اسم المستخدم يجب أن يحتوي على أحرف إنجليزية وأرقام فقط', 'error');
     return;
   }
-  
+
   if(!password || password.length < 6){
     toast('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
     return;
   }
-  
+
   // Phone is optional, but validate format if provided
   if(phone && !/^01[0-9]{9}$/.test(phone)){
     toast('رقم الهاتف غير صحيح. يجب أن يبدأ بـ 01 ويحتوي على 11 رقم', 'error');
     return;
   }
-  
+
   if(!jobTitle){
     toast('يرجى اختيار الوظيفة', 'error');
     return;
   }
-  
+
   // Collect permissions for permanent employees
   let permissions = {};
   if(empType === 'permanent'){
     // Collect all checked permissions
     const mainCheckboxes = document.querySelectorAll('.main-checkbox:checked');
-    
+
     mainCheckboxes.forEach(mainCb => {
       const group = mainCb.dataset.group;
       const subCheckboxes = document.querySelectorAll(`.sub-checkbox[data-parent="${group}"]:checked`);
-      
+
       // If no sub-permissions, set main permission to true
       if(subCheckboxes.length === 0){
         permissions[group] = true;
@@ -7880,19 +7936,19 @@ async function createEmployeeAccount(){
         });
       }
     });
-    
+
     // If no permissions selected, warning
     if(Object.keys(permissions).length === 0){
       const confirm = window.confirm('لم يتم اختيار أي صلاحيات! هل تريد المتابعة؟');
       if(!confirm) return;
     }
   }
-  
+
   try {
     // ============ EDIT MODE: Update existing employee ============
     if (employeeEditMode && employeeEditMode.id) {
       const empId = employeeEditMode.id;
-      
+
       // Check if username changed and conflicts with another employee
       if (username !== employeeEditMode.data.username) {
         const { data: existing } = await _supabase
@@ -7901,13 +7957,13 @@ async function createEmployeeAccount(){
           .eq('username', username)
           .neq('id', empId)
           .maybeSingle();
-        
+
         if (existing) {
           toast('اسم المستخدم موجود بالفعل! اختر اسم آخر', 'error');
           return;
         }
       }
-      
+
       // Update employee data
       const updatedData = {
         username,
@@ -7919,30 +7975,30 @@ async function createEmployeeAccount(){
         is_active: empType === 'permanent',
         application_status: empType === 'permanent' ? 'approved' : employeeEditMode.data.application_status
       };
-      
+
       const { data, error } = await _supabase
         .from('employees')
         .update(updatedData)
         .eq('id', empId);
-      
+
       if (error) {
         console.error('Supabase update error:', error);
         throw new Error(error.message);
       }
-      
+
       console.log('✅ Employee updated in Supabase:', empId);
       toast('✅ تم تحديث بيانات الموظف بنجاح!', 'success');
-      
+
       // Close modal and refresh
       document.getElementById('employeeContractModal').classList.remove('open');
       employeeEditMode = null; // Reset edit mode
-      
+
       // Reload employees list
       renderUsers('employee');
       updateBadges();
       return;
     }
-    
+
     // ============ ADD MODE: Create new employee ============
     // Check if username already exists
     const { data: existing } = await _supabase
@@ -7950,12 +8006,12 @@ async function createEmployeeAccount(){
       .select('id')
       .eq('username', username)
       .maybeSingle();
-    
+
     if (existing) {
       toast('اسم المستخدم موجود بالفعل! اختر اسم آخر', 'error');
       return;
     }
-    
+
     // Create employee in Supabase
     const empId = 'emp_' + Date.now();
     const employeeData = {
@@ -7970,18 +8026,18 @@ async function createEmployeeAccount(){
       application_status: empType === 'permanent' ? 'approved' : 'incomplete',
       created_at: new Date().toISOString()
     };
-    
+
     const { data, error } = await _supabase
       .from('employees')
       .insert([employeeData]);
-    
+
     if (error) {
       console.error('Supabase error:', error);
       throw new Error(error.message);
     }
-    
+
     console.log('✅ Employee created in Supabase:', empId);
-    
+
     // If permanent employee, show success and close
     if(empType === 'permanent'){
       toast('✅ تم إضافة الموظف الدائم بنجاح!', 'success');
@@ -7991,20 +8047,20 @@ async function createEmployeeAccount(){
       updateBadges();
       return;
     }
-    
+
     // For contract employees, generate onboarding link
     const onboardingLink = `${window.location.origin}/employee-onboarding.html?id=${empId}`;
     window.currentOnboardingLink = onboardingLink;
-    
+
     // Store data for sending
     currentEmployeeData = { username, phone, jobTitle, empId };
-    
+
     // Show success and send options
     document.getElementById('empFormSection').style.display = 'none';
     document.getElementById('empSendSection').style.display = 'block';
     document.getElementById('empBtnCreate').style.display = 'none';
     document.getElementById('empLinkInput').value = onboardingLink;
-    
+
     // Show summary
     document.getElementById('empContractSummary').innerHTML = `
       <div style="display:flex;flex-direction:column;gap:10px;">
@@ -8022,13 +8078,13 @@ async function createEmployeeAccount(){
         </div>
       </div>
     `;
-    
+
     toast('✅ تم إنشاء الحساب بنجاح!', 'success');
-    
+
     // Reset filter to 'all' to show new employee
     filterEmpReqs('all');
     updateBadges();
-    
+
   } catch(error){
     console.error('Error creating employee account:', error);
     toast('حدث خطأ أثناء إنشاء الحساب: ' + error.message, 'error');
@@ -8040,12 +8096,12 @@ function sendViaWhatsApp(){
     toast('حدث خطأ، يرجى المحاولة مرة أخرى', 'error');
     return;
   }
-  
+
   if(!currentEmployeeData.phone){
     toast('لم يتم إدخال رقم هاتف للموظف', 'error');
     return;
   }
-  
+
   const phone = currentEmployeeData.phone.replace(/\D/g, '');
   const message = `مرحباً! 👋\n\n` +
     `تم إنشاء حساب لك في منصة أكرم مصطفى.\n\n` +
@@ -8055,10 +8111,10 @@ function sendViaWhatsApp(){
     `${window.currentOnboardingLink}\n\n` +
     `⚠️ هذا الرابط خاص بك ولا يجب مشاركته مع أحد.\n\n` +
     `مع تحياتنا 🌟`;
-  
+
   const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   window.open(whatsappLink, '_blank');
-  
+
   toast('تم فتح واتساب', 'success');
   setTimeout(() => {
     closeEmployeeModal();
@@ -8070,7 +8126,7 @@ function copyEmployeeLink(){
     toast('حدث خطأ، يرجى المحاولة مرة أخرى', 'error');
     return;
   }
-  
+
   const linkInput = document.getElementById('empLinkInput');
   linkInput.select();
   navigator.clipboard.writeText(window.currentOnboardingLink);
@@ -8082,7 +8138,7 @@ function sendViaEmail(){
     toast('حدث خطأ، يرجى المحاولة مرة أخرى', 'error');
     return;
   }
-  
+
   const subject = `دعوة للانضمام - منصة أكرم مصطفى`;
   const body = `مرحباً،\n\n` +
     `تم إنشاء حساب لك في منصة أكرم مصطفى.\n\n` +
@@ -8091,10 +8147,10 @@ function sendViaEmail(){
     `${window.currentOnboardingLink}\n\n` +
     `هذا الرابط خاص بك ولا يجب مشاركته مع أحد.\n\n` +
     `مع تحياتنا،\nفريق منصة أكرم مصطفى`;
-  
+
   const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   window.location.href = mailtoLink;
-  
+
   toast('تم فتح تطبيق البريد', 'success');
 }
 
@@ -8107,7 +8163,7 @@ let _contractSelectedEmpId = null;
 async function openContractModal(preselectedEmpId){
   const modal = document.getElementById('contractCreationModal');
   modal.classList.add('open');
-  
+
   // Reset form
   document.getElementById('contractJobTitle').value = '';
   document.getElementById('contractSalary').value = '';
@@ -8117,19 +8173,19 @@ async function openContractModal(preselectedEmpId){
   document.getElementById('contractSuccessSection').style.display = 'none';
   document.getElementById('contractFooterBtns').style.display = 'flex';
   _contractSelectedEmpId = null;
-  
+
   // Load employees into dropdown
   try {
     const { data: employees, error } = await _supabase
       .from('employees')
       .select('id, username, full_name, job_title, phone')
       .order('created_at', { ascending: false });
-    
+
     if(error) throw error;
-    
+
     const select = document.getElementById('contractEmpSelect');
     select.innerHTML = '<option value="">-- اختر موظف --</option>';
-    
+
     if(employees && employees.length > 0){
       employees.forEach(emp => {
         const displayName = emp.full_name || emp.username;
@@ -8141,13 +8197,13 @@ async function openContractModal(preselectedEmpId){
         select.appendChild(opt);
       });
     }
-    
+
     // Pre-select if provided
     if(preselectedEmpId){
       select.value = preselectedEmpId;
       onContractEmployeeSelect();
     }
-    
+
   } catch(err){
     console.error('Error loading employees for contract:', err);
     toast('خطأ في تحميل قائمة الموظفين', 'error');
@@ -8158,7 +8214,7 @@ function onContractEmployeeSelect(){
   const select = document.getElementById('contractEmpSelect');
   const selectedOpt = select.options[select.selectedIndex];
   _contractSelectedEmpId = select.value;
-  
+
   if(selectedOpt && selectedOpt.dataset.jobTitle){
     document.getElementById('contractJobTitle').value = selectedOpt.dataset.jobTitle;
     updateContractTermsForContract();
@@ -8173,7 +8229,7 @@ function closeContractModal(){
 function updateContractTermsForContract(){
   const jobTitle = document.getElementById('contractJobTitle').value;
   const termsField = document.getElementById('contractTerms');
-  
+
   if(jobTitle && JOB_CONTRACT_TERMS[jobTitle]){
     termsField.value = JOB_CONTRACT_TERMS[jobTitle];
   } else {
@@ -8187,7 +8243,7 @@ async function saveContract(withPDF){
   const salary = document.getElementById('contractSalary').value.trim();
   const startDate = document.getElementById('contractStartDate').value;
   const contractTerms = document.getElementById('contractTerms').value;
-  
+
   if(!empId){
     toast('يرجى اختيار الموظف', 'error');
     return;
@@ -8204,7 +8260,7 @@ async function saveContract(withPDF){
     toast('يرجى اختيار تاريخ بدء العمل', 'error');
     return;
   }
-  
+
   try {
     // Update employee record with contract data
     const { error } = await _supabase
@@ -8217,25 +8273,25 @@ async function saveContract(withPDF){
         updated_at: new Date().toISOString()
       })
       .eq('id', empId);
-    
+
     if(error) throw error;
-    
+
     _contractSelectedEmpId = empId;
-    
+
     // Format date for display
     const formattedDate = new Date(startDate).toLocaleDateString('ar-EG', {
       year: 'numeric', month: 'long', day: 'numeric'
     });
-    
+
     // Get employee name
     const select = document.getElementById('contractEmpSelect');
     const empName = select.options[select.selectedIndex].textContent;
-    
+
     // Show success section
     document.getElementById('contractFormSection').style.display = 'none';
     document.getElementById('contractSuccessSection').style.display = 'block';
     document.getElementById('contractFooterBtns').style.display = 'none';
-    
+
     document.getElementById('contractSummaryDisplay').innerHTML = `
       <div style="display:flex;flex-direction:column;gap:10px;">
         <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
@@ -8256,15 +8312,15 @@ async function saveContract(withPDF){
         </div>
       </div>
     `;
-    
+
     toast('✅ تم حفظ العقد بنجاح!', 'success');
     renderEmployeeRequests();
-    
+
     // Auto-download PDF if requested
     if(withPDF){
       setTimeout(() => downloadContractPDF(), 500);
     }
-    
+
   } catch(err){
     console.error('Error saving contract:', err);
     toast('حدث خطأ أثناء حفظ العقد: ' + err.message, 'error');
@@ -8298,36 +8354,36 @@ const MARKETING_PLANS_KEY = '_fsAdminMarketingPlans';
 async function loadMarketingPlans(){
   const grid = document.getElementById('marketingPlansGrid');
   if(!grid) return;
-  
+
   try {
     // Load all plans first to count
     const { data: allPlans, error: countError } = await _supabase
       .from('marketing_plans')
       .select('*');
-    
+
     if(!countError && allPlans){
       const pendingCount = allPlans.filter(p => p.status === 'pending').length;
       const completedCount = allPlans.filter(p => p.status === 'completed').length;
-      
+
       document.getElementById('pendingCount').textContent = pendingCount;
       document.getElementById('completedCount').textContent = completedCount;
       document.getElementById('plansCount').textContent = allPlans.length;
     }
-    
+
     // Load filtered plans
     const { data: plans, error } = await _supabase
       .from('marketing_plans')
       .select('*')
       .eq('status', _currentPlanStatus)
       .order('created_at', { ascending: false });
-    
+
     if(error) throw error;
-    
+
     // 🛡️ Backup to localStorage
     if(allPlans && allPlans.length > 0){
       localStorage.setItem(MARKETING_PLANS_KEY, JSON.stringify(allPlans));
     }
-    
+
     if(!plans || plans.length === 0){
       grid.innerHTML = `
         <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);">
@@ -8338,12 +8394,12 @@ async function loadMarketingPlans(){
       `;
       return;
     }
-    
+
     renderMarketingPlans(plans, grid);
-    
+
   } catch(err){
     console.error('Error loading marketing plans:', err);
-    
+
     // 🔄 Fallback to localStorage
     const cached = localStorage.getItem(MARKETING_PLANS_KEY);
     if(cached){
@@ -8352,13 +8408,13 @@ async function loadMarketingPlans(){
         const plans = allPlans.filter(p => p.status === _currentPlanStatus);
         console.log('✅ Loaded marketing plans from localStorage backup');
         toast('تم تحميل الخطط من النسخة الاحتياطية', 'warning');
-        
+
         const pendingCount = allPlans.filter(p => p.status === 'pending').length;
         const completedCount = allPlans.filter(p => p.status === 'completed').length;
         document.getElementById('pendingCount').textContent = pendingCount;
         document.getElementById('completedCount').textContent = completedCount;
         document.getElementById('plansCount').textContent = allPlans.length;
-        
+
         renderMarketingPlans(plans, grid);
       } catch(e){
         console.error('Error parsing cached plans:', e);
@@ -8390,7 +8446,7 @@ function renderMarketingPlans(plans, grid){
         completed: { label: 'مكتملة', class: 'completed', icon: 'fa-check-circle' },
         sent: { label: 'تم الإرسال', class: 'sent', icon: 'fa-paper-plane' }
       };
-      
+
       const status = statusInfo[plan.status] || statusInfo.draft;
       const planData = typeof plan.plan_data === 'string' ? JSON.parse(plan.plan_data) : plan.plan_data;
       const platforms = planData.platforms || {};
@@ -8398,7 +8454,7 @@ function renderMarketingPlans(plans, grid){
       const createdDate = new Date(plan.created_at).toLocaleDateString('ar-EG', {
         year: 'numeric', month: 'short', day: 'numeric'
       });
-      
+
       // Platform icons
       const platformIcons = [];
       if(platforms.ig) platformIcons.push('<i class="fab fa-instagram" style="color:#E4405F"></i>');
@@ -8406,7 +8462,7 @@ function renderMarketingPlans(plans, grid){
       if(platforms.tt) platformIcons.push('<i class="fab fa-tiktok" style="color:#000"></i>');
       if(platforms.yt) platformIcons.push('<i class="fab fa-youtube" style="color:#FF0000"></i>');
       if(platforms.web) platformIcons.push('<i class="fas fa-globe" style="color:#0984E3"></i>');
-      
+
       return `
         <div class="plan-card">
           <div class="plan-card-header">
@@ -8418,7 +8474,7 @@ function renderMarketingPlans(plans, grid){
               <i class="fas ${status.icon}"></i> ${status.label}
             </span>
           </div>
-          
+
           <div class="plan-card-info">
             <div class="plan-card-info-row">
               <i class="fas fa-industry"></i>
@@ -8455,7 +8511,7 @@ function renderMarketingPlans(plans, grid){
               </div>
             ` : ''}
           </div>
-          
+
           <div class="plan-card-actions">
             ${plan.status === 'pending' ? `
               <button class="plan-card-btn" onclick="viewPendingPlan('${plan.id}')" style="background:rgba(59,130,246,0.15);color:#3b82f6;flex:1;">
@@ -8515,7 +8571,7 @@ function getPlatformIcon(platform){
 function openPlanModal(planId = null){
   const modal = document.getElementById('marketingPlanModal');
   modal.classList.add('open');
-  
+
   // Reset form
   document.getElementById('planEditId').value = planId || '';
   document.getElementById('planLeadId').value = '';
@@ -8530,10 +8586,10 @@ function openPlanModal(planId = null){
   document.getElementById('planStrategy').value = '';
   document.getElementById('planMetrics').value = '';
   document.getElementById('planNotes').value = '';
-  
+
   // Uncheck all platforms
   document.querySelectorAll('input[name="platforms"]').forEach(cb => cb.checked = false);
-  
+
   // If editing, load plan data
   if(planId){
     loadPlanForEdit(planId);
@@ -8547,15 +8603,15 @@ async function loadPlanForEdit(planId){
       .select('*')
       .eq('id', planId)
       .single();
-    
+
     if(error) throw error;
-    
+
     document.getElementById('planLeadId').value = plan.lead_id || '';
     document.getElementById('planCompanyName').value = plan.company_name || '';
     document.getElementById('planCompanyEmail').value = plan.company_email || '';
     document.getElementById('planCompanyPhone').value = plan.company_phone || '';
     document.getElementById('planIndustry').value = plan.company_industry || '';
-    
+
     const planData = typeof plan.plan_data === 'string' ? JSON.parse(plan.plan_data) : plan.plan_data;
     document.getElementById('planGoal').value = planData.goal || '';
     document.getElementById('planBudget').value = planData.budget || '';
@@ -8563,13 +8619,13 @@ async function loadPlanForEdit(planId){
     document.getElementById('planStrategy').value = planData.strategy || '';
     document.getElementById('planMetrics').value = planData.metrics || '';
     document.getElementById('planNotes').value = planData.notes || '';
-    
+
     // Check platforms
     (planData.platforms || []).forEach(platform => {
       const checkbox = document.getElementById(`platform${platform.charAt(0).toUpperCase() + platform.slice(1).replace('google', 'Google')}`);
       if(checkbox) checkbox.checked = true;
     });
-    
+
   } catch(err){
     console.error('Error loading plan for edit:', err);
     toast('خطأ في تحميل بيانات الخطة', 'error');
@@ -8586,20 +8642,20 @@ function openAdvancedForm(){
   const companyName = document.getElementById('planCompanyName').value;
   const companyEmail = document.getElementById('planCompanyEmail').value;
   const companyPhone = document.getElementById('planCompanyPhone').value;
-  
+
   // Build URL with parameters
   let url = 'marketing-form-advanced.html?source=admin';
   if(leadId) url += `&leadId=${encodeURIComponent(leadId)}`;
   if(companyName) url += `&companyName=${encodeURIComponent(companyName)}`;
   if(companyEmail) url += `&companyEmail=${encodeURIComponent(companyEmail)}`;
   if(companyPhone) url += `&companyPhone=${encodeURIComponent(companyPhone)}`;
-  
+
   // Open in new tab
   window.open(url, '_blank');
-  
+
   // Close current modal
   closePlanModal();
-  
+
   toast('تم فتح النموذج التفاعلي في تبويب جديد', 'info');
 }
 
@@ -8617,7 +8673,7 @@ async function savePlan(){
   const strategy = document.getElementById('planStrategy').value.trim();
   const metrics = document.getElementById('planMetrics').value.trim();
   const notes = document.getElementById('planNotes').value.trim();
-  
+
   // Validation
   if(!companyName){
     toast('يرجى إدخال اسم الشركة', 'error');
@@ -8635,13 +8691,13 @@ async function savePlan(){
     toast('يرجى إدخال الهدف التسويقي', 'error');
     return;
   }
-  
+
   // Get selected platforms
   const platforms = [];
   document.querySelectorAll('input[name="platforms"]:checked').forEach(cb => {
     platforms.push(cb.value);
   });
-  
+
   const planData = {
     goal,
     budget: budget ? parseFloat(budget) : null,
@@ -8651,7 +8707,7 @@ async function savePlan(){
     metrics,
     notes
   };
-  
+
   try {
     if(planId){
       // Update existing plan
@@ -8668,15 +8724,15 @@ async function savePlan(){
           updated_at: new Date().toISOString()
         })
         .eq('id', planId);
-      
+
       if(error) throw error;
       toast('✅ تم تحديث الخطة بنجاح!', 'success');
-      
+
     } else {
       // Create new plan
       const newPlanId = 'plan_' + Date.now();
       const viewLink = `${window.location.origin}/marketing-plan-view.html?id=${newPlanId}`;
-      
+
       const { error } = await _supabase
         .from('marketing_plans')
         .insert([{
@@ -8691,22 +8747,22 @@ async function savePlan(){
           view_link: viewLink,
           created_at: new Date().toISOString()
         }]);
-      
+
       if(error) throw error;
       toast('✅ تم إنشاء الخطة بنجاح!', 'success');
     }
-    
+
     closePlanModal();
     loadMarketingPlans(); // Will also backup to localStorage
-    
+
     // Reload lead details if viewing
     if(_currentViewLeadId && leadId){
       await loadLeadMarketingPlans(_currentViewLeadId);
     }
-    
+
   } catch(err){
     console.error('Error saving plan:', err);
-    
+
     if(err.message.includes('relation') || err.message.includes('does not exist')){
       toast('⚠️ قاعدة البيانات غير جاهزة - راجع ملف SETUP-CRM-DATABASE.md', 'error');
     } else {
@@ -8733,25 +8789,25 @@ async function sendPlanToClient(planId){
       .select('*')
       .eq('id', planId)
       .single();
-    
+
     if(error) throw error;
-    
+
     // Update status to sent
     await _supabase
       .from('marketing_plans')
       .update({ status: 'sent', updated_at: new Date().toISOString() })
       .eq('id', planId);
-    
+
     const viewLink = plan.view_link || `${window.location.origin}/marketing-plan-view.html?id=${planId}`;
     const subject = `خطة تسويقية من أكرم مصطفى - ${plan.company_name}`;
     const body = `مرحباً،\n\nنرسل لكم الخطة التسويقية المخصصة لشركتكم:\n\n${viewLink}\n\nيمكنكم الاطلاع على تفاصيل الخطة من خلال الرابط أعلاه.\n\nمع تحياتنا،\nفريق أكرم مصطفى`;
-    
+
     const mailtoLink = `mailto:${plan.company_email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
-    
+
     toast('تم فتح تطبيق البريد', 'success');
     loadMarketingPlans();
-    
+
   } catch(err){
     console.error('Error sending plan:', err);
     toast('خطأ في إرسال الخطة', 'error');
@@ -8763,18 +8819,18 @@ async function deletePlan(planId){
   if(!confirm('هل أنت متأكد من حذف هذه الخطة؟')){
     return;
   }
-  
+
   try {
     const { error } = await _supabase
       .from('marketing_plans')
       .delete()
       .eq('id', planId);
-    
+
     if(error) throw error;
-    
+
     toast('تم حذف الخطة', 'success');
     loadMarketingPlans();
-    
+
   } catch(err){
     console.error('Error deleting plan:', err);
     toast('خطأ في حذف الخطة', 'error');
@@ -8786,7 +8842,7 @@ let _currentPlanStatus = 'pending';
 
 function filterPlansByStatus(status){
   _currentPlanStatus = status;
-  
+
   // Update tab styles
   document.querySelectorAll('.plan-tab').forEach(tab => {
     tab.classList.remove('active');
@@ -8794,7 +8850,7 @@ function filterPlansByStatus(status){
       tab.classList.add('active');
     }
   });
-  
+
   loadMarketingPlans();
 }
 
@@ -8803,18 +8859,18 @@ async function approvePlan(planId){
   if(!confirm('هل تريد الموافقة على هذا الطلب وتحويله إلى خطة مكتملة؟')){
     return;
   }
-  
+
   try {
     const { error } = await _supabase
       .from('marketing_plans')
       .update({ status: 'completed' })
       .eq('id', planId);
-    
+
     if(error) throw error;
-    
+
     toast('✅ تمت الموافقة على الطلب', 'success');
     loadMarketingPlans();
-    
+
   } catch(err){
     console.error('Error approving plan:', err);
     toast('خطأ في الموافقة على الطلب', 'error');
@@ -8826,18 +8882,18 @@ async function rejectPlan(planId){
   if(!confirm('هل أنت متأكد من رفض هذا الطلب؟ سيتم حذفه نهائياً.')){
     return;
   }
-  
+
   try {
     const { error } = await _supabase
       .from('marketing_plans')
       .delete()
       .eq('id', planId);
-    
+
     if(error) throw error;
-    
+
     toast('تم رفض الطلب', 'warning');
     loadMarketingPlans();
-    
+
   } catch(err){
     console.error('Error rejecting plan:', err);
     toast('خطأ في رفض الطلب', 'error');
@@ -8852,16 +8908,16 @@ async function viewPendingPlan(planId){
       .select('*')
       .eq('id', planId)
       .single();
-    
+
     if(error) throw error;
-    
+
     const planData = typeof plan.plan_data === 'string' ? JSON.parse(plan.plan_data) : plan.plan_data;
-    
+
     // Show plan details in a modal
     const modalContent = `
       <div style="padding:20px;">
         <h3 style="color:var(--primary);margin-bottom:20px;"><i class="fas fa-clipboard-list"></i> تفاصيل الطلب</h3>
-        
+
         <div style="background:rgba(255,255,255,0.03);padding:16px;border-radius:12px;margin-bottom:16px;">
           <h4 style="color:var(--green);margin-bottom:12px;"><i class="fas fa-building"></i> معلومات الشركة</h4>
           <div style="display:grid;gap:8px;font-size:.9rem;">
@@ -8873,7 +8929,7 @@ async function viewPendingPlan(planId){
             ${planData.description ? `<div><strong>الوصف:</strong> ${planData.description}</div>` : ''}
           </div>
         </div>
-        
+
         <div style="background:rgba(255,255,255,0.03);padding:16px;border-radius:12px;margin-bottom:16px;">
           <h4 style="color:#3b82f6;margin-bottom:12px;"><i class="fas fa-share-alt"></i> المنصات</h4>
           <div style="display:grid;gap:6px;font-size:.9rem;">
@@ -8884,20 +8940,20 @@ async function viewPendingPlan(planId){
             ${planData.platforms?.web ? `<div><i class="fas fa-globe" style="color:#0984E3;margin-left:8px;"></i> Website: ${planData.platforms.web}</div>` : ''}
           </div>
         </div>
-        
+
         <div style="background:rgba(255,255,255,0.03);padding:16px;border-radius:12px;margin-bottom:16px;">
           <h4 style="color:#f59e0b;margin-bottom:12px;"><i class="fas fa-bullseye"></i> الأهداف</h4>
           <div style="display:flex;flex-wrap:wrap;gap:8px;">
             ${planData.goals?.map(goal => `<span style="background:rgba(245,158,11,0.15);color:#f59e0b;padding:6px 14px;border-radius:50px;font-size:.85rem;">${goal}</span>`).join('') || 'لا توجد أهداف'}
           </div>
         </div>
-        
+
         <div style="background:rgba(255,255,255,0.03);padding:16px;border-radius:12px;margin-bottom:20px;">
           <h4 style="color:var(--green);margin-bottom:12px;"><i class="fas fa-dollar-sign"></i> الميزانية</h4>
           <div style="font-size:1.3rem;font-weight:700;color:var(--green);">${Number(planData.budget || 0).toLocaleString()} ج.م/شهر</div>
           <div style="color:var(--text-secondary);font-size:.85rem;margin-top:4px;">المدة: ${planData.duration || 'غير محدد'}</div>
         </div>
-        
+
         <div style="display:flex;gap:12px;justify-content:center;">
           <button onclick="approvePlan('${plan.id}');closeCustomModal();" style="flex:1;padding:12px;background:var(--green);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;">
             <i class="fas fa-check"></i> موافقة على الطلب
@@ -8908,9 +8964,9 @@ async function viewPendingPlan(planId){
         </div>
       </div>
     `;
-    
+
     showCustomModal(modalContent);
-    
+
   } catch(err){
     console.error('Error viewing pending plan:', err);
     toast('خطأ في عرض تفاصيل الطلب', 'error');
@@ -8946,28 +9002,28 @@ function closeCustomModal(){
 // متغير للفلتر الحالي لطلبات الموظفين
 let _empReqFilter = 'all';
 
-// عرض طلبات الموظفين  
+// عرض طلبات الموظفين
 async function renderEmployeeRequests(){
   const grid = document.getElementById('employeeRequestsGrid');
   if(!grid) return;
-  
+
   try {
     // Load employees from Supabase
     const { data, error } = await _supabase
       .from('employees')
       .select('*')
       .order('created_at', { ascending: false });
-    
+
     if (error) {
       console.error('Supabase error:', error);
       throw error;
     }
-    
+
     const allRequests = data || [];
-    
+
     // Update global cache
     _fsEmployees = allRequests;
-    
+
     // Apply filter
     let requests = allRequests;
     if (_empReqFilter !== 'all') {
@@ -8984,27 +9040,27 @@ async function renderEmployeeRequests(){
         return true;
       });
     }
-    
+
     // Update badge counts
     const allCount = allRequests.length;
     const pendingCount = allRequests.filter(r => r.application_status === 'pending' && r.application_submitted_at).length;
     const incompleteCount = allRequests.filter(r => !r.application_submitted_at).length;
     const approvedCount = allRequests.filter(r => r.application_status === 'approved').length;
     const rejectedCount = allRequests.filter(r => r.application_status === 'rejected').length;
-    
+
     // Update badge spans
     const allBadge = document.getElementById('empReqAllCount');
     const pendingBadge = document.getElementById('empReqPendingCount');
     const incompleteBadge = document.getElementById('empReqIncompleteCount');
     const approvedBadge = document.getElementById('empReqApprovedCount');
     const rejectedBadge = document.getElementById('empReqRejectedCount');
-    
+
     if (allBadge) allBadge.textContent = allCount;
     if (pendingBadge) pendingBadge.textContent = pendingCount;
     if (incompleteBadge) incompleteBadge.textContent = incompleteCount;
     if (approvedBadge) approvedBadge.textContent = approvedCount;
     if (rejectedBadge) rejectedBadge.textContent = rejectedCount;
-    
+
     if(requests.length === 0){
       grid.innerHTML = `
         <div class="emp-req-empty">
@@ -9016,12 +9072,12 @@ async function renderEmployeeRequests(){
         </div>`;
       return;
     }
-    
+
     grid.innerHTML = requests.map(req => {
       // Determine status
       let statusBadge = '';
       let statusClass = 'incomplete';
-      
+
       if(req.application_status === 'approved'){
         statusBadge = '<div class="emp-req-status approved"><i class="fas fa-check-circle"></i> تم القبول</div>';
         statusClass = 'approved';
@@ -9035,20 +9091,20 @@ async function renderEmployeeRequests(){
         statusBadge = '<div class="emp-req-status incomplete"><i class="fas fa-edit"></i> لم يكمل البيانات</div>';
         statusClass = 'incomplete';
       }
-      
-      const avatarHtml = req.selfie_url ? 
+
+      const avatarHtml = req.selfie_url ?
         `<img src="${req.selfie_url}" alt="${req.full_name||req.username}">` :
         `${(req.full_name||req.username||'؟').charAt(0).toUpperCase()}`;
-      
-      const submittedDate = req.application_submitted_at ? 
-        new Date(req.application_submitted_at).toLocaleDateString('ar-EG', {year:'numeric',month:'long',day:'numeric'}) : 
+
+      const submittedDate = req.application_submitted_at ?
+        new Date(req.application_submitted_at).toLocaleDateString('ar-EG', {year:'numeric',month:'long',day:'numeric'}) :
         'لم يحدد بعد';
-      
+
       // Employee type badge
-      const empTypeBadge = req.employee_type === 'permanent' ? 
-        '<i class="fas fa-user-check" style="color:#22c55e;" title="موظف دائم"></i>' : 
+      const empTypeBadge = req.employee_type === 'permanent' ?
+        '<i class="fas fa-user-check" style="color:#22c55e;" title="موظف دائم"></i>' :
         '<i class="fas fa-file-signature" style="color:#3b82f6;" title="تعاقد"></i>';
-      
+
       return `
         <div class="emp-req-card ${statusClass}">
           <div class="emp-req-header">
@@ -9060,7 +9116,7 @@ async function renderEmployeeRequests(){
           </div>
           <div class="emp-req-body">
             ${statusBadge}
-            
+
             ${req.email ? `
             <div class="emp-req-row">
               <i class="fas fa-envelope"></i>
@@ -9070,36 +9126,36 @@ async function renderEmployeeRequests(){
               <i class="fas fa-envelope"></i>
               <span style="color:#f59e0b;">لم يدخل الإيميل بعد</span>
             </div>`}
-            
+
             ${req.phone ? `
             <div class="emp-req-row">
               <i class="fas fa-phone"></i>
               <span>${req.phone}</span>
             </div>` : ''}
-            
+
             ${req.national_id ? `
             <div class="emp-req-row">
               <i class="fas fa-id-card"></i>
               <span>الرقم القومي: ${req.national_id}</span>
             </div>` : ''}
-            
+
             ${req.salary ? `
             <div class="emp-req-row">
               <i class="fas fa-money-bill-wave"></i>
               <span>${req.salary} جنيه / شهر</span>
             </div>` : ''}
-            
+
             <div class="emp-req-row">
               <i class="fas fa-calendar"></i>
               <span>تاريخ التقديم: ${submittedDate}</span>
             </div>
-            
+
             ${req.employee_type === 'permanent' && req.permissions && Object.keys(req.permissions).length > 0 ? `
             <div class="emp-req-row">
               <i class="fas fa-user-tag"></i>
               <span>صلاحيات: ${Object.keys(req.permissions).length} قسم</span>
             </div>` : ''}
-            
+
             ${req.id_front_url || req.id_back_url || req.selfie_url ? `
             <div class="emp-req-docs">
               ${req.id_front_url ? `<div class="emp-req-doc-thumb" onclick="openLb('${req.id_front_url}')">
@@ -9112,7 +9168,7 @@ async function renderEmployeeRequests(){
                 <img src="${req.selfie_url}" alt="الصورة الشخصية">
               </div>` : ''}
             </div>` : ''}
-            
+
             ${req.application_status === 'pending' && req.application_submitted_at ? `
             <div class="emp-req-actions">
               <button class="btn-approve" onclick="approveEmployeeRequest('${req.id}')">
@@ -9128,7 +9184,7 @@ async function renderEmployeeRequests(){
                 <i class="fas fa-trash"></i>
               </button>
             </div>` : ''}
-            
+
             ${req.application_status === 'approved' ? `
             <div class="emp-req-actions">
               <button class="btn-view-req" onclick="viewEmployeeRequestDetails('${req.id}')" title="عرض التفاصيل" style="flex:1;">
@@ -9138,7 +9194,7 @@ async function renderEmployeeRequests(){
                 <i class="fas fa-trash"></i>
               </button>
             </div>` : ''}
-            
+
             ${req.application_status === 'rejected' ? `
             <div class="emp-req-actions">
               <button class="btn-view-req" onclick="viewEmployeeRequestDetails('${req.id}')" title="عرض التفاصيل" style="flex:1;">
@@ -9148,7 +9204,7 @@ async function renderEmployeeRequests(){
                 <i class="fas fa-trash"></i>
               </button>
             </div>` : ''}
-            
+
             ${!req.application_submitted_at ? `
             <div class="emp-req-actions">
               <button class="btn-view-req" onclick="viewEmployeeRequestDetails('${req.id}')" title="عرض التفاصيل" style="flex:1;">
@@ -9164,7 +9220,7 @@ async function renderEmployeeRequests(){
           </div>
         </div>`;
     }).join('');
-    
+
   } catch(error){
     console.error('Error loading employee requests:', error);
     grid.innerHTML = `<div class="emp-req-empty"><i class="fas fa-exclamation-triangle"></i><p>حدث خطأ في تحميل الطلبات</p></div>`;
@@ -9182,17 +9238,17 @@ async function approveEmployeeRequest(empId){
         approved_at: new Date().toISOString()
       })
       .eq('id', empId);
-    
+
     if (error) throw error;
-    
+
     // Close modal if open
     const modal = document.getElementById('reqDetailModal');
     if (modal) modal.classList.remove('open');
-    
+
     renderEmployeeRequests();
     updateBadges();
     toast('تم قبول الطلب بنجاح', 'success');
-    
+
   } catch(error){
     console.error('Error approving request:', error);
     toast('حدث خطأ أثناء قبول الطلب', 'error');
@@ -9202,7 +9258,7 @@ async function approveEmployeeRequest(empId){
 // رفض طلب موظف
 async function rejectEmployeeRequest(empId){
   const reason = prompt('سبب الرفض (اختياري):');
-  
+
   try {
     const { error } = await _supabase
       .from('employees')
@@ -9212,17 +9268,17 @@ async function rejectEmployeeRequest(empId){
         rejection_reason: reason || ''
       })
       .eq('id', empId);
-    
+
     if (error) throw error;
-    
+
     // Close modal if open
     const modal = document.getElementById('reqDetailModal');
     if (modal) modal.classList.remove('open');
-    
+
     renderEmployeeRequests();
     updateBadges();
     toast('تم رفض الطلب', 'success');
-    
+
   } catch(error){
     console.error('Error rejecting request:', error);
     toast('حدث خطأ أثناء رفض الطلب', 'error');
@@ -9234,23 +9290,23 @@ async function deleteEmployeeRequest(empId){
   if (!confirm('هل أنت متأكد من حذف هذا الطلب نهائياً؟\nلا يمكن التراجع عن هذا الإجراء.')) {
     return;
   }
-  
+
   try {
     const { error } = await _supabase
       .from('employees')
       .delete()
       .eq('id', empId);
-    
+
     if (error) throw error;
-    
+
     // Close modal if open
     const modal = document.getElementById('reqDetailModal');
     if (modal) modal.classList.remove('open');
-    
+
     renderEmployeeRequests();
     updateBadges();
     toast('تم حذف الطلب بنجاح', 'success');
-    
+
   } catch(error){
     console.error('Error deleting request:', error);
     toast('حدث خطأ أثناء حذف الطلب', 'error');
@@ -9260,7 +9316,7 @@ async function deleteEmployeeRequest(empId){
 // فلترة طلبات الموظفين
 function filterEmpReqs(status) {
   _empReqFilter = status;
-  
+
   // Update button active states
   const buttons = ['empReqAll', 'empReqPending', 'empReqIncomplete', 'empReqApproved', 'empReqRejected'];
   buttons.forEach(btnId => {
@@ -9273,13 +9329,13 @@ function filterEmpReqs(status) {
       }
     }
   });
-  
+
   // Set empReqAll as active if status is 'all'
   if (status === 'all') {
     const allBtn = document.getElementById('empReqAll');
     if (allBtn) allBtn.classList.add('active');
   }
-  
+
   // Re-render with filter
   renderEmployeeRequests();
 }
@@ -9288,27 +9344,27 @@ function filterEmpReqs(status) {
 async function downloadEmployeeContractPDF(empId){
   try {
     toast('جاري إنشاء العقد...', 'info');
-    
+
     // Load employee data
     const { data: emp, error } = await _supabase
       .from('employees')
       .select('*')
       .eq('id', empId)
       .single();
-    
+
     if (error || !emp) {
       toast('لم يتم العثور على بيانات الموظف', 'error');
       return;
     }
-    
+
     const contractDate = emp.approved_at ? new Date(emp.approved_at).toLocaleDateString('ar-EG') : new Date().toLocaleDateString('ar-EG');
     const startDate = emp.start_date ? new Date(emp.start_date).toLocaleDateString('ar-EG') : '-';
-    
+
     // Create hidden container for the contract HTML
     const contractDiv = document.createElement('div');
     contractDiv.id = 'contractPrintArea';
     contractDiv.style.cssText = 'position:fixed;top:-9999px;left:0;width:794px;background:#fff;z-index:-1;font-family:Cairo,sans-serif;';
-    
+
     contractDiv.innerHTML = `
       <div style="padding:40px 50px;color:#1a1a1a;direction:rtl;">
         <!-- Header -->
@@ -9323,14 +9379,14 @@ async function downloadEmployeeContractPDF(empId){
             <img src="../images/1772173627537.png" style="width:70px;height:70px;object-fit:contain;" onerror="this.style.display='none'">
           </div>
         </div>
-        
+
         <!-- Contract Title -->
         <div style="text-align:center;margin-bottom:30px;">
           <h2 style="margin:0;font-size:28px;color:#2c3e50;font-weight:900;">عقد عمل</h2>
           <p style="margin:5px 0 0;font-size:14px;color:#7f8c8d;">Employment Contract</p>
           <p style="margin:8px 0 0;font-size:13px;color:#555;">تاريخ العقد: ${contractDate}</p>
         </div>
-        
+
         <!-- Contract Parties Section -->
         <div style="background:linear-gradient(135deg,rgba(52,152,219,0.08),rgba(46,213,115,0.08));border:2px solid #3498db;border-radius:12px;padding:20px;margin-bottom:25px;">
           <h3 style="font-size:16px;color:#2c3e50;margin:0 0 15px 0;font-weight:900;text-align:center;">أطراف العقد</h3>
@@ -9366,7 +9422,7 @@ async function downloadEmployeeContractPDF(empId){
             وتلتزم شركة أكرم مصطفى بكونها جهة مرخصة وموثقة بتوفير بيئة عمل آمنة ومستقرة للموظف.
           </p>
         </div>
-        
+
         <!-- Employee Info Section -->
         <div style="margin-bottom:25px;">
           <h3 style="font-size:16px;color:#3498db;border-bottom:2px solid #ecf0f1;padding-bottom:8px;margin-bottom:15px;">
@@ -9396,7 +9452,7 @@ async function downloadEmployeeContractPDF(empId){
             </tr>
           </table>
         </div>
-        
+
         <!-- Job Details Section -->
         <div style="margin-bottom:25px;">
           <h3 style="font-size:16px;color:#3498db;border-bottom:2px solid #ecf0f1;padding-bottom:8px;margin-bottom:15px;">
@@ -9418,7 +9474,7 @@ async function downloadEmployeeContractPDF(empId){
             </tr>
           </table>
         </div>
-        
+
         <!-- Contract Terms -->
         ${emp.contract_terms ? `
         <div style="margin-bottom:25px;">
@@ -9428,7 +9484,7 @@ async function downloadEmployeeContractPDF(empId){
           </h3>
           <div style="padding:15px;background:#f8f9fa;border-radius:8px;font-size:13px;line-height:2;white-space:pre-wrap;color:#333;">${emp.contract_terms}</div>
         </div>` : ''}
-        
+
         <!-- Signatures Section -->
         <div style="margin-top:40px;padding-top:20px;border-top:2px solid #ecf0f1;">
           <div style="display:flex;justify-content:space-between;">
@@ -9452,7 +9508,7 @@ async function downloadEmployeeContractPDF(empId){
             </div>
           </div>
         </div>
-        
+
         <!-- Footer -->
         <div style="margin-top:30px;padding-top:15px;border-top:1px solid #ecf0f1;text-align:center;">
           <div style="background:rgba(52,152,219,0.05);padding:15px;border-radius:8px;margin-bottom:10px;">
@@ -9464,12 +9520,12 @@ async function downloadEmployeeContractPDF(empId){
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(contractDiv);
-    
+
     // Wait for images to load
     await new Promise(r => setTimeout(r, 500));
-    
+
     // Use html2canvas to render the contract
     const canvas = await html2canvas(contractDiv, {
       scale: 2,
@@ -9479,19 +9535,19 @@ async function downloadEmployeeContractPDF(empId){
       width: 794,
       logging: false
     });
-    
+
     // Create PDF from canvas
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF('p', 'mm', 'a4');
-    
+
     const imgWidth = 210; // A4 width in mm
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    
+
     // Handle multi-page if content is long
     let position = 0;
     const pageHeight = 297; // A4 height in mm
     let remainingHeight = imgHeight;
-    
+
     while (remainingHeight > 0) {
       doc.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, position, imgWidth, imgHeight);
       remainingHeight -= pageHeight;
@@ -9500,16 +9556,16 @@ async function downloadEmployeeContractPDF(empId){
         position -= pageHeight;
       }
     }
-    
+
     // Clean up
     document.body.removeChild(contractDiv);
-    
+
     // Save PDF
     const fileName = `عقد_عمل_${emp.full_name || emp.id}.pdf`;
     doc.save(fileName);
-    
+
     toast('تم تحميل العقد بنجاح', 'success');
-    
+
   } catch(error){
     console.error('Error generating PDF:', error);
     // Clean up on error
@@ -9525,11 +9581,11 @@ async function sendContractToEmployee(empId, phone, name){
     phone = prompt('أدخل رقم واتساب الموظف:\nمثال: 01012345678');
     if (!phone || !phone.trim()) return;
   }
-  
+
   // Normalize phone number
   let formattedPhone = phone.replace(/\s+/g, '').replace(/^0/, '20');
   if (!formattedPhone.startsWith('20')) formattedPhone = '20' + formattedPhone;
-  
+
   // Build contract download link message
   const siteUrl = window.location.origin || 'https://akrammostafa.com';
   const contractMsg = encodeURIComponent(
@@ -9542,7 +9598,7 @@ async function sendContractToEmployee(empId, phone, name){
     `مرحباً بك في فريق العمل! 🚀\n` +
     `Akram Mostafa - أكرم مصطفى`
   );
-  
+
   window.open(`https://wa.me/${formattedPhone}?text=${contractMsg}`, '_blank');
   toast('تم فتح واتساب لإرسال العقد', 'success');
 }
@@ -9550,11 +9606,11 @@ async function sendContractToEmployee(empId, phone, name){
 // إعادة إرسال رابط التسجيل للموظف
 function resendEmployeeLink(empId, email, name){
   const onboardingLink = `${window.location.origin}/employee-onboarding.html?id=${empId}`;
-  
+
   const whatsappMsg = encodeURIComponent(`مرحباً ${name}!\n\nتذكير: يرجى إكمال بياناتك والتوقيع على العقد من الرابط التالي:\n\n${onboardingLink}`);
-  
+
   const phone = prompt('أدخل رقم الواتساب:\nمثال: 01012345678');
-  
+
   if(phone && phone.trim()){
     const cleanPhone = phone.replace(/\D/g, '');
     const whatsappLink = `https://wa.me/${cleanPhone}?text=${whatsappMsg}`;
@@ -9575,22 +9631,22 @@ async function viewEmployeeRequestDetails(empId){
       .select('*')
       .eq('id', empId)
       .single();
-    
+
     if (error || !emp) {
       console.error('Error loading employee:', error);
       toast('لم يتم العثور على الموظف', 'error');
       return;
     }
-    
+
     const modal = document.getElementById('reqDetailModal') || createReqDetailModal();
     const content = document.getElementById('reqDetailContent');
-    
+
     const startDate = emp.start_date ? new Date(emp.start_date).toLocaleDateString('ar-EG') : '-';
     const submittedDate = emp.application_submitted_at ? new Date(emp.application_submitted_at).toLocaleDateString('ar-EG') : '-';
     const statusMap = {pending:'معلّق',approved:'مقبول',rejected:'مرفوض',incomplete:'غير مكتمل'};
     const statusClass = emp.application_status || 'incomplete';
     const initials = (emp.full_name || 'م').split(' ').map(w=>w[0]).join('').slice(0,2);
-    
+
     content.innerHTML = `
       <!-- Employee Hero -->
       <div class="rd-emp-hero">
@@ -9606,7 +9662,7 @@ async function viewEmployeeRequestDetails(empId){
         </div>
         <span class="rd-emp-status ${statusClass}">${statusMap[statusClass] || statusClass}</span>
       </div>
-      
+
       <!-- Personal Info -->
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-user"></i> البيانات الشخصية</div>
@@ -9618,7 +9674,7 @@ async function viewEmployeeRequestDetails(empId){
           <div class="rd-row"><div class="rd-lbl"><i class="fas fa-id-card"></i> رقم البطاقة</div><div class="rd-val">${emp.national_id || '-'}</div></div>
         </div>
       </div>
-      
+
       <!-- Job Info -->
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-briefcase"></i> بيانات الوظيفة</div>
@@ -9629,7 +9685,7 @@ async function viewEmployeeRequestDetails(empId){
           <div class="rd-row"><div class="rd-lbl"><i class="fas fa-clock"></i> تاريخ التقديم</div><div class="rd-val">${submittedDate}</div></div>
         </div>
       </div>
-      
+
       <!-- Account Info -->
       <div class="rd-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 20px; color: #fff; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
         <div class="rd-section-title" style="color: #fff; border-bottom: 2px solid rgba(255,255,255,0.3);"><i class="fas fa-key"></i> بيانات تسجيل الدخول</div>
@@ -9640,7 +9696,7 @@ async function viewEmployeeRequestDetails(empId){
           <div class="rd-row" style="border-bottom: 1px solid rgba(255,255,255,0.2);"><div class="rd-lbl" style="color: rgba(255,255,255,0.9);"><i class="fas fa-toggle-on"></i> حالة الحساب</div><div class="rd-val" style="color: #fff;">${emp.is_active ? '<span style="background: #22c55e; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> مفعّل</span>' : '<span style="background: #ef4444; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;"><i class="fas fa-times-circle"></i> غير مفعّل</span>'}</div></div>
         </div>
       </div>
-      
+
       <!-- Permissions Section -->
       ${emp.permissions && Object.keys(emp.permissions).length > 0 ? `
       <div class="rd-section">
@@ -9676,13 +9732,13 @@ async function viewEmployeeRequestDetails(empId){
           <p style="font-size: 12px; margin-top: 8px; opacity: 0.7;">يرجى الموافقة على الطلب وتعيين الصلاحيات المناسبة</p>
         </div>
       </div>`}
-      
+
       <!-- Account Section Closing -->
       <div class="rd-section" style="background: transparent; padding: 0; box-shadow: none;">
         <div class="rd-section-body" style="padding: 0;">
         </div>
       </div>
-      
+
       <!-- ID Photos -->
       ${emp.id_front_url || emp.id_back_url ? `
       <div class="rd-section">
@@ -9702,7 +9758,7 @@ async function viewEmployeeRequestDetails(empId){
           </div>` : ''}
         </div>
       </div>` : ''}
-      
+
       <!-- Selfie -->
       ${emp.selfie_url ? `
       <div class="rd-section">
@@ -9713,7 +9769,7 @@ async function viewEmployeeRequestDetails(empId){
           </div>
         </div>
       </div>` : ''}
-      
+
       <!-- Signature -->
       ${emp.signature_url ? `
       <div class="rd-section">
@@ -9724,14 +9780,14 @@ async function viewEmployeeRequestDetails(empId){
           </div>
         </div>
       </div>` : ''}
-      
+
       <!-- Contract Terms -->
       ${emp.contract_terms ? `
       <div class="rd-section">
         <div class="rd-section-title"><i class="fas fa-file-contract"></i> شروط العقد</div>
         <div class="rd-terms-box">${emp.contract_terms}</div>
       </div>` : ''}
-      
+
       <!-- Actions: Pending -->
       ${emp.application_status === 'pending' ? `
       <div class="rd-actions">
@@ -9742,7 +9798,7 @@ async function viewEmployeeRequestDetails(empId){
           <i class="fas fa-times-circle"></i> رفض الطلب
         </button>
       </div>` : ''}
-      
+
       <!-- Actions: Approved -->
       ${emp.application_status === 'approved' ? `
       <div class="rd-actions">
@@ -9754,9 +9810,9 @@ async function viewEmployeeRequestDetails(empId){
         </button>
       </div>` : ''}
     `;
-    
+
     modal.classList.add('open');
-    
+
   } catch(error){
     console.error('Error viewing details:', error);
     toast('حدث خطأ في عرض التفاصيل', 'error');
@@ -9779,11 +9835,11 @@ function createReqDetailModal(){
       <div id="reqDetailContent"></div>
     </div>`;
   document.body.appendChild(modal);
-  
+
   modal.addEventListener('click', (e) => {
     if(e.target === modal) modal.classList.remove('open');
   });
-  
+
   return modal;
 }
 
@@ -9811,28 +9867,28 @@ async function loadCrmLeads(){
       .from('crm_leads')
       .select('*')
       .order('created_at', { ascending: false });
-    
+
     if(error) throw error;
-    
+
     _crmLeads = leads || [];
-    
+
     // 🛡️ Backup to localStorage
     if(_crmLeads.length > 0){
       localStorage.setItem(CRM_LEADS_KEY, JSON.stringify(_crmLeads));
     }
-    
+
     // Update stats
     updateCrmStats();
-    
+
     // Update tab counts
     updateCrmTabCounts();
-    
+
     // Display leads
     displayCrmLeads();
-    
+
   } catch(err){
     console.error('Error loading CRM leads:', err);
-    
+
     // 🔄 Fallback to localStorage
     const cached = localStorage.getItem(CRM_LEADS_KEY);
     if(cached){
@@ -9840,7 +9896,7 @@ async function loadCrmLeads(){
         _crmLeads = JSON.parse(cached);
         console.log('✅ Loaded CRM leads from localStorage backup');
         toast('تم تحميل البيانات من النسخة الاحتياطية', 'warning');
-        
+
         updateCrmStats();
         updateCrmTabCounts();
         displayCrmLeads();
@@ -9859,35 +9915,35 @@ async function loadCrmLeads(){
 function displayCrmLeads(){
   const tbody = document.getElementById('crmLeadsTableBody');
   if(!tbody) return;
-  
+
   // Filter leads based on current status filter
   let filteredLeads = _crmLeads;
-  
+
   if(_crmFilterStatus !== 'all'){
     filteredLeads = _crmLeads.filter(l => l.status === _crmFilterStatus);
   }
-  
+
   // Apply additional filters
   const searchText = (document.getElementById('crmLeadSearch')?.value || '').toLowerCase();
   const assignedFilter = document.getElementById('crmAssignedFilter')?.value || '';
   const priorityFilter = document.getElementById('crmPriorityFilter')?.value || '';
-  
+
   if(searchText){
-    filteredLeads = filteredLeads.filter(l => 
+    filteredLeads = filteredLeads.filter(l =>
       (l.name||'').toLowerCase().includes(searchText) ||
       (l.phone||'').includes(searchText) ||
       (l.company||'').toLowerCase().includes(searchText)
     );
   }
-  
+
   if(assignedFilter){
     filteredLeads = filteredLeads.filter(l => l.assigned_to === assignedFilter);
   }
-  
+
   if(priorityFilter){
     filteredLeads = filteredLeads.filter(l => l.priority === priorityFilter);
   }
-  
+
   // Generate table rows
   if(filteredLeads.length === 0){
     tbody.innerHTML = `
@@ -9900,12 +9956,12 @@ function displayCrmLeads(){
     `;
     return;
   }
-  
+
   tbody.innerHTML = filteredLeads.map(lead => {
     // Generate avatar initials with dynamic color
     const nameWords = (lead.name || 'عميل').trim().split(/\s+/);
     const initials = nameWords.map(w => w[0]).join('').slice(0, 2).toUpperCase();
-    
+
     // Generate dynamic gradient based on name
     const colors = [
       ['#00E5FF', '#00B8D4'], // pink-orange
@@ -9919,10 +9975,10 @@ function displayCrmLeads(){
     ];
     const colorIndex = (lead.name || 'A').charCodeAt(0) % colors.length;
     const [color1, color2] = colors[colorIndex];
-    
+
     const lastContact = lead.last_contact ? new Date(lead.last_contact).toLocaleDateString('ar-EG', {month:'short', day:'numeric'}) : '-';
     const isSelected = _selectedCrmLeads.has(lead.id);
-    
+
     const statusNames = {
       'new': 'جديد',
       'interested': 'مهتم',
@@ -9931,12 +9987,12 @@ function displayCrmLeads(){
       'not_interested': 'غير مهتم',
       'no_answer': 'لا يرد'
     };
-    
+
     return `
       <tr style="cursor:context-menu;" oncontextmenu="showCrmContextMenu(event, ${lead.id})">
         <td style="width:40px;">
-          <input type="checkbox" class="crm-lead-checkbox" 
-                 ${isSelected ? 'checked' : ''} 
+          <input type="checkbox" class="crm-lead-checkbox"
+                 ${isSelected ? 'checked' : ''}
                  onchange="toggleCrmLeadSelection(${lead.id}, this.checked)">
         </td>
         <td>
@@ -9950,8 +10006,8 @@ function displayCrmLeads(){
         </td>
         <td style="direction:ltr;text-align:right;font-size:0.85rem;">${lead.phone || '-'}</td>
         <td>
-          <span class="crm-status-badge crm-status-${lead.status}" 
-                onclick="showCrmStatusDropdown(event, ${lead.id})" 
+          <span class="crm-status-badge crm-status-${lead.status}"
+                onclick="showCrmStatusDropdown(event, ${lead.id})"
                 title="انقر لتغيير الحالة">
             <span class="crm-status-dot"></span>
             ${statusNames[lead.status] || lead.status}
@@ -10015,37 +10071,37 @@ function displayCrmLeads(){
 
 function showCrmContextMenu(event, leadId){
   event.preventDefault();
-  
+
   const menu = document.getElementById('crmContextMenu');
   if(!menu) return;
-  
+
   // Store the lead ID for later actions
   _contextMenuLeadId = leadId;
-  
+
   // Get click position
   const x = event.clientX;
   const y = event.clientY;
-  
+
   // Show menu
   menu.style.display = 'block';
-  
+
   // Calculate menu dimensions
   const menuRect = menu.getBoundingClientRect();
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
-  
+
   // Position menu (prevent overflow)
   let menuX = x;
   let menuY = y;
-  
+
   if(x + menuRect.width > viewportWidth){
     menuX = x - menuRect.width; // Open to the left
   }
-  
+
   if(y + menuRect.height > viewportHeight){
     menuY = y - menuRect.height; // Open upwards
   }
-  
+
   menu.style.left = menuX + 'px';
   menu.style.top = menuY + 'px';
 }
@@ -10053,12 +10109,12 @@ function showCrmContextMenu(event, leadId){
 function crmContextAction(action){
   const menu = document.getElementById('crmContextMenu');
   if(menu) menu.style.display = 'none';
-  
+
   if(!_contextMenuLeadId) return;
-  
+
   const lead = _crmLeads.find(l => l.id === _contextMenuLeadId);
   if(!lead) return;
-  
+
   switch(action){
     case 'view':
       openCrmHistory(_contextMenuLeadId);
@@ -10090,7 +10146,7 @@ function crmContextAction(action){
       deleteCrmLead(_contextMenuLeadId);
       break;
   }
-  
+
   _contextMenuLeadId = null;
 }
 
@@ -10119,12 +10175,12 @@ function updateCrmStats(){
   const converted = _crmLeads.filter(l => l.status === 'converted').length;
   const pending = _crmLeads.filter(l => ['new','interested','negotiating'].includes(l.status)).length;
   const lost = _crmLeads.filter(l => ['not_interested','no_answer'].includes(l.status)).length;
-  
+
   document.getElementById('crmTotalLeads').textContent = total;
   document.getElementById('crmConvertedLeads').textContent = converted;
   document.getElementById('crmPendingLeads').textContent = pending;
   document.getElementById('crmLostLeads').textContent = lost;
-  
+
   // Update nav counts
   document.getElementById('crmLeadsCount').textContent = total;
 }
@@ -10139,7 +10195,7 @@ function updateCrmTabCounts(){
     not_interested: _crmLeads.filter(l => l.status === 'not_interested').length,
     no_answer: _crmLeads.filter(l => l.status === 'no_answer').length
   };
-  
+
   Object.keys(counts).forEach(status => {
     const el = document.getElementById(`tabCount${status.charAt(0).toUpperCase()}${status.slice(1).replace('_', '')}`);
     if(el) el.textContent = counts[status];
@@ -10152,13 +10208,13 @@ function updateCrmTabCounts(){
 
 function filterCrmLeadsByStatus(status){
   _crmFilterStatus = status;
-  
+
   // Update active tab
   document.querySelectorAll('.crm-status-tab').forEach(tab => {
     tab.classList.remove('active');
   });
   event.target.closest('.crm-status-tab').classList.add('active');
-  
+
   displayCrmLeads();
 }
 
@@ -10180,14 +10236,14 @@ function toggleCrmLeadSelection(leadId, checked){
   } else {
     _selectedCrmLeads.delete(leadId);
   }
-  
+
   updateBulkActionsBar();
 }
 
 function toggleSelectAllCrmLeads(){
   const checkboxes = document.querySelectorAll('.crm-lead-checkbox');
   const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-  
+
   checkboxes.forEach(cb => {
     cb.checked = !allChecked;
     const leadId = cb.onchange.toString().match(/'([^']+)'/)?.[1];
@@ -10199,7 +10255,7 @@ function toggleSelectAllCrmLeads(){
       }
     }
   });
-  
+
   updateBulkActionsBar();
 }
 
@@ -10207,7 +10263,7 @@ function updateBulkActionsBar(){
   const count = _selectedCrmLeads.size;
   const bar = document.getElementById('crmBulkActions');
   const countEl = document.getElementById('selectedCrmLeadsCount');
-  
+
   if(count > 0){
     bar.style.display = 'flex';
     countEl.textContent = count;
@@ -10227,7 +10283,7 @@ function bulkAssignCrmLeads(){
     toast('اختر عملاء أولاً', 'error');
     return;
   }
-  
+
   document.getElementById('bulkAssignCount').textContent = _selectedCrmLeads.size;
   populateEmployeeDropdown('bulkAssignEmployee');
   document.getElementById('bulkAssignModal').classList.add('open');
@@ -10235,15 +10291,15 @@ function bulkAssignCrmLeads(){
 
 async function confirmBulkAssign(){
   const employee = document.getElementById('bulkAssignEmployee').value;
-  
+
   if(!employee){
     toast('اختر موظف', 'error');
     return;
   }
-  
+
   try {
     const leadIds = Array.from(_selectedCrmLeads);
-    
+
     for(const leadId of leadIds){
       await _supabase
         .from('crm_leads')
@@ -10252,7 +10308,7 @@ async function confirmBulkAssign(){
           assigned_at: new Date().toISOString()
         })
         .eq('id', leadId);
-      
+
       // Log distribution
       await _supabase
         .from('crm_distribution_log')
@@ -10264,12 +10320,12 @@ async function confirmBulkAssign(){
           created_at: new Date().toISOString()
         }]);
     }
-    
+
     toast(`تم توزيع ${leadIds.length} عميل بنجاح`, 'success');
     closeBulkAssignModal();
     clearCrmSelection();
     loadCrmLeads();
-    
+
   } catch(err){
     console.error('Error bulk assigning:', err);
     toast('خطأ في التوزيع', 'error');
@@ -10281,7 +10337,7 @@ function bulkChangeStatus(){
     toast('اختر عملاء أولاً', 'error');
     return;
   }
-  
+
   document.getElementById('bulkStatusCount').textContent = _selectedCrmLeads.size;
   document.getElementById('bulkStatusModal').classList.add('open');
 }
@@ -10289,16 +10345,16 @@ function bulkChangeStatus(){
 async function confirmBulkStatus(){
   const newStatus = document.getElementById('bulkNewStatus').value;
   const note = document.getElementById('bulkStatusNote').value.trim();
-  
+
   try {
     const leadIds = Array.from(_selectedCrmLeads);
-    
+
     for(const leadId of leadIds){
       const lead = _crmLeads.find(l => l.id === leadId);
       if(!lead) continue;
-      
+
       const oldStatus = lead.status;
-      
+
       await _supabase
         .from('crm_leads')
         .update({
@@ -10306,7 +10362,7 @@ async function confirmBulkStatus(){
           updated_at: new Date().toISOString()
         })
         .eq('id', leadId);
-      
+
       // Log status change
       await _supabase
         .from('crm_status_log')
@@ -10319,12 +10375,12 @@ async function confirmBulkStatus(){
           created_at: new Date().toISOString()
         }]);
     }
-    
+
     toast(`تم تغيير حالة ${leadIds.length} عميل بنجاح`, 'success');
     closeBulkStatusModal();
     clearCrmSelection();
     loadCrmLeads();
-    
+
   } catch(err){
     console.error('Error bulk status change:', err);
     toast('خطأ في تغيير الحالة', 'error');
@@ -10336,25 +10392,25 @@ async function bulkDeleteCrmLeads(){
     toast('اختر عملاء أولاً', 'error');
     return;
   }
-  
+
   if(!confirm(`هل أنت متأكد من حذف ${_selectedCrmLeads.size} عميل؟\nهذا الإجراء لا يمكن التراجع عنه.`)){
     return;
   }
-  
+
   try {
     const leadIds = Array.from(_selectedCrmLeads);
-    
+
     const { error } = await _supabase
       .from('crm_leads')
       .delete()
       .in('id', leadIds);
-    
+
     if(error) throw error;
-    
+
     toast(`تم حذف ${leadIds.length} عميل بنجاح`, 'success');
     clearCrmSelection();
     loadCrmLeads();
-    
+
   } catch(err){
     console.error('Error bulk delete:', err);
     toast('خطأ في الحذف', 'error');
@@ -10368,7 +10424,7 @@ async function bulkDeleteCrmLeads(){
 function openAddLeadModal(){
   document.getElementById('leadModalTitle').textContent = 'عميل جديد';
   document.getElementById('leadEditId').value = '';
-  
+
   // Clear form
   document.getElementById('leadName').value = '';
   document.getElementById('leadPhone').value = '';
@@ -10379,19 +10435,19 @@ function openAddLeadModal(){
   document.getElementById('leadStatus').value = 'new';
   document.getElementById('leadValue').value = '';
   document.getElementById('leadNotes').value = '';
-  
+
   populateEmployeeDropdown('leadAssignedTo');
-  
+
   document.getElementById('addLeadModal').classList.add('open');
 }
 
 async function editCrmLead(leadId){
   const lead = _crmLeads.find(l => l.id === leadId);
   if(!lead) return;
-  
+
   document.getElementById('leadModalTitle').textContent = 'تعديل عميل';
   document.getElementById('leadEditId').value = leadId;
-  
+
   document.getElementById('leadName').value = lead.name || '';
   document.getElementById('leadPhone').value = lead.phone || '';
   document.getElementById('leadEmail').value = lead.email || '';
@@ -10401,10 +10457,10 @@ async function editCrmLead(leadId){
   document.getElementById('leadStatus').value = lead.status || 'new';
   document.getElementById('leadValue').value = lead.total_value || '';
   document.getElementById('leadNotes').value = lead.notes || '';
-  
+
   populateEmployeeDropdown('leadAssignedTo');
   document.getElementById('leadAssignedTo').value = lead.assigned_to || '';
-  
+
   document.getElementById('addLeadModal').classList.add('open');
 }
 
@@ -10420,17 +10476,17 @@ async function saveCrmLead(){
   const totalValue = document.getElementById('leadValue').value.trim();
   const assignedTo = document.getElementById('leadAssignedTo').value;
   const notes = document.getElementById('leadNotes').value.trim();
-  
+
   if(!name){
     toast('أدخل اسم العميل', 'error');
     return;
   }
-  
+
   if(!phone){
     toast('أدخل رقم الهاتف', 'error');
     return;
   }
-  
+
   try {
     const leadData = {
       name,
@@ -10445,18 +10501,18 @@ async function saveCrmLead(){
       notes,
       updated_at: new Date().toISOString()
     };
-    
+
     if(leadId){
       // Update existing lead
       const oldLead = _crmLeads.find(l => l.id === leadId);
-      
+
       const { error } = await _supabase
         .from('crm_leads')
         .update(leadData)
         .eq('id', leadId);
-      
+
       if(error) throw error;
-      
+
       // Log status change if changed
       if(oldLead && oldLead.status !== status){
         await _supabase
@@ -10470,30 +10526,30 @@ async function saveCrmLead(){
             created_at: new Date().toISOString()
           }]);
       }
-      
+
       toast('تم تحديث العميل بنجاح', 'success');
-      
+
     } else {
       // Create new lead - Supabase will auto-generate id (BIGSERIAL)
       leadData.created_at = new Date().toISOString();
       leadData.call_count = 0;
       leadData.note_count = 0;
-      
+
       const { error } = await _supabase
         .from('crm_leads')
         .insert([leadData]);
-      
+
       if(error) throw error;
-      
+
       toast('تم إضافة العميل بنجاح', 'success');
     }
-    
+
     closeLeadModal();
     loadCrmLeads(); // Will also backup to localStorage
-    
+
   } catch(err){
     console.error('Error saving lead:', err);
-    
+
     if(err.message.includes('duplicate') || err.message.includes('unique')){
       toast('رقم الهاتف مسجل مسبقاً', 'error');
     } else if(err.message.includes('relation') || err.message.includes('does not exist')){
@@ -10512,18 +10568,18 @@ async function deleteCrmLead(leadId){
   if(!confirm('هل أنت متأكد من حذف هذا العميل؟')){
     return;
   }
-  
+
   try {
     const { error } = await _supabase
       .from('crm_leads')
       .delete()
       .eq('id', leadId);
-    
+
     if(error) throw error;
-    
+
     toast('تم حذف العميل بنجاح', 'success');
     loadCrmLeads();
-    
+
   } catch(err){
     console.error('Error deleting lead:', err);
     toast('خطأ في الحذف', 'error');
@@ -10536,7 +10592,7 @@ async function deleteCrmLead(leadId){
 
 async function viewLeadDetails(leadId){
   _currentViewLeadId = leadId;
-  
+
   try {
     // Load lead
     const { data: lead, error: leadError } = await _supabase
@@ -10544,36 +10600,36 @@ async function viewLeadDetails(leadId){
       .select('*')
       .eq('id', leadId)
       .single();
-    
+
     if(leadError || !lead){
       toast('لم يتم العثور على العميل', 'error');
       return;
     }
-    
+
     // Load status log
     const { data: statusLog } = await _supabase
       .from('crm_status_log')
       .select('*')
       .eq('lead_id', leadId)
       .order('created_at', { ascending: false });
-    
+
     // Load notes
     const { data: notes } = await _supabase
       .from('crm_notes')
       .select('*')
       .eq('lead_id', leadId)
       .order('created_at', { ascending: false });
-    
+
     // Load calls
     const { data: calls } = await _supabase
       .from('crm_calls')
       .select('*')
       .eq('lead_id', leadId)
       .order('created_at', { ascending: false });
-    
+
     // Display lead info
     document.getElementById('viewLeadName').textContent = lead.name || 'تفاصيل العميل';
-    
+
     const infoHtml = `
       <div><strong>الهاتف:</strong> ${lead.phone || '-'}</div>
       <div><strong>البريد:</strong> ${lead.email || '-'}</div>
@@ -10586,7 +10642,7 @@ async function viewLeadDetails(leadId){
       <div style="grid-column:1/-1;"><strong>ملاحظات:</strong> ${lead.notes || '-'}</div>
     `;
     document.getElementById('viewLeadInfo').innerHTML = infoHtml;
-    
+
     // Display status log
     const statusLogHtml = (statusLog || []).map(log => {
       const date = new Date(log.created_at).toLocaleString('ar-EG', {
@@ -10612,7 +10668,7 @@ async function viewLeadDetails(leadId){
       `;
     }).join('');
     document.getElementById('viewLeadStatusLog').innerHTML = statusLogHtml || '<p style="color:var(--text-muted);padding:10px;">لا يوجد سجل</p>';
-    
+
     // Display calls
     document.getElementById('viewLeadCallsCount').textContent = (calls || []).length;
     const callsHtml = (calls || []).map(call => {
@@ -10634,7 +10690,7 @@ async function viewLeadDetails(leadId){
       `;
     }).join('');
     document.getElementById('viewLeadCalls').innerHTML = callsHtml || '<p style="color:var(--text-muted);padding:10px;">لا توجد مكالمات</p>';
-    
+
     // Display notes
     document.getElementById('viewLeadNotesCount').textContent = (notes || []).length;
     const notesHtml = (notes || []).map(note => {
@@ -10656,12 +10712,12 @@ async function viewLeadDetails(leadId){
       `;
     }).join('');
     document.getElementById('viewLeadNotes').innerHTML = notesHtml || '<p style="color:var(--text-muted);padding:10px;">لا توجد ملاحظات</p>';
-    
+
     // Load marketing plans
     await loadLeadMarketingPlans(leadId);
-    
+
     document.getElementById('viewLeadModal').classList.add('open');
-    
+
   } catch(err){
     console.error('Error viewing lead details:', err);
     toast('خطأ في عرض التفاصيل', 'error');
@@ -10675,11 +10731,11 @@ async function loadLeadMarketingPlans(leadId){
       .select('*')
       .eq('lead_id', leadId)
       .order('created_at', { ascending: false });
-    
+
     if(error) throw error;
-    
+
     document.getElementById('viewLeadPlansCount').textContent = (plans || []).length;
-    
+
     const plansHtml = (plans || []).map(plan => {
       const date = new Date(plan.created_at).toLocaleDateString('ar-EG', {
         year: 'numeric',
@@ -10723,9 +10779,9 @@ async function loadLeadMarketingPlans(leadId){
         </div>
       `;
     }).join('');
-    
+
     document.getElementById('viewLeadPlans').innerHTML = plansHtml || '<p style="color:var(--text-muted);padding:10px;">لا توجد خطط تسويقية</p>';
-    
+
   } catch(err){
     console.error('Error loading marketing plans:', err);
   }
@@ -10733,17 +10789,17 @@ async function loadLeadMarketingPlans(leadId){
 
 async function addLeadNote(){
   const note = document.getElementById('newLeadNote').value.trim();
-  
+
   if(!note){
     toast('أدخل الملاحظة', 'error');
     return;
   }
-  
+
   if(!_currentViewLeadId){
     toast('خطأ في تحديد العميل', 'error');
     return;
   }
-  
+
   try {
     await _supabase
       .from('crm_notes')
@@ -10754,19 +10810,19 @@ async function addLeadNote(){
         note_type: 'general',
         created_at: new Date().toISOString()
       }]);
-    
+
     // Update note count
     await _supabase
       .from('crm_leads')
       .update({ note_count: _supabase.raw('note_count + 1') })
       .eq('id', _currentViewLeadId);
-    
+
     document.getElementById('newLeadNote').value = '';
     toast('تم إضافة الملاحظة', 'success');
-    
+
     // Refresh view
     viewLeadDetails(_currentViewLeadId);
-    
+
   } catch(err){
     console.error('Error adding note:', err);
     toast('خطأ في إضافة الملاحظة', 'error');
@@ -10806,10 +10862,10 @@ function handleExcelFile(input){
   if(!file){
     return;
   }
-  
+
   // For now, show info that this requires xlsx library
   toast('Import Excel feature requires SheetJS library. Contact developer to enable.', 'info', 5000);
-  
+
   // TODO: Implement Excel parsing with SheetJS
   // This would parse the file and populate _importedLeadsData
   // Then show preview and enable import button
@@ -10820,7 +10876,7 @@ async function confirmImportLeads(){
     toast('لا توجد بيانات للاستيراد', 'error');
     return;
   }
-  
+
   try {
     const leadsToInsert = _importedLeadsData.map(row => ({
       id: 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
@@ -10835,17 +10891,17 @@ async function confirmImportLeads(){
       note_count: 0,
       created_at: new Date().toISOString()
     }));
-    
+
     const { error } = await _supabase
       .from('crm_leads')
       .insert(leadsToInsert);
-    
+
     if(error) throw error;
-    
+
     toast(`تم استيراد ${leadsToInsert.length} عميل بنجاح`, 'success');
     closeImportModal();
     loadCrmLeads();
-    
+
   } catch(err){
     console.error('Error importing leads:', err);
     toast('خطأ في الاستيراد: ' + err.message, 'error');
@@ -10861,24 +10917,24 @@ async function loadCrmDistribution(){
     // Load distribution stats
     const unassigned = _crmLeads.filter(l => !l.assigned_to).length;
     const assigned = _crmLeads.filter(l => l.assigned_to).length;
-    
+
     document.getElementById('distUnassignedCount').textContent = unassigned;
     document.getElementById('distAssignedCount').textContent = assigned;
-    
+
     // Load employees and their stats
     const { data: employees, error } = await _supabase
       .from('employees')
       .select('username, full_name')
       .eq('application_status', 'approved');
-    
+
     if(error) throw error;
-    
+
     document.getElementById('distActiveEmployees').textContent = (employees || []).length;
-    
+
     // Calculate stats per employee
     const tbody = document.getElementById('distEmployeesTableBody');
     if(!tbody) return;
-    
+
     if(!employees || employees.length === 0){
       tbody.innerHTML = `
         <tr>
@@ -10889,7 +10945,7 @@ async function loadCrmDistribution(){
       `;
       return;
     }
-    
+
     tbody.innerHTML = employees.map(emp => {
       const empLeads = _crmLeads.filter(l => l.assigned_to === emp.username);
       const total = empLeads.length;
@@ -10897,15 +10953,15 @@ async function loadCrmDistribution(){
       const interested = empLeads.filter(l => l.status === 'interested').length;
       const converted = empLeads.filter(l => l.status === 'converted').length;
       const conversionRate = total > 0 ? ((converted / total) * 100).toFixed(1) : '0';
-      
+
       // Get last activity
-      const lastActivity = empLeads.length > 0 
+      const lastActivity = empLeads.length > 0
         ? Math.max(...empLeads.map(l => new Date(l.updated_at || l.created_at).getTime()))
         : null;
-      const lastActivityStr = lastActivity 
+      const lastActivityStr = lastActivity
         ? new Date(lastActivity).toLocaleDateString('ar-EG', {month: 'short', day: 'numeric'})
         : '-';
-      
+
       return `
         <tr>
           <td><strong>${emp.full_name || emp.username}</strong></td>
@@ -10925,7 +10981,7 @@ async function loadCrmDistribution(){
         </tr>
       `;
     }).join('');
-    
+
   } catch(err){
     console.error('Error loading distribution:', err);
     toast('خطأ في تحميل التوزيع', 'error');
@@ -10934,17 +10990,17 @@ async function loadCrmDistribution(){
 
 function openAutoDistributeModal(){
   const unassigned = _crmLeads.filter(l => !l.assigned_to).length;
-  
+
   if(unassigned === 0){
     toast('لا يوجد عملاء غير موزعين', 'info');
     return;
   }
-  
+
   document.getElementById('autoDistUnassigned').textContent = unassigned;
-  
+
   // Load employees
   loadAutoDistEmployeeList();
-  
+
   document.getElementById('autoDistributeModal').classList.add('open');
 }
 
@@ -10954,26 +11010,26 @@ async function loadAutoDistEmployeeList(){
       .from('employees')
       .select('username, full_name')
       .eq('application_status', 'approved');
-    
+
     if(error) throw error;
-    
+
     document.getElementById('autoDistEmployees').textContent = (employees || []).length;
-    
+
     const list = document.getElementById('autoDistEmployeeList');
     if(!employees || employees.length === 0){
       list.innerHTML = '<p style="color:var(--text-muted);padding:10px;">لا يوجد موظفين</p>';
       return;
     }
-    
+
     list.innerHTML = employees.map(emp => `
-      <label style="display:flex;align-items:center;gap:8px;padding:8px;cursor:pointer;border-radius:6px;" 
-             onmouseover="this.style.background='var(--bg)'" 
+      <label style="display:flex;align-items:center;gap:8px;padding:8px;cursor:pointer;border-radius:6px;"
+             onmouseover="this.style.background='var(--bg)'"
              onmouseout="this.style.background='transparent'">
         <input type="checkbox" class="auto-dist-emp-check" value="${emp.username}" checked>
         <span>${emp.full_name || emp.username}</span>
       </label>
     `).join('');
-    
+
   } catch(err){
     console.error('Error loading employees:', err);
   }
@@ -10983,37 +11039,37 @@ async function confirmAutoDistribute(){
   try {
     const method = document.getElementById('distributionMethod').value;
     const filter = document.getElementById('distributionFilter').value;
-    
+
     // Get selected employees
     const selectedEmps = Array.from(document.querySelectorAll('.auto-dist-emp-check:checked')).map(cb => cb.value);
-    
+
     if(selectedEmps.length === 0){
       toast('اختر موظف واحد على الأقل', 'error');
       return;
     }
-    
+
     // Get leads to distribute
     let leadsToDistribute = _crmLeads.filter(l => !l.assigned_to);
-    
+
     if(filter === 'new_only'){
       leadsToDistribute = leadsToDistribute.filter(l => l.status === 'new');
     } else if(filter === 'high_priority'){
       leadsToDistribute = leadsToDistribute.filter(l => ['high', 'urgent'].includes(l.priority));
     }
-    
+
     if(leadsToDistribute.length === 0){
       toast('لا يوجد عملاء متطابقين مع  الفلتر', 'info');
       return;
     }
-    
+
     // Simple equal distribution
     const leadsPerEmp = Math.floor(leadsToDistribute.length / selectedEmps.length);
     let empIndex = 0;
-    
+
     for(let i = 0; i < leadsToDistribute.length; i++){
       const lead = leadsToDistribute[i];
       const employee = selectedEmps[empIndex];
-      
+
       await _supabase
         .from('crm_leads')
         .update({
@@ -11021,7 +11077,7 @@ async function confirmAutoDistribute(){
           assigned_at: new Date().toISOString()
         })
         .eq('id', lead.id);
-      
+
       // Log distribution
       await _supabase
         .from('crm_distribution_log')
@@ -11032,16 +11088,16 @@ async function confirmAutoDistribute(){
           reason: 'auto_distribute',
           created_at: new Date().toISOString()
         }]);
-      
+
       // Round-robin assignment
       empIndex = (empIndex + 1) % selectedEmps.length;
     }
-    
+
     toast(`تم توزيع ${leadsToDistribute.length} عميل على ${selectedEmps.length} موظف`, 'success');
     closeAutoDistributeModal();
     loadCrmLeads();
     loadCrmDistribution();
-    
+
   } catch(err){
     console.error('Error auto distributing:', err);
     toast('خطأ في التوزيع التلقائي', 'error');
@@ -11067,12 +11123,12 @@ function closeBulkStatusModal(){
 async function loadCrmReports(){
   const dateFrom = document.getElementById('reportDateFrom').value;
   const dateTo = document.getElementById('reportDateTo').value;
-  
+
   if(!dateFrom || !dateTo){
     toast('اختر نطاق التاريخ', 'error');
     return;
   }
-  
+
   try {
     // Load leads within date range
     const { data: leads, error } = await _supabase
@@ -11080,15 +11136,15 @@ async function loadCrmReports(){
       .select('*')
       .gte('created_at', dateFrom)
       .lte('created_at', dateTo + 'T23:59:59');
-    
+
     if(error) throw error;
-    
+
     // Calculate summary
     const total = (leads || []).length;
     const converted = (leads || []).filter(l => l.status === 'converted').length;
     const conversionRate = total > 0 ? ((converted / total) * 100).toFixed(1) : '0';
     const totalValue = (leads || []).reduce((sum, l) => sum + (l.total_value || 0), 0);
-    
+
     const summaryHtml = `
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
         <div style="background:rgba(59,130,246,0.1);padding:16px;border-radius:12px;text-align:center;">
@@ -11109,10 +11165,10 @@ async function loadCrmReports(){
         </div>
       </div>
     `;
-    
+
     document.getElementById('reportSummaryCards').innerHTML = summaryHtml;
     toast('تم تحميل التقرير', 'success');
-    
+
   } catch(err){
     console.error('Error loading reports:', err);
     toast('خطأ في تحميل التقرير', 'error');
@@ -11157,24 +11213,24 @@ async function populateEmployeeDropdown(selectId){
       .select('username, full_name')
       .eq('application_status', 'approved')
       .order('full_name');
-    
+
     if(error) throw error;
-    
+
     const select = document.getElementById(selectId);
     if(!select) return;
-    
+
     // Keep first option (empty/default)
     const firstOption = select.options[0];
     select.innerHTML = '';
     if(firstOption) select.appendChild(firstOption);
-    
+
     (employees || []).forEach(emp => {
       const option = document.createElement('option');
       option.value = emp.username;
       option.textContent = emp.full_name || emp.username;
       select.appendChild(option);
     });
-    
+
   } catch(err){
     console.error('Error populating employee dropdown:', err);
   }
@@ -11188,18 +11244,18 @@ async function createPlanForLead(leadId){
       toast('لم يتم العثور على العميل', 'error');
       return;
     }
-    
+
     // Open plan modal with lead data
     document.getElementById('planModalTitle').textContent = 'خطة تسويقية جديدة';
     document.getElementById('planEditId').value = '';
     document.getElementById('planLeadId').value = leadId;
-    
+
     // Fill company info from lead
     document.getElementById('planCompanyName').value = lead.company || lead.name || '';
     document.getElementById('planCompanyEmail').value = lead.email || '';
     document.getElementById('planCompanyPhone').value = lead.phone || '';
     document.getElementById('planIndustry').value = lead.industry || '';
-    
+
     // Clear plan details
     document.getElementById('planGoal').value = '';
     document.getElementById('planBudget').value = '';
@@ -11207,12 +11263,12 @@ async function createPlanForLead(leadId){
     document.getElementById('planStrategy').value = '';
     document.getElementById('planMetrics').value = '';
     document.getElementById('planNotes').value = '';
-    
+
     // Uncheck all platforms
     document.querySelectorAll('input[name="platforms"]').forEach(cb => cb.checked = false);
-    
+
     document.getElementById('marketingPlanModal').classList.add('open');
-    
+
   } catch(err){
     console.error('Error creating plan for lead:', err);
     toast('خطأ في إنشاء الخطة', 'error');
@@ -11230,7 +11286,7 @@ function showCrmContextMenu(e, leadId) {
     e.stopPropagation();
     crmCtxLeadId = leadId;
     crmCurrentLeadData = _crmLeads.find(l => l.id == leadId);
-    
+
     const menu = document.getElementById('crmCtxMenu');
     const x = Math.min(e.clientX, window.innerWidth - 240);
     const y = Math.min(e.clientY, window.innerHeight - 360);
@@ -11347,12 +11403,12 @@ async function changeCrmLeadStatus(leadId, newStatus) {
 
         lead.status = newStatus;
         await loadCrmLeads();
-        
+
         const statusNames = {
             'new': 'جديد', 'interested': 'مهتم', 'negotiating': 'تفاوض',
             'converted': 'محول', 'not_interested': 'غير مهتم', 'no_answer': 'لا يرد'
         };
-        
+
         toast(`تم التحويل إلى: ${statusNames[newStatus]}`, 'success');
     } catch (err) {
         console.error('Error changing status:', err);
@@ -11380,7 +11436,7 @@ async function openCrmHistory(leadId) {
 
         // Combine all events into timeline
         const timeline = [];
-        
+
         // Add status changes
         if(statusResult.data){
             statusResult.data.forEach(item => {
@@ -11391,7 +11447,7 @@ async function openCrmHistory(leadId) {
                 });
             });
         }
-        
+
         // Add calls
         if(callsResult.data){
             callsResult.data.forEach(item => {
@@ -11402,7 +11458,7 @@ async function openCrmHistory(leadId) {
                 });
             });
         }
-        
+
         // Add notes
         if(notesResult.data){
             notesResult.data.forEach(item => {
@@ -11413,7 +11469,7 @@ async function openCrmHistory(leadId) {
                 });
             });
         }
-        
+
         // Add distribution events
         if(distResult.data){
             distResult.data.forEach(item => {
@@ -11424,7 +11480,7 @@ async function openCrmHistory(leadId) {
                 });
             });
         }
-        
+
         // Add lead creation event
         if(lead.created_at){
             timeline.push({
@@ -11452,14 +11508,14 @@ async function openCrmHistory(leadId) {
         };
 
         let html = '<div class="history-timeline">';
-        
+
         timeline.forEach(event => {
             const dateStr = event.date.toLocaleString('ar-EG', {
                 year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
             });
-            
+
             let icon, color, title, content;
-            
+
             switch(event.type){
                 case 'status':
                     const oldSt = statusNames[event.data.old_status] || { name: event.data.old_status, color: '#6B7280' };
@@ -11480,7 +11536,7 @@ async function openCrmHistory(leadId) {
                         ${event.data.note ? `<div style="margin-top:8px;color:var(--text-secondary);font-size:.75rem;">${event.data.note}</div>` : ''}
                     `;
                     break;
-                    
+
                 case 'call':
                     icon = event.data.status === 'answered' ? 'fas fa-phone' : 'fas fa-phone-slash';
                     color = event.data.status === 'answered' ? '#10B981' : '#F59E0B';
@@ -11492,14 +11548,14 @@ async function openCrmHistory(leadId) {
                         </div>
                     `;
                     break;
-                    
+
                 case 'note':
                     icon = 'fas fa-sticky-note';
                     color = '#8B5CF6';
                     title = 'ملاحظة';
                     content = `<div style="color:var(--text-secondary);font-size:.75rem;">${event.data.content || ''}</div>`;
                     break;
-                    
+
                 case 'distribution':
                     icon = 'fas fa-user-check';
                     color = '#06B6D4';
@@ -11516,7 +11572,7 @@ async function openCrmHistory(leadId) {
                         </div>
                     `;
                     break;
-                    
+
                 case 'created':
                     icon = 'fas fa-plus-circle';
                     color = '#3B82F6';
@@ -11524,7 +11580,7 @@ async function openCrmHistory(leadId) {
                     content = `<div style="color:var(--text-secondary);font-size:.75rem;">تمت إضافة العميل للنظام</div>`;
                     break;
             }
-            
+
             html += `
                 <div class="timeline-item">
                     <div class="timeline-dot" style="background:${color};box-shadow:0 0 0 4px rgba(${hexToRgb(color)}, 0.2), 0 0 16px ${color};">
@@ -11534,8 +11590,8 @@ async function openCrmHistory(leadId) {
                         <span class="timeline-user">
                             <i class="${icon}" style="color:${color};margin-left:5px;font-size:.72rem;"></i>
                             <span style="font-weight:800;color:#fff;">${title}</span>
-                            ${event.data.changed_by || event.data.created_by || event.data.distributed_by ? 
-                                `<span style="margin-right:8px;color:${color};font-size:0.75rem;">• ${event.data.changed_by || event.data.created_by || event.data.distributed_by}</span>` 
+                            ${event.data.changed_by || event.data.created_by || event.data.distributed_by ?
+                                `<span style="margin-right:8px;color:${color};font-size:0.75rem;">• ${event.data.changed_by || event.data.created_by || event.data.distributed_by}</span>`
                                 : ''}
                         </span>
                         <span class="timeline-date">${dateStr}</span>
@@ -11546,9 +11602,9 @@ async function openCrmHistory(leadId) {
                 </div>
             `;
         });
-        
+
         html += '</div>';
-        
+
         document.getElementById('crmHistoryBody').innerHTML = html;
     } catch (err) {
         console.error('Error loading history:', err);
@@ -11559,8 +11615,8 @@ async function openCrmHistory(leadId) {
 // Helper function to convert hex to RGB
 function hexToRgb(hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? 
-        `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` 
+    return result ?
+        `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
         : '107, 130, 168';
 }
 
