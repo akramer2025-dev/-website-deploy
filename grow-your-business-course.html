@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="كورس كبّر شغلك وسوّق لنفسك مع م. أكرم مصطفى — تعلّم إدارة العملاء، استراتيجيات التسويق والإعلانات الممولة بخطوات عملية.">
+  <meta property="og:title" content="كبّر شغلك وسوّق لنفسك | أكرم مصطفى">
+  <meta property="og:description" content="كورس عملي يساعدك تسوّق لنفسك أو لشغلك وتحوّل مجهودك لنتائج قابلة للقياس.">
+  <meta property="og:image" content="https://www.akrammostafa.com/images/grow-your-business-course.png">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="images/1772173627537.png">
+  <title>كبّر شغلك وسوّق لنفسك | أكرم مصطفى</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root{--bg:#02060d;--panel:#081321;--panel2:#0b1b2d;--cyan:#00c8ff;--blue:#087cff;--text:#f7fbff;--muted:#9cb2c8;--line:rgba(47,193,255,.18);--green:#25d366}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .container{width:min(1160px,calc(100% - 40px));margin-inline:auto}
+    .nav{position:fixed;z-index:50;inset:0 0 auto;background:rgba(2,6,13,.76);border-bottom:1px solid transparent;backdrop-filter:blur(16px);transition:.3s}
+    .nav.scrolled{border-color:var(--line);background:rgba(2,6,13,.94)}
+    .nav-row{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.04em}
+    .brand img{width:44px;height:44px;object-fit:contain}
+    .nav-links{display:flex;align-items:center;gap:28px;color:#c4d3df;font-size:.92rem;font-weight:700}
+    .nav-links a:hover{color:var(--cyan)}
+    .nav-cta,.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:14px;font-weight:800;transition:.25s}
+    .nav-cta{padding:9px 18px;background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 8px 28px rgba(0,154,255,.24)}
+    .menu-btn{display:none;width:44px;height:44px;border:1px solid var(--line);background:var(--panel);color:#fff;border-radius:12px;cursor:pointer}
+    .hero{min-height:100svh;position:relative;display:grid;align-items:center;padding:116px 0 70px;isolation:isolate}
+    .hero:before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(circle at 80% 30%,rgba(0,157,255,.20),transparent 32%),radial-gradient(circle at 15% 80%,rgba(0,200,255,.11),transparent 28%),linear-gradient(180deg,#030915 0%,#02060d 100%)}
+    .grid-bg{position:absolute;inset:0;z-index:-1;opacity:.18;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:46px 46px;mask-image:linear-gradient(to bottom,black,transparent 92%)}
+    .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:68px}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border:1px solid rgba(0,200,255,.35);background:rgba(0,166,255,.08);border-radius:99px;color:#83ddff;font-size:.84rem;font-weight:800;margin-bottom:22px}
+    h1{font-size:clamp(2.5rem,5.2vw,5.2rem);line-height:1.14;letter-spacing:-.04em;margin-bottom:20px}
+    h1 span,.section-title span{color:var(--cyan);text-shadow:0 0 28px rgba(0,200,255,.35)}
+    .hero-copy>p{color:var(--muted);font-size:clamp(1rem,1.5vw,1.18rem);max-width:650px;margin-bottom:30px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:30px}
+    .hero-offer{display:flex;align-items:center;gap:16px;width:fit-content;margin-bottom:24px;padding:13px 17px;border:1px solid rgba(0,200,255,.3);background:rgba(4,24,42,.75);border-radius:16px;box-shadow:0 12px 32px rgba(0,0,0,.18)}
+    .offer-price{display:flex;align-items:baseline;gap:7px;color:var(--cyan);font-size:1.75rem;font-weight:900;line-height:1}
+    .offer-price small{font-size:.78rem;color:#b9d2e4}
+    .offer-old{font-size:.82rem;color:#8aa1b5}.offer-old del{font-weight:800;color:#a9bbc9}
+    .offer-badge{padding:5px 9px;border-radius:8px;background:rgba(0,200,255,.14);color:#7cddff;font-size:.73rem;font-weight:900;white-space:nowrap}
+    .btn{min-height:54px;padding:0 25px;border:1px solid transparent}
+    .btn-primary{background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 13px 38px rgba(0,154,255,.3)}
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 48px rgba(0,174,255,.42)}
+    .btn-ghost{border-color:var(--line);background:rgba(255,255,255,.025);color:#d7e8f4}
+    .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+    .micro{display:flex;gap:20px;flex-wrap:wrap;color:#b7c8d7;font-size:.85rem}
+    .micro i{color:var(--cyan);margin-left:5px}
+    .poster-wrap{position:relative;width:min(100%,470px);margin-inline:auto}
+    .poster-wrap:before{content:"";position:absolute;inset:10% -9%;background:var(--blue);filter:blur(80px);opacity:.24;z-index:-1}
+    .poster{display:block;width:100%;height:auto;border-radius:24px;border:1px solid rgba(79,205,255,.35);box-shadow:0 32px 80px rgba(0,0,0,.55),0 0 40px rgba(0,160,255,.13)}
+    .float-note{position:absolute;left:-35px;bottom:11%;display:flex;align-items:center;gap:10px;padding:11px 15px;background:rgba(7,19,33,.92);border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 35px rgba(0,0,0,.35);font-size:.85rem;font-weight:800;backdrop-filter:blur(10px)}
+    .float-note i{color:var(--cyan);font-size:1.2rem}
+    section{padding:90px 0}
+    .section-head{text-align:center;max-width:700px;margin:0 auto 46px}
+    .section-kicker{color:var(--cyan);font-size:.82rem;font-weight:900;letter-spacing:.12em;margin-bottom:8px}
+    .section-title{font-size:clamp(1.8rem,3.5vw,3rem);line-height:1.35;margin-bottom:12px}
+    .section-head p{color:var(--muted)}
+    .features{background:linear-gradient(180deg,transparent,rgba(6,22,38,.68),transparent)}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{padding:28px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(12,30,49,.9),rgba(5,14,26,.8));border-radius:20px;transition:.3s}
+    .card:hover{transform:translateY(-6px);border-color:rgba(0,200,255,.5)}
+    .icon{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(0,123,255,.2),rgba(0,213,255,.12));color:var(--cyan);font-size:1.35rem;margin-bottom:18px;border:1px solid var(--line)}
+    .card h3{font-size:1.08rem;margin-bottom:8px}.card p{font-size:.9rem;color:var(--muted)}
+    .learn-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:center}
+    .learn-image{position:relative;overflow:hidden;border-radius:22px;border:1px solid var(--line);max-height:620px}
+    .learn-image img{width:100%;display:block;transform:scale(1.01)}
+    .learn-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 65%,rgba(2,6,13,.9))}
+    .learn-copy h2{text-align:right}.learn-copy>p{color:var(--muted);margin-bottom:25px}
+    .check-list{list-style:none;display:grid;gap:13px}
+    .check-list li{display:flex;align-items:flex-start;gap:11px;padding:14px 16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:13px;color:#d8e5ee}
+    .check-list i{color:var(--cyan);margin-top:6px}
+    .audience{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .audience .card{text-align:center;padding:24px 18px}.audience .icon{margin-inline:auto}
+    .cta-box{position:relative;overflow:hidden;text-align:center;border:1px solid rgba(0,200,255,.32);background:linear-gradient(135deg,#071729,#092844);border-radius:28px;padding:62px 25px;box-shadow:0 26px 70px rgba(0,0,0,.3)}
+    .cta-box:before{content:"";position:absolute;width:350px;height:350px;border-radius:50%;background:var(--cyan);filter:blur(120px);opacity:.11;left:-120px;top:-170px}
+    .cta-box h2{font-size:clamp(1.8rem,4vw,3rem);margin-bottom:10px}.cta-box>p{color:#b5c9da;margin-bottom:18px}
+    .cta-price{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:25px}.cta-price strong{font-size:2.25rem;color:var(--cyan);line-height:1}.cta-price strong small{font-size:.85rem;color:#c4d7e5}.cta-price del{color:#90a8ba;font-weight:700}.cta-price span{padding:5px 10px;border-radius:8px;background:rgba(0,200,255,.15);color:#80e2ff;font-size:.78rem;font-weight:900}
+    .btn-wa{background:var(--green);box-shadow:0 12px 34px rgba(37,211,102,.25)}
+    footer{padding:30px 0;border-top:1px solid var(--line);color:#7790a5;font-size:.84rem}
+    .footer-row{display:flex;align-items:center;justify-content:space-between;gap:18px}.footer-links{display:flex;gap:18px}.footer-links a:hover{color:var(--cyan)}
+    .wa-float{position:fixed;z-index:40;left:22px;bottom:22px;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--green);font-size:1.55rem;box-shadow:0 10px 30px rgba(37,211,102,.3)}
+    @media(max-width:900px){.nav-links{display:none;position:absolute;top:76px;right:20px;left:20px;padding:20px;flex-direction:column;background:#07111e;border:1px solid var(--line);border-radius:16px}.nav-links.open{display:flex}.menu-btn{display:grid;place-items:center}.nav-cta{display:none}.hero-grid,.learn-grid{grid-template-columns:1fr}.hero-copy{text-align:center}.hero-copy>p{margin-inline:auto}.hero-actions,.micro{justify-content:center}.hero-offer{margin-inline:auto}.poster-wrap{max-width:480px}.cards{grid-template-columns:repeat(2,1fr)}.audience{grid-template-columns:repeat(2,1fr)}.learn-copy h2{text-align:right}}
+    @media(max-width:560px){.container{width:min(100% - 28px,1160px)}.hero{padding-top:105px}.hero-grid{gap:42px}h1{font-size:2.55rem}.cards,.audience{grid-template-columns:1fr}.float-note{left:10px;bottom:20px}.btn{width:100%}.micro{gap:10px 16px}.poster{border-radius:18px}section{padding:68px 0}.footer-row{flex-direction:column;text-align:center}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+  </style>
+  <script src="/js/meta-pixel.js" defer></script>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="container nav-row">
+      <a class="brand" href="index.html"><img src="images/1772173627537.png" alt="شعار أكرم مصطفى"><span>AKRAM MOSTAFA</span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة" aria-expanded="false"><i class="fas fa-bars"></i></button>
+      <div class="nav-links" id="navLinks">
+        <a href="#about">عن الكورس</a><a href="#learn">هتتعلم إيه؟</a><a href="#for-who">الكورس لمين؟</a><a href="courses.html">كل الكورسات</a>
+      </div>
+      <a class="nav-cta" href="#register">احجز مكانك <i class="fas fa-arrow-left"></i></a>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <div class="grid-bg"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><i class="fas fa-bolt"></i> كورس عملي لأصحاب الشغل والطموح</div>
+          <h1>كبّر شغلك<br><span>وسوّق لنفسك</span></h1>
+          <p>اتعلّم تبني حضور قوي، توصل للعميل الصح، وتحوّل التسويق من محاولات عشوائية لخطة واضحة تقدر تنفذها وتقيس نتائجها.</p>
+          <div class="hero-offer" aria-label="عرض سعر الكورس">
+            <div><div class="offer-price">١٥٠٠ <small>جنيه</small></div><div class="offer-old">بدلًا من <del>٣٠٠٠ جنيه</del></div></div>
+            <div class="offer-badge">خصم ٥٠٪ لأول ١٠ مشتركين</div>
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#register">ابدأ دلوقتي <i class="fas fa-arrow-left"></i></a>
+            <a class="btn btn-ghost" href="#learn"><i class="fas fa-circle-play"></i> اعرف محتوى الكورس</a>
+          </div>
+          <div class="micro"><span><i class="fas fa-circle-check"></i> شرح عملي</span><span><i class="fas fa-circle-check"></i> من الصفر</span><span><i class="fas fa-circle-check"></i> خطوات قابلة للتنفيذ</span></div>
+        </div>
+        <div class="poster-wrap">
+          <img class="poster" src="images/grow-your-business-course.png" alt="غلاف كورس كبّر شغلك وسوّق لنفسك" width="1122" height="1402">
+          <div class="float-note"><i class="fas fa-chart-line"></i><span>من الفكرة لنتيجة حقيقية</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="features" id="about">
+      <div class="container">
+        <div class="section-head"><div class="section-kicker">ليه الكورس ده؟</div><h2 class="section-title">تسويق مفهوم، عملي، <span>ومفيد لشغلك</span></h2><p>هتجمع أهم أجزاء التسويق في صورة واحدة واضحة بدل ما تفضل تايه بين معلومات متفرقة.</p></div>
+        <div class="cards">
+          <article class="card"><div class="icon"><i class="fas fa-users"></i></div><h3>إدارة العملاء</h3><p>افهم عميلك، ابنِ ثقة حقيقية، وحوّل التواصل لعلاقة طويلة المدى.</p></article>
+          <article class="card"><div class="icon"><i class="fas fa-bullseye"></i></div><h3>استراتيجية تسويق</h3><p>حدد هدفك وجمهورك ورسالتك والقنوات المناسبة قبل ما تبدأ التنفيذ.</p></article>
+          <article class="card"><div class="icon"><i class="fas fa-bullhorn"></i></div><h3>إعلانات ممولة</h3><p>اعرف أساسيات الحملة الناجحة وكيف تقرأ الأرقام وتتخذ قرارك بثقة.</p></article>
+          <article class="card"><div class="icon"><i class="fas fa-pen-ruler"></i></div><h3>محتوى يبيع</h3><p>حوّل مميزاتك لرسالة يفهمها العميل ويشعر أنها معمولة مخصوص له.</p></article>
+          <article class="card"><div class="icon"><i class="fas fa-chart-column"></i></div><h3>قياس النتائج</h3><p>راقب المؤشرات المهمة واعرف إيه اللي شغال وإيه اللي محتاج يتغير.</p></article>
+          <article class="card"><div class="icon"><i class="fas fa-rocket"></i></div><h3>خطة نمو</h3><p>اخرج بخطوات مرتبة تساعدك تبدأ، تثبت وجودك، وبعدها تتوسع.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="learn">
+      <div class="container learn-grid">
+        <div class="learn-image"><img src="images/grow-your-business-course.png" alt="تصميم كورس التسويق الجديد" loading="lazy"></div>
+        <div class="learn-copy">
+          <div class="section-kicker">محتوى عملي</div><h2 class="section-title">هتتعلم تبني <span>منظومة تسويق</span> مش مجرد إعلان</h2>
+          <p>الهدف إنك تعرف تبدأ منين، تعمل إيه، وتقيس نجاحك إزاي — سواء بتسوّق لنفسك أو لمشروعك.</p>
+          <ul class="check-list">
+            <li><i class="fas fa-circle-check"></i><span>تحديد العميل المثالي وفهم احتياجاته ودوافع الشراء عنده.</span></li>
+            <li><i class="fas fa-circle-check"></i><span>صياغة عرض واضح يبيّن قيمتك ويفرقك عن المنافسين.</span></li>
+            <li><i class="fas fa-circle-check"></i><span>اختيار القنوات المناسبة بدل التواجد العشوائي على كل المنصات.</span></li>
+            <li><i class="fas fa-circle-check"></i><span>تخطيط المحتوى وربطه بهدف تجاري قابل للقياس.</span></li>
+            <li><i class="fas fa-circle-check"></i><span>فهم الإعلانات الممولة ومتابعة أهم مؤشرات الأداء.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="for-who">
+      <div class="container">
+        <div class="section-head"><div class="section-kicker">الكورس مناسب لمين؟</div><h2 class="section-title">لو عندك مهارة أو مشروع، <span>الكورس معمول ليك</span></h2></div>
+        <div class="audience">
+          <article class="card"><div class="icon"><i class="fas fa-store"></i></div><h3>أصحاب المشاريع</h3><p>اللي عايزين مبيعات أكتر وخطة أوضح.</p></article>
+          <article class="card"><div class="icon"><i class="fas fa-laptop-code"></i></div><h3>الفريلانسرز</h3><p>اللي محتاجين يسوّقوا لخدماتهم باحتراف.</p></article>
+          <article class="card"><div class="icon"><i class="fas fa-user-tie"></i></div><h3>مقدمو الخدمات</h3><p>اللي عايزين يبنوا اسم وثقة مع جمهورهم.</p></article>
+          <article class="card"><div class="icon"><i class="fas fa-seedling"></i></div><h3>المبتدئون</h3><p>اللي محتاجين بداية صحيحة من غير تعقيد.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="register">
+      <div class="container">
+        <div class="cta-box"><h2>جاهز تكبّر شغلك؟</h2><p>احجز ضمن أول ١٠ مشتركين واستفد من العرض الخاص.</p><div class="cta-price"><strong>١٥٠٠ <small>جنيه</small></strong><del>٣٠٠٠ جنيه</del><span>وفّر ١٥٠٠ جنيه</span></div><a class="btn btn-wa" target="_blank" rel="noopener" href="https://wa.me/201555512778?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%85%2F%20%D8%A3%D9%83%D8%B1%D9%85%D8%8C%20%D8%A3%D9%86%D8%A7%20%D9%85%D9%87%D8%AA%D9%85%20%D8%A8%D8%AD%D8%AC%D8%B2%20%D9%83%D9%88%D8%B1%D8%B3%20%D9%83%D8%A8%D9%91%D8%B1%20%D8%B4%D8%BA%D9%84%D9%83%20%D9%88%D8%B3%D9%88%D9%91%D9%82%20%D9%84%D9%86%D9%81%D8%B3%D9%83%20%D8%A8%D8%B9%D8%B1%D8%B6%20%D8%A3%D9%88%D9%84%20%D9%A1%D9%A0%20%D9%85%D8%B4%D8%AA%D8%B1%D9%83%D9%8A%D9%86%20%D8%A8%D8%B3%D8%B9%D8%B1%20%D9%A1%D9%A5%D9%A0%D9%A0%20%D8%AC%D9%86%D9%8A%D9%87"><i class="fab fa-whatsapp"></i> احجز مكانك بـ١٥٠٠ جنيه</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container footer-row"><p>© 2026 Akram Mostafa — جميع الحقوق محفوظة</p><div class="footer-links"><a href="index.html">الرئيسية</a><a href="courses.html">الكورسات</a><a href="contact.html">تواصل معي</a></div></div></footer>
+  <a class="wa-float" href="https://wa.me/201555512778" target="_blank" rel="noopener" aria-label="تواصل على واتساب"><i class="fab fa-whatsapp"></i></a>
+  <script>
+    const nav=document.getElementById('nav');
+    const menuBtn=document.getElementById('menuBtn');
+    const navLinks=document.getElementById('navLinks');
+    addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>24),{passive:true});
+    menuBtn.addEventListener('click',()=>{const open=navLinks.classList.toggle('open');menuBtn.setAttribute('aria-expanded',open);menuBtn.innerHTML=`<i class="fas fa-${open?'xmark':'bars'}"></i>`});
+    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');menuBtn.innerHTML='<i class="fas fa-bars"></i>'}));
+  </script>
+</body>
+</html>

@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كورس التسويق الاحترافي - منستر أكر</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: #f5f0e8;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    cursor: none;
+    user-select: none;
+  }
+
+  /* ===== WHITEBOARD ===== */
+  #board {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: #fdfaf4;
+    background-image:
+      linear-gradient(rgba(180,160,120,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(180,160,120,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+    overflow: hidden;
+  }
+
+  /* paper texture */
+  #board::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== SLIDE WRAPPER ===== */
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    z-index: 1;
+    padding: 40px;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ===== SVG DRAW ANIMATION ===== */
+  .draw-line {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    animation: none;
+  }
+  .slide.active .draw-line {
+    animation: draw 1.8s ease forwards;
+  }
+  .slide.active .draw-line.d2 { animation-delay: 0.4s; }
+  .slide.active .draw-line.d3 { animation-delay: 0.8s; }
+  .slide.active .draw-line.d4 { animation-delay: 1.2s; }
+  .slide.active .draw-line.d5 { animation-delay: 1.6s; }
+  .slide.active .draw-line.d6 { animation-delay: 2.0s; }
+  .slide.active .draw-line.d7 { animation-delay: 2.4s; }
+  .slide.active .draw-line.d8 { animation-delay: 2.8s; }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* fill animations */
+  .draw-fill {
+    opacity: 0;
+    animation: none;
+  }
+  .slide.active .draw-fill {
+    animation: fadeIn 0.5s ease forwards;
+  }
+  .slide.active .draw-fill.f2 { animation-delay: 1.0s; }
+  .slide.active .draw-fill.f3 { animation-delay: 1.5s; }
+  .slide.active .draw-fill.f4 { animation-delay: 2.0s; }
+  .slide.active .draw-fill.f5 { animation-delay: 2.5s; }
+  .slide.active .draw-fill.f6 { animation-delay: 3.0s; }
+  .slide.active .draw-fill.f7 { animation-delay: 3.5s; }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* text reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: none;
+  }
+  .slide.active .reveal {
+    animation: revealUp 0.6s ease forwards;
+  }
+  .slide.active .reveal.r2 { animation-delay: 0.8s; }
+  .slide.active .reveal.r3 { animation-delay: 1.4s; }
+  .slide.active .reveal.r4 { animation-delay: 2.0s; }
+  .slide.active .reveal.r5 { animation-delay: 2.6s; }
+  .slide.active .reveal.r6 { animation-delay: 3.2s; }
+  .slide.active .reveal.r7 { animation-delay: 3.8s; }
+
+  @keyframes revealUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== TYPOGRAPHY ===== */
+  .slide-title {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 900;
+    color: #1a1a2e;
+    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .slide-subtitle {
+    font-size: clamp(14px, 1.8vw, 22px);
+    color: #5a5a7a;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 400;
+  }
+  .hand-text {
+    font-family: 'Tajawal', cursive;
+    font-weight: 700;
+    fill: #1a1a2e;
+    font-size: 16px;
+  }
+  .hand-text-sm {
+    font-family: 'Tajawal', cursive;
+    font-weight: 400;
+    fill: #4a4a6a;
+    font-size: 13px;
+  }
+
+  /* ===== CONTROLS ===== */
+  #controls {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 100;
+    background: rgba(26,26,46,0.9);
+    padding: 10px 20px;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+  }
+  #controls button {
+    background: none;
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #controls button:hover { background: rgba(255,255,255,0.2); border-color: white; }
+  #slide-counter {
+    color: rgba(255,255,255,0.7);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14px;
+    min-width: 60px;
+    text-align: center;
+  }
+  #fullscreen-btn {
+    width: 36px !important; height: 36px !important;
+    font-size: 14px !important;
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #6c63ff, #ff6b6b);
+    transition: width 0.5s ease;
+    z-index: 100;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ===== CURSOR ===== */
+  #cursor {
+    position: fixed;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(108,99,255,0.3);
+    border: 2px solid #6c63ff;
+    pointer-events: none;
+    z-index: 999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+  }
+
+  /* ===== SLIDE INDICATOR ===== */
+  #dots {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(26,26,46,0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .dot.active {
+    background: #6c63ff;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* ===== PRESENTER LABEL ===== */
+  #presenter {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #6c63ff;
+    z-index: 100;
+    background: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(108,99,255,0.2);
+  }
+
+  /* ===== HELPER: ICON BADGE ===== */
+  .icon-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  /* ===== SLIDE 0 – COVER ===== */
+  #s0 { background: transparent; }
+  #s0 .big-title {
+    font-size: clamp(36px, 6vw, 80px);
+    font-weight: 900;
+    color: #1a1a2e;
+    text-align: center;
+    line-height: 1.2;
+  }
+  #s0 .big-title span { color: #6c63ff; }
+  #s0 .tagline {
+    font-size: clamp(15px, 2vw, 26px);
+    color: #5a5a7a;
+    text-align: center;
+    margin-top: 12px;
+    max-width: 700px;
+  }
+  #s0 .start-hint {
+    margin-top: 40px;
+    font-size: 15px;
+    color: #aaa;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+  /* ===== LAYOUT HELPERS ===== */
+  .row { display: flex; align-items: center; gap: 40px; width: 100%; max-width: 1000px; }
+  .col { flex: 1; }
+  .svg-wrap { flex: 1; display: flex; justify-content: center; }
+
+  /* ===== STEP PILLS ===== */
+  .steps { display: flex; flex-direction: column; gap: 14px; max-width: 420px; }
+  .step-pill {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    border-radius: 14px;
+    padding: 12px 18px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    opacity: 0;
+    transform: translateX(20px);
+    animation: none;
+  }
+  .slide.active .step-pill { animation: slideIn 0.5s ease forwards; }
+  .slide.active .step-pill:nth-child(1) { animation-delay: 0.5s; }
+  .slide.active .step-pill:nth-child(2) { animation-delay: 1.0s; }
+  .slide.active .step-pill:nth-child(3) { animation-delay: 1.5s; }
+  .slide.active .step-pill:nth-child(4) { animation-delay: 2.0s; }
+  .slide.active .step-pill:nth-child(5) { animation-delay: 2.5s; }
+  .slide.active .step-pill:nth-child(6) { animation-delay: 3.0s; }
+  @keyframes slideIn { to { opacity:1; transform:translateX(0); } }
+
+  .step-num {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 18px;
+    color: white;
+    flex-shrink: 0;
+  }
+  .step-label { font-weight: 700; font-size: 15px; color: #1a1a2e; }
+  .step-desc { font-size: 12px; color: #777; margin-top: 2px; }
+
+  /* ===== PLATFORM ICONS ===== */
+  .platforms {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .platform-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px 24px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    width: 140px;
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+    animation: none;
+    flex-shrink: 0;
+  }
+  .slide.active .platform-card { animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  .slide.active .platform-card:nth-child(1) { animation-delay: 0.3s; }
+  .slide.active .platform-card:nth-child(2) { animation-delay: 0.6s; }
+  .slide.active .platform-card:nth-child(3) { animation-delay: 0.9s; }
+  .slide.active .platform-card:nth-child(4) { animation-delay: 1.2s; }
+  @keyframes popIn { to { opacity:1; transform:scale(1) translateY(0); } }
+  .platform-card .icon { font-size: 40px; margin-bottom: 8px; }
+  .platform-card .name { font-weight: 700; font-size: 14px; color: #1a1a2e; }
+  .platform-card .tip { font-size: 11px; color: #888; margin-top: 4px; }
+
+  /* ===== MIND MAP NODE ===== */
+  .mind-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #6c63ff;
+    color: white;
+    border-radius: 50%;
+    width: 120px; height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900;
+    font-size: 16px;
+    text-align: center;
+    line-height: 1.3;
+    box-shadow: 0 8px 30px rgba(108,99,255,0.4);
+    z-index: 2;
+  }
+
+  /* ===== FINAL CTA ===== */
+  #s6 { gap: 20px; }
+  .cta-box {
+    background: linear-gradient(135deg, #6c63ff 0%, #ff6b6b 100%);
+    color: white;
+    border-radius: 24px;
+    padding: 40px 50px;
+    text-align: center;
+    max-width: 700px;
+    box-shadow: 0 20px 60px rgba(108,99,255,0.3);
+  }
+  .cta-box h2 { font-size: clamp(22px, 3vw, 40px); font-weight: 900; margin-bottom: 12px; }
+  .cta-box p { font-size: 16px; opacity: 0.9; margin-bottom: 30px; line-height: 1.7; }
+  .price-tag {
+    display: inline-block;
+    background: white;
+    color: #6c63ff;
+    font-size: clamp(28px,4vw,48px);
+    font-weight: 900;
+    padding: 10px 40px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+  }
+
+  /* ===== KEYBOARD HINT ===== */
+  #keyhint {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(90,90,120,0.5);
+    font-size: 12px;
+    font-family: 'Tajawal', sans-serif;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* ===== TRANSITION OVERLAY ===== */
+  #overlay {
+    position: fixed;
+    inset: 0;
+    background: #fdfaf4;
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  #overlay.flash { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+
+<!-- Progress -->
+<div id="progress"></div>
+
+<!-- Presenter badge -->
+<div id="presenter">🎓 أكرم مصطفى</div>
+
+<!-- Slide dots -->
+<div id="dots"></div>
+
+<!-- Transition overlay -->
+<div id="overlay"></div>
+
+<!-- Controls -->
+<div id="controls">
+  <button id="btn-prev" title="السابق">&#8594;</button>
+  <span id="slide-counter">1 / 7</span>
+  <button id="btn-next" title="التالي">&#8592;</button>
+  <button id="fullscreen-btn" title="ملء الشاشة">⛶</button>
+</div>
+
+<div id="keyhint">← → للتنقل • F للملء</div>
+
+<!-- ================================================================
+     BOARD
+================================================================ -->
+<div id="board">
+
+<!-- ============================
+     SLIDE 0 — COVER
+============================ -->
+<div class="slide active" id="s0">
+  <div class="reveal">
+    <div class="big-title">
+      كورس التسويق<br><span>الاحترافي</span>
+    </div>
+  </div>
+  <div class="reveal r2">
+    <div class="tagline">من الهوية البصرية إلى حضور رقمي كامل على كل المنصات</div>
+  </div>
+
+  <!-- Whiteboard sketch -->
+  <div class="reveal r3" style="margin-top:30px;">
+    <svg width="520" height="130" viewBox="0 0 520 130">
+      <!-- rocket body -->
+      <path class="draw-line" d="M260,110 C230,90 215,60 225,30 C235,8 260,2 260,2 C260,2 285,8 295,30 C305,60 290,90 260,110Z"
+        fill="none" stroke="#6c63ff" stroke-width="3" stroke-linecap="round"/>
+      <!-- rocket window -->
+      <circle class="draw-line d2" cx="260" cy="48" r="14" fill="none" stroke="#ff6b6b" stroke-width="3"/>
+      <!-- left wing -->
+      <path class="draw-line d3" d="M225,80 L195,100 L220,95" fill="none" stroke="#6c63ff" stroke-width="3" stroke-linecap="round"/>
+      <!-- right wing -->
+      <path class="draw-line d3" d="M295,80 L325,100 L300,95" fill="none" stroke="#6c63ff" stroke-width="3" stroke-linecap="round"/>
+      <!-- flame -->
+      <path class="draw-line d4" d="M245,110 C250,125 260,128 260,128 C260,128 270,125 275,110" fill="none" stroke="#f4a261" stroke-width="3" stroke-linecap="round"/>
+      <!-- stars -->
+      <circle class="draw-fill" cx="160" cy="20" r="3" fill="#6c63ff" opacity="0.5"/>
+      <circle class="draw-fill f2" cx="380" cy="15" r="4" fill="#ff6b6b" opacity="0.5"/>
+      <circle class="draw-fill f3" cx="120" cy="60" r="2" fill="#6c63ff" opacity="0.4"/>
+      <circle class="draw-fill f4" cx="420" cy="55" r="3" fill="#f4a261" opacity="0.5"/>
+      <circle class="draw-fill f5" cx="80" cy="30" r="2" fill="#6c63ff" opacity="0.3"/>
+      <circle class="draw-fill f6" cx="450" cy="85" r="2" fill="#ff6b6b" opacity="0.4"/>
+      <!-- text labels -->
+      <text class="draw-fill f2" x="148" y="45" font-family="Tajawal" font-size="13" fill="#6c63ff" text-anchor="middle">هوية</text>
+      <text class="draw-fill f3" x="380" y="40" font-family="Tajawal" font-size="13" fill="#ff6b6b" text-anchor="middle">تسويق</text>
+      <text class="draw-fill f4" x="90" y="100" font-family="Tajawal" font-size="13" fill="#f4a261" text-anchor="middle">موقع</text>
+      <text class="draw-fill f5" x="440" y="110" font-family="Tajawal" font-size="13" fill="#6c63ff" text-anchor="middle">منصات</text>
+    </svg>
+  </div>
+
+  <div class="start-hint reveal r4">انقر أو اضغط السهم للبدء ←</div>
+</div>
+
+
+<!-- ============================
+     SLIDE 1 — رحلتنا
+============================ -->
+<div class="slide" id="s1">
+  <div class="slide-title reveal">رحلتك نحو الاحتراف الرقمي</div>
+  <div class="slide-subtitle reveal r2">6 محاور تحولك من الصفر إلى محترف</div>
+
+  <div class="row" style="margin-top:10px;">
+    <div class="steps">
+      <div class="step-pill">
+        <div class="step-num" style="background:#6c63ff;">١</div>
+        <div>
+          <div class="step-label">🎨 الهوية البصرية الاحترافية</div>
+          <div class="step-desc">لوجو · ألوان · خطوط · صوت العلامة</div>
+        </div>
+      </div>
+      <div class="step-pill">
+        <div class="step-num" style="background:#ff6b6b;">٢</div>
+        <div>
+          <div class="step-label">📱 إنشاء المنصات وتفعيلها</div>
+          <div class="step-desc">فيسبوك · إنستجرام · تيك توك · واتساب</div>
+        </div>
+      </div>
+      <div class="step-pill">
+        <div class="step-num" style="background:#f4a261;">٣</div>
+        <div>
+          <div class="step-label">🔗 ربط المنصات ببعضها</div>
+          <div class="step-desc">نظام واحد يتحكم في كل الحسابات</div>
+        </div>
+      </div>
+      <div class="step-pill">
+        <div class="step-num" style="background:#2ec4b6;">٤</div>
+        <div>
+          <div class="step-label">📣 التسويق الاحترافي</div>
+          <div class="step-desc">محتوى · إعلانات · تحليل · نتائج حقيقية</div>
+        </div>
+      </div>
+      <div class="step-pill">
+        <div class="step-num" style="background:#8338ec;">٥</div>
+        <div>
+          <div class="step-label">🌐 موقع إلكتروني بالذكاء الاصطناعي</div>
+          <div class="step-desc">بدون برمجة · احترافي · جاهز في ساعات</div>
+        </div>
+      </div>
+      <div class="step-pill">
+        <div class="step-num" style="background:#e63946;">٦</div>
+        <div>
+          <div class="step-label">🚀 التسويق متعدد المنصات</div>
+          <div class="step-desc">كل المنصات تشتغل مع بعض بنظام واحد</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Road illustration -->
+    <div class="svg-wrap">
+      <svg width="280" height="380" viewBox="0 0 280 380">
+        <!-- Road -->
+        <path class="draw-line" d="M140,370 C140,300 140,250 140,10"
+          fill="none" stroke="#ddd" stroke-width="28" stroke-linecap="round"/>
+        <!-- center dashes -->
+        <line class="draw-line d2" x1="140" y1="360" x2="140" y2="330" stroke="white" stroke-width="3" stroke-dasharray="10,8"/>
+        <line class="draw-line d2" x1="140" y1="310" x2="140" y2="280" stroke="white" stroke-width="3" stroke-dasharray="10,8"/>
+        <line class="draw-line d2" x1="140" y1="260" x2="140" y2="230" stroke="white" stroke-width="3" stroke-dasharray="10,8"/>
+        <line class="draw-line d2" x1="140" y1="210" x2="140" y2="180" stroke="white" stroke-width="3" stroke-dasharray="10,8"/>
+        <line class="draw-line d2" x1="140" y1="160" x2="140" y2="130" stroke="white" stroke-width="3" stroke-dasharray="10,8"/>
+        <!-- step circles on road -->
+        <circle class="draw-fill" cx="140" cy="345" r="14" fill="#6c63ff"/>
+        <text class="draw-fill" x="140" y="350" text-anchor="middle" font-family="Tajawal" font-size="14" fill="white" font-weight="bold">١</text>
+        <circle class="draw-fill f2" cx="140" cy="285" r="14" fill="#ff6b6b"/>
+        <text class="draw-fill f2" x="140" y="290" text-anchor="middle" font-family="Tajawal" font-size="14" fill="white" font-weight="bold">٢</text>
+        <circle class="draw-fill f3" cx="140" cy="225" r="14" fill="#f4a261"/>
+        <text class="draw-fill f3" x="140" y="230" text-anchor="middle" font-family="Tajawal" font-size="14" fill="white" font-weight="bold">٣</text>
+        <circle class="draw-fill f4" cx="140" cy="165" r="14" fill="#2ec4b6"/>
+        <text class="draw-fill f4" x="140" y="170" text-anchor="middle" font-family="Tajawal" font-size="14" fill="white" font-weight="bold">٤</text>
+        <circle class="draw-fill f5" cx="140" cy="105" r="14" fill="#8338ec"/>
+        <text class="draw-fill f5" x="140" y="110" text-anchor="middle" font-family="Tajawal" font-size="14" fill="white" font-weight="bold">٥</text>
+        <circle class="draw-fill f6" cx="140" cy="42" r="18" fill="#e63946"/>
+        <text class="draw-fill f6" x="140" y="48" text-anchor="middle" font-family="Tajawal" font-size="15" fill="white" font-weight="bold">٦</text>
+        <!-- flag -->
+        <line class="draw-line d5" x1="140" y1="24" x2="140" y2="2" stroke="#1a1a2e" stroke-width="2"/>
+        <polygon class="draw-fill f7" points="140,2 165,10 140,18" fill="#f4a261"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================
+     SLIDE 2 — الهوية البصرية
+============================ -->
+<div class="slide" id="s2">
+  <div class="slide-title reveal">🎨 الهوية البصرية الاحترافية</div>
+  <div class="slide-subtitle reveal r2">قبل ما تبيع أي حاجة — الناس لازم تعرف مين إنت</div>
+
+  <div class="row">
+    <div class="svg-wrap">
+      <svg width="320" height="300" viewBox="0 0 320 300">
+        <!-- Brand card -->
+        <rect class="draw-line" x="20" y="20" width="280" height="260" rx="20"
+          fill="none" stroke="#6c63ff" stroke-width="3"/>
+        <!-- Logo placeholder circle -->
+        <circle class="draw-line d2" cx="160" cy="90" r="50"
+          fill="none" stroke="#ff6b6b" stroke-width="3"/>
+        <text class="draw-fill f2" x="160" y="97" text-anchor="middle" font-family="Tajawal" font-size="28" fill="#6c63ff" font-weight="900">M</text>
+        <!-- Color swatches -->
+        <rect class="draw-fill f3" x="60" y="165" width="30" height="30" rx="8" fill="#6c63ff"/>
+        <rect class="draw-fill f3" x="100" y="165" width="30" height="30" rx="8" fill="#ff6b6b"/>
+        <rect class="draw-fill f3" x="140" y="165" width="30" height="30" rx="8" fill="#f4a261"/>
+        <rect class="draw-fill f3" x="180" y="165" width="30" height="30" rx="8" fill="#2ec4b6"/>
+        <rect class="draw-fill f3" x="220" y="165" width="30" height="30" rx="8" fill="#1a1a2e"/>
+        <!-- Text bars -->
+        <rect class="draw-fill f4" x="60" y="215" width="200" height="8" rx="4" fill="#6c63ff" opacity="0.3"/>
+        <rect class="draw-fill f4" x="80" y="233" width="160" height="6" rx="3" fill="#6c63ff" opacity="0.2"/>
+        <rect class="draw-fill f4" x="100" y="248" width="120" height="5" rx="2" fill="#6c63ff" opacity="0.15"/>
+        <!-- labels -->
+        <text class="draw-fill f2" x="160" y="152" text-anchor="middle" font-family="Tajawal" font-size="13" fill="#888">اللوجو</text>
+        <text class="draw-fill f3" x="160" y="212" text-anchor="middle" font-family="Tajawal" font-size="13" fill="#888">الألوان</text>
+        <text class="draw-fill f4" x="160" y="270" text-anchor="middle" font-family="Tajawal" font-size="13" fill="#888">الخطوط والأسلوب</text>
+      </svg>
+    </div>
+
+    <div class="col">
+      <div class="steps" style="gap:12px;">
+        <div class="step-pill">
+          <span style="font-size:24px;">🖌️</span>
+          <div>
+            <div class="step-label">تصميم اللوجو</div>
+            <div class="step-desc">باستخدام أدوات الذكاء الاصطناعي مجاناً</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:24px;">🎨</span>
+          <div>
+            <div class="step-label">اختيار الألوان المميزة</div>
+            <div class="step-desc">Psychology of colors - ألوان تبيع</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:24px;">✍️</span>
+          <div>
+            <div class="step-label">صوت علامتك التجارية</div>
+            <div class="step-desc">طريقة كلامك مع العميل</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:24px;">📐</span>
+          <div>
+            <div class="step-label">Templates احترافية</div>
+            <div class="step-desc">تصميمات جاهزة تتكيف مع كل منصة</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================
+     SLIDE 3 — المنصات
+============================ -->
+<div class="slide" id="s3">
+  <div class="slide-title reveal">📱 إنشاء المنصات وربطها ببعض</div>
+  <div class="slide-subtitle reveal r2">كل منصة ليها دور — وكلهم بيشتغلوا كفريق واحد</div>
+
+  <div class="platforms" style="margin-top:20px;">
+    <div class="platform-card">
+      <div class="icon">📘</div>
+      <div class="name">فيسبوك</div>
+      <div class="tip">صفحة بيزنس + Ads Manager</div>
+    </div>
+    <div class="platform-card">
+      <div class="icon">📸</div>
+      <div class="name">إنستجرام</div>
+      <div class="tip">Business Profile + Reels</div>
+    </div>
+    <div class="platform-card">
+      <div class="icon">🎵</div>
+      <div class="name">تيك توك</div>
+      <div class="tip">Business Account + Trends</div>
+    </div>
+    <div class="platform-card">
+      <div class="icon">💬</div>
+      <div class="name">واتساب</div>
+      <div class="tip">Business + Catalog + Broadcast</div>
+    </div>
+  </div>
+
+  <!-- Connection diagram -->
+  <div class="reveal r4" style="margin-top:30px;">
+    <svg width="560" height="160" viewBox="0 0 560 160">
+      <!-- Center hub -->
+      <rect class="draw-line" x="210" y="55" width="140" height="50" rx="14" fill="none" stroke="#6c63ff" stroke-width="3"/>
+      <text class="draw-fill" x="280" y="83" text-anchor="middle" font-family="Tajawal" font-size="15" fill="#6c63ff" font-weight="900">هويتك</text>
+      <text class="draw-fill" x="280" y="98" text-anchor="middle" font-family="Tajawal" font-size="11" fill="#888">المحور الرئيسي</text>
+
+      <!-- Lines to platforms -->
+      <line class="draw-line d2" x1="210" y1="80" x2="100" y2="40" stroke="#6c63ff" stroke-width="2" stroke-dasharray="5,4"/>
+      <line class="draw-line d3" x1="210" y1="80" x2="100" y2="120" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="5,4"/>
+      <line class="draw-line d2" x1="350" y1="80" x2="460" y2="40" stroke="#2ec4b6" stroke-width="2" stroke-dasharray="5,4"/>
+      <line class="draw-line d3" x1="350" y1="80" x2="460" y2="120" stroke="#f4a261" stroke-width="2" stroke-dasharray="5,4"/>
+
+      <!-- Platform labels -->
+      <rect class="draw-fill" x="30" y="20" width="70" height="40" rx="10" fill="#e7f0ff"/>
+      <text class="draw-fill" x="65" y="43" text-anchor="middle" font-family="Tajawal" font-size="13" fill="#1a1a2e" font-weight="700">📘 FB</text>
+      <rect class="draw-fill f2" x="30" y="100" width="70" height="40" rx="10" fill="#fff0f0"/>
+      <text class="draw-fill f2" x="65" y="123" text-anchor="middle" font-family="Tajawal" font-size="13" fill="#1a1a2e" font-weight="700">📸 IG</text>
+      <rect class="draw-fill f3" x="460" y="20" width="70" height="40" rx="10" fill="#e0fff8"/>
+      <text class="draw-fill f3" x="495" y="43" text-anchor="middle" font-family="Tajawal" font-size="13" fill="#1a1a2e" font-weight="700">🎵 TT</text>
+      <rect class="draw-fill f4" x="460" y="100" width="70" height="40" rx="10" fill="#fff8e0"/>
+      <text class="draw-fill f4" x="495" y="123" text-anchor="middle" font-family="Tajawal" font-size="13" fill="#1a1a2e" font-weight="700">💬 WA</text>
+    </svg>
+  </div>
+</div>
+
+
+<!-- ============================
+     SLIDE 4 — التسويق الاحترافي
+============================ -->
+<div class="slide" id="s4">
+  <div class="slide-title reveal">📣 التسويق الاحترافي</div>
+  <div class="slide-subtitle reveal r2">مش بس نشر — ده نظام يجيب نتائج حقيقية</div>
+
+  <div class="row" style="margin-top:15px;">
+    <div class="svg-wrap">
+      <svg width="300" height="300" viewBox="0 0 300 300">
+        <!-- Funnel -->
+        <polygon class="draw-line" points="30,30 270,30 200,130 100,130"
+          fill="none" stroke="#6c63ff" stroke-width="3"/>
+        <polygon class="draw-line d2" points="100,135 200,135 170,200 130,200"
+          fill="none" stroke="#ff6b6b" stroke-width="3"/>
+        <polygon class="draw-line d3" points="130,205 170,205 155,255 145,255"
+          fill="none" stroke="#f4a261" stroke-width="3"/>
+
+        <!-- Fill -->
+        <polygon class="draw-fill" points="30,30 270,30 200,130 100,130"
+          fill="#6c63ff" opacity="0.08"/>
+        <polygon class="draw-fill f2" points="100,135 200,135 170,200 130,200"
+          fill="#ff6b6b" opacity="0.1"/>
+        <polygon class="draw-fill f3" points="130,205 170,205 155,255 145,255"
+          fill="#f4a261" opacity="0.15"/>
+
+        <!-- Labels -->
+        <text class="draw-fill" x="150" y="90" text-anchor="middle" font-family="Tajawal" font-size="16" fill="#6c63ff" font-weight="700">Awareness</text>
+        <text class="draw-fill" x="150" y="78" text-anchor="middle" font-family="Tajawal" font-size="12" fill="#888">الوعي بالعلامة</text>
+
+        <text class="draw-fill f2" x="150" y="170" text-anchor="middle" font-family="Tajawal" font-size="15" fill="#ff6b6b" font-weight="700">Engagement</text>
+        <text class="draw-fill f2" x="150" y="184" text-anchor="middle" font-family="Tajawal" font-size="11" fill="#888">تفاعل ومتابعة</text>
+
+        <text class="draw-fill f3" x="150" y="235" text-anchor="middle" font-family="Tajawal" font-size="14" fill="#f4a261" font-weight="700">Conversion</text>
+        <text class="draw-fill f3" x="150" y="249" text-anchor="middle" font-family="Tajawal" font-size="11" fill="#888">مبيعات حقيقية</text>
+
+        <!-- Arrow down -->
+        <line class="draw-line d4" x1="150" y1="256" x2="150" y2="280" stroke="#1a1a2e" stroke-width="2"/>
+        <polygon class="draw-fill f5" points="143,278 150,290 157,278" fill="#1a1a2e"/>
+        <text class="draw-fill f5" x="150" y="298" text-anchor="middle" font-family="Tajawal" font-size="13" fill="#1a1a2e" font-weight="900">💰 ربح</text>
+      </svg>
+    </div>
+
+    <div class="col">
+      <div class="steps" style="gap:10px;">
+        <div class="step-pill">
+          <span style="font-size:22px;">📝</span>
+          <div>
+            <div class="step-label">إنشاء محتوى يبيع</div>
+            <div class="step-desc">Copywriting + صور + فيديو</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:22px;">📅</span>
+          <div>
+            <div class="step-label">Content Calendar</div>
+            <div class="step-desc">خطة نشر منظمة طول الشهر</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:22px;">🎯</span>
+          <div>
+            <div class="step-label">إعلانات مدفوعة مضبوطة</div>
+            <div class="step-desc">Targeting صح = نتيجة صح</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:22px;">📊</span>
+          <div>
+            <div class="step-label">تحليل النتائج</div>
+            <div class="step-desc">Analytics + تحسين مستمر</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:22px;">🔄</span>
+          <div>
+            <div class="step-label">Scale Up</div>
+            <div class="step-desc">ضاعف اللي بينجح وأوقف اللي مش بينجح</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================
+     SLIDE 5 — الموقع بالذكاء الاصطناعي
+============================ -->
+<div class="slide" id="s5">
+  <div class="slide-title reveal">🌐 موقعك الإلكتروني بالـ AI</div>
+  <div class="slide-subtitle reveal r2">بدون برمجة · بدون مصمم · أنت اللي بتعمله</div>
+
+  <div class="row" style="margin-top:15px;">
+    <div class="col">
+      <div class="steps" style="gap:12px;">
+        <div class="step-pill">
+          <span style="font-size:22px;">🤖</span>
+          <div>
+            <div class="step-label">اختيار الأداة المناسبة</div>
+            <div class="step-desc">Wix · Framer · Webflow + AI</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:22px;">✍️</span>
+          <div>
+            <div class="step-label">كتابة المحتوى بالـ AI</div>
+            <div class="step-desc">ChatGPT يكتب نصوص الموقع كامل</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:22px;">🖼️</span>
+          <div>
+            <div class="step-label">تصميم الصور والبانرات</div>
+            <div class="step-desc">Midjourney · DALL·E · Canva AI</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:22px;">🔍</span>
+          <div>
+            <div class="step-label">SEO تلقائي</div>
+            <div class="step-desc">تظهر في جوجل من غير ما تدفع</div>
+          </div>
+        </div>
+        <div class="step-pill">
+          <span style="font-size:22px;">📲</span>
+          <div>
+            <div class="step-label">ربط الموقع بالمنصات</div>
+            <div class="step-desc">Pixel + WhatsApp + Social Links</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="svg-wrap">
+      <svg width="280" height="320" viewBox="0 0 280 320">
+        <!-- Browser window -->
+        <rect class="draw-line" x="20" y="20" width="240" height="280" rx="16" fill="none" stroke="#6c63ff" stroke-width="3"/>
+        <!-- Browser bar -->
+        <rect class="draw-fill" x="20" y="20" width="240" height="40" rx="12" fill="#6c63ff" opacity="0.1"/>
+        <circle class="draw-fill f2" cx="50" cy="40" r="7" fill="#ff6b6b" opacity="0.7"/>
+        <circle class="draw-fill f2" cx="72" cy="40" r="7" fill="#f4a261" opacity="0.7"/>
+        <circle class="draw-fill f2" cx="94" cy="40" r="7" fill="#2ec4b6" opacity="0.7"/>
+        <!-- URL bar -->
+        <rect class="draw-fill f2" x="110" y="30" width="130" height="20" rx="6" fill="white" opacity="0.8"/>
+        <text class="draw-fill f3" x="175" y="44" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#888">akrammostafa.com</text>
+        <!-- Hero section -->
+        <rect class="draw-fill f3" x="35" y="75" width="210" height="80" rx="10" fill="#6c63ff" opacity="0.12"/>
+        <text class="draw-fill f3" x="140" y="110" text-anchor="middle" font-family="Tajawal" font-size="15" fill="#6c63ff" font-weight="900">🚀 خدماتي</text>
+        <text class="draw-fill f4" x="140" y="128" text-anchor="middle" font-family="Tajawal" font-size="11" fill="#888">تسويق احترافي لبيزنسك</text>
+        <!-- Cards -->
+        <rect class="draw-fill f4" x="35" y="168" width="95" height="65" rx="8" fill="#ff6b6b" opacity="0.1"/>
+        <text class="draw-fill f4" x="82" y="200" text-anchor="middle" font-family="Tajawal" font-size="22">🎨</text>
+        <text class="draw-fill f4" x="82" y="222" text-anchor="middle" font-family="Tajawal" font-size="11" fill="#888">هوية</text>
+        <rect class="draw-fill f5" x="150" y="168" width="95" height="65" rx="8" fill="#2ec4b6" opacity="0.1"/>
+        <text class="draw-fill f5" x="197" y="200" text-anchor="middle" font-family="Tajawal" font-size="22">📣</text>
+        <text class="draw-fill f5" x="197" y="222" text-anchor="middle" font-family="Tajawal" font-size="11" fill="#888">تسويق</text>
+        <!-- CTA button -->
+        <rect class="draw-fill f6" x="70" y="252" width="140" height="34" rx="17" fill="#6c63ff"/>
+        <text class="draw-fill f6" x="140" y="273" text-anchor="middle" font-family="Tajawal" font-size="14" fill="white" font-weight="700">تواصل معي الآن</text>
+        <!-- AI sparkle -->
+        <text class="draw-fill f7" x="255" y="72" font-family="Tajawal" font-size="22">✨</text>
+        <text class="draw-fill f7" x="248" y="88" font-family="Tajawal" font-size="9" fill="#6c63ff" font-weight="700">AI</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================
+     SLIDE 6 — CTA / CLOSE
+============================ -->
+<div class="slide" id="s6">
+  <div class="reveal" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:20px;">
+    <div class="cta-box">
+      <h2>🚀 جاهز تبدأ؟</h2>
+      <p>
+        كورس <strong>التسويق الاحترافي مع منستر أكر</strong><br>
+        من الهوية البصرية لحد ما تملك منظومة تسويقية متكاملة<br>
+        على كل المنصات + موقعك الإلكتروني الاحترافي
+      </p>
+      <div class="price-tag">1,500 جنيه</div>
+      <div style="font-size:14px;opacity:0.8;margin-bottom:20px;">بدل من 2,000 جنيه — عرض محدود</div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <div style="background:rgba(255,255,255,0.2);border-radius:50px;padding:8px 20px;font-size:13px;">✅ 6 محاور متكاملة</div>
+        <div style="background:rgba(255,255,255,0.2);border-radius:50px;padding:8px 20px;font-size:13px;">✅ تطبيق عملي فوري</div>
+        <div style="background:rgba(255,255,255,0.2);border-radius:50px;padding:8px 20px;font-size:13px;">✅ متابعة شخصية</div>
+      </div>
+    </div>
+
+    <!-- Illustrations -->
+    <svg width="500" height="80" viewBox="0 0 500 80" class="reveal r3">
+      <!-- People silhouettes -->
+      <g class="draw-fill">
+        <circle cx="60" cy="25" r="18" fill="#6c63ff" opacity="0.2"/>
+        <ellipse cx="60" cy="65" rx="22" ry="15" fill="#6c63ff" opacity="0.15"/>
+        <text x="60" y="32" text-anchor="middle" font-size="20">👨</text>
+      </g>
+      <g class="draw-fill f2">
+        <circle cx="120" cy="25" r="18" fill="#ff6b6b" opacity="0.2"/>
+        <ellipse cx="120" cy="65" rx="22" ry="15" fill="#ff6b6b" opacity="0.15"/>
+        <text x="120" y="32" text-anchor="middle" font-size="20">👩</text>
+      </g>
+      <g class="draw-fill f3">
+        <circle cx="180" cy="25" r="18" fill="#f4a261" opacity="0.2"/>
+        <ellipse cx="180" cy="65" rx="22" ry="15" fill="#f4a261" opacity="0.15"/>
+        <text x="180" y="32" text-anchor="middle" font-size="20">🧑</text>
+      </g>
+      <g class="draw-fill f4">
+        <circle cx="240" cy="25" r="18" fill="#2ec4b6" opacity="0.2"/>
+        <ellipse cx="240" cy="65" rx="22" ry="15" fill="#2ec4b6" opacity="0.15"/>
+        <text x="240" y="32" text-anchor="middle" font-size="20">👨‍💼</text>
+      </g>
+      <g class="draw-fill f5">
+        <circle cx="300" cy="25" r="18" fill="#8338ec" opacity="0.2"/>
+        <ellipse cx="300" cy="65" rx="22" ry="15" fill="#8338ec" opacity="0.15"/>
+        <text x="300" y="32" text-anchor="middle" font-size="20">👩‍💼</text>
+      </g>
+      <!-- Arrow to success -->
+      <line class="draw-line d4" x1="340" y1="40" x2="400" y2="40" stroke="#6c63ff" stroke-width="2.5"/>
+      <polygon class="draw-fill f5" points="398,34 410,40 398,46" fill="#6c63ff"/>
+      <text class="draw-fill f6" x="450" y="30" text-anchor="middle" font-size="28">🏆</text>
+      <text class="draw-fill f6" x="450" y="55" text-anchor="middle" font-family="Tajawal" font-size="13" fill="#6c63ff" font-weight="700">محترفين</text>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end board -->
+
+<script>
+const TOTAL = 7;
+let current = 0;
+let animating = false;
+
+const slides = document.querySelectorAll('.slide');
+const counter = document.getElementById('slide-counter');
+const progress = document.getElementById('progress');
+const dots = document.getElementById('dots');
+const overlay = document.getElementById('overlay');
+const cursor = document.getElementById('cursor');
+
+// Build dots
+for(let i=0; i<TOTAL; i++){
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.addEventListener('click', ()=>goTo(i));
+  dots.appendChild(d);
+}
+
+function updateUI(){
+  counter.textContent = (current+1) + ' / ' + TOTAL;
+  progress.style.width = ((current+1)/TOTAL*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,i)=>{
+    d.classList.toggle('active', i===current);
+  });
+}
+
+function goTo(idx){
+  if(animating || idx===current || idx<0 || idx>=TOTAL) return;
+  animating = true;
+
+  overlay.classList.add('flash');
+  setTimeout(()=>{
+    slides[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+    updateUI();
+    overlay.classList.remove('flash');
+    setTimeout(()=>{ animating=false; }, 300);
+  }, 280);
+}
+
+function next(){ goTo(current+1); }
+function prev(){ goTo(current-1); }
+
+document.getElementById('btn-next').addEventListener('click', next);
+document.getElementById('btn-prev').addEventListener('click', prev);
+
+document.getElementById('fullscreen-btn').addEventListener('click', ()=>{
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
+});
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowLeft'||e.key==='ArrowDown'||e.key===' ') { e.preventDefault(); next(); }
+  if(e.key==='ArrowRight'||e.key==='ArrowUp') { e.preventDefault(); prev(); }
+  if(e.key==='f'||e.key==='F') {
+    if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+
+// Click anywhere to advance
+document.getElementById('board').addEventListener('click', e=>{
+  if(e.target.closest('#controls')) return;
+  next();
+});
+
+// Custom cursor
+document.addEventListener('mousemove', e=>{
+  cursor.style.left = e.clientX+'px';
+  cursor.style.top = e.clientY+'px';
+});
+document.addEventListener('mousedown', ()=>{
+  cursor.style.width='14px'; cursor.style.height='14px';
+  cursor.style.background='rgba(108,99,255,0.6)';
+});
+document.addEventListener('mouseup', ()=>{
+  cursor.style.width='20px'; cursor.style.height='20px';
+  cursor.style.background='rgba(108,99,255,0.3)';
+});
+
+updateUI();
+</script>
+</body>
+</html>
